@@ -1,0 +1,137 @@
+{
+  "project_info": {
+    "project_number": "988665107482",
+    "project_id": "the-pig-farmer-78728",
+    "storage_bucket": "the-pig-farmer-78728.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:988665107482:android:056e3b35f8da0ef7b92da3",
+        "android_client_info": {
+          "package_name": "com.bibiniitech.smartswine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "988665107482-4m266fg1ve13oq68sb72159dii74j9vc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bibiniitech.smartswine",
+            "certificate_hash": "0194610dd0b1afcd22e0f71cfc5a35120bdbcc7d"
+          }
+        },
+        {
+          "client_id": "988665107482-dc11nn1gemm0stjgpohqa9tvm4rhtlr2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bibiniitech.smartswine",
+            "certificate_hash": "dd1b1c5f927beb8716cea2526569dff264f05282"
+          }
+        },
+        {
+          "client_id": "988665107482-4meu3habci5lio15ao2q8hitddvt5ntf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzWsKA9TUia-suAE6Cj_6wrNwl4OnA-YE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "988665107482-4meu3habci5lio15ao2q8hitddvt5ntf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:988665107482:android:39383c5326b40635b92da3",
+        "android_client_info": {
+          "package_name": "com.bibiniitech.smartswine.beta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "988665107482-gjto8pdeq58a352eivbfbert09vgoo27.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bibiniitech.smartswine.beta",
+            "certificate_hash": "dd1b1c5f927beb8716cea2526569dff264f05282"
+          }
+        },
+        {
+          "client_id": "988665107482-4meu3habci5lio15ao2q8hitddvt5ntf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzWsKA9TUia-suAE6Cj_6wrNwl4OnA-YE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "988665107482-4meu3habci5lio15ao2q8hitddvt5ntf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:988665107482:android:0adef5ca6e639789b92da3",
+        "android_client_info": {
+          "package_name": "com.example.thepigfarmer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "988665107482-61k8t7qtgrhnkq6b1i6te2gu395cqbks.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.thepigfarmer",
+            "certificate_hash": "0194610dd0b1afcd22e0f71cfc5a35120bdbcc7d"
+          }
+        },
+        {
+          "client_id": "988665107482-sj0ub3gltcripf4b0m8p6hhrinnurgpm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.thepigfarmer",
+            "certificate_hash": "dd1b1c5f927beb8716cea2526569dff264f05282"
+          }
+        },
+        {
+          "client_id": "988665107482-4meu3habci5lio15ao2q8hitddvt5ntf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzWsKA9TUia-suAE6Cj_6wrNwl4OnA-YE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "988665107482-4meu3habci5lio15ao2q8hitddvt5ntf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

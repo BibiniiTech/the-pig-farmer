@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">SmartSwine</string>
+    <string name="weight_checker_title">WEIGHT CHECKER</string>
+    <string name="back_button_content_description">Back</string>
+    <string name="important_notes_title">Important Notes</string>
+    <string name="weight_checker_notes">• Heart Girth: Measure the thorax (just behind the front legs) making sure the tape is fit along the body and meets tightly (Point B).\n• Body Length: Measure from the base of the ears to the base of the tail making sure the tape is firm on the body and not lose (Point A).\n• Ensure the pig is standing squarely on level ground for the most accurate result.\n</string>
+    <string name="converter_title">Converter</string>
+    <string name="unit_lbs">Lbs</string>
+    <string name="unit_kgs">Kgs</string>
+    <string name="weigh_with_tape_title">Weigh with Tape</string>
+    <string name="weigh_with_tape_subtitle">Estimate weight with measuring tape.</string>
+    <string name="label_length">Length (%1$s)</string>
+    <string name="label_girth">Girth (%1$s)</string>
+    <string name="unit_cm">cm</string>
+    <string name="unit_in">in</string>
+    <string name="placeholder_a">A</string>
+    <string name="placeholder_b">B</string>
+    <string name="label_estimated_live_weight">Estimated Live Weight</string>
+    <string name="label_estimated_carcass_weight">Estimated Carcass Weight</string>
+    <string name="msg_enter_measurements">Enter measurements on diagram to calculate</string>
+    <string name="pig_diagram_content_description">Pig measurement guide</string>
+    <string name="weight_format">%1$.1f Kg / %2$.1f Lbs</string>
+    <string name="estimated_results">Estimated Results</string>
+
+    <string name="specify_breed" translatable="false">Specify Breed</string>
+</resources>
