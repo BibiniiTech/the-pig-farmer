@@ -1,0 +1,363 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { collection, onSnapshot, doc, setDoc, deleteDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { useAuth } from "@/context/AuthContext";
+import NavbarDropdown from "@/components/NavbarDropdown";
+
+interface FinancialRecord {
+  id: string;
+  date: string;
+  type: string; // "Income" or "Expense"
+  category: string;
+  amount: number;
+  description: string;
+  pigId?: string;
+}
+
+interface Pig {
+  id: string;
+  tagNumber: string;
+}
+
+export default function FinancialsPage() {
+  const { user, activeFarmUid, loading } = useAuth();
+  const router = useRouter();
+
+  const [records, setRecords] = useState<FinancialRecord[]>([]);
+  const [pigs, setPigs] = useState<Pig[]>([]);
+  const [dataLoading, setDataLoading] = useState(true);
+  const [showAddModal, setShowAddModal] = useState(false);
+
+  // Form states
+  const [type, setType] = useState("Expense");
+  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [category, setCategory] = useState("Feed");
+  const [amount, setAmount] = useState(0);
+  const [description, setDescription] = useState("");
+  const [selectedPigId, setSelectedPigId] = useState("");
+
+  const categories = {
+    Income: ["Pig Sale", "Manure Sale", "Breeding Service", "Equipment Sale", "Other"],
+    Expense: ["Feed", "Vet/Medication", "Labor/Salary", "Equipment", "Transport", "Rent", "Utility", "Other"]
+  };
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/login");
+    }
+  }, [user, loading, router]);
+
+  useEffect(() => {
+    if (!activeFarmUid) return;
+
+    setDataLoading(true);
+
+    // 1. Listen to Financial Records
+    const finRef = collection(db, "users", activeFarmUid, "financials");
+    const unsubscribeFin = onSnapshot(finRef, (snapshot) => {
+      const list = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as FinancialRecord));
+      setRecords(list.sort((a, b) => b.date.localeCompare(a.date)));
+      setDataLoading(false);
+    }, (err) => {
+      console.error(err);
+      setDataLoading(false);
+    });
+
+    // 2. Listen to Pigs for linking transactions
+    const pigsRef = collection(db, "users", activeFarmUid, "pigs");
+    const unsubscribePigs = onSnapshot(pigsRef, (snapshot) => {
+      const list = snapshot.docs.map(doc => ({ id: doc.id, tagNumber: doc.data().tagNumber || doc.id } as Pig));
+      setPigs(list.sort((a, b) => a.tagNumber.localeCompare(b.tagNumber)));
+    });
+
+    return () => {
+      unsubscribeFin();
+      unsubscribePigs();
+    };
+  }, [activeFarmUid]);
+
+  const handleAddTransaction = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!activeFarmUid || amount <= 0) return;
+
+    try {
+      const finCollection = collection(db, "users", activeFarmUid, "financials");
+      const newRef = doc(finCollection);
+
+      const record: FinancialRecord = {
+        id: newRef.id,
+        date,
+        type,
+        category,
+        amount,
+        description
+      };
+      if (type === "Income" && category === "Pig Sale" && selectedPigId) {
+        record.pigId = selectedPigId;
+      }
+
+      await setDoc(newRef, record);
+
+      // Reset
+      setAmount(0);
+      setDescription("");
+      setSelectedPigId("");
+      setShowAddModal(false);
+    } catch (err) {
+      console.error("Failed to log transaction:", err);
+    }
+  };
+
+  const handleDeleteRecord = async (id: string) => {
+    if (!activeFarmUid || !confirm("Are you sure you want to delete this transaction record?")) return;
+    try {
+      await deleteDoc(doc(db, "users", activeFarmUid, "financials", id));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Calculations
+  const totalIncome = records.filter(r => r.type === "Income").reduce((sum, r) => sum + r.amount, 0);
+  const totalExpense = records.filter(r => r.type === "Expense").reduce((sum, r) => sum + r.amount, 0);
+  const netBalance = totalIncome - totalExpense;
+
+  if (loading || !user) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-white text-zinc-900">
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
+      {/* Watermark Logo Background */}
+      <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
+        <img
+          src="/app_logo.png"
+          alt="Watermark Background Logo"
+          className="w-full max-w-[1100px] max-h-[85vh] object-contain"
+        />
+      </div>
+
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+              <NavbarDropdown />
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setShowAddModal(true)}
+                className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white shadow shadow-emerald-600/10 transition"
+              >
+                + Log Transaction
+              </button>
+              <Link
+                href="/dashboard"
+                className="text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/50 px-3 py-1.5 rounded-lg transition duration-200"
+              >
+                Back to Home
+              </Link>
+            </div>
+          </div>
+        </header>
+
+        <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
+          {/* Dashboard balance summaries */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {[
+              { label: "Total Revenue", amount: totalIncome, color: "text-emerald-700 bg-emerald-50/50 border-emerald-100" },
+              { label: "Total Expenses", amount: totalExpense, color: "text-rose-700 bg-rose-50/50 border-rose-100" },
+              { label: "Net Cashflow", amount: netBalance, color: netBalance >= 0 ? "text-emerald-800 bg-emerald-100/30 border-emerald-200" : "text-rose-800 bg-rose-100/30 border-rose-200" }
+            ].map((stat, i) => (
+              <div key={i} className={`backdrop-blur-md border rounded-2xl p-6 shadow-sm ${stat.color}`}>
+                <p className="text-xs font-bold uppercase tracking-wider">{stat.label}</p>
+                <p className="text-3xl font-black mt-2">${stat.amount.toFixed(2)}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Ledger Table */}
+          <div className="bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
+            <h2 className="text-lg font-bold text-zinc-900 mb-4">Farm Cashflow Ledger</h2>
+            {dataLoading ? (
+              <div className="space-y-3">
+                {[...Array(4)].map((_, i) => (
+                  <div key={i} className="h-10 bg-zinc-100 animate-pulse rounded-lg" />
+                ))}
+              </div>
+            ) : records.length === 0 ? (
+              <p className="text-sm text-zinc-500 text-center py-12">No transactions recorded yet.</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-zinc-200 text-sm">
+                  <thead>
+                    <tr className="text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider border-b border-zinc-200">
+                      <th className="pb-3">Date</th>
+                      <th className="pb-3">Type</th>
+                      <th className="pb-3">Category</th>
+                      <th className="pb-3">Description</th>
+                      <th className="pb-3">Linked Pig</th>
+                      <th className="pb-3 text-right">Amount</th>
+                      <th className="pb-3 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-zinc-150">
+                    {records.map(record => {
+                      const linkedPig = pigs.find(p => p.id === record.pigId);
+                      return (
+                        <tr key={record.id}>
+                          <td className="py-4 font-mono text-zinc-500">{record.date}</td>
+                          <td className="py-4">
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                              record.type === "Income" ? "bg-emerald-50 text-emerald-800 border border-emerald-100" : "bg-rose-50 text-rose-800 border border-rose-100"
+                            }`}>
+                              {record.type}
+                            </span>
+                          </td>
+                          <td className="py-4 font-semibold text-zinc-800">{record.category}</td>
+                          <td className="py-4 text-zinc-500">{record.description}</td>
+                          <td className="py-4 text-zinc-600 font-mono">
+                            {linkedPig ? (
+                              <Link href={`/dashboard/herd/${record.pigId}`} className="text-emerald-700 hover:underline">
+                                {linkedPig.tagNumber}
+                              </Link>
+                            ) : "N/A"}
+                          </td>
+                          <td className={`py-4 text-right font-bold font-mono ${
+                            record.type === "Income" ? "text-emerald-700" : "text-rose-700"
+                          }`}>
+                            {record.type === "Income" ? "+" : "-"}${record.amount.toFixed(2)}
+                          </td>
+                          <td className="py-4 text-right font-medium">
+                            <button onClick={() => handleDeleteRecord(record.id)} className="text-xs text-rose-600 hover:underline">
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </main>
+      </div>
+
+      {/* Log Transaction Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-white border border-zinc-200 rounded-2xl w-full max-w-md p-6 space-y-6 shadow-2xl">
+            <h3 className="text-lg font-bold text-zinc-900">Log Transaction</h3>
+            <form onSubmit={handleAddTransaction} className="space-y-4">
+              <div className="flex gap-2 p-1 bg-zinc-100 rounded-lg">
+                <button
+                  type="button"
+                  onClick={() => { setType("Expense"); setCategory("Feed"); }}
+                  className={`flex-1 py-1.5 text-xs font-bold rounded-md transition ${type === "Expense" ? "bg-white text-zinc-800 shadow" : "text-zinc-500"}`}
+                >
+                  Expense
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setType("Income"); setCategory("Pig Sale"); }}
+                  className={`flex-1 py-1.5 text-xs font-bold rounded-md transition ${type === "Income" ? "bg-white text-zinc-800 shadow" : "text-zinc-500"}`}
+                >
+                  Income
+                </button>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Date</label>
+                  <input
+                    type="date"
+                    required
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Category</label>
+                  <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
+                  >
+                    {((type === "Income" ? categories.Income : categories.Expense)).map(cat => (
+                      <option key={cat}>{cat}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className={type === "Income" && category === "Pig Sale" ? "grid grid-cols-2 gap-4" : "grid grid-cols-1 gap-4"}>
+                <div>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Amount ($)</label>
+                  <input
+                    type="number"
+                    step="any"
+                    required
+                    value={amount}
+                    onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
+                    className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
+                  />
+                </div>
+                {type === "Income" && category === "Pig Sale" && (
+                  <div>
+                    <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Link Pig (Optional)</label>
+                    <select
+                      value={selectedPigId}
+                      onChange={(e) => setSelectedPigId(e.target.value)}
+                      className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
+                    >
+                      <option value="">None</option>
+                      {pigs.map(p => (
+                        <option key={p.id} value={p.id}>{p.tagNumber}</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Description</label>
+                <textarea
+                  required
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="e.g. Purchased 10 bags of starter feed from feed shop."
+                  rows={2}
+                  className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
+                />
+              </div>
+
+              <div className="flex justify-end gap-3 pt-4 border-t border-zinc-150">
+                <button
+                  type="button"
+                  onClick={() => setShowAddModal(false)}
+                  className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2 text-xs font-semibold text-zinc-500 hover:bg-zinc-100 transition"
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white transition">
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

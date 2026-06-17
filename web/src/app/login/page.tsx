@@ -2,14 +2,25 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isSignUp, setIsSignUp] = useState(false);
+  
+  // Sign Up fields
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [farmName, setFarmName] = useState("");
+  const [country, setCountry] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
@@ -20,16 +31,55 @@ export default function LoginPage() {
     }
   }, [user, authLoading, router]);
 
-  const handleEmailLogin = async (e: React.FormEvent) => {
+  const handleAuthSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setSuccess(null);
     setLoading(true);
+
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push("/dashboard");
+      if (isSignUp) {
+        if (!firstName.trim() || !lastName.trim() || !farmName.trim() || !country.trim()) {
+          setError("Please fill in all fields.");
+          setLoading(false);
+          return;
+        }
+        if (password !== confirmPassword) {
+          setError("Passwords do not match.");
+          setLoading(false);
+          return;
+        }
+        if (password.length < 6) {
+          setError("Password must be at least 6 characters.");
+          setLoading(false);
+          return;
+        }
+
+        // 1. Create user in Firebase Auth
+        const credential = await createUserWithEmailAndPassword(auth, email, password);
+        const userId = credential.user.uid;
+
+        // 2. Save profile to Firestore
+        await setDoc(doc(db, "users", userId), {
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          farmName: farmName.trim(),
+          country: country.trim(),
+          email: email.trim().toLowerCase(),
+          isPremium: false,
+          isAdmin: false,
+          isKofisPerson: false,
+          createdAt: new Date(),
+        });
+
+        router.push("/dashboard");
+      } else {
+        await signInWithEmailAndPassword(auth, email, password);
+        router.push("/dashboard");
+      }
     } catch (err: any) {
       console.error(err);
-      setError(err.message || "Invalid email or password.");
+      setError(err.message || "Authentication failed.");
     } finally {
       setLoading(false);
     }
@@ -37,6 +87,7 @@ export default function LoginPage() {
 
   const handleGoogleLogin = async () => {
     setError(null);
+    setSuccess(null);
     setLoading(true);
     const provider = new GoogleAuthProvider();
     try {
@@ -50,41 +101,146 @@ export default function LoginPage() {
     }
   };
 
+  const handleForgotPassword = async () => {
+    setError(null);
+    setSuccess(null);
+    if (!email.trim()) {
+      setError("Please enter your email address first to reset your password.");
+      return;
+    }
+    setLoading(true);
+    try {
+      await sendPasswordResetEmail(auth, email.trim());
+      setSuccess("Password reset email sent! Please check your inbox.");
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "Failed to send password reset email.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (authLoading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-zinc-950 text-zinc-100">
+      <div className="flex h-screen items-center justify-center bg-zinc-50 text-zinc-900">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
       </div>
     );
   }
 
   return (
-    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-zinc-950 px-4 py-12 sm:px-6 lg:px-8">
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-zinc-50 px-4 py-12 sm:px-6 lg:px-8">
       {/* Background glow effects */}
       <div className="absolute top-1/4 left-1/4 -z-10 h-96 w-96 rounded-full bg-emerald-500/10 blur-[100px]" />
       <div className="absolute bottom-1/4 right-1/4 -z-10 h-96 w-96 rounded-full bg-violet-600/10 blur-[100px]" />
 
-      <div className="w-full max-w-md space-y-8 rounded-2xl border border-zinc-800 bg-zinc-900/60 p-8 shadow-2xl backdrop-blur-xl">
-        <div className="text-center">
-          <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-tr from-emerald-500 to-violet-600 text-2xl font-bold text-white shadow-lg shadow-emerald-500/20">
-            🐖
-          </div>
-          <h1 id="login-title" className="mt-6 text-3xl font-extrabold tracking-tight text-white bg-gradient-to-r from-emerald-400 to-violet-400 bg-clip-text text-transparent">
-            Smart Swine Web
+      {/* Watermark Logo Background */}
+      <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.22] pointer-events-none select-none">
+        <img
+          src="/app_logo.png"
+          alt="Watermark Background Logo"
+          className="w-full max-w-[1300px] max-h-[90vh] object-contain"
+        />
+      </div>
+
+      <div className="relative z-10 w-full max-w-md space-y-8 rounded-2xl border border-zinc-200 bg-white/85 p-8 shadow-2xl backdrop-blur-md">
+        <div className="text-center flex flex-col items-center">
+          <img
+            src="/app_logo.png"
+            alt="SmartSwine Logo"
+            className="h-16 w-16 object-contain rounded-xl shadow-md border border-zinc-200/50 bg-white p-1 mb-4"
+          />
+          <h1 id="login-title" className="mt-2 text-3xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-950 via-emerald-800 to-green-600 bg-clip-text text-transparent">
+            SmartSwine Web
           </h1>
-          <p className="mt-2 text-sm text-zinc-400">
-            Sign in to access your farm metrics and formulations
+          <p className="mt-2 text-sm text-zinc-600">
+            {isSignUp ? "Create your farm account" : "Sign in to access your farm metrics"}
           </p>
         </div>
 
         {error && (
-          <div className="rounded-lg border border-red-500/20 bg-red-500/10 p-3 text-sm text-red-400">
+          <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
             {error}
           </div>
         )}
 
-        <form className="mt-8 space-y-6" onSubmit={handleEmailLogin}>
-          <div className="space-y-4 rounded-md">
+        {success && (
+          <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-800">
+            {success}
+          </div>
+        )}
+
+        <form className="mt-6 space-y-4" onSubmit={handleAuthSubmit}>
+          <div className="space-y-3 rounded-md">
+            {isSignUp && (
+              <>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label htmlFor="first-name" className="sr-only">
+                      First Name
+                    </label>
+                    <input
+                      id="first-name"
+                      name="firstName"
+                      type="text"
+                      required
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      className="relative block w-full rounded-lg border border-zinc-200 bg-white px-3 py-3 text-zinc-900 placeholder-zinc-400 focus:z-10 focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 sm:text-sm shadow-sm"
+                      placeholder="First Name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="last-name" className="sr-only">
+                      Last Name
+                    </label>
+                    <input
+                      id="last-name"
+                      name="lastName"
+                      type="text"
+                      required
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      className="relative block w-full rounded-lg border border-zinc-200 bg-white px-3 py-3 text-zinc-900 placeholder-zinc-400 focus:z-10 focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 sm:text-sm shadow-sm"
+                      placeholder="Last Name"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="farm-name" className="sr-only">
+                    Farm Name
+                  </label>
+                  <input
+                    id="farm-name"
+                    name="farmName"
+                    type="text"
+                    required
+                    value={farmName}
+                    onChange={(e) => setFarmName(e.target.value)}
+                    className="relative block w-full rounded-lg border border-zinc-200 bg-white px-3 py-3 text-zinc-900 placeholder-zinc-400 focus:z-10 focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 sm:text-sm shadow-sm"
+                    placeholder="Farm Name"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="country" className="sr-only">
+                    Country
+                  </label>
+                  <input
+                    id="country"
+                    name="country"
+                    type="text"
+                    required
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    className="relative block w-full rounded-lg border border-zinc-200 bg-white px-3 py-3 text-zinc-900 placeholder-zinc-400 focus:z-10 focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 sm:text-sm shadow-sm"
+                    placeholder="Country"
+                  />
+                </div>
+              </>
+            )}
+
             <div>
               <label htmlFor="email-address" className="sr-only">
                 Email address
@@ -97,10 +253,11 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="relative block w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-3 text-white placeholder-zinc-500 focus:z-10 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
+                className="relative block w-full rounded-lg border border-zinc-200 bg-white px-3 py-3 text-zinc-900 placeholder-zinc-400 focus:z-10 focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 sm:text-sm shadow-sm"
                 placeholder="Email address"
               />
             </div>
+            
             <div>
               <label htmlFor="password" className="sr-only">
                 Password
@@ -113,30 +270,75 @@ export default function LoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="relative block w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-3 text-white placeholder-zinc-500 focus:z-10 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
+                className="relative block w-full rounded-lg border border-zinc-200 bg-white px-3 py-3 text-zinc-900 placeholder-zinc-400 focus:z-10 focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 sm:text-sm shadow-sm"
                 placeholder="Password"
               />
             </div>
+
+            {isSignUp && (
+              <div>
+                <label htmlFor="confirm-password" className="sr-only">
+                  Confirm Password
+                </label>
+                <input
+                  id="confirm-password"
+                  name="confirmPassword"
+                  type="password"
+                  required
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="relative block w-full rounded-lg border border-zinc-200 bg-white px-3 py-3 text-zinc-900 placeholder-zinc-400 focus:z-10 focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 sm:text-sm shadow-sm"
+                  placeholder="Confirm Password"
+                />
+              </div>
+            )}
           </div>
 
-          <div>
+          <div className="pt-2 flex flex-col gap-3">
             <button
               id="submit-login"
               type="submit"
               disabled={loading}
-              className="group relative flex w-full justify-center rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-600 py-3 px-4 text-sm font-semibold text-white shadow-md hover:from-emerald-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:opacity-50 transition-all duration-200"
+              className="group relative flex w-full justify-center rounded-lg bg-gradient-to-r from-emerald-600 to-emerald-700 py-3 px-4 text-sm font-semibold text-white shadow-md hover:from-emerald-700 hover:to-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-offset-2 focus:ring-offset-white disabled:opacity-50 transition-all duration-200"
             >
-              {loading ? "Signing in..." : "Sign In"}
+              {loading ? "Processing..." : isSignUp ? "Sign Up" : "Sign In"}
             </button>
+
+            {/* Forgot password link option */}
+            {!isSignUp && (
+              <div className="text-right text-xs">
+                <button
+                  type="button"
+                  onClick={handleForgotPassword}
+                  className="font-semibold text-zinc-500 hover:text-emerald-800 transition"
+                >
+                  Forgot password?
+                </button>
+              </div>
+            )}
           </div>
         </form>
 
+        {/* Toggles between Sign In and Sign Up styled as a button */}
+        <div className="mt-4">
+          <button
+            onClick={() => {
+              setIsSignUp(!isSignUp);
+              setError(null);
+              setSuccess(null);
+            }}
+            className="w-full text-center rounded-lg border border-emerald-500/20 bg-emerald-500/5 hover:bg-emerald-500/10 py-2.5 text-sm font-semibold text-emerald-800 transition-all duration-200"
+          >
+            {isSignUp ? "Already have an account? Sign In" : "New Here? Sign Up"}
+          </button>
+        </div>
+
         <div className="relative mt-6">
           <div className="absolute inset-0 flex items-center" aria-hidden="true">
-            <div className="w-full border-t border-zinc-800" />
+            <div className="w-full border-t border-zinc-200" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="bg-zinc-900/60 px-2 text-zinc-500 backdrop-blur-xl">Or continue with</span>
+            <span className="bg-white/80 px-2 text-zinc-500 backdrop-blur-md">Or continue with</span>
           </div>
         </div>
 
@@ -145,7 +347,7 @@ export default function LoginPage() {
             id="google-login"
             onClick={handleGoogleLogin}
             disabled={loading}
-            className="flex w-full items-center justify-center gap-3 rounded-lg border border-zinc-700 bg-zinc-950 py-3 px-4 text-sm font-medium text-white shadow-sm hover:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-zinc-900 transition-all duration-200"
+            className="flex w-full items-center justify-center gap-3 rounded-lg border border-zinc-200 bg-white py-3 px-4 text-sm font-medium text-zinc-700 shadow-sm hover:bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-offset-2 focus:ring-offset-white transition-all duration-200"
           >
             <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
               <path

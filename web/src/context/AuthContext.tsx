@@ -2,8 +2,9 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs, query, limit, writeBatch, onSnapshot } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
+import { defaultIngredients } from "@/lib/defaultIngredients";
 
 interface UserProfile {
   firstName: string;
@@ -15,6 +16,7 @@ interface UserProfile {
   isAdmin: boolean;
   isKofisPerson: boolean;
   subscriptionSource?: string;
+  appLanguage?: string;
 }
 
 interface AuthContextType {
@@ -41,7 +43,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+    let profileUnsubscribe: (() => void) | null = null;
+
+    const unsubscribeAuth = onAuthStateChanged(auth, async (currentUser) => {
+      // Clean up previous profile listener
+      if (profileUnsubscribe) {
+        profileUnsubscribe();
+        profileUnsubscribe = null;
+      }
+
       setUser(currentUser);
       if (currentUser) {
         try {
@@ -50,10 +60,36 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           const userDocSnap = await getDoc(userDocRef);
 
           if (userDocSnap.exists()) {
-            const profile = userDocSnap.data() as UserProfile;
-            setUserProfile(profile);
             setActiveFarmUid(currentUser.uid);
             setIsStaff(false);
+
+            // Listen to owner profile in real-time
+            profileUnsubscribe = onSnapshot(userDocRef, (snapshot) => {
+              if (snapshot.exists()) {
+                setUserProfile(snapshot.data() as UserProfile);
+              }
+            });
+
+            // Check and seed default ingredients if collection is empty
+            try {
+              const ingredientsCollRef = collection(db, "users", currentUser.uid, "feed_ingredients");
+              const ingredientsSnap = await getDocs(query(ingredientsCollRef, limit(1)));
+              if (ingredientsSnap.empty) {
+                console.log("No ingredients found. Seeding default list...");
+                const batch = writeBatch(db);
+                defaultIngredients.forEach((ing) => {
+                  const newDocRef = doc(ingredientsCollRef);
+                  batch.set(newDocRef, {
+                    ...ing,
+                    id: newDocRef.id,
+                  });
+                });
+                await batch.commit();
+                console.log("Default ingredients seeded successfully.");
+              }
+            } catch (seedError) {
+              console.error("Error seeding default ingredients:", seedError);
+            }
           } else {
             // 2. Check if user is a Staff member
             const email = currentUser.email?.trim().toLowerCase();
@@ -64,16 +100,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
               if (registryDocSnap.exists()) {
                 const managerUid = registryDocSnap.data().managerUid;
                 if (managerUid) {
-                  // Fetch manager's profile to get farmName and details
-                  const managerDocRef = doc(db, "users", managerUid);
-                  const managerDocSnap = await getDoc(managerDocRef);
+                  setActiveFarmUid(managerUid);
+                  setIsStaff(true);
 
-                  if (managerDocSnap.exists()) {
-                    const managerProfile = managerDocSnap.data() as UserProfile;
-                    setUserProfile(managerProfile);
-                    setActiveFarmUid(managerUid);
-                    setIsStaff(true);
-                  }
+                  const managerDocRef = doc(db, "users", managerUid);
+                  // Listen to manager profile in real-time
+                  profileUnsubscribe = onSnapshot(managerDocRef, (snapshot) => {
+                    if (snapshot.exists()) {
+                      setUserProfile(snapshot.data() as UserProfile);
+                    }
+                  });
                 }
               }
             }
@@ -89,7 +125,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribeAuth();
+      if (profileUnsubscribe) {
+        profileUnsubscribe();
+      }
+    };
   }, []);
 
   return (
