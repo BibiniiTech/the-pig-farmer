@@ -27,16 +27,16 @@ interface NavOption {
 }
 
 const BASE_NAV_OPTIONS: NavOption[] = [
-  { key: "home", label: "Dashboard Home", path: "/dashboard", icon: HomeIcon },
+  { key: "home", label: "Home", path: "/dashboard", icon: HomeIcon },
   { key: "herd", label: "Herd Data", path: "/dashboard/herd", icon: HerdDataIcon },
-  { key: "feed", label: "Feed Management", path: "/dashboard/feed", icon: FeedManagementIcon },
+  { key: "feed", label: "Feed", path: "/dashboard/feed", icon: FeedManagementIcon },
   { key: "activities", label: "Herd Activities", path: "/dashboard/activities", icon: HerdActivitiesIcon },
   { key: "financials", label: "Financials", path: "/dashboard/financials", icon: FinancialsIcon },
   { key: "hr", label: "Human Resources", path: "/dashboard/hr", icon: HumanResourcesIcon },
   { key: "hub", label: "Local Hub", path: "/dashboard/hub", icon: LocalHubIcon },
   { key: "symptoms", label: "Symptoms Analyzer", path: "/dashboard/symptoms", icon: SymptomsAnalyzerIcon },
   { key: "weight", label: "Weight Checker", path: "/dashboard/weight", icon: WeightCheckerIcon },
-  { key: "training", label: "Training Tips", path: "/dashboard/training", icon: TrainingTipsIcon },
+  { key: "training", label: "Training", path: "/dashboard/training", icon: TrainingTipsIcon },
   { key: "billing", label: "Billing & Premium", path: "/dashboard/billing", icon: PremiumIcon },
 ];
 
