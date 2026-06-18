@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <main className="relative flex min-h-screen flex-col items-center overflow-hidden bg-zinc-50 px-4 text-center">
       {/* Floating Upper Left Logo */}
-      <div className="absolute top-6 left-6 z-20 flex items-center gap-3 select-none">
+      <Link href="/" className="absolute top-6 left-6 z-20 flex items-center gap-3 select-none hover:opacity-80 transition-opacity cursor-pointer">
         <img
           src="/app_logo.png"
           alt="SmartSwine Logo"
@@ -34,11 +34,11 @@ export default function Home() {
           <span className="font-extrabold text-lg tracking-tight text-zinc-900 leading-tight">
             SmartSwine
           </span>
-          <span className="text-[10px] font-bold text-emerald-800 tracking-wider uppercase leading-none mt-0.5">
+          <span className="text-[12px] font-bold text-emerald-800 tracking-wider uppercase leading-none mt-0.5">
             Piggery Manager
           </span>
         </div>
-      </div>
+      </Link>
 
       {/* Floating Upper Right Language Selector */}
       <div className="absolute top-6 right-6 z-20">

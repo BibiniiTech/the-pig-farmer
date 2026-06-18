@@ -357,16 +357,16 @@ export default function TrainingPage() {
         {/* Header */}
         <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
               <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                SmartSwine
+              </span>
+            </Link>
+
+            <div className="flex items-center gap-2">
               <NavbarDropdown />
             </div>
-            <Link
-              href="/dashboard"
-              className="text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/50 px-3 py-1.5 rounded-lg transition duration-200"
-            >
-              Back to Home
-            </Link>
           </div>
         </header>
 
@@ -565,7 +565,7 @@ export default function TrainingPage() {
 function TipCard({ tip, isExpanded, onToggle }: { tip: Tip; isExpanded: boolean; onToggle: () => void }) {
   return (
     <div
-      className={`group bg-white border rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer ${
+      className={`group bg-white/60 border rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer ${
         isExpanded
           ? "border-emerald-500 ring-4 ring-emerald-50 shadow-xl"
           : "border-zinc-200 hover:border-emerald-300 shadow-sm"

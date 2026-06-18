@@ -217,22 +217,22 @@ export default function WeightCheckerPage() {
         {/* Header */}
         <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
               <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                SmartSwine
+              </span>
+            </Link>
+
+            <div className="flex items-center gap-2">
               <NavbarDropdown />
             </div>
-            <Link
-              href="/dashboard"
-              className="text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/50 px-3 py-1.5 rounded-lg transition duration-200"
-            >
-              Back to Home
-            </Link>
           </div>
         </header>
 
         {/* Content Body */}
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-          <div className="bg-white/85 backdrop-blur-sm border border-zinc-200 rounded-2xl p-6 shadow-sm">
+          <div className="bg-white/60 backdrop-blur-sm border border-zinc-200 rounded-2xl p-6 shadow-sm">
             <h2 className="text-xl font-bold text-zinc-900">Weigh Pigs with a Tape & Unit Converter</h2>
             <p className="text-sm text-zinc-500 mt-1">
               Estimate swine live weight using chest girth and body length tape measurements, or convert standard weight metrics.
@@ -241,7 +241,7 @@ export default function WeightCheckerPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left Column: Tape Calculator (Span 7) */}
-            <div className="lg:col-span-7 bg-white/80 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-6">
+            <div className="lg:col-span-7 bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-6">
               <div className="flex justify-between items-center">
                 <h3 className="text-base font-bold text-zinc-900 flex items-center gap-2">
                   <span>📏</span> Weigh with Tape
@@ -344,7 +344,7 @@ export default function WeightCheckerPage() {
             {/* Right Column: Weight Converter & Profile Sync (Span 5) */}
             <div className="lg:col-span-5 space-y-8">
               {/* Unit Converter Card */}
-              <div className="bg-white/80 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4">
+              <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4">
                 <h3 className="text-base font-bold text-zinc-900 flex items-center gap-2">
                   <ScaleIcon className="h-5 w-5 text-teal-600" /> Weight Converter
                 </h3>
@@ -373,7 +373,7 @@ export default function WeightCheckerPage() {
               </div>
 
               {/* Save weight to pig card */}
-              <div className="bg-white/80 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4">
+              <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4">
                 <h3 className="text-base font-bold text-zinc-900 flex items-center gap-2">
                   <span>💾</span> Save to Pig Profile
                 </h3>

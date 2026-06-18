@@ -268,12 +268,39 @@ export default function HumanResourcesPage() {
       <div className="relative z-10 flex flex-col min-h-screen">
         <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
               <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-              <NavbarDropdown />
-            </div>
+              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                SmartSwine
+              </span>
+            </Link>
 
             <div className="flex items-center gap-2">
+              <NavbarDropdown />
+            </div>
+          </div>
+        </header>
+
+        <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
+          <div className="space-y-1">
+            <h2 className="text-2xl font-bold text-zinc-900">Staff Management Directory</h2>
+            <p className="text-sm text-zinc-500">Add team members, configure salary packages, and manage farm dashboard access.</p>
+          </div>
+
+          {/* Summary Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm bg-white/60">
+              <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500">Total Staff</p>
+              <p className="text-3xl font-bold mt-2 text-zinc-900">{staff.length}</p>
+            </div>
+            <div className="backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm bg-white/60">
+              <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500">Monthly Payroll</p>
+              <p className="text-3xl font-bold mt-2 text-emerald-600">
+                ${staff.reduce((sum, member) => sum + member.salary, 0).toFixed(2)}
+              </p>
+            </div>
+            <div className="backdrop-blur-md border border-emerald-200/50 rounded-2xl p-6 shadow-sm bg-emerald-50/40 flex flex-col justify-center items-center gap-3">
+              <p className="text-xs font-bold text-emerald-800 uppercase tracking-tight">Expand Your Team</p>
               <button
                 onClick={() => {
                   setEditingStaff(null);
@@ -287,37 +314,10 @@ export default function HumanResourcesPage() {
                   setEmail("");
                   setShowAddModal(true);
                 }}
-                className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white shadow shadow-emerald-600/10 transition"
+                className="w-full rounded-xl bg-emerald-600 hover:bg-emerald-700 py-3 text-xs font-bold text-white shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
               >
-                + Add Staff
+                + Add Staff Member
               </button>
-              <Link
-                href="/dashboard"
-                className="text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/50 px-3 py-1.5 rounded-lg transition duration-200"
-              >
-                Back to Home
-              </Link>
-            </div>
-          </div>
-        </header>
-
-        <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
-          <div className="space-y-1">
-            <h2 className="text-2xl font-bold text-zinc-900">Staff Management Directory</h2>
-            <p className="text-sm text-zinc-500">Add team members, configure salary packages, and manage farm dashboard access.</p>
-          </div>
-
-          {/* Summary Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm bg-white/70">
-              <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500">Total Staff</p>
-              <p className="text-3xl font-bold mt-2 text-zinc-900">{staff.length}</p>
-            </div>
-            <div className="backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm bg-white/70">
-              <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500">Monthly Payroll</p>
-              <p className="text-3xl font-bold mt-2 text-emerald-600">
-                ${staff.reduce((sum, member) => sum + member.salary, 0).toFixed(2)}
-              </p>
             </div>
           </div>
 
@@ -334,7 +334,7 @@ export default function HumanResourcesPage() {
               {staff.map(member => (
                 <div
                   key={member.id}
-                  className="bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4 relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300"
+                  className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4 relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300"
                 >
                   <div className="absolute top-0 right-0 h-16 w-16 rounded-full bg-emerald-500/5 blur-lg" />
                   <div className="flex justify-between items-start">

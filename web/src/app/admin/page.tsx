@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   collection,
   onSnapshot,
@@ -17,6 +18,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
+import NavbarDropdown from "@/components/NavbarDropdown";
 import {
   ChevronLeftIcon,
   StorefrontIcon,
@@ -231,20 +233,32 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900 font-sans pb-20">
-      {/* Header */}
-      <header className="bg-white border-b border-zinc-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => router.push("/dashboard")}
-              className="p-2 hover:bg-zinc-100 rounded-lg transition"
-            >
-              <ChevronLeftIcon className="h-6 w-6 text-zinc-600" />
-            </button>
-            <h1 className="text-xl font-black text-emerald-600 tracking-tight">ADMIN PANEL</h1>
+    <div className="min-h-screen bg-zinc-50 text-zinc-900 font-sans pb-20 overflow-hidden">
+      {/* Watermark Logo Background */}
+      <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.05] pointer-events-none select-none">
+        <img
+          src="/app_logo.png"
+          alt="Watermark Background Logo"
+          className="w-full max-w-[1100px] max-h-[85vh] object-contain"
+        />
+      </div>
+
+      <div className="relative z-10 flex flex-col min-h-screen">
+        {/* Header */}
+        <header className="bg-white/80 backdrop-blur-md border-b border-zinc-200 sticky top-0 z-40">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
+              <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                SmartSwine
+              </span>
+            </Link>
+
+            <div className="flex items-center gap-4">
+              <h1 className="text-[10px] font-black text-zinc-400 tracking-widest mr-2">ADMIN PANEL</h1>
+              <NavbarDropdown />
+            </div>
           </div>
-        </div>
 
         {/* Tabs */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex border-t border-zinc-100">
@@ -278,7 +292,7 @@ export default function AdminPage() {
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeTab === "suggestions" && (
           <div className="space-y-6">
             {/* Suggestions Sections */}
@@ -381,7 +395,7 @@ export default function AdminPage() {
                           >
                             <div className="flex items-center gap-2">
                               <span className="text-xs font-black text-zinc-500 uppercase tracking-widest">{label}</span>
-                              <span className="px-1.5 py-0.5 rounded-full bg-zinc-200 text-zinc-600 text-[10px] font-black">{(countryProviders as ProviderListing[]).length}</span>
+                              <span className="px-1.5 py-0.5 rounded-full bg-zinc-200 text-zinc-600 text-[12px] font-black">{(countryProviders as ProviderListing[]).length}</span>
                             </div>
                             {isExpanded ? <ChevronUpIcon className="h-4 w-4 text-zinc-400" /> : <ChevronDownIcon className="h-4 w-4 text-zinc-400" />}
                           </button>
@@ -444,7 +458,7 @@ export default function AdminPage() {
                       >
                         <div className="flex items-center gap-2.5">
                           <span className="text-sm font-black text-zinc-700 uppercase tracking-widest">{category}</span>
-                          <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-black">{(items as FeedIngredient[]).length}</span>
+                          <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[12px] font-black">{(items as FeedIngredient[]).length}</span>
                         </div>
                         {isExpanded ? <ChevronUpIcon className="h-4 w-4 text-zinc-400" /> : <ChevronDownIcon className="h-4 w-4 text-zinc-400" />}
                       </button>
@@ -622,6 +636,7 @@ export default function AdminPage() {
         />
       )}
     </div>
+  </div>
   );
 }
 
@@ -638,7 +653,7 @@ function CollapsibleSection({ title, icon, count, expanded, onToggle, children, 
           {icon}
           <span className="font-bold text-zinc-900">{title}</span>
           {count > 0 && (
-            <span className={`px-2 py-0.5 rounded-full text-white text-[10px] font-black ${countColor}`}>
+            <span className={`px-2 py-0.5 rounded-full text-white text-[12px] font-black ${countColor}`}>
               {count}
             </span>
           )}
@@ -656,7 +671,7 @@ function SuggestionItem({ suggestion, onApprove, onReject, onEdit, onDelete }: a
       <div className="flex justify-between items-start">
         <div>
           <h4 className="font-bold text-zinc-900">{suggestion.providerName}</h4>
-          <span className="inline-block px-2 py-0.5 bg-emerald-100 text-emerald-700 text-[10px] font-bold rounded uppercase mt-1">
+          <span className="inline-block px-2 py-0.5 bg-emerald-100 text-emerald-700 text-[12px] font-bold rounded uppercase mt-1">
             {suggestion.serviceType}
           </span>
         </div>
@@ -674,7 +689,7 @@ function SuggestionItem({ suggestion, onApprove, onReject, onEdit, onDelete }: a
       </div>
 
       {suggestion.status === "rejected" && suggestion.adminFeedback && (
-        <div className="p-2 bg-red-50 border border-red-100 rounded text-[11px] text-red-600">
+        <div className="p-2 bg-red-50 border border-red-100 rounded text-[13px] text-red-600">
           <span className="font-bold">Rejection Reason:</span> {suggestion.adminFeedback}
         </div>
       )}
@@ -699,7 +714,7 @@ function ProviderItem({ provider, onEdit, onDelete }: any) {
       <div className="flex justify-between items-start">
         <div>
           <h4 className="font-bold text-zinc-900">{provider.name}</h4>
-          <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 text-[10px] font-bold rounded uppercase mt-1">
+          <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 text-[12px] font-bold rounded uppercase mt-1">
             {provider.category}
           </span>
         </div>
@@ -709,7 +724,7 @@ function ProviderItem({ provider, onEdit, onDelete }: any) {
         </div>
       </div>
       <p className="text-xs text-zinc-600 line-clamp-2">{provider.description}</p>
-      <div className="grid grid-cols-2 gap-y-1 text-[11px]">
+      <div className="grid grid-cols-2 gap-y-1 text-[13px]">
         <div><span className="text-zinc-400">Contact:</span> {provider.contact}</div>
         <div><span className="text-zinc-400">Location:</span> {provider.location}</div>
         {provider.email && <div><span className="text-zinc-400">Email:</span> {provider.email}</div>}
@@ -894,34 +909,35 @@ function IngredientModal({ ingredient, onClose }: { ingredient: FeedIngredient |
   return (
     <Modal title={ingredient ? "Edit Feed Ingredient" : "Add Feed Ingredient"} onClose={onClose}>
       <div className="space-y-4">
-        <Input label="Ingredient Name" value={formData.name} onChange={v => setFormData({...formData, name: v})} />
-        <Select label="Main Category" value={formData.mainCategory} options={categories} onChange={v => setFormData({...formData, mainCategory: v})} />
+        <Input label="Ingredient Name" value={formData.name} onChange={(v: string) => setFormData({...formData, name: v})} />
+        <Select label="Main Category" value={formData.mainCategory} options={categories} onChange={(v: string) => setFormData({...formData, mainCategory: v})} />
 
         <div className="grid grid-cols-2 gap-4">
-          <Input label="Crude Protein (%)" type="number" value={formData.crudeProtein} onChange={v => setFormData({...formData, crudeProtein: v})} />
-          <Input label="ME (MJ/kg)" type="number" value={formData.metabolizableEnergy} onChange={v => setFormData({...formData, metabolizableEnergy: v})} />
+          <Input label="Crude Protein (%)" type="number" value={formData.crudeProtein} onChange={(v: string) => setFormData({...formData, crudeProtein: v})} />
+          <Input label="ME (MJ/kg)" type="number" value={formData.metabolizableEnergy} onChange={(v: string) => setFormData({...formData, metabolizableEnergy: v})} />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <Input label="Crude Fiber (%)" type="number" value={formData.crudeFiber} onChange={v => setFormData({...formData, crudeFiber: v})} />
-          <Input label="Dry Matter (%)" type="number" value={formData.dryMatter} onChange={v => setFormData({...formData, dryMatter: v})} />
+          <Input label="Crude Fiber (%)" type="number" value={formData.crudeFiber} onChange={(v: string) => setFormData({...formData, crudeFiber: v})} />
+          <Input label="Dry Matter (%)" type="number" value={formData.dryMatter} onChange={(v: string) => setFormData({...formData, dryMatter: v})} />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <Input label="Calcium (%)" type="number" value={formData.calcium} onChange={v => setFormData({...formData, calcium: v})} />
-          <Input label="Phosphorus (%)" type="number" value={formData.phosphorus} onChange={v => setFormData({...formData, phosphorus: v})} />
+          <Input label="Calcium (%)" type="number" value={formData.calcium} onChange={(v: string) => setFormData({...formData, calcium: v})} />
+          <Input label="Phosphorus (%)" type="number" value={formData.phosphorus} onChange={(v: string) => setFormData({...formData, phosphorus: v})} />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <Input label="Lysine (%)" type="number" value={formData.lysine} onChange={v => setFormData({...formData, lysine: v})} />
-          <Input label="Methionine (%)" type="number" value={formData.methionine} onChange={v => setFormData({...formData, methionine: v})} />
+          <Input label="Lysine (%)" type="number" value={formData.lysine} onChange={(v: string) => setFormData({...formData, lysine: v})} />
+          <Input label="Methionine (%)" type="number" value={formData.methionine} onChange={(v: string) => setFormData({...formData, methionine: v})} />
         </div>
 
         <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest pt-2">Max Inclusion Limits (%)</p>
+
         <div className="grid grid-cols-3 gap-2">
-          <Input label="Starter" type="number" value={formData.maxStarter} onChange={v => setFormData({...formData, maxStarter: v})} />
-          <Input label="Grower" type="number" value={formData.maxGrower} onChange={v => setFormData({...formData, maxGrower: v})} />
-          <Input label="Finisher" type="number" value={formData.maxFinisher} onChange={v => setFormData({...formData, maxFinisher: v})} />
+          <Input label="Starter" type="number" value={formData.maxStarter} onChange={(v: string) => setFormData({...formData, maxStarter: v})} />
+          <Input label="Grower" type="number" value={formData.maxGrower} onChange={(v: string) => setFormData({...formData, maxGrower: v})} />
+          <Input label="Finisher" type="number" value={formData.maxFinisher} onChange={(v: string) => setFormData({...formData, maxFinisher: v})} />
         </div>
 
         <button onClick={handleSave} className="w-full py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 transition mt-4">

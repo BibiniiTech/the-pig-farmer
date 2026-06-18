@@ -383,24 +383,15 @@ export default function HerdPage() {
       <div className="relative z-10 flex flex-col min-h-screen">
         <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
               <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-              <NavbarDropdown />
-            </div>
+              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                SmartSwine
+              </span>
+            </Link>
 
             <div className="flex items-center gap-2">
-              <button
-                onClick={() => setShowAddModal(true)}
-                className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white shadow-lg shadow-emerald-600/10 transition"
-              >
-                + Add Pigs
-              </button>
-              <Link
-                href="/dashboard"
-                className="text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/50 px-3 py-1.5 rounded-lg transition duration-200"
-              >
-                Back to Home
-              </Link>
+              <NavbarDropdown />
             </div>
           </div>
         </header>
@@ -409,7 +400,7 @@ export default function HerdPage() {
           {/* Herd Summary Stats Card (StatsRibbon) */}
           <div
             onClick={handleCardClick}
-            className="cursor-pointer bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300 shadow-sm min-h-[148px] flex flex-col justify-between"
+            className="cursor-pointer bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300 shadow-sm min-h-[148px] flex flex-col justify-between"
           >
             {/* Background design elements */}
             <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-emerald-500/5 blur-2xl group-hover:bg-emerald-500/10 transition-all duration-300 pointer-events-none" />
@@ -497,8 +488,17 @@ export default function HerdPage() {
             </div>
           </div>
 
+          <div className="flex justify-end">
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
+            >
+              + Add Pigs
+            </button>
+          </div>
+
           {/* Herd List Grid */}
-          <div className="bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
+          <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
             <h2 className="text-lg font-bold text-zinc-900 mb-4">
               {viewingArchived ? "Pigs Inventory (Archived)" : "Pigs Inventory"}
             </h2>

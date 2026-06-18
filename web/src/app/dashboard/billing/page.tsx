@@ -79,16 +79,15 @@ export default function BillingPage() {
       <div className="relative z-10 flex flex-col min-h-screen">
         <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
               <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                SmartSwine
+              </span>
+            </Link>
+            <div className="flex items-center gap-2">
               <NavbarDropdown />
             </div>
-            <Link
-              href="/dashboard"
-              className="text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/50 px-3 py-1.5 rounded-lg transition duration-200"
-            >
-              Back to Home
-            </Link>
           </div>
         </header>
 
@@ -152,7 +151,7 @@ export default function BillingPage() {
               {/* Pricing Cards Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto relative z-10">
                 {/* Free Plan */}
-                <div className="bg-zinc-50/70 backdrop-blur-sm border border-zinc-200 rounded-2xl p-8 space-y-6 flex flex-col justify-between hover:border-zinc-300 transition duration-300 shadow-sm">
+                <div className="bg-zinc-50/60 backdrop-blur-sm border border-zinc-200 rounded-2xl p-8 space-y-6 flex flex-col justify-between hover:border-zinc-300 transition duration-300 shadow-sm">
                   <div className="space-y-4">
                     <h3 className="text-lg font-bold text-zinc-500">Basic Plan</h3>
                     <div className="flex items-baseline gap-1">
@@ -172,7 +171,7 @@ export default function BillingPage() {
                 </div>
 
                 {/* Premium Plan */}
-                <div className="bg-white/70 backdrop-blur-md border-2 border-emerald-500/40 rounded-2xl p-8 space-y-6 flex flex-col justify-between relative overflow-hidden group hover:border-emerald-500 transition duration-300 shadow-xl shadow-emerald-500/5">
+                <div className="bg-white/60 backdrop-blur-md border-2 border-emerald-500/40 rounded-2xl p-8 space-y-6 flex flex-col justify-between relative overflow-hidden group hover:border-emerald-500 transition duration-300 shadow-xl shadow-emerald-500/5">
                   <div className="absolute top-0 right-0 bg-gradient-to-r from-emerald-600 to-green-500 text-white text-[10px] font-black px-3 py-1.5 rounded-bl-xl tracking-wider uppercase">
                     Highly Recommended
                   </div>

@@ -217,12 +217,12 @@ export default function LocalHubPage() {
       <div className="relative z-10 flex flex-col min-h-screen">
         <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
           <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Link href="/dashboard" className="hover:opacity-80 transition">
-                <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-              </Link>
-              <h1 className="text-lg font-black text-emerald-600 uppercase tracking-tight">Market</h1>
-            </div>
+            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
+              <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                SmartSwine
+              </span>
+            </Link>
 
             <div className="flex items-center gap-2">
               <NavbarDropdown />
@@ -438,7 +438,7 @@ export default function LocalHubPage() {
 
 function CollapsibleCard({ title, icon, count, children, expanded, onToggle }: { title: string, icon: React.ReactNode, count?: number, children: React.ReactNode, expanded: boolean, onToggle: () => void }) {
   return (
-    <div className="bg-white border border-zinc-200 rounded-3xl overflow-hidden shadow-sm transition-all">
+    <div className="bg-white/60 border border-zinc-200 rounded-3xl overflow-hidden shadow-sm transition-all">
       <button
         onClick={onToggle}
         className="w-full px-6 py-5 flex items-center justify-between hover:bg-zinc-50 transition active:bg-zinc-100"

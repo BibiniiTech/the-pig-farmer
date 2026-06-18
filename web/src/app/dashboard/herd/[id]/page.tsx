@@ -190,35 +190,15 @@ export default function PigProfilePage() {
       <div className="relative z-10 flex flex-col min-h-screen">
         <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Link href="/dashboard/herd" className="text-zinc-500 hover:text-zinc-950 transition">
-                ← Herd Data
-              </Link>
-              <span className="text-zinc-300">|</span>
-              <span className="font-bold text-lg text-zinc-900 flex items-center gap-2">
-                🐖 Pig Profile: {pig.tagNumber}
+            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
+              <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                SmartSwine
               </span>
-            </div>
+            </Link>
 
-            <div className="flex gap-2">
-              <button
-                onClick={() => setShowEditModal(true)}
-                className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 hover:text-zinc-950 transition"
-              >
-                ✏️ Edit Details
-              </button>
-              <button
-                onClick={() => setShowRecordModal(true)}
-                className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white shadow-lg shadow-emerald-600/10 transition"
-              >
-                + Log Health
-              </button>
-              <Link
-                href="/dashboard"
-                className="text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/50 px-3 py-1.5 rounded-lg transition duration-200 flex items-center justify-center"
-              >
-                Back to Home
-              </Link>
+            <div className="flex items-center gap-2">
+              <NavbarDropdown />
             </div>
           </div>
         </header>
@@ -226,7 +206,7 @@ export default function PigProfilePage() {
         <main className="flex-1 max-w-4xl w-full mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-12 gap-8">
           {/* Left Side: Summary Card */}
           <div className="md:col-span-5 space-y-6">
-            <div className="bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4 relative overflow-hidden">
+            <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4 relative overflow-hidden">
               <div className="absolute top-0 right-0 h-16 w-16 rounded-full bg-emerald-500/5 blur-lg" />
               <div>
                 <p className="text-xs font-semibold text-zinc-400 font-mono">Status & Location</p>
@@ -282,13 +262,28 @@ export default function PigProfilePage() {
               >
                 Delete Profile
               </button>
+
+              <button
+                onClick={() => setShowEditModal(true)}
+                className="w-full mt-2 rounded-lg border border-zinc-200 bg-zinc-50/50 px-4 py-2.5 text-xs font-bold text-zinc-650 hover:bg-zinc-100 hover:text-zinc-950 transition-all active:scale-95"
+              >
+                ✏️ Edit Details
+              </button>
             </div>
           </div>
 
           {/* Right Side: Health Timeline */}
           <div className="md:col-span-7 space-y-6">
-            <div className="bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-zinc-900 mb-4">Health History</h3>
+            <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-bold text-zinc-900">Health History</h3>
+                <button
+                  onClick={() => setShowRecordModal(true)}
+                  className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white shadow-lg shadow-emerald-600/10 transition-all active:scale-95"
+                >
+                  + Log Health
+                </button>
+              </div>
 
               {healthRecords.length === 0 ? (
                 <p className="text-sm text-zinc-500 text-center py-12">No health actions or procedures logged.</p>

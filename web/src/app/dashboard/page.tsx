@@ -467,15 +467,16 @@ export default function DashboardPage() {
         {/* Navbar Header */}
         <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-3">
+            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
               <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 hidden sm:inline-block">
+              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
                 SmartSwine
               </span>
-              <NavbarDropdown />
-            </div>
+            </Link>
 
             <div className="flex items-center gap-4">
+              <NavbarDropdown />
+              {/* Notification Bell */}
               {/* Notification Bell */}
               <div className="relative">
                 <button
@@ -487,7 +488,7 @@ export default function DashboardPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                   </svg>
                   {groupedTasks.length > 0 && (
-                    <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white ring-2 ring-white">
+                    <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[11px] font-bold text-white ring-2 ring-white">
                       {groupedTasks.length}
                     </span>
                   )}
@@ -539,7 +540,7 @@ export default function DashboardPage() {
                 {/* Dropdown Options */}
                 {isLangDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 rounded-xl border border-zinc-200 bg-white/95 backdrop-blur-md shadow-xl z-40 py-1.5 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 origin-top-right">
-                    <div className="px-3 py-1 text-[10px] font-bold text-zinc-400 uppercase tracking-wider border-b border-zinc-100 mb-1">
+                    <div className="px-3 py-1 text-[12px] font-bold text-zinc-400 uppercase tracking-wider border-b border-zinc-100 mb-1">
                       Preferred Language
                     </div>
                     <div className="max-h-[240px] overflow-y-auto no-scrollbar">
@@ -583,7 +584,7 @@ export default function DashboardPage() {
 
         {/* Main Body */}
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-zinc-50/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
             <div>
               <h1 className="text-2xl font-bold text-zinc-900">
                 Welcome to {userProfile?.farmName || "SmartSwine"}
@@ -610,7 +611,7 @@ export default function DashboardPage() {
           {/* Herd Summary Stats Card (StatsRibbon) */}
           <div
             onClick={handleCardClick}
-            className="cursor-pointer bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300 shadow-sm min-h-[148px] flex flex-col justify-between"
+            className="cursor-pointer bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300 shadow-sm min-h-[148px] flex flex-col justify-between"
           >
             {/* Background design elements */}
             <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-emerald-500/5 blur-2xl group-hover:bg-emerald-500/10 transition-all duration-300 pointer-events-none" />
@@ -699,10 +700,10 @@ export default function DashboardPage() {
           </div>
 
           {/* Quick Tools / Navigation Section */}
-          <div className="bg-zinc-50/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
+          <div className="bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
             <h3 className="text-lg font-bold text-zinc-900 mb-4">Farm Operations</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <Link href="/dashboard/herd" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/70 hover:bg-zinc-50/70 backdrop-blur-md transition duration-300 group shadow-sm">
+              <Link href="/dashboard/herd" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/60 hover:bg-zinc-50/60 backdrop-blur-md transition duration-300 group shadow-sm">
                 <span className="p-3 bg-emerald-50 rounded-xl text-emerald-600 group-hover:scale-110 transition duration-300">
                   <HerdDataIcon className="h-8 w-8" />
                 </span>
@@ -712,7 +713,7 @@ export default function DashboardPage() {
                 </div>
               </Link>
 
-              <Link href="/dashboard/feed" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/70 hover:bg-zinc-50/70 backdrop-blur-md transition duration-300 group shadow-sm">
+              <Link href="/dashboard/feed" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/60 hover:bg-zinc-50/60 backdrop-blur-md transition duration-300 group shadow-sm">
                 <span className="p-3 bg-emerald-50 rounded-xl text-emerald-600 group-hover:scale-110 transition duration-300">
                   <FeedManagementIcon className="h-8 w-8" />
                 </span>
@@ -722,7 +723,7 @@ export default function DashboardPage() {
                 </div>
               </Link>
 
-              <Link href="/dashboard/activities" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/70 hover:bg-zinc-50/70 backdrop-blur-md transition duration-300 group shadow-sm">
+              <Link href="/dashboard/activities" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/60 hover:bg-zinc-50/60 backdrop-blur-md transition duration-300 group shadow-sm">
                 <span className="p-3 bg-amber-50 rounded-xl text-amber-600 group-hover:scale-110 transition duration-300">
                   <HerdActivitiesIcon className="h-8 w-8" />
                 </span>
@@ -732,7 +733,7 @@ export default function DashboardPage() {
                 </div>
               </Link>
 
-              <Link href="/dashboard/financials" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/70 hover:bg-zinc-50/70 backdrop-blur-md transition duration-300 group shadow-sm">
+              <Link href="/dashboard/financials" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/60 hover:bg-zinc-50/60 backdrop-blur-md transition duration-300 group shadow-sm">
                 <span className="p-3 bg-blue-50 rounded-xl text-blue-600 group-hover:scale-110 transition duration-300">
                   <FinancialsIcon className="h-8 w-8" />
                 </span>
@@ -742,7 +743,7 @@ export default function DashboardPage() {
                 </div>
               </Link>
 
-              <Link href="/dashboard/hr" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/70 hover:bg-zinc-50/70 backdrop-blur-md transition duration-300 group shadow-sm">
+              <Link href="/dashboard/hr" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/60 hover:bg-zinc-50/60 backdrop-blur-md transition duration-300 group shadow-sm">
                 <span className="p-3 bg-indigo-50 rounded-xl text-indigo-600 group-hover:scale-110 transition duration-300">
                   <HumanResourcesIcon className="h-8 w-8" />
                 </span>
@@ -752,7 +753,7 @@ export default function DashboardPage() {
                 </div>
               </Link>
 
-              <Link href="/dashboard/hub" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/70 hover:bg-zinc-50/70 backdrop-blur-md transition duration-300 group shadow-sm">
+              <Link href="/dashboard/hub" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/60 hover:bg-zinc-50/60 backdrop-blur-md transition duration-300 group shadow-sm">
                 <span className="p-3 bg-purple-50 rounded-xl text-purple-600 group-hover:scale-110 transition duration-300">
                   <LocalHubIcon className="h-8 w-8" />
                 </span>
@@ -762,7 +763,7 @@ export default function DashboardPage() {
                 </div>
               </Link>
 
-              <Link href="/dashboard/symptoms" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/70 hover:bg-zinc-50/70 backdrop-blur-md transition duration-300 group shadow-sm">
+              <Link href="/dashboard/symptoms" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/60 hover:bg-zinc-50/60 backdrop-blur-md transition duration-300 group shadow-sm">
                 <span className="p-3 bg-rose-50 rounded-xl text-rose-600 group-hover:scale-110 transition duration-300">
                   <SymptomsAnalyzerIcon className="h-8 w-8" />
                 </span>
@@ -772,7 +773,7 @@ export default function DashboardPage() {
                 </div>
               </Link>
 
-              <Link href="/dashboard/weight" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/70 hover:bg-zinc-50/70 backdrop-blur-md transition duration-300 group shadow-sm">
+              <Link href="/dashboard/weight" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/60 hover:bg-zinc-50/60 backdrop-blur-md transition duration-300 group shadow-sm">
                 <span className="p-3 bg-teal-50 rounded-xl text-teal-600 group-hover:scale-110 transition duration-300">
                   <WeightCheckerIcon className="h-8 w-8" />
                 </span>
@@ -782,7 +783,7 @@ export default function DashboardPage() {
                 </div>
               </Link>
 
-              <Link href="/dashboard/training" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/70 hover:bg-zinc-50/70 backdrop-blur-md transition duration-300 group shadow-sm">
+              <Link href="/dashboard/training" className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/60 hover:bg-zinc-50/60 backdrop-blur-md transition duration-300 group shadow-sm">
                 <span className="p-3 bg-violet-50 rounded-xl text-violet-600 group-hover:scale-110 transition duration-300">
                   <TrainingTipsIcon className="h-8 w-8" />
                 </span>
@@ -807,7 +808,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Recent Financials Section */}
-          <div className="bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
+          <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
             <h3 className="text-lg font-bold text-zinc-900 mb-4">Recent Transactions</h3>
             {statsLoading ? (
               <div className="space-y-3">

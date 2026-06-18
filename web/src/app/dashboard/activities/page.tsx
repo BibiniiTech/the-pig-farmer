@@ -646,16 +646,15 @@ export default function HerdActivitiesPage() {
       <div className="relative z-10 flex flex-col min-h-screen">
         <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
               <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                SmartSwine
+              </span>
+            </Link>
+            <div className="flex items-center gap-2">
               <NavbarDropdown />
             </div>
-            <Link
-              href="/dashboard"
-              className="text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/50 px-3 py-1.5 rounded-lg transition duration-200"
-            >
-              Back to Home
-            </Link>
           </div>
         </header>
 
@@ -670,7 +669,7 @@ export default function HerdActivitiesPage() {
               <button
                 key={i}
                 onClick={() => setSelectedActivity(act)}
-                className="bg-white/70 hover:bg-zinc-50/70 backdrop-blur-md border border-zinc-200 hover:border-emerald-500/40 rounded-xl p-5 text-left transition shadow-sm flex items-start gap-4 group"
+                className="bg-white/60 hover:bg-zinc-50/60 backdrop-blur-md border border-zinc-200 hover:border-emerald-500/40 rounded-xl p-5 text-left transition shadow-sm flex items-start gap-4 group"
               >
                 <span className="p-3 bg-zinc-100 rounded-xl group-hover:scale-110 transition duration-300 text-emerald-600">
                   <act.icon className="h-8 w-8" />

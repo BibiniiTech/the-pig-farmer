@@ -148,24 +148,15 @@ export default function FinancialsPage() {
       <div className="relative z-10 flex flex-col min-h-screen">
         <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
               <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-              <NavbarDropdown />
-            </div>
+              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                SmartSwine
+              </span>
+            </Link>
 
             <div className="flex items-center gap-2">
-              <button
-                onClick={() => setShowAddModal(true)}
-                className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white shadow shadow-emerald-600/10 transition"
-              >
-                + Log Transaction
-              </button>
-              <Link
-                href="/dashboard"
-                className="text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/50 px-3 py-1.5 rounded-lg transition duration-200"
-              >
-                Back to Home
-              </Link>
+              <NavbarDropdown />
             </div>
           </div>
         </header>
@@ -178,7 +169,7 @@ export default function FinancialsPage() {
               { label: "Total Expenses", amount: totalExpense, color: "text-rose-700 bg-rose-50/50 border-rose-100" },
               { label: "Net Cashflow", amount: netBalance, color: netBalance >= 0 ? "text-emerald-800 bg-emerald-100/30 border-emerald-200" : "text-rose-800 bg-rose-100/30 border-rose-200" }
             ].map((stat, i) => (
-              <div key={i} className={`backdrop-blur-md border rounded-2xl p-6 shadow-sm ${stat.color}`}>
+              <div key={i} className={`backdrop-blur-md border rounded-2xl p-6 shadow-sm bg-white/60 ${stat.color}`}>
                 <p className="text-xs font-bold uppercase tracking-wider">{stat.label}</p>
                 <p className="text-3xl font-black mt-2">${stat.amount.toFixed(2)}</p>
               </div>
@@ -186,8 +177,16 @@ export default function FinancialsPage() {
           </div>
 
           {/* Ledger Table */}
-          <div className="bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-            <h2 className="text-lg font-bold text-zinc-900 mb-4">Farm Cashflow Ledger</h2>
+          <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-4">
+              <h2 className="text-lg font-bold text-zinc-900">Farm Cashflow Ledger</h2>
+              <button
+                onClick={() => setShowAddModal(true)}
+                className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white shadow shadow-emerald-600/10 transition active:scale-95"
+              >
+                + Log Transaction
+              </button>
+            </div>
             {dataLoading ? (
               <div className="space-y-3">
                 {[...Array(4)].map((_, i) => (

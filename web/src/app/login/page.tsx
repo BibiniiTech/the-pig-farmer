@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
@@ -145,14 +146,16 @@ export default function LoginPage() {
 
       <div className="relative z-10 w-full max-w-md space-y-8 rounded-2xl border border-zinc-200 bg-white/85 p-8 shadow-2xl backdrop-blur-md">
         <div className="text-center flex flex-col items-center">
-          <img
-            src="/app_logo.png"
-            alt="SmartSwine Logo"
-            className="h-16 w-16 object-contain rounded-xl shadow-md border border-zinc-200/50 bg-white p-1 mb-4"
-          />
-          <h1 id="login-title" className="mt-2 text-3xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-950 via-emerald-800 to-green-600 bg-clip-text text-transparent">
-            SmartSwine Web
-          </h1>
+          <Link href="/" className="flex flex-col items-center hover:opacity-80 transition-opacity cursor-pointer">
+            <img
+              src="/app_logo.png"
+              alt="SmartSwine Logo"
+              className="h-16 w-16 object-contain rounded-xl shadow-md border border-zinc-200/50 bg-white p-1 mb-4"
+            />
+            <h1 id="login-title" className="mt-2 text-3xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-950 via-emerald-800 to-green-600 bg-clip-text text-transparent">
+              SmartSwine Web
+            </h1>
+          </Link>
           <p className="mt-2 text-sm text-zinc-600">
             {isSignUp ? "Create your farm account" : "Sign in to access your farm metrics"}
           </p>

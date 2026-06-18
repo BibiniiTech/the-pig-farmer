@@ -1277,32 +1277,22 @@ export default function SymptomsPage() {
         {/* Header */}
         <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
               <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-              <NavbarDropdown />
-            </div>
+              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                SmartSwine
+              </span>
+            </Link>
+
             <div className="flex items-center gap-2">
-              {!isPremium && (
-                <Link
-                  href="/dashboard/billing"
-                  className="rounded-lg bg-rose-50 border border-rose-200 px-3 py-1.5 text-xs font-bold text-rose-700 hover:bg-rose-100 transition duration-300"
-                >
-                  💎 Get Premium
-                </Link>
-              )}
-              <Link
-                href="/dashboard"
-                className="text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/50 px-3 py-1.5 rounded-lg transition duration-200"
-              >
-                Back to Home
-              </Link>
+              <NavbarDropdown />
             </div>
           </div>
         </header>
 
         {/* Content */}
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-          <div className="bg-white/85 backdrop-blur-sm border border-zinc-200 rounded-2xl p-6 shadow-sm">
+          <div className="bg-white/60 backdrop-blur-sm border border-zinc-200 rounded-2xl p-6 shadow-sm">
             <h2 className="text-xl font-bold text-zinc-900">Swine Disease Diagnostic Engine</h2>
             <p className="text-sm text-zinc-500 mt-1">
               Select the clinical signs observed in your pigs. The analyzer compares active symptoms against our reference database of swine illnesses.
@@ -1311,7 +1301,7 @@ export default function SymptomsPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
             {/* Symptoms Selection Side */}
-            <div className="lg:col-span-2 bg-white/80 backdrop-blur-md border border-zinc-200 rounded-2xl overflow-hidden shadow-sm flex flex-col">
+            <div className="lg:col-span-2 bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl overflow-hidden shadow-sm flex flex-col">
               {/* Vertical Scrollable Sections */}
               <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto no-scrollbar">
                 {SYMPTOM_GROUPS.map((group) => {
@@ -1386,7 +1376,7 @@ export default function SymptomsPage() {
             </div>
 
             {/* Diagnosis results sidebar */}
-            <div className="bg-white/80 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-6">
+            <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-6">
               <h3 className="text-base font-bold text-zinc-900">Diagnosis Dashboard</h3>
 
               {!hasAnalyzed ? (

@@ -608,85 +608,37 @@ export default function FeedPage() {
       <div className="relative z-10 flex flex-col min-h-screen print:hidden">
         <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
               <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                SmartSwine
+              </span>
+            </Link>
+
+            <div className="flex items-center gap-2">
               <NavbarDropdown />
             </div>
-
-            {/* Print or Add options based on tab */}
-            <div className="flex items-center gap-2">
-              {activeTab === "inventory" && (
-                <>
-                  <button
-                    onClick={() => setShowExportModal(true)}
-                    className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center gap-1.5"
-                  >
-                    <PdfIcon className="h-3.5 w-3.5 text-zinc-500" />
-                    <span>Export PDF</span>
-                  </button>
-                  <button
-                    onClick={() => setShowAddModal(true)}
-                    className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white shadow shadow-emerald-600/10 transition"
-                  >
-                    + Add Feed Item
-                  </button>
-                </>
-              )}
-              {activeTab === "formulator" && formulation && (
-                <button
-                  onClick={handleExportFormulationPdf}
-                  className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center gap-1.5"
-                >
-                  <PdfIcon className="h-3.5 w-3.5 text-zinc-500" />
-                  <span>Export PDF</span>
-                </button>
-              )}
-              <Link
-                href="/dashboard"
-                className="text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/50 px-3 py-1.5 rounded-lg transition duration-200"
-              >
-                Back to Home
-              </Link>
-            </div>
-          </div>
-
-          {/* Sub Navigation Tabs */}
-          <div className="max-w-7xl mx-auto px-4 border-t border-zinc-100 flex gap-4">
-            {TABS_CONFIG.map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`py-3 text-xs font-bold border-b-2 transition-all flex items-center gap-2 ${
-                  activeTab === tab.id
-                    ? "border-emerald-600 text-emerald-700"
-                    : "border-transparent text-zinc-500 hover:text-zinc-800"
-                }`}
-              >
-                <tab.icon className="h-4 w-4" />
-                <span>{tab.label}</span>
-              </button>
-            ))}
           </div>
         </header>
 
-        <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-8 print:p-0">
+        <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-12 print:p-0">
 
-          {/* ==================== TAB 1: INVENTORY ==================== */}
-          {activeTab === "inventory" && (
-            <div className="space-y-6">
-              {items.some(item => item.quantity < item.minThreshold) && (
-                <div className="rounded-xl border border-amber-200 bg-amber-50/70 p-4 text-xs text-amber-800 flex items-center gap-3 print:hidden shadow-sm">
-                  <WarningIcon className="h-5 w-5 text-amber-600 shrink-0" />
-                  <div>
-                    <p className="font-bold">Low Stock Warning</p>
-                    <p className="text-zinc-650 mt-0.5">Some feed items have fallen below their safety threshold. Please restock.</p>
-                  </div>
+          {/* ==================== SECTION 1: INVENTORY ==================== */}
+          <div className="space-y-6">
+            {items.some(item => item.quantity < item.minThreshold) && (
+              <div className="rounded-xl border border-amber-200 bg-amber-50/60 p-4 text-xs text-amber-800 flex items-center gap-3 print:hidden shadow-sm">
+                <WarningIcon className="h-5 w-5 text-amber-600 shrink-0" />
+                <div>
+                  <p className="font-bold">Low Stock Warning</p>
+                  <p className="text-zinc-650 mt-0.5">Some feed items have fallen below their safety threshold. Please restock.</p>
                 </div>
-              )}
+              </div>
+            )}
 
-              <div className="bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm overflow-hidden print:border-none print:p-0">
-                {/* Section header — Android style */}
-                <div className="flex items-center gap-3 mb-5">
+            <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm overflow-hidden print:border-none print:p-0">
+              {/* Section header — Android style */}
+              <div className="flex items-center justify-between mb-5 flex-wrap gap-4">
+                <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-xl bg-emerald-50 flex items-center justify-center flex-shrink-0">
                     <InventoryIcon className="h-5 w-5 text-emerald-600" />
                   </div>
@@ -696,152 +648,180 @@ export default function FeedPage() {
                   </div>
                 </div>
 
-                {dataLoading ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                    {[...Array(3)].map((_, i) => (
-                      <div key={i} className="h-44 bg-zinc-100 animate-pulse rounded-2xl" />
-                    ))}
-                  </div>
-                ) : items.length === 0 ? (
-                  <p className="text-sm text-zinc-500 text-center py-8">No feed items registered yet.</p>
-                ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                    {items.map((item) => {
-                      const isLow = item.quantity < item.minThreshold;
-                      const stockPct = item.minThreshold > 0
-                        ? Math.min(100, (item.quantity / (item.minThreshold * 3)) * 100)
-                        : 100;
-                      return (
-                        <div key={item.id} className={`bg-white border rounded-2xl p-5 shadow-sm flex flex-col gap-3 transition ${isLow ? "border-amber-300 shadow-amber-100" : "border-zinc-200"}`}>
-                          {/* Card Header */}
-                          <div className="flex items-start justify-between gap-2">
-                            <div className="flex-1 min-w-0">
-                              <p className="font-bold text-zinc-900 text-sm truncate">{item.name}</p>
-                              <span className="mt-1 inline-block px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-bold border border-emerald-100">{item.feedType}</span>
-                            </div>
-                            <div className="flex items-center gap-1.5 flex-shrink-0">
-                              {isLow && (
-                                <span className="px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[9px] font-black uppercase tracking-wide">Low</span>
-                              )}
-                              <button
-                                onClick={() => handleDeleteItem(item.id)}
-                                className="text-zinc-300 hover:text-rose-500 transition p-1 rounded-lg hover:bg-rose-50"
-                                title="Delete item"
-                              >
-                                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                </svg>
-                              </button>
-                            </div>
-                          </div>
-
-                          {/* Quantity */}
-                          <div>
-                            <div className="flex items-baseline justify-between mb-1.5">
-                              <span className={`text-3xl font-black tracking-tight ${isLow ? "text-amber-600" : "text-zinc-900"}`}>
-                                {item.quantity.toFixed(1)}
-                              </span>
-                              <span className="text-xs text-zinc-500 font-semibold">{item.unit}</span>
-                            </div>
-                            <div className="h-1.5 rounded-full bg-zinc-100 overflow-hidden">
-                              <div
-                                className={`h-full rounded-full transition-all duration-500 ${isLow ? "bg-amber-400" : "bg-emerald-500"}`}
-                                style={{ width: `${stockPct}%` }}
-                              />
-                            </div>
-                            <p className="text-[10px] text-zinc-400 mt-1">Min threshold: {item.minThreshold} {item.unit}</p>
-                          </div>
-
-                          {/* Actions */}
-                          <div className="flex gap-2 mt-auto pt-1">
-                            <button
-                              onClick={() => { setSelectedItemId(item.id); setUsageUnit(item.unit); setShowUsageModal(true); }}
-                              className="flex-1 py-2 text-xs font-bold text-violet-700 border border-violet-200 rounded-xl hover:bg-violet-50 transition"
-                            >
-                              Log Usage
-                            </button>
-                            <button
-                              onClick={() => { setSelectedItemId(item.id); setRestockUnit(item.unit); setShowRestockModal(true); }}
-                              className="flex-1 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition"
-                            >
-                              Restock
-                            </button>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setShowExportModal(true)}
+                    className="rounded-lg border border-zinc-200 bg-zinc-50/50 px-4 py-2 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center gap-1.5"
+                  >
+                    <PdfIcon className="h-3.5 w-3.5 text-zinc-500" />
+                    <span>Export PDF</span>
+                  </button>
+                  <button
+                    onClick={() => setShowAddModal(true)}
+                    className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white shadow shadow-emerald-600/10 transition active:scale-95"
+                  >
+                    + Add Feed Item
+                  </button>
+                </div>
               </div>
 
-              <div className="bg-zinc-50/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-                {/* Section header — Android style */}
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="h-10 w-10 rounded-xl bg-zinc-100 flex items-center justify-center flex-shrink-0">
-                    <svg className="h-5 w-5 text-zinc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-black text-zinc-900">Transaction History</h3>
-                    <p className="text-xs text-zinc-500 mt-0.5">Recent inventory movements</p>
-                  </div>
+              {dataLoading ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                  {[...Array(3)].map((_, i) => (
+                    <div key={i} className="h-44 bg-zinc-100 animate-pulse rounded-2xl" />
+                  ))}
                 </div>
-
-                {dataLoading ? (
-                  <div className="h-10 bg-zinc-150 animate-pulse rounded-lg" />
-                ) : transactions.length === 0 ? (
-                  <p className="text-sm text-zinc-550 text-center py-6">No inventory transactions logged.</p>
-                ) : (
-                  <div className="space-y-3">
-                    {transactions.map(tx => {
-                      const isRestock = tx.type === "Restock";
-                      return (
-                        <div key={tx.id} className="flex items-start gap-3 bg-white border border-zinc-100 rounded-xl p-4 shadow-sm">
-                          {/* Icon */}
-                          <div className={`flex-shrink-0 h-9 w-9 rounded-full flex items-center justify-center ${isRestock ? "bg-emerald-50" : "bg-violet-50"}`}>
-                            {isRestock ? (
-                              <svg className="h-4 w-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                              </svg>
-                            ) : (
-                              <svg className="h-4 w-4 text-violet-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                              </svg>
-                            )}
-                          </div>
-                          {/* Content */}
+              ) : items.length === 0 ? (
+                <p className="text-sm text-zinc-500 text-center py-8">No feed items registered yet.</p>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                  {items.map((item) => {
+                    const isLow = item.quantity < item.minThreshold;
+                    const stockPct = item.minThreshold > 0
+                      ? Math.min(100, (item.quantity / (item.minThreshold * 3)) * 100)
+                      : 100;
+                    return (
+                      <div key={item.id} className={`bg-white/80 border rounded-2xl p-5 shadow-sm flex flex-col gap-3 transition ${isLow ? "border-amber-300 shadow-amber-100" : "border-zinc-200"}`}>
+                        {/* Card Header */}
+                        <div className="flex items-start justify-between gap-2">
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 flex-wrap">
-                              <p className="font-bold text-zinc-800 text-sm">{tx.itemName}</p>
-                              <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-full ${isRestock ? "bg-emerald-100 text-emerald-700" : "bg-violet-100 text-violet-700"}`}>
-                                {tx.type}
-                              </span>
-                            </div>
-                            {tx.notes && <p className="text-xs text-zinc-500 mt-0.5 truncate">{tx.notes}</p>}
-                            <p className="text-[10px] text-zinc-400 mt-1">{new Date(tx.date).toLocaleString()}</p>
+                            <p className="font-bold text-zinc-900 text-sm truncate">{item.name}</p>
+                            <span className="mt-1 inline-block px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-bold border border-emerald-100">{item.feedType}</span>
                           </div>
-                          {/* Right */}
-                          <div className="text-right flex-shrink-0">
-                            <p className={`font-bold text-sm ${isRestock ? "text-emerald-600" : "text-violet-600"}`}>
-                              {isRestock ? "+" : "-"}{tx.quantity} {tx.unit}
-                            </p>
-                            {tx.cost > 0 && <p className="text-[10px] text-zinc-400 mt-0.5">${tx.cost.toFixed(2)}</p>}
+                          <div className="flex items-center gap-1.5 flex-shrink-0">
+                            {isLow && (
+                              <span className="px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[9px] font-black uppercase tracking-wide">Low</span>
+                            )}
+                            <button
+                              onClick={() => handleDeleteItem(item.id)}
+                              className="text-zinc-300 hover:text-rose-500 transition p-1 rounded-lg hover:bg-rose-50"
+                              title="Delete item"
+                            >
+                              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                            </button>
                           </div>
                         </div>
-                      );
-                    })}
-                  </div>
-                )}
+
+                        {/* Quantity */}
+                        <div>
+                          <div className="flex items-baseline justify-between mb-1.5">
+                            <span className={`text-3xl font-black tracking-tight ${isLow ? "text-amber-600" : "text-zinc-900"}`}>
+                              {item.quantity.toFixed(1)}
+                            </span>
+                            <span className="text-xs text-zinc-500 font-semibold">{item.unit}</span>
+                          </div>
+                          <div className="h-1.5 rounded-full bg-zinc-100 overflow-hidden">
+                            <div
+                              className={`h-full rounded-full transition-all duration-500 ${isLow ? "bg-amber-400" : "bg-emerald-500"}`}
+                              style={{ width: `${stockPct}%` }}
+                            />
+                          </div>
+                          <p className="text-[10px] text-zinc-400 mt-1">Min threshold: {item.minThreshold} {item.unit}</p>
+                        </div>
+
+                        {/* Actions */}
+                        <div className="flex gap-2 mt-auto pt-1">
+                          <button
+                            onClick={() => { setSelectedItemId(item.id); setUsageUnit(item.unit); setShowUsageModal(true); }}
+                            className="flex-1 py-2 text-xs font-bold text-violet-700 border border-violet-200 rounded-xl hover:bg-violet-50 transition active:scale-95"
+                          >
+                            Log Usage
+                          </button>
+                          <button
+                            onClick={() => { setSelectedItemId(item.id); setRestockUnit(item.unit); setShowRestockModal(true); }}
+                            className="flex-1 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition active:scale-95"
+                          >
+                            Restock
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            <div className="bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
+              {/* Section header — Android style */}
+              <div className="flex items-center gap-3 mb-5">
+                <div className="h-10 w-10 rounded-xl bg-zinc-100 flex items-center justify-center flex-shrink-0">
+                  <svg className="h-5 w-5 text-zinc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-sm font-black text-zinc-900">Transaction History</h3>
+                  <p className="text-xs text-zinc-500 mt-0.5">Recent inventory movements</p>
+                </div>
+              </div>
+
+              {dataLoading ? (
+                <div className="h-10 bg-zinc-150 animate-pulse rounded-lg" />
+              ) : transactions.length === 0 ? (
+                <p className="text-sm text-zinc-550 text-center py-6">No inventory transactions logged.</p>
+              ) : (
+                <div className="space-y-3">
+                  {transactions.slice(0, 10).map(tx => {
+                    const isRestock = tx.type === "Restock";
+                    return (
+                      <div key={tx.id} className="flex items-start gap-3 bg-white/80 border border-zinc-100 rounded-xl p-4 shadow-sm">
+                        {/* Icon */}
+                        <div className={`flex-shrink-0 h-9 w-9 rounded-full flex items-center justify-center ${isRestock ? "bg-emerald-50" : "bg-violet-50"}`}>
+                          {isRestock ? (
+                            <svg className="h-4 w-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                            </svg>
+                          ) : (
+                            <svg className="h-4 w-4 text-violet-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                            </svg>
+                          )}
+                        </div>
+                        {/* Content */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <p className="font-bold text-zinc-800 text-sm">{tx.itemName}</p>
+                            <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-full ${isRestock ? "bg-emerald-100 text-emerald-700" : "bg-violet-100 text-violet-700"}`}>
+                              {tx.type}
+                            </span>
+                          </div>
+                          {tx.notes && <p className="text-xs text-zinc-500 mt-0.5 truncate">{tx.notes}</p>}
+                          <p className="text-[10px] text-zinc-400 mt-1">{new Date(tx.date).toLocaleString()}</p>
+                        </div>
+                        {/* Right */}
+                        <div className="text-right flex-shrink-0">
+                          <p className={`font-bold text-sm ${isRestock ? "text-emerald-600" : "text-violet-600"}`}>
+                            {isRestock ? "+" : "-"}{tx.quantity} {tx.unit}
+                          </p>
+                          {tx.cost > 0 && <p className="text-[10px] text-zinc-400 mt-0.5">${tx.cost.toFixed(2)}</p>}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <hr className="border-zinc-200" />
+
+          {/* ==================== SECTION 2: FORMULATOR ==================== */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-purple-50 flex items-center justify-center flex-shrink-0">
+                <ScienceIcon className="h-5 w-5 text-purple-600" />
+              </div>
+              <div>
+                <h2 className="text-sm font-black text-zinc-900">Feed Formulator</h2>
+                <p className="text-xs text-zinc-500 mt-0.5">Scientific ration balancing</p>
               </div>
             </div>
-          )}
 
-          {/* ==================== TAB 2: FORMULATOR ==================== */}
-          {activeTab === "formulator" && (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               <div className="lg:col-span-5 space-y-6">
-                <div className="bg-zinc-50/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 space-y-3 shadow-sm">
+                <div className="bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 space-y-3 shadow-sm">
                   <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Target Growth Stage</h3>
                   <select
                     value={selectedStage}
@@ -867,7 +847,7 @@ export default function FeedPage() {
 
                 <button
                   onClick={handleFormulate}
-                  className="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 py-3 text-xs font-bold text-white shadow shadow-emerald-600/10 transition"
+                  className="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 py-3 text-xs font-bold text-white shadow shadow-emerald-600/10 transition active:scale-95"
                 >
                   Formulate Ration
                 </button>
@@ -888,8 +868,17 @@ export default function FeedPage() {
                   </div>
                 ) : (
                   <div className="space-y-6">
-                    <div className="bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-                      <h3 className="text-lg font-bold text-zinc-900 mb-4">Feed Formula: {selectedStage} Mix</h3>
+                    <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
+                      <div className="flex justify-between items-center mb-4">
+                        <h3 className="text-lg font-bold text-zinc-900">Feed Formula: {selectedStage} Mix</h3>
+                        <button
+                          onClick={handleExportFormulationPdf}
+                          className="rounded-lg border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center gap-1.5"
+                        >
+                          <PdfIcon className="h-3.5 w-3.5 text-zinc-500" />
+                          <span>Export PDF</span>
+                        </button>
+                      </div>
                       <div className="space-y-3 divide-y divide-zinc-100">
                         {Object.entries(formulation.ingredients).map(([id, percent]) => {
                           const ing = ingredients.find(i => i.id === id || i.name === id);
@@ -914,7 +903,7 @@ export default function FeedPage() {
                       </div>
                     </div>
 
-                    <div className="bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
+                    <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
                       <h3 className="text-lg font-bold text-zinc-900 mb-4">Nutritional Analysis</h3>
                       <div className="overflow-x-auto">
                         <table className="min-w-full divide-y divide-zinc-200 text-sm">
@@ -951,12 +940,24 @@ export default function FeedPage() {
                 )}
               </div>
             </div>
-          )}
+          </div>
 
-          {/* ==================== TAB 3: CALCULATOR ==================== */}
-          {activeTab === "calculator" && (
+          <hr className="border-zinc-200" />
+
+          {/* ==================== SECTION 3: CALCULATOR ==================== */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
+                <CalculateIcon className="h-5 w-5 text-blue-600" />
+              </div>
+              <div>
+                <h2 className="text-sm font-black text-zinc-900">Feed Calculator</h2>
+                <p className="text-xs text-zinc-500 mt-0.5">Projected herd demand</p>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-              <div className="lg:col-span-5 bg-zinc-50/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4">
+              <div className="lg:col-span-5 bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4">
                 <h3 className="text-lg font-bold text-zinc-900">Feed Demand Calculator</h3>
                 <p className="text-xs text-zinc-500">Verify your herd counts and enter the calculation projection period.</p>
 
@@ -1013,7 +1014,7 @@ export default function FeedPage() {
 
                 <button
                   onClick={handleCalculateFeedProjections}
-                  className="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 py-3 text-xs font-bold text-white shadow shadow-emerald-600/10 transition"
+                  className="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 py-3 text-xs font-bold text-white shadow shadow-emerald-600/10 transition active:scale-95"
                 >
                   Generate Projection Report
                 </button>
@@ -1027,12 +1028,12 @@ export default function FeedPage() {
                     <p className="text-xs text-zinc-400 mt-1">Configure counts on the left and click calculate.</p>
                   </div>
                 ) : (
-                  <div className="bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-6">
+                  <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-6">
                     <div className="flex justify-between items-center">
                       <h3 className="text-lg font-bold text-zinc-900">Projected Feed Demand Results</h3>
                       <button
                         onClick={handleExportCalculatorPdf}
-                        className="rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center gap-1.5"
+                        className="rounded-lg border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center gap-1.5"
                       >
                         <PdfIcon className="h-3.5 w-3.5 text-zinc-500" />
                         <span>Export PDF</span>
@@ -1067,7 +1068,7 @@ export default function FeedPage() {
                 )}
               </div>
             </div>
-          )}
+          </div>
         </main>
       </div>
 
