@@ -894,34 +894,35 @@ function IngredientModal({ ingredient, onClose }: { ingredient: FeedIngredient |
   return (
     <Modal title={ingredient ? "Edit Feed Ingredient" : "Add Feed Ingredient"} onClose={onClose}>
       <div className="space-y-4">
-        <Input label="Ingredient Name" value={formData.name} onChange={v => setFormData({...formData, name: v})} />
-        <Select label="Main Category" value={formData.mainCategory} options={categories} onChange={v => setFormData({...formData, mainCategory: v})} />
+        <Input label="Ingredient Name" value={formData.name} onChange={(v: string) => setFormData({...formData, name: v})} />
+        <Select label="Main Category" value={formData.mainCategory} options={categories} onChange={(v: string) => setFormData({...formData, mainCategory: v})} />
 
         <div className="grid grid-cols-2 gap-4">
-          <Input label="Crude Protein (%)" type="number" value={formData.crudeProtein} onChange={v => setFormData({...formData, crudeProtein: v})} />
-          <Input label="ME (MJ/kg)" type="number" value={formData.metabolizableEnergy} onChange={v => setFormData({...formData, metabolizableEnergy: v})} />
+          <Input label="Crude Protein (%)" type="number" value={formData.crudeProtein} onChange={(v: string) => setFormData({...formData, crudeProtein: v})} />
+          <Input label="ME (MJ/kg)" type="number" value={formData.metabolizableEnergy} onChange={(v: string) => setFormData({...formData, metabolizableEnergy: v})} />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <Input label="Crude Fiber (%)" type="number" value={formData.crudeFiber} onChange={v => setFormData({...formData, crudeFiber: v})} />
-          <Input label="Dry Matter (%)" type="number" value={formData.dryMatter} onChange={v => setFormData({...formData, dryMatter: v})} />
+          <Input label="Crude Fiber (%)" type="number" value={formData.crudeFiber} onChange={(v: string) => setFormData({...formData, crudeFiber: v})} />
+          <Input label="Dry Matter (%)" type="number" value={formData.dryMatter} onChange={(v: string) => setFormData({...formData, dryMatter: v})} />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <Input label="Calcium (%)" type="number" value={formData.calcium} onChange={v => setFormData({...formData, calcium: v})} />
-          <Input label="Phosphorus (%)" type="number" value={formData.phosphorus} onChange={v => setFormData({...formData, phosphorus: v})} />
+          <Input label="Calcium (%)" type="number" value={formData.calcium} onChange={(v: string) => setFormData({...formData, calcium: v})} />
+          <Input label="Phosphorus (%)" type="number" value={formData.phosphorus} onChange={(v: string) => setFormData({...formData, phosphorus: v})} />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <Input label="Lysine (%)" type="number" value={formData.lysine} onChange={v => setFormData({...formData, lysine: v})} />
-          <Input label="Methionine (%)" type="number" value={formData.methionine} onChange={v => setFormData({...formData, methionine: v})} />
+          <Input label="Lysine (%)" type="number" value={formData.lysine} onChange={(v: string) => setFormData({...formData, lysine: v})} />
+          <Input label="Methionine (%)" type="number" value={formData.methionine} onChange={(v: string) => setFormData({...formData, methionine: v})} />
         </div>
 
         <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest pt-2">Max Inclusion Limits (%)</p>
+
         <div className="grid grid-cols-3 gap-2">
-          <Input label="Starter" type="number" value={formData.maxStarter} onChange={v => setFormData({...formData, maxStarter: v})} />
-          <Input label="Grower" type="number" value={formData.maxGrower} onChange={v => setFormData({...formData, maxGrower: v})} />
-          <Input label="Finisher" type="number" value={formData.maxFinisher} onChange={v => setFormData({...formData, maxFinisher: v})} />
+          <Input label="Starter" type="number" value={formData.maxStarter} onChange={(v: string) => setFormData({...formData, maxStarter: v})} />
+          <Input label="Grower" type="number" value={formData.maxGrower} onChange={(v: string) => setFormData({...formData, maxGrower: v})} />
+          <Input label="Finisher" type="number" value={formData.maxFinisher} onChange={(v: string) => setFormData({...formData, maxFinisher: v})} />
         </div>
 
         <button onClick={handleSave} className="w-full py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 transition mt-4">
