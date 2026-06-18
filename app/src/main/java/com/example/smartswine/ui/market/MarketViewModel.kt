@@ -7,6 +7,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -77,6 +78,7 @@ class MarketViewModel : ViewModel() {
         _isLoading.value = true
         providersListener?.remove()
         providersListener = db.collection("market_providers")
+            .orderBy("createdAt", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, error ->
                 _isLoading.value = false
                 if (error != null) {
@@ -88,7 +90,7 @@ class MarketViewModel : ViewModel() {
                     if (list.isEmpty()) {
                         seedDefaultProviders()
                     } else {
-                        _providers.value = list.sortedByDescending { it.createdAt }
+                        _providers.value = list
                     }
                 }
             }
@@ -98,6 +100,7 @@ class MarketViewModel : ViewModel() {
         mySuggestionsListener?.remove()
         mySuggestionsListener = db.collection("market_suggestions")
             .whereEqualTo("userId", userId)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
                     return@addSnapshotListener
@@ -106,7 +109,7 @@ class MarketViewModel : ViewModel() {
                     val list = snapshot.documents.mapNotNull { doc ->
                         doc.toObject(Suggestion::class.java)?.copy(id = doc.id)
                     }
-                    _mySuggestions.value = list.sortedByDescending { it.timestamp }
+                    _mySuggestions.value = list
                 }
             }
     }
@@ -114,6 +117,7 @@ class MarketViewModel : ViewModel() {
     fun fetchAllSuggestions() {
         allSuggestionsListener?.remove()
         allSuggestionsListener = db.collection("market_suggestions")
+            .orderBy("timestamp", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
                     return@addSnapshotListener
@@ -122,7 +126,7 @@ class MarketViewModel : ViewModel() {
                     val list = snapshot.documents.mapNotNull { doc ->
                         doc.toObject(Suggestion::class.java)?.copy(id = doc.id)
                     }
-                    _allSuggestions.value = list.sortedByDescending { it.timestamp }
+                    _allSuggestions.value = list
                 }
             }
     }
