@@ -93,3 +93,80 @@ export const PremiumIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+// 12. Shopping Bag (for Buyers)
+export const ShoppingBagIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .89-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-8 4c0 .55-.45 1-1 1s-1-.45-1-1V8h2v2zm2-6c1.1 0 2 .9 2 2H10c0-1.1.9-2 2-2zm4 6c0 .55-.45 1-1 1s-1-.45-1-1V8h2v2z" />
+  </svg>
+);
+
+// 13. Medical Services (for Vets)
+export const MedicalServicesIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4zm10 16H4V8h16v12zM12 10c-.55 0-1 .45-1 1v2H9c-.55 0-1 .45-1 1s.45 1 1 1h2v2c0 .55.45 1 1 1s1-.45 1-1v-2h2c.55 0 1-.45 1-1s-.45-1-1-1h-2v-2c0-.55-.45-1-1-1z" />
+  </svg>
+);
+
+// 14. History (for Suggestions)
+export const HistoryIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z" />
+  </svg>
+);
+
+// 15. Add (for Suggest a Provider)
+export const AddIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+  </svg>
+);
+
+// 16. Location On (for Directory Region)
+export const LocationIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+  </svg>
+);
+
+// 17. Phone
+export const PhoneIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M6.62 10.79c1.44 2.82 3.76 5.2 6.58 6.64l2.2-2.2c.27-.27.67-.36 1.02-.26 1.12.32 2.33.5 3.58.5.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.07 21 2 12.93 2 3c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.18 2.46.5 3.58.1.35.01.74-.26 1.02l-2.22 2.21z" />
+  </svg>
+);
+
+// 18. Email
+export const EmailIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+  </svg>
+);
+
+// 19. Verified
+export const VerifiedIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.7 3.1 5.52l.34 3.69L1 12l2.44 2.79-.34 3.69 3.61.82 1.89 3.2L12 21.04l3.4 1.46 1.89-3.2 3.61-.82-.34-3.69L23 12zm-12.91 4.72l-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z" />
+  </svg>
+);
+
+// 20. Scale (Material-like Scale)
+export const ScaleIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M12.001,2.984c3.143,0 6.286,0 9.428,0c0.413,0 0.473,0.043 0.436,0.465c-0.174,1.933 -1.126,3.32 -2.925,4.092c-0.528,0.227 -1.09,0.323 -1.67,0.317c-0.933,-0.009 -1.865,0.004 -2.798,-0.007c-0.242,-0.003 -0.338,0.075 -0.315,0.318c0.017,0.158 0.015,0.32 0.001,0.479c-0.018,0.216 0.063,0.299 0.285,0.295c0.655,-0.011 1.313,-0.004 1.967,-0.004c0.729,0 1.391,0.425 1.657,1.105c0.735,1.884 1.459,3.774 2.187,5.662c0.376,0.979 0.749,1.959 1.126,2.938c0.438,1.137 -0.395,2.367 -1.615,2.369c-5.218,0.004 -10.437,0.004 -15.654,0c-1.211,0 -2.051,-1.219 -1.618,-2.35c0.934,-2.445 1.877,-4.891 2.816,-7.333c0.156,-0.408 0.302,-0.819 0.469,-1.223c0.321,-0.774 0.926,-1.169 1.768,-1.17c0.697,0 1.396,0 2.093,0c0.356,0 0.357,-0.001 0.357,-0.369c0,-0.143 -0.01,-0.287 0.002,-0.428c0.021,-0.225 -0.081,-0.29 -0.295,-0.288C8.679,7.86 7.652,7.857 6.627,7.855C4.698,7.85 2.896,6.504 2.337,4.657C2.205,4.221 2.115,3.779 2.126,3.32c0.008,-0.323 0.016,-0.335 0.348,-0.335C5.648,2.984 8.824,2.984 12.001,2.984zM11.935,20.491c2.596,0 5.192,0.002 7.788,-0.001c0.933,-0.001 1.487,-0.798 1.173,-1.678c-0.139,-0.387 -0.292,-0.769 -0.438,-1.151c-0.941,-2.444 -1.881,-4.892 -2.824,-7.335c-0.237,-0.614 -0.614,-0.865 -1.272,-0.866c-2.957,-0.001 -5.914,-0.001 -8.872,0c-0.628,0 -1.022,0.272 -1.252,0.864c-0.494,1.276 -0.984,2.554 -1.477,3.832c-0.589,1.527 -1.177,3.056 -1.765,4.584c-0.085,0.221 -0.144,0.447 -0.107,0.688c0.1,0.656 0.575,1.063 1.26,1.063C6.742,20.492 9.338,20.491 11.935,20.491zM12.002,3.5c-2.999,0 -5.998,0 -8.997,0c-0.353,0 -0.381,0.033 -0.342,0.372c0.212,1.841 1.918,3.437 3.769,3.451c3.385,0.026 6.771,0.014 10.155,0.016c0.353,0 0.705,0.001 1.059,-0.013c1.773,-0.072 3.467,-1.664 3.655,-3.433C21.343,3.501 21.343,3.5 20.948,3.5C17.965,3.5 14.983,3.5 12.002,3.5z" />
+  </svg>
+);
+
+// 21. Info (Google Material Icon: Info)
+export const InfoIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+  </svg>
+);
+
+// 22. Shield Check (for Admin Panel)
+export const ShieldCheckIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
+  </svg>
+);
+

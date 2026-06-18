@@ -711,6 +711,16 @@ fun AddPigDialog(
                         }
                     }
 
+                    if (source.value == "Brought to farm") {
+                        OutlinedTextField(
+                            value = purchasePrice.value,
+                            onValueChange = { purchasePrice.value = it },
+                            label = { Text(stringResource("purchase_price")) },
+                            modifier = Modifier.fillMaxWidth(),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+                        )
+                    }
+
                     Spacer(Modifier.height(8.dp))
                     
                     // Males Section

@@ -45,30 +45,32 @@ enum class Severity(val key: String) {
 object DiseaseDatabase {
     val symptomGroups = mapOf(
         "sg_skin_coat" to listOf(
-            "sym_skin_discoloration", "sym_diamond_lesions", "sym_itching", "sym_hair_loss", 
-            "sym_pale_skin", "sym_jaundice", "sym_skin_crusts", "sym_rough_hair", "sym_sunburn", "sym_ear_necrosis",
-            "sym_blisters_snout_feet"
+            "sym_blisters_snout_feet", "sym_diamond_lesions", "sym_ear_necrosis", "sym_hair_loss", 
+            "sym_itching", "sym_jaundice", "sym_pale_skin", "sym_rough_hair", "sym_skin_crusts", 
+            "sym_skin_discoloration", "sym_sunburn"
         ),
         "sg_digestive_stool" to listOf(
-            "sym_diarrhea", "sym_vomiting", "sym_bloody_diarrhea", "sym_blood_in_stool", "sym_rectal_prolapse", 
-            "sym_bloat", "sym_dehydration", "sym_loss_of_appetite", "sym_weight_loss"
+            "sym_bloat", "sym_blood_in_stool", "sym_bloody_diarrhea", "sym_dehydration", 
+            "sym_diarrhea", "sym_loss_of_appetite", "sym_rectal_prolapse", "sym_vomiting", "sym_weight_loss"
         ),
         "sg_respiratory" to listOf(
-            "sym_coughing", "sym_difficulty_breathing", "sym_nasal_discharge", "sym_sneezing", 
-            "sym_thumping", "sym_nose_bleeds", "sym_frothing", "sym_excessive_salivation"
+            "sym_coughing", "sym_difficulty_breathing", "sym_excessive_salivation", "sym_frothing", 
+            "sym_nasal_discharge", "sym_nose_bleeds", "sym_sneezing", "sym_thumping"
         ),
         "sg_behavioral_nervous" to listOf(
-            "sym_lethargy", "sym_seizures", "sym_muscle_stiffness", "sym_trembling", "sym_blindness", "sym_paralysis", 
-            "sym_incoordination", "sym_circling", "sym_convulsions", "sym_nervousness", "sym_twitching", "sym_tail_biting"
+            "sym_blindness", "sym_circling", "sym_convulsions", "sym_incoordination", "sym_lethargy", 
+            "sym_muscle_stiffness", "sym_nervousness", "sym_paralysis", "sym_seizures", "sym_tail_biting", 
+            "sym_trembling", "sym_twitching"
         ),
         "sg_reproduction" to listOf(
-            "sym_abortion", "sym_infertility", "sym_mummified_piglets", "sym_small_litter", "sym_swollen_vulva", "sym_enlarged_scrotum",
-            "sym_swollen_udder"
+            "sym_abortion", "sym_enlarged_scrotum", "sym_infertility", "sym_mummified_piglets", 
+            "sym_small_litter", "sym_swollen_udder", "sym_swollen_vulva"
         ),
         "sg_general_limbs" to listOf(
-            "sym_high_fever", "sym_lameness", "sym_sudden_death", "sym_swollen_joints", "sym_swollen_navel", 
-            "sym_leg_weakness", "sym_swollen_eyelids", "sym_stunted_growth", "sym_pale_mucous", "sym_bleeding_orifices",
-            "sym_cracked_hooves", "sym_red_urine"
+            "sym_abscesses", "sym_anemia", "sym_bleeding_orifices", "sym_cracked_hooves", "sym_fractures", 
+            "sym_high_fever", "sym_lameness", "sym_leg_weakness", "sym_pale_mucous", "sym_red_urine", 
+            "sym_stunted_growth", "sym_sudden_death", "sym_swollen_eyelids", "sym_swollen_joints", 
+            "sym_swollen_navel", "sym_thirst", "sym_watery_diarrhea"
         )
     )
 

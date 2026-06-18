@@ -66,7 +66,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             // Listen to owner profile in real-time
             profileUnsubscribe = onSnapshot(userDocRef, (snapshot) => {
               if (snapshot.exists()) {
-                setUserProfile(snapshot.data() as UserProfile);
+                const data = snapshot.data();
+                // Firestore stores the admin flag as "admin" (not "isAdmin")
+                // Mirror the email fallback from the Android app
+                const isAdminUser =
+                  data.admin === true ||
+                  data.email === "bibiniitech@gmail.com";
+                setUserProfile({ ...data, isAdmin: isAdminUser } as UserProfile);
               }
             });
 
@@ -107,7 +113,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                   // Listen to manager profile in real-time
                   profileUnsubscribe = onSnapshot(managerDocRef, (snapshot) => {
                     if (snapshot.exists()) {
-                      setUserProfile(snapshot.data() as UserProfile);
+                      const data = snapshot.data();
+                      const isAdminUser =
+                        data.admin === true ||
+                        data.email === "bibiniitech@gmail.com";
+                      setUserProfile({ ...data, isAdmin: isAdminUser } as UserProfile);
                     }
                   });
                 }

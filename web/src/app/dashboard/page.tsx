@@ -791,6 +791,18 @@ export default function DashboardPage() {
                   <p className="text-sm text-zinc-500 mt-1">Access detailed husbandry guidelines on weaning, feeding, and breeding, and watch expert video tutorials.</p>
                 </div>
               </Link>
+
+              {userProfile?.isAdmin && (
+                <Link href="/admin" className="flex items-start gap-4 p-4 rounded-xl border border-emerald-200 bg-emerald-50/30 hover:bg-emerald-50/50 backdrop-blur-md transition duration-300 group shadow-sm">
+                  <span className="p-3 bg-emerald-100 rounded-xl text-emerald-600 group-hover:scale-110 transition duration-300">
+                    <LocalHubIcon className="h-8 w-8" />
+                  </span>
+                  <div>
+                    <h4 className="text-base font-bold text-emerald-900 group-hover:text-emerald-700 transition">Admin Panel</h4>
+                    <p className="text-sm text-emerald-700/70 mt-1">Manage global ingredients, verify provider suggestions, and update training video tutorials.</p>
+                  </div>
+                </Link>
+              )}
             </div>
           </div>
 

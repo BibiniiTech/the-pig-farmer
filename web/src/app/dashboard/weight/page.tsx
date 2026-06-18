@@ -7,6 +7,7 @@ import { collection, onSnapshot, doc, updateDoc, setDoc } from "firebase/firesto
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
+import { ScaleIcon, InfoIcon } from "@/components/icons/DashboardIcons";
 
 interface Pig {
   id: string;
@@ -232,7 +233,7 @@ export default function WeightCheckerPage() {
         {/* Content Body */}
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
           <div className="bg-white/85 backdrop-blur-sm border border-zinc-200 rounded-2xl p-6 shadow-sm">
-            <h2 className="text-xl font-bold text-zinc-900">Tape Measuring & Unit Converter Tools</h2>
+            <h2 className="text-xl font-bold text-zinc-900">Weigh Pigs with a Tape & Unit Converter</h2>
             <p className="text-sm text-zinc-500 mt-1">
               Estimate swine live weight using chest girth and body length tape measurements, or convert standard weight metrics.
             </p>
@@ -270,7 +271,7 @@ export default function WeightCheckerPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-zinc-650 mb-1.5">
-                    Heart Girth ({unit === "in" ? "inches" : "cm"})
+                    B = Heart Girth ({unit === "in" ? "inches" : "cm"})
                   </label>
                   <input
                     type="number"
@@ -285,7 +286,7 @@ export default function WeightCheckerPage() {
 
                 <div>
                   <label className="block text-xs font-bold text-zinc-650 mb-1.5">
-                    Body Length ({unit === "in" ? "inches" : "cm"})
+                    A = Body Length ({unit === "in" ? "inches" : "cm"})
                   </label>
                   <input
                     type="number"
@@ -299,37 +300,17 @@ export default function WeightCheckerPage() {
                 </div>
               </div>
 
-              {/* Simple illustrative SVG diagram of a pig showing girth & length */}
+              {/* Simple illustrative diagram of a pig showing girth & length */}
               <div className="relative rounded-xl border border-zinc-150 bg-zinc-50/50 p-4 flex flex-col items-center">
-                <svg className="w-full max-w-[320px] h-[160px] text-zinc-400" viewBox="0 0 200 100" fill="none">
-                  {/* Outer Pig Shape Outline */}
-                  <path
-                    d="M 30,55 C 30,35 55,20 100,20 C 135,20 170,30 170,55 C 170,68 150,75 125,75 C 100,75 30,75 30,55 Z"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    fill="#fefefe"
-                  />
-                  {/* Pig snout */}
-                  <path d="M 30,50 C 20,48 18,52 20,57 C 22,60 30,60 30,55" stroke="currentColor" strokeWidth="2" />
-                  {/* Pig tail */}
-                  <path d="M 170,50 Q 185,45 180,38 Q 175,32 173,43" stroke="currentColor" strokeWidth="2" />
-                  {/* Pig legs */}
-                  <line x1="50" y1="75" x2="50" y2="92" stroke="currentColor" strokeWidth="3" />
-                  <line x1="70" y1="75" x2="70" y2="92" stroke="currentColor" strokeWidth="3" />
-                  <line x1="130" y1="75" x2="130" y2="92" stroke="currentColor" strokeWidth="3" />
-                  <line x1="150" y1="75" x2="150" y2="92" stroke="currentColor" strokeWidth="3" />
-                  {/* Ears */}
-                  <path d="M 45,35 Q 40,15 48,22 Z" stroke="currentColor" strokeWidth="2" fill="#fff" />
-                  {/* Measurement lines */}
-                  {/* Girth Line */}
-                  <path d="M 75,20 L 75,75" stroke="#f43f5e" strokeWidth="2" strokeDasharray="3,3" />
-                  <text x="79" y="45" fill="#f43f5e" className="text-[8px] font-extrabold">Heart Girth (G)</text>
-                  {/* Length Line */}
-                  <path d="M 48,20 L 170,20" stroke="#0ea5e9" strokeWidth="2" />
-                  <text x="80" y="15" fill="#0ea5e9" className="text-[8px] font-extrabold">Body Length (L)</text>
-                </svg>
+                <img
+                  src="/ic_pig_scale.png"
+                  alt="Pig Measurement Guide"
+                  className={`w-full max-w-[320px] h-auto object-contain transition-opacity duration-300 ${
+                    girth || length ? "opacity-100" : "opacity-50"
+                  }`}
+                />
                 <div className="text-[10px] text-zinc-500 font-bold text-center mt-2">
-                  Measure Girth (Red Dotted) and Length (Blue Solid) as shown above.
+                  Measure Girth (Point B) and Length (Point A) as shown above.
                 </div>
               </div>
 
@@ -365,7 +346,7 @@ export default function WeightCheckerPage() {
               {/* Unit Converter Card */}
               <div className="bg-white/80 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4">
                 <h3 className="text-base font-bold text-zinc-900 flex items-center gap-2">
-                  <span>⚖️</span> Weight Converter
+                  <ScaleIcon className="h-5 w-5 text-teal-600" /> Weight Converter
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
@@ -442,6 +423,25 @@ export default function WeightCheckerPage() {
                     </button>
                   </form>
                 )}
+              </div>
+
+              {/* Important Notes Card */}
+              <div className="bg-zinc-50/80 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4">
+                <div className="flex items-center justify-center gap-2 text-teal-700">
+                  <InfoIcon className="h-5 w-5" />
+                  <h3 className="text-sm font-bold uppercase tracking-wider">Important Notes</h3>
+                </div>
+                <div className="space-y-3 text-xs text-zinc-600 leading-relaxed text-justify">
+                  <p>
+                    <span className="font-bold text-zinc-800">Heart Girth:</span> Measure the thorax (just behind the front legs) making sure the tape is fit along the body and meets tightly (Point B).
+                  </p>
+                  <p>
+                    <span className="font-bold text-zinc-800">Body Length:</span> Measure from the base of the ears to the base of the tail making sure the tape is firm on the body and not loose (Point A).
+                  </p>
+                  <p>
+                    Ensure the pig is standing squarely on level ground for the most accurate result.
+                  </p>
+                </div>
               </div>
             </div>
           </div>

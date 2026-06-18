@@ -749,6 +749,7 @@ class HerdViewModel : ViewModel() {
     }
 
     fun addPigsFromForm(formData: AddPigFormData) {
+        val userId = activeFarmId ?: auth.currentUser?.uid ?: return
         if (!formData.isMultiple) {
             val pig = Pig(
                 tagNumber = formData.tagNumber,
@@ -802,6 +803,26 @@ class HerdViewModel : ViewModel() {
                     notes = formData.notes
                 )
                 addPig(pig, 0.0)
+            }
+
+            val totalCost = formData.purchasePrice.toDoubleOrNull() ?: 0.0
+            if (formData.source == "Brought to farm" && totalCost > 0.0) {
+                viewModelScope.launch {
+                    try {
+                        val financialRef = db.collection("users").document(userId).collection("financials").document()
+                        val financialRecord = FinancialRecord(
+                            id = financialRef.id,
+                            date = DateUtils.formatToInternal(java.util.Date()),
+                            type = "Expense",
+                            category = "Livestock Purchase",
+                            amount = totalCost,
+                            description = "Purchase of batch of pigs (Qty: ${validMales.size + validFemales.size})",
+                        )
+                        financialRef.set(financialRecord).await()
+                    } catch (e: Exception) {
+                        _error.value = "Failed to record financial transaction: ${e.message}"
+                    }
+                }
             }
         }
     }

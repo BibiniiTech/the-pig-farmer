@@ -685,87 +685,152 @@ export default function FeedPage() {
               )}
 
               <div className="bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm overflow-hidden print:border-none print:p-0">
-                <h2 className="text-lg font-bold text-zinc-900 mb-4 print:text-black">Current Stock Levels</h2>
+                {/* Section header — Android style */}
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="h-10 w-10 rounded-xl bg-emerald-50 flex items-center justify-center flex-shrink-0">
+                    <InventoryIcon className="h-5 w-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h2 className="text-sm font-black text-zinc-900 print:text-black">Feed Inventory</h2>
+                    <p className="text-xs text-zinc-500 mt-0.5">Track and manage your feed stock</p>
+                  </div>
+                </div>
+
                 {dataLoading ? (
-                  <div className="space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                     {[...Array(3)].map((_, i) => (
-                      <div key={i} className="h-12 bg-zinc-100 animate-pulse rounded-lg" />
+                      <div key={i} className="h-44 bg-zinc-100 animate-pulse rounded-2xl" />
                     ))}
                   </div>
                 ) : items.length === 0 ? (
                   <p className="text-sm text-zinc-500 text-center py-8">No feed items registered yet.</p>
                 ) : (
-                  <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-zinc-200">
-                      <thead>
-                        <tr className="text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-                          <th className="pb-3">Name</th>
-                          <th className="pb-3">Feed Type</th>
-                          <th className="pb-3">Quantity</th>
-                          <th className="pb-3">Threshold</th>
-                          <th className="pb-3 text-right">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-zinc-150 text-sm">
-                        {items.map((item) => {
-                          const isLow = item.quantity < item.minThreshold;
-                          return (
-                            <tr key={item.id}>
-                              <td className="py-4 font-semibold text-zinc-800">{item.name}</td>
-                              <td className="py-4 text-zinc-500">{item.feedType}</td>
-                              <td className="py-4">
-                                <span className={`font-semibold ${isLow ? "text-amber-600" : "text-zinc-800"}`}>
-                                  {item.quantity.toFixed(1)} {item.unit}
-                                </span>
-                              </td>
-                              <td className="py-4 text-zinc-500">{item.minThreshold} {item.unit}</td>
-                              <td className="py-4 text-right space-x-3 font-medium">
-                                <button onClick={() => { setSelectedItemId(item.id); setRestockUnit(item.unit); setShowRestockModal(true); }} className="text-xs text-emerald-600 hover:underline">
-                                  Restock
-                                </button>
-                                <button onClick={() => { setSelectedItemId(item.id); setUsageUnit(item.unit); setShowUsageModal(true); }} className="text-xs text-violet-600 hover:underline">
-                                  Log Usage
-                                </button>
-                                <button onClick={() => handleDeleteItem(item.id)} className="text-xs text-rose-600 hover:underline">
-                                  Delete
-                                </button>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                    {items.map((item) => {
+                      const isLow = item.quantity < item.minThreshold;
+                      const stockPct = item.minThreshold > 0
+                        ? Math.min(100, (item.quantity / (item.minThreshold * 3)) * 100)
+                        : 100;
+                      return (
+                        <div key={item.id} className={`bg-white border rounded-2xl p-5 shadow-sm flex flex-col gap-3 transition ${isLow ? "border-amber-300 shadow-amber-100" : "border-zinc-200"}`}>
+                          {/* Card Header */}
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="flex-1 min-w-0">
+                              <p className="font-bold text-zinc-900 text-sm truncate">{item.name}</p>
+                              <span className="mt-1 inline-block px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-bold border border-emerald-100">{item.feedType}</span>
+                            </div>
+                            <div className="flex items-center gap-1.5 flex-shrink-0">
+                              {isLow && (
+                                <span className="px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[9px] font-black uppercase tracking-wide">Low</span>
+                              )}
+                              <button
+                                onClick={() => handleDeleteItem(item.id)}
+                                className="text-zinc-300 hover:text-rose-500 transition p-1 rounded-lg hover:bg-rose-50"
+                                title="Delete item"
+                              >
+                                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Quantity */}
+                          <div>
+                            <div className="flex items-baseline justify-between mb-1.5">
+                              <span className={`text-3xl font-black tracking-tight ${isLow ? "text-amber-600" : "text-zinc-900"}`}>
+                                {item.quantity.toFixed(1)}
+                              </span>
+                              <span className="text-xs text-zinc-500 font-semibold">{item.unit}</span>
+                            </div>
+                            <div className="h-1.5 rounded-full bg-zinc-100 overflow-hidden">
+                              <div
+                                className={`h-full rounded-full transition-all duration-500 ${isLow ? "bg-amber-400" : "bg-emerald-500"}`}
+                                style={{ width: `${stockPct}%` }}
+                              />
+                            </div>
+                            <p className="text-[10px] text-zinc-400 mt-1">Min threshold: {item.minThreshold} {item.unit}</p>
+                          </div>
+
+                          {/* Actions */}
+                          <div className="flex gap-2 mt-auto pt-1">
+                            <button
+                              onClick={() => { setSelectedItemId(item.id); setUsageUnit(item.unit); setShowUsageModal(true); }}
+                              className="flex-1 py-2 text-xs font-bold text-violet-700 border border-violet-200 rounded-xl hover:bg-violet-50 transition"
+                            >
+                              Log Usage
+                            </button>
+                            <button
+                              onClick={() => { setSelectedItemId(item.id); setRestockUnit(item.unit); setShowRestockModal(true); }}
+                              className="flex-1 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition"
+                            >
+                              Restock
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>
 
               <div className="bg-zinc-50/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-                <h3 className="text-lg font-bold text-zinc-900 mb-4">Inventory Transactions</h3>
+                {/* Section header — Android style */}
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="h-10 w-10 rounded-xl bg-zinc-100 flex items-center justify-center flex-shrink-0">
+                    <svg className="h-5 w-5 text-zinc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-black text-zinc-900">Transaction History</h3>
+                    <p className="text-xs text-zinc-500 mt-0.5">Recent inventory movements</p>
+                  </div>
+                </div>
+
                 {dataLoading ? (
                   <div className="h-10 bg-zinc-150 animate-pulse rounded-lg" />
                 ) : transactions.length === 0 ? (
                   <p className="text-sm text-zinc-550 text-center py-6">No inventory transactions logged.</p>
                 ) : (
-                  <div className="space-y-4">
-                    {transactions.map(tx => (
-                      <div key={tx.id} className="flex justify-between items-start border-b border-zinc-200/60 pb-3 text-sm">
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <span className={`h-2 w-2 rounded-full ${tx.type === "Restock" ? "bg-emerald-500" : "bg-violet-500"}`} />
-                            <p className="font-semibold text-zinc-800">{tx.itemName}</p>
-                            <span className="text-[10px] text-zinc-400 font-bold uppercase font-mono">({tx.type})</span>
+                  <div className="space-y-3">
+                    {transactions.map(tx => {
+                      const isRestock = tx.type === "Restock";
+                      return (
+                        <div key={tx.id} className="flex items-start gap-3 bg-white border border-zinc-100 rounded-xl p-4 shadow-sm">
+                          {/* Icon */}
+                          <div className={`flex-shrink-0 h-9 w-9 rounded-full flex items-center justify-center ${isRestock ? "bg-emerald-50" : "bg-violet-50"}`}>
+                            {isRestock ? (
+                              <svg className="h-4 w-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                              </svg>
+                            ) : (
+                              <svg className="h-4 w-4 text-violet-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                              </svg>
+                            )}
                           </div>
-                          {tx.notes && <p className="text-xs text-zinc-550 mt-1">{tx.notes}</p>}
-                          <p className="text-[10px] text-zinc-400 mt-0.5">{new Date(tx.date).toLocaleString()}</p>
+                          {/* Content */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <p className="font-bold text-zinc-800 text-sm">{tx.itemName}</p>
+                              <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-full ${isRestock ? "bg-emerald-100 text-emerald-700" : "bg-violet-100 text-violet-700"}`}>
+                                {tx.type}
+                              </span>
+                            </div>
+                            {tx.notes && <p className="text-xs text-zinc-500 mt-0.5 truncate">{tx.notes}</p>}
+                            <p className="text-[10px] text-zinc-400 mt-1">{new Date(tx.date).toLocaleString()}</p>
+                          </div>
+                          {/* Right */}
+                          <div className="text-right flex-shrink-0">
+                            <p className={`font-bold text-sm ${isRestock ? "text-emerald-600" : "text-violet-600"}`}>
+                              {isRestock ? "+" : "-"}{tx.quantity} {tx.unit}
+                            </p>
+                            {tx.cost > 0 && <p className="text-[10px] text-zinc-400 mt-0.5">${tx.cost.toFixed(2)}</p>}
+                          </div>
                         </div>
-                        <div className="text-right">
-                          <p className="font-bold text-zinc-800">
-                            {tx.type === "Restock" ? "+" : "-"}{tx.quantity} {tx.unit}
-                          </p>
-                          {tx.cost > 0 && <p className="text-xs text-zinc-500 mt-0.5">Cost: ${tx.cost.toFixed(2)}</p>}
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
               </div>

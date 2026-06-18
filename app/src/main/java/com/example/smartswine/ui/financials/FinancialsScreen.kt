@@ -186,7 +186,107 @@ fun getTranslatedFinancialType(type: String): String {
 
 @Composable
 fun getTranslatedFinancialCategory(category: String): String {
+    val lang = com.example.smartswine.utils.LocalAppLanguage.current.code
     return when (category) {
+        "Pig Sale" -> when (lang) {
+            "fr" -> "Vente de porcs"
+            "zh" -> "猪只销售"
+            "es" -> "Venta de cerdos"
+            "tl" -> "Benta ng Baboy"
+            "vi" -> "Bán lợn"
+            "th" -> "ขายหมู"
+            "pt" -> "Venda de porcos"
+            "hi" -> "सुअर की बिक्री"
+            else -> "Pig Sale"
+        }
+        "Manure Sale" -> when (lang) {
+            "fr" -> "Vente de fumier"
+            "zh" -> "粪便销售"
+            "es" -> "Venta de estiércol"
+            "tl" -> "Benta ng Pataba"
+            "vi" -> "Bán phân"
+            "th" -> "ขายปุ๋ยคอก"
+            "pt" -> "Venda de esterco"
+            "hi" -> "खाद की बिक्री"
+            else -> "Manure Sale"
+        }
+        "Breeding Service" -> when (lang) {
+            "fr" -> "Service d'élevage"
+            "zh" -> "配种服务"
+            "es" -> "Servicio de cría"
+            "tl" -> "Serbisyo sa Pagpaparami"
+            "vi" -> "Dịch vụ phối giống"
+            "th" -> "บริการผสมพันธุ์"
+            "pt" -> "Serviço de reprodução"
+            "hi" -> "प्रजनन सेवा"
+            else -> "Breeding Service"
+        }
+        "Equipment Sale" -> when (lang) {
+            "fr" -> "Vente d'équipement"
+            "zh" -> "设备销售"
+            "es" -> "Venta de equipos"
+            "tl" -> "Benta ng Kagamitan"
+            "vi" -> "Bán thiết bị"
+            "th" -> "ขายอุปกรณ์"
+            "pt" -> "Venda de equipamentos"
+            "hi" -> "उपकरण की बिक्री"
+            else -> "Equipment Sale"
+        }
+        "Vet/Medication" -> when (lang) {
+            "fr" -> "Vétérinaire/Médicaments"
+            "zh" -> "兽医/药物"
+            "es" -> "Veterinario/Medicamentos"
+            "tl" -> "Vet/Gamot"
+            "vi" -> "Thú y/Thuốc"
+            "th" -> "สัตวแพทย์/ยารักษาโรค"
+            "pt" -> "Veterinário/Medicamento"
+            "hi" -> "पशु चिकित्सक/दवा"
+            else -> "Vet/Medication"
+        }
+        "Labor/Salary" -> when (lang) {
+            "fr" -> "Main d'œuvre/Salaire"
+            "zh" -> "人工/工资"
+            "es" -> "Mano de obra/Salario"
+            "tl" -> "Labor/Sahod"
+            "vi" -> "Nhân công/Lương"
+            "th" -> "แรงงาน/เงินเดือน"
+            "pt" -> "Mão de obra/Salário"
+            "hi" -> "श्रम/वेतन"
+            else -> "Labor/Salary"
+        }
+        "Transport" -> when (lang) {
+            "fr" -> "Transport"
+            "zh" -> "运输"
+            "es" -> "Transporte"
+            "tl" -> "Transportasyon"
+            "vi" -> "Vận chuyển"
+            "th" -> "การขนส่ง"
+            "pt" -> "Transporte"
+            "hi" -> "परिवहन"
+            else -> "Transport"
+        }
+        "Rent" -> when (lang) {
+            "fr" -> "Loyer"
+            "zh" -> "租金"
+            "es" -> "Alquiler"
+            "tl" -> "Upa"
+            "vi" -> "Thuê"
+            "th" -> "ค่าเช่า"
+            "pt" -> "Aluguel"
+            "hi" -> "किराया"
+            else -> "Rent"
+        }
+        "Utility" -> when (lang) {
+            "fr" -> "Services publics"
+            "zh" -> "水电费"
+            "es" -> "Servicios públicos"
+            "tl" -> "Kuryente at Tubig"
+            "vi" -> "Tiện ích"
+            "th" -> "สาธารณูปโภค"
+            "pt" -> "Serviços públicos"
+            "hi" -> "उपयोगिता"
+            else -> "Utility"
+        }
         "Sale" -> stringResource("cat_sale")
         "Other" -> stringResource("cat_other")
         "Feed" -> stringResource("cat_feed")
@@ -328,7 +428,11 @@ fun AddFinancialRecordDialog(
     val selectedPigIds = remember { mutableStateListOf<String>() }
     val scrollState = rememberScrollState()
 
-    val categories = if (type == "Income") listOf("Sale", "Other") else listOf("Feed", "Medicine", "Equipment", "Labor", "Other")
+    val categories = if (type == "Income") {
+        listOf("Pig Sale", "Manure Sale", "Breeding Service", "Equipment Sale", "Other")
+    } else {
+        listOf("Feed", "Vet/Medication", "Labor/Salary", "Equipment", "Transport", "Rent", "Utility", "Other")
+    }
 
     if (showDatePicker.value) {
         DatePickerDialog(
@@ -389,7 +493,7 @@ fun AddFinancialRecordDialog(
                                 text = { Text(getTranslatedFinancialType(selectionOption)) },
                                 onClick = {
                                     type = selectionOption
-                                    category = if (selectionOption == "Income") "Sale" else "Feed"
+                                    category = if (selectionOption == "Income") "Pig Sale" else "Feed"
                                     expandedType = false
                                 }
                             )
@@ -429,7 +533,7 @@ fun AddFinancialRecordDialog(
                     )
                 }
 
-                if (category == "Sale") {
+                if (category == "Pig Sale") {
                     val availablePigs = remember(pigs) {
                         pigs.filter { pig ->
                             val isArchived = pig.location.equals("Archived", ignoreCase = true) || 

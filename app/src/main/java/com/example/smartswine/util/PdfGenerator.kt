@@ -391,16 +391,115 @@ object PdfGenerator {
 
                 table.addCell(Paragraph(record.date))
                 val rawCategory = record.category
-                val categoryKey = when (rawCategory) {
-                    "Sale" -> "cat_sale"
-                    "Other" -> "cat_other"
-                    "Feed" -> "cat_feed"
-                    "Medicine" -> "cat_medicine"
-                    "Equipment" -> "cat_equipment"
-                    "Labor" -> "cat_labor"
-                    else -> rawCategory.lowercase().replace(" ", "_")
+                val translatedCategory = when (rawCategory) {
+                    "Pig Sale" -> when (lang) {
+                        "fr" -> "Vente de porcs"
+                        "zh" -> "猪只销售"
+                        "es" -> "Venta de cerdos"
+                        "tl" -> "Benta ng Baboy"
+                        "vi" -> "Bán lợn"
+                        "th" -> "ขายหมู"
+                        "pt" -> "Venda de porcos"
+                        "hi" -> "सुअर की बिक्री"
+                        else -> "Pig Sale"
+                    }
+                    "Manure Sale" -> when (lang) {
+                        "fr" -> "Vente de fumier"
+                        "zh" -> "粪便销售"
+                        "es" -> "Venta de estiércol"
+                        "tl" -> "Benta ng Pataba"
+                        "vi" -> "Bán phân"
+                        "th" -> "ขายปุ๋ยคอก"
+                        "pt" -> "Venda de esterco"
+                        "hi" -> "खाद की बिक्री"
+                        else -> "Manure Sale"
+                    }
+                    "Breeding Service" -> when (lang) {
+                        "fr" -> "Service d'élevage"
+                        "zh" -> "配种服务"
+                        "es" -> "Servicio de cría"
+                        "tl" -> "Serbisyo sa Pagpaparami"
+                        "vi" -> "Dịch vụ phối giống"
+                        "th" -> "บริการผสมพันธุ์"
+                        "pt" -> "Serviço de reprodução"
+                        "hi" -> "प्रजनन सेवा"
+                        else -> "Breeding Service"
+                    }
+                    "Equipment Sale" -> when (lang) {
+                        "fr" -> "Vente d'équipement"
+                        "zh" -> "设备销售"
+                        "es" -> "Venta de equipos"
+                        "tl" -> "Benta ng Kagamitan"
+                        "vi" -> "Bán thiết bị"
+                        "th" -> "ขายอุปกรณ์"
+                        "pt" -> "Venda de equipamentos"
+                        "hi" -> "उपकरण की बिक्री"
+                        else -> "Equipment Sale"
+                    }
+                    "Vet/Medication" -> when (lang) {
+                        "fr" -> "Vétérinaire/Médicaments"
+                        "zh" -> "兽医/药物"
+                        "es" -> "Veterinario/Medicamentos"
+                        "tl" -> "Vet/Gamot"
+                        "vi" -> "Thú y/Thuốc"
+                        "th" -> "สัตวแพทย์/ยารักษาโรค"
+                        "pt" -> "Veterinário/Medicamento"
+                        "hi" -> "पशु चिकित्सक/दवा"
+                        else -> "Vet/Medication"
+                    }
+                    "Labor/Salary" -> when (lang) {
+                        "fr" -> "Main d'œuvre/Salaire"
+                        "zh" -> "人工/工资"
+                        "es" -> "Mano de obra/Salario"
+                        "tl" -> "Labor/Sahod"
+                        "vi" -> "Nhân công/Lương"
+                        "th" -> "แรงงาน/เงินเดือน"
+                        "pt" -> "Mão de obra/Salário"
+                        "hi" -> "श्रम/वेतन"
+                        else -> "Labor/Salary"
+                    }
+                    "Transport" -> when (lang) {
+                        "fr" -> "Transport"
+                        "zh" -> "运输"
+                        "es" -> "Transporte"
+                        "tl" -> "Transportasyon"
+                        "vi" -> "Vận chuyển"
+                        "th" -> "การขนส่ง"
+                        "pt" -> "Transporte"
+                        "hi" -> "परिवहन"
+                        else -> "Transport"
+                    }
+                    "Rent" -> when (lang) {
+                        "fr" -> "Loyer"
+                        "zh" -> "租金"
+                        "es" -> "Alquiler"
+                        "tl" -> "Upa"
+                        "vi" -> "Thuê"
+                        "th" -> "ค่าเช่า"
+                        "pt" -> "Aluguel"
+                        "hi" -> "किराया"
+                        else -> "Rent"
+                    }
+                    "Utility" -> when (lang) {
+                        "fr" -> "Services publics"
+                        "zh" -> "水电费"
+                        "es" -> "Servicios públicos"
+                        "tl" -> "Kuryente at Tubig"
+                        "vi" -> "Tiện ích"
+                        "th" -> "สาธารณูปโภค"
+                        "pt" -> "Serviços públicos"
+                        "hi" -> "उपयोगिता"
+                        else -> "Utility"
+                    }
+                    "Sale" -> tr("cat_sale", lang)
+                    "Other" -> tr("cat_other", lang)
+                    "Feed" -> tr("cat_feed", lang)
+                    "Medicine" -> tr("cat_medicine", lang)
+                    "Equipment" -> tr("cat_equipment", lang)
+                    "Labor" -> tr("cat_labor", lang)
+                    else -> rawCategory
                 }
-                table.addCell(Paragraph(tr(categoryKey, lang)))
+                table.addCell(Paragraph(translatedCategory))
                 table.addCell(Paragraph(displayDescription))
                 table.addCell(Paragraph(if (incomeVal > 0) String.format(Locale.getDefault(), "%.2f", incomeVal) else ""))
                 table.addCell(Paragraph(if (expenseVal > 0) String.format(Locale.getDefault(), "%.2f", expenseVal) else ""))

@@ -99,31 +99,31 @@ const SYMPTOM_GROUPS = [
     id: "sg_skin_coat",
     name: "Skin & Coat",
     symptoms: [
-      "sym_skin_discoloration",
-      "sym_diamond_lesions",
-      "sym_itching",
-      "sym_hair_loss",
-      "sym_pale_skin",
-      "sym_jaundice",
-      "sym_skin_crusts",
-      "sym_rough_hair",
-      "sym_sunburn",
-      "sym_ear_necrosis",
       "sym_blisters_snout_feet",
+      "sym_diamond_lesions",
+      "sym_ear_necrosis",
+      "sym_hair_loss",
+      "sym_itching",
+      "sym_jaundice",
+      "sym_pale_skin",
+      "sym_rough_hair",
+      "sym_skin_crusts",
+      "sym_skin_discoloration",
+      "sym_sunburn",
     ],
   },
   {
     id: "sg_digestive_stool",
     name: "Digestive & Stool",
     symptoms: [
-      "sym_diarrhea",
-      "sym_vomiting",
-      "sym_bloody_diarrhea",
-      "sym_blood_in_stool",
-      "sym_rectal_prolapse",
       "sym_bloat",
+      "sym_blood_in_stool",
+      "sym_bloody_diarrhea",
       "sym_dehydration",
+      "sym_diarrhea",
       "sym_loss_of_appetite",
+      "sym_rectal_prolapse",
+      "sym_vomiting",
       "sym_weight_loss",
     ],
   },
@@ -133,30 +133,30 @@ const SYMPTOM_GROUPS = [
     symptoms: [
       "sym_coughing",
       "sym_difficulty_breathing",
+      "sym_excessive_salivation",
+      "sym_frothing",
       "sym_nasal_discharge",
+      "sym_nose_bleeds",
       "sym_sneezing",
       "sym_thumping",
-      "sym_nose_bleeds",
-      "sym_frothing",
-      "sym_excessive_salivation",
     ],
   },
   {
     id: "sg_behavioral_nervous",
     name: "Behavioral & Nervous",
     symptoms: [
-      "sym_lethargy",
-      "sym_seizures",
-      "sym_muscle_stiffness",
-      "sym_trembling",
       "sym_blindness",
-      "sym_paralysis",
-      "sym_incoordination",
       "sym_circling",
       "sym_convulsions",
+      "sym_incoordination",
+      "sym_lethargy",
+      "sym_muscle_stiffness",
       "sym_nervousness",
-      "sym_twitching",
+      "sym_paralysis",
+      "sym_seizures",
       "sym_tail_biting",
+      "sym_trembling",
+      "sym_twitching",
     ],
   },
   {
@@ -164,35 +164,35 @@ const SYMPTOM_GROUPS = [
     name: "Reproduction",
     symptoms: [
       "sym_abortion",
+      "sym_enlarged_scrotum",
       "sym_infertility",
       "sym_mummified_piglets",
       "sym_small_litter",
-      "sym_swollen_vulva",
-      "sym_enlarged_scrotum",
       "sym_swollen_udder",
+      "sym_swollen_vulva",
     ],
   },
   {
     id: "sg_general_limbs",
     name: "General & Limbs",
     symptoms: [
-      "sym_high_fever",
-      "sym_lameness",
-      "sym_sudden_death",
-      "sym_swollen_joints",
-      "sym_swollen_navel",
-      "sym_leg_weakness",
-      "sym_swollen_eyelids",
-      "sym_stunted_growth",
-      "sym_pale_mucous",
-      "sym_bleeding_orifices",
-      "sym_watery_diarrhea",
       "sym_abscesses",
       "sym_anemia",
-      "sym_thirst",
-      "sym_fractures",
+      "sym_bleeding_orifices",
       "sym_cracked_hooves",
+      "sym_fractures",
+      "sym_high_fever",
+      "sym_lameness",
+      "sym_leg_weakness",
+      "sym_pale_mucous",
       "sym_red_urine",
+      "sym_stunted_growth",
+      "sym_sudden_death",
+      "sym_swollen_eyelids",
+      "sym_swollen_joints",
+      "sym_swollen_navel",
+      "sym_thirst",
+      "sym_watery_diarrhea",
     ],
   },
 ];
@@ -1196,15 +1196,28 @@ export default function SymptomsPage() {
   const router = useRouter();
 
   const [selectedSymptoms, setSelectedSymptoms] = useState<Set<string>>(new Set());
-  const [activeTab, setActiveTab] = useState<string>("sg_skin_coat");
+  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set(["sg_skin_coat"]));
   const [diagnosisResults, setDiagnosisResults] = useState<{ disease: Disease; matches: number; matchPercent: number }[]>([]);
   const [hasAnalyzed, setHasAnalyzed] = useState(false);
+  const [expandedDisease, setExpandedDisease] = useState<string | null>(null);
 
   useEffect(() => {
     if (!loading && !user) {
       router.push("/login");
     }
   }, [user, loading, router]);
+
+  const toggleGroup = (groupId: string) => {
+    setExpandedGroups((prev) => {
+      const next = new Set(prev);
+      if (next.has(groupId)) {
+        next.delete(groupId);
+      } else {
+        next.add(groupId);
+      }
+      return next;
+    });
+  };
 
   const toggleSymptom = (key: string) => {
     setSelectedSymptoms((prev) => {
@@ -1299,60 +1312,58 @@ export default function SymptomsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
             {/* Symptoms Selection Side */}
             <div className="lg:col-span-2 bg-white/80 backdrop-blur-md border border-zinc-200 rounded-2xl overflow-hidden shadow-sm flex flex-col">
-              {/* Tabs list */}
-              <div className="flex border-b border-zinc-200 bg-zinc-50/50 overflow-x-auto no-scrollbar">
-                {SYMPTOM_GROUPS.map((group) => (
-                  <button
-                    key={group.id}
-                    onClick={() => setActiveTab(group.id)}
-                    className={`px-4 py-3 text-xs font-bold whitespace-nowrap border-b-2 transition duration-300 ${
-                      activeTab === group.id
-                        ? "border-rose-600 text-rose-600 bg-white"
-                        : "border-transparent text-zinc-500 hover:text-zinc-800 hover:bg-zinc-100/50"
-                    }`}
-                  >
-                    {group.name}
-                  </button>
-                ))}
-              </div>
-
-              {/* Symptom checkboxes grid */}
-              <div className="p-6 min-h-[300px]">
+              {/* Vertical Scrollable Sections */}
+              <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto no-scrollbar">
                 {SYMPTOM_GROUPS.map((group) => {
-                  if (group.id !== activeTab) return null;
+                  const isExpanded = expandedGroups.has(group.id);
                   return (
-                    <div key={group.id} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {group.symptoms.map((sKey) => {
-                        const isChecked = selectedSymptoms.has(sKey);
-                        return (
-                          <label
-                            key={sKey}
-                            onClick={() => toggleSymptom(sKey)}
-                            className={`flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer select-none transition duration-300 ${
-                              isChecked
-                                ? "border-rose-350 bg-rose-50/40 text-rose-900"
-                                : "border-zinc-200 bg-white hover:bg-zinc-50/50 text-zinc-800"
-                            }`}
-                          >
-                            <input
-                              type="checkbox"
-                              checked={isChecked}
-                              readOnly
-                              className="mt-1 h-4 w-4 rounded text-rose-600 border-zinc-300 focus:ring-rose-500 pointer-events-none"
-                            />
-                            <div className="text-xs font-semibold leading-relaxed">
-                              {SYMPTOMS[sKey] || sKey}
-                            </div>
-                          </label>
-                        );
-                      })}
+                    <div key={group.id} className="border border-zinc-100 rounded-xl overflow-hidden">
+                      <button
+                        onClick={() => toggleGroup(group.id)}
+                        className="w-full flex items-center justify-between p-4 bg-zinc-50/50 hover:bg-zinc-100 transition-colors"
+                      >
+                        <span className="text-sm font-bold text-emerald-800 uppercase tracking-tight">{group.name}</span>
+                        <span className="text-zinc-400 font-bold">{isExpanded ? "−" : "+"}</span>
+                      </button>
+
+                      {isExpanded && (
+                        <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-3 bg-white">
+                          {group.symptoms.map((sKey) => {
+                            const isChecked = selectedSymptoms.has(sKey);
+                            return (
+                              <label
+                                key={sKey}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  toggleSymptom(sKey);
+                                }}
+                                className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer select-none transition duration-300 ${
+                                  isChecked
+                                    ? "border-emerald-350 bg-emerald-50/40 text-emerald-900"
+                                    : "border-zinc-100 bg-white hover:bg-zinc-50/50 text-zinc-700"
+                                }`}
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={isChecked}
+                                  readOnly
+                                  className="mt-1 h-3.5 w-3.5 rounded text-emerald-600 border-zinc-300 focus:ring-emerald-500 pointer-events-none"
+                                />
+                                <div className="text-[11px] font-semibold leading-relaxed">
+                                  {SYMPTOMS[sKey] || sKey}
+                                </div>
+                              </label>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
                   );
                 })}
               </div>
 
               {/* Action Buttons */}
-              <div className="border-t border-zinc-200 p-4 bg-zinc-55/20 flex flex-wrap gap-4 justify-between items-center">
+              <div className="border-t border-zinc-200 p-4 bg-zinc-50/30 flex flex-wrap gap-4 justify-between items-center">
                 <div className="text-xs text-zinc-500 font-medium">
                   {selectedSymptoms.size} symptom(s) selected
                 </div>
@@ -1366,7 +1377,7 @@ export default function SymptomsPage() {
                   <button
                     onClick={handleAnalyze}
                     disabled={selectedSymptoms.size === 0}
-                    className="px-6 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 disabled:bg-zinc-200 disabled:text-zinc-450 disabled:cursor-not-allowed text-xs font-bold text-white shadow transition-all flex items-center gap-2"
+                    className="px-6 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:bg-zinc-200 disabled:text-zinc-450 disabled:cursor-not-allowed text-xs font-bold text-white shadow transition-all flex items-center gap-2"
                   >
                     Analyze Symptoms
                   </button>
@@ -1387,15 +1398,15 @@ export default function SymptomsPage() {
                 </div>
               ) : !isPremium ? (
                 /* Free Paywall Block */
-                <div className="border border-rose-250 bg-rose-50/50 rounded-xl p-5 text-center space-y-4">
+                <div className="border border-emerald-250 bg-emerald-50/50 rounded-xl p-5 text-center space-y-4">
                   <span className="text-3xl block">🔒</span>
-                  <h4 className="text-sm font-bold text-rose-900">Premium Diagnostics Feature</h4>
+                  <h4 className="text-sm font-bold text-emerald-900">Premium Diagnostics Feature</h4>
                   <p className="text-xs text-zinc-600 leading-relaxed">
                     Analyzing swine diseases is a Premium Feature. Upgraded farms gain full access to the AI diagnostics matcher, match accuracy indicators, and tailored biosecurity prevention guidelines.
                   </p>
                   <Link
                     href="/dashboard/billing"
-                    className="block w-full py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow transition"
+                    className="block w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow transition"
                   >
                     Upgrade to Premium
                   </Link>
@@ -1422,10 +1433,14 @@ export default function SymptomsPage() {
                     else if (disease.severity === "HIGH") severityColor = "bg-orange-50 text-orange-800 border-orange-200/50";
                     else if (disease.severity === "CRITICAL") severityColor = "bg-rose-50 text-rose-800 border-rose-200/50";
 
+                    const isExpanded = expandedDisease === disease.id;
+                    const unselectedSymptoms = disease.symptomKeys.filter(sKey => !selectedSymptoms.has(sKey));
+
                     return (
                       <div
                         key={disease.id}
-                        className="p-4 rounded-xl border border-zinc-200 bg-white/90 shadow-sm space-y-3"
+                        onClick={() => setExpandedDisease(isExpanded ? null : disease.id)}
+                        className="p-4 rounded-xl border border-zinc-200 bg-white/90 shadow-sm space-y-3 cursor-pointer hover:border-emerald-200 transition-all"
                       >
                         <div className="flex justify-between items-start gap-2">
                           <div>
@@ -1439,29 +1454,49 @@ export default function SymptomsPage() {
                           </span>
                         </div>
 
-                        {/* Match Meter */}
-                        <div className="space-y-1.5">
-                          <div className="flex justify-between text-[10px] font-bold">
-                            <span className="text-zinc-500">{matches} symptom(s) matched</span>
-                            <span className="text-rose-600">{matchPercent}%</span>
+                        {/* Match Indicator */}
+                        <div className="space-y-1">
+                          <div className="text-[10px] font-bold text-emerald-700">
+                            Match Accuracy: {matches} symptom(s) detected
                           </div>
                           <div className="h-1.5 w-full bg-zinc-100 rounded-full overflow-hidden">
                             <div
-                              className="h-full bg-rose-500 rounded-full transition-all duration-500"
+                              className="h-full bg-emerald-500 rounded-full transition-all duration-500"
                               style={{ width: `${matchPercent}%` }}
                             />
                           </div>
                         </div>
 
-                        <div className="text-[11px] text-zinc-600 leading-relaxed border-t border-zinc-100 pt-2.5">
-                          <strong className="text-zinc-700 block mb-0.5">Description:</strong>
-                          {disease.description}
-                        </div>
+                        {isExpanded && (
+                          <div className="space-y-3 pt-2 border-t border-zinc-100 animate-in fade-in slide-in-from-top-1 duration-300">
+                            <div className="text-[11px] text-zinc-600 leading-relaxed">
+                              <strong className="text-zinc-700 block mb-0.5">Description:</strong>
+                              {disease.description}
+                            </div>
 
-                        {disease.prevention && (
-                          <div className="text-[11px] text-zinc-600 leading-relaxed bg-rose-50/30 p-2.5 rounded-lg border border-rose-100/50">
-                            <strong className="text-rose-900 block mb-0.5">Prevention & Action Plan:</strong>
-                            {disease.prevention}
+                            {unselectedSymptoms.length > 0 && (
+                              <div className="text-[11px] text-zinc-600 leading-relaxed">
+                                <strong className="text-zinc-700 block mb-0.5">Other symptoms to watch out for:</strong>
+                                <ul className="list-disc list-inside pl-1 space-y-0.5">
+                                  {unselectedSymptoms.map(sKey => (
+                                    <li key={sKey}>{SYMPTOMS[sKey] || sKey}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+
+                            {disease.prevention && (
+                              <div className="text-[11px] text-zinc-600 leading-relaxed bg-emerald-50/30 p-2.5 rounded-lg border border-emerald-100/50">
+                                <strong className="text-emerald-900 block mb-0.5">Prevention & Action Plan:</strong>
+                                {disease.prevention}
+                              </div>
+                            )}
+                          </div>
+                        )}
+
+                        {!isExpanded && (
+                          <div className="text-[10px] text-zinc-400 font-bold text-center pt-1">
+                            Click to view details & prevention
                           </div>
                         )}
                       </div>

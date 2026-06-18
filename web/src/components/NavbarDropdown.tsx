@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 import {
   HomeIcon,
   HerdDataIcon,
@@ -15,6 +16,7 @@ import {
   WeightCheckerIcon,
   TrainingTipsIcon,
   PremiumIcon,
+  ShieldCheckIcon,
 } from "@/components/icons/DashboardIcons";
 
 interface NavOption {
@@ -24,7 +26,7 @@ interface NavOption {
   icon: React.ComponentType<any>;
 }
 
-const NAV_OPTIONS: NavOption[] = [
+const BASE_NAV_OPTIONS: NavOption[] = [
   { key: "home", label: "Dashboard Home", path: "/dashboard", icon: HomeIcon },
   { key: "herd", label: "Herd Data", path: "/dashboard/herd", icon: HerdDataIcon },
   { key: "feed", label: "Feed Management", path: "/dashboard/feed", icon: FeedManagementIcon },
@@ -38,16 +40,29 @@ const NAV_OPTIONS: NavOption[] = [
   { key: "billing", label: "Billing & Premium", path: "/dashboard/billing", icon: PremiumIcon },
 ];
 
+const ADMIN_NAV_OPTION: NavOption = {
+  key: "admin",
+  label: "Admin Panel",
+  path: "/admin",
+  icon: ShieldCheckIcon,
+};
+
 export default function NavbarDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const { userProfile } = useAuth();
+
+  // Insert Admin Panel immediately after Billing & Premium (same order as Android app)
+  const options = userProfile?.isAdmin
+    ? [...BASE_NAV_OPTIONS, ADMIN_NAV_OPTION]
+    : [...BASE_NAV_OPTIONS];
 
   // Determine current option based on path
-  const currentOption = NAV_OPTIONS.find(
+  const currentOption = options.find(
     (opt) =>
       opt.path === pathname || 
       (opt.path !== "/dashboard" && pathname.startsWith(opt.path))
-  ) || NAV_OPTIONS[0];
+  ) || options[0];
 
   return (
     <div className="relative inline-block text-left">
@@ -84,7 +99,7 @@ export default function NavbarDropdown() {
             Navigate to
           </div>
           <div className="max-h-[320px] overflow-y-auto pr-0.5 no-scrollbar">
-            {NAV_OPTIONS.map((opt) => {
+            {options.map((opt) => {
               const isSelected = opt.key === currentOption.key;
               return (
                 <Link

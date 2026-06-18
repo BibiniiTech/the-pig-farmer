@@ -1025,6 +1025,7 @@ fun FeedFormulatorDialog(
                 val cat = it.mainCategory.ifBlank { it.category }
                 if (cat.isBlank()) "Uncategorized" else cat
             }
+            .mapValues { entry -> entry.value.sortedBy { it.name.lowercase() } }
             .toSortedMap(compareBy<String> { 
                 val index = categoryOrder.indexOf(it)
                 if (index == -1) Int.MAX_VALUE else index 

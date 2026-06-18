@@ -137,6 +137,7 @@ fun AdminPanelContent(
     var ingredientToDelete by remember { mutableStateOf<FeedIngredient?>(null) }
     var showAddIngredientDialog by remember { mutableStateOf(false) }
     val expandedCategories = remember { mutableStateMapOf<String, Boolean>() }
+    val expandedCountries = remember { mutableStateMapOf<String, Boolean>() }
 
     // Dialogue/Sheet states for Videos
     var videoToEdit by remember { mutableStateOf<TrainingVideo?>(null) }
@@ -1222,12 +1223,67 @@ fun AdminPanelContent(
                                         modifier = Modifier.padding(vertical = 8.dp)
                                     )
                                 } else {
-                                    sortedProviders.forEach { provider ->
-                                        AdminProviderListingItem(
-                                            provider = provider,
-                                            onEdit = { providerToEdit = it },
-                                            onDelete = { providerToDelete = it }
-                                        )
+                                    val providersByCountry = providers
+                                        .groupBy { it.country.ifBlank { "Unknown" } }
+                                        .entries
+                                        .sortedBy { it.key }
+
+                                    providersByCountry.forEach { (country, countryProviders) ->
+                                        val isCountryExpanded = expandedCountries[country] ?: true
+
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .clickable { expandedCountries[country] = !isCountryExpanded }
+                                                .padding(vertical = 6.dp),
+                                            horizontalArrangement = Arrangement.SpaceBetween,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                                Text(
+                                                    text = country,
+                                                    style = MaterialTheme.typography.titleSmall,
+                                                    fontWeight = FontWeight.Bold,
+                                                    color = MaterialTheme.colorScheme.secondary
+                                                )
+                                                Spacer(modifier = Modifier.width(6.dp))
+                                                Surface(
+                                                    shape = RoundedCornerShape(100.dp),
+                                                    color = MaterialTheme.colorScheme.secondaryContainer,
+                                                ) {
+                                                    Text(
+                                                        text = countryProviders.size.toString(),
+                                                        style = MaterialTheme.typography.labelSmall,
+                                                        fontWeight = FontWeight.Bold,
+                                                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                                                    )
+                                                }
+                                            }
+                                            Icon(
+                                                imageVector = if (isCountryExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                                                contentDescription = null,
+                                                tint = MaterialTheme.colorScheme.secondary
+                                            )
+                                        }
+
+                                        AnimatedVisibility(
+                                            visible = isCountryExpanded,
+                                            enter = expandVertically() + fadeIn(),
+                                            exit = shrinkVertically() + fadeOut()
+                                        ) {
+                                            Column(
+                                                modifier = Modifier.padding(start = 4.dp, bottom = 4.dp),
+                                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                                            ) {
+                                                countryProviders.sortedBy { it.name }.forEach { provider ->
+                                                    AdminProviderListingItem(
+                                                        provider = provider,
+                                                        onEdit = { providerToEdit = it },
+                                                        onDelete = { providerToDelete = it }
+                                                    )
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                                 Spacer(modifier = Modifier.height(8.dp))
