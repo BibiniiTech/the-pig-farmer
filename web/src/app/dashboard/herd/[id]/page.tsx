@@ -6,6 +6,7 @@ import Link from "next/link";
 import { doc, onSnapshot, updateDoc, collection, setDoc, deleteDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
+import NavbarDropdown from "@/components/NavbarDropdown";
 
 interface Pig {
   id: string;
