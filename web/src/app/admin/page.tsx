@@ -796,13 +796,13 @@ function EditSuggestionModal({ suggestion, onClose }: { suggestion: Suggestion, 
   return (
     <Modal title="Edit Suggestion Details" onClose={onClose}>
       <div className="space-y-4">
-        <Input label="Provider Name" value={formData.providerName} onChange={v => setFormData({...formData, providerName: v})} />
-        <Select label="Service Type" value={formData.serviceType} options={services} onChange={v => setFormData({...formData, serviceType: v})} />
-        <Input label="Contact" value={formData.contact} onChange={v => setFormData({...formData, contact: v})} />
-        <Input label="Email" value={formData.email} onChange={v => setFormData({...formData, email: v})} />
+        <Input label="Provider Name" value={formData.providerName} onChange={(v: string) => setFormData({...formData, providerName: v})} />
+        <Select label="Service Type" value={formData.serviceType} options={services} onChange={(v: string) => setFormData({...formData, serviceType: v})} />
+        <Input label="Contact" value={formData.contact} onChange={(v: string) => setFormData({...formData, contact: v})} />
+        <Input label="Email" value={formData.email} onChange={(v: string) => setFormData({...formData, email: v})} />
         <div className="grid grid-cols-2 gap-4">
-          <Input label="City" value={formData.city} onChange={v => setFormData({...formData, city: v})} />
-          <Input label="Country" value={formData.country} onChange={v => setFormData({...formData, country: v})} />
+          <Input label="City" value={formData.city} onChange={(v: string) => setFormData({...formData, city: v})} />
+          <Input label="Country" value={formData.country} onChange={(v: string) => setFormData({...formData, country: v})} />
         </div>
         <button onClick={handleSave} className="w-full py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 transition mt-4">Save Changes</button>
       </div>
@@ -824,12 +824,12 @@ function EditProviderModal({ provider, onClose }: { provider: ProviderListing, o
   return (
     <Modal title="Edit Provider Listing" onClose={onClose}>
       <div className="space-y-4">
-        <Input label="Name" value={formData.name} onChange={v => setFormData({...formData, name: v})} />
-        <Select label="Category" value={formData.category} options={categories} onChange={v => setFormData({...formData, category: v})} />
-        <Input label="Contact" value={formData.contact} onChange={v => setFormData({...formData, contact: v})} />
-        <Input label="Email" value={formData.email} onChange={v => setFormData({...formData, email: v})} />
-        <Input label="Location" value={formData.location} onChange={v => setFormData({...formData, location: v})} />
-        <Input label="Country" value={formData.country} onChange={v => setFormData({...formData, country: v})} />
+        <Input label="Name" value={formData.name} onChange={(v: string) => setFormData({...formData, name: v})} />
+        <Select label="Category" value={formData.category} options={categories} onChange={(v: string) => setFormData({...formData, category: v})} />
+        <Input label="Contact" value={formData.contact} onChange={(v: string) => setFormData({...formData, contact: v})} />
+        <Input label="Email" value={formData.email} onChange={(v: string) => setFormData({...formData, email: v})} />
+        <Input label="Location" value={formData.location} onChange={(v: string) => setFormData({...formData, location: v})} />
+        <Input label="Country" value={formData.country} onChange={(v: string) => setFormData({...formData, country: v})} />
         <textarea
           placeholder="Description"
           value={formData.description}
