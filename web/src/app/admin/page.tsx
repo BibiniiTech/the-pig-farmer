@@ -249,23 +249,23 @@ export default function AdminPage() {
 
       <div className="relative z-10 flex flex-col min-h-screen">
         {/* Header */}
-        {!isMobile && (
-          <header className="bg-white/80 backdrop-blur-md border-b border-zinc-200 sticky top-0 z-40">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-              <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
-                <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-                <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
-                  SmartSwine
-                </span>
-              </Link>
+        <header className="bg-white/80 backdrop-blur-md border-b border-zinc-200 sticky top-0 z-40">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
+              <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                SmartSwine
+              </span>
+            </Link>
 
-              <div className="flex items-center gap-4">
-                <h1 className="text-[10px] font-black text-zinc-400 tracking-widest mr-2">ADMIN PANEL</h1>
-                <NavbarDropdown />
-              </div>
+            <div className="flex items-center gap-4">
+              <h1 className="hidden sm:block text-[10px] font-black text-zinc-400 tracking-widest mr-2">ADMIN PANEL</h1>
+              <NavbarDropdown />
             </div>
+          </div>
 
-            {/* Tabs */}
+          {/* Tabs (Desktop only) */}
+          {!isMobile && (
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex border-t border-zinc-100">
               <button
                 onClick={() => setActiveTab("suggestions")}
@@ -295,12 +295,12 @@ export default function AdminPage() {
                 <span className="hidden sm:inline">Videos</span>
               </button>
             </div>
-          </header>
-        )}
+          )}
+        </header>
 
         {/* Mobile-only Tabs (Floating or sub-header) */}
         {isMobile && (
-          <div className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-zinc-100 flex shadow-sm">
+          <div className="sticky top-16 z-40 bg-white/95 backdrop-blur-md border-b border-zinc-100 flex shadow-sm">
             <button
               onClick={() => setActiveTab("suggestions")}
               className={`flex-1 py-3 text-[10px] font-black uppercase tracking-widest transition ${
