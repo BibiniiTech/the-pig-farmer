@@ -352,56 +352,58 @@ export default function HumanResourcesPage() {
                   key={member.id}
                   className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4 relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300"
                 >
-                  <div className="absolute top-0 right-0 h-16 w-16 rounded-full bg-emerald-500/5 blur-lg" />
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h4 className="text-base font-bold text-zinc-900">{member.name}</h4>
-                      <p className="text-xs text-zinc-500 mt-0.5">{member.role}</p>
+                  <div className="absolute top-0 right-0 h-16 w-16 rounded-full bg-emerald-500/5 blur-lg pointer-events-none" />
+                  <div className="relative z-10 space-y-4">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h4 className="text-base font-bold text-zinc-900">{member.name}</h4>
+                        <p className="text-xs text-zinc-500 mt-0.5">{member.role}</p>
+                      </div>
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                        member.status === "Active" ? "bg-emerald-50 text-emerald-800" : "bg-zinc-100 text-zinc-500"
+                      }`}>
+                        {member.status}
+                      </span>
                     </div>
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                      member.status === "Active" ? "bg-emerald-50 text-emerald-800" : "bg-zinc-100 text-zinc-500"
-                    }`}>
-                      {member.status}
-                    </span>
-                  </div>
 
-                  <div className="divide-y divide-zinc-100 text-xs text-zinc-650 space-y-1.5 pt-1">
-                    <div className="flex justify-between py-1">
-                      <span>Phone</span>
-                      <span className="font-semibold text-zinc-800">{member.phone || "N/A"}</span>
+                    <div className="divide-y divide-zinc-100 text-xs text-zinc-650 space-y-1.5 pt-1">
+                      <div className="flex justify-between py-1">
+                        <span>Phone</span>
+                        <span className="font-semibold text-zinc-800">{member.phone || "N/A"}</span>
+                      </div>
+                      <div className="flex justify-between py-1">
+                        <span>Email</span>
+                        <span className="font-semibold text-zinc-800">{member.email || "N/A"}</span>
+                      </div>
+                      <div className="flex justify-between py-1">
+                        <span>Salary</span>
+                        <span className="font-semibold text-zinc-800">${member.salary.toFixed(2)}/mo</span>
+                      </div>
+                      <div className="flex justify-between py-1">
+                        <span>Joined</span>
+                        <span className="font-semibold text-zinc-800">{member.joinDate}</span>
+                      </div>
                     </div>
-                    <div className="flex justify-between py-1">
-                      <span>Email</span>
-                      <span className="font-semibold text-zinc-800">{member.email || "N/A"}</span>
-                    </div>
-                    <div className="flex justify-between py-1">
-                      <span>Salary</span>
-                      <span className="font-semibold text-zinc-800">${member.salary.toFixed(2)}/mo</span>
-                    </div>
-                    <div className="flex justify-between py-1">
-                      <span>Joined</span>
-                      <span className="font-semibold text-zinc-800">{member.joinDate}</span>
-                    </div>
-                  </div>
 
-                  <div className="pt-3 border-t border-zinc-100 flex items-center justify-between">
-                    <label className="flex items-center gap-2 cursor-pointer text-xs text-zinc-600">
-                      <input
-                        type="checkbox"
-                        checked={member.allowAppAccess}
-                        onChange={() => handleToggleAccess(member)}
-                        className="h-4 w-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500"
-                      />
-                      <span>App Access</span>
-                    </label>
+                    <div className="pt-3 border-t border-zinc-100 flex items-center justify-between">
+                      <label className="flex items-center gap-2 cursor-pointer text-xs text-zinc-600">
+                        <input
+                          type="checkbox"
+                          checked={member.allowAppAccess}
+                          onChange={() => handleToggleAccess(member)}
+                          className="h-4 w-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500"
+                        />
+                        <span>App Access</span>
+                      </label>
 
-                    <div className="space-x-3 text-xs">
-                      <button onClick={() => startEdit(member)} className="text-emerald-600 hover:underline font-bold">
-                        Edit
-                      </button>
-                      <button onClick={() => handleDeleteStaff(member)} className="text-rose-600 hover:underline font-bold">
-                        Remove
-                      </button>
+                      <div className="space-x-3 text-xs">
+                        <button onClick={() => startEdit(member)} className="text-emerald-600 hover:underline font-bold">
+                          Edit
+                        </button>
+                        <button onClick={() => handleDeleteStaff(member)} className="text-rose-600 hover:underline font-bold">
+                          Remove
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

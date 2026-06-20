@@ -202,8 +202,8 @@ export default function PigProfilePage() {
           {/* Left Side: Summary Card */}
           <div className="md:col-span-5 space-y-6">
             <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4 relative overflow-hidden">
-              <div className="absolute top-0 right-0 h-16 w-16 rounded-full bg-emerald-500/5 blur-lg" />
-              <div className="flex justify-between items-start gap-4">
+              <div className="absolute top-0 right-0 h-16 w-16 rounded-full bg-emerald-500/5 blur-lg pointer-events-none" />
+              <div className="flex justify-between items-start gap-4 relative z-10">
                 <div className="min-w-0">
                   <p className="text-xs font-semibold text-zinc-400 font-mono">Status & Location</p>
                   <h2 className="text-xl font-bold text-zinc-900 mt-1 truncate">{pig.tagNumber}</h2>
@@ -220,7 +220,7 @@ export default function PigProfilePage() {
                 </button>
               </div>
 
-              <div className="divide-y divide-zinc-100 text-sm">
+              <div className="divide-y divide-zinc-100 text-sm relative z-10">
                 <div className="py-1.5 flex justify-between">
                   <span className="text-zinc-500">Gender</span>
                   <span className="font-semibold">{pig.gender}</span>
@@ -264,14 +264,14 @@ export default function PigProfilePage() {
 
               <button
                 onClick={handleDeletePig}
-                className="w-full text-center text-xs font-semibold text-rose-600 hover:text-rose-700 pt-2 border-t border-zinc-100 hover:underline"
+                className="w-full text-center text-xs font-semibold text-rose-600 hover:text-rose-700 pt-2 border-t border-zinc-100 hover:underline relative z-10"
               >
                 Delete Profile
               </button>
 
               <button
                 onClick={() => setShowEditModal(true)}
-                className="w-full mt-2 rounded-lg border border-zinc-200 bg-zinc-50/50 px-4 py-2.5 text-xs font-bold text-zinc-650 hover:bg-zinc-100 hover:text-zinc-950 transition-all active:scale-95"
+                className="w-full mt-2 rounded-lg border border-zinc-200 bg-zinc-50/50 px-4 py-2.5 text-xs font-bold text-zinc-650 hover:bg-zinc-100 hover:text-zinc-950 transition-all active:scale-95 relative z-10"
               >
                 ✏️ Edit Details
               </button>

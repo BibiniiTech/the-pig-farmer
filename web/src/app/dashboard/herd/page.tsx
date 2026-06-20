@@ -541,7 +541,7 @@ export default function HerdPage() {
                       key={pig.id}
                       className="bg-white/90 hover:bg-zinc-50/90 border border-zinc-200 hover:border-emerald-500/40 rounded-xl p-4 transition-all shadow-sm block group relative overflow-hidden"
                     >
-                      <div className="absolute top-0 right-0 h-16 w-16 rounded-full bg-emerald-500/5 blur-lg group-hover:bg-emerald-500/10 transition-all" />
+                      <div className="absolute top-0 right-0 h-16 w-16 rounded-full bg-emerald-500/5 blur-lg group-hover:bg-emerald-500/10 transition-all pointer-events-none" />
                       <div className="flex justify-between items-start">
                         <div>
                           <p className="text-xs font-semibold text-zinc-400 font-mono">Tag Number</p>
