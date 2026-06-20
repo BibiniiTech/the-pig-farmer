@@ -21,6 +21,7 @@ import {
   NutritionalRequirement,
   FormulationResult
 } from "@/lib/feedCalculator";
+import PremiumWrapper from "@/components/PremiumWrapper";
 
 // SVG Icons matching Android Material Icons
 const PrintIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -629,13 +630,23 @@ export default function FeedPage() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setShowExportModal(true)}
-                    className="rounded-lg border border-zinc-200 bg-zinc-50/50 px-4 py-2 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center gap-1.5"
-                  >
-                    <PdfIcon className="h-3.5 w-3.5 text-zinc-500" />
-                    <span>Export PDF</span>
-                  </button>
+                  <PremiumWrapper fallback={
+                    <Link
+                      href="/dashboard/billing"
+                      className="rounded-lg border border-amber-200 bg-amber-50/50 px-4 py-2 text-xs font-semibold text-amber-650 hover:bg-amber-100 transition shadow-sm flex items-center gap-1.5"
+                    >
+                      <PdfIcon className="h-3.5 w-3.5 text-amber-500" />
+                      <span>Export PDF (Premium)</span>
+                    </Link>
+                  }>
+                    <button
+                      onClick={() => setShowExportModal(true)}
+                      className="rounded-lg border border-zinc-200 bg-zinc-50/50 px-4 py-2 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center gap-1.5"
+                    >
+                      <PdfIcon className="h-3.5 w-3.5 text-zinc-500" />
+                      <span>Export PDF</span>
+                    </button>
+                  </PremiumWrapper>
                   <button
                     onClick={() => setShowAddModal(true)}
                     className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white shadow shadow-emerald-600/10 transition active:scale-95"
@@ -799,129 +810,131 @@ export default function FeedPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-              <div className="lg:col-span-5 space-y-6">
-                <div className="bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 space-y-3 shadow-sm">
-                  <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Target Growth Stage</h3>
-                  <select
-                    value={selectedStage}
-                    onChange={(e) => setSelectedStage(e.target.value)}
-                    className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2.5 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-sm"
+            <PremiumWrapper>
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div className="lg:col-span-5 space-y-6">
+                  <div className="bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 space-y-3 shadow-sm">
+                    <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Target Growth Stage</h3>
+                    <select
+                      value={selectedStage}
+                      onChange={(e) => setSelectedStage(e.target.value)}
+                      className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2.5 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-sm"
+                    >
+                      {requirements
+                        .filter((req) => ["Starter", "Grower", "Finisher"].includes(req.stage))
+                        .map((req) => (
+                          <option key={req.stage} value={req.stage}>
+                            {req.stage} (CP target: {req.digestibleProtein}%)
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+
+                  <div className="space-y-4">
+                    <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider px-2">Select Ingredients</h3>
+                    {renderGroupList("Energy", energyCollapsed, setEnergyCollapsed)}
+                    {renderGroupList("Protein", proteinCollapsed, setProteinCollapsed)}
+                    {renderGroupList("Vitamins, Minerals & Salt", mineralsCollapsed, setMineralsCollapsed)}
+                  </div>
+
+                  <button
+                    onClick={handleFormulate}
+                    className="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 py-3 text-xs font-bold text-white shadow shadow-emerald-600/10 transition active:scale-95"
                   >
-                    {requirements
-                      .filter((req) => ["Starter", "Grower", "Finisher"].includes(req.stage))
-                      .map((req) => (
-                        <option key={req.stage} value={req.stage}>
-                          {req.stage} (CP target: {req.digestibleProtein}%)
-                        </option>
-                      ))}
-                  </select>
+                    Formulate Ration
+                  </button>
                 </div>
 
-                <div className="space-y-4">
-                  <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider px-2">Select Ingredients</h3>
-                  {renderGroupList("Energy", energyCollapsed, setEnergyCollapsed)}
-                  {renderGroupList("Protein", proteinCollapsed, setProteinCollapsed)}
-                  {renderGroupList("Vitamins, Minerals & Salt", mineralsCollapsed, setMineralsCollapsed)}
-                </div>
+                <div className="lg:col-span-7 space-y-6">
+                  {formulatorError && (
+                    <div className="rounded-xl border border-rose-200 bg-rose-50/80 p-4 text-xs text-rose-800 font-medium shadow-sm">
+                      {formulatorError}
+                    </div>
+                  )}
 
-                <button
-                  onClick={handleFormulate}
-                  className="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 py-3 text-xs font-bold text-white shadow shadow-emerald-600/10 transition active:scale-95"
-                >
-                  Formulate Ration
-                </button>
-              </div>
-
-              <div className="lg:col-span-7 space-y-6">
-                {formulatorError && (
-                  <div className="rounded-xl border border-rose-200 bg-rose-50/80 p-4 text-xs text-rose-800 font-medium shadow-sm">
-                    {formulatorError}
-                  </div>
-                )}
-
-                {!formulation ? (
-                  <div className="h-96 flex flex-col items-center justify-center border border-dashed border-zinc-200 rounded-2xl text-center p-6 bg-zinc-50/40 backdrop-blur-sm shadow-inner">
-                    <ScienceIcon className="h-10 w-10 text-zinc-400 mb-3" />
-                    <p className="font-semibold text-zinc-500 text-sm">No Active Formulation</p>
-                    <p className="text-xs text-zinc-400 mt-1">Select growth stage, check ingredients, and formulate.</p>
-                  </div>
-                ) : (
-                  <div className="space-y-6">
-                    <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
-                        <h3 className="text-lg font-bold text-zinc-900">Feed Formula: {selectedStage} Mix</h3>
-                        <button
-                          onClick={handleExportFormulationPdf}
-                          className="w-full sm:w-auto rounded-lg border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center justify-center gap-1.5"
-                        >
-                          <PdfIcon className="h-3.5 w-3.5 text-zinc-500" />
-                          <span>Export PDF</span>
-                        </button>
-                      </div>
-                      <div className="space-y-3 divide-y divide-zinc-100">
-                        {Object.entries(formulation.ingredients).map(([id, percent]) => {
-                          const ing = ingredients.find(i => i.id === id || i.name === id);
-                          const name = ing ? ing.name : id;
-                          return (
-                            <div key={id} className="pt-2.5 first:pt-0 flex justify-between items-center text-sm">
-                              <span className="text-zinc-700 font-medium">{name}</span>
-                              <div className="flex flex-col items-end">
-                                <span className="font-mono font-bold text-zinc-900">{percent.toFixed(1)}%</span>
-                                <span className="text-[10px] text-zinc-500 font-semibold">{(percent * 10).toFixed(1)} kg/ton</span>
+                  {!formulation ? (
+                    <div className="h-96 flex flex-col items-center justify-center border border-dashed border-zinc-200 rounded-2xl text-center p-6 bg-zinc-50/40 backdrop-blur-sm shadow-inner">
+                      <ScienceIcon className="h-10 w-10 text-zinc-400 mb-3" />
+                      <p className="font-semibold text-zinc-500 text-sm">No Active Formulation</p>
+                      <p className="text-xs text-zinc-400 mt-1">Select growth stage, check ingredients, and formulate.</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-6">
+                      <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
+                          <h3 className="text-lg font-bold text-zinc-900">Feed Formula: {selectedStage} Mix</h3>
+                          <button
+                            onClick={handleExportFormulationPdf}
+                            className="w-full sm:w-auto rounded-lg border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center justify-center gap-1.5"
+                          >
+                            <PdfIcon className="h-3.5 w-3.5 text-zinc-500" />
+                            <span>Export PDF</span>
+                          </button>
+                        </div>
+                        <div className="space-y-3 divide-y divide-zinc-100">
+                          {Object.entries(formulation.ingredients).map(([id, percent]) => {
+                            const ing = ingredients.find(i => i.id === id || i.name === id);
+                            const name = ing ? ing.name : id;
+                            return (
+                              <div key={id} className="pt-2.5 first:pt-0 flex justify-between items-center text-sm">
+                                <span className="text-zinc-700 font-medium">{name}</span>
+                                <div className="flex flex-col items-end">
+                                  <span className="font-mono font-bold text-zinc-900">{percent.toFixed(1)}%</span>
+                                  <span className="text-[10px] text-zinc-500 font-semibold">{(percent * 10).toFixed(1)} kg/ton</span>
+                                </div>
                               </div>
+                            );
+                          })}
+                          <div className="pt-3 flex justify-between items-center font-bold text-sm text-zinc-900">
+                            <span>Total mix</span>
+                            <div className="flex flex-col items-end">
+                              <span className="font-mono">{formulation.totalPercentage.toFixed(1)}%</span>
+                              <span className="text-[10px] text-zinc-500 font-semibold">1000 kg</span>
                             </div>
-                          );
-                        })}
-                        <div className="pt-3 flex justify-between items-center font-bold text-sm text-zinc-900">
-                          <span>Total mix</span>
-                          <div className="flex flex-col items-end">
-                            <span className="font-mono">{formulation.totalPercentage.toFixed(1)}%</span>
-                            <span className="text-[10px] text-zinc-500 font-semibold">1000 kg</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
+                        <h3 className="text-lg font-bold text-zinc-900 mb-4">Nutritional Analysis</h3>
+                        <div className="overflow-x-auto -mx-6 sm:mx-0">
+                          <div className="inline-block min-w-full align-middle sm:px-0 px-6">
+                            <table className="min-w-full divide-y divide-zinc-200 text-sm">
+                              <thead>
+                                <tr className="text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+                                  <th className="pb-3">Nutrient</th>
+                                  <th className="pb-3 text-right">Target</th>
+                                  <th className="pb-3 text-right">Actual</th>
+                                  <th className="pb-3 text-right">Status</th>
+                                </tr>
+                              </thead>
+                              <tbody className="divide-y divide-zinc-150">
+                                {formulation.nutritionalComparison.map((nutrient) => (
+                                  <tr key={nutrient.label}>
+                                    <td className="py-3 font-semibold text-zinc-700 whitespace-nowrap pr-4">{nutrient.label}</td>
+                                    <td className="py-3 text-right font-mono text-zinc-500">{nutrient.target.toFixed(2)}</td>
+                                    <td className="py-3 text-right font-mono">
+                                      <span className={nutrient.isDeficient ? "text-rose-600 font-bold" : "text-emerald-600 font-bold"}>
+                                        {nutrient.actual.toFixed(2)}
+                                      </span>
+                                    </td>
+                                    <td className="py-3 text-right font-semibold">
+                                      <span className={nutrient.isDeficient ? "text-rose-600" : "text-emerald-600"}>
+                                        {nutrient.isDeficient ? "Deficient" : "OK"}
+                                      </span>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
                           </div>
                         </div>
                       </div>
                     </div>
-
-                    <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-                      <h3 className="text-lg font-bold text-zinc-900 mb-4">Nutritional Analysis</h3>
-                      <div className="overflow-x-auto -mx-6 sm:mx-0">
-                        <div className="inline-block min-w-full align-middle sm:px-0 px-6">
-                          <table className="min-w-full divide-y divide-zinc-200 text-sm">
-                            <thead>
-                              <tr className="text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-                                <th className="pb-3">Nutrient</th>
-                                <th className="pb-3 text-right">Target</th>
-                                <th className="pb-3 text-right">Actual</th>
-                                <th className="pb-3 text-right">Status</th>
-                              </tr>
-                            </thead>
-                            <tbody className="divide-y divide-zinc-150">
-                              {formulation.nutritionalComparison.map((nutrient) => (
-                                <tr key={nutrient.label}>
-                                  <td className="py-3 font-semibold text-zinc-700 whitespace-nowrap pr-4">{nutrient.label}</td>
-                                  <td className="py-3 text-right font-mono text-zinc-500">{nutrient.target.toFixed(2)}</td>
-                                  <td className="py-3 text-right font-mono">
-                                    <span className={nutrient.isDeficient ? "text-rose-600 font-bold" : "text-emerald-600 font-bold"}>
-                                      {nutrient.actual.toFixed(2)}
-                                    </span>
-                                  </td>
-                                  <td className="py-3 text-right font-semibold">
-                                    <span className={nutrient.isDeficient ? "text-rose-600" : "text-emerald-600"}>
-                                      {nutrient.isDeficient ? "Deficient" : "OK"}
-                                    </span>
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
-            </div>
+            </PremiumWrapper>
           </div>
 
           <hr className="border-zinc-200" />
@@ -1013,13 +1026,23 @@ export default function FeedPage() {
                   <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-6">
                     <div className="flex justify-between items-center">
                       <h3 className="text-lg font-bold text-zinc-900">Projected Feed Demand Results</h3>
-                      <button
-                        onClick={handleExportCalculatorPdf}
-                        className="rounded-lg border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center gap-1.5"
-                      >
-                        <PdfIcon className="h-3.5 w-3.5 text-zinc-500" />
-                        <span>Export PDF</span>
-                      </button>
+                      <PremiumWrapper fallback={
+                        <Link
+                          href="/dashboard/billing"
+                          className="rounded-lg border border-amber-200 bg-amber-50/50 px-3 py-1.5 text-xs font-semibold text-amber-650 hover:bg-amber-100 transition shadow-sm flex items-center gap-1.5"
+                        >
+                          <PdfIcon className="h-3.5 w-3.5 text-amber-500" />
+                          <span>Export PDF (Premium)</span>
+                        </Link>
+                      }>
+                        <button
+                          onClick={handleExportCalculatorPdf}
+                          className="rounded-lg border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center gap-1.5"
+                        >
+                          <PdfIcon className="h-3.5 w-3.5 text-zinc-500" />
+                          <span>Export PDF</span>
+                        </button>
+                      </PremiumWrapper>
                     </div>
 
                     <div className="divide-y divide-zinc-100">

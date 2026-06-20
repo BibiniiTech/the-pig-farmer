@@ -8,6 +8,7 @@ import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
+import PremiumWrapper from "@/components/PremiumWrapper";
 
 // Severity Enums
 type SeverityLevel = "LOW" | "MODERATE" | "HIGH" | "CRITICAL";
@@ -1285,12 +1286,13 @@ export default function SymptomsPage() {
 
         {/* Content */}
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-          <div className="bg-white/60 backdrop-blur-sm border border-zinc-200 rounded-2xl p-6 shadow-sm">
-            <h2 className="text-xl font-bold text-zinc-900">Swine Disease Diagnostic Engine</h2>
-            <p className="text-sm text-zinc-500 mt-1">
-              Select the clinical signs observed in your pigs. The analyzer compares active symptoms against our reference database of swine illnesses.
-            </p>
-          </div>
+          <PremiumWrapper>
+            <div className="bg-white/60 backdrop-blur-sm border border-zinc-200 rounded-2xl p-6 shadow-sm">
+              <h2 className="text-xl font-bold text-zinc-900">Swine Disease Diagnostic Engine</h2>
+              <p className="text-sm text-zinc-500 mt-1">
+                Select the clinical signs observed in your pigs. The analyzer compares active symptoms against our reference database of swine illnesses.
+              </p>
+            </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
             {/* Symptoms Selection Side */}
@@ -1494,6 +1496,7 @@ export default function SymptomsPage() {
           <div className="bg-zinc-50/80 backdrop-blur-md border border-zinc-200 rounded-2xl p-4 text-[11px] text-zinc-500 leading-relaxed shadow-sm">
             <strong>Disclaimer:</strong> This AI tool is powered by veterinary research for educational assistance. It is NOT a substitute for professional veterinary diagnosis. Always consult a qualified veterinary practitioner before initiating treatments or purchasing medications.
           </div>
+          </PremiumWrapper>
         </main>
       </div>
     </div>

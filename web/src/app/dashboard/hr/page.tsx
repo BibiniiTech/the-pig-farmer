@@ -309,6 +309,12 @@ export default function HumanResourcesPage() {
               <div className="flex w-full gap-2">
                 <button
                   onClick={() => {
+                    const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
+                    if (!isPremium) {
+                      alert("Adding staff members is a Premium Feature. Please upgrade to expand your team.");
+                      router.push("/dashboard/billing");
+                      return;
+                    }
                     setEditingStaff(null);
                     setName("");
                     setRole("");

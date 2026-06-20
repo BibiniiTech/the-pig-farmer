@@ -63,7 +63,7 @@ const ArchiveIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export default function HerdPage() {
-  const { user, activeFarmUid, loading } = useAuth();
+  const { user, userProfile, activeFarmUid, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
 
@@ -244,6 +244,16 @@ export default function HerdPage() {
   const handleAddPig = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!activeFarmUid) return;
+
+    const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
+    const additionalPigs = isMultiple ? malePigs.filter(p => p.tagNumber.trim() !== "").length + femalePigs.filter(p => p.tagNumber.trim() !== "").length : 1;
+
+    if (!isPremium && herdStats.total + additionalPigs > 20) {
+      alert("Free users can only have up to 20 pigs total. Please upgrade to Premium to add more.");
+      router.push("/dashboard/billing");
+      setShowAddModal(false);
+      return;
+    }
 
     try {
       const pigsCollection = collection(db, "users", activeFarmUid, "pigs");
@@ -484,7 +494,15 @@ export default function HerdPage() {
 
           <div className="flex justify-end">
             <button
-              onClick={() => setShowAddModal(true)}
+              onClick={() => {
+                const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
+                if (!isPremium && herdStats.total >= 20) {
+                  alert("Free users can only have up to 20 pigs. Please upgrade to Premium to add more.");
+                  router.push("/dashboard/billing");
+                } else {
+                  setShowAddModal(true);
+                }
+              }}
               className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
             >
               + Add Pigs
