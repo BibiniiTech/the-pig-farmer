@@ -20,6 +20,8 @@ import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
+import UserProfileDropdown from "@/components/UserProfileDropdown";
+import DesktopHeader from "@/components/layouts/DesktopHeader";
 import {
   ChevronLeftIcon,
   StorefrontIcon,
@@ -249,20 +251,7 @@ export default function AdminPage() {
 
       <div className="relative z-10 flex flex-col min-h-screen">
         {/* Header */}
-        <header className="bg-white/80 backdrop-blur-md border-b border-zinc-200 sticky top-0 z-40">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
-              <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2">
-                SmartSwine
-              </span>
-            </Link>
-
-            <div className="flex items-center gap-4">
-              <h1 className="hidden md:block text-[10px] font-black text-zinc-400 tracking-widest mr-2">ADMIN PANEL</h1>
-              <NavbarDropdown />
-            </div>
-          </div>
+        {!isMobile && <DesktopHeader label="Admin Panel" />}
 
           {/* Tabs (Desktop only) */}
           {!isMobile && (

@@ -28,20 +28,21 @@ interface NavOption {
   label: string;
   path: string;
   icon: React.ComponentType<any>;
+  description?: string;
 }
 
 const BASE_NAV_OPTIONS: NavOption[] = [
-  { key: "home", label: "Home", path: "/dashboard", icon: HomeIcon },
-  { key: "herd", label: "Herd Data", path: "/dashboard/herd", icon: HerdDataIcon },
-  { key: "feed", label: "Feed Management", path: "/dashboard/feed", icon: FeedManagementIcon },
-  { key: "activities", label: "Herd Activities", path: "/dashboard/activities", icon: HerdActivitiesIcon },
-  { key: "financials", label: "Financials", path: "/dashboard/financials", icon: FinancialsIcon },
-  { key: "hr", label: "Human Resources", path: "/dashboard/hr", icon: HumanResourcesIcon },
-  { key: "hub", label: "Local Hub", path: "/dashboard/hub", icon: LocalHubIcon },
-  { key: "symptoms", label: "Symptoms Analyzer", path: "/dashboard/symptoms", icon: SymptomsAnalyzerIcon },
-  { key: "weight", label: "Weight Checker", path: "/dashboard/weight", icon: WeightCheckerIcon },
-  { key: "training", label: "Training Tips", path: "/dashboard/training", icon: TrainingTipsIcon },
-  { key: "billing", label: "Billing & Premium", path: "/dashboard/billing", icon: PremiumIcon },
+  { key: "home", label: "Home", path: "/dashboard", icon: HomeIcon, description: "Farm overview and stats" },
+  { key: "herd", label: "Herd Data", path: "/dashboard/herd", icon: HerdDataIcon, description: "Manage individual pig records" },
+  { key: "feed", label: "Feed Management", path: "/dashboard/feed", icon: FeedManagementIcon, description: "Inventory and formulation" },
+  { key: "activities", label: "Herd Activities", path: "/dashboard/activities", icon: HerdActivitiesIcon, description: "Track health and breeding" },
+  { key: "financials", label: "Financials", path: "/dashboard/financials", icon: FinancialsIcon, description: "Revenue and expense ledger" },
+  { key: "hr", label: "Human Resources", path: "/dashboard/hr", icon: HumanResourcesIcon, description: "Manage staff and access" },
+  { key: "hub", label: "Local Hub", path: "/dashboard/hub", icon: LocalHubIcon, description: "Markets and resources" },
+  { key: "symptoms", label: "Symptoms Analyzer", path: "/dashboard/symptoms", icon: SymptomsAnalyzerIcon, description: "AI health diagnostic tool" },
+  { key: "weight", label: "Weight Checker", path: "/dashboard/weight", icon: WeightCheckerIcon, description: "Growth performance tracking" },
+  { key: "training", label: "Training Tips", path: "/dashboard/training", icon: TrainingTipsIcon, description: "Learn husbandry techniques" },
+  { key: "billing", label: "Billing & Premium", path: "/dashboard/billing", icon: PremiumIcon, description: "Subscription and features" },
 ];
 
 const ADMIN_NAV_OPTION: NavOption = {
@@ -123,11 +124,53 @@ export default function NavbarDropdown() {
 
         {/* Dropdown Options List */}
         {isOpen && (
-          <div className="absolute right-0 sm:left-0 mt-2 w-64 sm:w-60 rounded-2xl border border-zinc-200 bg-white shadow-2xl z-40 py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 origin-top-right sm:origin-top-left">
+          <div className="absolute right-0 sm:left-0 mt-2 w-64 sm:w-80 rounded-2xl border border-zinc-200 bg-white shadow-2xl z-40 py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 origin-top-right sm:origin-top-left">
             <div className="px-4 py-2 text-[10px] font-bold text-zinc-400 uppercase tracking-widest border-b border-zinc-100 mb-1">
               Navigate to
             </div>
-            <div className="max-h-[360px] lg:max-h-[400px] overflow-y-auto pr-0.5 custom-scrollbar">
+
+            {/* Desktop Modern List Layout */}
+            <div className="hidden sm:block p-2 max-h-[500px] overflow-y-auto custom-scrollbar">
+              <div className="space-y-1">
+                {options.map((opt) => {
+                  const isSelected = opt.key === currentOption.key;
+                  return (
+                    <Link
+                      key={opt.key}
+                      href={opt.path}
+                      onClick={() => setIsOpen(false)}
+                      className={`flex items-start gap-4 p-3 rounded-xl transition duration-200 group ${
+                        isSelected
+                          ? "bg-emerald-50"
+                          : "hover:bg-zinc-50"
+                      }`}
+                    >
+                      <div className={`p-2 rounded-lg shrink-0 transition-colors ${
+                        isSelected ? "bg-emerald-100 text-emerald-700" : "bg-zinc-100 text-zinc-500 group-hover:bg-emerald-50 group-hover:text-emerald-600"
+                      }`}>
+                        <opt.icon className="h-5 w-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className={`text-sm font-bold truncate ${isSelected ? "text-emerald-800" : "text-zinc-800"}`}>
+                          {opt.label}
+                        </p>
+                        <p className="text-[10px] text-zinc-400 font-medium">
+                          {opt.description}
+                        </p>
+                      </div>
+                      {isSelected && (
+                        <div className="ml-auto self-center">
+                          <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                        </div>
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Mobile List Layout (Untouched) */}
+            <div className="sm:hidden max-h-[360px] overflow-y-auto pr-0.5 custom-scrollbar">
               {options.map((opt) => {
                 const isSelected = opt.key === currentOption.key;
                 return (
@@ -153,34 +196,37 @@ export default function NavbarDropdown() {
               })}
             </div>
 
-            {/* Separator */}
-            <div className="my-1 border-t border-zinc-100" />
+            {/* Bottom Section - Settings/SignOut (Mobile ONLY) */}
+            <div className="sm:hidden">
+              {/* Separator */}
+              <div className="my-1 border-t border-zinc-100" />
 
-            {/* Settings Link */}
-            <button
-              onClick={() => {
-                setIsOpen(false);
-                setIsSettingsModalOpen(true);
-              }}
-              className="flex w-full items-center gap-3 px-4 py-3 text-sm font-bold text-zinc-650 hover:bg-zinc-100 hover:text-zinc-900 transition duration-200"
-            >
-              <svg className="h-5 w-5 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <span>Settings</span>
-            </button>
+              {/* Settings Link */}
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                  setIsSettingsModalOpen(true);
+                }}
+                className="flex w-full items-center gap-3 px-4 py-3 text-sm font-bold text-zinc-650 hover:bg-zinc-100 hover:text-zinc-900 transition duration-200"
+              >
+                <svg className="h-5 w-5 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span>Settings</span>
+              </button>
 
-            {/* Sign Out Link */}
-            <button
-              onClick={handleSignOut}
-              className="flex w-full items-center gap-3 px-4 py-3 text-sm font-bold text-red-600 hover:bg-red-50 transition duration-200"
-            >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-              </svg>
-              <span>Sign Out</span>
-            </button>
+              {/* Sign Out Link */}
+              <button
+                onClick={handleSignOut}
+                className="flex w-full items-center gap-3 px-4 py-3 text-sm font-bold text-red-600 hover:bg-red-50 transition duration-200"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                <span>Sign Out</span>
+              </button>
+            </div>
           </div>
         )}
       </div>

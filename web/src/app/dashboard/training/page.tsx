@@ -8,6 +8,8 @@ import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
+import UserProfileDropdown from "@/components/UserProfileDropdown";
+import DesktopHeader from "@/components/layouts/DesktopHeader";
 
 interface TrainingVideo {
   id: string;
@@ -358,22 +360,7 @@ export default function TrainingPage() {
       )}
 
       <div className="relative z-10 flex flex-col min-h-screen">
-        {!isMobile && (
-          <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
-            <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-              <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
-                <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-                <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
-                  SmartSwine
-                </span>
-              </Link>
-
-              <div className="flex items-center gap-2">
-                <NavbarDropdown />
-              </div>
-            </div>
-          </header>
-        )}
+        {!isMobile && <DesktopHeader />}
 
         {/* Content Body */}
         <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
