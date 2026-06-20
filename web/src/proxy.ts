@@ -1,30 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
+import createMiddleware from 'next-intl/middleware';
+import { routing } from './i18n/routing';
 
-// Patterns that identify mobile / tablet user-agents
-const MOBILE_UA_REGEX =
-  /Mobile|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i;
+const intlMiddleware = createMiddleware(routing);
 
 export function proxy(request: NextRequest) {
+  // First, run the internationalization middleware
+  const response = intlMiddleware(request);
+
+  // Perform device detection
   const ua = request.headers.get("user-agent") || "";
-  const deviceType = MOBILE_UA_REGEX.test(ua) ? "mobile" : "desktop";
+  const isMobile = /Mobile|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i.test(ua);
+  const deviceType = isMobile ? "mobile" : "desktop";
 
-  const response = NextResponse.next();
+  // Use the response from next-intl if available
+  const finalResponse = response || NextResponse.next();
 
-  // Forward as a request header so server components can read it
-  response.headers.set("x-device-type", deviceType);
-
-  // Set a cookie so client components can read it without hydration mismatch
-  response.cookies.set("device-type", deviceType, {
+  finalResponse.headers.set("x-device-type", deviceType);
+  finalResponse.cookies.set("device-type", deviceType, {
     path: "/",
-    httpOnly: false,   // Needs to be readable by client JS
+    httpOnly: false,
     sameSite: "lax",
-    maxAge: 60 * 60 * 24, // 24 hours
+    maxAge: 60 * 60 * 24,
   });
 
-  return response;
+  return finalResponse;
 }
 
 export const config = {
-  // Run on all pages except Next.js internals, static files, and API routes
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|icons|api).*)"],
+  matcher: ['/((?!api|_next|.*\\..*).*)']
 };
