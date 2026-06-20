@@ -42,7 +42,7 @@ interface HealthRecord {
 }
 
 export default function PigProfilePage() {
-  const { user, activeFarmUid, loading } = useAuth();
+  const { user, userProfile, activeFarmUid, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
   const params = useParams();

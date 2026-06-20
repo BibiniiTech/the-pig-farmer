@@ -8,7 +8,11 @@ import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
-import { usePaystackPayment } from "react-paystack";
+import dynamic from "next/dynamic";
+
+const PaystackBillingButton = dynamic(() => import("@/components/PaystackBillingButton"), {
+  ssr: false,
+});
 
 export default function BillingPage() {
   const { user, userProfile, loading } = useAuth();
@@ -39,7 +43,7 @@ export default function BillingPage() {
 
   const paystackConfig = {
     email: userEmail,
-    amount: billingCycle === "monthly" ? 500 : 4500, // Paystack requires amount in lowest denomination (cents/pesewas). Since plan overrides this, we pass the plan value just in case.
+    amount: billingCycle === "monthly" ? 500 : 4500,
     publicKey: PUBLIC_KEY,
     plan: billingCycle === "monthly" ? MONTHLY_PLAN_CODE : ANNUAL_PLAN_CODE,
     metadata: {
@@ -53,10 +57,7 @@ export default function BillingPage() {
     }
   };
 
-  const initializePayment = usePaystackPayment(paystackConfig);
-
   const onSuccess = (reference: any) => {
-    // Optionally show a loading state while waiting for webhook
     alert("Payment successful! Your premium features will be activated shortly.");
   };
 
@@ -191,15 +192,11 @@ export default function BillingPage() {
                       Maximize productivity, dynamic Pearson Square feeds, and unlimited operations.
                     </p>
                   </div>
-                  <button
-                    onClick={() => {
-                      // @ts-ignore
-                      initializePayment(onSuccess, onClose);
-                    }}
-                    className="w-full rounded-xl bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-700 hover:to-green-600 py-3 text-xs font-bold text-white text-center shadow-lg shadow-emerald-600/10 block transition duration-300 transform active:scale-95"
-                  >
-                    Upgrade to Premium
-                  </button>
+                  <PaystackBillingButton
+                    config={paystackConfig}
+                    onSuccess={onSuccess}
+                    onClose={onClose}
+                  />
                 </div>
               </div>
             </>
