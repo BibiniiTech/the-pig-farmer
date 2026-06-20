@@ -14,6 +14,13 @@ html {
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Custom shades used in the UI */
+  --color-zinc-55: #f7f7f8;
+  --color-zinc-450: #898992;
+  --color-zinc-650: #494951;
+  --color-emerald-250: #8becc4;
+  --color-emerald-350: #51dda9;
 }
 
 @media (prefers-color-scheme: dark) {
