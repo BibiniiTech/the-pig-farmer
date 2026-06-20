@@ -86,6 +86,8 @@ export default function MobileShell({
   const router = useRouter();
   const { user, userProfile, activeFarmUid, isStaff } = useAuth();
 
+  const isHome = pathname === "/dashboard";
+
   useEffect(() => {
     if (userProfile?.appLanguage) {
       setSelectedLang(userProfile.appLanguage);
@@ -153,70 +155,74 @@ export default function MobileShell({
 
         {/* Right Actions */}
         <div className="flex items-center gap-0.5">
-          {/* Notification bell */}
-          <button
-            onClick={() => router.push("/dashboard")}
-            aria-label="Upcoming Activities"
-            className="relative p-2 rounded-xl text-zinc-600 hover:bg-zinc-100 transition-colors"
-          >
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-            </svg>
-            {taskCount > 0 && (
-              <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white ring-2 ring-white">
-                {taskCount > 9 ? "9+" : taskCount}
-              </span>
-            )}
-          </button>
-
-          {/* Language flag */}
-          <div className="relative">
+          {/* Notification bell - Only on Home */}
+          {isHome && (
             <button
-              onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-              className="p-2 rounded-xl text-lg hover:bg-zinc-100 transition-colors"
-              aria-label="Select Language"
+              onClick={() => router.push("/dashboard")}
+              aria-label="Upcoming Activities"
+              className="relative p-2 rounded-xl text-zinc-600 hover:bg-zinc-100 transition-colors"
             >
-              {LANGUAGES.find((l) => l.code === selectedLang)?.flag || "🇺🇸"}
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              </svg>
+              {taskCount > 0 && (
+                <span className="absolute top-1.5 right-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white ring-2 ring-white">
+                  {taskCount > 9 ? "9+" : taskCount}
+                </span>
+              )}
             </button>
+          )}
 
-            {isLangDropdownOpen && (
-              <>
-                <div
-                  className="fixed inset-0 z-30"
-                  onClick={() => setIsLangDropdownOpen(false)}
-                />
-                <div className="absolute right-0 mt-1 w-48 rounded-xl border border-zinc-200 bg-white shadow-xl z-40 py-1.5 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
-                  <div className="px-3 py-1 text-[10px] font-bold text-zinc-400 uppercase tracking-wider border-b border-zinc-100 mb-1">
-                    Language
-                  </div>
-                  <div className="max-h-[240px] overflow-y-auto">
-                    {LANGUAGES.map((lang) => {
-                      const isSelected = lang.code === selectedLang;
-                      return (
-                        <button
-                          key={lang.code}
-                          onClick={() => handleLanguageChange(lang.code)}
-                          className={`w-full flex items-center justify-between px-4 py-2 text-sm font-semibold ${
-                            isSelected
-                              ? "text-emerald-700 bg-emerald-50"
-                              : "text-zinc-700 hover:bg-zinc-50"
-                          }`}
-                        >
-                          <div className="flex items-center gap-2">
-                            <span>{lang.flag}</span>
-                            <span>{lang.displayName}</span>
-                          </div>
-                          {isSelected && <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
+          {/* Language flag - Only on Home */}
+          {isHome && (
+            <div className="relative">
+              <button
+                onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+                className="p-1.5 rounded-xl text-base hover:bg-zinc-100 transition-colors"
+                aria-label="Select Language"
+              >
+                {LANGUAGES.find((l) => l.code === selectedLang)?.flag || "🇺🇸"}
+              </button>
 
-          {/* Hamburger */}
+              {isLangDropdownOpen && (
+                <>
+                  <div
+                    className="fixed inset-0 z-30"
+                    onClick={() => setIsLangDropdownOpen(false)}
+                  />
+                  <div className="absolute right-0 mt-1 w-48 rounded-xl border border-zinc-200 bg-white shadow-xl z-40 py-1.5 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="px-3 py-1 text-[10px] font-bold text-zinc-400 uppercase tracking-wider border-b border-zinc-100 mb-1">
+                      Language
+                    </div>
+                    <div className="max-h-[240px] overflow-y-auto">
+                      {LANGUAGES.map((lang) => {
+                        const isSelected = lang.code === selectedLang;
+                        return (
+                          <button
+                            key={lang.code}
+                            onClick={() => handleLanguageChange(lang.code)}
+                            className={`w-full flex items-center justify-between px-4 py-2 text-sm font-semibold ${
+                              isSelected
+                                ? "text-emerald-700 bg-emerald-50"
+                                : "text-zinc-700 hover:bg-zinc-50"
+                            }`}
+                          >
+                            <div className="flex items-center gap-2">
+                              <span>{lang.flag}</span>
+                              <span>{lang.displayName}</span>
+                            </div>
+                            {isSelected && <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
+          {/* Hamburger - Always on Right */}
           <button
             id="mobile-menu-toggle"
             onClick={() => setDrawerOpen(true)}

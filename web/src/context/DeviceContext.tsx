@@ -33,9 +33,20 @@ export function DeviceProvider({
   const [deviceType, setDeviceType] = useState<DeviceType>(initialDevice);
 
   useEffect(() => {
-    // On the client, read the cookie set by middleware for ground-truth
-    const cookieDevice = getDeviceFromCookie();
-    setDeviceType(cookieDevice);
+    // Initial check
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setDeviceType("mobile");
+      } else {
+        // Fallback to cookie for desktop/tablet distinction if needed,
+        // but for "mobile view" width is standard.
+        setDeviceType("desktop");
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (

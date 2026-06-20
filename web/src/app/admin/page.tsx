@@ -253,13 +253,13 @@ export default function AdminPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
               <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2">
                 SmartSwine
               </span>
             </Link>
 
             <div className="flex items-center gap-4">
-              <h1 className="hidden sm:block text-[10px] font-black text-zinc-400 tracking-widest mr-2">ADMIN PANEL</h1>
+              <h1 className="hidden md:block text-[10px] font-black text-zinc-400 tracking-widest mr-2">ADMIN PANEL</h1>
               <NavbarDropdown />
             </div>
           </div>

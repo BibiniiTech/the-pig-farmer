@@ -87,45 +87,43 @@ export default function NavbarDropdown() {
         {/* Dropdown Toggle Button / Hamburger */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`inline-flex items-center justify-center gap-2 h-10 transition duration-300 shadow-sm focus:outline-none select-none rounded-xl border border-zinc-200 ${
-            isMobile
-              ? "w-10 bg-white hover:bg-zinc-50"
-              : "px-4 bg-zinc-150/70 hover:bg-zinc-200/80 text-xs font-bold text-zinc-800 lg:min-w-[160px]"
-          }`}
-          aria-label={isMobile ? "Open menu" : "Navigation menu"}
+          className="inline-flex items-center justify-center gap-2 h-10 transition duration-300 shadow-sm focus:outline-none select-none rounded-xl border border-zinc-200 w-10 sm:w-auto sm:px-4 bg-white sm:bg-zinc-150/70 hover:bg-zinc-50 sm:hover:bg-zinc-200/80 text-xs font-bold text-zinc-800 lg:min-w-[160px]"
+          aria-label="Navigation menu"
         >
-          {isMobile ? (
+          {/* Hamburger Icon (Visible on mobile) */}
+          <div className="sm:hidden">
             <svg className="h-6 w-6 text-zinc-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
-          ) : (
-            <>
-              <currentOption.icon className="h-4 w-4 text-zinc-650" />
-              <span>{currentOption.label}</span>
-              <svg
-                className={`h-3 w-3 text-zinc-500 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2.5"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-            </>
-          )}
+          </div>
+
+          {/* Desktop View (Icon + Label + Arrow) */}
+          <div className="hidden sm:flex items-center gap-2">
+            <currentOption.icon className="h-4 w-4 text-zinc-650" />
+            <span>{currentOption.label}</span>
+            <svg
+              className={`h-3 w-3 text-zinc-500 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2.5"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
         </button>
 
         {/* Click Outside Overlay */}
         {isOpen && (
           <div
-            className="fixed inset-0 z-30 cursor-default bg-black/5 lg:bg-transparent"
+            className="fixed inset-0 z-30 cursor-default bg-black/5 sm:bg-transparent"
             onClick={() => setIsOpen(false)}
           />
         )}
 
         {/* Dropdown Options List */}
         {isOpen && (
-          <div className={`absolute right-0 mt-2 w-64 rounded-2xl border border-zinc-200 bg-white shadow-2xl z-40 py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 origin-top-right ${isMobile ? "fixed top-14 right-4 mt-0 max-h-[calc(100vh-80px)]" : ""}`}>
+          <div className="absolute right-0 sm:left-0 mt-2 w-64 sm:w-60 rounded-2xl border border-zinc-200 bg-white shadow-2xl z-40 py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 origin-top-right sm:origin-top-left">
             <div className="px-4 py-2 text-[10px] font-bold text-zinc-400 uppercase tracking-widest border-b border-zinc-100 mb-1">
               Navigate to
             </div>
