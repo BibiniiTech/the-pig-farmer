@@ -10,6 +10,7 @@ import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
+import FinancialReport from "@/components/reports/FinancialReport";
 
 interface FinancialRecord {
   id: string;
@@ -153,7 +154,7 @@ export default function FinancialsPage() {
         </div>
       )}
 
-      <div className="relative z-10 flex flex-col min-h-screen">
+      <div className="relative z-10 flex flex-col min-h-screen print:hidden">
         {!isMobile && <DesktopHeader />}
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
@@ -303,6 +304,12 @@ export default function FinancialsPage() {
           </div>
         </main>
       </div>
+
+      <FinancialReport
+        records={records}
+        pigs={pigs}
+        currencySymbol={currencySymbol}
+      />
 
       {/* Log Transaction Modal */}
       {showAddModal && (

@@ -10,6 +10,7 @@ import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
+import HRReport from "@/components/reports/HRReport";
 import { sendPasswordResetEmail } from "firebase/auth";
 
 interface StaffMember {
@@ -70,6 +71,7 @@ export default function HumanResourcesPage() {
   const router = useRouter();
 
   const [staff, setStaff] = useState<StaffMember[]>([]);
+  const [financialRecords, setFinancialRecords] = useState<any[]>([]);
   const [dataLoading, setDataLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingStaff, setEditingStaff] = useState<StaffMember | null>(null);
@@ -104,7 +106,17 @@ export default function HumanResourcesPage() {
       setDataLoading(false);
     });
 
-    return () => unsubscribe();
+    // Fetch financials for payroll history
+    const finRef = collection(db, "users", activeFarmUid, "financials");
+    const unsubscribeFin = onSnapshot(finRef, (snapshot) => {
+      const list = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as any));
+      setFinancialRecords(list);
+    });
+
+    return () => {
+      unsubscribe();
+      unsubscribeFin();
+    };
   }, [activeFarmUid]);
 
   const handleAddStaff = async (e: React.FormEvent) => {
@@ -271,7 +283,7 @@ export default function HumanResourcesPage() {
         </div>
       )}
 
-      <div className="relative z-10 flex flex-col min-h-screen">
+      <div className="relative z-10 flex flex-col min-h-screen print:hidden">
         {!isMobile && <DesktopHeader />}
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
@@ -398,6 +410,12 @@ export default function HumanResourcesPage() {
           )}
         </main>
       </div>
+
+      <HRReport
+        staff={staff}
+        financialRecords={financialRecords}
+        currencySymbol={userProfile?.settings?.currencySymbol || "$"}
+      />
 
       {/* Add / Edit Staff Modal */}
       {(showAddModal || editingStaff) && (

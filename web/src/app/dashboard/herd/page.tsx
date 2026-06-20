@@ -10,6 +10,7 @@ import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
+import HerdReport from "@/components/reports/HerdReport";
 import { evaluatePerformance, calculateAgeMonths } from "@/lib/swineGrowthDatabase";
 
 interface Pig {
@@ -386,7 +387,7 @@ export default function HerdPage() {
         </div>
       )}
 
-      <div className="relative z-10 flex flex-col min-h-screen">
+      <div className="relative z-10 flex flex-col min-h-screen print:hidden">
         {!isMobile && <DesktopHeader />}
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-8">
@@ -498,7 +499,6 @@ export default function HerdPage() {
               </h2>
               <button
                 onClick={() => {
-                  // Basic export logic placeholder for herd inventory
                   window.print();
                 }}
                 className="rounded-lg border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center gap-1.5"
@@ -576,6 +576,11 @@ export default function HerdPage() {
           </div>
         </main>
       </div>
+
+      <HerdReport
+        pigs={viewingArchived ? archivedPigs : pigs}
+        title={viewingArchived ? "Herd Inventory Report (Archived)" : "Herd Inventory Report"}
+      />
 
       {/* Add Pigs Modal */}
       {showAddModal && (
