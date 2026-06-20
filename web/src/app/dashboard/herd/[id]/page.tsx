@@ -226,10 +226,21 @@ export default function PigProfilePage() {
           <div className="md:col-span-5 space-y-6">
             <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4 relative overflow-hidden">
               <div className="absolute top-0 right-0 h-16 w-16 rounded-full bg-emerald-500/5 blur-lg" />
-              <div>
-                <p className="text-xs font-semibold text-zinc-400 font-mono">Status & Location</p>
-                <h2 className="text-xl font-bold text-zinc-900 mt-1">{pig.tagNumber}</h2>
-                <p className="text-sm text-zinc-500 mt-0.5">{pig.breed}</p>
+              <div className="flex justify-between items-start gap-4">
+                <div className="min-w-0">
+                  <p className="text-xs font-semibold text-zinc-400 font-mono">Status & Location</p>
+                  <h2 className="text-xl font-bold text-zinc-900 mt-1 truncate">{pig.tagNumber}</h2>
+                  <p className="text-sm text-zinc-500 mt-0.5 truncate">{pig.breed}</p>
+                </div>
+                <button
+                  onClick={() => window.print()}
+                  className="flex-shrink-0 p-2 rounded-lg border border-zinc-200 bg-zinc-50/50 text-zinc-500 hover:bg-zinc-100 transition shadow-sm"
+                  title="Export PDF"
+                >
+                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 11c0 .55-.45 1-1 1H9v2H7.5v-5h3c.55 0 1 .45 1 1v1zm5 2c0 .55-.45 1-1 1h-2.5v-5H16c.55 0 1 .45 1 1v3zm-5.5-4H10v1.5h.5V11zm4.5 1h-.5v2h.5v-2zm2.5 1h-2v-1h2v-1h-2v-1h3.5v5H19v-2z" />
+                  </svg>
+                </button>
               </div>
 
               <div className="divide-y divide-zinc-100 text-sm">

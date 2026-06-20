@@ -862,11 +862,11 @@ export default function FeedPage() {
                 ) : (
                   <div className="space-y-6">
                     <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-                      <div className="flex justify-between items-center mb-4">
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
                         <h3 className="text-lg font-bold text-zinc-900">Feed Formula: {selectedStage} Mix</h3>
                         <button
                           onClick={handleExportFormulationPdf}
-                          className="rounded-lg border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center gap-1.5"
+                          className="w-full sm:w-auto rounded-lg border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center justify-center gap-1.5"
                         >
                           <PdfIcon className="h-3.5 w-3.5 text-zinc-500" />
                           <span>Export PDF</span>
@@ -877,20 +877,20 @@ export default function FeedPage() {
                           const ing = ingredients.find(i => i.id === id || i.name === id);
                           const name = ing ? ing.name : id;
                           return (
-                            <div key={id} className="pt-2.5 first:pt-0 flex justify-between text-sm">
-                              <span className="text-zinc-700">{name}</span>
-                              <div className="space-x-6 text-right font-mono font-bold text-zinc-900">
-                                <span>{percent.toFixed(1)}%</span>
-                                <span className="text-zinc-500">{(percent * 10).toFixed(1)} kg/ton</span>
+                            <div key={id} className="pt-2.5 first:pt-0 flex justify-between items-center text-sm">
+                              <span className="text-zinc-700 font-medium">{name}</span>
+                              <div className="flex flex-col items-end">
+                                <span className="font-mono font-bold text-zinc-900">{percent.toFixed(1)}%</span>
+                                <span className="text-[10px] text-zinc-500 font-semibold">{(percent * 10).toFixed(1)} kg/ton</span>
                               </div>
                             </div>
                           );
                         })}
-                        <div className="pt-3 flex justify-between font-bold text-sm text-zinc-900">
+                        <div className="pt-3 flex justify-between items-center font-bold text-sm text-zinc-900">
                           <span>Total mix</span>
-                          <div className="space-x-6 text-right font-mono">
-                            <span>{formulation.totalPercentage.toFixed(1)}%</span>
-                            <span>1000 kg</span>
+                          <div className="flex flex-col items-end">
+                            <span className="font-mono">{formulation.totalPercentage.toFixed(1)}%</span>
+                            <span className="text-[10px] text-zinc-500 font-semibold">1000 kg</span>
                           </div>
                         </div>
                       </div>
@@ -898,35 +898,37 @@ export default function FeedPage() {
 
                     <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
                       <h3 className="text-lg font-bold text-zinc-900 mb-4">Nutritional Analysis</h3>
-                      <div className="overflow-x-auto">
-                        <table className="min-w-full divide-y divide-zinc-200 text-sm">
-                          <thead>
-                            <tr className="text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-                              <th className="pb-3">Nutrient</th>
-                              <th className="pb-3 text-right">Target</th>
-                              <th className="pb-3 text-right">Actual</th>
-                              <th className="pb-3 text-right">Status</th>
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-zinc-150">
-                            {formulation.nutritionalComparison.map((nutrient) => (
-                              <tr key={nutrient.label}>
-                                <td className="py-3 font-semibold text-zinc-700">{nutrient.label}</td>
-                                <td className="py-3 text-right font-mono text-zinc-500">{nutrient.target.toFixed(2)}</td>
-                                <td className="py-3 text-right font-mono">
-                                  <span className={nutrient.isDeficient ? "text-rose-600 font-bold" : "text-emerald-600 font-bold"}>
-                                    {nutrient.actual.toFixed(2)}
-                                  </span>
-                                </td>
-                                <td className="py-3 text-right font-semibold">
-                                  <span className={nutrient.isDeficient ? "text-rose-600" : "text-emerald-600"}>
-                                    {nutrient.isDeficient ? "Deficient" : "OK"}
-                                  </span>
-                                </td>
+                      <div className="overflow-x-auto -mx-6 sm:mx-0">
+                        <div className="inline-block min-w-full align-middle sm:px-0 px-6">
+                          <table className="min-w-full divide-y divide-zinc-200 text-sm">
+                            <thead>
+                              <tr className="text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+                                <th className="pb-3">Nutrient</th>
+                                <th className="pb-3 text-right">Target</th>
+                                <th className="pb-3 text-right">Actual</th>
+                                <th className="pb-3 text-right">Status</th>
                               </tr>
-                            ))}
-                          </tbody>
-                        </table>
+                            </thead>
+                            <tbody className="divide-y divide-zinc-150">
+                              {formulation.nutritionalComparison.map((nutrient) => (
+                                <tr key={nutrient.label}>
+                                  <td className="py-3 font-semibold text-zinc-700 whitespace-nowrap pr-4">{nutrient.label}</td>
+                                  <td className="py-3 text-right font-mono text-zinc-500">{nutrient.target.toFixed(2)}</td>
+                                  <td className="py-3 text-right font-mono">
+                                    <span className={nutrient.isDeficient ? "text-rose-600 font-bold" : "text-emerald-600 font-bold"}>
+                                      {nutrient.actual.toFixed(2)}
+                                    </span>
+                                  </td>
+                                  <td className="py-3 text-right font-semibold">
+                                    <span className={nutrient.isDeficient ? "text-rose-600" : "text-emerald-600"}>
+                                      {nutrient.isDeficient ? "Deficient" : "OK"}
+                                    </span>
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
                   </div>

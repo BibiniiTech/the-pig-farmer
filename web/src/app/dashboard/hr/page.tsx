@@ -307,23 +307,34 @@ export default function HumanResourcesPage() {
             </div>
             <div className="backdrop-blur-md border border-emerald-200/50 rounded-2xl p-6 shadow-sm bg-emerald-50/40 flex flex-col justify-center items-center gap-3">
               <p className="text-xs font-bold text-emerald-800 uppercase tracking-tight">Expand Your Team</p>
-              <button
-                onClick={() => {
-                  setEditingStaff(null);
-                  setName("");
-                  setRole("");
-                  setPhone("");
-                  setSalary(0);
-                  setJoinDate(new Date().toISOString().split("T")[0]);
-                  setStatus("Active");
-                  setAllowAppAccess(false);
-                  setEmail("");
-                  setShowAddModal(true);
-                }}
-                className="w-full rounded-xl bg-emerald-600 hover:bg-emerald-700 py-3 text-xs font-bold text-white shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
-              >
-                + Add Staff Member
-              </button>
+              <div className="flex w-full gap-2">
+                <button
+                  onClick={() => {
+                    setEditingStaff(null);
+                    setName("");
+                    setRole("");
+                    setPhone("");
+                    setSalary(0);
+                    setJoinDate(new Date().toISOString().split("T")[0]);
+                    setStatus("Active");
+                    setAllowAppAccess(false);
+                    setEmail("");
+                    setShowAddModal(true);
+                  }}
+                  className="flex-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 py-3 text-xs font-bold text-white shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
+                >
+                  + Add Staff
+                </button>
+                <button
+                  onClick={() => window.print()}
+                  className="px-4 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 py-3 text-zinc-500 transition-all active:scale-95 shadow-sm"
+                  title="Export PDF"
+                >
+                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 11c0 .55-.45 1-1 1H9v2H7.5v-5h3c.55 0 1 .45 1 1v1zm5 2c0 .55-.45 1-1 1h-2.5v-5H16c.55 0 1 .45 1 1v3zm-5.5-4H10v1.5h.5V11zm4.5 1h-.5v2h.5v-2zm2.5 1h-2v-1h2v-1h-2v-1h3.5v5H19v-2z" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
 

@@ -505,9 +505,23 @@ export default function HerdPage() {
 
           {/* Herd List Grid */}
           <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-            <h2 className="text-lg font-bold text-zinc-900 mb-4">
-              {viewingArchived ? "Pigs Inventory (Archived)" : "Pigs Inventory"}
-            </h2>
+            <div className="flex items-center justify-between mb-4 gap-4 flex-wrap">
+              <h2 className="text-lg font-bold text-zinc-900">
+                {viewingArchived ? "Pigs Inventory (Archived)" : "Pigs Inventory"}
+              </h2>
+              <button
+                onClick={() => {
+                  // Basic export logic placeholder for herd inventory
+                  window.print();
+                }}
+                className="rounded-lg border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center gap-1.5"
+              >
+                <svg className="h-3.5 w-3.5 text-zinc-500" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 11c0 .55-.45 1-1 1H9v2H7.5v-5h3c.55 0 1 .45 1 1v1zm5 2c0 .55-.45 1-1 1h-2.5v-5H16c.55 0 1 .45 1 1v3zm-5.5-4H10v1.5h.5V11zm4.5 1h-.5v2h.5v-2zm2.5 1h-2v-1h2v-1h-2v-1h3.5v5H19v-2z" />
+                </svg>
+                <span>Export PDF</span>
+              </button>
+            </div>
             {dataLoading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {[...Array(6)].map((_, i) => (

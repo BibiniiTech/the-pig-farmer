@@ -388,8 +388,8 @@ export default function TrainingPage() {
             {/* Search and Filters */}
             <div className="space-y-4">
               <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-                {/* Horizontal scrollable categories - hidden on desktop */}
-                <div className="flex lg:hidden overflow-x-auto pb-2 gap-2 w-full no-scrollbar">
+                {/* Horizontal scrollable categories - hidden on desktop and mobile as requested */}
+                <div className="hidden lg:flex overflow-x-auto pb-2 gap-2 w-full no-scrollbar">
                   {CATEGORIES.map((cat) => (
                     <button
                       key={cat.key}
