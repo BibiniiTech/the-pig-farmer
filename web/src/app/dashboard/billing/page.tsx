@@ -3,12 +3,12 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Script from "next/script";
 import { useAuth } from "@/context/AuthContext";
 import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
+import { usePaystackPayment } from "react-paystack";
 
 export default function BillingPage() {
   const { user, userProfile, loading } = useAuth();
@@ -16,17 +16,9 @@ export default function BillingPage() {
   const router = useRouter();
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
 
-  const MONTHLY_VARIANT_ID = process.env.NEXT_PUBLIC_LEMON_SQUEEZY_MONTHLY_VARIANT_ID || "333333";
-  const ANNUAL_VARIANT_ID = process.env.NEXT_PUBLIC_LEMON_SQUEEZY_ANNUAL_VARIANT_ID || "444444";
-  const STORE_URL = process.env.NEXT_PUBLIC_LEMON_SQUEEZY_STORE_URL || "https://smartswine.lemonsqueezy.com";
-
-  // Re-initialize Lemon Squeezy script when layout updates to hook elements
-  useEffect(() => {
-    const win = window as any;
-    if (typeof win.createLemonSqueezy === "function") {
-      win.createLemonSqueezy();
-    }
-  }, [billingCycle, userProfile]);
+  const MONTHLY_PLAN_CODE = process.env.NEXT_PUBLIC_PAYSTACK_MONTHLY_PLAN_CODE || "PLN_djizfx0yiftmffw";
+  const ANNUAL_PLAN_CODE = process.env.NEXT_PUBLIC_PAYSTACK_ANNUAL_PLAN_CODE || "PLN_t0s6exwcejd8bs0";
+  const PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "pk_test_3bb2eb45030c50dbac96d899ef036de1598e60df";
 
   useEffect(() => {
     if (!loading && !user) {
@@ -43,12 +35,37 @@ export default function BillingPage() {
   }
 
   const userUid = user.uid;
-  const storeBase = STORE_URL.replace(/\/$/, ""); // trim trailing slash
-  const monthlyUrl = `${storeBase}/checkout/buy/${MONTHLY_VARIANT_ID}?embed=1&media=0&checkout[custom][user_id]=${userUid}`;
-  const annualUrl = `${storeBase}/checkout/buy/${ANNUAL_VARIANT_ID}?embed=1&media=0&checkout[custom][user_id]=${userUid}`;
+  const userEmail = userProfile?.email || user.email || "user@smartswine.app";
+
+  const paystackConfig = {
+    email: userEmail,
+    amount: billingCycle === "monthly" ? 500 : 4500, // Paystack requires amount in lowest denomination (cents/pesewas). Since plan overrides this, we pass the plan value just in case.
+    publicKey: PUBLIC_KEY,
+    plan: billingCycle === "monthly" ? MONTHLY_PLAN_CODE : ANNUAL_PLAN_CODE,
+    metadata: {
+      custom_fields: [
+        {
+          display_name: "User ID",
+          variable_name: "user_id",
+          value: userUid
+        }
+      ]
+    }
+  };
+
+  const initializePayment = usePaystackPayment(paystackConfig);
+
+  const onSuccess = (reference: any) => {
+    // Optionally show a loading state while waiting for webhook
+    alert("Payment successful! Your premium features will be activated shortly.");
+  };
+
+  const onClose = () => {
+    console.log("Paystack modal closed");
+  };
 
   const features = [
-    { name: "Unlimited Pigs & Litters", free: "Up to 50 pigs", premium: "Unlimited" },
+    { name: "Unlimited Pigs & Litters", free: "Up to 20 pigs", premium: "Unlimited" },
     { name: "Feed Stock & Transactions", free: "Basic logging", premium: "Advanced + Alerts" },
     { name: "Feed Formulator (Pearson Square)", free: "Starter stage only", premium: "All stages (Starter, Grower, Finisher)" },
     { name: "PDF Report Exports", free: "❌ Unavailable", premium: "⚡ Yes, Instant Print/PDF" },
@@ -59,17 +76,6 @@ export default function BillingPage() {
 
   return (
     <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
-      {/* Lemon Squeezy Script Integration */}
-      <Script
-        src="https://app.lemonsqueezy.com/js/lemon.js"
-        strategy="afterInteractive"
-        onLoad={() => {
-          const win = window as any;
-          if (typeof win.createLemonSqueezy === "function") {
-            win.createLemonSqueezy();
-          }
-        }}
-      />
 
       {/* Watermark Logo Background */}
       {!isMobile && (
@@ -107,7 +113,7 @@ export default function BillingPage() {
               </p>
               <div className="pt-2 flex justify-center gap-3">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3.5 py-1 text-xs font-semibold text-emerald-800 border border-emerald-200">
-                  Billing Source: {userProfile?.subscriptionSource || "lemon_squeezy"}
+                  Billing Source: {userProfile?.subscriptionSource || "paystack"}
                 </span>
               </div>
             </div>
@@ -175,7 +181,7 @@ export default function BillingPage() {
                     </h3>
                     <div className="flex items-baseline gap-1">
                       <span className="text-4xl font-extrabold text-zinc-900">
-                        {billingCycle === "monthly" ? "$9.99" : "$6.66"}
+                        {billingCycle === "monthly" ? "$5.00" : "$45.00"}
                       </span>
                       <span className="text-zinc-500 text-sm">
                         / month {billingCycle === "annual" && "(billed yearly)"}
@@ -185,12 +191,15 @@ export default function BillingPage() {
                       Maximize productivity, dynamic Pearson Square feeds, and unlimited operations.
                     </p>
                   </div>
-                  <a
-                    href={billingCycle === "monthly" ? monthlyUrl : annualUrl}
-                    className="lemonsqueezy-button w-full rounded-xl bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-700 hover:to-green-600 py-3 text-xs font-bold text-white text-center shadow-lg shadow-emerald-600/10 block transition duration-300 transform active:scale-95"
+                  <button
+                    onClick={() => {
+                      // @ts-ignore
+                      initializePayment(onSuccess, onClose);
+                    }}
+                    className="w-full rounded-xl bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-700 hover:to-green-600 py-3 text-xs font-bold text-white text-center shadow-lg shadow-emerald-600/10 block transition duration-300 transform active:scale-95"
                   >
                     Upgrade to Premium
-                  </a>
+                  </button>
                 </div>
               </div>
             </>

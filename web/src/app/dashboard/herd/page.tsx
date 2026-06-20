@@ -517,14 +517,24 @@ export default function HerdPage() {
               </h2>
               <button
                 onClick={() => {
+                  const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
+                  if (!isPremium) {
+                    alert("Exporting PDF reports is a Premium feature. Upgrade to unlock!");
+                    router.push("/dashboard/billing");
+                    return;
+                  }
                   window.print();
                 }}
-                className="rounded-lg border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center gap-1.5"
+                className={`rounded-lg border px-3 py-1.5 text-xs font-semibold transition shadow-sm flex items-center gap-1.5 ${
+                  userProfile?.isPremium || userProfile?.isAdmin
+                    ? "border-zinc-200 bg-zinc-50/50 text-zinc-650 hover:bg-zinc-100"
+                    : "border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100"
+                }`}
               >
-                <svg className="h-3.5 w-3.5 text-zinc-500" viewBox="0 0 24 24" fill="currentColor">
+                <svg className="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 11c0 .55-.45 1-1 1H9v2H7.5v-5h3c.55 0 1 .45 1 1v1zm5 2c0 .55-.45 1-1 1h-2.5v-5H16c.55 0 1 .45 1 1v3zm-5.5-4H10v1.5h.5V11zm4.5 1h-.5v2h.5v-2zm2.5 1h-2v-1h2v-1h-2v-1h3.5v5H19v-2z" />
                 </svg>
-                <span>Export PDF</span>
+                <span>{userProfile?.isPremium || userProfile?.isAdmin ? "Export PDF" : "Export PDF (Premium)"}</span>
               </button>
             </div>
             {dataLoading ? (
