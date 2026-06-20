@@ -8,6 +8,7 @@ import { doc, setDoc, collection, query, where, onSnapshot } from "firebase/fire
 import { auth, db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 import SettingsModal from "@/components/SettingsModal";
+import { useTranslations } from "next-intl";
 import {
   HomeIcon,
   HerdDataIcon,
@@ -46,28 +47,11 @@ const LANGUAGES: AppLanguageOption[] = [
   { code: "th", displayName: "ไทย", flag: "🇹🇭" },
   { code: "pt", displayName: "Português", flag: "🇵🇹" },
   { code: "hi", displayName: "हिन्दी", flag: "🇮🇳" },
+  { code: "sw", displayName: "Kiswahili", flag: "🇰🇪" },
+  { code: "id", displayName: "Bahasa Indonesia", flag: "🇮🇩" },
+  { code: "ht", displayName: "Kreyòl Ayisyen", flag: "🇭🇹" },
+  { code: "my", displayName: "မြန်မာ", flag: "🇲🇲" },
 ];
-
-const BASE_NAV_OPTIONS: NavOption[] = [
-  { key: "home", label: "Home", path: "/dashboard", icon: HomeIcon },
-  { key: "herd", label: "Herd Data", path: "/dashboard/herd", icon: HerdDataIcon },
-  { key: "feed", label: "Feed Management", path: "/dashboard/feed", icon: FeedManagementIcon },
-  { key: "activities", label: "Herd Activities", path: "/dashboard/activities", icon: HerdActivitiesIcon },
-  { key: "financials", label: "Financials", path: "/dashboard/financials", icon: FinancialsIcon },
-  { key: "hr", label: "Human Resources", path: "/dashboard/hr", icon: HumanResourcesIcon },
-  { key: "hub", label: "Local Hub", path: "/dashboard/hub", icon: LocalHubIcon },
-  { key: "symptoms", label: "Symptoms Analyzer", path: "/dashboard/symptoms", icon: SymptomsAnalyzerIcon },
-  { key: "weight", label: "Weight Checker", path: "/dashboard/weight", icon: WeightCheckerIcon },
-  { key: "training", label: "Training Tips", path: "/dashboard/training", icon: TrainingTipsIcon },
-  { key: "billing", label: "Billing & Premium", path: "/dashboard/billing", icon: PremiumIcon },
-];
-
-const ADMIN_NAV_OPTION: NavOption = {
-  key: "admin",
-  label: "Admin Panel",
-  path: "/admin",
-  icon: ShieldCheckIcon,
-};
 
 interface MobileShellProps {
   children: React.ReactNode;
@@ -76,6 +60,8 @@ interface MobileShellProps {
 export default function MobileShell({
   children,
 }: MobileShellProps) {
+  const tNav = useTranslations("Navigation");
+  const tDash = useTranslations("Dashboard");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState("en");
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
@@ -87,6 +73,27 @@ export default function MobileShell({
   const { user, userProfile, activeFarmUid, isStaff } = useAuth();
 
   const isHome = pathname === "/dashboard";
+
+  const BASE_NAV_OPTIONS: NavOption[] = [
+    { key: "home", label: tNav("home"), path: "/dashboard", icon: HomeIcon },
+    { key: "herd", label: tNav("herd"), path: "/dashboard/herd", icon: HerdDataIcon },
+    { key: "feed", label: tNav("feed"), path: "/dashboard/feed", icon: FeedManagementIcon },
+    { key: "activities", label: tNav("activities"), path: "/dashboard/activities", icon: HerdActivitiesIcon },
+    { key: "financials", label: tNav("financials"), path: "/dashboard/financials", icon: FinancialsIcon },
+    { key: "hr", label: tNav("hr"), path: "/dashboard/hr", icon: HumanResourcesIcon },
+    { key: "hub", label: tNav("hub"), path: "/dashboard/hub", icon: LocalHubIcon },
+    { key: "symptoms", label: tNav("symptoms"), path: "/dashboard/symptoms", icon: SymptomsAnalyzerIcon },
+    { key: "weight", label: tNav("weight"), path: "/dashboard/weight", icon: WeightCheckerIcon },
+    { key: "training", label: tNav("training"), path: "/dashboard/training", icon: TrainingTipsIcon },
+    { key: "billing", label: tNav("billing"), path: "/dashboard/billing", icon: PremiumIcon },
+  ];
+
+  const ADMIN_NAV_OPTION: NavOption = {
+    key: "admin",
+    label: tNav("admin"),
+    path: "/admin",
+    icon: ShieldCheckIcon,
+  };
 
   useEffect(() => {
     if (userProfile?.appLanguage) {
@@ -110,6 +117,10 @@ export default function MobileShell({
   const handleLanguageChange = async (langCode: string) => {
     setSelectedLang(langCode);
     setIsLangDropdownOpen(false);
+
+    // Set cookie and reload to apply new locale
+    document.cookie = `NEXT_LOCALE=${langCode}; path=/; max-age=31536000`;
+
     if (user) {
       try {
         const userDocRef = doc(db, "users", user.uid);
@@ -118,6 +129,7 @@ export default function MobileShell({
         console.error("Failed to update language:", err);
       }
     }
+    window.location.reload();
   };
 
   const navOptions = userProfile?.isAdmin
@@ -159,7 +171,7 @@ export default function MobileShell({
           {isHome && (
             <button
               onClick={() => router.push("/dashboard")}
-              aria-label="Upcoming Activities"
+              aria-label={tDash("upcomingActivities")}
               className="relative p-2 rounded-xl text-zinc-600 hover:bg-zinc-100 transition-colors"
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
@@ -192,7 +204,7 @@ export default function MobileShell({
                   />
                   <div className="absolute right-0 mt-1 w-48 rounded-xl border border-zinc-200 bg-white shadow-xl z-40 py-1.5 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
                     <div className="px-3 py-1 text-[10px] font-bold text-zinc-400 uppercase tracking-wider border-b border-zinc-100 mb-1">
-                      Language
+                      {tDash("language")}
                     </div>
                     <div className="max-h-[240px] overflow-y-auto">
                       {LANGUAGES.map((lang) => {
@@ -284,8 +296,8 @@ export default function MobileShell({
               {userProfile?.firstName} {userProfile?.lastName}
             </p>
             <p className="text-[11px] text-zinc-500 truncate">
-              {isStaff ? "Staff Member" : "Farm Owner"}
-              {userProfile?.isPremium && " · Premium"}
+              {isStaff ? tDash("staffMember") : tDash("farmOwner")}
+              {userProfile?.isPremium && ` · ${tDash("premium")}`}
             </p>
           </div>
           {userProfile?.isPremium && (
@@ -300,7 +312,7 @@ export default function MobileShell({
         {/* Navigation Items */}
         <nav className="flex-1 overflow-y-auto py-2 px-2">
           <p className="px-3 py-1.5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
-            Navigate to
+            {tNav("navigateTo")}
           </p>
           {navOptions.map((opt) => {
             const isActive = opt.key === currentOption.key;
@@ -336,10 +348,10 @@ export default function MobileShell({
             className="flex w-full items-center gap-3 px-3 py-3 rounded-xl text-zinc-700 hover:bg-zinc-50 hover:text-zinc-900 font-medium transition-all duration-150"
           >
             <svg className="h-5 w-5 flex-shrink-0 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span className="text-sm">Settings</span>
+            <span className="text-sm">{tNav("settings")}</span>
           </button>
 
           {/* Sign Out as the last item in the list */}
@@ -351,7 +363,7 @@ export default function MobileShell({
             <svg className="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
-            <span className="text-sm">Sign Out</span>
+            <span className="text-sm">{tNav("signOut")}</span>
           </button>
         </nav>
 

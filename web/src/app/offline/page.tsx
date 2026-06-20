@@ -1,6 +1,9 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 export default function OfflinePage() {
+  const t = useTranslations("Offline");
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-white px-6 text-center">
       {/* Ambient glow */}
@@ -42,11 +45,10 @@ export default function OfflinePage() {
 
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight text-zinc-900">
-            You&apos;re Offline
+            {t("title")}
           </h1>
           <p className="mt-2 text-sm text-zinc-500 leading-relaxed">
-            SmartSwine needs an internet connection to load your farm data.
-            Please check your connection and try again.
+            {t("description")}
           </p>
         </div>
 
@@ -57,11 +59,11 @@ export default function OfflinePage() {
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
-          Try Again
+          {t("tryAgain")}
         </button>
 
         <p className="text-xs text-zinc-400">
-          SmartSwine · Piggery Manager
+          {t("subtitle")}
         </p>
       </div>
     </main>

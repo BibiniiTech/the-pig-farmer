@@ -11,6 +11,8 @@ import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import FinancialReport from "@/components/reports/FinancialReport";
+import { ExportPdfIcon } from "@/components/icons/DashboardIcons";
+import { useTranslations } from "next-intl";
 
 interface FinancialRecord {
   id: string;
@@ -28,6 +30,7 @@ interface Pig {
 }
 
 export default function FinancialsPage() {
+  const t = useTranslations("Financials");
   const { user, userProfile, activeFarmUid, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -48,8 +51,23 @@ export default function FinancialsPage() {
   const [selectedPigId, setSelectedPigId] = useState("");
 
   const categories = {
-    Income: ["Pig Sale", "Manure Sale", "Breeding Service", "Equipment Sale", "Other"],
-    Expense: ["Feed", "Vet/Medication", "Labor/Salary", "Equipment", "Transport", "Rent", "Utility", "Other"]
+    Income: [
+      t("incomeCategories.pigSale"),
+      t("incomeCategories.manureSale"),
+      t("incomeCategories.breedingService"),
+      t("incomeCategories.equipmentSale"),
+      t("incomeCategories.other")
+    ],
+    Expense: [
+      t("expenseCategories.feed"),
+      t("expenseCategories.vet"),
+      t("expenseCategories.labor"),
+      t("expenseCategories.equipment"),
+      t("expenseCategories.transport"),
+      t("expenseCategories.rent"),
+      t("expenseCategories.utility"),
+      t("expenseCategories.other")
+    ]
   };
 
   useEffect(() => {
@@ -103,7 +121,7 @@ export default function FinancialsPage() {
         amount,
         description
       };
-      if (type === "Income" && category === "Pig Sale" && selectedPigId) {
+      if (type === "Income" && category === t("incomeCategories.pigSale") && selectedPigId) {
         record.pigId = selectedPigId;
       }
 
@@ -120,7 +138,7 @@ export default function FinancialsPage() {
   };
 
   const handleDeleteRecord = async (id: string) => {
-    if (!activeFarmUid || !confirm("Are you sure you want to delete this transaction record?")) return;
+    if (!activeFarmUid || !confirm(t("confirmDelete"))) return;
     try {
       await deleteDoc(doc(db, "users", activeFarmUid, "financials", id));
     } catch (err) {
@@ -161,9 +179,9 @@ export default function FinancialsPage() {
           {/* Dashboard balance summaries */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[
-              { label: "Total Revenue", amount: totalIncome, color: "text-emerald-700 bg-emerald-50/50 border-emerald-100" },
-              { label: "Total Expenses", amount: totalExpense, color: "text-rose-700 bg-rose-50/50 border-rose-100" },
-              { label: "Net Cashflow", amount: netBalance, color: netBalance >= 0 ? "text-emerald-800 bg-emerald-100/30 border-emerald-200" : "text-rose-800 bg-rose-100/30 border-rose-200" }
+              { label: t("totalRevenue"), amount: totalIncome, color: "text-emerald-700 bg-emerald-50/50 border-emerald-100" },
+              { label: t("totalExpenses"), amount: totalExpense, color: "text-rose-700 bg-rose-50/50 border-rose-100" },
+              { label: t("netCashflow"), amount: netBalance, color: netBalance >= 0 ? "text-emerald-800 bg-emerald-100/30 border-emerald-200" : "text-rose-800 bg-rose-100/30 border-rose-200" }
             ].map((stat, i) => (
               <div key={i} className={`backdrop-blur-md border rounded-2xl p-6 shadow-sm bg-white/60 ${stat.color}`}>
                 <p className="text-xs font-bold uppercase tracking-wider">{stat.label}</p>
@@ -175,7 +193,7 @@ export default function FinancialsPage() {
           {/* Ledger Table */}
           <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4 flex-wrap gap-4">
-              <h2 className="text-lg font-bold text-zinc-900">Farm Cashflow Ledger</h2>
+              <h2 className="text-lg font-bold text-zinc-900">{t("farmCashflowLedger")}</h2>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => {
@@ -193,16 +211,14 @@ export default function FinancialsPage() {
                       : "border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100"
                   }`}
                 >
-                  <svg className="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 11c0 .55-.45 1-1 1H9v2H7.5v-5h3c.55 0 1 .45 1 1v1zm5 2c0 .55-.45 1-1 1h-2.5v-5H16c.55 0 1 .45 1 1v3zm-5.5-4H10v1.5h.5V11zm4.5 1h-.5v2h.5v-2zm2.5 1h-2v-1h2v-1h-2v-1h3.5v5H19v-2z" />
-                  </svg>
-                  <span>{userProfile?.isPremium || userProfile?.isAdmin ? "Export PDF" : "Export PDF (Premium)"}</span>
+                  <ExportPdfIcon className="h-3.5 w-3.5 opacity-80" />
+                  <span>{userProfile?.isPremium || userProfile?.isAdmin ? t("exportPdf") : t("exportPdfPremium")}</span>
                 </button>
                 <button
                   onClick={() => setShowAddModal(true)}
                   className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white shadow shadow-emerald-600/10 transition active:scale-95"
                 >
-                  + Log Transaction
+                  + {t("logTransaction")}
                 </button>
               </div>
             </div>
@@ -213,7 +229,7 @@ export default function FinancialsPage() {
                 ))}
               </div>
             ) : records.length === 0 ? (
-              <p className="text-sm text-zinc-500 text-center py-12">No transactions recorded yet.</p>
+              <p className="text-sm text-zinc-500 text-center py-12">{t("noTransactions")}</p>
             ) : (
               <>
                 {/* Desktop Table View */}
@@ -221,13 +237,13 @@ export default function FinancialsPage() {
                   <table className="min-w-full divide-y divide-zinc-200 text-sm">
                     <thead>
                       <tr className="text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider border-b border-zinc-200">
-                        <th className="pb-3">Date</th>
-                        <th className="pb-3">Type</th>
-                        <th className="pb-3">Category</th>
-                        <th className="pb-3">Description</th>
-                        <th className="pb-3">Linked Pig</th>
-                        <th className="pb-3 text-right">Amount</th>
-                        <th className="pb-3 text-right">Actions</th>
+                        <th className="pb-3">{t("date")}</th>
+                        <th className="pb-3">{t("type")}</th>
+                        <th className="pb-3">{t("category")}</th>
+                        <th className="pb-3">{t("description")}</th>
+                        <th className="pb-3">{t("linkedPig")}</th>
+                        <th className="pb-3 text-right">{t("amount")}</th>
+                        <th className="pb-3 text-right">{t("actions")}</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-zinc-150">
@@ -250,7 +266,7 @@ export default function FinancialsPage() {
                                 <Link href={`/dashboard/herd/${record.pigId}`} className="text-emerald-700 hover:underline">
                                   {linkedPig.tagNumber}
                                 </Link>
-                              ) : "N/A"}
+                              ) : t("none")}
                             </td>
                             <td className={`py-4 text-right font-bold font-mono ${
                               record.type === "Income" ? "text-emerald-700" : "text-rose-700"
@@ -259,7 +275,7 @@ export default function FinancialsPage() {
                             </td>
                             <td className="py-4 text-right font-medium">
                               <button onClick={() => handleDeleteRecord(record.id)} className="text-xs text-rose-600 hover:underline">
-                                Delete
+                                {t("delete")}
                               </button>
                             </td>
                           </tr>
@@ -291,19 +307,19 @@ export default function FinancialsPage() {
 
                         <div className="flex justify-between items-end border-t border-zinc-100 pt-3">
                           <div className="text-[10px]">
-                            <span className="text-zinc-400 font-semibold uppercase">Linked Pig: </span>
+                            <span className="text-zinc-400 font-semibold uppercase">{t("linkedPig")}: </span>
                             {linkedPig ? (
                               <Link href={`/dashboard/herd/${record.pigId}`} className="text-emerald-700 font-bold hover:underline">
                                 {linkedPig.tagNumber}
                               </Link>
-                            ) : <span className="text-zinc-500 font-bold">N/A</span>}
+                            ) : <span className="text-zinc-500 font-bold">{t("none")}</span>}
                           </div>
                           <div className="text-right">
                              <p className={`text-sm font-black font-mono ${record.type === "Income" ? "text-emerald-700" : "text-rose-700"}`}>
                                 {record.type === "Income" ? "+" : "-"}{currencySymbol}{record.amount.toFixed(2)}
                              </p>
                              <button onClick={() => handleDeleteRecord(record.id)} className="text-[10px] font-bold text-rose-500 mt-1 uppercase tracking-tight">
-                                Delete Entry
+                                {t("deleteEntry")}
                              </button>
                           </div>
                         </div>
@@ -327,28 +343,28 @@ export default function FinancialsPage() {
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <div className="bg-white border border-zinc-200 rounded-2xl w-full max-w-md p-6 space-y-6 shadow-2xl">
-            <h3 className="text-lg font-bold text-zinc-900">Log Transaction</h3>
+            <h3 className="text-lg font-bold text-zinc-900">{t("logTransaction")}</h3>
             <form onSubmit={handleAddTransaction} className="space-y-4">
               <div className="flex gap-2 p-1 bg-zinc-100 rounded-lg">
                 <button
                   type="button"
-                  onClick={() => { setType("Expense"); setCategory("Feed"); }}
+                  onClick={() => { setType("Expense"); setCategory(t("expenseCategories.feed")); }}
                   className={`flex-1 py-1.5 text-xs font-bold rounded-md transition ${type === "Expense" ? "bg-white text-zinc-800 shadow" : "text-zinc-500"}`}
                 >
-                  Expense
+                  {t("expense")}
                 </button>
                 <button
                   type="button"
-                  onClick={() => { setType("Income"); setCategory("Pig Sale"); }}
+                  onClick={() => { setType("Income"); setCategory(t("incomeCategories.pigSale")); }}
                   className={`flex-1 py-1.5 text-xs font-bold rounded-md transition ${type === "Income" ? "bg-white text-zinc-800 shadow" : "text-zinc-500"}`}
                 >
-                  Income
+                  {t("income")}
                 </button>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Date</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("date")}</label>
                   <input
                     type="date"
                     required
@@ -358,7 +374,7 @@ export default function FinancialsPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Category</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("category")}</label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
@@ -371,9 +387,9 @@ export default function FinancialsPage() {
                 </div>
               </div>
 
-              <div className={type === "Income" && category === "Pig Sale" ? "grid grid-cols-2 gap-4" : "grid grid-cols-1 gap-4"}>
+              <div className={type === "Income" && category === t("incomeCategories.pigSale") ? "grid grid-cols-2 gap-4" : "grid grid-cols-1 gap-4"}>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Amount ({currencySymbol})</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("amountWithSymbol", { symbol: currencySymbol })}</label>
                   <input
                     type="number"
                     step="any"
@@ -383,15 +399,15 @@ export default function FinancialsPage() {
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                   />
                 </div>
-                {type === "Income" && category === "Pig Sale" && (
+                {type === "Income" && category === t("incomeCategories.pigSale") && (
                   <div>
-                    <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Link Pig (Optional)</label>
+                    <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("linkPigOptional")}</label>
                     <select
                       value={selectedPigId}
                       onChange={(e) => setSelectedPigId(e.target.value)}
                       className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                     >
-                      <option value="">None</option>
+                      <option value="">{t("none")}</option>
                       {pigs.map(p => (
                         <option key={p.id} value={p.id}>{p.tagNumber}</option>
                       ))}
@@ -401,12 +417,12 @@ export default function FinancialsPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Description</label>
+                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("description")}</label>
                 <textarea
                   required
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="e.g. Purchased 10 bags of starter feed from feed shop."
+                  placeholder={t("descriptionPlaceholder")}
                   rows={2}
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                 />
@@ -418,10 +434,10 @@ export default function FinancialsPage() {
                   onClick={() => setShowAddModal(false)}
                   className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2 text-xs font-semibold text-zinc-500 hover:bg-zinc-100 transition"
                 >
-                  Cancel
+                  {t("cancel")}
                 </button>
                 <button type="submit" className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white transition">
-                  Save
+                  {t("save")}
                 </button>
               </div>
             </form>

@@ -2,6 +2,7 @@
 
 import React from "react";
 import ReportLayout from "./ReportLayout";
+import { useTranslations } from "next-intl";
 
 interface HealthRecord {
   id: string;
@@ -29,7 +30,11 @@ interface HerdReportProps {
   includeSummary?: boolean;
 }
 
-const HerdReport: React.FC<HerdReportProps> = ({ pigs, allPigs = [], title = "Herd Data Report", includeSummary = true }) => {
+const HerdReport: React.FC<HerdReportProps> = ({ pigs, allPigs = [], title, includeSummary = true }) => {
+  const t = useTranslations("Reports");
+  const th = useTranslations("Herd");
+  const defaultTitle = t("herdInventory");
+
   const calculateAgeMonths = (birthDate: string) => {
     const birth = new Date(birthDate);
     const now = new Date();
@@ -49,16 +54,16 @@ const HerdReport: React.FC<HerdReportProps> = ({ pigs, allPigs = [], title = "He
   const porkers = pigs.filter(p => p.purpose === "Porker");
 
   return (
-    <ReportLayout title={title}>
+    <ReportLayout title={title || defaultTitle}>
       {includeSummary && (
         <div className="mb-10 space-y-2 border-l-4 border-emerald-500 pl-6 py-2 bg-zinc-50 rounded-r-xl">
-          <h3 className="text-[16pt] font-bold text-zinc-800">Herd Summary</h3>
-          <p className="text-[12pt]">Total Pigs: {pigs.length}</p>
-          <p className="text-[12pt]">Total Breeders: {breeders.length}</p>
+          <h3 className="text-[16pt] font-bold text-zinc-800">{t("summary")}</h3>
+          <p className="text-[12pt]">{t("totalPigs")}: {pigs.length}</p>
+          <p className="text-[12pt]">Total {th("breeder")}s: {breeders.length}</p>
           <p className="text-[11pt] text-zinc-600 italic ml-4">
             Breakdown: Males: {breeders.filter(p => p.gender === "Male").length}, Females: {breeders.filter(p => p.gender === "Female").length}
           </p>
-          <p className="text-[12pt]">Total Porkers: {porkers.length}</p>
+          <p className="text-[12pt]">Total {th("porker")}s: {porkers.length}</p>
           <p className="text-[11pt] text-zinc-600 italic ml-4">
             Breakdown: Males: {porkers.filter(p => p.gender === "Male").length}, Females: {porkers.filter(p => p.gender === "Female").length}
           </p>
@@ -68,14 +73,14 @@ const HerdReport: React.FC<HerdReportProps> = ({ pigs, allPigs = [], title = "He
       <table className="w-full border-collapse mb-10 text-[10pt]">
         <thead>
           <tr className="bg-zinc-100 text-left border-y-2 border-zinc-300">
-            <th className="p-3 font-bold border-r border-zinc-200">Tag #</th>
-            <th className="p-3 font-bold border-r border-zinc-200">Gender</th>
-            <th className="p-3 font-bold border-r border-zinc-200">Breed</th>
+            <th className="p-3 font-bold border-r border-zinc-200">{t("tagNumber")}</th>
+            <th className="p-3 font-bold border-r border-zinc-200">{t("gender")}</th>
+            <th className="p-3 font-bold border-r border-zinc-200">{t("breed")}</th>
             <th className="p-3 font-bold border-r border-zinc-200">Purpose</th>
-            <th className="p-3 font-bold border-r border-zinc-200 text-center">Weight (kg)</th>
-            <th className="p-3 font-bold border-r border-zinc-200">Pen #</th>
+            <th className="p-3 font-bold border-r border-zinc-200 text-center">{t("weight")}</th>
+            <th className="p-3 font-bold border-r border-zinc-200">{t("location")}</th>
             <th className="p-3 font-bold border-r border-zinc-200">DOB</th>
-            <th className="p-3 font-bold">Age</th>
+            <th className="p-3 font-bold">{t("age")}</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-zinc-200">
@@ -104,7 +109,7 @@ const HerdReport: React.FC<HerdReportProps> = ({ pigs, allPigs = [], title = "He
                 <thead>
                   <tr className="bg-zinc-50 text-left border-y border-zinc-200">
                     <th className="p-2 font-bold w-1/4">Activity Type</th>
-                    <th className="p-2 font-bold w-1/5">Date</th>
+                    <th className="p-2 font-bold w-1/5">{t("date")}</th>
                     <th className="p-2 font-bold">Notes / Description</th>
                   </tr>
                 </thead>

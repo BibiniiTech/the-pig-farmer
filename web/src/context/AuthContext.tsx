@@ -1,10 +1,11 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useRef } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
-import { doc, getDoc, collection, getDocs, query, limit, writeBatch, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs, query, limit, writeBatch, onSnapshot, updateDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { defaultIngredients } from "@/lib/defaultIngredients";
+import { getCurrencyByCountry } from "@/lib/currencyUtils";
 
 interface UserProfile {
   firstName: string;
@@ -66,6 +67,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isStaff, setIsStaff] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
+  // Track last seen country to auto-update currency if it changes (matching Android logic)
+  const lastCountryRef = useRef<string | null>(null);
+
   useEffect(() => {
     let profileUnsubscribe: (() => void) | null = null;
 
@@ -88,11 +92,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             setIsStaff(false);
 
             // Listen to owner profile in real-time
-            profileUnsubscribe = onSnapshot(userDocRef, (snapshot) => {
+            profileUnsubscribe = onSnapshot(userDocRef, async (snapshot) => {
               if (snapshot.exists()) {
                 const data = snapshot.data();
-                // Firestore stores the admin flag as "admin" (not "isAdmin")
-                // Mirror the email fallback from the Android app
+
+                // Auto-update currency based on country changes (Android logic)
+                const currentCountry = data.country || "";
+                if (currentCountry && currentCountry !== lastCountryRef.current) {
+                  lastCountryRef.current = currentCountry;
+
+                  // Only auto-update if currency isn't already set or if it's the first time seeing this country
+                  if (!data.settings?.selectedCurrency || !data.settings?.currencySymbol) {
+                    const currency = getCurrencyByCountry(currentCountry);
+                    await updateDoc(userDocRef, {
+                      "settings.selectedCurrency": currency.code,
+                      "settings.currencySymbol": currency.symbol
+                    });
+                  }
+                }
+
                 const isAdminUser =
                   data.admin === true ||
                   data.email === "bibiniitech@gmail.com";

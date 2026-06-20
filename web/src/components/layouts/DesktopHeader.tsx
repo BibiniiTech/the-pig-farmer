@@ -8,6 +8,7 @@ import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
+import { useTranslations } from "next-intl";
 
 interface AppLanguageOption {
   code: string;
@@ -25,9 +26,14 @@ const LANGUAGES: AppLanguageOption[] = [
   { code: "th", displayName: "ไทย", flag: "🇹🇭" },
   { code: "pt", displayName: "Português", flag: "🇵🇹" },
   { code: "hi", displayName: "हिन्दी", flag: "🇮🇳" },
+  { code: "sw", displayName: "Kiswahili", flag: "🇰🇪" },
+  { code: "id", displayName: "Bahasa Indonesia", flag: "🇮🇩" },
+  { code: "ht", displayName: "Kreyòl Ayisyen", flag: "🇭🇹" },
+  { code: "my", displayName: "မြန်မာ", flag: "🇲🇲" },
 ];
 
 export default function DesktopHeader({ label, showBack, backPath }: { label?: string; showBack?: boolean; backPath?: string }) {
+  const t = useTranslations("Dashboard");
   const { user, userProfile, activeFarmUid } = useAuth();
   const [selectedLang, setSelectedLang] = useState("en");
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
@@ -47,7 +53,29 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
       where("completed", "==", false)
     );
     const unsubscribe = onSnapshot(tasksQuery, (snapshot) => {
-      setTaskCount(snapshot.size);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const activeTasks = snapshot.docs.filter(docSnap => {
+        const task = docSnap.data();
+        if (!task.date) return false;
+
+        try {
+          const taskDate = new Date(task.date);
+          if (isNaN(taskDate.getTime())) return false;
+
+          taskDate.setHours(0, 0, 0, 0);
+          const diffTime = taskDate.getTime() - today.getTime();
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+          // Match Android logic: Show notifications for tasks within -2 to +2 day window
+          return diffDays >= -2 && diffDays <= 2;
+        } catch (e) {
+          return false;
+        }
+      });
+
+      setTaskCount(activeTasks.length);
     });
     return () => unsubscribe();
   }, [activeFarmUid]);
@@ -55,6 +83,10 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
   const handleLanguageChange = async (langCode: string) => {
     setSelectedLang(langCode);
     setIsLangDropdownOpen(false);
+
+    // Set cookie and reload to apply new locale
+    document.cookie = `NEXT_LOCALE=${langCode}; path=/; max-age=31536000`;
+
     if (user) {
       try {
         const userDocRef = doc(db, "users", user.uid);
@@ -63,6 +95,7 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
         console.error("Failed to update language:", err);
       }
     }
+    window.location.reload();
   };
 
   return (
@@ -99,7 +132,7 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
             <button
               onClick={() => router.push("/dashboard")}
               className="relative p-2 text-zinc-650 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition duration-200 focus:outline-none"
-              aria-label="Upcoming Activities"
+              aria-label={t("upcomingActivities")}
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
@@ -145,7 +178,7 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
             {isLangDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 rounded-xl border border-zinc-200 bg-white/95 backdrop-blur-md shadow-xl z-40 py-1.5 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 origin-top-right">
                 <div className="px-3 py-1 text-[10px] font-bold text-zinc-400 uppercase tracking-wider border-b border-zinc-100 mb-1">
-                  Language
+                  {t("language")}
                 </div>
                 <div className="max-h-[240px] overflow-y-auto no-scrollbar">
                   {LANGUAGES.map((lang) => {

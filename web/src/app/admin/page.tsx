@@ -19,9 +19,8 @@ import {
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 import { useDevice } from "@/context/DeviceContext";
-import NavbarDropdown from "@/components/NavbarDropdown";
-import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
+import { useTranslations } from "next-intl";
 import {
   ChevronLeftIcon,
   StorefrontIcon,
@@ -93,6 +92,7 @@ interface TrainingVideo {
 }
 
 export default function AdminPage() {
+  const t = useTranslations("Admin");
   const { userProfile, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -253,7 +253,7 @@ export default function AdminPage() {
         {/* Header */}
         {!isMobile && (
           <header className="bg-white sticky top-0 z-50 border-b border-zinc-100">
-            <DesktopHeader label="Admin Panel" />
+            <DesktopHeader label={t("title")} />
 
             {/* Tabs (Desktop only) */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex border-t border-zinc-100">
@@ -264,7 +264,7 @@ export default function AdminPage() {
                 }`}
               >
                 <StorefrontIcon className="h-5 w-5" />
-                <span className="hidden sm:inline">Suggestions</span>
+                <span className="hidden sm:inline">{t("suggestions")}</span>
               </button>
               <button
                 onClick={() => setActiveTab("ingredients")}
@@ -273,7 +273,7 @@ export default function AdminPage() {
                 }`}
               >
                 <ListIcon className="h-5 w-5" />
-                <span className="hidden sm:inline">Ingredients</span>
+                <span className="hidden sm:inline">{t("ingredients")}</span>
               </button>
               <button
                 onClick={() => setActiveTab("videos")}
@@ -282,7 +282,7 @@ export default function AdminPage() {
                 }`}
               >
                 <PlayCircleIcon className="h-5 w-5" />
-                <span className="hidden sm:inline">Videos</span>
+                <span className="hidden sm:inline">{t("videos")}</span>
               </button>
             </div>
           </header>
@@ -297,7 +297,7 @@ export default function AdminPage() {
                 activeTab === "suggestions" ? "text-emerald-600 border-b-2 border-emerald-500" : "text-zinc-400"
               }`}
             >
-              Suggestions
+              {t("suggestions")}
             </button>
             <button
               onClick={() => setActiveTab("ingredients")}
@@ -305,7 +305,7 @@ export default function AdminPage() {
                 activeTab === "ingredients" ? "text-emerald-600 border-b-2 border-emerald-500" : "text-zinc-400"
               }`}
             >
-              Ingredients
+              {t("ingredients")}
             </button>
             <button
               onClick={() => setActiveTab("videos")}
@@ -313,7 +313,7 @@ export default function AdminPage() {
                 activeTab === "videos" ? "text-emerald-600 border-b-2 border-emerald-500" : "text-zinc-400"
               }`}
             >
-              Videos
+              {t("videos")}
             </button>
           </div>
         )}
@@ -323,7 +323,7 @@ export default function AdminPage() {
           <div className="space-y-6">
             {/* Suggestions Sections */}
             <CollapsibleSection
-              title="Pending Suggestions"
+              title={t("pendingSuggestions")}
               icon={<ListIcon className="h-5 w-5 text-emerald-600" />}
               count={suggestions.filter(s => s.status === "pending").length}
               expanded={pendingExpanded}
@@ -332,7 +332,7 @@ export default function AdminPage() {
             >
               <div className="space-y-4 pt-4">
                 {suggestions.filter(s => s.status === "pending").length === 0 ? (
-                  <p className="text-sm text-zinc-500 text-center py-4">No pending suggestions.</p>
+                  <p className="text-sm text-zinc-500 text-center py-4">{t("noPending")}</p>
                 ) : (
                   suggestions.filter(s => s.status === "pending").map(s => (
                     <SuggestionItem
@@ -342,6 +342,7 @@ export default function AdminPage() {
                       onReject={() => setShowRejectModal(s)}
                       onEdit={() => setShowEditSuggestion(s)}
                       onDelete={() => setShowDeleteSuggestion(s)}
+                      t={t}
                     />
                   ))
                 )}
@@ -349,7 +350,7 @@ export default function AdminPage() {
             </CollapsibleSection>
 
             <CollapsibleSection
-              title="Approved Suggestions"
+              title={t("approvedSuggestions")}
               icon={<CheckIcon className="h-5 w-5 text-green-600" />}
               count={suggestions.filter(s => s.status === "approved").length}
               expanded={approvedExpanded}
@@ -358,7 +359,7 @@ export default function AdminPage() {
             >
               <div className="space-y-4 pt-4">
                 {suggestions.filter(s => s.status === "approved").length === 0 ? (
-                  <p className="text-sm text-zinc-500 text-center py-4">No approved suggestions.</p>
+                  <p className="text-sm text-zinc-500 text-center py-4">{t("noApproved")}</p>
                 ) : (
                   suggestions.filter(s => s.status === "approved").map(s => (
                     <SuggestionItem
@@ -366,6 +367,7 @@ export default function AdminPage() {
                       suggestion={s}
                       onEdit={() => setShowEditSuggestion(s)}
                       onDelete={() => setShowDeleteSuggestion(s)}
+                      t={t}
                     />
                   ))
                 )}
@@ -373,7 +375,7 @@ export default function AdminPage() {
             </CollapsibleSection>
 
             <CollapsibleSection
-              title="Rejected Suggestions"
+              title={t("rejectedSuggestions")}
               icon={<XMarkIcon className="h-5 w-5 text-red-600" />}
               count={suggestions.filter(s => s.status === "rejected").length}
               expanded={rejectedExpanded}
@@ -382,7 +384,7 @@ export default function AdminPage() {
             >
               <div className="space-y-4 pt-4">
                 {suggestions.filter(s => s.status === "rejected").length === 0 ? (
-                  <p className="text-sm text-zinc-500 text-center py-4">No rejected suggestions.</p>
+                  <p className="text-sm text-zinc-500 text-center py-4">{t("noRejected")}</p>
                 ) : (
                   suggestions.filter(s => s.status === "rejected").map(s => (
                     <SuggestionItem
@@ -390,6 +392,7 @@ export default function AdminPage() {
                       suggestion={s}
                       onEdit={() => setShowEditSuggestion(s)}
                       onDelete={() => setShowDeleteSuggestion(s)}
+                      t={t}
                     />
                   ))
                 )}
@@ -397,7 +400,7 @@ export default function AdminPage() {
             </CollapsibleSection>
 
             <CollapsibleSection
-              title="Existing Directory"
+              title={t("existingDirectory")}
               icon={<StorefrontIcon className="h-5 w-5 text-emerald-600" />}
               count={providers.length}
               expanded={existingExpanded}
@@ -406,7 +409,7 @@ export default function AdminPage() {
             >
               <div className="space-y-2 pt-4">
                 {providers.length === 0 ? (
-                  <p className="text-sm text-zinc-500 text-center py-4">No directory listings.</p>
+                  <p className="text-sm text-zinc-500 text-center py-4">{t("noDirectory")}</p>
                 ) : (
                   Object.entries(groupBy(providers.slice().sort((a, b) => a.name.localeCompare(b.name)), "country"))
                     .sort(([a], [b]) => (a || "Unknown").localeCompare(b || "Unknown"))
@@ -433,6 +436,7 @@ export default function AdminPage() {
                                   provider={p}
                                   onEdit={() => setShowEditProvider(p)}
                                   onDelete={() => setShowDeleteProvider(p)}
+                                  t={t}
                                 />
                               ))}
                             </div>
@@ -453,7 +457,7 @@ export default function AdminPage() {
                 <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-400" />
                 <input
                   type="text"
-                  placeholder="Search Ingredients..."
+                  placeholder={t("searchIngredients")}
                   value={ingredientSearch}
                   onChange={(e) => setIngredientSearch(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 bg-white border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition"
@@ -464,7 +468,7 @@ export default function AdminPage() {
                 className="flex items-center justify-center gap-2 px-6 py-2 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 transition"
               >
                 <PlusIcon className="h-5 w-5" />
-                Add Ingredient
+                {t("addIngredient")}
               </button>
             </div>
 
@@ -496,6 +500,7 @@ export default function AdminPage() {
                               ingredient={ing}
                               onEdit={() => setShowIngredientModal(ing)}
                               onDelete={() => setShowDeleteIngredient(ing)}
+                              t={t}
                             />
                           ))}
                         </div>
@@ -504,7 +509,7 @@ export default function AdminPage() {
                   );
                 })}
               {filteredIngredients.length === 0 && (
-                <p className="text-center text-zinc-500 py-12">No ingredients found.</p>
+                <p className="text-center text-zinc-500 py-12">{t("noIngredients")}</p>
               )}
             </div>
           </div>
@@ -517,7 +522,7 @@ export default function AdminPage() {
                 <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-400" />
                 <input
                   type="text"
-                  placeholder="Search Videos..."
+                  placeholder={t("searchVideos")}
                   value={videoSearch}
                   onChange={(e) => setVideoSearch(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 bg-white border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition"
@@ -528,7 +533,7 @@ export default function AdminPage() {
                 className="flex items-center justify-center gap-2 px-6 py-2 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 transition"
               >
                 <PlusIcon className="h-5 w-5" />
-                Add Video
+                {t("addVideo")}
               </button>
             </div>
 
@@ -546,7 +551,7 @@ export default function AdminPage() {
                 </div>
               ))}
               {filteredVideos.length === 0 && (
-                <p className="col-span-full text-center text-zinc-500 py-12">No video tutorials found.</p>
+                <p className="col-span-full text-center text-zinc-500 py-12">{t("noVideos")}</p>
               )}
             </div>
           </div>
@@ -555,23 +560,23 @@ export default function AdminPage() {
 
       {/* Modals */}
       {showRejectModal && (
-        <Modal title="Reject Suggestion" onClose={() => setShowRejectModal(null)}>
+        <Modal title={t("rejectSuggestion")} onClose={() => setShowRejectModal(null)}>
           <div className="space-y-4">
-            <p className="text-sm text-zinc-600">Enter feedback / reason for rejection:</p>
+            <p className="text-sm text-zinc-600">{t("rejectionReason")}</p>
             <textarea
               value={rejectionReason}
               onChange={(e) => setRejectionReason(e.target.value)}
               className="w-full p-3 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none h-32 resize-none"
-              placeholder="Reason for rejection..."
+              placeholder={t("reasonPlaceholder")}
             />
             <div className="flex gap-3 pt-2">
-              <button onClick={() => setShowRejectModal(null)} className="flex-1 py-3 text-zinc-600 font-bold hover:bg-zinc-100 rounded-xl transition">Cancel</button>
+              <button onClick={() => setShowRejectModal(null)} className="flex-1 py-3 text-zinc-600 font-bold hover:bg-zinc-100 rounded-xl transition">{t("cancel")}</button>
               <button
                 onClick={handleRejectSuggestion}
                 disabled={!rejectionReason.trim()}
                 className="flex-1 py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 disabled:opacity-50 transition"
               >
-                Confirm Rejection
+                {t("confirmRejection")}
               </button>
             </div>
           </div>
@@ -583,19 +588,21 @@ export default function AdminPage() {
         <EditSuggestionModal
           suggestion={showEditSuggestion}
           onClose={() => setShowEditSuggestion(null)}
+          t={t}
         />
       )}
 
       {/* Delete Suggestion Modal */}
       {showDeleteSuggestion && (
         <DeleteModal
-          title="Delete Suggestion"
-          message={`Are you sure you want to permanently delete '${showDeleteSuggestion.providerName}'?`}
+          title={t("deleteSuggestion")}
+          message={t("confirmDeleteSuggestion", { name: showDeleteSuggestion.providerName })}
           onDelete={async () => {
             await deleteDoc(doc(db, "market_suggestions", showDeleteSuggestion.id));
             setShowDeleteSuggestion(null);
           }}
           onClose={() => setShowDeleteSuggestion(null)}
+          t={t}
         />
       )}
 
@@ -604,19 +611,21 @@ export default function AdminPage() {
         <EditProviderModal
           provider={showEditProvider}
           onClose={() => setShowEditProvider(null)}
+          t={t}
         />
       )}
 
       {/* Delete Provider Modal */}
       {showDeleteProvider && (
         <DeleteModal
-          title="Delete Provider Listing"
-          message={`Are you sure you want to permanently delete '${showDeleteProvider.name}'?`}
+          title={t("deleteProvider")}
+          message={t("confirmDeleteProvider", { name: showDeleteProvider.name })}
           onDelete={async () => {
             await deleteDoc(doc(db, "market_providers", showDeleteProvider.id));
             setShowDeleteProvider(null);
           }}
           onClose={() => setShowDeleteProvider(null)}
+          t={t}
         />
       )}
 
@@ -625,19 +634,21 @@ export default function AdminPage() {
         <IngredientModal
           ingredient={showIngredientModal === "new" ? null : showIngredientModal}
           onClose={() => setShowIngredientModal(null)}
+          t={t}
         />
       )}
 
       {/* Delete Ingredient Modal */}
       {showDeleteIngredient && (
         <DeleteModal
-          title="Delete Global Ingredient"
-          message={`Are you sure you want to delete '${showDeleteIngredient.name}'? This will stop seeding this ingredient to new users.`}
+          title={t("deleteIngredient")}
+          message={t("confirmDeleteIngredient", { name: showDeleteIngredient.name })}
           onDelete={async () => {
             await deleteDoc(doc(db, "global_feed_ingredients", showDeleteIngredient.id));
             setShowDeleteIngredient(null);
           }}
           onClose={() => setShowDeleteIngredient(null)}
+          t={t}
         />
       )}
 
@@ -646,19 +657,21 @@ export default function AdminPage() {
         <VideoModal
           video={showVideoModal === "new" ? null : showVideoModal}
           onClose={() => setShowVideoModal(null)}
+          t={t}
         />
       )}
 
       {/* Delete Video Modal */}
       {showDeleteVideo && (
         <DeleteModal
-          title="Delete Video Tutorial"
-          message={`Are you sure you want to permanently delete '${showDeleteVideo.title}'?`}
+          title={t("deleteVideo")}
+          message={t("confirmDeleteVideo", { name: showDeleteVideo.title })}
           onDelete={async () => {
             await deleteDoc(doc(db, "training_videos", showDeleteVideo.id));
             setShowDeleteVideo(null);
           }}
           onClose={() => setShowDeleteVideo(null)}
+          t={t}
         />
       )}
     </div>
@@ -691,7 +704,7 @@ function CollapsibleSection({ title, icon, count, expanded, onToggle, children, 
   );
 }
 
-function SuggestionItem({ suggestion, onApprove, onReject, onEdit, onDelete }: any) {
+function SuggestionItem({ suggestion, onApprove, onReject, onEdit, onDelete, t }: any) {
   return (
     <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-4 space-y-4 hover:border-emerald-500/20 transition">
       <div className="flex justify-between items-start">
@@ -708,25 +721,25 @@ function SuggestionItem({ suggestion, onApprove, onReject, onEdit, onDelete }: a
       </div>
 
       <div className="grid grid-cols-2 gap-y-2 text-xs">
-        <div><span className="text-zinc-400">User:</span> {suggestion.userId}</div>
-        <div><span className="text-zinc-400">Contact:</span> {suggestion.contact}</div>
-        {suggestion.email && <div><span className="text-zinc-400">Email:</span> {suggestion.email}</div>}
-        <div><span className="text-zinc-400">Location:</span> {suggestion.city}, {suggestion.country}</div>
+        <div><span className="text-zinc-400">{t("user")}:</span> {suggestion.userId}</div>
+        <div><span className="text-zinc-400">{t("contact")}:</span> {suggestion.contact}</div>
+        {suggestion.email && <div><span className="text-zinc-400">{t("email")}:</span> {suggestion.email}</div>}
+        <div><span className="text-zinc-400">{t("location")}:</span> {suggestion.city}, {suggestion.country}</div>
       </div>
 
       {suggestion.status === "rejected" && suggestion.adminFeedback && (
         <div className="p-2 bg-red-50 border border-red-100 rounded text-[13px] text-red-600">
-          <span className="font-bold">Rejection Reason:</span> {suggestion.adminFeedback}
+          <span className="font-bold">{t("rejectionReasonLabel")}</span> {suggestion.adminFeedback}
         </div>
       )}
 
       {suggestion.status === "pending" && (
         <div className="flex gap-2 pt-2">
           <button onClick={onApprove} className="flex-1 py-2 bg-green-600 text-white text-xs font-bold rounded-lg hover:bg-green-700 transition flex items-center justify-center gap-1">
-            <CheckIcon className="h-3.5 w-3.5" /> Approve
+            <CheckIcon className="h-3.5 w-3.5" /> {t("approve")}
           </button>
           <button onClick={onReject} className="flex-1 py-2 bg-red-600 text-white text-xs font-bold rounded-lg hover:bg-red-700 transition flex items-center justify-center gap-1">
-            <XMarkIcon className="h-3.5 w-3.5" /> Reject
+            <XMarkIcon className="h-3.5 w-3.5" /> {t("reject")}
           </button>
         </div>
       )}
@@ -734,7 +747,7 @@ function SuggestionItem({ suggestion, onApprove, onReject, onEdit, onDelete }: a
   );
 }
 
-function ProviderItem({ provider, onEdit, onDelete }: any) {
+function ProviderItem({ provider, onEdit, onDelete, t }: any) {
   return (
     <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-4 space-y-3 hover:border-emerald-500/20 transition">
       <div className="flex justify-between items-start">
@@ -751,16 +764,16 @@ function ProviderItem({ provider, onEdit, onDelete }: any) {
       </div>
       <p className="text-xs text-zinc-600 line-clamp-2">{provider.description}</p>
       <div className="grid grid-cols-2 gap-y-1 text-[13px]">
-        <div><span className="text-zinc-400">Contact:</span> {provider.contact}</div>
-        <div><span className="text-zinc-400">Location:</span> {provider.location}</div>
-        {provider.email && <div><span className="text-zinc-400">Email:</span> {provider.email}</div>}
-        <div><span className="text-zinc-400">Country:</span> {provider.country}</div>
+        <div><span className="text-zinc-400">{t("contact")}:</span> {provider.contact}</div>
+        <div><span className="text-zinc-400">{t("location")}:</span> {provider.location}</div>
+        {provider.email && <div><span className="text-zinc-400">{t("email")}:</span> {provider.email}</div>}
+        <div><span className="text-zinc-400">{t("country")}:</span> {provider.country}</div>
       </div>
     </div>
   );
 }
 
-function IngredientCard({ ingredient, onEdit, onDelete }: any) {
+function IngredientCard({ ingredient, onEdit, onDelete, t }: any) {
   return (
     <div className="bg-white border border-zinc-200 rounded-2xl p-4 space-y-4 hover:border-emerald-500/30 transition shadow-sm group">
       <div className="flex justify-between items-start">
@@ -807,14 +820,14 @@ function Modal({ title, children, onClose }: any) {
   );
 }
 
-function DeleteModal({ title, message, onDelete, onClose }: any) {
+function DeleteModal({ title, message, onDelete, onClose, t }: any) {
   return (
     <Modal title={title} onClose={onClose}>
       <div className="space-y-6">
         <p className="text-sm text-zinc-600 leading-relaxed">{message}</p>
         <div className="flex gap-3">
-          <button onClick={onClose} className="flex-1 py-3 text-zinc-600 font-bold hover:bg-zinc-100 rounded-xl transition">Cancel</button>
-          <button onClick={onDelete} className="flex-1 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition">Delete</button>
+          <button onClick={onClose} className="flex-1 py-3 text-zinc-600 font-bold hover:bg-zinc-100 rounded-xl transition">{t("cancel")}</button>
+          <button onClick={onDelete} className="flex-1 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition">{t("delete")}</button>
         </div>
       </div>
     </Modal>
@@ -823,7 +836,7 @@ function DeleteModal({ title, message, onDelete, onClose }: any) {
 
 // Complex Form Modals
 
-function EditSuggestionModal({ suggestion, onClose }: { suggestion: Suggestion, onClose: () => void }) {
+function EditSuggestionModal({ suggestion, onClose, t }: { suggestion: Suggestion, onClose: () => void, t: any }) {
   const [formData, setFormData] = useState({...suggestion});
   const services = ["Butcher", "Meat Processor", "Abattoir", "Feed Supplier", "Tools Supplier", "Vet Shop", "Vet Services", "Other"];
 
@@ -835,23 +848,23 @@ function EditSuggestionModal({ suggestion, onClose }: { suggestion: Suggestion, 
   };
 
   return (
-    <Modal title="Edit Suggestion Details" onClose={onClose}>
+    <Modal title={t("editSuggestion")} onClose={onClose}>
       <div className="space-y-4">
-        <Input label="Provider Name" value={formData.providerName} onChange={(v: string) => setFormData({...formData, providerName: v})} />
-        <Select label="Service Type" value={formData.serviceType} options={services} onChange={(v: string) => setFormData({...formData, serviceType: v})} />
-        <Input label="Contact" value={formData.contact} onChange={(v: string) => setFormData({...formData, contact: v})} />
-        <Input label="Email" value={formData.email} onChange={(v: string) => setFormData({...formData, email: v})} />
+        <Input label={t("providerName")} value={formData.providerName} onChange={(v: string) => setFormData({...formData, providerName: v})} />
+        <Select label={t("serviceType")} value={formData.serviceType} options={services} onChange={(v: string) => setFormData({...formData, serviceType: v})} />
+        <Input label={t("contact")} value={formData.contact} onChange={(v: string) => setFormData({...formData, contact: v})} />
+        <Input label={t("email")} value={formData.email} onChange={(v: string) => setFormData({...formData, email: v})} />
         <div className="grid grid-cols-2 gap-4">
-          <Input label="City" value={formData.city} onChange={(v: string) => setFormData({...formData, city: v})} />
-          <Input label="Country" value={formData.country} onChange={(v: string) => setFormData({...formData, country: v})} />
+          <Input label={t("city")} value={formData.city} onChange={(v: string) => setFormData({...formData, city: v})} />
+          <Input label={t("country")} value={formData.country} onChange={(v: string) => setFormData({...formData, country: v})} />
         </div>
-        <button onClick={handleSave} className="w-full py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 transition mt-4">Save Changes</button>
+        <button onClick={handleSave} className="w-full py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 transition mt-4">{t("saveChanges")}</button>
       </div>
     </Modal>
   );
 }
 
-function EditProviderModal({ provider, onClose }: { provider: ProviderListing, onClose: () => void }) {
+function EditProviderModal({ provider, onClose, t }: { provider: ProviderListing, onClose: () => void, t: any }) {
   const [formData, setFormData] = useState({...provider});
   const categories = ["vendors", "buyers", "vets"];
 
@@ -863,27 +876,27 @@ function EditProviderModal({ provider, onClose }: { provider: ProviderListing, o
   };
 
   return (
-    <Modal title="Edit Provider Listing" onClose={onClose}>
+    <Modal title={t("editProvider")} onClose={onClose}>
       <div className="space-y-4">
-        <Input label="Name" value={formData.name} onChange={(v: string) => setFormData({...formData, name: v})} />
-        <Select label="Category" value={formData.category} options={categories} onChange={(v: string) => setFormData({...formData, category: v})} />
-        <Input label="Contact" value={formData.contact} onChange={(v: string) => setFormData({...formData, contact: v})} />
-        <Input label="Email" value={formData.email} onChange={(v: string) => setFormData({...formData, email: v})} />
-        <Input label="Location" value={formData.location} onChange={(v: string) => setFormData({...formData, location: v})} />
-        <Input label="Country" value={formData.country} onChange={(v: string) => setFormData({...formData, country: v})} />
+        <Input label={t("name")} value={formData.name} onChange={(v: string) => setFormData({...formData, name: v})} />
+        <Select label={t("category")} value={formData.category} options={categories} onChange={(v: string) => setFormData({...formData, category: v})} />
+        <Input label={t("contact")} value={formData.contact} onChange={(v: string) => setFormData({...formData, contact: v})} />
+        <Input label={t("email")} value={formData.email} onChange={(v: string) => setFormData({...formData, email: v})} />
+        <Input label={t("location")} value={formData.location} onChange={(v: string) => setFormData({...formData, location: v})} />
+        <Input label={t("country")} value={formData.country} onChange={(v: string) => setFormData({...formData, country: v})} />
         <textarea
-          placeholder="Description"
+          placeholder={t("description")}
           value={formData.description}
           onChange={e => setFormData({...formData, description: e.target.value})}
           className="w-full p-3 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none h-24 resize-none text-sm"
         />
-        <button onClick={handleSave} className="w-full py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 transition mt-4">Save Changes</button>
+        <button onClick={handleSave} className="w-full py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 transition mt-4">{t("saveChanges")}</button>
       </div>
     </Modal>
   );
 }
 
-function IngredientModal({ ingredient, onClose }: { ingredient: FeedIngredient | null, onClose: () => void }) {
+function IngredientModal({ ingredient, onClose, t }: { ingredient: FeedIngredient | null, onClose: () => void, t: any }) {
   const [formData, setFormData] = useState<any>(ingredient || {
     name: "",
     mainCategory: "Energy",
@@ -933,48 +946,48 @@ function IngredientModal({ ingredient, onClose }: { ingredient: FeedIngredient |
   };
 
   return (
-    <Modal title={ingredient ? "Edit Feed Ingredient" : "Add Feed Ingredient"} onClose={onClose}>
+    <Modal title={ingredient ? t("editIngredient") : t("newIngredient")} onClose={onClose}>
       <div className="space-y-4">
-        <Input label="Ingredient Name" value={formData.name} onChange={(v: string) => setFormData({...formData, name: v})} />
-        <Select label="Main Category" value={formData.mainCategory} options={categories} onChange={(v: string) => setFormData({...formData, mainCategory: v})} />
+        <Input label={t("ingredientName")} value={formData.name} onChange={(v: string) => setFormData({...formData, name: v})} />
+        <Select label={t("mainCategory")} value={formData.mainCategory} options={categories} onChange={(v: string) => setFormData({...formData, mainCategory: v})} />
 
         <div className="grid grid-cols-2 gap-4">
-          <Input label="Crude Protein (%)" type="number" value={formData.crudeProtein} onChange={(v: string) => setFormData({...formData, crudeProtein: v})} />
-          <Input label="ME (MJ/kg)" type="number" value={formData.metabolizableEnergy} onChange={(v: string) => setFormData({...formData, metabolizableEnergy: v})} />
+          <Input label={t("protein")} type="number" value={formData.crudeProtein} onChange={(v: string) => setFormData({...formData, crudeProtein: v})} />
+          <Input label={t("me")} type="number" value={formData.metabolizableEnergy} onChange={(v: string) => setFormData({...formData, metabolizableEnergy: v})} />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <Input label="Crude Fiber (%)" type="number" value={formData.crudeFiber} onChange={(v: string) => setFormData({...formData, crudeFiber: v})} />
-          <Input label="Dry Matter (%)" type="number" value={formData.dryMatter} onChange={(v: string) => setFormData({...formData, dryMatter: v})} />
+          <Input label={t("fiber")} type="number" value={formData.crudeFiber} onChange={(v: string) => setFormData({...formData, crudeFiber: v})} />
+          <Input label={t("dryMatter")} type="number" value={formData.dryMatter} onChange={(v: string) => setFormData({...formData, dryMatter: v})} />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <Input label="Calcium (%)" type="number" value={formData.calcium} onChange={(v: string) => setFormData({...formData, calcium: v})} />
-          <Input label="Phosphorus (%)" type="number" value={formData.phosphorus} onChange={(v: string) => setFormData({...formData, phosphorus: v})} />
+          <Input label={t("calcium")} type="number" value={formData.calcium} onChange={(v: string) => setFormData({...formData, calcium: v})} />
+          <Input label={t("phosphorus")} type="number" value={formData.phosphorus} onChange={(v: string) => setFormData({...formData, phosphorus: v})} />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <Input label="Lysine (%)" type="number" value={formData.lysine} onChange={(v: string) => setFormData({...formData, lysine: v})} />
-          <Input label="Methionine (%)" type="number" value={formData.methionine} onChange={(v: string) => setFormData({...formData, methionine: v})} />
+          <Input label={t("lysine")} type="number" value={formData.lysine} onChange={(v: string) => setFormData({...formData, lysine: v})} />
+          <Input label={t("methionine")} type="number" value={formData.methionine} onChange={(v: string) => setFormData({...formData, methionine: v})} />
         </div>
 
-        <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest pt-2">Max Inclusion Limits (%)</p>
+        <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest pt-2">{t("maxInclusion")}</p>
 
         <div className="grid grid-cols-3 gap-2">
-          <Input label="Starter" type="number" value={formData.maxStarter} onChange={(v: string) => setFormData({...formData, maxStarter: v})} />
-          <Input label="Grower" type="number" value={formData.maxGrower} onChange={(v: string) => setFormData({...formData, maxGrower: v})} />
-          <Input label="Finisher" type="number" value={formData.maxFinisher} onChange={(v: string) => setFormData({...formData, maxFinisher: v})} />
+          <Input label={t("starter")} type="number" value={formData.maxStarter} onChange={(v: string) => setFormData({...formData, maxStarter: v})} />
+          <Input label={t("grower")} type="number" value={formData.maxGrower} onChange={(v: string) => setFormData({...formData, maxGrower: v})} />
+          <Input label={t("finisher")} type="number" value={formData.maxFinisher} onChange={(v: string) => setFormData({...formData, maxFinisher: v})} />
         </div>
 
         <button onClick={handleSave} className="w-full py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 transition mt-4">
-          {ingredient ? "Save Changes" : "Add Ingredient"}
+          {ingredient ? t("saveChanges") : t("addIngredient")}
         </button>
       </div>
     </Modal>
   );
 }
 
-function VideoModal({ video, onClose }: { video: TrainingVideo | null, onClose: () => void }) {
+function VideoModal({ video, onClose, t }: { video: TrainingVideo | null, onClose: () => void, t: any }) {
   const [title, setTitle] = useState(video?.title || "");
   const [youtubeLink, setYoutubeLink] = useState(video ? `https://youtube.com/watch?v=${video.youtubeId}` : "");
 
@@ -1001,12 +1014,12 @@ function VideoModal({ video, onClose }: { video: TrainingVideo | null, onClose: 
   };
 
   return (
-    <Modal title={video ? "Edit Video Tutorial" : "Add Video Tutorial"} onClose={onClose}>
+    <Modal title={video ? t("editVideo") : t("newVideo")} onClose={onClose}>
       <div className="space-y-4">
-        <Input label="Video Title" value={title} onChange={setTitle} />
-        <Input label="YouTube Link or ID" value={youtubeLink} onChange={setYoutubeLink} placeholder="e.g. https://www.youtube.com/watch?v=..." />
+        <Input label={t("videoTitle")} value={title} onChange={setTitle} />
+        <Input label={t("youtubeLink")} value={youtubeLink} onChange={setYoutubeLink} placeholder="e.g. https://www.youtube.com/watch?v=..." />
         <button onClick={handleSave} className="w-full py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 transition mt-4">
-          {video ? "Save Changes" : "Add Video"}
+          {video ? t("saveChanges") : t("addVideo")}
         </button>
       </div>
     </Modal>

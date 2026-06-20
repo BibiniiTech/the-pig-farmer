@@ -4,6 +4,7 @@ import React from "react";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import { LockClosedIcon } from "@heroicons/react/24/solid";
+import { useTranslations } from "next-intl";
 
 interface PremiumWrapperProps {
   children: React.ReactNode;
@@ -11,6 +12,7 @@ interface PremiumWrapperProps {
 }
 
 export default function PremiumWrapper({ children, fallback }: PremiumWrapperProps) {
+  const t = useTranslations("Premium");
   const { userProfile, loading } = useAuth();
 
   if (loading) {
@@ -36,13 +38,13 @@ export default function PremiumWrapper({ children, fallback }: PremiumWrapperPro
       <div className="bg-emerald-100 p-4 rounded-full mb-6 text-emerald-600">
         <LockClosedIcon className="w-12 h-12" />
       </div>
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">Premium Feature</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-4">{t("featureTitle")}</h2>
       <p className="text-gray-600 mb-8 max-w-md">
-        This feature is exclusive to Smart Swine Premium users. Upgrade to unlock powerful tools to manage and grow your farm.
+        {t("featureDesc")}
       </p>
       <Link href="/dashboard/billing">
         <span className="inline-block px-8 py-4 bg-gradient-to-r from-emerald-600 to-green-500 text-white rounded-xl font-bold shadow-lg hover:shadow-xl hover:from-emerald-700 hover:to-green-600 transition-all duration-300 transform hover:-translate-y-1">
-          Upgrade to Premium
+          {t("upgradeButton")}
         </span>
       </Link>
     </div>

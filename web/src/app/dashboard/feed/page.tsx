@@ -10,6 +10,7 @@ import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
+import { useTranslations } from "next-intl";
 import {
   InventoryIcon,
   ScienceIcon,
@@ -22,6 +23,7 @@ import {
   FormulationResult
 } from "@/lib/feedCalculator";
 import PremiumWrapper from "@/components/PremiumWrapper";
+import { ExportPdfIcon } from '@/components/icons/DashboardIcons';
 
 // SVG Icons matching Android Material Icons
 const PrintIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -35,18 +37,6 @@ const WarningIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
   </svg>
 );
-
-const PdfIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
-    <path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 11c0 .55-.45 1-1 1H9v2H7.5v-5h3c.55 0 1 .45 1 1v1zm5 2c0 .55-.45 1-1 1h-2.5v-5H16c.55 0 1 .45 1 1v3zm-5.5-4H10v1.5h.5V11zm4.5 1h-.5v2h.5v-2zm2.5 1h-2v-1h2v-1h-2v-1h3.5v5H19v-2z" />
-  </svg>
-);
-
-const TABS_CONFIG = [
-  { id: "inventory", label: "Feed Inventory", icon: InventoryIcon },
-  { id: "formulator", label: "Feed Formulator", icon: ScienceIcon },
-  { id: "calculator", label: "Feed Calculator", icon: CalculateIcon }
-] as const;
 
 // Interfaces
 interface FeedInventoryItem {
@@ -80,12 +70,10 @@ const defaultRequirements: NutritionalRequirement[] = [
 ];
 
 export default function FeedPage() {
+  const t = useTranslations("Feed");
   const { user, activeFarmUid, loading, userProfile } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
-
-  // Tab State: "inventory" | "formulator" | "calculator"
-  const [activeTab, setActiveTab] = useState<"inventory" | "formulator" | "calculator">("inventory");
 
   // ==================== INVENTORY STATES ====================
   const [items, setItems] = useState<FeedInventoryItem[]>([]);
@@ -164,16 +152,16 @@ export default function FeedPage() {
     if (exportRange === "Current Month") {
       const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
       startDateStr = firstDay.toISOString().split("T")[0];
-      rangeLabel = "Current Month";
+      rangeLabel = t("currentMonth");
     } else if (exportRange === "Last 3 Months") {
       const pastDate = new Date();
       pastDate.setMonth(today.getMonth() - 3);
       startDateStr = pastDate.toISOString().split("T")[0];
-      rangeLabel = "Last 3 Months";
+      rangeLabel = t("last3Months");
     } else {
       startDateStr = exportFromDate || "1970-01-01";
       endDateStr = exportToDate || todayStr;
-      rangeLabel = `Custom (${startDateStr} to ${endDateStr})`;
+      rangeLabel = `${t("custom")} (${startDateStr} to ${endDateStr})`;
     }
 
     // Filter transactions
@@ -184,7 +172,7 @@ export default function FeedPage() {
 
     setPrintData({
       type: "inventory",
-      title: `Feed Inventory Report - ${rangeLabel}${exportRange === "Custom" ? ` (${startDateStr} to ${endDateStr})` : ""}`,
+      title: t("reportTitle", { range: rangeLabel }),
       details: {
         items,
         transactions: filteredTx,
@@ -204,7 +192,7 @@ export default function FeedPage() {
     if (!formulation) return;
     setPrintData({
       type: "formulator",
-      title: `Feed Formulation Report - Formulation for ${selectedStage}`,
+      title: t("feedFormulaMix", { stage: selectedStage }),
       details: {
         stage: selectedStage,
         formulation,
@@ -221,7 +209,7 @@ export default function FeedPage() {
     if (!calcResults) return;
     setPrintData({
       type: "calculator",
-      title: "Feed Requirements Report",
+      title: t("projectedResults"),
       details: {
         calcResults
       }
@@ -463,16 +451,6 @@ export default function FeedPage() {
     setSelectedIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
   };
 
-  const handleSelectAll = (category: string) => {
-    const catIds = ingredients.filter(ing => ing.mainCategory === category).map(ing => ing.id);
-    const allSelected = catIds.every(id => selectedIds.includes(id));
-    if (allSelected) {
-      setSelectedIds(prev => prev.filter(id => !catIds.includes(id)));
-    } else {
-      setSelectedIds(prev => Array.from(new Set([...prev, ...catIds])));
-    }
-  };
-
   const handleFormulate = () => {
     setFormulatorError(null);
     const targetReq = requirements.find(req => req.stage === selectedStage);
@@ -489,14 +467,14 @@ export default function FeedPage() {
   const handleCalculateFeedProjections = () => {
     // intake values (kg per animal per day)
     const rates = {
-      Sows: { rate: 2.2, label: "Sows (dry/breeders)" },
-      Boars: { rate: 2.2, label: "Boars" },
-      Gilts: { rate: 2.2, label: "Gilts" },
-      Pregnant: { rate: 2.2, label: "Pregnant Sows" },
-      Lactating: { rate: 5.5, label: "Lactating Sows" },
-      Starter: { rate: 0.7, label: "Starter Piglets" },
-      Grower: { rate: 1.8, label: "Grower Pigs" },
-      Finisher: { rate: 2.5, label: "Finisher Pigs" }
+      Sows: { rate: 2.2, label: t("sowsCount") },
+      Boars: { rate: 2.2, label: t("boarsCount") },
+      Gilts: { rate: 2.2, label: t("giltsCount") },
+      Pregnant: { rate: 2.2, label: t("pregnantSows") },
+      Lactating: { rate: 5.5, label: t("lactatingSows") },
+      Starter: { rate: 0.7, label: t("starterPiglets") },
+      Grower: { rate: 1.8, label: t("growers") },
+      Finisher: { rate: 2.5, label: t("finishers") }
     };
 
     const breakdown: any[] = [];
@@ -610,8 +588,8 @@ export default function FeedPage() {
               <div className="rounded-xl border border-amber-200 bg-amber-50/60 p-4 text-xs text-amber-800 flex items-center gap-3 print:hidden shadow-sm">
                 <WarningIcon className="h-5 w-5 text-amber-600 shrink-0" />
                 <div>
-                  <p className="font-bold">Low Stock Warning</p>
-                  <p className="text-zinc-650 mt-0.5">Some feed items have fallen below their safety threshold. Please restock.</p>
+                  <p className="font-bold">{t("lowStockWarning")}</p>
+                  <p className="text-zinc-650 mt-0.5">{t("lowStockDesc")}</p>
                 </div>
               </div>
             )}
@@ -624,8 +602,8 @@ export default function FeedPage() {
                     <InventoryIcon className="h-5 w-5 text-emerald-600" />
                   </div>
                   <div>
-                    <h2 className="text-sm font-black text-zinc-900 print:text-black">Feed Inventory</h2>
-                    <p className="text-xs text-zinc-500 mt-0.5">Track and manage your feed stock</p>
+                    <h2 className="text-sm font-black text-zinc-900 print:text-black">{t("inventory")}</h2>
+                    <p className="text-xs text-zinc-500 mt-0.5">{t("inventoryDesc")}</p>
                   </div>
                 </div>
 
@@ -635,23 +613,23 @@ export default function FeedPage() {
                       href="/dashboard/billing"
                       className="rounded-lg border border-amber-200 bg-amber-50/50 px-4 py-2 text-xs font-semibold text-amber-650 hover:bg-amber-100 transition shadow-sm flex items-center gap-1.5"
                     >
-                      <PdfIcon className="h-3.5 w-3.5 text-amber-500" />
-                      <span>Export PDF (Premium)</span>
+                      <ExportPdfIcon className="h-3.5 w-3.5 text-amber-500" />
+                      <span>{t("exportPdfPremium")}</span>
                     </Link>
                   }>
                     <button
                       onClick={() => setShowExportModal(true)}
                       className="rounded-lg border border-zinc-200 bg-zinc-50/50 px-4 py-2 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center gap-1.5"
                     >
-                      <PdfIcon className="h-3.5 w-3.5 text-zinc-500" />
-                      <span>Export PDF</span>
+                      <ExportPdfIcon className="h-3.5 w-3.5 text-zinc-500" />
+                      <span>{t("exportPdf")}</span>
                     </button>
                   </PremiumWrapper>
                   <button
                     onClick={() => setShowAddModal(true)}
                     className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white shadow shadow-emerald-600/10 transition active:scale-95"
                   >
-                    + Add Feed Item
+                    {t("addFeedItem")}
                   </button>
                 </div>
               </div>
@@ -663,7 +641,7 @@ export default function FeedPage() {
                   ))}
                 </div>
               ) : items.length === 0 ? (
-                <p className="text-sm text-zinc-500 text-center py-8">No feed items registered yet.</p>
+                <p className="text-sm text-zinc-500 text-center py-8">{t("noItems")}</p>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                   {items.map((item) => {
@@ -681,7 +659,7 @@ export default function FeedPage() {
                           </div>
                           <div className="flex items-center gap-1.5 flex-shrink-0">
                             {isLow && (
-                              <span className="px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[9px] font-black uppercase tracking-wide">Low</span>
+                              <span className="px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[9px] font-black uppercase tracking-wide">{t("low")}</span>
                             )}
                             <button
                               onClick={() => handleDeleteItem(item.id)}
@@ -701,7 +679,7 @@ export default function FeedPage() {
                             <span className={`text-3xl font-black tracking-tight ${isLow ? "text-amber-600" : "text-zinc-900"}`}>
                               {item.quantity.toFixed(1)}
                             </span>
-                            <span className="text-xs text-zinc-500 font-semibold">{item.unit}</span>
+                            <span className="text-xs text-zinc-500 font-semibold">{t(item.unit as any)}</span>
                           </div>
                           <div className="h-1.5 rounded-full bg-zinc-100 overflow-hidden">
                             <div
@@ -709,7 +687,7 @@ export default function FeedPage() {
                               style={{ width: `${stockPct}%` }}
                             />
                           </div>
-                          <p className="text-[10px] text-zinc-400 mt-1">Min threshold: {item.minThreshold} {item.unit}</p>
+                          <p className="text-[10px] text-zinc-400 mt-1">{t("minThreshold", { count: item.minThreshold, unit: t(item.unit as any) })}</p>
                         </div>
 
                         {/* Actions */}
@@ -718,13 +696,13 @@ export default function FeedPage() {
                             onClick={() => { setSelectedItemId(item.id); setUsageUnit(item.unit); setShowUsageModal(true); }}
                             className="flex-1 py-2 text-xs font-bold text-violet-700 border border-violet-200 rounded-xl hover:bg-violet-50 transition active:scale-95"
                           >
-                            Log Usage
+                            {t("logUsage")}
                           </button>
                           <button
                             onClick={() => { setSelectedItemId(item.id); setRestockUnit(item.unit); setShowRestockModal(true); }}
                             className="flex-1 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition active:scale-95"
                           >
-                            Restock
+                            {t("restock")}
                           </button>
                         </div>
                       </div>
@@ -743,15 +721,15 @@ export default function FeedPage() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-sm font-black text-zinc-900">Transaction History</h3>
-                  <p className="text-xs text-zinc-500 mt-0.5">Recent inventory movements</p>
+                  <h3 className="text-sm font-black text-zinc-900">{t("transactionHistory")}</h3>
+                  <p className="text-xs text-zinc-500 mt-0.5">{t("recentMovements")}</p>
                 </div>
               </div>
 
               {dataLoading ? (
                 <div className="h-10 bg-zinc-150 animate-pulse rounded-lg" />
               ) : transactions.length === 0 ? (
-                <p className="text-sm text-zinc-550 text-center py-6">No inventory transactions logged.</p>
+                <p className="text-sm text-zinc-550 text-center py-6">{t("noTransactions")}</p>
               ) : (
                 <div className="space-y-3">
                   {transactions.slice(0, 10).map(tx => {
@@ -784,7 +762,7 @@ export default function FeedPage() {
                         {/* Right */}
                         <div className="text-right flex-shrink-0">
                           <p className={`font-bold text-sm ${isRestock ? "text-emerald-600" : "text-violet-600"}`}>
-                            {isRestock ? "+" : "-"}{tx.quantity} {tx.unit}
+                            {isRestock ? "+" : "-"}{tx.quantity} {t(tx.unit as any)}
                           </p>
                           {tx.cost > 0 && <p className="text-[10px] text-zinc-400 mt-0.5">${tx.cost.toFixed(2)}</p>}
                         </div>
@@ -805,8 +783,8 @@ export default function FeedPage() {
                 <ScienceIcon className="h-5 w-5 text-purple-600" />
               </div>
               <div>
-                <h2 className="text-sm font-black text-zinc-900">Feed Formulator</h2>
-                <p className="text-xs text-zinc-500 mt-0.5">Scientific ration balancing</p>
+                <h2 className="text-sm font-black text-zinc-900">{t("formulator")}</h2>
+                <p className="text-xs text-zinc-500 mt-0.5">{t("formulatorDesc")}</p>
               </div>
             </div>
 
@@ -814,7 +792,7 @@ export default function FeedPage() {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <div className="lg:col-span-5 space-y-6">
                   <div className="bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 space-y-3 shadow-sm">
-                    <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Target Growth Stage</h3>
+                    <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">{t("targetGrowthStage")}</h3>
                     <select
                       value={selectedStage}
                       onChange={(e) => setSelectedStage(e.target.value)}
@@ -831,7 +809,7 @@ export default function FeedPage() {
                   </div>
 
                   <div className="space-y-4">
-                    <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider px-2">Select Ingredients</h3>
+                    <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider px-2">{t("selectIngredients")}</h3>
                     {renderGroupList("Energy", energyCollapsed, setEnergyCollapsed)}
                     {renderGroupList("Protein", proteinCollapsed, setProteinCollapsed)}
                     {renderGroupList("Vitamins, Minerals & Salt", mineralsCollapsed, setMineralsCollapsed)}
@@ -841,7 +819,7 @@ export default function FeedPage() {
                     onClick={handleFormulate}
                     className="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 py-3 text-xs font-bold text-white shadow shadow-emerald-600/10 transition active:scale-95"
                   >
-                    Formulate Ration
+                    {t("formulateRation")}
                   </button>
                 </div>
 
@@ -855,20 +833,20 @@ export default function FeedPage() {
                   {!formulation ? (
                     <div className="h-96 flex flex-col items-center justify-center border border-dashed border-zinc-200 rounded-2xl text-center p-6 bg-zinc-50/40 backdrop-blur-sm shadow-inner">
                       <ScienceIcon className="h-10 w-10 text-zinc-400 mb-3" />
-                      <p className="font-semibold text-zinc-500 text-sm">No Active Formulation</p>
-                      <p className="text-xs text-zinc-400 mt-1">Select growth stage, check ingredients, and formulate.</p>
+                      <p className="font-semibold text-zinc-500 text-sm">{t("noActiveFormulation")}</p>
+                      <p className="text-xs text-zinc-400 mt-1">{t("formulatePrompt")}</p>
                     </div>
                   ) : (
                     <div className="space-y-6">
                       <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
                         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
-                          <h3 className="text-lg font-bold text-zinc-900">Feed Formula: {selectedStage} Mix</h3>
+                          <h3 className="text-lg font-bold text-zinc-900">{t("feedFormulaMix", { stage: selectedStage })}</h3>
                           <button
                             onClick={handleExportFormulationPdf}
                             className="w-full sm:w-auto rounded-lg border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center justify-center gap-1.5"
                           >
-                            <PdfIcon className="h-3.5 w-3.5 text-zinc-500" />
-                            <span>Export PDF</span>
+                            <ExportPdfIcon className="h-3.5 w-3.5 text-zinc-500" />
+                            <span>{t("exportPdf")}</span>
                           </button>
                         </div>
                         <div className="space-y-3 divide-y divide-zinc-100">
@@ -880,13 +858,13 @@ export default function FeedPage() {
                                 <span className="text-zinc-700 font-medium">{name}</span>
                                 <div className="flex flex-col items-end">
                                   <span className="font-mono font-bold text-zinc-900">{percent.toFixed(1)}%</span>
-                                  <span className="text-[10px] text-zinc-500 font-semibold">{(percent * 10).toFixed(1)} kg/ton</span>
+                                  <span className="text-[10px] text-zinc-500 font-semibold">{t("perTonMix", { percent })}</span>
                                 </div>
                               </div>
                             );
                           })}
                           <div className="pt-3 flex justify-between items-center font-bold text-sm text-zinc-900">
-                            <span>Total mix</span>
+                            <span>{t("totalMix")}</span>
                             <div className="flex flex-col items-end">
                               <span className="font-mono">{formulation.totalPercentage.toFixed(1)}%</span>
                               <span className="text-[10px] text-zinc-500 font-semibold">1000 kg</span>
@@ -896,16 +874,16 @@ export default function FeedPage() {
                       </div>
 
                       <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-                        <h3 className="text-lg font-bold text-zinc-900 mb-4">Nutritional Analysis</h3>
+                        <h3 className="text-lg font-bold text-zinc-900 mb-4">{t("nutritionalAnalysis")}</h3>
                         <div className="overflow-x-auto -mx-6 sm:mx-0">
                           <div className="inline-block min-w-full align-middle sm:px-0 px-6">
                             <table className="min-w-full divide-y divide-zinc-200 text-sm">
                               <thead>
                                 <tr className="text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-                                  <th className="pb-3">Nutrient</th>
-                                  <th className="pb-3 text-right">Target</th>
-                                  <th className="pb-3 text-right">Actual</th>
-                                  <th className="pb-3 text-right">Status</th>
+                                  <th className="pb-3">{t("nutrient")}</th>
+                                  <th className="pb-3 text-right">{t("target")}</th>
+                                  <th className="pb-3 text-right">{t("actual")}</th>
+                                  <th className="pb-3 text-right">{t("status")}</th>
                                 </tr>
                               </thead>
                               <tbody className="divide-y divide-zinc-150">
@@ -920,7 +898,7 @@ export default function FeedPage() {
                                     </td>
                                     <td className="py-3 text-right font-semibold">
                                       <span className={nutrient.isDeficient ? "text-rose-600" : "text-emerald-600"}>
-                                        {nutrient.isDeficient ? "Deficient" : "OK"}
+                                        {nutrient.isDeficient ? t("deficient") : t("ok")}
                                       </span>
                                     </td>
                                   </tr>
@@ -946,63 +924,63 @@ export default function FeedPage() {
                 <CalculateIcon className="h-5 w-5 text-blue-600" />
               </div>
               <div>
-                <h2 className="text-sm font-black text-zinc-900">Feed Calculator</h2>
-                <p className="text-xs text-zinc-500 mt-0.5">Projected herd demand</p>
+                <h2 className="text-sm font-black text-zinc-900">{t("calculator")}</h2>
+                <p className="text-xs text-zinc-500 mt-0.5">{t("calculatorDesc")}</p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               <div className="lg:col-span-5 bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4">
-                <h3 className="text-lg font-bold text-zinc-900">Feed Demand Calculator</h3>
-                <p className="text-xs text-zinc-500">Verify your herd counts and enter the calculation projection period.</p>
+                <h3 className="text-lg font-bold text-zinc-900">{t("demandCalculator")}</h3>
+                <p className="text-xs text-zinc-500">{t("calculatorPrompt")}</p>
 
                 <div className="space-y-3">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1">Sows count</label>
+                      <label className="block text-xs font-bold text-zinc-500 mb-1">{t("sowsCount")}</label>
                       <input type="number" min="0" value={sowsCount} onChange={(e) => setSowsCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1">Boars count</label>
+                      <label className="block text-xs font-bold text-zinc-500 mb-1">{t("boarsCount")}</label>
                       <input type="number" min="0" value={boarsCount} onChange={(e) => setBoarsCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1">Gilts count</label>
+                      <label className="block text-xs font-bold text-zinc-500 mb-1">{t("giltsCount")}</label>
                       <input type="number" min="0" value={giltsCount} onChange={(e) => setGiltsCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1">Pregnant Sows</label>
+                      <label className="block text-xs font-bold text-zinc-500 mb-1">{t("pregnantSows")}</label>
                       <input type="number" min="0" value={pregnantCount} onChange={(e) => setPregnantCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1">Lactating Sows</label>
+                      <label className="block text-xs font-bold text-zinc-500 mb-1">{t("lactatingSows")}</label>
                       <input type="number" min="0" value={lactatingCount} onChange={(e) => setLactatingCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1">Starter piglets</label>
+                      <label className="block text-xs font-bold text-zinc-500 mb-1">{t("starterPiglets")}</label>
                       <input type="number" min="0" value={starterCount} onChange={(e) => setStarterCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1">Growers</label>
+                      <label className="block text-xs font-bold text-zinc-500 mb-1">{t("growers")}</label>
                       <input type="number" min="0" value={growerCount} onChange={(e) => setGrowerCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1">Finishers</label>
-                      <input type="number" min="0" value={finisherCount} onChange={(e) => setFinisherCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
+                      <label className="block text-xs font-bold text-zinc-500 mb-1">{t("finishers")}</label>
+                      <input type="number" min="0" value={finisherCount} onChange={(e) => setFinishersCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-zinc-500 mb-1">Projection Period (Days)</label>
+                    <label className="block text-xs font-bold text-zinc-500 mb-1">{t("projectionPeriod")}</label>
                     <input type="number" min="1" value={calcDays} onChange={(e) => setCalcDays(parseInt(e.target.value) || 1)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
                   </div>
                 </div>
@@ -1011,7 +989,7 @@ export default function FeedPage() {
                   onClick={handleCalculateFeedProjections}
                   className="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 py-3 text-xs font-bold text-white shadow shadow-emerald-600/10 transition active:scale-95"
                 >
-                  Generate Projection Report
+                  {t("generateReport")}
                 </button>
               </div>
 
@@ -1019,28 +997,28 @@ export default function FeedPage() {
                 {!calcResults ? (
                   <div className="h-96 flex flex-col items-center justify-center border border-dashed border-zinc-200 rounded-2xl text-center p-6 bg-zinc-50/40 backdrop-blur-sm shadow-inner">
                     <CalculateIcon className="h-10 w-10 text-zinc-400 mb-3" />
-                    <p className="font-semibold text-zinc-500 text-sm">No Active Calculation</p>
-                    <p className="text-xs text-zinc-400 mt-1">Configure counts on the left and click calculate.</p>
+                    <p className="font-semibold text-zinc-500 text-sm">{t("noActiveCalculation")}</p>
+                    <p className="text-xs text-zinc-400 mt-1">{t("calcPrompt")}</p>
                   </div>
                 ) : (
                   <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-6">
                     <div className="flex justify-between items-center">
-                      <h3 className="text-lg font-bold text-zinc-900">Projected Feed Demand Results</h3>
+                      <h3 className="text-lg font-bold text-zinc-900">{t("projectedResults")}</h3>
                       <PremiumWrapper fallback={
                         <Link
                           href="/dashboard/billing"
                           className="rounded-lg border border-amber-200 bg-amber-50/50 px-3 py-1.5 text-xs font-semibold text-amber-650 hover:bg-amber-100 transition shadow-sm flex items-center gap-1.5"
                         >
-                          <PdfIcon className="h-3.5 w-3.5 text-amber-500" />
-                          <span>Export PDF (Premium)</span>
+                          <ExportPdfIcon className="h-3.5 w-3.5 text-amber-500" />
+                          <span>{t("exportPdfPremium")}</span>
                         </Link>
                       }>
                         <button
                           onClick={handleExportCalculatorPdf}
                           className="rounded-lg border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center gap-1.5"
                         >
-                          <PdfIcon className="h-3.5 w-3.5 text-zinc-500" />
-                          <span>Export PDF</span>
+                          <ExportPdfIcon className="h-3.5 w-3.5 text-zinc-500" />
+                          <span>{t("exportPdf")}</span>
                         </button>
                       </PremiumWrapper>
                     </div>
@@ -1055,18 +1033,18 @@ export default function FeedPage() {
                             </p>
                           </div>
                           <div className="text-right font-mono font-bold text-zinc-900">
-                            <p>{row.dailyTotal.toFixed(1)} kg/day</p>
-                            <p className="text-xs text-zinc-500">Period Total: {row.periodTotal.toFixed(1)} kg</p>
+                            <p>{row.dailyTotal.toFixed(1)} {t("kgDay")}</p>
+                            <p className="text-xs text-zinc-500">{t("periodTotal", { count: row.periodTotal.toFixed(1) })}</p>
                           </div>
                         </div>
                       ))}
                     </div>
 
                     <div className="pt-4 border-t border-zinc-200 flex justify-between font-extrabold text-sm text-zinc-900">
-                      <span>Grand Total for {calcResults.days} Days</span>
+                      <span>{t("grandTotal", { days: calcResults.days })}</span>
                       <div className="text-right font-mono">
-                        <p>{calcResults.dailyTotal.toFixed(1)} kg/day</p>
-                        <p className="text-xs text-emerald-700">Projected Total: {calcResults.periodTotal.toFixed(1)} kg</p>
+                        <p>{calcResults.dailyTotal.toFixed(1)} {t("kgDay")}</p>
+                        <p className="text-xs text-emerald-700">{t("projectedTotal", { count: calcResults.periodTotal.toFixed(1) })}</p>
                       </div>
                     </div>
                   </div>
@@ -1081,10 +1059,10 @@ export default function FeedPage() {
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <div className="bg-white border border-zinc-200 rounded-2xl w-full max-w-md p-6 space-y-6 shadow-2xl">
-            <h3 className="text-lg font-bold text-zinc-900">Add New Feed Item</h3>
+            <h3 className="text-lg font-bold text-zinc-900">{t("addNewItem")}</h3>
             <form onSubmit={handleAddItem} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Name</label>
+                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("name")}</label>
                 <input
                   type="text"
                   required
@@ -1096,7 +1074,7 @@ export default function FeedPage() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Feed Type</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("feedType")}</label>
                   <select
                     value={newFeedType}
                     onChange={(e) => setNewFeedType(e.target.value)}
@@ -1110,20 +1088,20 @@ export default function FeedPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Base Unit</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("baseUnit")}</label>
                   <select
                     value={newUnit}
                     onChange={(e) => setNewUnit(e.target.value)}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                   >
-                    <option value="bags">Bags</option>
-                    <option value="kg">kg</option>
+                    <option value="bags">{t("bags")}</option>
+                    <option value="kg">{t("kg")}</option>
                   </select>
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Init Qty</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("initQty")}</label>
                   <input
                     type="number"
                     step="any"
@@ -1133,7 +1111,7 @@ export default function FeedPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Bag Wt (kg)</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("bagWt")}</label>
                   <input
                     type="number"
                     step="any"
@@ -1143,7 +1121,7 @@ export default function FeedPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Min Alert</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("minAlert")}</label>
                   <input
                     type="number"
                     step="any"
@@ -1159,10 +1137,10 @@ export default function FeedPage() {
                   onClick={() => setShowAddModal(false)}
                   className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2 text-xs font-semibold text-zinc-500 hover:bg-zinc-100 transition"
                 >
-                  Cancel
+                  {t("cancel")}
                 </button>
                 <button type="submit" className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white transition">
-                  Save
+                  {t("save")}
                 </button>
               </div>
             </form>
@@ -1174,11 +1152,11 @@ export default function FeedPage() {
       {showRestockModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <div className="bg-white border border-zinc-200 rounded-2xl w-full max-w-md p-6 space-y-6 shadow-2xl">
-            <h3 className="text-lg font-bold text-zinc-900">Restock Feed Item</h3>
+            <h3 className="text-lg font-bold text-zinc-900">{t("restockItem")}</h3>
             <form onSubmit={handleRestock} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Qty Added</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("qtyAdded")}</label>
                   <input
                     type="number"
                     step="any"
@@ -1189,19 +1167,19 @@ export default function FeedPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Unit</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("unit")}</label>
                   <select
                     value={restockUnit}
                     onChange={(e) => setRestockUnit(e.target.value)}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                   >
-                    <option value="bags">Bags</option>
-                    <option value="kg">kg</option>
+                    <option value="bags">{t("bags")}</option>
+                    <option value="kg">{t("kg")}</option>
                   </select>
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Total Cost ($)</label>
+                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("totalCost", { symbol: "$" })}</label>
                 <input
                   type="number"
                   step="any"
@@ -1212,7 +1190,7 @@ export default function FeedPage() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Notes</label>
+                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("notes")}</label>
                 <input
                   type="text"
                   value={restockNotes}
@@ -1223,10 +1201,10 @@ export default function FeedPage() {
               </div>
               <div className="flex justify-end gap-3 pt-4 border-t border-zinc-150">
                 <button type="button" onClick={() => setShowRestockModal(false)} className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2 text-xs font-semibold text-zinc-500 hover:bg-zinc-100 transition">
-                  Cancel
+                  {t("cancel")}
                 </button>
                 <button type="submit" className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white transition">
-                  Add Stock
+                  {t("addStock")}
                 </button>
               </div>
             </form>
@@ -1238,11 +1216,11 @@ export default function FeedPage() {
       {showUsageModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <div className="bg-white border border-zinc-200 rounded-2xl w-full max-w-md p-6 space-y-6 shadow-2xl">
-            <h3 className="text-lg font-bold text-zinc-900">Log Feed Usage</h3>
+            <h3 className="text-lg font-bold text-zinc-900">{t("logFeedUsage")}</h3>
             <form onSubmit={handleUseFeed} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Qty Used</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("qtyUsed")}</label>
                   <input
                     type="number"
                     step="any"
@@ -1253,19 +1231,19 @@ export default function FeedPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Unit</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("unit")}</label>
                   <select
                     value={usageUnit}
                     onChange={(e) => setUsageUnit(e.target.value)}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                   >
-                    <option value="bags">Bags</option>
-                    <option value="kg">kg</option>
+                    <option value="bags">{t("bags")}</option>
+                    <option value="kg">{t("kg")}</option>
                   </select>
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Notes</label>
+                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("notes")}</label>
                 <input
                   type="text"
                   value={usageNotes}
@@ -1276,10 +1254,10 @@ export default function FeedPage() {
               </div>
               <div className="flex justify-end gap-3 pt-4 border-t border-zinc-150">
                 <button type="button" onClick={() => setShowUsageModal(false)} className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2 text-xs font-semibold text-zinc-500 hover:bg-zinc-100 transition">
-                  Cancel
+                  {t("cancel")}
                 </button>
                 <button type="submit" className="rounded-lg bg-violet-600 hover:bg-violet-700 px-4 py-2 text-xs font-bold text-white transition">
-                  Log Usage
+                  {t("logUsage")}
                 </button>
               </div>
             </form>
@@ -1291,9 +1269,9 @@ export default function FeedPage() {
       {showExportModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <div className="bg-white border border-zinc-200 rounded-2xl w-full max-w-md p-6 space-y-6 shadow-2xl">
-            <h3 className="text-lg font-bold text-zinc-900">Export Feed Data</h3>
+            <h3 className="text-lg font-bold text-zinc-900">{t("exportData")}</h3>
             <div className="space-y-4">
-              <label className="block text-xs font-bold text-zinc-500 uppercase tracking-wider">Select Range</label>
+              <label className="block text-xs font-bold text-zinc-500 uppercase tracking-wider">{t("selectRange")}</label>
               <div className="space-y-2">
                 {(["Current Month", "Last 3 Months", "Custom"] as const).map((range) => (
                   <label key={range} className="flex items-center gap-2.5 cursor-pointer text-sm text-zinc-800">
@@ -1304,7 +1282,7 @@ export default function FeedPage() {
                       onChange={() => setExportRange(range)}
                       className="h-4 w-4 border-zinc-300 text-emerald-600 focus:ring-emerald-500"
                     />
-                    <span>{range === "Current Month" ? "Current Month" : range === "Last 3 Months" ? "Last 3 Months" : "Custom"}</span>
+                    <span>{range === "Current Month" ? t("currentMonth") : range === "Last 3 Months" ? t("last3Months") : t("custom")}</span>
                   </label>
                 ))}
               </div>
@@ -1312,7 +1290,7 @@ export default function FeedPage() {
               {exportRange === "Custom" && (
                 <div className="grid grid-cols-2 gap-4 animate-fade-in">
                   <div>
-                    <label className="block text-xs font-semibold text-zinc-500 mb-1.5">From Date</label>
+                    <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("fromDate")}</label>
                     <input
                       type="date"
                       required
@@ -1322,7 +1300,7 @@ export default function FeedPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-zinc-500 mb-1.5">To Date</label>
+                    <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("toDate")}</label>
                     <input
                       type="date"
                       required
@@ -1341,13 +1319,13 @@ export default function FeedPage() {
                 onClick={() => setShowExportModal(false)}
                 className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2 text-xs font-semibold text-zinc-500 hover:bg-zinc-100 transition"
               >
-                Cancel
+                {t("cancel")}
               </button>
               <button
                 onClick={handleExportFeedInventoryPdf}
                 className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white transition"
               >
-                Export
+                {t("export")}
               </button>
             </div>
           </div>
@@ -1405,7 +1383,7 @@ export default function FeedPage() {
             return {
               name: item.name,
               feedType: item.feedType,
-              unit: item.unit === "bags" ? "Bags" : "kg",
+              unit: item.unit === "bags" ? t("bags") : t("kg"),
               addition,
               usage,
               inStock
@@ -1435,7 +1413,7 @@ export default function FeedPage() {
                   The Only Tool a Pig Farmer Needs.<br />Farm Smarter, Not Harder.
                 </p>
                 <h2 className="text-[18px] font-bold text-black mt-3">{printData.title}</h2>
-                <p className="text-[10px] text-zinc-400 mt-1">Generated on: {generatedOn}</p>
+                <p className="text-[10px] text-zinc-400 mt-1">{t("generatedOn", { date: generatedOn })}</p>
               </div>
 
               {/* Report Body */}
@@ -1444,12 +1422,12 @@ export default function FeedPage() {
                   <table className="min-w-full divide-y divide-zinc-200 text-xs border border-zinc-200">
                     <thead className="bg-zinc-100">
                       <tr className="text-left font-bold text-zinc-700 uppercase tracking-wider">
-                        <th className="p-2 border">Feed Name</th>
-                        <th className="p-2 border">Feed Type</th>
-                        <th className="p-2 border">Unit</th>
-                        <th className="p-2 border text-right">Addition</th>
-                        <th className="p-2 border text-right">Usage</th>
-                        <th className="p-2 border text-right">In Stock</th>
+                        <th className="p-2 border">{t("feedName")}</th>
+                        <th className="p-2 border">{t("feedType")}</th>
+                        <th className="p-2 border">{t("unit")}</th>
+                        <th className="p-2 border text-right">{t("addition")}</th>
+                        <th className="p-2 border text-right">{t("usage")}</th>
+                        <th className="p-2 border text-right">{t("inStock")}</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-zinc-200 bg-white">
@@ -1464,7 +1442,7 @@ export default function FeedPage() {
                         </tr>
                       ))}
                       <tr className="bg-zinc-50 font-bold text-zinc-900 border-t-2 border-zinc-400">
-                        <td className="p-2 border">Total (kg)</td>
+                        <td className="p-2 border">{t("totalKg")}</td>
                         <td className="p-2 border"></td>
                         <td className="p-2 border"></td>
                         <td className="p-2 border text-right">{totalAdditionInKg.toFixed(1)}</td>
@@ -1479,13 +1457,13 @@ export default function FeedPage() {
               {printData.type === "formulator" && printData.details && (
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-sm font-bold text-zinc-700 mb-2 uppercase tracking-wide">Ingredients Composition</h3>
+                    <h3 className="text-sm font-bold text-zinc-700 mb-2 uppercase tracking-wide">{t("ingredientsComposition")}</h3>
                     <table className="min-w-full divide-y divide-zinc-200 text-xs border border-zinc-200">
                       <thead className="bg-zinc-100">
                         <tr className="text-left font-bold text-zinc-700 uppercase tracking-wider">
-                          <th className="p-2 border">Ingredient</th>
-                          <th className="p-2 border text-right">Ration Percentage (%)</th>
-                          <th className="p-2 border text-right">Per Ton Mix (kg)</th>
+                          <th className="p-2 border">{t("ingredient")}</th>
+                          <th className="p-2 border text-right">{t("rationPercentage")}</th>
+                          <th className="p-2 border text-right">{t("perTonMixKg")}</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-zinc-200 bg-white">
@@ -1501,7 +1479,7 @@ export default function FeedPage() {
                           );
                         })}
                         <tr className="bg-zinc-50 font-bold text-zinc-900 border-t-2 border-zinc-400">
-                          <td className="p-2 border">Total mix</td>
+                          <td className="p-2 border">{t("totalMix")}</td>
                           <td className="p-2 border text-right">{printData.details.formulation.totalPercentage.toFixed(1)}%</td>
                           <td className="p-2 border text-right font-mono">1000.0 kg</td>
                         </tr>
@@ -1511,19 +1489,19 @@ export default function FeedPage() {
 
                   {printData.details.formulation.totalPercentage < 99.9 && (
                     <div className="text-xs font-bold text-rose-600">
-                      Formula incomplete ({printData.details.formulation.totalPercentage.toFixed(1)}%)
+                      {t("formulaIncomplete", { percent: printData.details.formulation.totalPercentage.toFixed(1) })}
                     </div>
                   )}
 
                   <div>
-                    <h3 className="text-sm font-bold text-zinc-700 mb-2 uppercase tracking-wide">Nutritional Analysis</h3>
+                    <h3 className="text-sm font-bold text-zinc-700 mb-2 uppercase tracking-wide">{t("nutritionalAnalysis")}</h3>
                     <table className="min-w-full divide-y divide-zinc-200 text-xs border border-zinc-200">
                       <thead className="bg-zinc-100">
                         <tr className="text-left font-bold text-zinc-700 uppercase tracking-wider">
-                          <th className="p-2 border">Nutrient</th>
-                          <th className="p-2 border text-right">Target</th>
-                          <th className="p-2 border text-right">Actual</th>
-                          <th className="p-2 border text-right">Status</th>
+                          <th className="p-2 border">{t("nutrient")}</th>
+                          <th className="p-2 border text-right">{t("target")}</th>
+                          <th className="p-2 border text-right">{t("actual")}</th>
+                          <th className="p-2 border text-right">{t("status")}</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-zinc-200 bg-white">
@@ -1535,7 +1513,7 @@ export default function FeedPage() {
                               {nutrient.actual.toFixed(2)}
                             </td>
                             <td className={`p-2 border text-right font-semibold ${nutrient.isDeficient ? "text-rose-600" : "text-emerald-600"}`}>
-                              {nutrient.isDeficient ? "Deficient" : "OK"}
+                              {nutrient.isDeficient ? t("deficient") : t("ok")}
                             </td>
                           </tr>
                         ))}
@@ -1544,7 +1522,7 @@ export default function FeedPage() {
                   </div>
 
                   <div className="text-center font-bold text-rose-600 text-[11px] pt-4 leading-relaxed">
-                    Disclaimer: Always consult a qualified animal nutritionist or veterinarian before making significant changes to your herd's diet.
+                    {t("disclaimer")}
                   </div>
                 </div>
               )}
@@ -1555,12 +1533,12 @@ export default function FeedPage() {
                     <table className="min-w-full divide-y divide-zinc-200 text-xs border border-zinc-200">
                       <thead className="bg-zinc-100">
                         <tr className="text-left font-bold text-zinc-700 uppercase tracking-wider">
-                          <th className="p-2 border">Growth Stage</th>
-                          <th className="p-2 border text-right">Daily (kg)</th>
+                          <th className="p-2 border">{t("growthStage")}</th>
+                          <th className="p-2 border text-right">{t("dailyKg")}</th>
                           <th className="p-2 border text-right">
                             {printData.details.calcResults.days > 1
-                              ? `${printData.details.calcResults.days} Days`
-                              : "Daily (kg)"}
+                              ? t("days", { count: printData.details.calcResults.days })
+                              : t("dailyKg")}
                           </th>
                         </tr>
                       </thead>
@@ -1588,14 +1566,14 @@ export default function FeedPage() {
                   </div>
 
                   <div className="text-center font-bold text-rose-600 text-[11px] pt-4 leading-relaxed">
-                    Disclaimer: Always consult a qualified animal nutritionist or veterinarian before making significant changes to your herd's diet.
+                    {t("disclaimer")}
                   </div>
                 </div>
               )}
 
               {/* Footer */}
               <div className="border-t pt-4 mt-8 text-center text-[10px] text-zinc-400">
-                <p>SmartSwine Management System Report</p>
+                <p>{t("managementSystemReport")}</p>
                 <p>Copyright 2026. Developed by Goshen AgriFirm & Bibinii Tech</p>
               </div>
             </div>

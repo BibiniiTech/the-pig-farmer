@@ -10,6 +10,7 @@ import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
+import { useTranslations } from "next-intl";
 import {
   LocalHubIcon,
   ShoppingBagIcon,
@@ -49,6 +50,7 @@ interface Suggestion {
 }
 
 export default function LocalHubPage() {
+  const t = useTranslations("Hub");
   const { user, userProfile, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -144,7 +146,7 @@ export default function LocalHubPage() {
       );
 
       if (isDuplicate) {
-        setErrorMsg("This provider is already listed or suggested.");
+        setErrorMsg(t("duplicateError"));
         return;
       }
 
@@ -170,12 +172,12 @@ export default function LocalHubPage() {
       setEmail("");
       setCity("");
       setServiceType("");
-      setSuccessMsg("Listing suggestion submitted successfully! Waiting for admin approval.");
+      setSuccessMsg(t("successSubmit"));
       setTimeout(() => setSuccessMsg(""), 5000);
       setExpandedSections(prev => ({ ...prev, suggest: false, mySuggestions: true }));
     } catch (err) {
       console.error("Failed to submit suggestion:", err);
-      setErrorMsg("Failed to submit suggestion. Please try again.");
+      setErrorMsg(t("errorSubmit"));
     }
   };
 
@@ -197,14 +199,14 @@ export default function LocalHubPage() {
   }
 
   const services = [
-    "Butcher",
-    "Meat Processor",
-    "Abattoir",
-    "Feed Supplier",
-    "Tools Supplier",
-    "Vet Shop",
-    "Vet Services",
-    "Other"
+    { label: t("services.butcher"), val: "Butcher" },
+    { label: t("services.meatProcessor"), val: "Meat Processor" },
+    { label: t("services.abattoir"), val: "Abattoir" },
+    { label: t("services.feedSupplier"), val: "Feed Supplier" },
+    { label: t("services.toolsSupplier"), val: "Tools Supplier" },
+    { label: t("services.vetShop"), val: "Vet Shop" },
+    { label: t("services.vetServices"), val: "Vet Services" },
+    { label: t("services.other"), val: "Other" }
   ];
 
   return (
@@ -228,7 +230,7 @@ export default function LocalHubPage() {
           <div className="bg-emerald-50/50 border border-emerald-100 rounded-2xl p-4 flex items-center justify-center gap-3">
              <LocationIcon className="h-5 w-5 text-emerald-600" />
              <p className="text-sm font-bold text-emerald-800">
-               Directory Region: {userProfile?.country || "All Regions"}
+               {t("directoryRegion", { region: userProfile?.country || t("allRegions") })}
              </p>
           </div>
 
@@ -246,84 +248,88 @@ export default function LocalHubPage() {
 
           {/* 1. Verified Vendors */}
           <CollapsibleCard
-            title="Verified Vendors"
+            title={t("verifiedVendors")}
             icon={<LocalHubIcon className="h-6 w-6 text-emerald-600" />}
             count={vendorsList.length}
             expanded={expandedSections.vendors}
             onToggle={() => toggleSection("vendors")}
+            t={t}
           >
             {dataLoading ? (
               <LoadingPulse />
             ) : vendorsList.length === 0 ? (
-              <EmptyState message="No vendors listed for this region yet." />
+              <EmptyState message={t("noVendors")} />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {vendorsList.map(p => <ProviderItem key={p.id} provider={p} />)}
+                {vendorsList.map(p => <ProviderItem key={p.id} provider={p} t={t} />)}
               </div>
             )}
           </CollapsibleCard>
 
           {/* 2. Pork Buyers & Abattoirs */}
           <CollapsibleCard
-            title="Pork Buyers & Abattoirs"
+            title={t("porkBuyers")}
             icon={<ShoppingBagIcon className="h-6 w-6 text-emerald-600" />}
             count={buyersList.length}
             expanded={expandedSections.buyers}
             onToggle={() => toggleSection("buyers")}
+            t={t}
           >
             {dataLoading ? (
               <LoadingPulse />
             ) : buyersList.length === 0 ? (
-              <EmptyState message="No buyers listed for this region yet." />
+              <EmptyState message={t("noBuyers")} />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {buyersList.map(p => <ProviderItem key={p.id} provider={p} />)}
+                {buyersList.map(p => <ProviderItem key={p.id} provider={p} t={t} />)}
               </div>
             )}
           </CollapsibleCard>
 
           {/* 3. Veterinary Services */}
           <CollapsibleCard
-            title="Veterinary Services"
+            title={t("vetServices")}
             icon={<MedicalServicesIcon className="h-6 w-6 text-emerald-600" />}
             count={vetsList.length}
             expanded={expandedSections.vets}
             onToggle={() => toggleSection("vets")}
+            t={t}
           >
             {dataLoading ? (
               <LoadingPulse />
             ) : vetsList.length === 0 ? (
-              <EmptyState message="No veterinary services listed for this region yet." />
+              <EmptyState message={t("noVets")} />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {vetsList.map(p => <ProviderItem key={p.id} provider={p} />)}
+                {vetsList.map(p => <ProviderItem key={p.id} provider={p} t={t} />)}
               </div>
             )}
           </CollapsibleCard>
 
           {/* 4. My Suggestions */}
           <CollapsibleCard
-            title="My Suggestions"
+            title={t("mySuggestions")}
             icon={<HistoryIcon className="h-6 w-6 text-emerald-600" />}
             count={mySuggestions.length}
             expanded={expandedSections.mySuggestions}
             onToggle={() => toggleSection("mySuggestions")}
+            t={t}
           >
             {mySuggestions.length === 0 ? (
-              <EmptyState message="You have not submitted any suggestions yet." />
+              <EmptyState message={t("noSuggestions")} />
             ) : (
               <div className="space-y-4">
                 {mySuggestions.map(s => (
                   <div key={s.id} className="bg-zinc-50 border border-zinc-200 rounded-xl p-4 flex flex-col gap-2">
                     <div className="flex justify-between items-start">
                       <h4 className="font-bold text-zinc-900">{s.providerName}</h4>
-                      <StatusBadge status={s.status} />
+                      <StatusBadge status={s.status} t={t} />
                     </div>
-                    <p className="text-xs text-zinc-600">Category: {s.serviceType}</p>
+                    <p className="text-xs text-zinc-600">{t("category", { type: s.serviceType })}</p>
                     <p className="text-xs text-zinc-500">{s.city}, {s.country}</p>
                     {s.adminFeedback && (
                       <div className="mt-2 p-3 bg-red-50 border border-red-100 rounded-lg text-xs text-red-700">
-                        <strong>Feedback:</strong> {s.adminFeedback}
+                        <strong>{t("feedback")}</strong> {s.adminFeedback}
                       </div>
                     )}
                   </div>
@@ -334,14 +340,15 @@ export default function LocalHubPage() {
 
           {/* 5. Suggest a Provider */}
           <CollapsibleCard
-            title="Suggest a Provider"
+            title={t("suggestProvider")}
             icon={<AddIcon className="h-6 w-6 text-emerald-600" />}
             expanded={expandedSections.suggest}
             onToggle={() => toggleSection("suggest")}
+            t={t}
           >
             <form onSubmit={handleCreateSuggestion} className="space-y-4 max-w-lg mx-auto bg-white p-6 rounded-2xl border border-zinc-100 shadow-sm">
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase text-zinc-400 ml-1">Business / Doctor Name</label>
+                <label className="text-[10px] font-black uppercase text-zinc-400 ml-1">{t("businessName")}</label>
                 <input
                   type="text"
                   required
@@ -354,19 +361,19 @@ export default function LocalHubPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-zinc-400 ml-1">Service Category</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-400 ml-1">{t("serviceCategory")}</label>
                   <select
                     required
                     value={serviceType}
                     onChange={(e) => setServiceType(e.target.value)}
                     className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition appearance-none"
                   >
-                    <option value="">Select Service</option>
-                    {services.map(s => <option key={s} value={s}>{s}</option>)}
+                    <option value="">{t("selectService")}</option>
+                    {services.map(s => <option key={s.val} value={s.val}>{s.label}</option>)}
                   </select>
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-zinc-400 ml-1">Country</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-400 ml-1">{t("country")}</label>
                   <input
                     type="text"
                     required
@@ -379,7 +386,7 @@ export default function LocalHubPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-zinc-400 ml-1">Phone Number</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-400 ml-1">{t("phoneNumber")}</label>
                   <input
                     type="text"
                     required
@@ -390,7 +397,7 @@ export default function LocalHubPage() {
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-zinc-400 ml-1">City / Location</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-400 ml-1">{t("cityLocation")}</label>
                   <input
                     type="text"
                     required
@@ -403,7 +410,7 @@ export default function LocalHubPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase text-zinc-400 ml-1">Email address (Optional)</label>
+                <label className="text-[10px] font-black uppercase text-zinc-400 ml-1">{t("emailOptional")}</label>
                 <input
                   type="email"
                   value={email}
@@ -417,7 +424,7 @@ export default function LocalHubPage() {
                 type="submit"
                 className="w-full rounded-xl bg-emerald-600 hover:bg-emerald-700 py-4 text-sm font-black text-white shadow-lg shadow-emerald-600/20 transition-all active:scale-[0.98] mt-4 uppercase tracking-widest"
               >
-                Submit Suggestion
+                {t("submitSuggestion")}
               </button>
             </form>
           </CollapsibleCard>
@@ -429,7 +436,7 @@ export default function LocalHubPage() {
   );
 }
 
-function CollapsibleCard({ title, icon, count, children, expanded, onToggle }: { title: string, icon: React.ReactNode, count?: number, children: React.ReactNode, expanded: boolean, onToggle: () => void }) {
+function CollapsibleCard({ title, icon, count, children, expanded, onToggle, t }: { title: string, icon: React.ReactNode, count?: number, children: React.ReactNode, expanded: boolean, onToggle: () => void, t: any }) {
   return (
     <div className="bg-white/60 border border-zinc-200 rounded-3xl overflow-hidden shadow-sm transition-all">
       <button
@@ -444,7 +451,7 @@ function CollapsibleCard({ title, icon, count, children, expanded, onToggle }: {
             <h3 className="text-base font-black text-zinc-900 leading-tight">{title}</h3>
             {count !== undefined && count > 0 && (
               <span className="text-[10px] font-bold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full mt-1 inline-block">
-                {count} {count === 1 ? 'listing' : 'listings'}
+                {count} {count === 1 ? t("listing") : t("listings")}
               </span>
             )}
           </div>
@@ -465,7 +472,7 @@ function CollapsibleCard({ title, icon, count, children, expanded, onToggle }: {
   );
 }
 
-function ProviderItem({ provider }: { provider: ProviderListing }) {
+function ProviderItem({ provider, t }: { provider: ProviderListing, t: any }) {
   return (
     <div className="bg-zinc-50/50 border border-zinc-200 rounded-2xl p-5 space-y-4 hover:border-emerald-500/30 transition-all group">
       <div className="flex justify-between items-start gap-2">
@@ -482,7 +489,7 @@ function ProviderItem({ provider }: { provider: ProviderListing }) {
         </div>
         {provider.isVerified && (
           <span className="shrink-0 text-[10px] font-black px-2 py-0.5 bg-emerald-500 text-white rounded-lg uppercase tracking-tighter">
-            Verified
+            {t("verified")}
           </span>
         )}
       </div>
@@ -494,18 +501,18 @@ function ProviderItem({ provider }: { provider: ProviderListing }) {
           href={`tel:${provider.contact}`}
           className="flex items-center justify-center gap-2 py-2.5 bg-white border border-zinc-200 rounded-xl text-[10px] font-black uppercase text-zinc-700 hover:bg-emerald-50 hover:border-emerald-200 transition"
         >
-          <PhoneIcon className="h-3.5 w-3.5" /> Call
+          <PhoneIcon className="h-3.5 w-3.5" /> {t("call")}
         </a>
         {provider.email ? (
            <a
             href={`mailto:${provider.email}`}
             className="flex items-center justify-center gap-2 py-2.5 bg-white border border-zinc-200 rounded-xl text-[10px] font-black uppercase text-zinc-700 hover:bg-emerald-50 hover:border-emerald-200 transition"
            >
-            <EmailIcon className="h-3.5 w-3.5" /> Email
+            <EmailIcon className="h-3.5 w-3.5" /> {t("email")}
            </a>
         ) : (
           <div className="py-2.5 bg-zinc-100/50 border border-transparent rounded-xl text-[10px] font-black uppercase text-zinc-300 flex items-center justify-center gap-2">
-            <EmailIcon className="h-3.5 w-3.5 opacity-50" /> No Email
+            <EmailIcon className="h-3.5 w-3.5 opacity-50" /> {t("noEmail")}
           </div>
         )}
       </div>
@@ -513,16 +520,22 @@ function ProviderItem({ provider }: { provider: ProviderListing }) {
   );
 }
 
-function StatusBadge({ status }: { status: string }) {
+function StatusBadge({ status, t }: { status: string, t: any }) {
   const styles = {
     approved: "bg-emerald-100 text-emerald-700 border-emerald-200",
     rejected: "bg-red-100 text-red-700 border-red-200",
     pending: "bg-amber-100 text-amber-700 border-amber-200"
   }[status] || "bg-zinc-100 text-zinc-700 border-zinc-200";
 
+  const label = {
+    approved: t("status.approved"),
+    rejected: t("status.rejected"),
+    pending: t("status.pending")
+  }[status] || status;
+
   return (
     <span className={`text-[10px] font-black px-2 py-1 rounded-lg border uppercase ${styles}`}>
-      {status}
+      {label}
     </span>
   );
 }

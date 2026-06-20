@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartSwine</string>
+    <string name="weight_checker_title">အလေးချိန်စစ်ဆေးစနစ်</string>
+    <string name="back_button_content_description">နောက်သို့</string>
+    <string name="important_notes_title">အရေးကြီးသော မှတ်ချက်များ</string>
+    <string name="weight_checker_notes">• ရင်ပတ်ပတ်လည်: ရှေ့ခြေထောက်များနောက်မှ ရင်ပတ်ကို တိပ်ဖြင့် တင်းတင်းကျပ်ကျပ် ပတ်၍ တိုင်းတာပါ (Point B)။\n• ကိုယ်ထည်အလျား: နားရွက်ခြေရင်းမှ အမြီးခြေရင်းအထိ တိပ်ကို ခန္ဓာကိုယ်ပေါ်တွင် တင်းတင်းရင်းရင်း တိုင်းတာပါ (Point A)။\n• တိကျသောရလဒ်ရရန် ဝက်ကို ညီညာသော မြေပြင်ပေါ်တွင် မတ်မတ်ရပ်ခိုင်းပါ။\n</string>
+    <string name="converter_title">ယူနစ်ပြောင်းလဲခြင်း</string>
+    <string name="unit_lbs">Lbs</string>
+    <string name="unit_kgs">Kg</string>
+    <string name="weigh_with_tape_title">ပေတိပ်ဖြင့် တိုင်းတာရန်</string>
+    <string name="weigh_with_tape_subtitle">ပေတိပ်အသုံးပြု၍ အလေးချိန်ကို ခန့်မှန်းပါ။</string>
+    <string name="label_length">အလျား (%1$s)</string>
+    <string name="label_girth">ရင်ပတ် (%1$s)</string>
+    <string name="unit_cm">cm</string>
+    <string name="unit_in">in</string>
+    <string name="placeholder_a">A</string>
+    <string name="placeholder_b">B</string>
+    <string name="label_estimated_live_weight">ခန့်မှန်းခြေ အရှင်အလေးချိန်</string>
+    <string name="label_estimated_carcass_weight">ခန့်မှန်းခြေ အသားထွက်နှုန်း</string>
+    <string name="msg_enter_measurements">တွက်ချက်ရန် တိုင်းတာချက်များကို ဖြည့်သွင်းပါ</string>
+    <string name="pig_diagram_content_description">ဝက်အလေးချိန်တိုင်းတာမှု လမ်းညွှန်</string>
+    <string name="weight_format">%1$.1f Kg / %2$.1f Lbs</string>
+    <string name="estimated_results">ခန့်မှန်းခြေ ရလဒ်များ</string>
+</resources>

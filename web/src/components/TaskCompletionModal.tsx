@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { doc, collection, writeBatch, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { useTranslations } from "next-intl";
+import { useAuth } from "@/context/AuthContext";
 import {
   HeatIcon,
   BreedingIcon,
@@ -62,15 +64,6 @@ const addDays = (dateStr: string, days: number) => {
   return result.toISOString().split("T")[0];
 };
 
-const calculateAgeMonths = (birthDateStr?: string) => {
-  if (!birthDateStr) return 0;
-  const birthDate = new Date(birthDateStr);
-  if (isNaN(birthDate.getTime())) return 0;
-  const now = new Date();
-  const diffTime = now.getTime() - birthDate.getTime();
-  return diffTime / (1000 * 60 * 60 * 24 * 30.417);
-};
-
 export default function TaskCompletionModal({
   isOpen,
   onClose,
@@ -78,6 +71,10 @@ export default function TaskCompletionModal({
   allPigs,
   activeFarmUid
 }: TaskCompletionModalProps) {
+  const t = useTranslations("TaskCompletion");
+  const { userProfile } = useAuth();
+  const currencySymbol = userProfile?.settings?.currencySymbol || "$";
+
   const [logDate, setLogDate] = useState(new Date().toISOString().split("T")[0]);
   const [selectedPigIds, setSelectedPigIds] = useState<string[]>([]);
   const [notes, setNotes] = useState("");
@@ -358,9 +355,9 @@ export default function TaskCompletionModal({
               const taskRef = doc(collection(db, "users", activeFarmUid, "tasks"));
               batch.set(taskRef, {
                 id: taskRef.id,
-                name: `Confirm Pregnancy: Pig ${pig.tagNumber}`,
+                name: t("confirmPregnancyTask", { tag: pig.tagNumber }),
                 date: addDays(logDate, 21),
-                notes: `Scheduled 21 days after mating on ${logDate}`,
+                notes: t("confirmPregnancyNotes", { date: logDate }),
                 pigIds: [pigId]
               });
             }
@@ -390,9 +387,9 @@ export default function TaskCompletionModal({
             const taskRef = doc(collection(db, "users", activeFarmUid, "tasks"));
             batch.set(taskRef, {
               id: taskRef.id,
-              name: `Farrowing: Pig ${pig.tagNumber}`,
+              name: t("farrowingTask", { tag: pig.tagNumber }),
               date: addDays(sowBreedingDate, 114),
-              notes: `Scheduled 114 days after mating on ${sowBreedingDate}`,
+              notes: t("farrowingNotes", { date: sowBreedingDate }),
               pigIds: [pigId]
             });
             finalDescription = `${notes}\nPregnancy Confirmed. Farrowing scheduled.`.trim();
@@ -506,9 +503,9 @@ export default function TaskCompletionModal({
               const taskRef = doc(collection(db, "users", activeFarmUid, "tasks"));
               batch.set(taskRef, {
                 id: taskRef.id,
-                name: `2nd Iron Injection: Pig ${pig.tagNumber}`,
+                name: t("ironTask", { tag: pig.tagNumber }),
                 date: addDays(logDate, 7),
-                notes: "Scheduled 7 days after first injection",
+                notes: t("ironNotes"),
                 pigIds: [pigId]
               });
             }
@@ -520,7 +517,7 @@ export default function TaskCompletionModal({
           const pigWeight = parseFloat(pigWeights[pigId]) || 0;
           if (pigWeight > 0) {
             batch.update(pigRef, { weight: pigWeight });
-            finalDescription = `${notes}\nWeight updated to: ${pigWeight} kg`.trim();
+            finalDescription = t("weightUpdateLog", { notes, weight: pigWeight });
           }
         }
 
@@ -531,7 +528,7 @@ export default function TaskCompletionModal({
           
           batch.set(archiveRef, {
             ...pig,
-            status: `Culled (${cullingReason})`,
+            status: t("culledLog", { reason: cullingReason }),
             cullingReason,
             salePrice: cullingReason === "Sold" ? individualPrice : 0,
             culledDate: logDate
@@ -548,9 +545,9 @@ export default function TaskCompletionModal({
               date: logDate,
               description: `Sold Culled Pig: ${pig.tagNumber}`
             });
-            finalDescription = `${notes}\nCulled (Sold) for: Ksh ${individualPrice}`.trim();
+            finalDescription = t("soldLog", { symbol: currencySymbol, price: individualPrice, notes });
           } else {
-            finalDescription = `${notes}\nCulled reason: ${cullingReason}`.trim();
+            finalDescription = t("culledReasonLog", { reason: cullingReason, notes });
           }
           await cleanupTasksForPig(batch, pigId, pig.tagNumber);
         }
@@ -608,12 +605,12 @@ export default function TaskCompletionModal({
       <div className="bg-white border border-zinc-200 rounded-2xl w-full max-w-lg p-6 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto no-scrollbar">
         <h3 className="text-lg font-bold text-zinc-900 flex items-center gap-2 border-b border-zinc-100 pb-3">
           {renderIcon()}
-          <span>Log Activity: {activityName}</span>
+          <span>{t("title", { type: activityName })}</span>
         </h3>
 
         <form onSubmit={handleCompleteTask} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Date Completed</label>
+            <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("dateCompleted")}</label>
             <input
               type="date"
               required
@@ -626,35 +623,35 @@ export default function TaskCompletionModal({
           {/* Activity-specific options */}
           {isHeatDetection && (
             <div>
-              <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Heat Outcome</label>
+              <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("heatOutcome")}</label>
               <select
                 value={heatOutcome}
                 onChange={(e) => setHeatOutcome(e.target.value)}
                 className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
               >
-                <option value="Heat Detected">Heat Detected</option>
-                <option value="No Heat Detected">No Heat Detected</option>
+                <option value="Heat Detected">{t("outcomes.heatDetected")}</option>
+                <option value="No Heat Detected">{t("outcomes.noHeatDetected")}</option>
               </select>
             </div>
           )}
 
           {isBreeding && (
             <div>
-              <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Mating Outcome</label>
+              <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("matingOutcome")}</label>
               <select
                 value={matingOutcome}
                 onChange={(e) => setMatingOutcome(e.target.value)}
                 className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
               >
-                <option value="Successful">Mating Successful</option>
-                <option value="Unsuccessful">Mating Failed</option>
+                <option value="Successful">{t("outcomes.successful")}</option>
+                <option value="Unsuccessful">{t("outcomes.unsuccessful")}</option>
               </select>
             </div>
           )}
 
           {isPregnancyCheck && (
             <div>
-              <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Pregnancy Confirmed?</label>
+              <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("pregnancyConfirmed")}</label>
               <div className="flex gap-4">
                 <label className="flex items-center gap-2 cursor-pointer text-sm font-semibold">
                   <input
@@ -663,7 +660,7 @@ export default function TaskCompletionModal({
                     onChange={() => setPregnancyOutcome("Successful")}
                     className="h-4 w-4 border-zinc-300 text-emerald-600 focus:ring-emerald-500"
                   />
-                  <span>Yes (Pregnant)</span>
+                  <span>{t("outcomes.yesPregnant")}</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer text-sm font-semibold">
                   <input
@@ -672,7 +669,7 @@ export default function TaskCompletionModal({
                     onChange={() => setPregnancyOutcome("Failed")}
                     className="h-4 w-4 border-zinc-300 text-emerald-600 focus:ring-emerald-500"
                   />
-                  <span>No (Failed)</span>
+                  <span>{t("outcomes.noFailed")}</span>
                 </label>
               </div>
             </div>
@@ -682,7 +679,7 @@ export default function TaskCompletionModal({
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Male Piglets</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("malePiglets")}</label>
                   <input
                     type="number"
                     min="0"
@@ -692,7 +689,7 @@ export default function TaskCompletionModal({
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Female Piglets</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("femalePiglets")}</label>
                   <input
                     type="number"
                     min="0"
@@ -705,7 +702,7 @@ export default function TaskCompletionModal({
               
               {(parseInt(numMales) || 0) > 0 && (
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Male Tags (Comma Separated)</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("maleTags")}</label>
                   <input
                     type="text"
                     value={maleTags}
@@ -718,7 +715,7 @@ export default function TaskCompletionModal({
 
               {(parseInt(numFemales) || 0) > 0 && (
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Female Tags (Comma Separated)</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("femaleTags")}</label>
                   <input
                     type="text"
                     value={femaleTags}
@@ -734,7 +731,7 @@ export default function TaskCompletionModal({
           {isMedicationActivity && (
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Medication Name</label>
+                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("medicationName")}</label>
                 <input
                   type="text"
                   value={medicationName}
@@ -744,7 +741,7 @@ export default function TaskCompletionModal({
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Dosage</label>
+                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("dosage")}</label>
                 <input
                   type="text"
                   value={medicationDosage}
@@ -765,7 +762,7 @@ export default function TaskCompletionModal({
                       onChange={(e) => setScheduleSecondIron(e.target.checked)}
                       className="h-4 w-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500"
                     />
-                    <span>Schedule 2nd Iron Injection (7 days later)?</span>
+                    <span>{t("scheduleIron")}</span>
                   </label>
                 </div>
               )}
@@ -775,20 +772,20 @@ export default function TaskCompletionModal({
           {isCulling && (
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Reason</label>
+                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("reason")}</label>
                 <select
                   value={cullingReason}
                   onChange={(e) => setCullingReason(e.target.value)}
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                 >
-                  <option value="Natural Causes">Natural Causes</option>
-                  <option value="Disease">Disease</option>
-                  <option value="Sold">Sold</option>
+                  <option value="Natural Causes">{t("outcomes.naturalCauses")}</option>
+                  <option value="Disease">{t("outcomes.disease")}</option>
+                  <option value="Sold">{t("outcomes.sold")}</option>
                 </select>
               </div>
               {cullingReason === "Sold" && (
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Total Sale Price ($)</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("totalSalePrice", { symbol: currencySymbol })}</label>
                   <input
                     type="number"
                     step="any"
@@ -804,11 +801,11 @@ export default function TaskCompletionModal({
           {/* Checklist of Pigs */}
           <div>
             <label className="block text-xs font-semibold text-zinc-500 mb-1.5">
-              Select Affected Pigs ({selectedPigIds.length})
+              {t("selectAffectedPigs", { count: selectedPigIds.length })}
             </label>
             <div className="border border-zinc-200 rounded-lg max-h-36 overflow-y-auto p-3 space-y-2 bg-zinc-50/50">
               {selectedPigIds.length === 0 ? (
-                <p className="text-xs text-zinc-400 italic">No targets loaded.</p>
+                <p className="text-xs text-zinc-400 italic">{t("noTargets")}</p>
               ) : (
                 selectedPigIds.map(id => {
                   const pig = allPigs.find(p => p.id === id);
@@ -828,7 +825,7 @@ export default function TaskCompletionModal({
                       {isWeaning && selectedPigIds.includes(id) && (
                         <input
                           type="text"
-                          placeholder="Pen Location"
+                          placeholder={t("penLocation")}
                           value={pigWeaningLocations[id] || ""}
                           onChange={(e) => setPigWeaningLocations(prev => ({ ...prev, [id]: e.target.value }))}
                           className="rounded border border-zinc-200 px-2 py-0.5 text-[11px] w-24 outline-none"
@@ -840,7 +837,7 @@ export default function TaskCompletionModal({
                         <input
                           type="number"
                           step="any"
-                          placeholder="Weight (kg)"
+                          placeholder={t("weightKg")}
                           value={pigWeights[id] || ""}
                           onChange={(e) => setPigWeights(prev => ({ ...prev, [id]: e.target.value }))}
                           className="rounded border border-zinc-200 px-2 py-0.5 text-[11px] w-24 outline-none"
@@ -852,7 +849,7 @@ export default function TaskCompletionModal({
                         <input
                           type="number"
                           step="any"
-                          placeholder="Price ($)"
+                          placeholder={t("price", { symbol: currencySymbol })}
                           value={pigSalePrices[id] || ""}
                           onChange={(e) => setPigSalePrices(prev => ({ ...prev, [id]: e.target.value }))}
                           className="rounded border border-zinc-200 px-2 py-0.5 text-[11px] w-24 outline-none"
@@ -866,12 +863,12 @@ export default function TaskCompletionModal({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Procedure Notes</label>
+            <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("procedureNotes")}</label>
             <textarea
               rows={2}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="e.g. completed successfully"
+              placeholder={t("notesPlaceholder")}
               className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
             />
           </div>
@@ -882,7 +879,7 @@ export default function TaskCompletionModal({
               onClick={onClose}
               className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2 text-xs font-semibold text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 transition"
             >
-              Cancel
+              {t("cancel")}
             </button>
             <button
               type="submit"
@@ -892,7 +889,7 @@ export default function TaskCompletionModal({
               {isSubmitting && (
                 <div className="h-3 w-3 animate-spin rounded-full border-2 border-white border-t-transparent" />
               )}
-              <span>Complete Task</span>
+              <span>{t("completeTask")}</span>
             </button>
           </div>
         </form>

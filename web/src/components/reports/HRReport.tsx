@@ -2,6 +2,7 @@
 
 import React from "react";
 import ReportLayout from "./ReportLayout";
+import { useTranslations } from "next-intl";
 
 interface StaffMember {
   id: string;
@@ -32,8 +33,11 @@ const HRReport: React.FC<HRReportProps> = ({
   staff,
   financialRecords,
   currencySymbol = "$",
-  title = "Human Resources Report"
+  title
 }) => {
+  const t = useTranslations("Reports");
+  const defaultTitle = t("hrDirectory");
+
   const totalMonthlyPayroll = staff.reduce((sum, m) => sum + m.salary, 0);
   const salaryPayments = financialRecords
     .filter(r => r.category === "Labor/Salary" || r.category === "Salary")
@@ -42,17 +46,17 @@ const HRReport: React.FC<HRReportProps> = ({
   const totalPeriodPayments = salaryPayments.reduce((sum, r) => sum + r.amount, 0);
 
   return (
-    <ReportLayout title={title}>
+    <ReportLayout title={title || defaultTitle}>
       <div className="space-y-8">
         <div>
           <h3 className="text-[15pt] font-bold text-zinc-800 border-b-2 border-zinc-200 pb-2 mb-4">Staff Details</h3>
           <table className="w-full border-collapse text-[10pt]">
             <thead>
               <tr className="bg-zinc-100 text-left border-y-2 border-zinc-300">
-                <th className="p-3 font-bold border-r border-zinc-200">Staff Name</th>
-                <th className="p-3 font-bold border-r border-zinc-200">Role</th>
-                <th className="p-3 font-bold border-r border-zinc-200 text-right">Monthly Payroll</th>
-                <th className="p-3 font-bold">Join Date</th>
+                <th className="p-3 font-bold border-r border-zinc-200">{t("staffName")}</th>
+                <th className="p-3 font-bold border-r border-zinc-200">{t("role")}</th>
+                <th className="p-3 font-bold border-r border-zinc-200 text-right">{t("monthlyPayroll")}</th>
+                <th className="p-3 font-bold">{t("joined")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-200">
@@ -67,7 +71,7 @@ const HRReport: React.FC<HRReportProps> = ({
                 </tr>
               ))}
               <tr className="bg-zinc-50 font-black text-zinc-900 border-t-2 border-zinc-300">
-                <td colSpan={2} className="p-3 text-right uppercase tracking-wider">Total Monthly Payroll</td>
+                <td colSpan={2} className="p-3 text-right uppercase tracking-wider">{t("totalMonthlyPayroll")}</td>
                 <td className="p-3 text-right font-mono text-[12pt] border-l border-zinc-200">
                   {currencySymbol}{totalMonthlyPayroll.toFixed(2)}
                 </td>
@@ -82,10 +86,10 @@ const HRReport: React.FC<HRReportProps> = ({
           <table className="w-full border-collapse text-[9pt]">
             <thead>
               <tr className="bg-zinc-100 text-left border-y-2 border-zinc-300">
-                <th className="p-3 font-bold border-r border-zinc-200">Activity Date</th>
-                <th className="p-3 font-bold border-r border-zinc-200 w-1/2">Description</th>
-                <th className="p-3 font-bold border-r border-zinc-200 text-right">Amount</th>
-                <th className="p-3 font-bold">Category</th>
+                <th className="p-3 font-bold border-r border-zinc-200">{t("date")}</th>
+                <th className="p-3 font-bold border-r border-zinc-200 w-1/2">{t("description")}</th>
+                <th className="p-3 font-bold border-r border-zinc-200 text-right">{t("amount")}</th>
+                <th className="p-3 font-bold">{t("category")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-200">

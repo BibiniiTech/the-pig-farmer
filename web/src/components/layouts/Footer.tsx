@@ -1,7 +1,11 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function Footer() {
+  const t = useTranslations("Footer");
   const currentYear = new Date().getFullYear();
 
   return (
@@ -10,8 +14,8 @@ export default function Footer() {
         
         {/* Left Section: Copyright & Developer */}
         <div className="flex flex-col items-center md:items-start text-sm text-zinc-500">
-          <p>© {currentYear} SmartSwine. All rights reserved.</p>
-          <p className="mt-1 text-xs text-zinc-400">Developed by SmartSwine Team</p>
+          <p>© {currentYear} SmartSwine. {t("rights")}</p>
+          <p className="mt-1 text-xs text-zinc-400">{t("developedBy")}</p>
         </div>
 
         {/* Center Section: Legal Links */}
@@ -22,7 +26,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="hover:text-emerald-600 transition"
           >
-            Privacy Policy
+            {t("privacyPolicy")}
           </a>
           <span className="text-zinc-300">|</span>
           <a
@@ -31,7 +35,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="hover:text-emerald-600 transition"
           >
-            Terms of Service
+            {t("termsOfService")}
           </a>
           <span className="text-zinc-300">|</span>
           <a
@@ -40,7 +44,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="hover:text-emerald-600 transition"
           >
-            Refund Policy
+            {t("refundPolicy")}
           </a>
           <span className="text-zinc-300">|</span>
           <a
@@ -49,7 +53,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="hover:text-emerald-600 transition"
           >
-            Account Deletion
+            {t("accountDeletion")}
           </a>
         </div>
 

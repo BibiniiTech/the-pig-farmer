@@ -7,8 +7,11 @@ import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, create
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
+import { getCurrencyByCountry } from "@/lib/currencyUtils";
+import { useTranslations } from "next-intl";
 
 export default function LoginPage() {
+  const t = useTranslations("Login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
@@ -41,17 +44,17 @@ export default function LoginPage() {
     try {
       if (isSignUp) {
         if (!firstName.trim() || !lastName.trim() || !farmName.trim() || !country.trim()) {
-          setError("Please fill in all fields.");
+          setError(t("fillAllFields"));
           setLoading(false);
           return;
         }
         if (password !== confirmPassword) {
-          setError("Passwords do not match.");
+          setError(t("passwordsDoNotMatch"));
           setLoading(false);
           return;
         }
         if (password.length < 6) {
-          setError("Password must be at least 6 characters.");
+          setError(t("passwordTooShort"));
           setLoading(false);
           return;
         }
@@ -61,6 +64,7 @@ export default function LoginPage() {
         const userId = credential.user.uid;
 
         // 2. Save profile to Firestore
+        const currency = getCurrencyByCountry(country);
         await setDoc(doc(db, "users", userId), {
           firstName: firstName.trim(),
           lastName: lastName.trim(),
@@ -71,6 +75,17 @@ export default function LoginPage() {
           isAdmin: false,
           isKofisPerson: false,
           createdAt: new Date(),
+          settings: {
+            selectedCurrency: currency.code,
+            currencySymbol: currency.symbol,
+            weaningDays: "56",
+            farrowingDays: "114",
+            ironDay1: "3",
+            ironDay2: "10",
+            autoClassifyBarrows: true,
+            autoClassifySows: true,
+            giltAgeThresholdWeeks: "26"
+          }
         });
 
         router.push("/dashboard");
@@ -80,7 +95,7 @@ export default function LoginPage() {
       }
     } catch (err: any) {
       console.error(err);
-      setError(err.message || "Authentication failed.");
+      setError(err.message || t("authFailed"));
     } finally {
       setLoading(false);
     }
@@ -96,7 +111,7 @@ export default function LoginPage() {
       router.push("/dashboard");
     } catch (err: any) {
       console.error(err);
-      setError(err.message || "Google sign-in failed.");
+      setError(err.message || t("googleFailed"));
     } finally {
       setLoading(false);
     }
@@ -106,16 +121,16 @@ export default function LoginPage() {
     setError(null);
     setSuccess(null);
     if (!email.trim()) {
-      setError("Please enter your email address first to reset your password.");
+      setError(t("enterEmailReset"));
       return;
     }
     setLoading(true);
     try {
       await sendPasswordResetEmail(auth, email.trim());
-      setSuccess("Password reset email sent! Please check your inbox.");
+      setSuccess(t("resetSent"));
     } catch (err: any) {
       console.error(err);
-      setError(err.message || "Failed to send password reset email.");
+      setError(err.message || t("resetFailed"));
     } finally {
       setLoading(false);
     }
@@ -153,11 +168,11 @@ export default function LoginPage() {
               className="h-16 w-16 object-contain rounded-xl shadow-md border border-zinc-200/50 bg-white p-1 mb-4"
             />
             <h1 id="login-title" className="mt-2 text-3xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-950 via-emerald-800 to-green-600 bg-clip-text text-transparent">
-              SmartSwine Web
+              {t("title")}
             </h1>
           </Link>
           <p className="mt-2 text-sm text-zinc-600">
-            {isSignUp ? "Create your farm account" : "Sign in to access your farm metrics"}
+            {isSignUp ? t("createAccount") : t("signInTitle")}
           </p>
         </div>
 
@@ -180,7 +195,7 @@ export default function LoginPage() {
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label htmlFor="first-name" className="sr-only">
-                      First Name
+                      {t("firstName")}
                     </label>
                     <input
                       id="first-name"
@@ -190,12 +205,12 @@ export default function LoginPage() {
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       className="relative block w-full rounded-lg border border-zinc-200 bg-white px-3 py-3 text-zinc-900 placeholder-zinc-400 focus:z-10 focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 sm:text-sm shadow-sm"
-                      placeholder="First Name"
+                      placeholder={t("firstName")}
                     />
                   </div>
                   <div>
                     <label htmlFor="last-name" className="sr-only">
-                      Last Name
+                      {t("lastName")}
                     </label>
                     <input
                       id="last-name"
@@ -205,14 +220,14 @@ export default function LoginPage() {
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                       className="relative block w-full rounded-lg border border-zinc-200 bg-white px-3 py-3 text-zinc-900 placeholder-zinc-400 focus:z-10 focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 sm:text-sm shadow-sm"
-                      placeholder="Last Name"
+                      placeholder={t("lastName")}
                     />
                   </div>
                 </div>
 
                 <div>
                   <label htmlFor="farm-name" className="sr-only">
-                    Farm Name
+                    {t("farmName")}
                   </label>
                   <input
                     id="farm-name"
@@ -222,13 +237,13 @@ export default function LoginPage() {
                     value={farmName}
                     onChange={(e) => setFarmName(e.target.value)}
                     className="relative block w-full rounded-lg border border-zinc-200 bg-white px-3 py-3 text-zinc-900 placeholder-zinc-400 focus:z-10 focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 sm:text-sm shadow-sm"
-                    placeholder="Farm Name"
+                    placeholder={t("farmName")}
                   />
                 </div>
 
                 <div>
                   <label htmlFor="country" className="sr-only">
-                    Country
+                    {t("country")}
                   </label>
                   <input
                     id="country"
@@ -238,7 +253,7 @@ export default function LoginPage() {
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
                     className="relative block w-full rounded-lg border border-zinc-200 bg-white px-3 py-3 text-zinc-900 placeholder-zinc-400 focus:z-10 focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 sm:text-sm shadow-sm"
-                    placeholder="Country"
+                    placeholder={t("country")}
                   />
                 </div>
               </>
@@ -246,7 +261,7 @@ export default function LoginPage() {
 
             <div>
               <label htmlFor="email-address" className="sr-only">
-                Email address
+                {t("email")}
               </label>
               <input
                 id="email-address"
@@ -257,13 +272,13 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="relative block w-full rounded-lg border border-zinc-200 bg-white px-3 py-3 text-zinc-900 placeholder-zinc-400 focus:z-10 focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 sm:text-sm shadow-sm"
-                placeholder="Email address"
+                placeholder={t("email")}
               />
             </div>
             
             <div>
               <label htmlFor="password" className="sr-only">
-                Password
+                {t("password")}
               </label>
               <input
                 id="password"
@@ -274,14 +289,14 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="relative block w-full rounded-lg border border-zinc-200 bg-white px-3 py-3 text-zinc-900 placeholder-zinc-400 focus:z-10 focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 sm:text-sm shadow-sm"
-                placeholder="Password"
+                placeholder={t("password")}
               />
             </div>
 
             {isSignUp && (
               <div>
                 <label htmlFor="confirm-password" className="sr-only">
-                  Confirm Password
+                  {t("confirmPassword")}
                 </label>
                 <input
                   id="confirm-password"
@@ -291,7 +306,7 @@ export default function LoginPage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="relative block w-full rounded-lg border border-zinc-200 bg-white px-3 py-3 text-zinc-900 placeholder-zinc-400 focus:z-10 focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 sm:text-sm shadow-sm"
-                  placeholder="Confirm Password"
+                  placeholder={t("confirmPassword")}
                 />
               </div>
             )}
@@ -304,7 +319,7 @@ export default function LoginPage() {
               disabled={loading}
               className="group relative flex w-full justify-center rounded-lg bg-gradient-to-r from-emerald-600 to-emerald-700 py-3 px-4 text-sm font-semibold text-white shadow-md hover:from-emerald-700 hover:to-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-offset-2 focus:ring-offset-white disabled:opacity-50 transition-all duration-200"
             >
-              {loading ? "Processing..." : isSignUp ? "Sign Up" : "Sign In"}
+              {loading ? t("processing") : isSignUp ? t("signUp") : t("signIn")}
             </button>
 
             {/* Forgot password link option */}
@@ -315,7 +330,7 @@ export default function LoginPage() {
                   onClick={handleForgotPassword}
                   className="font-semibold text-zinc-500 hover:text-emerald-800 transition"
                 >
-                  Forgot password?
+                  {t("forgotPassword")}
                 </button>
               </div>
             )}
@@ -332,7 +347,7 @@ export default function LoginPage() {
             }}
             className="w-full text-center rounded-lg border border-emerald-500/20 bg-emerald-500/5 hover:bg-emerald-500/10 py-2.5 text-sm font-semibold text-emerald-800 transition-all duration-200"
           >
-            {isSignUp ? "Already have an account? Sign In" : "New Here? Sign Up"}
+            {isSignUp ? t("alreadyHaveAccount") : t("newHere")}
           </button>
         </div>
 
@@ -341,7 +356,7 @@ export default function LoginPage() {
             <div className="w-full border-t border-zinc-200" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="bg-white/80 px-2 text-zinc-500 backdrop-blur-md">Or continue with</span>
+            <span className="bg-white/80 px-2 text-zinc-500 backdrop-blur-md">{t("orContinueWith")}</span>
           </div>
         </div>
 
@@ -370,7 +385,7 @@ export default function LoginPage() {
                 fill="#EA4335"
               />
             </svg>
-            Google
+            {t("google")}
           </button>
         </div>
       </div>

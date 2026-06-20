@@ -18,6 +18,10 @@ const languages = [
   { code: "tl", name: "Filipino", flag: "🇵🇭" },
   { code: "vi", name: "Tiếng Việt", flag: "🇻🇳" },
   { code: "zh", name: "中文", flag: "🇨🇳" },
+  { code: "sw", name: "Kiswahili", flag: "🇰🇪" },
+  { code: "id", name: "Bahasa Indonesia", flag: "🇮🇩" },
+  { code: "ht", name: "Kreyòl Ayisyen", flag: "🇭🇹" },
+  { code: "my", name: "မြန်မာ", flag: "🇲🇲" },
 ];
 
 export default function MobileHomePage({

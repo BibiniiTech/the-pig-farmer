@@ -12,6 +12,8 @@ import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import HerdReport from "@/components/reports/HerdReport";
 import { evaluatePerformance, calculateAgeMonths } from "@/lib/swineGrowthDatabase";
+import { ExportPdfIcon } from "@/components/icons/DashboardIcons";
+import { useTranslations } from "next-intl";
 
 interface Pig {
   id: string;
@@ -63,6 +65,8 @@ const ArchiveIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export default function HerdPage() {
+  const t = useTranslations("Herd");
+  const td = useTranslations("Dashboard");
   const { user, userProfile, activeFarmUid, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -249,7 +253,7 @@ export default function HerdPage() {
     const additionalPigs = isMultiple ? malePigs.filter(p => p.tagNumber.trim() !== "").length + femalePigs.filter(p => p.tagNumber.trim() !== "").length : 1;
 
     if (!isPremium && herdStats.total + additionalPigs > 20) {
-      alert("Free users can only have up to 20 pigs total. Please upgrade to Premium to add more.");
+      alert(t("limitReached"));
       router.push("/dashboard/billing");
       setShowAddModal(false);
       return;
@@ -369,13 +373,6 @@ export default function HerdPage() {
     }
   };
 
-  // Stats calculation
-  const boarCount = pigs.filter(p => p.gender === "Male" && p.purpose === "Breeder").length;
-  const sowCount = pigs.filter(p => p.gender === "Female" && p.purpose === "Breeder").length;
-  const pigletCount = pigs.filter(p => p.status === "Piglet").length;
-  const growerCount = pigs.filter(p => p.status === "Grower" || p.status === "Starter").length;
-  const finisherCount = pigs.filter(p => p.status === "Finisher").length;
-
   if (loading || !user) {
     return (
       <div className="flex h-screen items-center justify-center bg-white text-zinc-900">
@@ -424,10 +421,10 @@ export default function HerdPage() {
                   {currentSlide === 0 && (
                     <>
                       <h3 className="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight">
-                        Total number of Pigs: <span className="text-xl sm:text-2xl font-extrabold text-emerald-600">{herdStats.total}</span>
+                        {td("totalPigs", { count: herdStats.total })}
                       </h3>
                       <p className="text-xs sm:text-sm font-medium text-zinc-500">
-                        Breeders: <span className="font-semibold text-zinc-700">{herdStats.breeders_count}</span> | Porkers: <span className="font-semibold text-zinc-700">{herdStats.porkers_count}</span>
+                        {td("breedersPorkers", { breeders: herdStats.breeders_count, porkers: herdStats.porkers_count })}
                       </p>
                     </>
                   )}
@@ -435,12 +432,12 @@ export default function HerdPage() {
                   {currentSlide === 1 && (
                     <>
                       <h3 className="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight">
-                        Total Number of Breeders: <span className="text-xl sm:text-2xl font-extrabold text-emerald-600">{herdStats.breeders_count}</span>
+                        {td("totalBreeders", { count: herdStats.breeders_count })}
                       </h3>
                       <p className="text-[11px] sm:text-xs font-medium text-zinc-500 leading-relaxed max-w-2xl">
-                        Piglet: <span className="font-semibold text-zinc-700">{herdStats.breeders_piglets}</span> | Starter: <span className="font-semibold text-zinc-700">{herdStats.breeders_starter}</span> | Grower: <span className="font-semibold text-zinc-700">{herdStats.breeders_grower}</span> | Boar: <span className="font-semibold text-zinc-700">{herdStats.boars}</span> | Gilt: <span className="font-semibold text-zinc-700">{herdStats.gilts}</span>
+                        {td("piglet")}: <span className="font-semibold text-zinc-700">{herdStats.breeders_piglets}</span> | {td("starter")}: <span className="font-semibold text-zinc-700">{herdStats.breeders_starter}</span> | {td("grower")}: <span className="font-semibold text-zinc-700">{herdStats.breeders_grower}</span> | {td("boar")}: <span className="font-semibold text-zinc-700">{herdStats.boars}</span> | {td("gilt")}: <span className="font-semibold text-zinc-700">{herdStats.gilts}</span>
                         <span className="block mt-0.5">
-                          Pregnant: <span className="font-semibold text-zinc-700">{herdStats.Pregnant}</span> | Lactating: <span className="font-semibold text-zinc-700">{herdStats.Lactating}</span> | Sow: <span className="font-semibold text-zinc-700">{herdStats.sows}</span>
+                          {td("pregnant")}: <span className="font-semibold text-zinc-700">{herdStats.Pregnant}</span> | {td("lactating")}: <span className="font-semibold text-zinc-700">{herdStats.Lactating}</span> | {td("sow")}: <span className="font-semibold text-zinc-700">{herdStats.sows}</span>
                         </span>
                       </p>
                     </>
@@ -449,10 +446,10 @@ export default function HerdPage() {
                   {currentSlide === 2 && (
                     <>
                       <h3 className="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight">
-                        Total Number of Porkers: <span className="text-xl sm:text-2xl font-extrabold text-emerald-600">{herdStats.porkers_count}</span>
+                        {td("totalPorkers", { count: herdStats.porkers_count })}
                       </h3>
                       <p className="text-xs sm:text-sm font-medium text-zinc-500 leading-relaxed">
-                        Starter: <span className="font-semibold text-zinc-700">{herdStats.Starter}</span> | Grower: <span className="font-semibold text-zinc-700">{herdStats.Grower}</span> | Finisher: <span className="font-semibold text-zinc-700">{herdStats.Finisher}</span>
+                        {td("starter")}: <span className="font-semibold text-zinc-700">{herdStats.Starter}</span> | {td("grower")}: <span className="font-semibold text-zinc-700">{herdStats.Grower}</span> | {td("finisher")}: <span className="font-semibold text-zinc-700">{herdStats.Finisher}</span>
                       </p>
                     </>
                   )}
@@ -462,11 +459,11 @@ export default function HerdPage() {
                       <div className="flex items-center gap-2 text-emerald-700">
                         <ArchiveIcon className="h-5 w-5" />
                         <h3 className="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight">
-                          Archived Pigs
+                          {td("archivedPigs")}
                         </h3>
                       </div>
                       <p className="text-xs sm:text-sm font-medium text-zinc-500">
-                        View culled or sold animals
+                        {td("viewCulled")}
                       </p>
                     </>
                   )}
@@ -497,7 +494,7 @@ export default function HerdPage() {
               onClick={() => {
                 const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
                 if (!isPremium && herdStats.total >= 20) {
-                  alert("Free users can only have up to 20 pigs. Please upgrade to Premium to add more.");
+                  alert(t("limitReached"));
                   router.push("/dashboard/billing");
                 } else {
                   setShowAddModal(true);
@@ -505,7 +502,7 @@ export default function HerdPage() {
               }}
               className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
             >
-              + Add Pigs
+              {t("addPigs")}
             </button>
           </div>
 
@@ -513,7 +510,7 @@ export default function HerdPage() {
           <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4 gap-4 flex-wrap">
               <h2 className="text-lg font-bold text-zinc-900">
-                {viewingArchived ? "Pigs Inventory (Archived)" : "Pigs Inventory"}
+                {viewingArchived ? t("titleArchived") : t("title")}
               </h2>
               <button
                 onClick={() => {
@@ -531,10 +528,8 @@ export default function HerdPage() {
                     : "border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100"
                 }`}
               >
-                <svg className="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 11c0 .55-.45 1-1 1H9v2H7.5v-5h3c.55 0 1 .45 1 1v1zm5 2c0 .55-.45 1-1 1h-2.5v-5H16c.55 0 1 .45 1 1v3zm-5.5-4H10v1.5h.5V11zm4.5 1h-.5v2h.5v-2zm2.5 1h-2v-1h2v-1h-2v-1h3.5v5H19v-2z" />
-                </svg>
-                <span>{userProfile?.isPremium || userProfile?.isAdmin ? "Export PDF" : "Export PDF (Premium)"}</span>
+                <ExportPdfIcon className="h-3.5 w-3.5 opacity-80" />
+                <span>{userProfile?.isPremium || userProfile?.isAdmin ? t("exportPdf") : t("exportPdfPremium")}</span>
               </button>
             </div>
             {dataLoading ? (
@@ -545,7 +540,7 @@ export default function HerdPage() {
               </div>
             ) : (viewingArchived ? archivedPigs : pigs).length === 0 ? (
               <p className="text-sm text-zinc-500 text-center py-12">
-                {viewingArchived ? "No archived pigs found." : "No pigs registered in this farm yet."}
+                {viewingArchived ? t("noArchived") : t("noPigs")}
               </p>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -572,7 +567,7 @@ export default function HerdPage() {
                       <div className="absolute top-0 right-0 h-16 w-16 rounded-full bg-emerald-500/5 blur-lg group-hover:bg-emerald-500/10 transition-all pointer-events-none" />
                       <div className="flex justify-between items-start">
                         <div>
-                          <p className="text-xs font-semibold text-zinc-400 font-mono">Tag Number</p>
+                          <p className="text-xs font-semibold text-zinc-400 font-mono">{t("tagNumber")}</p>
                           <p className="text-lg font-bold text-zinc-900 group-hover:text-emerald-700 transition">
                             {pig.tagNumber}
                           </p>
@@ -584,16 +579,16 @@ export default function HerdPage() {
 
                       <div className="grid grid-cols-2 gap-2 mt-4 text-xs text-zinc-500">
                         <div>
-                          <span className="font-semibold">Age:</span> {ageMonths === 0 ? "Less than 1 month" : `${ageMonths} month${ageMonths === 1 ? "" : "s"}`}
+                          <span className="font-semibold">{t("age")}:</span> {ageMonths === 0 ? t("lessThanMonth") : (ageMonths === 1 ? t("month", { count: 1 }) : t("months", { count: ageMonths }))}
                         </div>
                         <div>
-                          <span className="font-semibold">Gender:</span> {pig.gender}
+                          <span className="font-semibold">{t("gender")}:</span> {pig.gender}
                         </div>
                         <div>
-                          <span className="font-semibold">Weight:</span> {pig.weight} kg
+                          <span className="font-semibold">{t("weight")}:</span> {pig.weight} kg
                         </div>
                         <div>
-                          <span className="font-semibold">Location:</span> {pig.location || "N/A"}
+                          <span className="font-semibold">{t("location")}:</span> {pig.location || "N/A"}
                         </div>
                       </div>
                     </Link>
@@ -607,14 +602,14 @@ export default function HerdPage() {
 
       <HerdReport
         pigs={viewingArchived ? archivedPigs : pigs}
-        title={viewingArchived ? "Herd Inventory Report (Archived)" : "Herd Inventory Report"}
+        title={viewingArchived ? t("titleArchived") : t("title")}
       />
 
       {/* Add Pigs Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <div className="bg-white border border-zinc-200 rounded-2xl w-full max-w-lg p-6 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto no-scrollbar">
-            <h3 className="text-lg font-bold text-zinc-900">Add New Pigs</h3>
+            <h3 className="text-lg font-bold text-zinc-900">{t("addNewPigs")}</h3>
 
             {/* Mode selection */}
             <div className="flex gap-2 p-1 bg-zinc-100 rounded-lg">
@@ -623,21 +618,21 @@ export default function HerdPage() {
                 onClick={() => setIsMultiple(false)}
                 className={`flex-1 py-1.5 text-xs font-bold rounded-md transition ${!isMultiple ? "bg-white text-zinc-800 shadow" : "text-zinc-500"}`}
               >
-                Single Pig
+                {t("singlePig")}
               </button>
               <button
                 type="button"
                 onClick={() => setIsMultiple(true)}
                 className={`flex-1 py-1.5 text-xs font-bold rounded-md transition ${isMultiple ? "bg-white text-zinc-800 shadow" : "text-zinc-500"}`}
               >
-                Multiple Batch
+                {t("multipleBatch")}
               </button>
             </div>
 
             <form onSubmit={handleAddPig} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Breed</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("breed")}</label>
                   <select
                     value={selectedBreed}
                     onChange={(e) => {
@@ -657,21 +652,21 @@ export default function HerdPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Purpose</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("purpose")}</label>
                   <select
                     value={purpose}
                     onChange={(e) => setPurpose(e.target.value)}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-sm"
                   >
-                    <option>Porker</option>
-                    <option>Breeder</option>
+                    <option value="Porker">{t("porker")}</option>
+                    <option value="Breeder">{t("breeder")}</option>
                   </select>
                 </div>
               </div>
 
               {selectedBreed === "Other" && (
                 <div className="animate-fade-in">
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Specify Breed</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("specifyBreed")}</label>
                   <input
                     type="text"
                     required
@@ -681,7 +676,7 @@ export default function HerdPage() {
                       setCustomBreed(val);
                       setBreed(val);
                     }}
-                    placeholder="e.g. Berkshire x Large White"
+                    placeholder={t("breedPlaceholder")}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-sm"
                   />
                 </div>
@@ -691,7 +686,7 @@ export default function HerdPage() {
                 <>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Tag Number</label>
+                      <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("tagNumber")}</label>
                       <input
                         type="text"
                         required
@@ -702,7 +697,7 @@ export default function HerdPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Gender</label>
+                      <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("gender")}</label>
                       <select
                         value={gender}
                         onChange={(e) => setGender(e.target.value)}
@@ -715,7 +710,7 @@ export default function HerdPage() {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Weight (kg)</label>
+                      <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("weightKg")}</label>
                       <input
                         type="number"
                         step="any"
@@ -725,7 +720,7 @@ export default function HerdPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Location / Pen</label>
+                      <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("locationPen")}</label>
                       <input
                         type="text"
                         value={location}
@@ -741,9 +736,9 @@ export default function HerdPage() {
                   {/* Males Section */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between border-b border-zinc-150 pb-2">
-                      <h4 className="text-sm font-bold text-zinc-800">Males</h4>
+                      <h4 className="text-sm font-bold text-zinc-800">{t("males")}</h4>
                       <div className="flex items-center gap-2">
-                        <label className="text-xs font-semibold text-zinc-500">Qty:</label>
+                        <label className="text-xs font-semibold text-zinc-500">{t("qty")}</label>
                         <input
                           type="number"
                           min="0"
@@ -757,9 +752,9 @@ export default function HerdPage() {
                     {maleQty > 0 && (
                       <div className="space-y-2 max-h-[200px] overflow-y-auto pr-1 no-scrollbar">
                         <div className="grid grid-cols-12 gap-2 text-[10px] font-bold text-zinc-500 px-1">
-                          <div className="col-span-4">Tag Number</div>
-                          <div className="col-span-4">Weight (kg)</div>
-                          <div className="col-span-4">Pen / Location</div>
+                          <div className="col-span-4">{t("tagNumber")}</div>
+                          <div className="col-span-4">{t("weightKg")}</div>
+                          <div className="col-span-4">{t("locationPen")}</div>
                         </div>
                         {malePigs.map((pig, idx) => (
                           <div key={idx} className="grid grid-cols-12 gap-2 items-center">
@@ -807,9 +802,9 @@ export default function HerdPage() {
                   {/* Females Section */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between border-b border-zinc-150 pb-2">
-                      <h4 className="text-sm font-bold text-zinc-800">Females</h4>
+                      <h4 className="text-sm font-bold text-zinc-800">{t("females")}</h4>
                       <div className="flex items-center gap-2">
-                        <label className="text-xs font-semibold text-zinc-500">Qty:</label>
+                        <label className="text-xs font-semibold text-zinc-500">{t("qty")}</label>
                         <input
                           type="number"
                           min="0"
@@ -823,9 +818,9 @@ export default function HerdPage() {
                     {femaleQty > 0 && (
                       <div className="space-y-2 max-h-[200px] overflow-y-auto pr-1 no-scrollbar">
                         <div className="grid grid-cols-12 gap-2 text-[10px] font-bold text-zinc-500 px-1">
-                          <div className="col-span-4">Tag Number</div>
-                          <div className="col-span-4">Weight (kg)</div>
-                          <div className="col-span-4">Pen / Location</div>
+                          <div className="col-span-4">{t("tagNumber")}</div>
+                          <div className="col-span-4">{t("weightKg")}</div>
+                          <div className="col-span-4">{t("locationPen")}</div>
                         </div>
                         {femalePigs.map((pig, idx) => (
                           <div key={idx} className="grid grid-cols-12 gap-2 items-center">
@@ -874,7 +869,7 @@ export default function HerdPage() {
 
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Birth Date</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("birthDate")}</label>
                   <input
                     type="date"
                     required
@@ -884,44 +879,44 @@ export default function HerdPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Sow Tag</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("sowTag")}</label>
                   <input
                     type="text"
                     value={sowTag}
                     onChange={(e) => setSowTag(e.target.value)}
-                    placeholder="Mother Tag"
+                    placeholder={t("motherTag")}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Boar Tag</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("boarTag")}</label>
                   <input
                     type="text"
                     value={boarTag}
                     onChange={(e) => setBoarTag(e.target.value)}
-                    placeholder="Father Tag"
+                    placeholder={t("fatherTag")}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-sm"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Source</label>
+                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("source")}</label>
                 <select
                   value={source}
                   onChange={(e) => setSource(e.target.value)}
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-sm"
                 >
-                  <option>Born on farm</option>
-                  <option>Brought to farm</option>
+                  <option value="Born on farm">{t("bornOnFarm")}</option>
+                  <option value="Brought to farm">{t("broughtToFarm")}</option>
                 </select>
               </div>
 
               {source === "Brought to farm" && (
                 <div className="bg-emerald-50/50 border border-emerald-200/50 rounded-xl p-4 space-y-2 animate-fade-in shadow-sm">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-bold text-emerald-800">Purchase Price</label>
-                    <span className="text-[10px] font-semibold text-emerald-600 bg-emerald-100/80 px-2 py-0.5 rounded-full">Financial Expense</span>
+                    <label className="text-xs font-bold text-emerald-800">{t("purchasePrice")}</label>
+                    <span className="text-[10px] font-semibold text-emerald-600 bg-emerald-100/80 px-2 py-0.5 rounded-full">{t("financialExpense")}</span>
                   </div>
                   <input
                     type="number"
@@ -929,18 +924,18 @@ export default function HerdPage() {
                     required
                     value={purchasePrice === 0 ? "" : purchasePrice}
                     onChange={(e) => setPurchasePrice(parseFloat(e.target.value) || 0)}
-                    placeholder="Enter purchase price..."
+                    placeholder={t("purchasePricePlaceholder")}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-sm"
                   />
                 </div>
               )}
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Notes</label>
+                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("notes")}</label>
                 <textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Any extra comments..."
+                  placeholder={t("notesPlaceholder")}
                   rows={2}
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-sm"
                 />
@@ -952,13 +947,13 @@ export default function HerdPage() {
                   onClick={() => setShowAddModal(false)}
                   className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2 text-xs font-semibold text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 transition"
                 >
-                  Cancel
+                  {t("cancel")}
                 </button>
                 <button
                   type="submit"
                   className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white transition"
                 >
-                  Save
+                  {t("save")}
                 </button>
               </div>
             </form>

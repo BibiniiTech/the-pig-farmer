@@ -3,20 +3,12 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { useDevice } from "@/context/DeviceContext";
-import NavbarDropdown from "@/components/NavbarDropdown";
-import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
+import { useTranslations } from "next-intl";
 
 export default function PrivacyPolicyPage() {
+  const t = useTranslations("Privacy");
   const { isMobile } = useDevice();
-
-  useEffect(() => {
-    // Optional: Auto-redirect after a few seconds
-    // const timer = setTimeout(() => {
-    //   window.location.href = "https://sites.google.com/view/smartswine-privacypolicy/home";
-    // }, 3000);
-    // return () => clearTimeout(timer);
-  }, []);
 
   return (
     <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
@@ -38,14 +30,14 @@ export default function PrivacyPolicyPage() {
         {/* Content Body */}
         <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
           <div className="text-center space-y-4">
-            <h1 className="text-4xl font-extrabold text-zinc-900 tracking-tight">Privacy Policy</h1>
-            <p className="text-sm text-zinc-500 font-medium">Last Updated: April 2026</p>
+            <h1 className="text-4xl font-extrabold text-zinc-900 tracking-tight">{t("title")}</h1>
+            <p className="text-sm text-zinc-500 font-medium">{t("lastUpdated")}</p>
           </div>
 
           <div className="bg-emerald-50 border border-emerald-100 rounded-3xl p-8 space-y-6 shadow-sm text-center">
-            <h2 className="text-2xl font-bold text-emerald-800">Your Data Privacy is Important to Us</h2>
+            <h2 className="text-2xl font-bold text-emerald-800">{t("importantTitle")}</h2>
             <p className="text-zinc-600 leading-relaxed text-lg max-w-2xl mx-auto">
-              SmartSwine is committed to protecting your personal and farm data. We use industry-standard security measures to ensure your information is kept safe.
+              {t("importantDesc")}
             </p>
             <div className="pt-4">
               <a
@@ -54,7 +46,7 @@ export default function PrivacyPolicyPage() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-lg shadow-lg shadow-emerald-200 transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
-                View Full Privacy Policy ↗
+                {t("viewFull")}
               </a>
             </div>
           </div>
@@ -62,34 +54,34 @@ export default function PrivacyPolicyPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8">
             <div className="space-y-3">
               <h3 className="font-bold text-zinc-800 flex items-center gap-2">
-                <span className="text-emerald-600">🛡️</span> Data Ownership
+                <span className="text-emerald-600">🛡️</span> {t("dataOwnershipTitle")}
               </h3>
               <p className="text-zinc-600 leading-relaxed">
-                You retain full ownership of all data you input into SmartSwine, including herd records, financials, and staff details.
+                {t("dataOwnershipDesc")}
               </p>
             </div>
             <div className="space-y-3">
               <h3 className="font-bold text-zinc-800 flex items-center gap-2">
-                <span className="text-emerald-600">☁️</span> Cloud Security
+                <span className="text-emerald-600">☁️</span> {t("cloudSecurityTitle")}
               </h3>
               <p className="text-zinc-600 leading-relaxed">
-                Your data is stored securely using Google Firebase, featuring encrypted storage and synchronization across your devices.
+                {t("cloudSecurityDesc")}
               </p>
             </div>
             <div className="space-y-3">
               <h3 className="font-bold text-zinc-800 flex items-center gap-2">
-                <span className="text-emerald-600">🚫</span> No Third-Party Sales
+                <span className="text-emerald-600">🚫</span> {t("noSalesTitle")}
               </h3>
               <p className="text-zinc-600 leading-relaxed">
-                We do not sell, rent, or trade your personal or farm data to third parties for marketing purposes.
+                {t("noSalesDesc")}
               </p>
             </div>
             <div className="space-y-3">
               <h3 className="font-bold text-zinc-800 flex items-center gap-2">
-                <span className="text-emerald-600">🎯</span> Accuracy Responsibility
+                <span className="text-emerald-600">🎯</span> {t("accuracyTitle")}
               </h3>
               <p className="text-zinc-600 leading-relaxed">
-                You are responsible for the accuracy of the data entered. Correct data ensures precise AI diagnostic and feed calculations.
+                {t("accuracyDesc")}
               </p>
             </div>
           </div>

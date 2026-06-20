@@ -12,6 +12,8 @@ import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import HRReport from "@/components/reports/HRReport";
 import { sendPasswordResetEmail } from "firebase/auth";
+import { ExportPdfIcon } from "@/components/icons/DashboardIcons";
+import { useTranslations } from "next-intl";
 
 interface StaffMember {
   id: string;
@@ -66,6 +68,7 @@ async function inviteStaffMember(email: string) {
 }
 
 export default function HumanResourcesPage() {
+  const t = useTranslations("HR");
   const { user, userProfile, activeFarmUid, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -75,6 +78,8 @@ export default function HumanResourcesPage() {
   const [dataLoading, setDataLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingStaff, setEditingStaff] = useState<StaffMember | null>(null);
+
+  const currencySymbol = userProfile?.settings?.currencySymbol || "$";
 
   // Form states
   const [name, setName] = useState("");
@@ -213,7 +218,7 @@ export default function HumanResourcesPage() {
   };
 
   const handleDeleteStaff = async (member: StaffMember) => {
-    if (!activeFarmUid || !confirm("Are you sure you want to remove this staff member?")) return;
+    if (!activeFarmUid || !confirm(t("confirmDelete"))) return;
     try {
       if (member.email) {
         const cleanEmail = member.email.trim().toLowerCase();
@@ -288,30 +293,30 @@ export default function HumanResourcesPage() {
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
           <div className="space-y-1">
-            <h2 className="text-2xl font-bold text-zinc-900">Staff Management Directory</h2>
-            <p className="text-sm text-zinc-500">Add team members, configure salary packages, and manage farm dashboard access.</p>
+            <h2 className="text-2xl font-bold text-zinc-900">{t("title")}</h2>
+            <p className="text-sm text-zinc-500">{t("description")}</p>
           </div>
 
           {/* Summary Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm bg-white/60">
-              <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500">Total Staff</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500">{t("totalStaff")}</p>
               <p className="text-3xl font-bold mt-2 text-zinc-900">{staff.length}</p>
             </div>
             <div className="backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm bg-white/60">
-              <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500">Monthly Payroll</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500">{t("monthlyPayroll")}</p>
               <p className="text-3xl font-bold mt-2 text-emerald-600">
-                ${staff.reduce((sum, member) => sum + member.salary, 0).toFixed(2)}
+                {currencySymbol}{staff.reduce((sum, member) => sum + member.salary, 0).toFixed(2)}
               </p>
             </div>
             <div className="backdrop-blur-md border border-emerald-200/50 rounded-2xl p-6 shadow-sm bg-emerald-50/40 flex flex-col justify-center items-center gap-3">
-              <p className="text-xs font-bold text-emerald-800 uppercase tracking-tight">Expand Your Team</p>
+              <p className="text-xs font-bold text-emerald-800 uppercase tracking-tight">{t("expandTeam")}</p>
               <div className="flex w-full gap-2">
                 <button
                   onClick={() => {
                     const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
                     if (!isPremium) {
-                      alert("Adding staff members is a Premium Feature. Please upgrade to expand your team.");
+                      alert(t("premiumFeatureAdd"));
                       router.push("/dashboard/billing");
                       return;
                     }
@@ -328,13 +333,13 @@ export default function HumanResourcesPage() {
                   }}
                   className="flex-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 py-3 text-xs font-bold text-white shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
                 >
-                  + Add Staff
+                  {t("addStaff")}
                 </button>
                 <button
                   onClick={() => {
                     const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
                     if (!isPremium) {
-                      alert("Exporting PDF reports is a Premium feature. Upgrade to unlock!");
+                      alert(t("premiumFeatureExport"));
                       router.push("/dashboard/billing");
                       return;
                     }
@@ -345,11 +350,9 @@ export default function HumanResourcesPage() {
                       ? "border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-500"
                       : "border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100"
                   }`}
-                  title={userProfile?.isPremium || userProfile?.isAdmin ? "Export PDF" : "Export PDF (Premium)"}
+                  title={userProfile?.isPremium || userProfile?.isAdmin ? t("exportPdf") : t("exportPdfPremium")}
                 >
-                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 11c0 .55-.45 1-1 1H9v2H7.5v-5h3c.55 0 1 .45 1 1v1zm5 2c0 .55-.45 1-1 1h-2.5v-5H16c.55 0 1 .45 1 1v3zm-5.5-4H10v1.5h.5V11zm4.5 1h-.5v2h.5v-2zm2.5 1h-2v-1h2v-1h-2v-1h3.5v5H19v-2z" />
-                  </svg>
+                  <ExportPdfIcon className="h-4 w-4" />
                 </button>
               </div>
             </div>
@@ -362,7 +365,7 @@ export default function HumanResourcesPage() {
               ))}
             </div>
           ) : staff.length === 0 ? (
-            <p className="text-sm text-zinc-500 text-center py-12">No staff registered in this farm yet.</p>
+            <p className="text-sm text-zinc-500 text-center py-12">{t("noStaff")}</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {staff.map(member => (
@@ -386,19 +389,19 @@ export default function HumanResourcesPage() {
 
                     <div className="divide-y divide-zinc-100 text-xs text-zinc-650 space-y-1.5 pt-1">
                       <div className="flex justify-between py-1">
-                        <span>Phone</span>
+                        <span>{t("phone")}</span>
                         <span className="font-semibold text-zinc-800">{member.phone || "N/A"}</span>
                       </div>
                       <div className="flex justify-between py-1">
-                        <span>Email</span>
+                        <span>{t("email")}</span>
                         <span className="font-semibold text-zinc-800">{member.email || "N/A"}</span>
                       </div>
                       <div className="flex justify-between py-1">
-                        <span>Salary</span>
-                        <span className="font-semibold text-zinc-800">${member.salary.toFixed(2)}/mo</span>
+                        <span>{t("salary")}</span>
+                        <span className="font-semibold text-zinc-800">{currencySymbol}{member.salary.toFixed(2)}/mo</span>
                       </div>
                       <div className="flex justify-between py-1">
-                        <span>Joined</span>
+                        <span>{t("joined")}</span>
                         <span className="font-semibold text-zinc-800">{member.joinDate}</span>
                       </div>
                     </div>
@@ -411,15 +414,15 @@ export default function HumanResourcesPage() {
                           onChange={() => handleToggleAccess(member)}
                           className="h-4 w-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500"
                         />
-                        <span>App Access</span>
+                        <span>{t("appAccess")}</span>
                       </label>
 
                       <div className="space-x-3 text-xs">
                         <button onClick={() => startEdit(member)} className="text-emerald-600 hover:underline font-bold">
-                          Edit
+                          {t("edit")}
                         </button>
                         <button onClick={() => handleDeleteStaff(member)} className="text-rose-600 hover:underline font-bold">
-                          Remove
+                          {t("remove")}
                         </button>
                       </div>
                     </div>
@@ -434,7 +437,7 @@ export default function HumanResourcesPage() {
       <HRReport
         staff={staff}
         financialRecords={financialRecords}
-        currencySymbol={userProfile?.settings?.currencySymbol || "$"}
+        currencySymbol={currencySymbol}
       />
 
       {/* Add / Edit Staff Modal */}
@@ -442,11 +445,11 @@ export default function HumanResourcesPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <div className="bg-white border border-zinc-200 rounded-2xl w-full max-w-md p-6 space-y-6 shadow-2xl">
             <h3 className="text-lg font-bold text-zinc-900">
-              {editingStaff ? "Edit Staff Details" : "Register Staff Member"}
+              {editingStaff ? t("editStaffDetails") : t("registerStaffMember")}
             </h3>
             <form onSubmit={editingStaff ? handleUpdateStaff : handleAddStaff} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Full Name</label>
+                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("fullName")}</label>
                 <input
                   type="text"
                   required
@@ -459,7 +462,7 @@ export default function HumanResourcesPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Role</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("role")}</label>
                   <input
                     type="text"
                     required
@@ -470,22 +473,22 @@ export default function HumanResourcesPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Status</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("status")}</label>
                   <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                   >
-                    <option>Active</option>
-                    <option>Inactive</option>
-                    <option>On Leave</option>
+                    <option value="Active">{t("active")}</option>
+                    <option value="Inactive">{t("inactive")}</option>
+                    <option value="On Leave">{t("onLeave")}</option>
                   </select>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Salary ($/mo)</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("salaryLabel", { symbol: currencySymbol })}</label>
                   <input
                     type="number"
                     step="any"
@@ -496,7 +499,7 @@ export default function HumanResourcesPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Joined Date</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("joinedDate")}</label>
                   <input
                     type="date"
                     required
@@ -509,7 +512,7 @@ export default function HumanResourcesPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Phone</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("phone")}</label>
                   <input
                     type="text"
                     value={phone}
@@ -519,7 +522,7 @@ export default function HumanResourcesPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Email address</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("email")}</label>
                   <input
                     type="email"
                     value={email}
@@ -538,7 +541,7 @@ export default function HumanResourcesPage() {
                     onChange={(e) => setAllowAppAccess(e.target.checked)}
                     className="h-4.5 w-4.5 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500"
                   />
-                  <span>Allow web/app database login access?</span>
+                  <span>{t("allowAppAccess")}</span>
                 </label>
               </div>
 
@@ -548,10 +551,10 @@ export default function HumanResourcesPage() {
                   onClick={() => { setShowAddModal(false); setEditingStaff(null); }}
                   className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2 text-xs font-semibold text-zinc-500 hover:bg-zinc-100 transition"
                 >
-                  Cancel
+                  {t("cancel")}
                 </button>
                 <button type="submit" className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white transition">
-                  {editingStaff ? "Save Updates" : "Register Staff"}
+                  {editingStaff ? t("saveUpdates") : t("registerStaff")}
                 </button>
               </div>
             </form>

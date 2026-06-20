@@ -4,8 +4,10 @@ import React from "react";
 import { useAuth } from "@/context/AuthContext";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import { useTranslations } from "next-intl";
 
 export default function StaffLockoutWrapper({ children }: { children: React.ReactNode }) {
+  const t = useTranslations("StaffLockout");
   const { user, userProfile, isStaff, loading } = useAuth();
 
   if (loading) {
@@ -22,16 +24,15 @@ export default function StaffLockoutWrapper({ children }: { children: React.Reac
               <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-zinc-900">Access Locked</h2>
+          <h2 className="text-2xl font-bold text-zinc-900">{t("title")}</h2>
           <p className="text-zinc-600 text-sm">
-            The farm owner's Premium subscription has expired or is inactive. 
-            Staff accounts require an active Premium subscription from the farm owner to access the platform.
+            {t("description")}
           </p>
           <button
             onClick={() => signOut(auth)}
             className="mt-4 w-full rounded-xl bg-zinc-900 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-zinc-800 transition"
           >
-            Sign Out
+            {t("signOut")}
           </button>
         </div>
       </div>

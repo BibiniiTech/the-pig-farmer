@@ -14,6 +14,7 @@ import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import TaskCompletionModal from "@/components/TaskCompletionModal";
 import SettingsModal from "@/components/SettingsModal";
+import { useTranslations } from "next-intl";
 import {
   HerdDataIcon,
   FeedManagementIcon,
@@ -226,6 +227,7 @@ const ArchiveIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export default function DashboardPage() {
+  const t = useTranslations("Dashboard");
   const { user, userProfile, activeFarmUid, isStaff, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -234,7 +236,7 @@ export default function DashboardPage() {
   const [feedCount, setFeedCount] = useState<number>(0);
   const [recentFinancials, setRecentFinancials] = useState<any[]>([]);
   const [statsLoading, setStatsLoading] = useState(true);
-  const [greeting, setGreeting] = useState("Good Day");
+  const [greeting, setGreeting] = useState("");
 
   const [allPigs, setAllPigs] = useState<Pig[]>([]);
   const [tasks, setTasks] = useState<TaskItem[]>([]);
@@ -300,10 +302,10 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const hr = new Date().getHours();
-    if (hr < 12) setGreeting("Good Morning");
-    else if (hr < 17) setGreeting("Good Afternoon");
-    else setGreeting("Good Evening");
-  }, []);
+    if (hr < 12) setGreeting(t("goodMorning"));
+    else if (hr < 17) setGreeting(t("goodAfternoon"));
+    else setGreeting(t("goodEvening"));
+  }, [t]);
 
   useEffect(() => {
     if (!activeFarmUid) return;
@@ -440,29 +442,29 @@ export default function DashboardPage() {
           <div className="flex flex-col items-center text-center sm:flex-row sm:justify-between sm:items-center sm:text-left gap-4 bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
             <div className="flex flex-col gap-1">
               <h1 className="text-xl sm:text-2xl font-bold text-zinc-900">
-                Welcome to {userProfile?.farmName || "SmartSwine"}
+                {t("welcome", { farmName: userProfile?.farmName || "SmartSwine" })}
               </h1>
               <div className="hidden sm:block">
                 <p className="text-sm font-bold text-emerald-800">
-                  {greeting}, Farmer {userProfile?.firstName || ""}
+                  {greeting}, {t("farmerName", { name: userProfile?.firstName || "" })}
                 </p>
                 <p className="text-xs text-zinc-500">
-                  {isStaff ? "Staff Member" : "Farm Owner"} {userProfile?.isPremium && "• Premium"}
+                  {isStaff ? t("staffMember") : t("farmOwner")} {userProfile?.isPremium && `• ${t("premium")}`}
                 </p>
               </div>
             </div>
             {userProfile?.isPremium ? (
               <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800 border border-emerald-200/50">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                Premium Access Active
+                {t("premiumAccessActive")}
               </span>
             ) : (
               <div className="flex items-center gap-3">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-zinc-100 px-3 py-1 text-xs font-semibold text-zinc-600 border border-zinc-200">
-                  Free Tier
+                  {t("freeTier")}
                 </span>
                 <Link href="/dashboard/billing" className="inline-flex items-center rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-3 py-1 text-xs font-bold text-emerald-700 transition-all">
-                  💎 Upgrade
+                  {t("upgrade")}
                 </Link>
               </div>
             )}
@@ -491,10 +493,10 @@ export default function DashboardPage() {
                   {currentSlide === 0 && (
                     <>
                       <h3 className="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight">
-                        Total number of Pigs: <span className="text-xl sm:text-2xl font-extrabold text-emerald-600">{herdStats.total}</span>
+                        {t("totalPigs", { count: herdStats.total })}
                       </h3>
                       <p className="text-xs sm:text-sm font-medium text-zinc-500">
-                        Breeders: <span className="font-semibold text-zinc-700">{herdStats.breeders_count}</span> | Porkers: <span className="font-semibold text-zinc-700">{herdStats.porkers_count}</span>
+                        {t("breedersPorkers", { breeders: herdStats.breeders_count, porkers: herdStats.porkers_count })}
                       </p>
                     </>
                   )}
@@ -502,12 +504,12 @@ export default function DashboardPage() {
                   {currentSlide === 1 && (
                     <>
                       <h3 className="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight">
-                        Total Number of Breeders: <span className="text-xl sm:text-2xl font-extrabold text-emerald-600">{herdStats.breeders_count}</span>
+                        {t("totalBreeders", { count: herdStats.breeders_count })}
                       </h3>
                       <p className="text-[11px] sm:text-xs font-medium text-zinc-500 leading-relaxed max-w-2xl">
-                        Piglet: <span className="font-semibold text-zinc-700">{herdStats.breeders_piglets}</span> | Starter: <span className="font-semibold text-zinc-700">{herdStats.breeders_starter}</span> | Grower: <span className="font-semibold text-zinc-700">{herdStats.breeders_grower}</span> | Boar: <span className="font-semibold text-zinc-700">{herdStats.boars}</span> | Gilt: <span className="font-semibold text-zinc-700">{herdStats.gilts}</span>
+                        {t("piglet")}: <span className="font-semibold text-zinc-700">{herdStats.breeders_piglets}</span> | {t("starter")}: <span className="font-semibold text-zinc-700">{herdStats.breeders_starter}</span> | {t("grower")}: <span className="font-semibold text-zinc-700">{herdStats.breeders_grower}</span> | {t("boar")}: <span className="font-semibold text-zinc-700">{herdStats.boars}</span> | {t("gilt")}: <span className="font-semibold text-zinc-700">{herdStats.gilts}</span>
                         <span className="block mt-0.5">
-                          Pregnant: <span className="font-semibold text-zinc-700">{herdStats.Pregnant}</span> | Lactating: <span className="font-semibold text-zinc-700">{herdStats.Lactating}</span> | Sow: <span className="font-semibold text-zinc-700">{herdStats.sows}</span>
+                          {t("pregnant")}: <span className="font-semibold text-zinc-700">{herdStats.Pregnant}</span> | {t("lactating")}: <span className="font-semibold text-zinc-700">{herdStats.Lactating}</span> | {t("sow")}: <span className="font-semibold text-zinc-700">{herdStats.sows}</span>
                         </span>
                       </p>
                     </>
@@ -516,10 +518,10 @@ export default function DashboardPage() {
                   {currentSlide === 2 && (
                     <>
                       <h3 className="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight">
-                        Total Number of Porkers: <span className="text-xl sm:text-2xl font-extrabold text-emerald-600">{herdStats.porkers_count}</span>
+                        {t("totalPorkers", { count: herdStats.porkers_count })}
                       </h3>
                       <p className="text-xs sm:text-sm font-medium text-zinc-500 leading-relaxed">
-                        Starter: <span className="font-semibold text-zinc-700">{herdStats.Starter}</span> | Grower: <span className="font-semibold text-zinc-700">{herdStats.Grower}</span> | Finisher: <span className="font-semibold text-zinc-700">{herdStats.Finisher}</span>
+                        {t("starter")}: <span className="font-semibold text-zinc-700">{herdStats.Starter}</span> | {t("grower")}: <span className="font-semibold text-zinc-700">{herdStats.Grower}</span> | {t("finisher")}: <span className="font-semibold text-zinc-700">{herdStats.Finisher}</span>
                       </p>
                     </>
                   )}
@@ -529,11 +531,11 @@ export default function DashboardPage() {
                       <div className="flex items-center gap-2 text-emerald-700">
                         <ArchiveIcon className="h-5 w-5" />
                         <h3 className="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight">
-                          Archived Pigs
+                          {t("archivedPigs")}
                         </h3>
                       </div>
                       <p className="text-xs sm:text-sm font-medium text-zinc-500">
-                        View culled or sold animals
+                        {t("viewCulled")}
                       </p>
                     </>
                   )}
@@ -561,15 +563,15 @@ export default function DashboardPage() {
 
           {/* Quick Tools / Navigation Section */}
           <div className="bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-            <h3 className="text-lg font-bold text-zinc-900 mb-4">Farm Operations</h3>
+            <h3 className="text-lg font-bold text-zinc-900 mb-4">{t("farmOperations")}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <Link href="/dashboard/herd" className="flex items-center sm:items-start gap-4 p-4 rounded-xl border border-zinc-200 bg-white/60 hover:bg-zinc-50/60 backdrop-blur-md transition duration-300 group shadow-sm">
                 <span className="p-3 bg-emerald-50 rounded-xl text-emerald-600 group-hover:scale-110 transition duration-300">
                   <HerdDataIcon className="h-8 w-8" />
                 </span>
                 <div>
-                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-emerald-700 transition">Herd Data</h4>
-                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">Manage active/archived pigs, register piglets/breeders, track locations, and view individual pig profiles.</p>
+                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-emerald-700 transition">{t("herdData")}</h4>
+                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">{t("herdDataDesc")}</p>
                 </div>
               </Link>
 
@@ -578,8 +580,8 @@ export default function DashboardPage() {
                   <FeedManagementIcon className="h-8 w-8" />
                 </span>
                 <div>
-                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-emerald-700 transition">Feed Management</h4>
-                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">Calculate projected herd feed demand, formulate stage rations, and log inventory usage/restocks.</p>
+                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-emerald-700 transition">{t("feedManagement")}</h4>
+                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">{t("feedManagementDesc")}</p>
                 </div>
               </Link>
 
@@ -588,8 +590,8 @@ export default function DashboardPage() {
                   <HerdActivitiesIcon className="h-8 w-8" />
                 </span>
                 <div>
-                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-amber-700 transition">Herd Activities</h4>
-                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">Log mating, pregnancy confirmation, farrowing births, weaning moves, castration, iron injections, and deworming.</p>
+                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-amber-700 transition">{t("herdActivities")}</h4>
+                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">{t("herdActivitiesDesc")}</p>
                 </div>
               </Link>
 
@@ -598,8 +600,8 @@ export default function DashboardPage() {
                   <FinancialsIcon className="h-8 w-8" />
                 </span>
                 <div>
-                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-blue-700 transition">Financials</h4>
-                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">Record and categorize incomes and expenses, monitor profit margins, and track transactions tied to specific pigs.</p>
+                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-blue-700 transition">{t("financials")}</h4>
+                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">{t("financialsDesc")}</p>
                 </div>
               </Link>
 
@@ -608,8 +610,8 @@ export default function DashboardPage() {
                   <HumanResourcesIcon className="h-8 w-8" />
                 </span>
                 <div>
-                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-indigo-700 transition">Human Resources</h4>
-                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">Register farm staff members, log payroll details, manage active/leave statuses, and enable application login access.</p>
+                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-indigo-700 transition">{t("hr")}</h4>
+                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">{t("hrDesc")}</p>
                 </div>
               </Link>
 
@@ -618,8 +620,8 @@ export default function DashboardPage() {
                   <LocalHubIcon className="h-8 w-8" />
                 </span>
                 <div>
-                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-purple-700 transition">Local Hub</h4>
-                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">Connect with verified vet doctors, feed sellers, and pig buyers, and publish local listing suggestions.</p>
+                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-purple-700 transition">{t("localHub")}</h4>
+                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">{t("localHubDesc")}</p>
                 </div>
               </Link>
 
@@ -628,8 +630,8 @@ export default function DashboardPage() {
                   <SymptomsAnalyzerIcon className="h-8 w-8" />
                 </span>
                 <div>
-                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-rose-700 transition">Symptoms Analyzer</h4>
-                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">Analyze symptoms (skin, stool, breathing) against a swine disease engine to identify issues and treatments.</p>
+                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-rose-700 transition">{t("symptomsAnalyzer")}</h4>
+                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">{t("symptomsAnalyzerDesc")}</p>
                 </div>
               </Link>
 
@@ -638,8 +640,8 @@ export default function DashboardPage() {
                   <WeightCheckerIcon className="h-8 w-8" />
                 </span>
                 <div>
-                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-teal-700 transition">Weight Checker</h4>
-                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">Estimate pig live and carcass weights using length and girth tape measurements. Save direct to profiles.</p>
+                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-teal-700 transition">{t("weightChecker")}</h4>
+                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">{t("weightCheckerDesc")}</p>
                 </div>
               </Link>
 
@@ -648,8 +650,8 @@ export default function DashboardPage() {
                   <TrainingTipsIcon className="h-8 w-8" />
                 </span>
                 <div>
-                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-violet-700 transition">Training Tips</h4>
-                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">Access detailed husbandry guidelines on weaning, feeding, and breeding, and watch expert video tutorials.</p>
+                  <h4 className="text-base font-bold text-zinc-900 group-hover:text-violet-700 transition">{t("trainingTips")}</h4>
+                  <p className="hidden sm:block text-sm text-zinc-500 mt-1">{t("trainingTipsDesc")}</p>
                 </div>
               </Link>
 
@@ -659,8 +661,8 @@ export default function DashboardPage() {
                     <LocalHubIcon className="h-8 w-8" />
                   </span>
                   <div>
-                    <h4 className="text-base font-bold text-emerald-900 group-hover:text-emerald-700 transition">Admin Panel</h4>
-                    <p className="hidden sm:block text-sm text-emerald-700/70 mt-1">Manage global ingredients, verify provider suggestions, and update training video tutorials.</p>
+                    <h4 className="text-base font-bold text-emerald-900 group-hover:text-emerald-700 transition">{t("adminPanel")}</h4>
+                    <p className="hidden sm:block text-sm text-emerald-700/70 mt-1">{t("adminPanelDesc")}</p>
                   </div>
                 </Link>
               )}
@@ -669,7 +671,7 @@ export default function DashboardPage() {
 
           {/* Recent Financials Section */}
           <div className="hidden sm:block bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-            <h3 className="text-lg font-bold text-zinc-900 mb-4">Recent Transactions</h3>
+            <h3 className="text-lg font-bold text-zinc-900 mb-4">{t("recentTransactions")}</h3>
             {statsLoading ? (
               <div className="space-y-3">
                 {[...Array(3)].map((_, i) => (
@@ -677,7 +679,7 @@ export default function DashboardPage() {
                 ))}
               </div>
             ) : recentFinancials.length === 0 ? (
-              <p className="text-sm text-zinc-500 text-center py-4">No recent financial transactions found.</p>
+              <p className="text-sm text-zinc-500 text-center py-4">{t("noTransactions")}</p>
             ) : (
               <div className="divide-y divide-zinc-100">
                 {recentFinancials.map((record) => (
@@ -726,7 +728,7 @@ export default function DashboardPage() {
           <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
             <div className="w-screen max-w-md bg-white border-l border-zinc-200 shadow-2xl flex flex-col transition duration-300">
               <div className="p-6 border-b border-zinc-150 flex items-center justify-between">
-                <h2 className="text-lg font-bold text-zinc-900">Upcoming Activities</h2>
+                <h2 className="text-lg font-bold text-zinc-900">{t("upcomingActivities")}</h2>
                 <button
                   onClick={() => setIsNotificationDrawerOpen(false)}
                   className="p-1 rounded-lg text-zinc-400 hover:text-zinc-650 hover:bg-zinc-100 transition"
@@ -740,8 +742,8 @@ export default function DashboardPage() {
               <div className="flex-1 overflow-y-auto p-6 space-y-4 no-scrollbar">
                 {groupedTasks.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-48 text-center">
-                    <p className="text-sm font-semibold text-zinc-400">No upcoming activities</p>
-                    <p className="text-xs text-zinc-400 mt-1">All tasks are completed!</p>
+                    <p className="text-sm font-semibold text-zinc-400">{t("noActivities")}</p>
+                    <p className="text-xs text-zinc-400 mt-1">{t("allTasksCompleted")}</p>
                   </div>
                 ) : (
                   groupedTasks.map((taskGroup, index) => (
@@ -767,7 +769,7 @@ export default function DashboardPage() {
                         <div>
                           <h4 className="font-bold text-zinc-900 text-sm">{taskGroup.activity}</h4>
                           <p className={`text-xs mt-0.5 ${taskGroup.isOverdue ? "text-red-700/80" : "text-zinc-500"}`}>
-                            {taskGroup.target === "General" ? "General Task" : taskGroup.target}
+                            {taskGroup.target === "General" ? t("generalTask") : taskGroup.target}
                           </p>
                         </div>
                       </div>

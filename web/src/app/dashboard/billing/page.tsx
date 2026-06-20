@@ -9,12 +9,14 @@ import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import dynamic from "next/dynamic";
+import { useTranslations } from "next-intl";
 
 const PaystackBillingButton = dynamic(() => import("@/components/PaystackBillingButton"), {
   ssr: false,
 });
 
 export default function BillingPage() {
+  const t = useTranslations("Billing");
   const { user, userProfile, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -58,21 +60,20 @@ export default function BillingPage() {
   };
 
   const onSuccess = (reference: any) => {
-    alert("Payment successful! Your premium features will be activated shortly.");
+    alert(t("paymentSuccess"));
   };
 
   const onClose = () => {
-    console.log("Paystack modal closed");
+    console.log(t("modalClosed"));
   };
 
   const features = [
-    { name: "Unlimited Pigs & Litters", free: "Up to 20 pigs", premium: "Unlimited" },
-    { name: "Feed Stock & Transactions", free: "Basic logging", premium: "Advanced + Alerts" },
-    { name: "Feed Formulator (Pearson Square)", free: "Starter stage only", premium: "All stages (Starter, Grower, Finisher)" },
-    { name: "PDF Report Exports", free: "❌ Unavailable", premium: "⚡ Yes, Instant Print/PDF" },
-    { name: "Visual Financial Ledger charts", free: "Basic list", premium: "Advanced graphs + Filter" },
-    { name: "Offline Sync Backup", free: "❌ Unavailable", premium: "⚡ Real-time cloud backup" },
-    { name: "Support Priority", free: "Email support", premium: "24/7 Priority chat" },
+    { name: t("features.unlimitedPigs"), free: t("features.pigsLimit"), premium: t("features.unlimited") },
+    { name: t("features.growthTracking"), free: t("features.pigsLimit"), premium: t("features.unlimited") },
+    { name: t("features.feedFormulation"), free: t("features.unavailable"), premium: t("features.feedDescription") },
+    { name: t("features.addEmployee"), free: t("features.unavailable"), premium: t("features.employeeDescription") },
+    { name: t("features.pdfReports"), free: t("features.unavailable"), premium: t("features.pdfDescription") },
+    { name: t("features.symptomsAnalyzer"), free: t("features.unavailable"), premium: t("features.fullAccess") },
   ];
 
   return (
@@ -96,10 +97,10 @@ export default function BillingPage() {
           {/* Top Info */}
           <div className="text-center max-w-2xl mx-auto space-y-4">
             <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-800 via-emerald-600 to-green-500 bg-clip-text text-transparent">
-              Unlock the Full Power of SmartSwine
+              {t("title")}
             </h1>
             <p className="text-zinc-600 text-sm md:text-base font-medium">
-              Optimize your pig farm operations, formulate advanced rations, export reports, and scale without limits.
+              {t("description")}
             </p>
           </div>
 
@@ -108,13 +109,13 @@ export default function BillingPage() {
             <div className="bg-gradient-to-r from-emerald-50/40 via-emerald-100/5 to-transparent backdrop-blur-md border border-emerald-200 rounded-2xl p-6 text-center space-y-4 relative overflow-hidden shadow-sm">
               <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-emerald-500/5 blur-2xl animate-pulse" />
               <span className="text-4xl">🎉</span>
-              <h2 className="text-xl font-bold text-zinc-900">SmartSwine Premium is Active!</h2>
+              <h2 className="text-xl font-bold text-zinc-900">{t("premiumActive")}</h2>
               <p className="text-sm text-zinc-600 max-w-md mx-auto">
-                Your account has full access to the Feed Formulator, unlimited herd data sizes, and PDF downloads. Thank you for supporting our platform!
+                {t("premiumBenefits")}
               </p>
               <div className="pt-2 flex justify-center gap-3">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3.5 py-1 text-xs font-semibold text-emerald-800 border border-emerald-200">
-                  Billing Source: {userProfile?.subscriptionSource || "paystack"}
+                  {t("billingSource", { source: userProfile?.subscriptionSource || "paystack" })}
                 </span>
               </div>
             </div>
@@ -131,7 +132,7 @@ export default function BillingPage() {
                         : "text-zinc-500 hover:text-zinc-850"
                     }`}
                   >
-                    Monthly billing
+                    {t("monthlyBilling")}
                   </button>
                   <button
                     onClick={() => setBillingCycle("annual")}
@@ -141,9 +142,9 @@ export default function BillingPage() {
                         : "text-zinc-500 hover:text-zinc-850"
                     }`}
                   >
-                    Annual billing
+                    {t("annualBilling")}
                     <span className="bg-emerald-600 text-[10px] text-white font-bold px-1.5 py-0.5 rounded-full">
-                      Save 33%
+                      {t("save33")}
                     </span>
                   </button>
                 </div>
@@ -154,20 +155,20 @@ export default function BillingPage() {
                 {/* Free Plan */}
                 <div className="bg-zinc-50/60 backdrop-blur-sm border border-zinc-200 rounded-2xl p-8 space-y-6 flex flex-col justify-between hover:border-zinc-300 transition duration-300 shadow-sm">
                   <div className="space-y-4">
-                    <h3 className="text-lg font-bold text-zinc-500">Basic Plan</h3>
+                    <h3 className="text-lg font-bold text-zinc-500">{t("basicPlan")}</h3>
                     <div className="flex items-baseline gap-1">
                       <span className="text-4xl font-extrabold text-zinc-900">$0</span>
-                      <span className="text-zinc-500 text-sm">/ forever</span>
+                      <span className="text-zinc-500 text-sm">/ {t("forever")}</span>
                     </div>
                     <p className="text-xs text-zinc-600">
-                      Perfect for hobbyists and starting farmers to explore tracking.
+                      {t("basicDescription")}
                     </p>
                   </div>
                   <button
                     disabled
                     className="w-full rounded-xl border border-zinc-200 bg-zinc-100 py-3 text-xs font-bold text-zinc-400 cursor-not-allowed text-center transition"
                   >
-                    Current Free Plan
+                    {t("currentFreePlan")}
                   </button>
                 </div>
 
@@ -178,18 +179,18 @@ export default function BillingPage() {
                   </div>
                   <div className="space-y-4">
                     <h3 className="text-lg font-bold text-zinc-900 flex items-center gap-2">
-                      💎 SmartSwine Premium
+                      💎 {t("smartSwinePremium")}
                     </h3>
                     <div className="flex items-baseline gap-1">
                       <span className="text-4xl font-extrabold text-zinc-900">
                         {billingCycle === "monthly" ? "$5.00" : "$45.00"}
                       </span>
                       <span className="text-zinc-500 text-sm">
-                        / month {billingCycle === "annual" && "(billed yearly)"}
+                        / {t("perMonth")} {billingCycle === "annual" && t("billedYearly")}
                       </span>
                     </div>
                     <p className="text-xs text-zinc-600">
-                      Maximize productivity, dynamic Pearson Square feeds, and unlimited operations.
+                      {t("premiumDescription")}
                     </p>
                   </div>
                   <PaystackBillingButton
@@ -204,14 +205,14 @@ export default function BillingPage() {
 
           {/* Feature Comparison Table */}
           <div className="bg-zinc-50/70 backdrop-blur-sm border border-zinc-200 rounded-2xl p-6 overflow-hidden shadow-sm relative z-10">
-            <h3 className="text-lg font-bold text-zinc-900 mb-6">Plan Comparison</h3>
+            <h3 className="text-lg font-bold text-zinc-900 mb-6">{t("planComparison")}</h3>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-zinc-200 text-sm">
                 <thead>
                   <tr className="text-left text-zinc-500 font-semibold border-b border-zinc-200">
-                    <th className="pb-3 pr-4">Feature</th>
-                    <th className="pb-3 text-center">Basic (Free)</th>
-                    <th className="pb-3 text-center text-emerald-700">Premium</th>
+                    <th className="pb-3 pr-4">{t("feature")}</th>
+                    <th className="pb-3 text-center">{t("basicFree")}</th>
+                    <th className="pb-3 text-center text-emerald-700">{t("premium")}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-zinc-200/50">

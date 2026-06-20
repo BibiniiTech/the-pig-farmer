@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 
 interface ReportLayoutProps {
   title: string;
@@ -8,6 +9,7 @@ interface ReportLayoutProps {
 }
 
 const ReportLayout: React.FC<ReportLayoutProps> = ({ title, children }) => {
+  const t = useTranslations("Reports");
   const generatedOn = new Date().toLocaleString("en-US", {
     year: "numeric",
     month: "2-digit",
@@ -33,9 +35,9 @@ const ReportLayout: React.FC<ReportLayoutProps> = ({ title, children }) => {
 
         <div className="text-center mb-10 border-b pb-6 border-zinc-200">
           <h1 className="text-[26pt] font-bold tracking-tight">SmartSwine</h1>
-          <p className="text-[13pt] italic text-zinc-600 mt-1">Farm Management Simplified</p>
+          <p className="text-[13pt] italic text-zinc-600 mt-1">{t("subtitle")}</p>
           <h2 className="text-[20pt] font-bold mt-6 uppercase tracking-wide">{title}</h2>
-          <p className="text-[10pt] text-zinc-500 mt-2">Generated on: {generatedOn}</p>
+          <p className="text-[10pt] text-zinc-500 mt-2">{t("generatedOn", { date: generatedOn })}</p>
         </div>
 
         {/* Content */}
@@ -45,7 +47,7 @@ const ReportLayout: React.FC<ReportLayoutProps> = ({ title, children }) => {
 
         {/* Footer */}
         <div className="mt-12 pt-6 border-t border-zinc-100 text-center text-[9pt] text-zinc-400 italic">
-          Disclaimer: Consult a Vet before making health or nutritional decisions.
+          {t("disclaimer")}
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@ import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import { ScaleIcon, InfoIcon } from "@/components/icons/DashboardIcons";
+import { useTranslations } from "next-intl";
 
 interface Pig {
   id: string;
@@ -23,6 +24,7 @@ interface Pig {
 }
 
 export default function WeightCheckerPage() {
+  const t = useTranslations("Weight");
   const { user, activeFarmUid, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -157,7 +159,7 @@ export default function WeightCheckerPage() {
 
     const weightNum = parseFloat(customSaveWeight);
     if (isNaN(weightNum) || weightNum <= 0) {
-      alert("Please enter a valid weight in kg.");
+      alert(t("validWeightAlert"));
       return;
     }
 
@@ -174,9 +176,15 @@ export default function WeightCheckerPage() {
       const logRef = doc(logCollection);
 
       // Create details message
-      let desc = `Weight checked manually: ${weightNum} kg.`;
+      let desc = t("weightCheckedManually", { weight: weightNum });
       if (estLiveKg && Math.abs(estLiveKg - weightNum) < 0.2) {
-        desc = `Tape calculation estimated weight: ${weightNum} kg / ${estLiveLbs} lbs (Girth: ${girth} ${unit}, Length: ${length} ${unit}).`;
+        desc = t("tapeEstimationLog", {
+          weight: weightNum,
+          lbs: estLiveLbs,
+          girth,
+          unit: unit === "in" ? t("inches") : t("centimeters"),
+          length
+        });
       }
 
       await setDoc(logRef, {
@@ -186,13 +194,13 @@ export default function WeightCheckerPage() {
         description: desc,
       });
 
-      alert("Weight successfully saved to pig profile!");
+      alert(t("saveSuccess"));
       // Reset profile select
       setSelectedPigId("");
       setCustomSaveWeight("");
     } catch (err) {
       console.error("Failed to save pig weight:", err);
-      alert("Error saving weight. Check your connection.");
+      alert(t("saveError"));
     } finally {
       setSaveLoading(false);
     }
@@ -226,10 +234,8 @@ export default function WeightCheckerPage() {
         {/* Content Body */}
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
           <div className="bg-white/60 backdrop-blur-sm border border-zinc-200 rounded-2xl p-6 shadow-sm">
-            <h2 className="text-xl font-bold text-zinc-900">Weigh Pigs with a Tape & Unit Converter</h2>
-            <p className="text-sm text-zinc-500 mt-1">
-              Estimate swine live weight using chest girth and body length tape measurements, or convert standard weight metrics.
-            </p>
+            <h2 className="text-xl font-bold text-zinc-900">{t("title")}</h2>
+            <p className="text-sm text-zinc-500 mt-1">{t("description")}</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -237,7 +243,7 @@ export default function WeightCheckerPage() {
             <div className="lg:col-span-7 bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-6">
               <div className="flex flex-col gap-4">
                 <h3 className="text-base font-bold text-zinc-900 flex items-center gap-2">
-                  <span>📏</span> Weigh with Tape
+                  <span>📏</span> {t("weighWithTape")}
                 </h3>
                 {/* Unit selector */}
                 <div className="inline-flex w-fit rounded-lg border border-zinc-200 bg-zinc-50 p-1">
@@ -247,7 +253,7 @@ export default function WeightCheckerPage() {
                       unit === "in" ? "bg-white text-teal-700 shadow-sm" : "text-zinc-500 hover:text-zinc-800"
                     }`}
                   >
-                    Inches
+                    {t("inches")}
                   </button>
                   <button
                     onClick={() => setUnit("cm")}
@@ -255,7 +261,7 @@ export default function WeightCheckerPage() {
                       unit === "cm" ? "bg-white text-teal-700 shadow-sm" : "text-zinc-500 hover:text-zinc-800"
                     }`}
                   >
-                    Centimeters
+                    {t("centimeters")}
                   </button>
                 </div>
               </div>
@@ -264,7 +270,7 @@ export default function WeightCheckerPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-zinc-650 mb-1.5">
-                    A = Body Length ({unit === "in" ? "inches" : "cm"})
+                    {t("bodyLength", { unit: unit === "in" ? t("inches") : t("centimeters") })}
                   </label>
                   <input
                     type="number"
@@ -274,12 +280,12 @@ export default function WeightCheckerPage() {
                     onChange={(e) => setLength(e.target.value)}
                     className="w-full rounded-xl border border-zinc-200 bg-white/70 px-4 py-2.5 text-xs font-semibold focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
                   />
-                  <p className="text-[10px] text-zinc-400 mt-1">Measure from the base of the ears to the base of the tail.</p>
+                  <p className="text-[10px] text-zinc-400 mt-1">{t("bodyLengthDesc")}</p>
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-zinc-650 mb-1.5">
-                    B = Heart Girth ({unit === "in" ? "inches" : "cm"})
+                    {t("heartGirth", { unit: unit === "in" ? t("inches") : t("centimeters") })}
                   </label>
                   <input
                     type="number"
@@ -289,7 +295,7 @@ export default function WeightCheckerPage() {
                     onChange={(e) => setGirth(e.target.value)}
                     className="w-full rounded-xl border border-zinc-200 bg-white/70 px-4 py-2.5 text-xs font-semibold focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
                   />
-                  <p className="text-[10px] text-zinc-400 mt-1">Measure the circumference of the chest directly behind front legs.</p>
+                  <p className="text-[10px] text-zinc-400 mt-1">{t("heartGirthDesc")}</p>
                 </div>
               </div>
 
@@ -303,24 +309,24 @@ export default function WeightCheckerPage() {
                   }`}
                 />
                 <div className="text-[10px] text-zinc-500 font-bold text-center mt-2">
-                  Measure Length (Point A) and Girth (Point B) as shown above.
+                  {t("measurementGuide")}
                 </div>
               </div>
 
               {/* Tape Estimation Results */}
               <div className="border-t border-zinc-200 pt-6 space-y-4">
-                <h4 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Estimated Results</h4>
+                <h4 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">{t("estimatedResults")}</h4>
                 {estLiveLbs !== null ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="bg-teal-50/40 border border-teal-200/50 rounded-xl p-4 space-y-1">
-                      <span className="text-[10px] font-bold text-teal-800 uppercase">Estimated Live Weight</span>
+                      <span className="text-[10px] font-bold text-teal-800 uppercase">{t("estLiveWeight")}</span>
                       <div className="text-2xl font-extrabold text-teal-900">
                         {estLiveKg} kg <span className="text-sm font-semibold text-teal-700">/ {estLiveLbs} lbs</span>
                       </div>
                     </div>
 
                     <div className="bg-zinc-50/70 border border-zinc-200 rounded-xl p-4 space-y-1">
-                      <span className="text-[10px] font-bold text-zinc-500 uppercase">Estimated Carcass Weight (72%)</span>
+                      <span className="text-[10px] font-bold text-zinc-500 uppercase">{t("estCarcassWeight")}</span>
                       <div className="text-2xl font-extrabold text-zinc-800">
                         {estCarcassKg} kg <span className="text-sm font-semibold text-zinc-500">/ {estCarcassLbs} lbs</span>
                       </div>
@@ -328,7 +334,7 @@ export default function WeightCheckerPage() {
                   </div>
                 ) : (
                   <p className="text-xs text-zinc-400 font-semibold text-center py-4 bg-zinc-50/30 rounded-xl border border-dashed border-zinc-200">
-                    Enter positive heart girth and body length values to run live/carcass weight projection.
+                    {t("enterPositiveValues")}
                   </p>
                 )}
               </div>
@@ -339,11 +345,11 @@ export default function WeightCheckerPage() {
               {/* Unit Converter Card */}
               <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4">
                 <h3 className="text-base font-bold text-zinc-900 flex items-center gap-2">
-                  <ScaleIcon className="h-5 w-5 text-teal-600" /> Weight Converter
+                  <ScaleIcon className="h-5 w-5 text-teal-600" /> {t("weightConverter")}
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold text-zinc-650 mb-1.5">Pounds (Lbs)</label>
+                    <label className="block text-xs font-bold text-zinc-650 mb-1.5">{t("pounds")}</label>
                     <input
                       type="number"
                       placeholder="e.g. 180"
@@ -353,7 +359,7 @@ export default function WeightCheckerPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-zinc-650 mb-1.5">Kilograms (Kg)</label>
+                    <label className="block text-xs font-bold text-zinc-650 mb-1.5">{t("kilograms")}</label>
                     <input
                       type="number"
                       placeholder="e.g. 81.6"
@@ -368,24 +374,24 @@ export default function WeightCheckerPage() {
               {/* Save weight to pig card */}
               <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4">
                 <h3 className="text-base font-bold text-zinc-900 flex items-center gap-2">
-                  <span>💾</span> Save to Pig Profile
+                  <span>💾</span> {t("saveToProfile")}
                 </h3>
 
                 {dataLoading ? (
                   <div className="h-28 bg-zinc-50 animate-pulse rounded-xl" />
                 ) : pigs.length === 0 ? (
-                  <p className="text-xs text-zinc-500 text-center py-4">No pigs found in your herd database.</p>
+                  <p className="text-xs text-zinc-500 text-center py-4">{t("noPigs")}</p>
                 ) : (
                   <form onSubmit={handleSaveToProfile} className="space-y-4">
                     <div>
-                      <label className="block text-xs font-bold text-zinc-650 mb-1.5">Select Pig Tag</label>
+                      <label className="block text-xs font-bold text-zinc-650 mb-1.5">{t("selectPigTag")}</label>
                       <select
                         value={selectedPigId}
                         onChange={(e) => setSelectedPigId(e.target.value)}
                         required
                         className="w-full rounded-xl border border-zinc-200 bg-white/70 px-4 py-2.5 text-xs font-semibold focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
                       >
-                        <option value="">-- Choose Pig Tag --</option>
+                        <option value="">{t("choosePigTag")}</option>
                         {pigs.map((p) => (
                           <option key={p.id} value={p.id}>
                             {p.tagNumber} ({p.gender} • {p.status})
@@ -395,7 +401,7 @@ export default function WeightCheckerPage() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-zinc-650 mb-1.5">Weight to Save (kg)</label>
+                      <label className="block text-xs font-bold text-zinc-650 mb-1.5">{t("weightToSave")}</label>
                       <input
                         type="number"
                         step="any"
@@ -412,7 +418,7 @@ export default function WeightCheckerPage() {
                       disabled={saveLoading || !selectedPigId}
                       className="w-full py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 disabled:bg-zinc-200 disabled:text-zinc-450 text-xs font-bold text-white shadow transition"
                     >
-                      {saveLoading ? "Saving weight..." : "Save Weight to Pig Profile"}
+                      {saveLoading ? t("savingWeight") : t("saveWeight")}
                     </button>
                   </form>
                 )}
@@ -422,17 +428,17 @@ export default function WeightCheckerPage() {
               <div className="bg-zinc-50/80 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4">
                 <div className="flex items-center justify-center gap-2 text-teal-700">
                   <InfoIcon className="h-5 w-5" />
-                  <h3 className="text-sm font-bold uppercase tracking-wider">Important Notes</h3>
+                  <h3 className="text-sm font-bold uppercase tracking-wider">{t("importantNotes")}</h3>
                 </div>
                 <div className="space-y-3 text-xs text-zinc-600 leading-relaxed text-justify">
                   <p>
-                    <span className="font-bold text-zinc-800">Body Length:</span> Measure from the base of the ears to the base of the tail making sure the tape is firm on the body and not loose (Point A).
+                    <span className="font-bold text-zinc-800">{t("noteBodyLength")}</span>
                   </p>
                   <p>
-                    <span className="font-bold text-zinc-800">Heart Girth:</span> Measure the thorax (just behind the front legs) making sure the tape is fit along the body and meets tightly (Point B).
+                    <span className="font-bold text-zinc-800">{t("noteHeartGirth")}</span>
                   </p>
                   <p>
-                    Ensure the pig is standing squarely on level ground for the most accurate result.
+                    {t("noteSquarely")}
                   </p>
                 </div>
               </div>

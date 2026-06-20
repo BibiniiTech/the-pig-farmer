@@ -1,15 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { collection, onSnapshot, doc, setDoc, deleteDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 import { useDevice } from "@/context/DeviceContext";
-import NavbarDropdown from "@/components/NavbarDropdown";
-import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
+import { useTranslations } from "next-intl";
 
 interface TrainingVideo {
   id: string;
@@ -25,190 +23,51 @@ interface Tip {
   content: string;
 }
 
-const CATEGORIES = [
-  { key: "all", label: "All Tips" },
-  { key: "cat_weaning", label: "Weaning" },
-  { key: "cat_feeding", label: "Feeding" },
-  { key: "cat_breeding", label: "Breeding" },
-  { key: "cat_health", label: "Health" },
-  { key: "cat_housing", label: "Housing" },
-  { key: "cat_waste", label: "Waste" },
-  { key: "cat_general", label: "General" }
-];
-
-// Sample of highly informative swine husbandry tips matching Android database
-const MANUAL_TIPS: Tip[] = [
-  // Weaning
-  {
-    id: 6,
-    category: "cat_weaning",
-    title: "Weaning Age for Smallholders",
-    content: "Wean piglets at 28 to 35 days instead of earlier. This allows piglets to grow stronger and adapt to solid feed using simple farm resources."
-  },
-  {
-    id: 7,
-    category: "cat_weaning",
-    title: "Gradual Separation Method",
-    content: "Reduce weaning stress by moving the sow out of the farrowing pen and leaving the piglets in their familiar environment for the first week."
-  },
-  {
-    id: 8,
-    category: "cat_weaning",
-    title: "Draft Prevention for Weaners",
-    content: "Block cold winds in the nursery pen by installing temporary curtains or wooden boards up to piglet-height (about 50cm)."
-  },
-  {
-    id: 11,
-    category: "cat_weaning",
-    title: "Homemade Rehydration Solution",
-    content: "Feed a cheap, homemade electrolyte solution (5 tablespoons sugar, 1/2 tablespoon salt in 5 liters clean water) during the first 3 days of weaning to combat stress."
-  },
-  {
-    id: 17,
-    category: "cat_weaning",
-    title: "Clay Soil Mineral Supplement",
-    content: "Put a clean shovel of fresh, red clay soil (from a clean area) in the farrowing/weaning pen. Piglets eat it to get natural iron and minerals."
-  },
-
-  // Feeding & Nutrition
-  {
-    id: 20,
-    category: "cat_feeding",
-    title: "Agricultural Byproduct Boiling",
-    content: "Boil agricultural byproducts like yam peels, cassava peels, and potato vines to destroy natural toxins and improve digestibility."
-  },
-  {
-    id: 21,
-    category: "cat_feeding",
-    title: "Local Protein Sources",
-    content: "Supplement commercial feed by growing high-protein forage crops like Moringa, Azolla, or sweet potato leaves on the farm."
-  },
-  {
-    id: 22,
-    category: "cat_feeding",
-    title: "Gestation Feed Restriction",
-    content: "Limit gestating sows to 2-2.5 kg of feed per day to prevent them from becoming overweight, which causes difficult births."
-  },
-  {
-    id: 26,
-    category: "cat_feeding",
-    title: "Boiling Kitchen Waste",
-    content: "Boil hotel or kitchen food waste for 30 minutes to destroy African Swine Fever and Foot-and-Mouth disease viruses."
-  },
-  {
-    id: 28,
-    category: "cat_feeding",
-    title: "Charcoal for Digestion",
-    content: "Place small pieces of wood charcoal in grower pens. Pigs chew it to help bind stomach toxins and reduce diarrhea."
-  },
-
-  // Breeding & Farrowing
-  {
-    id: 34,
-    category: "cat_breeding",
-    title: "Hand Mating in Breeding Pen",
-    content: "Bring the sow in heat to the boar's pen for breeding, rather than letting the boar run loose in the sow herd."
-  },
-  {
-    id: 35,
-    category: "cat_breeding",
-    title: "Standing Heat Response",
-    content: "Test for heat by pressing your hands firmly on the sow's back; if she stands completely still and stiffens her ears, she is ready to mate."
-  },
-  {
-    id: 39,
-    category: "cat_breeding",
-    title: "DIY Crushed Piglet Protection",
-    content: "Install \"guard rails\" (heavy wooden poles or metal pipes placed 20cm out from the walls and 20cm off the floor) in farrowing pens."
-  },
-  {
-    id: 43,
-    category: "cat_breeding",
-    title: "Breeding Records Calendar",
-    content: "Mark the breeding date on a calendar; pregnancy lasts 114 days (3 months, 3 weeks, 3 days), allowing you to prepare the farrowing pen."
-  },
-  {
-    id: 47,
-    category: "cat_breeding",
-    title: "Gilt First Mating Age",
-    content: "Wait until a gilt is at least 8 months old and on her second or third heat cycle before mating her to ensure a larger first litter."
-  },
-
-  // Biosecurity & Health
-  {
-    id: 48,
-    category: "cat_health",
-    title: "Isolation of New Purchases",
-    content: "Keep newly purchased pigs in a separate pen at least 20 meters away from your main herd for 30 days to check for sickness."
-  },
-  {
-    id: 49,
-    category: "cat_health",
-    title: "DIY Footbath Setup",
-    content: "Place a shallow plastic tub or half-cut tire filled with water and disinfectant (like chlorine or agricultural lime) at the farm gate."
-  },
-  {
-    id: 51,
-    category: "cat_health",
-    title: "Visitor Restriction Policy",
-    content: "Do not allow visitors (especially other pig buyers or farmers) inside your pig pens. Discuss business outside the pen area."
-  },
-  {
-    id: 55,
-    category: "cat_health",
-    title: "Natural Parasite Control",
-    content: "Feed crushed papaya seeds or pumpkin seeds to grower pigs as a cheap, natural remedy to help reduce internal worms."
-  },
-  {
-    id: 60,
-    category: "cat_health",
-    title: "Proper Burial of Mortalities",
-    content: "Bury dead pigs at least 2 meters deep, far away from water sources, and cover the carcass with agricultural lime before refilling the soil."
-  },
-
-  // Housing, Waste & General
-  {
-    id: 61,
-    category: "cat_housing",
-    title: "Low-Cost Pen Space",
-    content: "Provide at least 1 square meter of space per finisher pig to reduce fighting, stress, and skin lesions."
-  },
-  {
-    id: 62,
-    category: "cat_housing",
-    title: "Natural Cross-Ventilation",
-    content: "Design pig houses with open sides (using wire mesh or bamboo slats) to allow natural breeze to blow through and remove odors."
-  },
-  {
-    id: 75,
-    category: "cat_waste",
-    title: "DIY Compost Piles",
-    content: "Pile pig manure in a designated dry corner, cover it with banana leaves or plastic, and turn it weekly with a shovel to make compost."
-  },
-  {
-    id: 76,
-    category: "cat_waste",
-    title: "Flexible Bag Biogas",
-    content: "Install a simple, low-cost plastic tubular biogas digester to treat pig manure, producing free cooking gas for the household."
-  },
-  {
-    id: 92,
-    category: "cat_general",
-    title: "Castration Age Limit",
-    content: "Castrate male piglets before they are 7 days old. At this age, the procedure is fast, heals quickly, and causes minimal pain."
-  },
-  {
-    id: 94,
-    category: "cat_general",
-    title: "Simple Notebook Records",
-    content: "Keep a small, cheap notebook in the barn to write down breeding dates, farrowing dates, and treatments for each sow."
-  }
-];
-
 export default function TrainingPage() {
+  const t = useTranslations("Training");
   const { user, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
+
+  const CATEGORIES = [
+    { key: "all", label: t("categories.all") },
+    { key: "cat_weaning", label: t("categories.weaning") },
+    { key: "cat_feeding", label: t("categories.feeding") },
+    { key: "cat_breeding", label: t("categories.breeding") },
+    { key: "cat_health", label: t("categories.health") },
+    { key: "cat_housing", label: t("categories.housing") },
+    { key: "cat_waste", label: t("categories.waste") },
+    { key: "cat_general", label: t("categories.general") }
+  ];
+
+  const MANUAL_TIPS: Tip[] = [
+    { id: 6, category: "cat_weaning", title: t("tips.tip6.title"), content: t("tips.tip6.content") },
+    { id: 7, category: "cat_weaning", title: t("tips.tip7.title"), content: t("tips.tip7.content") },
+    { id: 8, category: "cat_weaning", title: t("tips.tip8.title"), content: t("tips.tip8.content") },
+    { id: 11, category: "cat_weaning", title: t("tips.tip11.title"), content: t("tips.tip11.content") },
+    { id: 17, category: "cat_weaning", title: t("tips.tip17.title"), content: t("tips.tip17.content") },
+    { id: 20, category: "cat_feeding", title: t("tips.tip20.title"), content: t("tips.tip20.content") },
+    { id: 21, category: "cat_feeding", title: t("tips.tip21.title"), content: t("tips.tip21.content") },
+    { id: 22, category: "cat_feeding", title: t("tips.tip22.title"), content: t("tips.tip22.content") },
+    { id: 26, category: "cat_feeding", title: t("tips.tip26.title"), content: t("tips.tip26.content") },
+    { id: 28, category: "cat_feeding", title: t("tips.tip28.title"), content: t("tips.tip28.content") },
+    { id: 34, category: "cat_breeding", title: t("tips.tip34.title"), content: t("tips.tip34.content") },
+    { id: 35, category: "cat_breeding", title: t("tips.tip35.title"), content: t("tips.tip35.content") },
+    { id: 39, category: "cat_breeding", title: t("tips.tip39.title"), content: t("tips.tip39.content") },
+    { id: 43, category: "cat_breeding", title: t("tips.tip43.title"), content: t("tips.tip43.content") },
+    { id: 47, category: "cat_breeding", title: t("tips.tip47.title"), content: t("tips.tip47.content") },
+    { id: 48, category: "cat_health", title: t("tips.tip48.title"), content: t("tips.tip48.content") },
+    { id: 49, category: "cat_health", title: t("tips.tip49.title"), content: t("tips.tip49.content") },
+    { id: 51, category: "cat_health", title: t("tips.tip51.title"), content: t("tips.tip51.content") },
+    { id: 55, category: "cat_health", title: t("tips.tip55.title"), content: t("tips.tip55.content") },
+    { id: 60, category: "cat_health", title: t("tips.tip60.title"), content: t("tips.tip60.content") },
+    { id: 61, category: "cat_housing", title: t("tips.tip61.title"), content: t("tips.tip61.content") },
+    { id: 62, category: "cat_housing", title: t("tips.tip62.title"), content: t("tips.tip62.content") },
+    { id: 75, category: "cat_waste", title: t("tips.tip75.title"), content: t("tips.tip75.content") },
+    { id: 76, category: "cat_waste", title: t("tips.tip76.title"), content: t("tips.tip76.content") },
+    { id: 92, category: "cat_general", title: t("tips.tip92.title"), content: t("tips.tip92.content") },
+    { id: 94, category: "cat_general", title: t("tips.tip94.title"), content: t("tips.tip94.content") }
+  ];
 
   const [videos, setVideos] = useState<TrainingVideo[]>([]);
   const [videosLoading, setVideosLoading] = useState(true);
@@ -319,7 +178,7 @@ export default function TrainingPage() {
   };
 
   const handleDeleteVideo = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this training video tutorial?")) return;
+    if (!confirm(t("confirmDelete"))) return;
     try {
       await deleteDoc(doc(db, "training_videos", id));
     } catch (err) {
@@ -368,14 +227,14 @@ export default function TrainingPage() {
           {/* Section 1: Quick Farming Tips */}
           <section className="space-y-6">
             <div className="text-center space-y-2">
-              <h2 className="text-2xl font-black text-emerald-600 uppercase tracking-tight">Quick Farming Tips</h2>
+              <h2 className="text-2xl font-black text-emerald-600 uppercase tracking-tight">{t("title")}</h2>
               <div className="h-1 w-24 bg-emerald-500 mx-auto rounded-full opacity-30" />
             </div>
 
             {/* Search and Filters */}
             <div className="space-y-4">
               <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-                {/* Horizontal scrollable categories - hidden on desktop and mobile as requested */}
+                {/* Horizontal scrollable categories */}
                 <div className="hidden lg:flex overflow-x-auto pb-2 gap-2 w-full no-scrollbar">
                   {CATEGORIES.map((cat) => (
                     <button
@@ -395,7 +254,7 @@ export default function TrainingPage() {
                 <div className="relative w-full sm:w-64">
                   <input
                     type="text"
-                    placeholder="Search tips..."
+                    placeholder={t("searchTips")}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full rounded-xl border border-zinc-200 bg-white/70 pl-9 pr-4 py-2 text-xs font-semibold focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
@@ -450,7 +309,7 @@ export default function TrainingPage() {
                   <div className="grid grid-cols-1 gap-4">
                     {getFilteredTips(activeCategory).length === 0 ? (
                       <div className="text-center py-20 bg-zinc-50/50 rounded-3xl border-2 border-dashed border-zinc-100">
-                        <p className="text-zinc-400 font-bold text-sm">No tips found matching your search.</p>
+                        <p className="text-zinc-400 font-bold text-sm">{t("noTipsFound")}</p>
                       </div>
                     ) : (
                       getFilteredTips(activeCategory).map(tip => (
@@ -472,18 +331,14 @@ export default function TrainingPage() {
           <section className="space-y-8">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="text-center sm:text-left space-y-2">
-                <h2 className="text-2xl font-black text-emerald-600 uppercase tracking-tight">Video Tutorials</h2>
+                <h2 className="text-2xl font-black text-emerald-600 uppercase tracking-tight">{t("videoTutorials")}</h2>
                 <div className="h-1 w-24 bg-emerald-500 rounded-full opacity-30 mx-auto sm:mx-0" />
               </div>
               <button
                 onClick={() => setShowAddForm(!showAddForm)}
                 className="flex items-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white shadow-lg shadow-emerald-200 transition active:scale-95"
               >
-                {showAddForm ? (
-                  <><span>✕</span> Close Form</>
-                ) : (
-                  <><span>＋</span> Add Video</>
-                )}
+                {showAddForm ? t("closeForm") : t("addVideo")}
               </button>
             </div>
 
@@ -492,7 +347,7 @@ export default function TrainingPage() {
               <form onSubmit={handleAddVideo} className="bg-zinc-50/80 backdrop-blur-sm border border-zinc-200 p-6 rounded-3xl space-y-4 shadow-inner max-w-2xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[11px] font-black text-zinc-500 uppercase mb-1.5 ml-1">Tutorial Title</label>
+                    <label className="block text-[11px] font-black text-zinc-500 uppercase mb-1.5 ml-1">{t("tutorialTitle")}</label>
                     <input
                       type="text"
                       required
@@ -503,7 +358,7 @@ export default function TrainingPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-black text-zinc-500 uppercase mb-1.5 ml-1">YouTube Link / ID</label>
+                    <label className="block text-[11px] font-black text-zinc-500 uppercase mb-1.5 ml-1">{t("youtubeLink")}</label>
                     <input
                       type="text"
                       required
@@ -519,7 +374,7 @@ export default function TrainingPage() {
                   disabled={addLoading}
                   className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black uppercase tracking-widest shadow-md transition disabled:bg-zinc-300"
                 >
-                  {addLoading ? "Saving..." : "Save Tutorial"}
+                  {addLoading ? t("saving") : t("saveTutorial")}
                 </button>
               </form>
             )}
@@ -535,7 +390,7 @@ export default function TrainingPage() {
                   </div>
                 ) : videos.length === 0 ? (
                   <div className="w-full text-center py-16 bg-zinc-50/50 rounded-3xl border-2 border-dashed border-zinc-100">
-                    <p className="text-zinc-400 font-bold text-sm">No video tutorials cataloged yet.</p>
+                    <p className="text-zinc-400 font-bold text-sm">{t("noVideos")}</p>
                   </div>
                 ) : (
                   videos.map((vid) => (
@@ -626,4 +481,3 @@ function VideoCard({ video, onDelete }: { video: TrainingVideo; onDelete: (id: s
     </div>
   );
 }
-

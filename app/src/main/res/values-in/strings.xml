@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartSwine</string>
+    <string name="weight_checker_title">PEMERIKSA BERAT</string>
+    <string name="back_button_content_description">Kembali</string>
+    <string name="important_notes_title">Catatan Penting</string>
+    <string name="weight_checker_notes">• Lingkar Dada: Ukur toraks (tepat di belakang kaki depan) pastikan pita pas di sepanjang badan dan bertemu dengan kencang (Titik B).\n• Panjang Badan: Ukur dari pangkal telinga hingga pangkal ekor pastikan pita kencang pada badan dan tidak longgar (Titik A).\n• Pastikan babi berdiri tegak di permukaan tanah yang rata untuk hasil yang paling akurat.\n</string>
+    <string name="converter_title">Konverter</string>
+    <string name="unit_lbs">Lbs</string>
+    <string name="unit_kgs">Kg</string>
+    <string name="weigh_with_tape_title">Timbang dengan Pita</string>
+    <string name="weigh_with_tape_subtitle">Estimasi berat dengan pita pengukur.</string>
+    <string name="label_length">Panjang (%1$s)</string>
+    <string name="label_girth">Lingkar (%1$s)</string>
+    <string name="unit_cm">cm</string>
+    <string name="unit_in">in</string>
+    <string name="placeholder_a">A</string>
+    <string name="placeholder_b">B</string>
+    <string name="label_estimated_live_weight">Estimasi Berat Hidup</string>
+    <string name="label_estimated_carcass_weight">Estimasi Berat Karkas</string>
+    <string name="msg_enter_measurements">Masukkan pengukuran pada diagram untuk menghitung</string>
+    <string name="pig_diagram_content_description">Panduan pengukuran babi</string>
+    <string name="weight_format">%1$.1f Kg / %2$.1f Lbs</string>
+    <string name="estimated_results">Hasil Estimasi</string>
+</resources>
