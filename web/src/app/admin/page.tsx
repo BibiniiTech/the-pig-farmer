@@ -251,10 +251,11 @@ export default function AdminPage() {
 
       <div className="relative z-10 flex flex-col min-h-screen">
         {/* Header */}
-        {!isMobile && <DesktopHeader label="Admin Panel" />}
+        {!isMobile && (
+          <header className="bg-white sticky top-0 z-50 border-b border-zinc-100">
+            <DesktopHeader label="Admin Panel" />
 
-          {/* Tabs (Desktop only) */}
-          {!isMobile && (
+            {/* Tabs (Desktop only) */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex border-t border-zinc-100">
               <button
                 onClick={() => setActiveTab("suggestions")}
@@ -284,8 +285,8 @@ export default function AdminPage() {
                 <span className="hidden sm:inline">Videos</span>
               </button>
             </div>
-          )}
-        </header>
+          </header>
+        )}
 
         {/* Mobile-only Tabs (Floating or sub-header) */}
         {isMobile && (
