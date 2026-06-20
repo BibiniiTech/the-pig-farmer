@@ -17,6 +17,30 @@ interface UserProfile {
   isKofisPerson: boolean;
   subscriptionSource?: string;
   appLanguage?: string;
+  settings?: {
+    weaningDays?: string;
+    farrowingDays?: string;
+    ironDay1?: string;
+    ironDay2?: string;
+    autoClassifyBarrows?: boolean;
+    autoClassifySows?: boolean;
+    notificationsEnabled?: boolean;
+    selectedCurrency?: string;
+    currencySymbol?: string;
+    giltAgeThresholdWeeks?: string;
+    porkerUseAge?: boolean;
+    porkerStarterAge?: string;
+    porkerGrowerAge?: string;
+    porkerStarterWeight?: string;
+    porkerGrowerWeight?: string;
+    breederUseAge?: boolean;
+    breederPigletAge?: string;
+    breederWeanerAge?: string;
+    breederGrowerAge?: string;
+    breederPigletWeight?: string;
+    breederWeanerWeight?: string;
+    breederGrowerWeight?: string;
+  };
 }
 
 interface AuthContextType {

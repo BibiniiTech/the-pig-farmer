@@ -6,7 +6,13 @@ import Link from "next/link";
 import { collection, onSnapshot, doc, setDoc, deleteDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
+import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
+import {
+  InventoryIcon,
+  ScienceIcon,
+  CalculateIcon,
+} from "@/components/icons/DashboardIcons";
 import {
   formulateFeed,
   FeedIngredient,
@@ -15,24 +21,6 @@ import {
 } from "@/lib/feedCalculator";
 
 // SVG Icons matching Android Material Icons
-const InventoryIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
-    <path d="M20 2H4c-1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 13H5v-2h14v2zm0-4H5V5h14v6z" />
-  </svg>
-);
-
-const ScienceIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
-    <path d="M19.79 16.26L14 8.53V4h1c.55 0 1-.45 1-1s-.45-1-1-1h-6c-.55 0-1 .45-1 1s.45 1 1 1h1v4.53L3.2 16.26C2.65 17 3.15 18 4 18h16c.85 0 1.35-1 .79-1.74zM7.4 16L11 11.2V4h2v7.2l3.6 4.8H7.4z" />
-  </svg>
-);
-
-const CalculateIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
-    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 4v2H7V7h4zm0 4v2H7v-2h4zm8 8h-4v-2h4v2zm0-4h-4v-2h4v2zm0-4h-4V7h4v2zm-8 8H7v-2h4v2z" />
-  </svg>
-);
-
 const PrintIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
     <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z" />
@@ -89,7 +77,8 @@ const defaultRequirements: NutritionalRequirement[] = [
 ];
 
 export default function FeedPage() {
-  const { user, activeFarmUid, loading } = useAuth();
+  const { user, activeFarmUid, loading, userProfile } = useAuth();
+  const { isMobile } = useDevice();
   const router = useRouter();
 
   // Tab State: "inventory" | "formulator" | "calculator"
@@ -134,9 +123,9 @@ export default function FeedPage() {
   const [formulatorError, setFormulatorError] = useState<string | null>(null);
 
   // Collapses
-  const [energyCollapsed, setEnergyCollapsed] = useState(false);
-  const [proteinCollapsed, setProteinCollapsed] = useState(false);
-  const [mineralsCollapsed, setMineralsCollapsed] = useState(false);
+  const [energyCollapsed, setEnergyCollapsed] = useState(true);
+  const [proteinCollapsed, setProteinCollapsed] = useState(true);
+  const [mineralsCollapsed, setMineralsCollapsed] = useState(true);
 
   // ==================== CALCULATOR STATES ====================
   const [sowsCount, setSowsCount] = useState(0);
@@ -550,16 +539,16 @@ export default function FeedPage() {
 
     return (
       <div className="bg-zinc-50/75 backdrop-blur-md border border-zinc-200 rounded-xl overflow-hidden shadow-sm">
-        <div className="bg-zinc-100/60 px-4 py-3 flex items-center justify-between border-b border-zinc-200/50">
-          <button
-            type="button"
-            onClick={() => setCollapsed(!collapsed)}
-            className="flex items-center gap-2 font-bold text-zinc-800 text-xs"
-          >
+        <button
+          type="button"
+          onClick={() => setCollapsed(!collapsed)}
+          className="w-full bg-zinc-100/60 px-4 py-3 flex items-center justify-between border-b border-zinc-200/50 hover:bg-zinc-200/60 transition-colors"
+        >
+          <div className="flex items-center gap-2 font-bold text-zinc-800 text-xs">
             <span>{collapsed ? "▶" : "▼"}</span>
             <span>{category} ({list.length})</span>
-          </button>
-        </div>
+          </div>
+        </button>
         {!collapsed && (
           <div className="p-3 space-y-2 divide-y divide-zinc-100">
             {list.length === 0 ? (
@@ -597,29 +586,33 @@ export default function FeedPage() {
   return (
     <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
       {/* Watermark Logo Background */}
-      <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
-        <img
-          src="/app_logo.png"
-          alt="Watermark Background Logo"
-          className="w-full max-w-[1100px] max-h-[85vh] object-contain"
-        />
-      </div>
+      {!isMobile && (
+        <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
+          <img
+            src="/app_logo.png"
+            alt="Watermark Background Logo"
+            className="w-full max-w-[1100px] max-h-[85vh] object-contain"
+          />
+        </div>
+      )}
 
       <div className="relative z-10 flex flex-col min-h-screen print:hidden">
-        <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
-              <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
-                SmartSwine
-              </span>
-            </Link>
+        {!isMobile && (
+          <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+            <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+              <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
+                <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+                <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                  SmartSwine
+                </span>
+              </Link>
 
-            <div className="flex items-center gap-2">
-              <NavbarDropdown />
+              <div className="flex items-center gap-2">
+                <NavbarDropdown />
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
+        )}
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-12 print:p-0">
 

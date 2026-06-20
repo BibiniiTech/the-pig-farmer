@@ -18,6 +18,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
+import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
 import {
   ChevronLeftIcon,
@@ -91,6 +92,7 @@ interface TrainingVideo {
 
 export default function AdminPage() {
   const { userProfile, loading } = useAuth();
+  const { isMobile } = useDevice();
   const router = useRouter();
 
   const [activeTab, setActiveTab] = useState<"suggestions" | "ingredients" | "videos">("suggestions");
@@ -235,62 +237,96 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900 font-sans pb-20 overflow-hidden">
       {/* Watermark Logo Background */}
-      <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.05] pointer-events-none select-none">
-        <img
-          src="/app_logo.png"
-          alt="Watermark Background Logo"
-          className="w-full max-w-[1100px] max-h-[85vh] object-contain"
-        />
-      </div>
+      {!isMobile && (
+        <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.05] pointer-events-none select-none">
+          <img
+            src="/app_logo.png"
+            alt="Watermark Background Logo"
+            className="w-full max-w-[1100px] max-h-[85vh] object-contain"
+          />
+        </div>
+      )}
 
       <div className="relative z-10 flex flex-col min-h-screen">
         {/* Header */}
-        <header className="bg-white/80 backdrop-blur-md border-b border-zinc-200 sticky top-0 z-40">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
-              <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
-                SmartSwine
-              </span>
-            </Link>
+        {!isMobile && (
+          <header className="bg-white/80 backdrop-blur-md border-b border-zinc-200 sticky top-0 z-40">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+              <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
+                <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+                <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                  SmartSwine
+                </span>
+              </Link>
 
-            <div className="flex items-center gap-4">
-              <h1 className="text-[10px] font-black text-zinc-400 tracking-widest mr-2">ADMIN PANEL</h1>
-              <NavbarDropdown />
+              <div className="flex items-center gap-4">
+                <h1 className="text-[10px] font-black text-zinc-400 tracking-widest mr-2">ADMIN PANEL</h1>
+                <NavbarDropdown />
+              </div>
             </div>
-          </div>
 
-        {/* Tabs */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex border-t border-zinc-100">
-          <button
-            onClick={() => setActiveTab("suggestions")}
-            className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 border-b-2 transition ${
-              activeTab === "suggestions" ? "border-emerald-500 text-emerald-600" : "border-transparent text-zinc-500 hover:text-zinc-700"
-            }`}
-          >
-            <StorefrontIcon className="h-5 w-5" />
-            <span className="hidden sm:inline">Suggestions</span>
-          </button>
-          <button
-            onClick={() => setActiveTab("ingredients")}
-            className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 border-b-2 transition ${
-              activeTab === "ingredients" ? "border-emerald-500 text-emerald-600" : "border-transparent text-zinc-500 hover:text-zinc-700"
-            }`}
-          >
-            <ListIcon className="h-5 w-5" />
-            <span className="hidden sm:inline">Ingredients</span>
-          </button>
-          <button
-            onClick={() => setActiveTab("videos")}
-            className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 border-b-2 transition ${
-              activeTab === "videos" ? "border-emerald-500 text-emerald-600" : "border-transparent text-zinc-500 hover:text-zinc-700"
-            }`}
-          >
-            <PlayCircleIcon className="h-5 w-5" />
-            <span className="hidden sm:inline">Videos</span>
-          </button>
-        </div>
-      </header>
+            {/* Tabs */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex border-t border-zinc-100">
+              <button
+                onClick={() => setActiveTab("suggestions")}
+                className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 border-b-2 transition ${
+                  activeTab === "suggestions" ? "border-emerald-500 text-emerald-600" : "border-transparent text-zinc-500 hover:text-zinc-700"
+                }`}
+              >
+                <StorefrontIcon className="h-5 w-5" />
+                <span className="hidden sm:inline">Suggestions</span>
+              </button>
+              <button
+                onClick={() => setActiveTab("ingredients")}
+                className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 border-b-2 transition ${
+                  activeTab === "ingredients" ? "border-emerald-500 text-emerald-600" : "border-transparent text-zinc-500 hover:text-zinc-700"
+                }`}
+              >
+                <ListIcon className="h-5 w-5" />
+                <span className="hidden sm:inline">Ingredients</span>
+              </button>
+              <button
+                onClick={() => setActiveTab("videos")}
+                className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 border-b-2 transition ${
+                  activeTab === "videos" ? "border-emerald-500 text-emerald-600" : "border-transparent text-zinc-500 hover:text-zinc-700"
+                }`}
+              >
+                <PlayCircleIcon className="h-5 w-5" />
+                <span className="hidden sm:inline">Videos</span>
+              </button>
+            </div>
+          </header>
+        )}
+
+        {/* Mobile-only Tabs (Floating or sub-header) */}
+        {isMobile && (
+          <div className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-zinc-100 flex shadow-sm">
+            <button
+              onClick={() => setActiveTab("suggestions")}
+              className={`flex-1 py-3 text-[10px] font-black uppercase tracking-widest transition ${
+                activeTab === "suggestions" ? "text-emerald-600 border-b-2 border-emerald-500" : "text-zinc-400"
+              }`}
+            >
+              Suggestions
+            </button>
+            <button
+              onClick={() => setActiveTab("ingredients")}
+              className={`flex-1 py-3 text-[10px] font-black uppercase tracking-widest transition ${
+                activeTab === "ingredients" ? "text-emerald-600 border-b-2 border-emerald-500" : "text-zinc-400"
+              }`}
+            >
+              Ingredients
+            </button>
+            <button
+              onClick={() => setActiveTab("videos")}
+              className={`flex-1 py-3 text-[10px] font-black uppercase tracking-widest transition ${
+                activeTab === "videos" ? "text-emerald-600 border-b-2 border-emerald-500" : "text-zinc-400"
+              }`}
+            >
+              Videos
+            </button>
+          </div>
+        )}
 
         <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeTab === "suggestions" && (

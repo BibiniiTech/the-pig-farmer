@@ -69,7 +69,7 @@ export default function NavbarDropdown() {
       {/* Dropdown Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="inline-flex items-center gap-2 px-3 py-1.5 bg-zinc-150/70 hover:bg-zinc-200/80 border border-zinc-200 rounded-xl text-xs font-bold text-zinc-800 transition duration-300 shadow-sm focus:outline-none select-none"
+        className="inline-flex items-center gap-2 h-10 px-4 bg-zinc-150/70 hover:bg-zinc-200/80 border border-zinc-200 rounded-xl text-xs font-bold text-zinc-800 transition duration-300 shadow-sm focus:outline-none select-none lg:min-w-[160px]"
       >
         <currentOption.icon className="h-4 w-4 text-zinc-650" />
         <span>{currentOption.label}</span>

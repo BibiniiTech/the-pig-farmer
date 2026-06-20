@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
 
 // Severity Enums
@@ -1193,10 +1194,11 @@ const DISEASES: Disease[] = [
 
 export default function SymptomsPage() {
   const { user, userProfile, loading } = useAuth();
+  const { isMobile } = useDevice();
   const router = useRouter();
 
   const [selectedSymptoms, setSelectedSymptoms] = useState<Set<string>>(new Set());
-  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set(["sg_skin_coat"]));
+  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
   const [diagnosisResults, setDiagnosisResults] = useState<{ disease: Disease; matches: number; matchPercent: number }[]>([]);
   const [hasAnalyzed, setHasAnalyzed] = useState(false);
   const [expandedDisease, setExpandedDisease] = useState<string | null>(null);
@@ -1265,30 +1267,34 @@ export default function SymptomsPage() {
   return (
     <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
       {/* Watermark Logo Background */}
-      <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
-        <img
-          src="/app_logo.png"
-          alt="Watermark Background Logo"
-          className="w-full max-w-[1100px] max-h-[85vh] object-contain"
-        />
-      </div>
+      {!isMobile && (
+        <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
+          <img
+            src="/app_logo.png"
+            alt="Watermark Background Logo"
+            className="w-full max-w-[1100px] max-h-[85vh] object-contain"
+          />
+        </div>
+      )}
 
       <div className="relative z-10 flex flex-col min-h-screen">
         {/* Header */}
-        <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
-              <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
-                SmartSwine
-              </span>
-            </Link>
+        {!isMobile && (
+          <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+            <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+              <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
+                <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+                <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                  SmartSwine
+                </span>
+              </Link>
 
-            <div className="flex items-center gap-2">
-              <NavbarDropdown />
+              <div className="flex items-center gap-2">
+                <NavbarDropdown />
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
+        )}
 
         {/* Content */}
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -1339,7 +1345,7 @@ export default function SymptomsPage() {
                                   readOnly
                                   className="mt-1 h-3.5 w-3.5 rounded text-emerald-600 border-zinc-300 focus:ring-emerald-500 pointer-events-none"
                                 />
-                                <div className="text-[11px] font-semibold leading-relaxed">
+                                <div className="text-sm font-semibold leading-relaxed">
                                   {SYMPTOMS[sKey] || sKey}
                                 </div>
                               </label>

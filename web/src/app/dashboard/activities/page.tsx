@@ -6,6 +6,7 @@ import Link from "next/link";
 import { collection, onSnapshot, doc, setDoc, writeBatch, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
+import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
 import {
   HeatIcon,
@@ -78,8 +79,11 @@ const calculateAgeMonths = (birthDateStr?: string) => {
 };
 
 export default function HerdActivitiesPage() {
-  const { user, activeFarmUid, loading } = useAuth();
+  const { user, userProfile, activeFarmUid, loading } = useAuth();
+  const { isMobile } = useDevice();
   const router = useRouter();
+
+  const currencySymbol = userProfile?.settings?.currencySymbol || "$";
 
   const [pigs, setPigs] = useState<Pig[]>([]);
   const [dataLoading, setDataLoading] = useState(true);
@@ -574,7 +578,7 @@ export default function HerdActivitiesPage() {
               date: logDate,
               description: `Sold Culled Pig: ${pig.tagNumber}`
             });
-            finalDescription = `${notes}\nCulled (Sold) for: Ksh ${individualPrice}`.trim();
+            finalDescription = `${notes}\nCulled (Sold) for: ${currencySymbol} ${individualPrice}`.trim();
           } else {
             finalDescription = `${notes}\nCulled reason: ${cullingReason}`.trim();
           }
@@ -635,28 +639,32 @@ export default function HerdActivitiesPage() {
   return (
     <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
       {/* Watermark Logo Background */}
-      <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
-        <img
-          src="/app_logo.png"
-          alt="Watermark Background Logo"
-          className="w-full max-w-[1100px] max-h-[85vh] object-contain"
-        />
-      </div>
+      {!isMobile && (
+        <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
+          <img
+            src="/app_logo.png"
+            alt="Watermark Background Logo"
+            className="w-full max-w-[1100px] max-h-[85vh] object-contain"
+          />
+        </div>
+      )}
 
       <div className="relative z-10 flex flex-col min-h-screen">
-        <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
-              <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
-                SmartSwine
-              </span>
-            </Link>
-            <div className="flex items-center gap-2">
-              <NavbarDropdown />
+        {!isMobile && (
+          <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+            <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+              <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
+                <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+                <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                  SmartSwine
+                </span>
+              </Link>
+              <div className="flex items-center gap-2">
+                <NavbarDropdown />
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
+        )}
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
           <div className="space-y-1">
@@ -934,7 +942,7 @@ export default function HerdActivitiesPage() {
                   </div>
                   {cullingReason === "Sold" && selectedPigIds.length > 0 && (
                     <div>
-                      <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Total Sale Price ($)</label>
+                      <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Total Sale Price ({currencySymbol})</label>
                       <input
                         type="number"
                         step="any"
@@ -1032,7 +1040,7 @@ export default function HerdActivitiesPage() {
               {/* Individual Sale Price Inputs for Culling */}
               {selectedActivity.type === "Culling" && cullingReason === "Sold" && selectedPigIds.length > 1 && (
                 <div className="space-y-2.5 border-t border-zinc-100 pt-3">
-                  <h4 className="text-xs font-bold text-zinc-700">Sale Prices ($)</h4>
+                  <h4 className="text-xs font-bold text-zinc-700">Sale Prices ({currencySymbol})</h4>
                   {selectedPigIds.map(pigId => {
                     const pig = pigs.find(p => p.id === pigId);
                     if (!pig) return null;

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { collection, onSnapshot, doc, setDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
+import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
 import { evaluatePerformance, calculateAgeMonths } from "@/lib/swineGrowthDatabase";
 
@@ -60,6 +61,7 @@ const ArchiveIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export default function HerdPage() {
   const { user, activeFarmUid, loading } = useAuth();
+  const { isMobile } = useDevice();
   const router = useRouter();
 
   const [pigs, setPigs] = useState<Pig[]>([]);
@@ -372,29 +374,33 @@ export default function HerdPage() {
   return (
     <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
       {/* Watermark Logo Background */}
-      <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
-        <img
-          src="/app_logo.png"
-          alt="Watermark Background Logo"
-          className="w-full max-w-[1100px] max-h-[85vh] object-contain"
-        />
-      </div>
+      {!isMobile && (
+        <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
+          <img
+            src="/app_logo.png"
+            alt="Watermark Background Logo"
+            className="w-full max-w-[1100px] max-h-[85vh] object-contain"
+          />
+        </div>
+      )}
 
       <div className="relative z-10 flex flex-col min-h-screen">
-        <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
-              <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
-                SmartSwine
-              </span>
-            </Link>
+        {!isMobile && (
+          <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+            <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+              <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
+                <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+                <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                  SmartSwine
+                </span>
+              </Link>
 
-            <div className="flex items-center gap-2">
-              <NavbarDropdown />
+              <div className="flex items-center gap-2">
+                <NavbarDropdown />
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
+        )}
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-8">
           {/* Herd Summary Stats Card (StatsRibbon) */}

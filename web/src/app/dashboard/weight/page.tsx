@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { collection, onSnapshot, doc, updateDoc, setDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
+import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
 import { ScaleIcon, InfoIcon } from "@/components/icons/DashboardIcons";
 
@@ -21,6 +22,7 @@ interface Pig {
 
 export default function WeightCheckerPage() {
   const { user, activeFarmUid, loading } = useAuth();
+  const { isMobile } = useDevice();
   const router = useRouter();
 
   const [pigs, setPigs] = useState<Pig[]>([]);
@@ -205,30 +207,34 @@ export default function WeightCheckerPage() {
   return (
     <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
       {/* Watermark Logo Background */}
-      <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
-        <img
-          src="/app_logo.png"
-          alt="Watermark Background Logo"
-          className="w-full max-w-[1100px] max-h-[85vh] object-contain"
-        />
-      </div>
+      {!isMobile && (
+        <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
+          <img
+            src="/app_logo.png"
+            alt="Watermark Background Logo"
+            className="w-full max-w-[1100px] max-h-[85vh] object-contain"
+          />
+        </div>
+      )}
 
       <div className="relative z-10 flex flex-col min-h-screen">
         {/* Header */}
-        <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
-              <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
-                SmartSwine
-              </span>
-            </Link>
+        {!isMobile && (
+          <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+            <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+              <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
+                <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+                <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                  SmartSwine
+                </span>
+              </Link>
 
-            <div className="flex items-center gap-2">
-              <NavbarDropdown />
+              <div className="flex items-center gap-2">
+                <NavbarDropdown />
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
+        )}
 
         {/* Content Body */}
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -242,12 +248,12 @@ export default function WeightCheckerPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left Column: Tape Calculator (Span 7) */}
             <div className="lg:col-span-7 bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-6">
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col gap-4">
                 <h3 className="text-base font-bold text-zinc-900 flex items-center gap-2">
                   <span>📏</span> Weigh with Tape
                 </h3>
                 {/* Unit selector */}
-                <div className="inline-flex rounded-lg border border-zinc-200 bg-zinc-50 p-1">
+                <div className="inline-flex w-fit rounded-lg border border-zinc-200 bg-zinc-50 p-1">
                   <button
                     onClick={() => setUnit("in")}
                     className={`px-3 py-1 text-xs font-bold rounded-md transition ${
@@ -271,21 +277,6 @@ export default function WeightCheckerPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-zinc-650 mb-1.5">
-                    B = Heart Girth ({unit === "in" ? "inches" : "cm"})
-                  </label>
-                  <input
-                    type="number"
-                    step="any"
-                    placeholder={`e.g. ${unit === "in" ? "42" : "106"}`}
-                    value={girth}
-                    onChange={(e) => setGirth(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-200 bg-white/70 px-4 py-2.5 text-xs font-semibold focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
-                  />
-                  <p className="text-[10px] text-zinc-400 mt-1">Measure the circumference of the chest directly behind front legs.</p>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-zinc-650 mb-1.5">
                     A = Body Length ({unit === "in" ? "inches" : "cm"})
                   </label>
                   <input
@@ -297,6 +288,21 @@ export default function WeightCheckerPage() {
                     className="w-full rounded-xl border border-zinc-200 bg-white/70 px-4 py-2.5 text-xs font-semibold focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
                   />
                   <p className="text-[10px] text-zinc-400 mt-1">Measure from the base of the ears to the base of the tail.</p>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-zinc-650 mb-1.5">
+                    B = Heart Girth ({unit === "in" ? "inches" : "cm"})
+                  </label>
+                  <input
+                    type="number"
+                    step="any"
+                    placeholder={`e.g. ${unit === "in" ? "42" : "106"}`}
+                    value={girth}
+                    onChange={(e) => setGirth(e.target.value)}
+                    className="w-full rounded-xl border border-zinc-200 bg-white/70 px-4 py-2.5 text-xs font-semibold focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  />
+                  <p className="text-[10px] text-zinc-400 mt-1">Measure the circumference of the chest directly behind front legs.</p>
                 </div>
               </div>
 
@@ -310,7 +316,7 @@ export default function WeightCheckerPage() {
                   }`}
                 />
                 <div className="text-[10px] text-zinc-500 font-bold text-center mt-2">
-                  Measure Girth (Point B) and Length (Point A) as shown above.
+                  Measure Length (Point A) and Girth (Point B) as shown above.
                 </div>
               </div>
 
@@ -433,10 +439,10 @@ export default function WeightCheckerPage() {
                 </div>
                 <div className="space-y-3 text-xs text-zinc-600 leading-relaxed text-justify">
                   <p>
-                    <span className="font-bold text-zinc-800">Heart Girth:</span> Measure the thorax (just behind the front legs) making sure the tape is fit along the body and meets tightly (Point B).
+                    <span className="font-bold text-zinc-800">Body Length:</span> Measure from the base of the ears to the base of the tail making sure the tape is firm on the body and not loose (Point A).
                   </p>
                   <p>
-                    <span className="font-bold text-zinc-800">Body Length:</span> Measure from the base of the ears to the base of the tail making sure the tape is firm on the body and not loose (Point A).
+                    <span className="font-bold text-zinc-800">Heart Girth:</span> Measure the thorax (just behind the front legs) making sure the tape is fit along the body and meets tightly (Point B).
                   </p>
                   <p>
                     Ensure the pig is standing squarely on level ground for the most accurate result.

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { doc, onSnapshot, updateDoc, collection, setDoc, deleteDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
+import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
 
 interface Pig {
@@ -39,6 +40,7 @@ interface HealthRecord {
 
 export default function PigProfilePage() {
   const { user, activeFarmUid, loading } = useAuth();
+  const { isMobile } = useDevice();
   const router = useRouter();
   const params = useParams();
   const pigId = params?.id as string;
@@ -180,29 +182,44 @@ export default function PigProfilePage() {
   return (
     <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
       {/* Watermark Logo Background */}
-      <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
-        <img
-          src="/app_logo.png"
-          alt="Watermark Background Logo"
-          className="w-full max-w-[1100px] max-h-[85vh] object-contain"
-        />
-      </div>
+      {!isMobile && (
+        <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
+          <img
+            src="/app_logo.png"
+            alt="Watermark Background Logo"
+            className="w-full max-w-[1100px] max-h-[85vh] object-contain"
+          />
+        </div>
+      )}
 
       <div className="relative z-10 flex flex-col min-h-screen">
-        <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
-              <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
-                SmartSwine
-              </span>
-            </Link>
+        {!isMobile && (
+          <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+            <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={() => router.push("/dashboard/herd")}
+                  className="p-2 hover:bg-zinc-100 rounded-lg transition-colors text-zinc-600"
+                  aria-label="Back to Herd"
+                >
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
+                  <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+                  <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                    SmartSwine
+                  </span>
+                </Link>
+              </div>
 
-            <div className="flex items-center gap-2">
-              <NavbarDropdown />
+              <div className="flex items-center gap-2">
+                <NavbarDropdown />
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
+        )}
 
         <main className="flex-1 max-w-4xl w-full mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-12 gap-8">
           {/* Left Side: Summary Card */}
@@ -216,35 +233,35 @@ export default function PigProfilePage() {
               </div>
 
               <div className="divide-y divide-zinc-100 text-sm">
-                <div className="py-2.5 flex justify-between">
+                <div className="py-1.5 flex justify-between">
                   <span className="text-zinc-500">Gender</span>
                   <span className="font-semibold">{pig.gender}</span>
                 </div>
-                <div className="py-2.5 flex justify-between">
+                <div className="py-1.5 flex justify-between">
                   <span className="text-zinc-500">Purpose</span>
                   <span className="font-semibold">{pig.purpose}</span>
                 </div>
-                <div className="py-2.5 flex justify-between">
+                <div className="py-1.5 flex justify-between">
                   <span className="text-zinc-500">Current Status</span>
                   <span className="font-semibold text-emerald-700">{pig.status}</span>
                 </div>
-                <div className="py-2.5 flex justify-between">
+                <div className="py-1.5 flex justify-between">
                   <span className="text-zinc-500">Weight</span>
                   <span className="font-semibold">{pig.weight} kg</span>
                 </div>
-                <div className="py-2.5 flex justify-between">
+                <div className="py-1.5 flex justify-between">
                   <span className="text-zinc-500">Location</span>
                   <span className="font-semibold">{pig.location || "Unassigned"}</span>
                 </div>
-                <div className="py-2.5 flex justify-between">
+                <div className="py-1.5 flex justify-between">
                   <span className="text-zinc-500">Birth Date</span>
                   <span className="font-semibold">{pig.birthDate}</span>
                 </div>
-                <div className="py-2.5 flex justify-between">
+                <div className="py-1.5 flex justify-between">
                   <span className="text-zinc-500">Sow Tag</span>
                   <span className="font-semibold font-mono">{pig.sowTag || "N/A"}</span>
                 </div>
-                <div className="py-2.5 flex justify-between">
+                <div className="py-1.5 flex justify-between">
                   <span className="text-zinc-500">Boar Tag</span>
                   <span className="font-semibold font-mono">{pig.boarTag || "N/A"}</span>
                 </div>

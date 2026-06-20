@@ -6,6 +6,7 @@ import Link from "next/link";
 import { collection, onSnapshot, doc, setDoc, deleteDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
+import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
 
 interface FinancialRecord {
@@ -24,8 +25,11 @@ interface Pig {
 }
 
 export default function FinancialsPage() {
-  const { user, activeFarmUid, loading } = useAuth();
+  const { user, userProfile, activeFarmUid, loading } = useAuth();
+  const { isMobile } = useDevice();
   const router = useRouter();
+
+  const currencySymbol = userProfile?.settings?.currencySymbol || "$";
 
   const [records, setRecords] = useState<FinancialRecord[]>([]);
   const [pigs, setPigs] = useState<Pig[]>([]);
@@ -137,29 +141,33 @@ export default function FinancialsPage() {
   return (
     <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
       {/* Watermark Logo Background */}
-      <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
-        <img
-          src="/app_logo.png"
-          alt="Watermark Background Logo"
-          className="w-full max-w-[1100px] max-h-[85vh] object-contain"
-        />
-      </div>
+      {!isMobile && (
+        <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
+          <img
+            src="/app_logo.png"
+            alt="Watermark Background Logo"
+            className="w-full max-w-[1100px] max-h-[85vh] object-contain"
+          />
+        </div>
+      )}
 
       <div className="relative z-10 flex flex-col min-h-screen">
-        <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
-              <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
-              <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
-                SmartSwine
-              </span>
-            </Link>
+        {!isMobile && (
+          <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+            <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+              <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
+                <img src="/app_logo.png" alt="SmartSwine Logo" className="h-8 w-8 object-contain rounded-md" />
+                <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 inline-block">
+                  SmartSwine
+                </span>
+              </Link>
 
-            <div className="flex items-center gap-2">
-              <NavbarDropdown />
+              <div className="flex items-center gap-2">
+                <NavbarDropdown />
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
+        )}
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
           {/* Dashboard balance summaries */}
@@ -171,7 +179,7 @@ export default function FinancialsPage() {
             ].map((stat, i) => (
               <div key={i} className={`backdrop-blur-md border rounded-2xl p-6 shadow-sm bg-white/60 ${stat.color}`}>
                 <p className="text-xs font-bold uppercase tracking-wider">{stat.label}</p>
-                <p className="text-3xl font-black mt-2">${stat.amount.toFixed(2)}</p>
+                <p className="text-3xl font-black mt-2">{currencySymbol}{stat.amount.toFixed(2)}</p>
               </div>
             ))}
           </div>
@@ -196,57 +204,103 @@ export default function FinancialsPage() {
             ) : records.length === 0 ? (
               <p className="text-sm text-zinc-500 text-center py-12">No transactions recorded yet.</p>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-zinc-200 text-sm">
-                  <thead>
-                    <tr className="text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider border-b border-zinc-200">
-                      <th className="pb-3">Date</th>
-                      <th className="pb-3">Type</th>
-                      <th className="pb-3">Category</th>
-                      <th className="pb-3">Description</th>
-                      <th className="pb-3">Linked Pig</th>
-                      <th className="pb-3 text-right">Amount</th>
-                      <th className="pb-3 text-right">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-zinc-150">
-                    {records.map(record => {
-                      const linkedPig = pigs.find(p => p.id === record.pigId);
-                      return (
-                        <tr key={record.id}>
-                          <td className="py-4 font-mono text-zinc-500">{record.date}</td>
-                          <td className="py-4">
-                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                              record.type === "Income" ? "bg-emerald-50 text-emerald-800 border border-emerald-100" : "bg-rose-50 text-rose-800 border border-rose-100"
+              <>
+                {/* Desktop Table View */}
+                <div className="hidden sm:block overflow-x-auto">
+                  <table className="min-w-full divide-y divide-zinc-200 text-sm">
+                    <thead>
+                      <tr className="text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider border-b border-zinc-200">
+                        <th className="pb-3">Date</th>
+                        <th className="pb-3">Type</th>
+                        <th className="pb-3">Category</th>
+                        <th className="pb-3">Description</th>
+                        <th className="pb-3">Linked Pig</th>
+                        <th className="pb-3 text-right">Amount</th>
+                        <th className="pb-3 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-zinc-150">
+                      {records.map(record => {
+                        const linkedPig = pigs.find(p => p.id === record.pigId);
+                        return (
+                          <tr key={record.id}>
+                            <td className="py-4 font-mono text-zinc-500">{record.date}</td>
+                            <td className="py-4">
+                              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                                record.type === "Income" ? "bg-emerald-50 text-emerald-800 border border-emerald-100" : "bg-rose-50 text-rose-800 border border-rose-100"
+                              }`}>
+                                {record.type}
+                              </span>
+                            </td>
+                            <td className="py-4 font-semibold text-zinc-800">{record.category}</td>
+                            <td className="py-4 text-zinc-500">{record.description}</td>
+                            <td className="py-4 text-zinc-600 font-mono">
+                              {linkedPig ? (
+                                <Link href={`/dashboard/herd/${record.pigId}`} className="text-emerald-700 hover:underline">
+                                  {linkedPig.tagNumber}
+                                </Link>
+                              ) : "N/A"}
+                            </td>
+                            <td className={`py-4 text-right font-bold font-mono ${
+                              record.type === "Income" ? "text-emerald-700" : "text-rose-700"
                             }`}>
-                              {record.type}
-                            </span>
-                          </td>
-                          <td className="py-4 font-semibold text-zinc-800">{record.category}</td>
-                          <td className="py-4 text-zinc-500">{record.description}</td>
-                          <td className="py-4 text-zinc-600 font-mono">
+                              {record.type === "Income" ? "+" : "-"}{currencySymbol}{record.amount.toFixed(2)}
+                            </td>
+                            <td className="py-4 text-right font-medium">
+                              <button onClick={() => handleDeleteRecord(record.id)} className="text-xs text-rose-600 hover:underline">
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Mobile Card View */}
+                <div className="sm:hidden space-y-4">
+                  {records.map(record => {
+                    const linkedPig = pigs.find(p => p.id === record.pigId);
+                    return (
+                      <div key={record.id} className="p-4 rounded-xl border border-zinc-100 bg-zinc-50/50 space-y-3 relative overflow-hidden">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <p className="text-[10px] font-bold text-zinc-400 font-mono">{record.date}</p>
+                            <h4 className="font-bold text-zinc-900">{record.category}</h4>
+                          </div>
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                            record.type === "Income" ? "bg-emerald-50 text-emerald-800 border border-emerald-100" : "bg-rose-50 text-rose-800 border border-rose-100"
+                          }`}>
+                            {record.type}
+                          </span>
+                        </div>
+
+                        <p className="text-xs text-zinc-600 leading-relaxed">{record.description}</p>
+
+                        <div className="flex justify-between items-end border-t border-zinc-100 pt-3">
+                          <div className="text-[10px]">
+                            <span className="text-zinc-400 font-semibold uppercase">Linked Pig: </span>
                             {linkedPig ? (
-                              <Link href={`/dashboard/herd/${record.pigId}`} className="text-emerald-700 hover:underline">
+                              <Link href={`/dashboard/herd/${record.pigId}`} className="text-emerald-700 font-bold hover:underline">
                                 {linkedPig.tagNumber}
                               </Link>
-                            ) : "N/A"}
-                          </td>
-                          <td className={`py-4 text-right font-bold font-mono ${
-                            record.type === "Income" ? "text-emerald-700" : "text-rose-700"
-                          }`}>
-                            {record.type === "Income" ? "+" : "-"}${record.amount.toFixed(2)}
-                          </td>
-                          <td className="py-4 text-right font-medium">
-                            <button onClick={() => handleDeleteRecord(record.id)} className="text-xs text-rose-600 hover:underline">
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
+                            ) : <span className="text-zinc-500 font-bold">N/A</span>}
+                          </div>
+                          <div className="text-right">
+                             <p className={`text-sm font-black font-mono ${record.type === "Income" ? "text-emerald-700" : "text-rose-700"}`}>
+                                {record.type === "Income" ? "+" : "-"}{currencySymbol}{record.amount.toFixed(2)}
+                             </p>
+                             <button onClick={() => handleDeleteRecord(record.id)} className="text-[10px] font-bold text-rose-500 mt-1 uppercase tracking-tight">
+                                Delete Entry
+                             </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
             )}
           </div>
         </main>
@@ -302,7 +356,7 @@ export default function FinancialsPage() {
 
               <div className={type === "Income" && category === "Pig Sale" ? "grid grid-cols-2 gap-4" : "grid grid-cols-1 gap-4"}>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Amount ($)</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Amount ({currencySymbol})</label>
                   <input
                     type="number"
                     step="any"
