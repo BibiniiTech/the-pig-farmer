@@ -22,7 +22,7 @@ export default function BillingPage() {
 
   const MONTHLY_PLAN_CODE = process.env.NEXT_PUBLIC_PAYSTACK_MONTHLY_PLAN_CODE || "PLN_0fhg14kc86tn8qs";
   const ANNUAL_PLAN_CODE = process.env.NEXT_PUBLIC_PAYSTACK_ANNUAL_PLAN_CODE || "PLN_sk44tcyegocprdu";
-  const PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "pk_live_80c6263d2d5499da137d63269d25aa45959b33e3";
+  const PUBLIC_KEY = (process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "pk_live_80c6263d2d5499da137d63269d25aa45959b33e3").replace(/['"]/g, "").trim();
 
   useEffect(() => {
     if (!loading && !user) {
