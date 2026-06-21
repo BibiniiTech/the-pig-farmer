@@ -11,6 +11,7 @@ import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import { useTranslations } from "next-intl";
+import { calculateAgeMonths } from "@/lib/swineGrowthDatabase";
 import {
   HeatIcon,
   BreedingIcon,
@@ -53,16 +54,6 @@ const addDays = (dateStr: string, days: number) => {
   result.setDate(result.getDate() + days);
   return result.toISOString().split("T")[0];
 };
-
-const calculateAgeMonths = (birthDateStr?: string) => {
-  if (!birthDateStr) return 0;
-  const birthDate = new Date(birthDateStr);
-  if (isNaN(birthDate.getTime())) return 0;
-  const now = new Date();
-  const diffTime = now.getTime() - birthDate.getTime();
-  return diffTime / (1000 * 60 * 60 * 24 * 30.417);
-};
-
 export default function HerdActivitiesPage() {
   const t = useTranslations("Activities");
   const { user, userProfile, activeFarmUid, loading } = useAuth();

@@ -57,7 +57,66 @@ const countryToCurrency: Record<string, CurrencyInfo> = {
   "namibia": { code: "NAD", symbol: "$" },
 };
 
+export const SUPPORTED_COUNTRIES: string[] = [
+  "Australia",
+  "Benin",
+  "Botswana",
+  "Brazil",
+  "Burkina Faso",
+  "Burundi",
+  "Cameroon",
+  "Canada",
+  "Central African Republic",
+  "Chad",
+  "China",
+  "Congo",
+  "Equatorial Guinea",
+  "Ethiopia",
+  "France",
+  "Gabon",
+  "Gambia",
+  "Germany",
+  "Ghana",
+  "India",
+  "Ireland",
+  "Italy",
+  "Ivory Coast",
+  "Kenya",
+  "Liberia",
+  "Malawi",
+  "Mali",
+  "Mexico",
+  "Namibia",
+  "Netherlands",
+  "New Zealand",
+  "Niger",
+  "Nigeria",
+  "Philippines",
+  "Portugal",
+  "Rwanda",
+  "Senegal",
+  "Sierra Leone",
+  "South Africa",
+  "Spain",
+  "Tanzania",
+  "Thailand",
+  "Uganda",
+  "United Kingdom",
+  "United States",
+  "Vietnam",
+  "Zambia",
+  "Zimbabwe"
+].sort();
+
+export function getNormalizedCountryName(countryName: string): string {
+  if (!countryName) return "";
+  const trimmed = countryName.trim();
+  const found = SUPPORTED_COUNTRIES.find(c => c.toLowerCase() === trimmed.toLowerCase());
+  return found || trimmed;
+}
+
 export function getCurrencyByCountry(country: string): CurrencyInfo {
   const normalized = country.trim().toLowerCase();
   return countryToCurrency[normalized] || { code: "USD", symbol: "$" };
 }
+

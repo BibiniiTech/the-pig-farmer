@@ -11,7 +11,7 @@ import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import HerdReport from "@/components/reports/HerdReport";
-import { evaluatePerformance } from "@/lib/swineGrowthDatabase";
+import { evaluatePerformance, calculateAgeMonths, calculateAgeDays } from "@/lib/swineGrowthDatabase";
 import { ExportPdfIcon } from "@/components/icons/DashboardIcons";
 import { useTranslations } from "next-intl";
 
@@ -125,24 +125,13 @@ export default function PigProfilePage() {
   const [recordWeight, setRecordWeight] = useState("");
 
   // Weight Warning Logic
-  const calculateAgeDays = (birthDateStr: string) => {
-    if (!birthDateStr) return 0;
-    const birthDate = new Date(birthDateStr);
-    if (isNaN(birthDate.getTime())) return 0;
-    const now = new Date();
-    now.setHours(0, 0, 0, 0);
-    const birth = new Date(birthDate);
-    birth.setHours(0, 0, 0, 0);
-    const diffTime = now.getTime() - birth.getTime();
-    return Math.floor(diffTime / (1000 * 60 * 60 * 24));
-  };
-
   const weightRecords = healthRecords.filter(r => r.type === "Weight Check");
   const latestWeightUpdateMs = weightRecords.length > 0
     ? Math.max(...weightRecords.map(r => new Date(r.date).getTime()))
     : null;
 
   const ageDays = pig ? calculateAgeDays(pig.birthDate) : 0;
+  const ageMonths = pig ? calculateAgeMonths(pig.birthDate) : 0;
   const performance = pig ? evaluatePerformance(pig.breed, ageDays, pig.weight) : "Blank";
 
   let performanceBadgeColor = "bg-zinc-200 text-zinc-600";
@@ -350,7 +339,7 @@ export default function PigProfilePage() {
                     <p className="text-xs font-semibold text-zinc-400 font-mono uppercase">{t("statusLocation")}</p>
                     {performance !== "Blank" && (
                       <span className={`text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider shadow-sm border border-black/5 ${performanceBadgeColor}`}>
-                        {performance}
+                        {th(performance.toLowerCase())}
                       </span>
                     )}
                   </div>
@@ -402,6 +391,16 @@ export default function PigProfilePage() {
                 <div className="py-1.5 flex justify-between">
                   <span className="text-zinc-500">{t("birthDate")}</span>
                   <span className="font-semibold">{pig.birthDate}</span>
+                </div>
+                <div className="py-1.5 flex justify-between">
+                  <span className="text-zinc-500">{th("age")}</span>
+                  <span className="font-semibold">
+                    {ageMonths === 0
+                      ? th("lessThanMonth")
+                      : ageMonths === 1
+                      ? th("month", { count: 1 })
+                      : th("months", { count: ageMonths })}
+                  </span>
                 </div>
                 <div className="py-1.5 flex justify-between">
                   <span className="text-zinc-500">{t("sowTag")}</span>

@@ -11,7 +11,7 @@ import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import HerdReport from "@/components/reports/HerdReport";
-import { evaluatePerformance, calculateAgeMonths } from "@/lib/swineGrowthDatabase";
+import { evaluatePerformance, calculateAgeMonths, calculateAgeDays } from "@/lib/swineGrowthDatabase";
 import { ExportPdfIcon } from "@/components/icons/DashboardIcons";
 import { useTranslations } from "next-intl";
 
@@ -546,10 +546,7 @@ export default function HerdPage() {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {(viewingArchived ? archivedPigs : pigs).map((pig) => {
-                  const birthDateObj = new Date(pig.birthDate);
-                  const ageDays = isNaN(birthDateObj.getTime())
-                    ? -1
-                    : Math.floor((Date.now() - birthDateObj.getTime()) / (1000 * 60 * 60 * 24));
+                  const ageDays = calculateAgeDays(pig.birthDate);
                   const performance = evaluatePerformance(pig.breed, ageDays, pig.weight);
                   const ageMonths = calculateAgeMonths(pig.birthDate);
 

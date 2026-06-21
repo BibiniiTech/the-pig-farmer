@@ -201,16 +201,19 @@ export function resolveBreedCurve(breedInput: string): BreedCurve {
 }
 
 export function evaluatePerformance(breed: string, ageDays: number, actualWeight: number): string {
-  if (actualWeight <= 0 || ageDays < 0) {
+  if (actualWeight <= 0 || !actualWeight) {
     return "Blank";
   }
+  const safeAgeDays = ageDays < 0 ? 0 : ageDays;
   const curve = resolveBreedCurve(breed);
-  const expectedWeight = interpolateCurve(curve.points, ageDays);
-  if (expectedWeight <= 0) return "Blank";
+  const expectedWeight = interpolateCurve(curve.points, safeAgeDays);
+  const safeExpectedWeight = expectedWeight <= 0
+    ? (curve.points[0]?.weightKg || 1.0)
+    : expectedWeight;
 
-  const ratio = actualWeight / expectedWeight;
+  const ratio = actualWeight / safeExpectedWeight;
 
-  if (ageDays > 270) {
+  if (safeAgeDays > 270) {
     if (ratio >= 1.35) return "Excellent";
     if (ratio >= 0.85) return "Good";
     if (ratio >= 0.70) return "Caution";
@@ -223,11 +226,51 @@ export function evaluatePerformance(breed: string, ageDays: number, actualWeight
   }
 }
 
-export function calculateAgeMonths(birthDateStr: string): number {
+export function parseSwineDate(dateStr?: string): Date | null {
+  if (!dateStr) return null;
+  const trimmed = dateStr.trim();
+
+  // 1. Check if format is yyyy-mm-dd (e.g. 2026-05-10)
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    const parts = trimmed.split("-").map(Number);
+    const d = new Date(parts[0], parts[1] - 1, parts[2]);
+    if (!isNaN(d.getTime())) return d;
+  }
+
+  // 2. Check if format is dd/mm/yyyy (e.g. 10/05/2026 or 10-05-2026)
+  if (/^\d{2}[/-]\d{2}[/-]\d{4}$/.test(trimmed)) {
+    const separator = trimmed.includes("/") ? "/" : "-";
+    const parts = trimmed.split(separator).map(Number);
+    const d = new Date(parts[2], parts[1] - 1, parts[0]);
+    if (!isNaN(d.getTime())) return d;
+  }
+
+  // 3. Fallback to standard new Date()
+  const d = new Date(trimmed);
+  return isNaN(d.getTime()) ? null : d;
+}
+
+export function calculateAgeDays(birthDateStr?: string): number {
   if (!birthDateStr) return 0;
   try {
-    const birth = new Date(birthDateStr);
-    if (isNaN(birth.getTime())) return 0;
+    const birth = parseSwineDate(birthDateStr);
+    if (!birth) return 0;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const birthMidnight = new Date(birth);
+    birthMidnight.setHours(0, 0, 0, 0);
+    const diffTime = today.getTime() - birthMidnight.getTime();
+    return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  } catch (e) {
+    return 0;
+  }
+}
+
+export function calculateAgeMonths(birthDateStr?: string): number {
+  if (!birthDateStr) return 0;
+  try {
+    const birth = parseSwineDate(birthDateStr);
+    if (!birth) return 0;
     const today = new Date();
 
     let months = (today.getFullYear() - birth.getFullYear()) * 12;

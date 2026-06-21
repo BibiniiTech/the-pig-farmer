@@ -232,19 +232,24 @@ object SwineGrowthDatabase {
      * Returns "Excellent", "Good", "Caution", "Poor" or "Blank" (if weight is 0 or age is invalid).
      */
     fun evaluatePerformance(breed: String, ageDays: Int, actualWeight: Double): String {
-        if (actualWeight <= 0.0 || ageDays < 0) {
+        if (actualWeight <= 0.0) {
             return "Blank"
         }
+        val safeAgeDays = if (ageDays < 0) 0 else ageDays
         val curve = resolveBreedCurve(breed)
-        val expectedWeight = interpolateCurve(curve.points, ageDays)
-        if (expectedWeight <= 0.0) return "Blank"
+        val expectedWeight = interpolateCurve(curve.points, safeAgeDays)
+        val safeExpectedWeight = if (expectedWeight <= 0.0) {
+            curve.points.firstOrNull()?.weightKg ?: 1.0
+        } else {
+            expectedWeight
+        }
 
-        val ratio = actualWeight / expectedWeight
+        val ratio = actualWeight / safeExpectedWeight
         
         // For mature pigs (age > 270 days / 9 months), growth plateaus.
         // We broaden the "Good" range to account for normal variations in mature size
         // without falsely flagging healthy mature animals whose growth has slowed down.
-        return if (ageDays > 270) {
+        return if (safeAgeDays > 270) {
             when {
                 ratio >= 1.35 -> "Excellent"
                 ratio >= 0.85 -> "Good"

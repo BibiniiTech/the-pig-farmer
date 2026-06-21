@@ -7,7 +7,7 @@ import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, create
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
-import { getCurrencyByCountry } from "@/lib/currencyUtils";
+import { getCurrencyByCountry, SUPPORTED_COUNTRIES } from "@/lib/currencyUtils";
 import { useTranslations } from "next-intl";
 
 export default function LoginPage() {
@@ -245,16 +245,28 @@ export default function LoginPage() {
                   <label htmlFor="country" className="sr-only">
                     {t("country")}
                   </label>
-                  <input
+                  <select
                     id="country"
                     name="country"
-                    type="text"
                     required
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
-                    className="relative block w-full rounded-lg border border-zinc-200 bg-white px-3 py-3 text-zinc-900 placeholder-zinc-400 focus:z-10 focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 sm:text-sm shadow-sm"
-                    placeholder={t("country")}
-                  />
+                    className={`relative block w-full rounded-lg border border-zinc-200 bg-white px-3 py-3 focus:z-10 focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 sm:text-sm shadow-sm transition ${
+                      country === "" ? "text-zinc-400" : "text-zinc-900"
+                    }`}
+                  >
+                    <option value="" disabled hidden>
+                      {t("country")}
+                    </option>
+                    {SUPPORTED_COUNTRIES.map((c) => (
+                      <option key={c} value={c} className="text-zinc-900">
+                        {c}
+                      </option>
+                    ))}
+                    <option value="Other" className="text-zinc-900">
+                      Other
+                    </option>
+                  </select>
                 </div>
               </>
             )}

@@ -7,6 +7,7 @@ import { useDevice } from "@/context/DeviceContext";
 import { db } from "@/lib/firebase";
 import { doc, updateDoc, deleteDoc, collection, getDocs, setDoc } from "firebase/firestore";
 import { useTranslations } from "next-intl";
+import { SUPPORTED_COUNTRIES, getNormalizedCountryName, getCurrencyByCountry } from "@/lib/currencyUtils";
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -58,6 +59,13 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   }, [userProfile, isOpen]);
 
   if (!isOpen) return null;
+
+  const handleCountryChange = (selectedCountry: string) => {
+    setCountry(selectedCountry);
+    const currency = getCurrencyByCountry(selectedCountry);
+    setSelectedCurrency(currency.code);
+    setCurrencySymbol(currency.symbol);
+  };
 
   const handleSaveSettings = async () => {
     if (!activeFarmUid) return;
@@ -174,12 +182,21 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t("country")}</label>
-                      <input
-                        type="text"
-                        value={country}
-                        onChange={(e) => setCountry(e.target.value)}
+                      <select
+                        value={getNormalizedCountryName(country)}
+                        onChange={(e) => handleCountryChange(e.target.value)}
                         className="w-full rounded-xl border border-zinc-200 bg-white px-4 py-2.5 text-sm font-semibold text-zinc-900 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition"
-                      />
+                      >
+                        <option value="" disabled hidden>
+                          Select Country
+                        </option>
+                        {SUPPORTED_COUNTRIES.map((c) => (
+                          <option key={c} value={c}>
+                            {c}
+                          </option>
+                        ))}
+                        <option value="Other">Other</option>
+                      </select>
                     </div>
 
                     <div className="pt-4 space-y-4">

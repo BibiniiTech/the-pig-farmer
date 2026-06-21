@@ -3,6 +3,7 @@
 import React from "react";
 import ReportLayout from "./ReportLayout";
 import { useTranslations } from "next-intl";
+import { calculateAgeMonths } from "@/lib/swineGrowthDatabase";
 
 interface HealthRecord {
   id: string;
@@ -74,15 +75,6 @@ const HerdReport: React.FC<HerdReportProps> = ({ pigs, allPigs = [], title, incl
       return tProfile(`actionTypes.${fallbacks[key]}`);
     }
     return type;
-  };
-
-  const calculateAgeMonths = (birthDate: string) => {
-    const birth = new Date(birthDate);
-    const now = new Date();
-    if (isNaN(birth.getTime())) return 0;
-    let months = (now.getFullYear() - birth.getFullYear()) * 12 + (now.getMonth() - birth.getMonth());
-    if (now.getDate() < birth.getDate()) months--;
-    return Math.max(0, months);
   };
 
   const getAgeText = (dob: string) => {
