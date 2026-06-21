@@ -975,7 +975,7 @@ export default function FeedPage() {
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-zinc-500 mb-1">{t("finishers")}</label>
-                      <input type="number" min="0" value={finisherCount} onChange={(e) => setFinishersCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
+                      <input type="number" min="0" value={finisherCount} onChange={(e) => setFinisherCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
                     </div>
                   </div>
 

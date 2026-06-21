@@ -180,7 +180,7 @@ export default function WeightCheckerPage() {
       if (estLiveKg && Math.abs(estLiveKg - weightNum) < 0.2) {
         desc = t("tapeEstimationLog", {
           weight: weightNum,
-          lbs: estLiveLbs,
+          lbs: estLiveLbs ?? 0,
           girth,
           unit: unit === "in" ? t("inches") : t("centimeters"),
           length
