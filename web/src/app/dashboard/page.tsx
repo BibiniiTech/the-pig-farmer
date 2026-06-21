@@ -14,7 +14,7 @@ import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import TaskCompletionModal from "@/components/TaskCompletionModal";
 import SettingsModal from "@/components/SettingsModal";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import {
   HerdDataIcon,
   FeedManagementIcon,
@@ -228,6 +228,7 @@ const ArchiveIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export default function DashboardPage() {
   const t = useTranslations("Dashboard");
+  const locale = useLocale();
   const { user, userProfile, activeFarmUid, isStaff, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -409,7 +410,7 @@ export default function DashboardPage() {
     return langQuotes[quoteKey] || langQuotes["quote_1"] || "";
   };
 
-  const dailyQuote = getQuoteOfDay(userProfile?.appLanguage || "en");
+  const dailyQuote = getQuoteOfDay(locale);
   const groupedTasks = groupTasks(tasks, allPigs);
 
   if (loading || !user) {

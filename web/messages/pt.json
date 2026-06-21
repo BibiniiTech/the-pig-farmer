@@ -188,7 +188,21 @@
     "limitReached": "Usuários gratuitos podem ter até 20 suínos. Faça upgrade para Premium para adicionar mais.",
     "porker": "Terminação",
     "breeder": "Reprodutor",
-    "addPigs": "+ Adicionar Suínos"
+    "addPigs": "+ Adicionar Suínos",
+    "male": "Macho",
+    "female": "Fêmea",
+    "excellent": "Excelente",
+    "good": "Bom",
+    "caution": "Cuidado",
+    "poor": "Ruim",
+    "blank": "Vazio",
+    "piglet": "Leitão",
+    "gilt": "Marrã",
+    "sow": "Porca",
+    "boar": "Cachaço",
+    "barrow": "Capado",
+    "pregnant": "Prenha",
+    "lactating": "Lactante"
   },
   "Profile": {
     "owner": "Proprietário",
@@ -228,21 +242,66 @@
     "title": "Executar Procedimento no Rebanho",
     "description": "Selecione uma atividade para atualizar status, registrar saúde ou agendar tarefas.",
     "categories": {
-      "heat": { "type": "Detecção de Cio", "desc": "Monitorar fêmeas prontas para cobertura." },
-      "breeding": { "type": "Cobertura/Monta", "desc": "Registrar sessões de acasalamento." },
-      "pregnancy": { "type": "Confirmar Prenhez", "desc": "Registrar ultrassom ou toques físicos." },
-      "farrowing": { "type": "Parto", "desc": "Registrar novas ninhadas e detalhes do nascimento." },
-      "weaning": { "type": "Desmame", "desc": "Registrar quando os leitões saem da mãe." },
-      "castration": { "type": "Castração", "desc": "Registrar castração de machos." },
-      "teeth": { "type": "Desgaste de Dentes", "desc": "Desgastar dentes agulha de leitões recém-nascidos." },
-      "tail": { "type": "Corte de Cauda", "desc": "Corte para prevenir canibalismo e infecção." },
-      "deworming": { "type": "Vermifugação", "desc": "Administrar medicação vermífuga." },
-      "iron": { "type": "Aplicação de Ferro", "desc": "Aplicar ferro para prevenir anemia." },
-      "vaccination": { "type": "Vacinação", "desc": "Registrar vacinas de rotina ou emergência." },
-      "medication": { "type": "Medicação", "desc": "Acompanhar tratamentos para animais doentes." },
-      "weight": { "type": "Checagem de Peso", "desc": "Registrar progresso de crescimento." },
-      "culling": { "type": "Descarte/Abate", "desc": "Registrar remoção do rebanho." },
-      "custom": { "type": "Personalizada", "desc": "Registrar qualquer outra atividade ou observação." }
+      "heat": {
+        "type": "Detecção de Cio",
+        "desc": "Monitorar fêmeas prontas para cobertura."
+      },
+      "breeding": {
+        "type": "Cobertura/Monta",
+        "desc": "Registrar sessões de acasalamento."
+      },
+      "pregnancy": {
+        "type": "Confirmar Prenhez",
+        "desc": "Registrar ultrassom ou toques físicos."
+      },
+      "farrowing": {
+        "type": "Parto",
+        "desc": "Registrar novas ninhadas e detalhes do nascimento."
+      },
+      "weaning": {
+        "type": "Desmame",
+        "desc": "Registrar quando os leitões saem da mãe."
+      },
+      "castration": {
+        "type": "Castração",
+        "desc": "Registrar castração de machos."
+      },
+      "teeth": {
+        "type": "Desgaste de Dentes",
+        "desc": "Desgastar dentes agulha de leitões recém-nascidos."
+      },
+      "tail": {
+        "type": "Corte de Cauda",
+        "desc": "Corte para prevenir canibalismo e infecção."
+      },
+      "deworming": {
+        "type": "Vermifugação",
+        "desc": "Administrar medicação vermífuga."
+      },
+      "iron": {
+        "type": "Aplicação de Ferro",
+        "desc": "Aplicar ferro para prevenir anemia."
+      },
+      "vaccination": {
+        "type": "Vacinação",
+        "desc": "Registrar vacinas de rotina ou emergência."
+      },
+      "medication": {
+        "type": "Medicação",
+        "desc": "Acompanhar tratamentos para animais doentes."
+      },
+      "weight": {
+        "type": "Checagem de Peso",
+        "desc": "Registrar progresso de crescimento."
+      },
+      "culling": {
+        "type": "Descarte/Abate",
+        "desc": "Registrar remoção do rebanho."
+      },
+      "custom": {
+        "type": "Personalizada",
+        "desc": "Registrar qualquer outra atividade ou observação."
+      }
     },
     "logActivity": "Registrar Atividade: {type}",
     "procedureDate": "Data do Procedimento",
@@ -378,7 +437,39 @@
     "days": "{count} Dias",
     "managementSystemReport": "Relatório do Sistema SmartSwine",
     "bags": "Sacos",
-    "kg": "kg"
+    "kg": "kg",
+    "starter": "Inicial",
+    "grower": "Crescimento",
+    "finisher": "Terminação",
+    "ingredientsList": {
+      "maize": "Milho",
+      "maize_bran": "Farelo de milho",
+      "soybean_meal": "Farelo de soja",
+      "fish_meal": "Farinha de peixe",
+      "rice_bran": "Farelo de arroz",
+      "wheat_bran": "Farelo de trigo",
+      "common_salt": "Sal comum",
+      "vitamin_premix": "Premistura de vitaminas",
+      "mycotoxin_binder": "Sequestrante de micotoxinas",
+      "oyster_shell": "Casca de ostra",
+      "bone_meal": "Farinha de osso",
+      "lysine": "Lisina",
+      "methionine": "Metionina"
+    },
+    "groups": {
+      "energy": "Energia",
+      "protein": "Proteína",
+      "vitaminsMineralsSalt": "Vitaminas, Minerais e Sal"
+    },
+    "nutrients": {
+      "digestibleProtein": "Proteína Digestível (%)",
+      "crudeFiber": "Fibra Bruta (%)",
+      "metabolizableEnergy": "Energia metabolizável (kcal/kg)",
+      "calcium": "Cálcio (%)",
+      "phosphorus": "Fósforo (%)",
+      "lysine": "Lisina (%)",
+      "methionineCystine": "Metionina + Cistina (%)"
+    }
   },
   "Financials": {
     "totalRevenue": "Receita Total",
@@ -531,32 +622,110 @@
       "general": "Geral"
     },
     "tips": {
-      "tip6": { "title": "Idade de Desmame", "content": "Desmame leitões entre 28 a 35 dias. Isso permite que cresçam mais fortes e se adaptem melhor à ração sólida." },
-      "tip7": { "title": "Método de Separação Gradual", "content": "Reduza o estresse do desmame retirando a matriz da baia e deixando os leitões no ambiente familiar na primeira semana." },
-      "tip8": { "title": "Prevenção de Correntes de Ar", "content": "Bloqueie ventos frios na creche instalando cortinas temporárias ou tábuas até a altura dos leitões (cerca de 50cm)." },
-      "tip11": { "title": "Soro Caseiro de Reidratação", "content": "Forneça uma solução eletrolítica barata (5 colheres de açúcar, 1/2 de sal em 5 litros de água limpa) nos primeiros 3 dias de desmame." },
-      "tip17": { "title": "Suplemento de Barro Vermelho", "content": "Coloque uma pá de terra vermelha limpa na baia de parto/creche. Os leitões comem para obter ferro e minerais naturais." },
-      "tip20": { "title": "Cozimento de Subprodutos", "content": "Cozinhe subprodutos como cascas de mandioca ou batata para destruir toxinas naturais e melhorar a digestibilidade." },
-      "tip21": { "title": "Fontes Locais de Proteína", "content": "Complemente a ração plantando forragens de alta proteína como Moringa, Azolla ou folhas de batata-doce na granja." },
-      "tip22": { "title": "Restrição Alimentar na Gestação", "content": "Limite matrizes gestantes a 2-2,5 kg de ração por dia para evitar sobrepeso, o que causa partos difíceis." },
-      "tip26": { "title": "Cozimento de Restos de Alimento", "content": "Ferva restos de comida por 30 minutos para destruir vírus como a Peste Suína Africana e Febre Aftosa." },
-      "tip28": { "title": "Carvão para Digestão", "content": "Coloque pedaços de carvão vegetal nas baias de crescimento. Os suínos mastigam para ajudar a ligar toxinas estomacais." },
-      "tip34": { "title": "Monta Controlada", "content": "Leve a fêmea em cio à baia do reprodutor para a cobertura, em vez de deixar o macho solto no rebanho." },
-      "tip35": { "title": "Teste de Imobilidade", "content": "Teste o cio pressionando firmemente o lombo da fêmea; se ela ficar imóvel e eretar as orelhas, está pronta para a monta." },
-      "tip39": { "title": "Proteção Contra Esmagamento", "content": "Instale barras de proteção (ferros ou paus a 20cm da parede e 20cm do chão) nas baias de parto." },
-      "tip43": { "title": "Calendário de Coberturas", "content": "Marque a data da cobertura; a gestação dura cerca de 114 dias (3 meses, 3 semanas, 3 dias)." },
-      "tip47": { "title": "Idade de Primeira Cobertura", "content": "Espere até que a marrã tenha pelo menos 8 meses e esteja no seu 2º ou 3º cio para garantir uma ninhada maior." },
-      "tip48": { "title": "Isolamento de Novos Animais", "content": "Mantenha suínos recém-comprados em baia separada a pelo menos 20m de distância por 30 dias para checar doenças." },
-      "tip49": { "title": "Pedilúvio DIY", "content": "Coloque uma bacia rasa com água e desinfetante (como cloro ou cal) no portão da granja." },
-      "tip51": { "title": "Restrição de Visitantes", "content": "Não permita visitantes dentro das baias. Discuta negócios fora da área dos animais." },
-      "tip55": { "title": "Controle Natural de Vermes", "content": "Sementes de mamão ou abóbora trituradas podem ajudar a reduzir vermes internos de forma barata." },
-      "tip60": { "title": "Enterro Adequado", "content": "Enterre animais mortos a pelo menos 2m de profundidade, longe de fontes de água, e cubra com cal agrícola." },
-      "tip61": { "title": "Espaço por Animal", "content": "Forneça pelo menos 1m² de espaço por animal em terminação para reduzir brigas e estresse." },
-      "tip62": { "title": "Ventilação Natural", "content": "Projete galpões com laterais abertas para permitir a brisa e remover odores." },
-      "tip75": { "title": "Compostagem DIY", "content": "Empilhe o esterco em local seco, cubra com palha e vire semanalmente para fazer adubo." },
-      "tip76": { "title": "Biodigestor de Saco", "content": "Instale um biodigestor plástico tubular de baixo custo para tratar dejetos e produzir gás de cozinha grátis." },
-      "tip92": { "title": "Idade de Castração", "content": "Castre os machos antes dos 7 dias de vida. O procedimento é rápido, cura logo e causa dor mínima." },
-      "tip94": { "title": "Registros em Caderno", "content": "Mantenha um caderno simples no galpão para anotar datas de cobertura, parto e tratamentos." }
+      "tip6": {
+        "title": "Idade de Desmame",
+        "content": "Desmame leitões entre 28 a 35 dias. Isso permite que cresçam mais fortes e se adaptem melhor à ração sólida."
+      },
+      "tip7": {
+        "title": "Método de Separação Gradual",
+        "content": "Reduza o estresse do desmame retirando a matriz da baia e deixando os leitões no ambiente familiar na primeira semana."
+      },
+      "tip8": {
+        "title": "Prevenção de Correntes de Ar",
+        "content": "Bloqueie ventos frios na creche instalando cortinas temporárias ou tábuas até a altura dos leitões (cerca de 50cm)."
+      },
+      "tip11": {
+        "title": "Soro Caseiro de Reidratação",
+        "content": "Forneça uma solução eletrolítica barata (5 colheres de açúcar, 1/2 de sal em 5 litros de água limpa) nos primeiros 3 dias de desmame."
+      },
+      "tip17": {
+        "title": "Suplemento de Barro Vermelho",
+        "content": "Coloque uma pá de terra vermelha limpa na baia de parto/creche. Os leitões comem para obter ferro e minerais naturais."
+      },
+      "tip20": {
+        "title": "Cozimento de Subprodutos",
+        "content": "Cozinhe subprodutos como cascas de mandioca ou batata para destruir toxinas naturais e melhorar a digestibilidade."
+      },
+      "tip21": {
+        "title": "Fontes Locais de Proteína",
+        "content": "Complemente a ração plantando forragens de alta proteína como Moringa, Azolla ou folhas de batata-doce na granja."
+      },
+      "tip22": {
+        "title": "Restrição Alimentar na Gestação",
+        "content": "Limite matrizes gestantes a 2-2,5 kg de ração por dia para evitar sobrepeso, o que causa partos difíceis."
+      },
+      "tip26": {
+        "title": "Cozimento de Restos de Alimento",
+        "content": "Ferva restos de comida por 30 minutos para destruir vírus como a Peste Suína Africana e Febre Aftosa."
+      },
+      "tip28": {
+        "title": "Carvão para Digestão",
+        "content": "Coloque pedaços de carvão vegetal nas baias de crescimento. Os suínos mastigam para ajudar a ligar toxinas estomacais."
+      },
+      "tip34": {
+        "title": "Monta Controlada",
+        "content": "Leve a fêmea em cio à baia do reprodutor para a cobertura, em vez de deixar o macho solto no rebanho."
+      },
+      "tip35": {
+        "title": "Teste de Imobilidade",
+        "content": "Teste o cio pressionando firmemente o lombo da fêmea; se ela ficar imóvel e eretar as orelhas, está pronta para a monta."
+      },
+      "tip39": {
+        "title": "Proteção Contra Esmagamento",
+        "content": "Instale barras de proteção (ferros ou paus a 20cm da parede e 20cm do chão) nas baias de parto."
+      },
+      "tip43": {
+        "title": "Calendário de Coberturas",
+        "content": "Marque a data da cobertura; a gestação dura cerca de 114 dias (3 meses, 3 semanas, 3 dias)."
+      },
+      "tip47": {
+        "title": "Idade de Primeira Cobertura",
+        "content": "Espere até que a marrã tenha pelo menos 8 meses e esteja no seu 2º ou 3º cio para garantir uma ninhada maior."
+      },
+      "tip48": {
+        "title": "Isolamento de Novos Animais",
+        "content": "Mantenha suínos recém-comprados em baia separada a pelo menos 20m de distância por 30 dias para checar doenças."
+      },
+      "tip49": {
+        "title": "Pedilúvio DIY",
+        "content": "Coloque uma bacia rasa com água e desinfetante (como cloro ou cal) no portão da granja."
+      },
+      "tip51": {
+        "title": "Restrição de Visitantes",
+        "content": "Não permita visitantes dentro das baias. Discuta negócios fora da área dos animais."
+      },
+      "tip55": {
+        "title": "Controle Natural de Vermes",
+        "content": "Sementes de mamão ou abóbora trituradas podem ajudar a reduzir vermes internos de forma barata."
+      },
+      "tip60": {
+        "title": "Enterro Adequado",
+        "content": "Enterre animais mortos a pelo menos 2m de profundidade, longe de fontes de água, e cubra com cal agrícola."
+      },
+      "tip61": {
+        "title": "Espaço por Animal",
+        "content": "Forneça pelo menos 1m² de espaço por animal em terminação para reduzir brigas e estresse."
+      },
+      "tip62": {
+        "title": "Ventilação Natural",
+        "content": "Projete galpões com laterais abertas para permitir a brisa e remover odores."
+      },
+      "tip75": {
+        "title": "Compostagem DIY",
+        "content": "Empilhe o esterco em local seco, cubra com palha e vire semanalmente para fazer adubo."
+      },
+      "tip76": {
+        "title": "Biodigestor de Saco",
+        "content": "Instale um biodigestor plástico tubular de baixo custo para tratar dejetos e produzir gás de cozinha grátis."
+      },
+      "tip92": {
+        "title": "Idade de Castração",
+        "content": "Castre os machos antes dos 7 dias de vida. O procedimento é rápido, cura logo e causa dor mínima."
+      },
+      "tip94": {
+        "title": "Registros em Caderno",
+        "content": "Mantenha um caderno simples no galpão para anotar datas de cobertura, parto e tratamentos."
+      }
     }
   },
   "Symptoms": {
@@ -660,10 +829,30 @@
       "sym_red_urine": "Urina vermelha/escura"
     },
     "diseases": {
-      "dis_asf": { "name": "Peste Suína Africana (PSA)", "scientificName": "Asfivirus", "description": "Doença viral altamente contagiosa e mortal. Não existe vacina.", "prevention": "Biosseguridade rigorosa e restrição de acesso." },
-      "dis_fmd": { "name": "Febre Aftosa", "scientificName": "Aphthovirus", "description": "Causa bolhas na boca e patas.", "prevention": "Vacinação e controle de movimentação." },
-      "dis_prrs": { "name": "PRRS (Orelha Azul)", "scientificName": "Arterivirus", "description": "Falha respiratória e reprodutiva.", "prevention": "Biosseguridade e vacinação." },
-      "dis_erysipelas": { "name": "Erisipela Suína", "scientificName": "Erysipelothrix rhusiopathiae", "description": "Bacteriana, causa lesões de pele e artrite.", "prevention": "Vacinação regular e higiene." }
+      "dis_asf": {
+        "name": "Peste Suína Africana (PSA)",
+        "scientificName": "Asfivirus",
+        "description": "Doença viral altamente contagiosa e mortal. Não existe vacina.",
+        "prevention": "Biosseguridade rigorosa e restrição de acesso."
+      },
+      "dis_fmd": {
+        "name": "Febre Aftosa",
+        "scientificName": "Aphthovirus",
+        "description": "Causa bolhas na boca e patas.",
+        "prevention": "Vacinação e controle de movimentação."
+      },
+      "dis_prrs": {
+        "name": "PRRS (Orelha Azul)",
+        "scientificName": "Arterivirus",
+        "description": "Falha respiratória e reprodutiva.",
+        "prevention": "Biosseguridade e vacinação."
+      },
+      "dis_erysipelas": {
+        "name": "Erisipela Suína",
+        "scientificName": "Erysipelothrix rhusiopathiae",
+        "description": "Bacteriana, causa lesões de pele e artrite.",
+        "prevention": "Vacinação regular e higiene."
+      }
     }
   },
   "HR": {
@@ -738,15 +927,27 @@
     "manualWeightLog": "Peso atualizado manualmente",
     "weightCheckDesc": "{notes}\nPeso atualizado para: {weight} kg",
     "actionTypes": {
-      "medication": "Medicação",
+      "medication": "Medicamento",
       "vaccination": "Vacinação",
       "treatment": "Tratamento",
       "heat": "Detecção de Cio",
       "breeding": "Cobertura",
       "pregnancy": "Confirmação de Prenhez",
-      "deworming": "Vermifugação",
+      "deworming": "Desverminação",
       "weight": "Checagem de Peso",
-      "other": "Outros"
+      "other": "Outros",
+      "weight_check": "Controle de Peso",
+      "culling": "Descarte",
+      "teeth_clipping": "Corte de Dentes",
+      "tail_docking": "Corte de Cauda",
+      "iron_injection": "Injeção de Ferro",
+      "weaning": "Desmame",
+      "castration": "Castração",
+      "heat_detection": "Detecção de Cio",
+      "breeding_mating": "Cruzamento",
+      "pregnancy_check": "Diagnóstico de Gestação",
+      "farrowing": "Parto",
+      "custom": "Personalizado"
     },
     "reportTitle": "Relatório do Perfil: {tag}"
   },
@@ -827,11 +1028,26 @@
     "lastUpdated": "Última Atualização: Abril 2026",
     "contactSupport": "Suporte:",
     "sections": {
-      "s1": { "title": "1. Aceitação", "content": "Ao acessar o SmartSwine, você aceita estes termos." },
-      "s2": { "title": "2. Serviço", "content": "Gestão de rebanho, financeiro, RH, IA diagnóstica e mercado." },
-      "s3": { "title": "3. Dados", "content": "Propriedade do usuário. Backup via Firebase. Não vendemos dados." },
-      "s4": { "title": "4. Aviso Veterinário", "content": "Funções de IA são educativas. Não substituem veterinário. Consulte profissionais." },
-      "s5": { "title": "5. Responsabilidade", "content": "Usuário responde por sua conta e atividades." }
+      "s1": {
+        "title": "1. Aceitação",
+        "content": "Ao acessar o SmartSwine, você aceita estes termos."
+      },
+      "s2": {
+        "title": "2. Serviço",
+        "content": "Gestão de rebanho, financeiro, RH, IA diagnóstica e mercado."
+      },
+      "s3": {
+        "title": "3. Dados",
+        "content": "Propriedade do usuário. Backup via Firebase. Não vendemos dados."
+      },
+      "s4": {
+        "title": "4. Aviso Veterinário",
+        "content": "Funções de IA são educativas. Não substituem veterinário. Consulte profissionais."
+      },
+      "s5": {
+        "title": "5. Responsabilidade",
+        "content": "Usuário responde por sua conta e atividades."
+      }
     }
   },
   "Privacy": {
@@ -995,7 +1211,10 @@
     "joined": "Admissão",
     "payrollSummary": "Resumo da Folha",
     "totalStaff": "Total Staff",
-    "monthlyPayroll": "Total Folha"
+    "monthlyPayroll": "Total Folha",
+    "detailedHistory": "Detailed transaction history",
+    "narration": "Narration",
+    "balance": "Balance"
   },
   "Common": {
     "loading": "Carregando..."

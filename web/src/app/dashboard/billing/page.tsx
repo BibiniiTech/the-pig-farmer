@@ -24,7 +24,13 @@ export default function BillingPage() {
 
   const MONTHLY_PLAN_CODE = process.env.NEXT_PUBLIC_PAYSTACK_MONTHLY_PLAN_CODE || "PLN_0fhg14kc86tn8qs";
   const ANNUAL_PLAN_CODE = process.env.NEXT_PUBLIC_PAYSTACK_ANNUAL_PLAN_CODE || "PLN_sk44tcyegocprdu";
-  const PUBLIC_KEY = (process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "pk_live_80c6263d2d5499da137d63269d25aa45959b33e3").replace(/['"]/g, "").trim();
+  
+  // Safely fallback to default key if environment key is not defined or is a placeholder
+  const rawKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "";
+  const PUBLIC_KEY = (rawKey.trim().startsWith("pk_")
+    ? rawKey.trim()
+    : "pk_live_80c6263d2d5499da137d63269d25aa45959b33e3"
+  ).replace(/['"]/g, "").trim();
 
   useEffect(() => {
     if (!loading && !user) {
@@ -46,6 +52,7 @@ export default function BillingPage() {
   const paystackConfig = {
     email: userEmail,
     amount: billingCycle === "monthly" ? 500 : 4500,
+    currency: "USD",
     publicKey: PUBLIC_KEY,
     plan: billingCycle === "monthly" ? MONTHLY_PLAN_CODE : ANNUAL_PLAN_CODE,
     metadata: {

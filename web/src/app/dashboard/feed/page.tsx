@@ -71,6 +71,43 @@ const defaultRequirements: NutritionalRequirement[] = [
 
 export default function FeedPage() {
   const t = useTranslations("Feed");
+  
+  const translateIngredientName = (name: string) => {
+    if (!name) return "";
+    const key = name.toLowerCase().replace(/[\s\(\),&\-\/]/g, "_").replace(/_+/g, "_").replace(/_$/, "");
+    try {
+      const translation = t(`ingredientsList.${key}`);
+      if (translation && !translation.startsWith("ingredientsList.")) {
+        return translation;
+      }
+    } catch {}
+    return name;
+  };
+
+  const translateNutrientLabel = (label: string) => {
+    const keys: Record<string, string> = {
+      "Digestible Protein (%)": "nutrients.digestibleProtein",
+      "Crude Fiber (%)": "nutrients.crudeFiber",
+      "Metabolizable Energy (kcal/kg)": "nutrients.metabolizableEnergy",
+      "Calcium (%)": "nutrients.calcium",
+      "Phosphorus (%)": "nutrients.phosphorus",
+      "Lysine (%)": "nutrients.lysine",
+      "Methionine + Cystine (%)": "nutrients.methionineCystine",
+    };
+    const key = keys[label];
+    return key ? t(key) : label;
+  };
+
+  const translateCategoryGroup = (cat: string) => {
+    const keys: Record<string, string> = {
+      "Energy": "groups.energy",
+      "Protein": "groups.protein",
+      "Vitamins, Minerals & Salt": "groups.vitaminsMineralsSalt",
+    };
+    const key = keys[cat];
+    return key ? t(key) : cat;
+  };
+
   const { user, activeFarmUid, loading, userProfile } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -527,7 +564,7 @@ export default function FeedPage() {
         >
           <div className="flex items-center gap-2 font-bold text-zinc-800 text-xs">
             <span>{collapsed ? "▶" : "▼"}</span>
-            <span>{category} ({list.length})</span>
+            <span>{translateCategoryGroup(category)} ({list.length})</span>
           </div>
         </button>
         {!collapsed && (
@@ -544,7 +581,7 @@ export default function FeedPage() {
                       onChange={() => handleToggleSelect(ing.id)}
                       className="h-4 w-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500"
                     />
-                    <span>{ing.name}</span>
+                    <span>{translateIngredientName(ing.name)}</span>
                   </label>
                   <span className="text-[10px] text-zinc-500 font-mono">CP: {ing.crudeProtein.toFixed(1)}%</span>
                 </div>
@@ -802,7 +839,7 @@ export default function FeedPage() {
                         .filter((req) => ["Starter", "Grower", "Finisher"].includes(req.stage))
                         .map((req) => (
                           <option key={req.stage} value={req.stage}>
-                            {req.stage} (CP target: {req.digestibleProtein}%)
+                            {t(req.stage.toLowerCase())} (CP target: {req.digestibleProtein}%)
                           </option>
                         ))}
                     </select>
@@ -852,7 +889,7 @@ export default function FeedPage() {
                         <div className="space-y-3 divide-y divide-zinc-100">
                           {Object.entries(formulation.ingredients).map(([id, percent]) => {
                             const ing = ingredients.find(i => i.id === id || i.name === id);
-                            const name = ing ? ing.name : id;
+                            const name = ing ? translateIngredientName(ing.name) : translateIngredientName(id);
                             return (
                               <div key={id} className="pt-2.5 first:pt-0 flex justify-between items-center text-sm">
                                 <span className="text-zinc-700 font-medium">{name}</span>
@@ -889,7 +926,7 @@ export default function FeedPage() {
                               <tbody className="divide-y divide-zinc-150">
                                 {formulation.nutritionalComparison.map((nutrient) => (
                                   <tr key={nutrient.label}>
-                                    <td className="py-3 font-semibold text-zinc-700 whitespace-nowrap pr-4">{nutrient.label}</td>
+                                    <td className="py-3 font-semibold text-zinc-700 whitespace-nowrap pr-4">{translateNutrientLabel(nutrient.label)}</td>
                                     <td className="py-3 text-right font-mono text-zinc-500">{nutrient.target.toFixed(2)}</td>
                                     <td className="py-3 text-right font-mono">
                                       <span className={nutrient.isDeficient ? "text-rose-600 font-bold" : "text-emerald-600 font-bold"}>
@@ -1027,9 +1064,9 @@ export default function FeedPage() {
                       {calcResults.breakdown.map((row: any, i: number) => (
                         <div key={i} className="py-3 flex justify-between text-sm">
                           <div>
-                            <p className="font-bold text-zinc-800">{row.category}</p>
+                            <p className="font-bold text-zinc-800">{t(row.category as any)}</p>
                             <p className="text-xs text-zinc-400">
-                              {row.count} heads × {row.rate} kg/head/day
+                              {row.count} {t("heads")} × {row.rate} {t("kgHeadDay")}
                             </p>
                           </div>
                           <div className="text-right font-mono font-bold text-zinc-900">
@@ -1080,11 +1117,11 @@ export default function FeedPage() {
                     onChange={(e) => setNewFeedType(e.target.value)}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                   >
-                    <option>Starter</option>
-                    <option>Grower</option>
-                    <option>Finisher</option>
-                    <option>Sow</option>
-                    <option>Boar</option>
+                    <option value="Starter">{t("starter")}</option>
+                    <option value="Grower">{t("grower")}</option>
+                    <option value="Finisher">{t("finisher")}</option>
+                    <option value="Sow">{t("sow")}</option>
+                    <option value="Boar">{t("boar")}</option>
                   </select>
                 </div>
                 <div>
@@ -1434,7 +1471,7 @@ export default function FeedPage() {
                       {inventoryRows.map((row: any, index: number) => (
                         <tr key={index} className="text-zinc-800">
                           <td className="p-2 border font-medium">{row.name}</td>
-                          <td className="p-2 border">{row.feedType}</td>
+                          <td className="p-2 border">{t(row.feedType as any)}</td>
                           <td className="p-2 border">{row.unit}</td>
                           <td className="p-2 border text-right">{row.addition.toFixed(1)}</td>
                           <td className="p-2 border text-right">{row.usage.toFixed(1)}</td>
@@ -1469,7 +1506,7 @@ export default function FeedPage() {
                       <tbody className="divide-y divide-zinc-200 bg-white">
                         {Object.entries(printData.details.formulation.ingredients).map(([id, percent]: any) => {
                           const ing = printData.details.ingredients.find((i: any) => i.id === id || i.name === id);
-                          const name = ing ? ing.name : id;
+                          const name = ing ? translateIngredientName(ing.name) : translateIngredientName(id);
                           return (
                             <tr key={id} className="text-zinc-800">
                               <td className="p-2 border">{name}</td>
@@ -1507,7 +1544,7 @@ export default function FeedPage() {
                       <tbody className="divide-y divide-zinc-200 bg-white">
                         {printData.details.formulation.nutritionalComparison.map((nutrient: any) => (
                           <tr key={nutrient.label} className="text-zinc-800">
-                            <td className="p-2 border font-medium">{nutrient.label}</td>
+                            <td className="p-2 border font-medium">{translateNutrientLabel(nutrient.label)}</td>
                             <td className="p-2 border text-right font-mono text-zinc-500">{nutrient.target.toFixed(2)}</td>
                             <td className={`p-2 border text-right font-mono font-bold ${nutrient.isDeficient ? "text-rose-600" : "text-emerald-600"}`}>
                               {nutrient.actual.toFixed(2)}

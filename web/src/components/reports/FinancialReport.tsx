@@ -33,7 +33,33 @@ const FinancialReport: React.FC<FinancialReportProps> = ({
   title
 }) => {
   const t = useTranslations("Reports");
+  const tFin = useTranslations("Financials");
   const defaultTitle = t("financialLedger");
+
+  const translateCategory = (cat: string, type: string) => {
+    if (!cat) return "";
+    const incomeKeys: Record<string, string> = {
+      "Pig Sale": "incomeCategories.pigSale",
+      "Manure Sale": "incomeCategories.manureSale",
+      "Breeding Service": "incomeCategories.breedingService",
+      "Equipment Sale": "incomeCategories.equipmentSale",
+      "Other": "incomeCategories.other",
+    };
+    const expenseKeys: Record<string, string> = {
+      "Feed": "expenseCategories.feed",
+      "Vet/Medication": "expenseCategories.vet",
+      "Vet": "expenseCategories.vet",
+      "Labor/Salary": "expenseCategories.labor",
+      "Labor": "expenseCategories.labor",
+      "Equipment": "expenseCategories.equipment",
+      "Transport": "expenseCategories.transport",
+      "Rent": "expenseCategories.rent",
+      "Utility": "expenseCategories.utility",
+      "Other": "expenseCategories.other",
+    };
+    const key = type === "Income" ? incomeKeys[cat] : expenseKeys[cat];
+    return key ? tFin(key) : cat;
+  };
 
   const totalIncome = records.filter(r => r.type === "Income").reduce((sum, r) => sum + r.amount, 0);
   const totalExpense = records.filter(r => r.type === "Expense").reduce((sum, r) => sum + r.amount, 0);
@@ -66,16 +92,16 @@ const FinancialReport: React.FC<FinancialReportProps> = ({
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-[14pt] font-bold text-zinc-800">Detailed Transaction History</h3>
+        <h3 className="text-[14pt] font-bold text-zinc-800">{t("detailedHistory")}</h3>
         <table className="w-full border-collapse text-[9pt]">
           <thead>
             <tr className="bg-zinc-100 text-left border-y-2 border-zinc-300">
               <th className="p-3 font-bold border-r border-zinc-200">{t("date")}</th>
-              <th className="p-3 font-bold border-r border-zinc-200">Narration</th>
+              <th className="p-3 font-bold border-r border-zinc-200">{t("narration")}</th>
               <th className="p-3 font-bold border-r border-zinc-200 w-1/3">{t("description")}</th>
               <th className="p-3 font-bold border-r border-zinc-200 text-right">{t("totalIncome")}</th>
               <th className="p-3 font-bold border-r border-zinc-200 text-right">{t("totalExpense")}</th>
-              <th className="p-3 font-bold text-right">Balance</th>
+              <th className="p-3 font-bold text-right">{t("balance")}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-200">
@@ -92,7 +118,7 @@ const FinancialReport: React.FC<FinancialReportProps> = ({
               return (
                 <tr key={record.id} className={isIncome ? "bg-emerald-50/20" : "bg-rose-50/20"}>
                   <td className="p-3 border-r border-zinc-100 font-mono">{record.date}</td>
-                  <td className="p-3 border-r border-zinc-100 font-bold text-zinc-700">{record.category}</td>
+                  <td className="p-3 border-r border-zinc-100 font-bold text-zinc-700">{translateCategory(record.category, record.type)}</td>
                   <td className="p-3 border-r border-zinc-100 text-zinc-600 italic leading-snug">{displayDescription}</td>
                   <td className="p-3 border-r border-zinc-100 text-right font-bold text-emerald-700">
                     {isIncome ? amount.toFixed(2) : ""}

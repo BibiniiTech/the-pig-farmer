@@ -188,7 +188,21 @@
     "limitReached": "Les utilisateurs gratuits ne peuvent avoir que jusqu'à 20 cochons. Veuillez passer à Premium pour en ajouter d'autres.",
     "porker": "Porc charcutier",
     "breeder": "Reproducteur",
-    "addPigs": "+ Ajouter des cochons"
+    "addPigs": "+ Ajouter des cochons",
+    "male": "Mâle",
+    "female": "Femelle",
+    "excellent": "Excellent",
+    "good": "Bon",
+    "caution": "Attention",
+    "poor": "Médiocre",
+    "blank": "Vide",
+    "piglet": "Porcelet",
+    "gilt": "Cochette",
+    "sow": "Truie",
+    "boar": "Verrat",
+    "barrow": "Mâle castré",
+    "pregnant": "Gestante",
+    "lactating": "Allaitante"
   },
   "Profile": {
     "owner": "Propriétaire",
@@ -228,21 +242,66 @@
     "title": "Exécuter une procédure sur le troupeau",
     "description": "Sélectionnez une activité pour mettre à jour les statuts des cochons, enregistrer des journaux de santé ou planifier des tâches futures.",
     "categories": {
-      "heat": { "type": "Détection des chaleurs", "desc": "Surveiller les truies pour la préparation à la reproduction." },
-      "breeding": { "type": "Saillie/Accouplement", "desc": "Enregistrer les sessions d'accouplement réussies." },
-      "pregnancy": { "type": "Confirmer la gestation", "desc": "Enregistrer les contrôles échographiques ou physiques." },
-      "farrowing": { "type": "Mise bas", "desc": "Enregistrer les nouvelles portées et les détails de la naissance." },
-      "weaning": { "type": "Sevrage", "desc": "Enregistrer quand les porcelets quittent la truie." },
-      "castration": { "type": "Castration", "desc": "Enregistrer la castration des porcs mâles." },
-      "teeth": { "type": "Coupe des dents", "desc": "Couper les dents de lait des porcelets nouveau-nés." },
-      "tail": { "type": "Coupe de la queue", "desc": "Couper les queues pour prévenir les morsures et les infections." },
-      "deworming": { "type": "Vermifugation", "desc": "Administrer des médicaments vermifuges." },
-      "iron": { "type": "Injection de fer", "desc": "Donner des injections de fer pour prévenir l'anémie." },
-      "vaccination": { "type": "Vaccination", "desc": "Enregistrer les injections de routine ou d'urgence." },
-      "medication": { "type": "Médicament", "desc": "Suivre les traitements pour les animaux malades." },
-      "weight": { "type": "Contrôle du poids", "desc": "Enregistrer les progrès de la croissance." },
-      "culling": { "type": "Réforme", "desc": "Enregistrer le retrait du troupeau." },
-      "custom": { "type": "Personnalisé", "desc": "Enregistrer toute autre activité ou observation de la ferme." }
+      "heat": {
+        "type": "Détection des chaleurs",
+        "desc": "Surveiller les truies pour la préparation à la reproduction."
+      },
+      "breeding": {
+        "type": "Saillie/Accouplement",
+        "desc": "Enregistrer les sessions d'accouplement réussies."
+      },
+      "pregnancy": {
+        "type": "Confirmer la gestation",
+        "desc": "Enregistrer les contrôles échographiques ou physiques."
+      },
+      "farrowing": {
+        "type": "Mise bas",
+        "desc": "Enregistrer les nouvelles portées et les détails de la naissance."
+      },
+      "weaning": {
+        "type": "Sevrage",
+        "desc": "Enregistrer quand les porcelets quittent la truie."
+      },
+      "castration": {
+        "type": "Castration",
+        "desc": "Enregistrer la castration des porcs mâles."
+      },
+      "teeth": {
+        "type": "Coupe des dents",
+        "desc": "Couper les dents de lait des porcelets nouveau-nés."
+      },
+      "tail": {
+        "type": "Coupe de la queue",
+        "desc": "Couper les queues pour prévenir les morsures et les infections."
+      },
+      "deworming": {
+        "type": "Vermifugation",
+        "desc": "Administrer des médicaments vermifuges."
+      },
+      "iron": {
+        "type": "Injection de fer",
+        "desc": "Donner des injections de fer pour prévenir l'anémie."
+      },
+      "vaccination": {
+        "type": "Vaccination",
+        "desc": "Enregistrer les injections de routine ou d'urgence."
+      },
+      "medication": {
+        "type": "Médicament",
+        "desc": "Suivre les traitements pour les animaux malades."
+      },
+      "weight": {
+        "type": "Contrôle du poids",
+        "desc": "Enregistrer les progrès de la croissance."
+      },
+      "culling": {
+        "type": "Réforme",
+        "desc": "Enregistrer le retrait du troupeau."
+      },
+      "custom": {
+        "type": "Personnalisé",
+        "desc": "Enregistrer toute autre activité ou observation de la ferme."
+      }
     },
     "logActivity": "Enregistrer l'activité : {type}",
     "procedureDate": "Date de la procédure",
@@ -378,7 +437,39 @@
     "days": "{count} Jours",
     "managementSystemReport": "Rapport du système de gestion SmartSwine",
     "bags": "Sacs",
-    "kg": "kg"
+    "kg": "kg",
+    "starter": "Starter",
+    "grower": "Croissance",
+    "finisher": "Finition",
+    "ingredientsList": {
+      "maize": "Maïs",
+      "maize_bran": "Son de maïs",
+      "soybean_meal": "Tourteau de soja",
+      "fish_meal": "Farine de poisson",
+      "rice_bran": "Son de riz",
+      "wheat_bran": "Son de blé",
+      "common_salt": "Sel commun",
+      "vitamin_premix": "Prémélange vitaminique",
+      "mycotoxin_binder": "Liant de mycotoxines",
+      "oyster_shell": "Coquille d'huître",
+      "bone_meal": "Farine d'os",
+      "lysine": "Lysine",
+      "methionine": "Méthionine"
+    },
+    "groups": {
+      "energy": "Énergie",
+      "protein": "Protéines",
+      "vitaminsMineralsSalt": "Vitamines, Minéraux et Sel"
+    },
+    "nutrients": {
+      "digestibleProtein": "Protéine digestible (%)",
+      "crudeFiber": "Fibre brute (%)",
+      "metabolizableEnergy": "Énergie métabolisable (kcal/kg)",
+      "calcium": "Calcium (%)",
+      "phosphorus": "Phosphore (%)",
+      "lysine": "Lysine (%)",
+      "methionineCystine": "Méthionine + Cystine (%)"
+    }
   },
   "Financials": {
     "totalRevenue": "Revenu total",
@@ -531,32 +622,110 @@
       "general": "Général"
     },
     "tips": {
-      "tip6": { "title": "Âge du sevrage pour les petits exploitants", "content": "Sevrez les porcelets entre 28 et 35 jours au lieu de plus tôt. Cela permet aux porcelets de devenir plus forts et de s'adapter aux aliments solides en utilisant les ressources simples de la ferme." },
-      "tip7": { "title": "Méthode de séparation graduelle", "content": "Réduisez le stress du sevrage en sortant la truie de la case de mise bas et en laissant les porcelets dans leur environnement familier pendant la première semaine." },
-      "tip8": { "title": "Prévention des courants d'air pour les sevrés", "content": "Bloquez les vents froids dans la case de nurserie en installant des rideaux temporaires ou des planches de bois jusqu'à la hauteur des porcelets (environ 50 cm)." },
-      "tip11": { "title": "Solution de réhydratation maison", "content": "Donnez une solution d'électrolytes maison bon marché (5 cuillères à soupe de sucre, 1/2 cuillère à soupe de sel dans 5 litres d'eau propre) pendant les 3 premiers jours du sevrage pour lutter contre le stress." },
-      "tip17": { "title": "Supplément minéral en terre argileuse", "content": "Mettez une pelletée propre de terre argileuse rouge fraîche (provenant d'une zone propre) dans la case de mise bas/sevrage. Les porcelets en mangent pour obtenir du fer et des minéraux naturels." },
-      "tip20": { "title": "Ébullition des sous-produits agricoles", "content": "Faites bouillir les sous-produits agricoles comme les épluchures d'igname, les épluchures de manioc et les fanes de patates douces pour détruire les toxines naturelles et améliorer la digestibilité." },
-      "tip21": { "title": "Sources de protéines locales", "content": "Complétez les aliments commerciaux en cultivant des plantes fourragères riches en protéines comme le Moringa, l'Azolla ou les feuilles de patate douce sur la ferme." },
-      "tip22": { "title": "Restriction alimentaire pendant la gestation", "content": "Limitez les truies gestantes à 2-2,5 kg d'aliments par jour pour éviter qu'elles ne deviennent trop grasses, ce qui cause des mises bas difficiles." },
-      "tip26": { "title": "Ébullition des déchets de cuisine", "content": "Faites bouillir les déchets alimentaires des hôtels ou des cuisines pendant 30 minutes pour détruire les virus de la peste porcine africaine et de la fièvre aphteuse." },
-      "tip28": { "title": "Charbon de bois pour la digestion", "content": "Placez de petits morceaux de charbon de bois dans les cases de croissance. Les cochons le mâchent pour aider à lier les toxines de l'estomac et réduire la diarrhée." },
-      "tip34": { "title": "Saillie contrôlée dans la case du verrat", "content": "Amenez la truie en chaleur dans la case du verrat pour l'accouplement, plutôt que de laisser le verrat courir librement dans le troupeau de truies." },
-      "tip35": { "title": "Réponse à la chaleur immobile", "content": "Testez les chaleurs en appuyant fermement vos mains sur le dos de la truie ; si elle reste complètement immobile et dresse ses oreilles, elle est prête pour la saillie." },
-      "tip39": { "title": "Protection contre l'écrasement des porcelets DIY", "content": "Installez des \"barres de protection\" (poteaux en bois lourds ou tuyaux métalliques placés à 20 cm des murs et à 20 cm du sol) dans les cases de mise bas." },
-      "tip43": { "title": "Calendrier des enregistrements de reproduction", "content": "Notez la date de saillie sur un calendrier ; la gestation dure 114 jours (3 mois, 3 semaines, 3 jours), ce qui vous permet de préparer la case de mise bas." },
-      "tip47": { "title": "Âge de la première saillie des cochetes", "content": "Attendez qu'une cochete ait au moins 8 mois et qu'elle en soit à son deuxième ou troisième cycle de chaleur avant de la saillir pour assurer une première portée plus nombreuse." },
-      "tip48": { "title": "Isolement des nouveaux achats", "content": "Gardez les cochons nouvellement achetés dans une case séparée à au moins 20 mètres de votre troupeau principal pendant 30 jours pour vérifier s'ils sont malades." },
-      "tip49": { "title": "Installation d'un pédiluve DIY", "content": "Placez un bac en plastique peu profond ou un pneu coupé en deux rempli d'eau et de désinfectant (comme du chlore ou de la chaux agricole) à l'entrée de la ferme." },
-      "tip51": { "title": "Politique de restriction des visiteurs", "content": "Ne laissez pas de visiteurs (en particulier d'autres acheteurs de porcs ou éleveurs) entrer dans vos cases de cochons. Discutez affaires à l'extérieur de la zone des cases." },
-      "tip55": { "title": "Contrôle naturel des parasites", "content": "Donnez des graines de papaye écrasées ou des graines de citrouille aux porcs en croissance comme remède naturel bon marché pour aider à réduire les vers internes." },
-      "tip60": { "title": "Inhumation appropriée des mortalités", "content": "Enterrez les cochons morts à au moins 2 mètres de profondeur, loin des sources d'eau, et couvrez le cadavre de chaux agricole avant de reboucher." },
-      "tip61": { "title": "Espace de case à faible coût", "content": "Prévoyez au moins 1 mètre carré d'espace par porc charcutier pour réduire les bagarres, le stress et les lésions cutanées." },
-      "tip62": { "title": "Ventilation transversale naturelle", "content": "Concevez des porcheries avec des côtés ouverts (en utilisant du grillage ou des lattes de bambou) pour permettre à une brise naturelle de passer et d'éliminer les odeurs." },
-      "tip75": { "title": "Tas de compost DIY", "content": "Empilez le fumier de porc dans un coin sec désigné, couvrez-le de feuilles de bananier ou de plastique et retournez-le chaque semaine avec une pelle pour faire du compost." },
-      "tip76": { "title": "Biogaz en sac flexible", "content": "Installez un digesteur de biogaz tubulaire en plastique simple et peu coûteux pour traiter le fumier de porc, produisant du gaz de cuisson gratuit pour le foyer." },
-      "tip92": { "title": "Limite d'âge pour la castration", "content": "Castrez les porcelets mâles avant l'âge de 7 jours. À cet âge, la procédure est rapide, guérit vite et cause une douleur minimale." },
-      "tip94": { "title": "Enregistrements simples sur carnet", "content": "Gardez un petit carnet bon marché dans la porcherie pour noter les dates de saillie, les dates de mise bas et les traitements pour chaque truie." }
+      "tip6": {
+        "title": "Âge du sevrage pour les petits exploitants",
+        "content": "Sevrez les porcelets entre 28 et 35 jours au lieu de plus tôt. Cela permet aux porcelets de devenir plus forts et de s'adapter aux aliments solides en utilisant les ressources simples de la ferme."
+      },
+      "tip7": {
+        "title": "Méthode de séparation graduelle",
+        "content": "Réduisez le stress du sevrage en sortant la truie de la case de mise bas et en laissant les porcelets dans leur environnement familier pendant la première semaine."
+      },
+      "tip8": {
+        "title": "Prévention des courants d'air pour les sevrés",
+        "content": "Bloquez les vents froids dans la case de nurserie en installant des rideaux temporaires ou des planches de bois jusqu'à la hauteur des porcelets (environ 50 cm)."
+      },
+      "tip11": {
+        "title": "Solution de réhydratation maison",
+        "content": "Donnez une solution d'électrolytes maison bon marché (5 cuillères à soupe de sucre, 1/2 cuillère à soupe de sel dans 5 litres d'eau propre) pendant les 3 premiers jours du sevrage pour lutter contre le stress."
+      },
+      "tip17": {
+        "title": "Supplément minéral en terre argileuse",
+        "content": "Mettez une pelletée propre de terre argileuse rouge fraîche (provenant d'une zone propre) dans la case de mise bas/sevrage. Les porcelets en mangent pour obtenir du fer et des minéraux naturels."
+      },
+      "tip20": {
+        "title": "Ébullition des sous-produits agricoles",
+        "content": "Faites bouillir les sous-produits agricoles comme les épluchures d'igname, les épluchures de manioc et les fanes de patates douces pour détruire les toxines naturelles et améliorer la digestibilité."
+      },
+      "tip21": {
+        "title": "Sources de protéines locales",
+        "content": "Complétez les aliments commerciaux en cultivant des plantes fourragères riches en protéines comme le Moringa, l'Azolla ou les feuilles de patate douce sur la ferme."
+      },
+      "tip22": {
+        "title": "Restriction alimentaire pendant la gestation",
+        "content": "Limitez les truies gestantes à 2-2,5 kg d'aliments par jour pour éviter qu'elles ne deviennent trop grasses, ce qui cause des mises bas difficiles."
+      },
+      "tip26": {
+        "title": "Ébullition des déchets de cuisine",
+        "content": "Faites bouillir les déchets alimentaires des hôtels ou des cuisines pendant 30 minutes pour détruire les virus de la peste porcine africaine et de la fièvre aphteuse."
+      },
+      "tip28": {
+        "title": "Charbon de bois pour la digestion",
+        "content": "Placez de petits morceaux de charbon de bois dans les cases de croissance. Les cochons le mâchent pour aider à lier les toxines de l'estomac et réduire la diarrhée."
+      },
+      "tip34": {
+        "title": "Saillie contrôlée dans la case du verrat",
+        "content": "Amenez la truie en chaleur dans la case du verrat pour l'accouplement, plutôt que de laisser le verrat courir librement dans le troupeau de truies."
+      },
+      "tip35": {
+        "title": "Réponse à la chaleur immobile",
+        "content": "Testez les chaleurs en appuyant fermement vos mains sur le dos de la truie ; si elle reste complètement immobile et dresse ses oreilles, elle est prête pour la saillie."
+      },
+      "tip39": {
+        "title": "Protection contre l'écrasement des porcelets DIY",
+        "content": "Installez des \"barres de protection\" (poteaux en bois lourds ou tuyaux métalliques placés à 20 cm des murs et à 20 cm du sol) dans les cases de mise bas."
+      },
+      "tip43": {
+        "title": "Calendrier des enregistrements de reproduction",
+        "content": "Notez la date de saillie sur un calendrier ; la gestation dure 114 jours (3 mois, 3 semaines, 3 jours), ce qui vous permet de préparer la case de mise bas."
+      },
+      "tip47": {
+        "title": "Âge de la première saillie des cochetes",
+        "content": "Attendez qu'une cochete ait au moins 8 mois et qu'elle en soit à son deuxième ou troisième cycle de chaleur avant de la saillir pour assurer une première portée plus nombreuse."
+      },
+      "tip48": {
+        "title": "Isolement des nouveaux achats",
+        "content": "Gardez les cochons nouvellement achetés dans une case séparée à au moins 20 mètres de votre troupeau principal pendant 30 jours pour vérifier s'ils sont malades."
+      },
+      "tip49": {
+        "title": "Installation d'un pédiluve DIY",
+        "content": "Placez un bac en plastique peu profond ou un pneu coupé en deux rempli d'eau et de désinfectant (comme du chlore ou de la chaux agricole) à l'entrée de la ferme."
+      },
+      "tip51": {
+        "title": "Politique de restriction des visiteurs",
+        "content": "Ne laissez pas de visiteurs (en particulier d'autres acheteurs de porcs ou éleveurs) entrer dans vos cases de cochons. Discutez affaires à l'extérieur de la zone des cases."
+      },
+      "tip55": {
+        "title": "Contrôle naturel des parasites",
+        "content": "Donnez des graines de papaye écrasées ou des graines de citrouille aux porcs en croissance comme remède naturel bon marché pour aider à réduire les vers internes."
+      },
+      "tip60": {
+        "title": "Inhumation appropriée des mortalités",
+        "content": "Enterrez les cochons morts à au moins 2 mètres de profondeur, loin des sources d'eau, et couvrez le cadavre de chaux agricole avant de reboucher."
+      },
+      "tip61": {
+        "title": "Espace de case à faible coût",
+        "content": "Prévoyez au moins 1 mètre carré d'espace par porc charcutier pour réduire les bagarres, le stress et les lésions cutanées."
+      },
+      "tip62": {
+        "title": "Ventilation transversale naturelle",
+        "content": "Concevez des porcheries avec des côtés ouverts (en utilisant du grillage ou des lattes de bambou) pour permettre à une brise naturelle de passer et d'éliminer les odeurs."
+      },
+      "tip75": {
+        "title": "Tas de compost DIY",
+        "content": "Empilez le fumier de porc dans un coin sec désigné, couvrez-le de feuilles de bananier ou de plastique et retournez-le chaque semaine avec une pelle pour faire du compost."
+      },
+      "tip76": {
+        "title": "Biogaz en sac flexible",
+        "content": "Installez un digesteur de biogaz tubulaire en plastique simple et peu coûteux pour traiter le fumier de porc, produisant du gaz de cuisson gratuit pour le foyer."
+      },
+      "tip92": {
+        "title": "Limite d'âge pour la castration",
+        "content": "Castrez les porcelets mâles avant l'âge de 7 jours. À cet âge, la procédure est rapide, guérit vite et cause une douleur minimale."
+      },
+      "tip94": {
+        "title": "Enregistrements simples sur carnet",
+        "content": "Gardez un petit carnet bon marché dans la porcherie pour noter les dates de saillie, les dates de mise bas et les traitements pour chaque truie."
+      }
     }
   },
   "Symptoms": {
@@ -1400,9 +1569,21 @@
       "heat": "Détection des chaleurs",
       "breeding": "Saillie",
       "pregnancy": "Confirmation de gestation",
-      "deworming": "Vermifugation",
+      "deworming": "Déparasitage",
       "weight": "Contrôle du poids",
-      "other": "Autre"
+      "other": "Autre",
+      "weight_check": "Contrôle du poids",
+      "culling": "Reforme",
+      "teeth_clipping": "Coupe des dents",
+      "tail_docking": "Coupe de la queue",
+      "iron_injection": "Injection de fer",
+      "weaning": "Sevrage",
+      "castration": "Castration",
+      "heat_detection": "Détection des chaleurs",
+      "breeding_mating": "Saillie",
+      "pregnancy_check": "Constat de gestation",
+      "farrowing": "Mise bas",
+      "custom": "Personnalisé"
     },
     "reportTitle": "Rapport du profil du cochon : {tag}"
   },
@@ -1690,7 +1871,10 @@
     "joined": "Arrivée",
     "payrollSummary": "Résumé de la paie",
     "totalStaff": "Effectif total",
-    "monthlyPayroll": "Paie mensuelle"
+    "monthlyPayroll": "Paie mensuelle",
+    "detailedHistory": "Detailed transaction history",
+    "narration": "Narration",
+    "balance": "Balance"
   },
   "Common": {
     "loading": "Chargement..."

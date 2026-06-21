@@ -188,7 +188,21 @@
     "limitReached": "Người dùng miễn phí chỉ có thể quản lý tối đa 20 con heo. Vui lòng nâng cấp lên Premium để thêm nhiều hơn.",
     "porker": "Heo thịt",
     "breeder": "Heo giống",
-    "addPigs": "+ Thêm heo"
+    "addPigs": "+ Thêm heo",
+    "male": "Đực",
+    "female": "Cái",
+    "excellent": "Xuất sắc",
+    "good": "Tốt",
+    "caution": "Cẩn trọng",
+    "poor": "Kém",
+    "blank": "Trống",
+    "piglet": "Heo con",
+    "gilt": "Hậu bị",
+    "sow": "Nái",
+    "boar": "Đực giống",
+    "barrow": "Heo thiến",
+    "pregnant": "Mang thai",
+    "lactating": "Đang nuôi con"
   },
   "Profile": {
     "owner": "Chủ sở hữu",
@@ -228,21 +242,66 @@
     "title": "Thực hiện quy trình đàn",
     "description": "Chọn một hoạt động để cập nhật trạng thái heo, ghi chép sức khỏe hoặc lập lịch công việc tương lai.",
     "categories": {
-      "heat": { "type": "Phát hiện lên giống", "desc": "Theo dõi heo nái sẵn sàng phối giống." },
-      "breeding": { "type": "Phối giống", "desc": "Ghi chép các ca phối giống thành công." },
-      "pregnancy": { "type": "Xác nhận mang thai", "desc": "Ghi lại kết quả siêu âm hoặc kiểm tra vật lý." },
-      "farrowing": { "type": "Đẻ lứa", "desc": "Ghi chép lứa đẻ mới và chi tiết sinh sản." },
-      "weaning": { "type": "Cai sữa", "desc": "Ghi lại thời điểm heo con tách mẹ." },
-      "castration": { "type": "Thiến", "desc": "Ghi lại việc thiến heo đực." },
-      "teeth": { "type": "Bấm răng", "desc": "Bấm răng nanh cho heo con mới sinh." },
-      "tail": { "type": "Cắt đuôi", "desc": "Cắt đuôi để ngăn cắn đuôi và nhiễm trùng." },
-      "deworming": { "type": "Tẩy giun", "desc": "Cho uống hoặc tiêm thuốc tẩy giun." },
-      "iron": { "type": "Tiêm sắt", "desc": "Tiêm sắt để ngăn ngừa thiếu máu." },
-      "vaccination": { "type": "Tiêm phòng", "desc": "Ghi chép các mũi tiêm định kỳ hoặc khẩn cấp." },
-      "medication": { "type": "Điều trị thuốc", "desc": "Theo dõi điều trị cho heo bệnh." },
-      "weight": { "type": "Kiểm tra cân nặng", "desc": "Ghi lại tiến trình tăng trưởng." },
-      "culling": { "type": "Loại thải", "desc": "Ghi lại việc loại khỏi đàn hoặc bán thanh lý." },
-      "custom": { "type": "Tùy chỉnh", "desc": "Ghi lại bất kỳ hoạt động hoặc quan sát trang trại nào khác." }
+      "heat": {
+        "type": "Phát hiện lên giống",
+        "desc": "Theo dõi heo nái sẵn sàng phối giống."
+      },
+      "breeding": {
+        "type": "Phối giống",
+        "desc": "Ghi chép các ca phối giống thành công."
+      },
+      "pregnancy": {
+        "type": "Xác nhận mang thai",
+        "desc": "Ghi lại kết quả siêu âm hoặc kiểm tra vật lý."
+      },
+      "farrowing": {
+        "type": "Đẻ lứa",
+        "desc": "Ghi chép lứa đẻ mới và chi tiết sinh sản."
+      },
+      "weaning": {
+        "type": "Cai sữa",
+        "desc": "Ghi lại thời điểm heo con tách mẹ."
+      },
+      "castration": {
+        "type": "Thiến",
+        "desc": "Ghi lại việc thiến heo đực."
+      },
+      "teeth": {
+        "type": "Bấm răng",
+        "desc": "Bấm răng nanh cho heo con mới sinh."
+      },
+      "tail": {
+        "type": "Cắt đuôi",
+        "desc": "Cắt đuôi để ngăn cắn đuôi và nhiễm trùng."
+      },
+      "deworming": {
+        "type": "Tẩy giun",
+        "desc": "Cho uống hoặc tiêm thuốc tẩy giun."
+      },
+      "iron": {
+        "type": "Tiêm sắt",
+        "desc": "Tiêm sắt để ngăn ngừa thiếu máu."
+      },
+      "vaccination": {
+        "type": "Tiêm phòng",
+        "desc": "Ghi chép các mũi tiêm định kỳ hoặc khẩn cấp."
+      },
+      "medication": {
+        "type": "Điều trị thuốc",
+        "desc": "Theo dõi điều trị cho heo bệnh."
+      },
+      "weight": {
+        "type": "Kiểm tra cân nặng",
+        "desc": "Ghi lại tiến trình tăng trưởng."
+      },
+      "culling": {
+        "type": "Loại thải",
+        "desc": "Ghi lại việc loại khỏi đàn hoặc bán thanh lý."
+      },
+      "custom": {
+        "type": "Tùy chỉnh",
+        "desc": "Ghi lại bất kỳ hoạt động hoặc quan sát trang trại nào khác."
+      }
     },
     "logActivity": "Ghi hoạt động: {type}",
     "procedureDate": "Ngày thực hiện",
@@ -378,7 +437,39 @@
     "days": "{count} Ngày",
     "managementSystemReport": "Báo cáo hệ thống quản lý SmartSwine",
     "bags": "Bao",
-    "kg": "kg"
+    "kg": "kg",
+    "starter": "Khởi động",
+    "grower": "Sinh trưởng",
+    "finisher": "Vỗ béo",
+    "ingredientsList": {
+      "maize": "Ngô (Bắp)",
+      "maize_bran": "Cám ngô",
+      "soybean_meal": "Khô đậu tương",
+      "fish_meal": "Bột cá",
+      "rice_bran": "Cám gạo",
+      "wheat_bran": "Cám mì",
+      "common_salt": "Muối ăn",
+      "vitamin_premix": "Vitamin Premix",
+      "mycotoxin_binder": "Chất hấp phụ độc tố",
+      "oyster_shell": "Vỏ hàu",
+      "bone_meal": "Bột xương",
+      "lysine": "Lysine",
+      "methionine": "Methionine"
+    },
+    "groups": {
+      "energy": "Năng lượng",
+      "protein": "Đạm",
+      "vitaminsMineralsSalt": "Vitamin, Khoáng chất & Muối"
+    },
+    "nutrients": {
+      "digestibleProtein": "Đạm tiêu hóa (%)",
+      "crudeFiber": "Xơ thô (%)",
+      "metabolizableEnergy": "Năng lượng trao đổi (kcal/kg)",
+      "calcium": "Canxi (%)",
+      "phosphorus": "Phốt pho (%)",
+      "lysine": "Lysine (%)",
+      "methionineCystine": "Methionine + Cystine (%)"
+    }
   },
   "Financials": {
     "totalRevenue": "Tổng thu nhập",
@@ -531,32 +622,110 @@
       "general": "Chung"
     },
     "tips": {
-      "tip6": { "title": "Tuổi cai sữa cho hộ chăn nuôi nhỏ", "content": "Cai sữa heo con ở thời điểm 28 đến 35 ngày tuổi thay vì sớm hơn. Điều này giúp heo con khỏe mạnh hơn và thích nghi tốt hơn với thức ăn rắn." },
-      "tip7": { "title": "Phương pháp tách mẹ dần dần", "content": "Giảm căng thẳng cai sữa bằng cách đưa heo nái ra khỏi chuồng đẻ và để heo con ở lại môi trường quen thuộc trong tuần đầu tiên." },
-      "tip8": { "title": "Ngăn gió lùa cho heo cai sữa", "content": "Chắn gió lạnh trong chuồng úm bằng cách lắp rèm tạm thời hoặc ván gỗ cao đến ngang tầm heo con (khoảng 50cm)." },
-      "tip11": { "title": "Dung dịch bù nước tự pha", "content": "Cho uống dung dịch điện giải tự pha rẻ tiền (5 muỗng canh đường, 1/2 muỗng canh muối trong 5 lít nước sạch) trong 3 ngày đầu cai sữa để chống stress." },
-      "tip17": { "title": "Bổ sung khoáng chất bằng đất sét", "content": "Cho một xẻng đất sét đỏ sạch vào chuồng đẻ/cai sữa. Heo con sẽ ăn đất để lấy sắt và khoáng chất tự nhiên." },
-      "tip20": { "title": "Luộc chín phụ phẩm nông nghiệp", "content": "Luộc chín các phụ phẩm như vỏ khoai lang, vỏ sắn, dây khoai lang để phá hủy độc tố tự nhiên và cải thiện khả năng tiêu hóa." },
-      "tip21": { "title": "Nguồn protein địa phương", "content": "Bổ sung thức ăn công nghiệp bằng cách trồng các loại cây thức ăn giàu protein như chùm ngây, bèo hoa dâu hoặc lá khoai lang tại trại." },
-      "tip22": { "title": "Hạn chế thức ăn giai đoạn mang thai", "content": "Hạn chế heo nái mang thai ăn khoảng 2-2.5 kg thức ăn mỗi ngày để ngăn chúng quá béo, gây khó đẻ." },
-      "tip26": { "title": "Nấu chín thức ăn thừa", "content": "Nấu chín thức ăn thừa từ khách sạn hoặc nhà bếp trong 30 phút để tiêu diệt virus Dịch tả heo Châu Phi và Lở mồm long móng." },
-      "tip28": { "title": "Than củi hỗ trợ tiêu hóa", "content": "Đặt các mẩu than củi nhỏ vào chuồng heo lứa. Heo nhai than sẽ giúp hấp phụ độc tố trong dạ dày và giảm tiêu chảy." },
-      "tip34": { "title": "Phối giống tại chuồng nọc", "content": "Đưa heo nái đang lên giống đến chuồng của heo nọc để phối, thay vì thả heo nọc chạy tự do trong đàn nái." },
-      "tip35": { "title": "Phản xạ đứng yên khi lên giống", "content": "Kiểm tra lên giống bằng cách ấn mạnh tay lên lưng nái; nếu nó đứng hoàn toàn yên và vểnh tai, nó đã sẵn sàng để phối." },
-      "tip39": { "title": "Thanh chắn bảo vệ heo con", "content": "Lắp các \"thanh chắn\" (cây gỗ nặng hoặc ống sắt cách tường 20cm và cách sàn 20cm) trong chuồng đẻ để tránh nái đè con." },
-      "tip43": { "title": "Lịch ghi chép phối giống", "content": "Đánh dấu ngày phối giống lên lịch; thai kỳ kéo dài 114 ngày (3 tháng, 3 tuần, 3 ngày), giúp bạn chuẩn bị chuồng đẻ kịp thời." },
-      "tip47": { "title": "Tuổi phối giống lần đầu cho hậu bị", "content": "Chờ cho đến khi heo hậu bị được ít nhất 8 tháng tuổi và ở chu kỳ lên giống thứ hai hoặc thứ ba trước khi phối để đảm bảo lứa đầu đông con hơn." },
-      "tip48": { "title": "Cách ly heo mới mua", "content": "Giữ heo mới mua ở chuồng riêng cách đàn chính ít nhất 20 mét trong 30 ngày để theo dõi bệnh tật." },
-      "tip49": { "title": "Hố sát trùng tự làm", "content": "Đặt một khay nhựa nông hoặc lốp xe cắt đôi đựng nước và thuốc sát trùng (như clo hoặc vôi nông nghiệp) tại cổng trại." },
-      "tip51": { "title": "Chính sách hạn chế khách thăm", "content": "Không cho phép khách tham quan (đặc biệt là người buôn heo hoặc người chăn nuôi khác) vào bên trong chuồng heo." },
-      "tip55": { "title": "Kiểm soát ký sinh trùng tự nhiên", "content": "Cho heo lứa ăn hạt đu đủ hoặc hạt bí ngô nghiền nát như một biện pháp tự nhiên rẻ tiền giúp giảm giun sán nội ký sinh." },
-      "tip60": { "title": "Chôn lấp xác heo đúng cách", "content": "Chôn heo chết sâu ít nhất 2 mét, cách xa nguồn nước và rắc vôi bột lên xác trước khi lấp đất." },
-      "tip61": { "title": "Diện tích chuồng trại chi phí thấp", "content": "Cung cấp ít nhất 1 mét vuông diện tích cho mỗi con heo thịt để giảm đánh nhau, stress và các tổn thương da." },
-      "tip62": { "title": "Thông gió tự nhiên", "content": "Thiết kế chuồng heo với các mặt hở (dùng lưới thép hoặc nan tre) để gió tự nhiên thổi qua, giúp loại bỏ mùi hôi." },
-      "tip75": { "title": "Ủ phân tự làm", "content": "Chất phân heo vào một góc khô ráo, phủ lá chuối hoặc nilon lên trên và đảo hàng tuần để làm phân bón." },
-      "tip76": { "title": "Túi biogas mềm", "content": "Lắp đặt hệ thống biogas bằng túi nilon chi phí thấp để xử lý phân heo, tạo ra gas nấu ăn miễn phí cho gia đình." },
-      "tip92": { "title": "Giới hạn tuổi thiến", "content": "Thiến heo đực trước khi chúng được 7 ngày tuổi. Ở tuổi này, quy trình nhanh, vết thương mau lành và ít đau đớn nhất." },
-      "tip94": { "title": "Sổ ghi chép đơn giản", "content": "Giữ một cuốn sổ nhỏ rẻ tiền ở chuồng để ghi lại ngày phối, ngày đẻ và các đợt điều trị cho mỗi con nái." }
+      "tip6": {
+        "title": "Tuổi cai sữa cho hộ chăn nuôi nhỏ",
+        "content": "Cai sữa heo con ở thời điểm 28 đến 35 ngày tuổi thay vì sớm hơn. Điều này giúp heo con khỏe mạnh hơn và thích nghi tốt hơn với thức ăn rắn."
+      },
+      "tip7": {
+        "title": "Phương pháp tách mẹ dần dần",
+        "content": "Giảm căng thẳng cai sữa bằng cách đưa heo nái ra khỏi chuồng đẻ và để heo con ở lại môi trường quen thuộc trong tuần đầu tiên."
+      },
+      "tip8": {
+        "title": "Ngăn gió lùa cho heo cai sữa",
+        "content": "Chắn gió lạnh trong chuồng úm bằng cách lắp rèm tạm thời hoặc ván gỗ cao đến ngang tầm heo con (khoảng 50cm)."
+      },
+      "tip11": {
+        "title": "Dung dịch bù nước tự pha",
+        "content": "Cho uống dung dịch điện giải tự pha rẻ tiền (5 muỗng canh đường, 1/2 muỗng canh muối trong 5 lít nước sạch) trong 3 ngày đầu cai sữa để chống stress."
+      },
+      "tip17": {
+        "title": "Bổ sung khoáng chất bằng đất sét",
+        "content": "Cho một xẻng đất sét đỏ sạch vào chuồng đẻ/cai sữa. Heo con sẽ ăn đất để lấy sắt và khoáng chất tự nhiên."
+      },
+      "tip20": {
+        "title": "Luộc chín phụ phẩm nông nghiệp",
+        "content": "Luộc chín các phụ phẩm như vỏ khoai lang, vỏ sắn, dây khoai lang để phá hủy độc tố tự nhiên và cải thiện khả năng tiêu hóa."
+      },
+      "tip21": {
+        "title": "Nguồn protein địa phương",
+        "content": "Bổ sung thức ăn công nghiệp bằng cách trồng các loại cây thức ăn giàu protein như chùm ngây, bèo hoa dâu hoặc lá khoai lang tại trại."
+      },
+      "tip22": {
+        "title": "Hạn chế thức ăn giai đoạn mang thai",
+        "content": "Hạn chế heo nái mang thai ăn khoảng 2-2.5 kg thức ăn mỗi ngày để ngăn chúng quá béo, gây khó đẻ."
+      },
+      "tip26": {
+        "title": "Nấu chín thức ăn thừa",
+        "content": "Nấu chín thức ăn thừa từ khách sạn hoặc nhà bếp trong 30 phút để tiêu diệt virus Dịch tả heo Châu Phi và Lở mồm long móng."
+      },
+      "tip28": {
+        "title": "Than củi hỗ trợ tiêu hóa",
+        "content": "Đặt các mẩu than củi nhỏ vào chuồng heo lứa. Heo nhai than sẽ giúp hấp phụ độc tố trong dạ dày và giảm tiêu chảy."
+      },
+      "tip34": {
+        "title": "Phối giống tại chuồng nọc",
+        "content": "Đưa heo nái đang lên giống đến chuồng của heo nọc để phối, thay vì thả heo nọc chạy tự do trong đàn nái."
+      },
+      "tip35": {
+        "title": "Phản xạ đứng yên khi lên giống",
+        "content": "Kiểm tra lên giống bằng cách ấn mạnh tay lên lưng nái; nếu nó đứng hoàn toàn yên và vểnh tai, nó đã sẵn sàng để phối."
+      },
+      "tip39": {
+        "title": "Thanh chắn bảo vệ heo con",
+        "content": "Lắp các \"thanh chắn\" (cây gỗ nặng hoặc ống sắt cách tường 20cm và cách sàn 20cm) trong chuồng đẻ để tránh nái đè con."
+      },
+      "tip43": {
+        "title": "Lịch ghi chép phối giống",
+        "content": "Đánh dấu ngày phối giống lên lịch; thai kỳ kéo dài 114 ngày (3 tháng, 3 tuần, 3 ngày), giúp bạn chuẩn bị chuồng đẻ kịp thời."
+      },
+      "tip47": {
+        "title": "Tuổi phối giống lần đầu cho hậu bị",
+        "content": "Chờ cho đến khi heo hậu bị được ít nhất 8 tháng tuổi và ở chu kỳ lên giống thứ hai hoặc thứ ba trước khi phối để đảm bảo lứa đầu đông con hơn."
+      },
+      "tip48": {
+        "title": "Cách ly heo mới mua",
+        "content": "Giữ heo mới mua ở chuồng riêng cách đàn chính ít nhất 20 mét trong 30 ngày để theo dõi bệnh tật."
+      },
+      "tip49": {
+        "title": "Hố sát trùng tự làm",
+        "content": "Đặt một khay nhựa nông hoặc lốp xe cắt đôi đựng nước và thuốc sát trùng (như clo hoặc vôi nông nghiệp) tại cổng trại."
+      },
+      "tip51": {
+        "title": "Chính sách hạn chế khách thăm",
+        "content": "Không cho phép khách tham quan (đặc biệt là người buôn heo hoặc người chăn nuôi khác) vào bên trong chuồng heo."
+      },
+      "tip55": {
+        "title": "Kiểm soát ký sinh trùng tự nhiên",
+        "content": "Cho heo lứa ăn hạt đu đủ hoặc hạt bí ngô nghiền nát như một biện pháp tự nhiên rẻ tiền giúp giảm giun sán nội ký sinh."
+      },
+      "tip60": {
+        "title": "Chôn lấp xác heo đúng cách",
+        "content": "Chôn heo chết sâu ít nhất 2 mét, cách xa nguồn nước và rắc vôi bột lên xác trước khi lấp đất."
+      },
+      "tip61": {
+        "title": "Diện tích chuồng trại chi phí thấp",
+        "content": "Cung cấp ít nhất 1 mét vuông diện tích cho mỗi con heo thịt để giảm đánh nhau, stress và các tổn thương da."
+      },
+      "tip62": {
+        "title": "Thông gió tự nhiên",
+        "content": "Thiết kế chuồng heo với các mặt hở (dùng lưới thép hoặc nan tre) để gió tự nhiên thổi qua, giúp loại bỏ mùi hôi."
+      },
+      "tip75": {
+        "title": "Ủ phân tự làm",
+        "content": "Chất phân heo vào một góc khô ráo, phủ lá chuối hoặc nilon lên trên và đảo hàng tuần để làm phân bón."
+      },
+      "tip76": {
+        "title": "Túi biogas mềm",
+        "content": "Lắp đặt hệ thống biogas bằng túi nilon chi phí thấp để xử lý phân heo, tạo ra gas nấu ăn miễn phí cho gia đình."
+      },
+      "tip92": {
+        "title": "Giới hạn tuổi thiến",
+        "content": "Thiến heo đực trước khi chúng được 7 ngày tuổi. Ở tuổi này, quy trình nhanh, vết thương mau lành và ít đau đớn nhất."
+      },
+      "tip94": {
+        "title": "Sổ ghi chép đơn giản",
+        "content": "Giữ một cuốn sổ nhỏ rẻ tiền ở chuồng để ghi lại ngày phối, ngày đẻ và các đợt điều trị cho mỗi con nái."
+      }
     }
   },
   "Symptoms": {
@@ -1394,7 +1563,7 @@
     "manualWeightLog": "Cập nhật cân nặng thủ công trong chi tiết heo",
     "weightCheckDesc": "{notes}\nCập nhật cân nặng thành: {weight} kg",
     "actionTypes": {
-      "medication": "Dùng thuốc",
+      "medication": "Thuốc",
       "vaccination": "Tiêm phòng",
       "treatment": "Điều trị",
       "heat": "Lên giống",
@@ -1402,7 +1571,19 @@
       "pregnancy": "Xác nhận thai",
       "deworming": "Tẩy giun",
       "weight": "Cân nặng",
-      "other": "Khác"
+      "other": "Khác",
+      "weight_check": "Kiểm tra cân nặng",
+      "culling": "Loại thải",
+      "teeth_clipping": "Bấm răng",
+      "tail_docking": "Cắt đuôi",
+      "iron_injection": "Tiêm sắt",
+      "weaning": "Cai sữa",
+      "castration": "Thiến",
+      "heat_detection": "Phát hiện động dục",
+      "breeding_mating": "Phối giống",
+      "pregnancy_check": "Kiểm tra mang thai",
+      "farrowing": "Đẻ",
+      "custom": "Tùy chỉnh"
     },
     "reportTitle": "Báo cáo hồ sơ heo: {tag}"
   },
@@ -1690,7 +1871,10 @@
     "joined": "Ngày vào",
     "payrollSummary": "Tóm tắt bảng lương",
     "totalStaff": "Tổng nhân viên",
-    "monthlyPayroll": "Lương tháng tổng"
+    "monthlyPayroll": "Lương tháng tổng",
+    "detailedHistory": "Detailed transaction history",
+    "narration": "Narration",
+    "balance": "Balance"
   },
   "Common": {
     "loading": "Đang tải..."

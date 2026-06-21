@@ -188,7 +188,21 @@
     "limitReached": "Ang mga libreng user ay hanggang 20 baboy lamang. Mag-upgrade sa Premium para makapagdagdag pa.",
     "porker": "Porker",
     "breeder": "Breeder",
-    "addPigs": "+ Magdagdag ng Baboy"
+    "addPigs": "+ Magdagdag ng Baboy",
+    "male": "Lalaki",
+    "female": "Babae",
+    "excellent": "Napakahusay",
+    "good": "Mabuti",
+    "caution": "Pag-iingat",
+    "poor": "Mahina",
+    "blank": "Bakante",
+    "piglet": "Biik",
+    "gilt": "Dumalla",
+    "sow": "Inahin",
+    "boar": "Barako",
+    "barrow": "Barrow (Kapon)",
+    "pregnant": "Buntis",
+    "lactating": "Nagpapasuso"
   },
   "Profile": {
     "owner": "May-ari",
@@ -228,21 +242,66 @@
     "title": "Magsagawa ng Aktibidad sa Babuyan",
     "description": "Pumili ng aktibidad para i-update ang status, mag-record ng health logs, o mag-schedule ng mga gawain.",
     "categories": {
-      "heat": { "type": "Heat Detection", "desc": "Suriin ang mga inahín kung pwede nang ipakasta." },
-      "breeding": { "type": "Pagpapakasta", "desc": "I-log ang matagumpay na pagpapakasta." },
-      "pregnancy": { "type": "Kumpirmahin ang Buntis", "desc": "I-record ang ultrasound o physical checks." },
-      "farrowing": { "type": "Panganganak", "desc": "I-log ang mga bagong biik at detalye ng kapanganakan." },
-      "weaning": { "type": "Pagwawalay", "desc": "I-record kung kailan iniwalay ang mga biik sa ina." },
-      "castration": { "type": "Kapon", "desc": "I-log ang pagkapon sa mga barako." },
-      "teeth": { "type": "Teeth Clipping", "desc": "Putulan ng ngipin ang mga bagong silang na biik." },
-      "tail": { "type": "Tail Docking", "desc": "Putulan ng buntot para maiwasan ang kagat at impeksyon." },
-      "deworming": { "type": "Pagpupurga", "desc": "Magbigay ng gamot sa bulate." },
-      "iron": { "type": "Turok ng Bakal", "desc": "Magturok ng iron injection para maiwasan ang anemia." },
-      "vaccination": { "type": "Bakuna", "desc": "I-log ang mga regular o emergency shots." },
-      "medication": { "type": "Panggagamot", "desc": "I-track ang gamutan para sa mga may sakit." },
-      "weight": { "type": "Pagtitimbang", "desc": "I-log ang progreso ng paglaki." },
-      "culling": { "type": "Culling", "desc": "I-record ang pagtanggal sa babuyan." },
-      "custom": { "type": "Custom", "desc": "I-log ang iba pang aktibidad o obserbasyon sa farm." }
+      "heat": {
+        "type": "Heat Detection",
+        "desc": "Suriin ang mga inahín kung pwede nang ipakasta."
+      },
+      "breeding": {
+        "type": "Pagpapakasta",
+        "desc": "I-log ang matagumpay na pagpapakasta."
+      },
+      "pregnancy": {
+        "type": "Kumpirmahin ang Buntis",
+        "desc": "I-record ang ultrasound o physical checks."
+      },
+      "farrowing": {
+        "type": "Panganganak",
+        "desc": "I-log ang mga bagong biik at detalye ng kapanganakan."
+      },
+      "weaning": {
+        "type": "Pagwawalay",
+        "desc": "I-record kung kailan iniwalay ang mga biik sa ina."
+      },
+      "castration": {
+        "type": "Kapon",
+        "desc": "I-log ang pagkapon sa mga barako."
+      },
+      "teeth": {
+        "type": "Teeth Clipping",
+        "desc": "Putulan ng ngipin ang mga bagong silang na biik."
+      },
+      "tail": {
+        "type": "Tail Docking",
+        "desc": "Putulan ng buntot para maiwasan ang kagat at impeksyon."
+      },
+      "deworming": {
+        "type": "Pagpupurga",
+        "desc": "Magbigay ng gamot sa bulate."
+      },
+      "iron": {
+        "type": "Turok ng Bakal",
+        "desc": "Magturok ng iron injection para maiwasan ang anemia."
+      },
+      "vaccination": {
+        "type": "Bakuna",
+        "desc": "I-log ang mga regular o emergency shots."
+      },
+      "medication": {
+        "type": "Panggagamot",
+        "desc": "I-track ang gamutan para sa mga may sakit."
+      },
+      "weight": {
+        "type": "Pagtitimbang",
+        "desc": "I-log ang progreso ng paglaki."
+      },
+      "culling": {
+        "type": "Culling",
+        "desc": "I-record ang pagtanggal sa babuyan."
+      },
+      "custom": {
+        "type": "Custom",
+        "desc": "I-log ang iba pang aktibidad o obserbasyon sa farm."
+      }
     },
     "logActivity": "I-log ang Aktibidad: {type}",
     "procedureDate": "Petsa ng Aktibidad",
@@ -378,7 +437,39 @@
     "days": "{count} Araw",
     "managementSystemReport": "SmartSwine Management System Report",
     "bags": "Mga Sako",
-    "kg": "kg"
+    "kg": "kg",
+    "starter": "Starter",
+    "grower": "Grower",
+    "finisher": "Finisher",
+    "ingredientsList": {
+      "maize": "Mais",
+      "maize_bran": "Maize bran (Tapa ng mais)",
+      "soybean_meal": "Soybean meal",
+      "fish_meal": "Fish Meal (Harina ng Isda)",
+      "rice_bran": "Darak (Rice bran)",
+      "wheat_bran": "Wheat bran",
+      "common_salt": "Asin",
+      "vitamin_premix": "Vitamin Premix",
+      "mycotoxin_binder": "Mycotoxin Binder",
+      "oyster_shell": "Oyster Shell",
+      "bone_meal": "Bone Meal",
+      "lysine": "Lysine",
+      "methionine": "Methionine"
+    },
+    "groups": {
+      "energy": "Enerhiya",
+      "protein": "Protina",
+      "vitaminsMineralsSalt": "Mga Bitamina, Mineral at Asin"
+    },
+    "nutrients": {
+      "digestibleProtein": "Digestible Protein (%)",
+      "crudeFiber": "Crude Fiber (%)",
+      "metabolizableEnergy": "Metabolizable Energy (kcal/kg)",
+      "calcium": "Calcium (%)",
+      "phosphorus": "Phosphorus (%)",
+      "lysine": "Lysine (%)",
+      "methionineCystine": "Methionine + Cystine (%)"
+    }
   },
   "Financials": {
     "totalRevenue": "Kabuuang Kita",
@@ -531,32 +622,110 @@
       "general": "General"
     },
     "tips": {
-      "tip6": { "title": "Tamang Edad ng Pagwawalay", "content": "Iwalay ang mga biik sa edad na 28 hanggang 35 araw. Mas malakas sila at mas mabilis masanay sa tuyong pagkain." },
-      "tip7": { "title": "Dahan-dahang Paghihiwalay", "content": "Bawasan ang stress sa pamamagitan ng pagtanggal sa inahín at pag-iwan sa mga biik sa dati nilang kulungan sa unang linggo." },
-      "tip8": { "title": "Pag-iwas sa Hangin", "content": "Harangan ang malamig na hangin sa nursery gamit ang mga kurtina o tabla para hindi ginawin ang mga biik." },
-      "tip11": { "title": "Sariling Electrolyte Solution", "content": "Painumin ng simpleng halo (5 kutsarang asukal, 1/2 kutsaritang asin sa 5 litrong malinis na tubig) sa unang 3 araw ng pagwawalay para iwas stress." },
-      "tip17": { "title": "Pulang Lupa bilang Supplement", "content": "Maglagay ng malinis na pulang lupa sa kulungan. Kinakain ito ng mga biik para makakuha ng natural na iron at minerals." },
-      "tip20": { "title": "Pagpapakulo ng Kanin-baboy", "content": "Pakuluang mabuti ang mga balat ng ubi, kamote, at iba pang scrap para matanggal ang toxins at mas madaling matunaw." },
-      "tip21": { "title": "Lokal na Protina", "content": "Dagdagan ang pagkain ng mga tanim na Moringa (malunggay), Azolla, o dahon ng kamote para sa dagdag na protina." },
-      "tip22": { "title": "Tamang Pakain sa Buntis", "content": "Limitahan ang pakain sa buntis na inahín sa 2-2.5 kg kada araw para hindi masyadong tumaba, na nagiging sanhi ng hirap sa panganganak." },
-      "tip26": { "title": "Pagpapakulo ng Basura mula sa Kusina", "content": "Pakuluin ang mga tira-tirang pagkain mula sa hotel o kusina nang 30 minuto para mapatay ang virus ng African Swine Fever (ASF)." },
-      "tip28": { "title": "Uling para sa Pantunaw", "content": "Maglagay ng maliliit na uling sa kulungan. Ngumunguya ang mga baboy nito para makatulong sa paglabas ng toxins sa tiyan." },
-      "tip34": { "title": "Hand Mating sa Kulungan", "content": "Dalhin ang inahíng may landi sa kulungan ng barako para ipakasta, sa halip na hayaang gumala ang barako sa lahat." },
-      "tip35": { "title": "Pag-check ng Landi", "content": "Diinan ang likod ng inahín; kung hindi siya gumagalaw at tumitigas ang tainga, handa na siyang ipakasta." },
-      "tip39": { "title": "Proteksyon Laban sa Pag-ipit", "content": "Maglagay ng \"guard rails\" (mga kahoy o bakal na nakakabit sa pader) sa kulungan ng panganganak para hindi maipit ng ina ang mga biik." },
-      "tip43": { "title": "Calendar ng Pagpapakasta", "content": "Markahan ang petsa ng pagpapakasta; ang pagbubuntis ay tumatagal ng 114 araw (3 buwan, 3 linggo, 3 araw)." },
-      "tip47": { "title": "Edad ng Dumálaga sa Unang Kasta", "content": "Hintaying mag-8 buwan ang dumálaga at pang-dalawa o pang-tatlong landi na niya bago ipakasta para mas maraming manganak." },
-      "tip48": { "title": "Isolation ng Bagong Bili", "content": "Ihiwalay ang mga bagong biling baboy ng 30 araw sa malayong kulungan para masigurong walang sakit." },
-      "tip49": { "title": "DIY Footbath", "content": "Maglagay ng tray na may tubig at disinfectant (gaya ng chlorine o apog) sa entrance ng farm." },
-      "tip51": { "title": "Bawal ang Bisita", "content": "Huwag magpapasok ng bisita sa loob ng kulungan. Mag-usap na lang sa labas para iwas sa sakit ng baboy." },
-      "tip55": { "title": "Natural na Purga", "content": "Ang dinikdik na buto ng papaya o buto ng kalabasa ay natural at murang paraan ng pagpuksa sa bulate sa tiyan." },
-      "tip60": { "title": "Tamang Paglilibing", "content": "Ilibing ang mga namatay na baboy nang 2 metrong lalim, malayo sa tubig, at lagyan ng apog (lime) bago takpan ng lupa." },
-      "tip61": { "title": "Sapat na Espasyo", "content": "Bigyan ng kahit 1 square meter na espasyo ang bawat finisher na baboy para hindi mag-away at mabawasan ang stress." },
-      "tip62": { "title": "Magandang Bentilasyon", "content": "Dapat bukas ang gilid ng kulungan para pumasok ang sariwang hangin at lumabas ang masamang amoy." },
-      "tip75": { "title": "Pag-compost ng Dumi", "content": "Ipunin ang dumi sa isang tuyong lugar, takpan ng dahon ng saging, at haluin linggu-linggo para maging pataba." },
-      "tip76": { "title": "Biogas mula sa Dumi", "content": "Maaaring gumamit ng simpleng plastic digester para sa dumi ng baboy para makagawa ng libreng gas na panluto." },
-      "tip92": { "title": "Edad ng Pagkakapon", "content": "Kapunin ang mga lalaking biik bago sila mag-7 araw. Mas mabilis itong gumaling at mas hindi masakit sa kanila." },
-      "tip94": { "title": "Simple na Notebook Records", "content": "Magtabi ng maliit na notebook sa kulungan para isulat ang mga petsa ng kasta, panganak, at gamutan." }
+      "tip6": {
+        "title": "Tamang Edad ng Pagwawalay",
+        "content": "Iwalay ang mga biik sa edad na 28 hanggang 35 araw. Mas malakas sila at mas mabilis masanay sa tuyong pagkain."
+      },
+      "tip7": {
+        "title": "Dahan-dahang Paghihiwalay",
+        "content": "Bawasan ang stress sa pamamagitan ng pagtanggal sa inahín at pag-iwan sa mga biik sa dati nilang kulungan sa unang linggo."
+      },
+      "tip8": {
+        "title": "Pag-iwas sa Hangin",
+        "content": "Harangan ang malamig na hangin sa nursery gamit ang mga kurtina o tabla para hindi ginawin ang mga biik."
+      },
+      "tip11": {
+        "title": "Sariling Electrolyte Solution",
+        "content": "Painumin ng simpleng halo (5 kutsarang asukal, 1/2 kutsaritang asin sa 5 litrong malinis na tubig) sa unang 3 araw ng pagwawalay para iwas stress."
+      },
+      "tip17": {
+        "title": "Pulang Lupa bilang Supplement",
+        "content": "Maglagay ng malinis na pulang lupa sa kulungan. Kinakain ito ng mga biik para makakuha ng natural na iron at minerals."
+      },
+      "tip20": {
+        "title": "Pagpapakulo ng Kanin-baboy",
+        "content": "Pakuluang mabuti ang mga balat ng ubi, kamote, at iba pang scrap para matanggal ang toxins at mas madaling matunaw."
+      },
+      "tip21": {
+        "title": "Lokal na Protina",
+        "content": "Dagdagan ang pagkain ng mga tanim na Moringa (malunggay), Azolla, o dahon ng kamote para sa dagdag na protina."
+      },
+      "tip22": {
+        "title": "Tamang Pakain sa Buntis",
+        "content": "Limitahan ang pakain sa buntis na inahín sa 2-2.5 kg kada araw para hindi masyadong tumaba, na nagiging sanhi ng hirap sa panganganak."
+      },
+      "tip26": {
+        "title": "Pagpapakulo ng Basura mula sa Kusina",
+        "content": "Pakuluin ang mga tira-tirang pagkain mula sa hotel o kusina nang 30 minuto para mapatay ang virus ng African Swine Fever (ASF)."
+      },
+      "tip28": {
+        "title": "Uling para sa Pantunaw",
+        "content": "Maglagay ng maliliit na uling sa kulungan. Ngumunguya ang mga baboy nito para makatulong sa paglabas ng toxins sa tiyan."
+      },
+      "tip34": {
+        "title": "Hand Mating sa Kulungan",
+        "content": "Dalhin ang inahíng may landi sa kulungan ng barako para ipakasta, sa halip na hayaang gumala ang barako sa lahat."
+      },
+      "tip35": {
+        "title": "Pag-check ng Landi",
+        "content": "Diinan ang likod ng inahín; kung hindi siya gumagalaw at tumitigas ang tainga, handa na siyang ipakasta."
+      },
+      "tip39": {
+        "title": "Proteksyon Laban sa Pag-ipit",
+        "content": "Maglagay ng \"guard rails\" (mga kahoy o bakal na nakakabit sa pader) sa kulungan ng panganganak para hindi maipit ng ina ang mga biik."
+      },
+      "tip43": {
+        "title": "Calendar ng Pagpapakasta",
+        "content": "Markahan ang petsa ng pagpapakasta; ang pagbubuntis ay tumatagal ng 114 araw (3 buwan, 3 linggo, 3 araw)."
+      },
+      "tip47": {
+        "title": "Edad ng Dumálaga sa Unang Kasta",
+        "content": "Hintaying mag-8 buwan ang dumálaga at pang-dalawa o pang-tatlong landi na niya bago ipakasta para mas maraming manganak."
+      },
+      "tip48": {
+        "title": "Isolation ng Bagong Bili",
+        "content": "Ihiwalay ang mga bagong biling baboy ng 30 araw sa malayong kulungan para masigurong walang sakit."
+      },
+      "tip49": {
+        "title": "DIY Footbath",
+        "content": "Maglagay ng tray na may tubig at disinfectant (gaya ng chlorine o apog) sa entrance ng farm."
+      },
+      "tip51": {
+        "title": "Bawal ang Bisita",
+        "content": "Huwag magpapasok ng bisita sa loob ng kulungan. Mag-usap na lang sa labas para iwas sa sakit ng baboy."
+      },
+      "tip55": {
+        "title": "Natural na Purga",
+        "content": "Ang dinikdik na buto ng papaya o buto ng kalabasa ay natural at murang paraan ng pagpuksa sa bulate sa tiyan."
+      },
+      "tip60": {
+        "title": "Tamang Paglilibing",
+        "content": "Ilibing ang mga namatay na baboy nang 2 metrong lalim, malayo sa tubig, at lagyan ng apog (lime) bago takpan ng lupa."
+      },
+      "tip61": {
+        "title": "Sapat na Espasyo",
+        "content": "Bigyan ng kahit 1 square meter na espasyo ang bawat finisher na baboy para hindi mag-away at mabawasan ang stress."
+      },
+      "tip62": {
+        "title": "Magandang Bentilasyon",
+        "content": "Dapat bukas ang gilid ng kulungan para pumasok ang sariwang hangin at lumabas ang masamang amoy."
+      },
+      "tip75": {
+        "title": "Pag-compost ng Dumi",
+        "content": "Ipunin ang dumi sa isang tuyong lugar, takpan ng dahon ng saging, at haluin linggu-linggo para maging pataba."
+      },
+      "tip76": {
+        "title": "Biogas mula sa Dumi",
+        "content": "Maaaring gumamit ng simpleng plastic digester para sa dumi ng baboy para makagawa ng libreng gas na panluto."
+      },
+      "tip92": {
+        "title": "Edad ng Pagkakapon",
+        "content": "Kapunin ang mga lalaking biik bago sila mag-7 araw. Mas mabilis itong gumaling at mas hindi masakit sa kanila."
+      },
+      "tip94": {
+        "title": "Simple na Notebook Records",
+        "content": "Magtabi ng maliit na notebook sa kulungan para isulat ang mga petsa ng kasta, panganak, at gamutan."
+      }
     }
   },
   "Symptoms": {
@@ -1395,14 +1564,26 @@
     "weightCheckDesc": "{notes}\nIn-update ang timbang sa: {weight} kg",
     "actionTypes": {
       "medication": "Gamot",
-      "vaccination": "Bakuna",
+      "vaccination": "Pagbabakuna",
       "treatment": "Gamutan",
       "heat": "Heat Detection",
       "breeding": "Pagpapakasta",
       "pregnancy": "Kumpirmasyon ng Buntis",
       "deworming": "Pagpupurga",
       "weight": "Pag-check ng Timbang",
-      "other": "Iba pa"
+      "other": "Iba pa",
+      "weight_check": "Pagtingin ng Timbang",
+      "culling": "Pag-culling",
+      "teeth_clipping": "Pagputol ng ngipin",
+      "tail_docking": "Pagputol ng buntot",
+      "iron_injection": "Iniksyon ng Bakal",
+      "weaning": "Pawalay",
+      "castration": "Pagkakapon",
+      "heat_detection": "Heat Detection",
+      "breeding_mating": "Pagpalahi",
+      "pregnancy_check": "Pregnancy Check",
+      "farrowing": "Pag-anak",
+      "custom": "Custom"
     },
     "reportTitle": "Pig Profile Report: {tag}"
   },
@@ -1690,7 +1871,10 @@
     "joined": "Petsa ng Pasok",
     "payrollSummary": "Summary ng Sahod",
     "totalStaff": "Kabuuang Staff",
-    "monthlyPayroll": "Buwanang Payroll"
+    "monthlyPayroll": "Buwanang Payroll",
+    "detailedHistory": "Detailed transaction history",
+    "narration": "Narration",
+    "balance": "Balance"
   },
   "Common": {
     "loading": "Naglo-load..."

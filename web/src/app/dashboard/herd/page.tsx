@@ -67,6 +67,7 @@ const ArchiveIcon = (props: React.SVGProps<SVGSVGElement>) => (
 export default function HerdPage() {
   const t = useTranslations("Herd");
   const td = useTranslations("Dashboard");
+  const tHr = useTranslations("HR");
   const { user, userProfile, activeFarmUid, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -516,7 +517,7 @@ export default function HerdPage() {
                 onClick={() => {
                   const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
                   if (!isPremium) {
-                    alert("Exporting PDF reports is a Premium feature. Upgrade to unlock!");
+                    alert(tHr("premiumFeatureExport"));
                     router.push("/dashboard/billing");
                     return;
                   }
@@ -573,7 +574,7 @@ export default function HerdPage() {
                           </p>
                         </div>
                         <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${performanceBadgeColor}`}>
-                          {performance}
+                          {performance ? t(performance.toLowerCase()) : ""}
                         </span>
                       </div>
 
@@ -582,7 +583,7 @@ export default function HerdPage() {
                           <span className="font-semibold">{t("age")}:</span> {ageMonths === 0 ? t("lessThanMonth") : (ageMonths === 1 ? t("month", { count: 1 }) : t("months", { count: ageMonths }))}
                         </div>
                         <div>
-                          <span className="font-semibold">{t("gender")}:</span> {pig.gender}
+                          <span className="font-semibold">{t("gender")}:</span> {pig.gender ? t(pig.gender.toLowerCase()) : ""}
                         </div>
                         <div>
                           <span className="font-semibold">{t("weight")}:</span> {pig.weight} kg

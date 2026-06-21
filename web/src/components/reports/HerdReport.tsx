@@ -33,7 +33,48 @@ interface HerdReportProps {
 const HerdReport: React.FC<HerdReportProps> = ({ pigs, allPigs = [], title, includeSummary = true }) => {
   const t = useTranslations("Reports");
   const th = useTranslations("Herd");
+  const tProfile = useTranslations("PigProfile");
   const defaultTitle = t("herdInventory");
+
+  const translateGender = (gender: string) => {
+    if (!gender) return "";
+    const key = gender.toLowerCase();
+    if (["male", "female"].includes(key)) return th(key);
+    return gender;
+  };
+
+  const translatePurpose = (purpose: string) => {
+    if (!purpose) return "";
+    const key = purpose.toLowerCase();
+    if (["breeder", "porker"].includes(key)) return th(key);
+    return purpose;
+  };
+
+  const translateActivityType = (type: string) => {
+    if (!type) return "";
+    const key = type.toLowerCase().replace(/[\s\/]/g, "_");
+    const actionKeys = [
+      "vaccination", "deworming", "medication", "weight_check", "culling", 
+      "teeth_clipping", "tail_docking", "iron_injection", "weaning", 
+      "castration", "heat_detection", "breeding_mating", "pregnancy_check", 
+      "farrowing", "custom"
+    ];
+    if (actionKeys.includes(key)) {
+      return tProfile(`actionTypes.${key}`);
+    }
+    const fallbacks: Record<string, string> = {
+      "treatment": "treatment",
+      "heat": "heat",
+      "breeding": "breeding",
+      "pregnancy": "pregnancy",
+      "weight": "weight",
+      "other": "other"
+    };
+    if (fallbacks[key]) {
+      return tProfile(`actionTypes.${fallbacks[key]}`);
+    }
+    return type;
+  };
 
   const calculateAgeMonths = (birthDate: string) => {
     const birth = new Date(birthDate);
@@ -61,11 +102,11 @@ const HerdReport: React.FC<HerdReportProps> = ({ pigs, allPigs = [], title, incl
           <p className="text-[12pt]">{t("totalPigs")}: {pigs.length}</p>
           <p className="text-[12pt]">Total {th("breeder")}s: {breeders.length}</p>
           <p className="text-[11pt] text-zinc-600 italic ml-4">
-            Breakdown: Males: {breeders.filter(p => p.gender === "Male").length}, Females: {breeders.filter(p => p.gender === "Female").length}
+            {th("males")}: {breeders.filter(p => p.gender === "Male").length}, {th("females")}: {breeders.filter(p => p.gender === "Female").length}
           </p>
           <p className="text-[12pt]">Total {th("porker")}s: {porkers.length}</p>
           <p className="text-[11pt] text-zinc-600 italic ml-4">
-            Breakdown: Males: {porkers.filter(p => p.gender === "Male").length}, Females: {porkers.filter(p => p.gender === "Female").length}
+            {th("males")}: {porkers.filter(p => p.gender === "Male").length}, {th("females")}: {porkers.filter(p => p.gender === "Female").length}
           </p>
         </div>
       )}
@@ -76,7 +117,7 @@ const HerdReport: React.FC<HerdReportProps> = ({ pigs, allPigs = [], title, incl
             <th className="p-3 font-bold border-r border-zinc-200">{t("tagNumber")}</th>
             <th className="p-3 font-bold border-r border-zinc-200">{t("gender")}</th>
             <th className="p-3 font-bold border-r border-zinc-200">{t("breed")}</th>
-            <th className="p-3 font-bold border-r border-zinc-200">Purpose</th>
+            <th className="p-3 font-bold border-r border-zinc-200">{th("purpose")}</th>
             <th className="p-3 font-bold border-r border-zinc-200 text-center">{t("weight")}</th>
             <th className="p-3 font-bold border-r border-zinc-200">{t("location")}</th>
             <th className="p-3 font-bold border-r border-zinc-200">DOB</th>
@@ -87,9 +128,9 @@ const HerdReport: React.FC<HerdReportProps> = ({ pigs, allPigs = [], title, incl
           {pigs.map((pig) => (
             <tr key={pig.id}>
               <td className="p-3 border-r border-zinc-100 font-mono font-bold">{pig.tagNumber}</td>
-              <td className="p-3 border-r border-zinc-100">{pig.gender}</td>
+              <td className="p-3 border-r border-zinc-100">{translateGender(pig.gender)}</td>
               <td className="p-3 border-r border-zinc-100">{pig.breed || "N/A"}</td>
-              <td className="p-3 border-r border-zinc-100 uppercase text-[8pt] font-black tracking-tighter text-zinc-500">{pig.purpose}</td>
+              <td className="p-3 border-r border-zinc-100 uppercase text-[8pt] font-black tracking-tighter text-zinc-500">{translatePurpose(pig.purpose)}</td>
               <td className="p-3 border-r border-zinc-100 text-center font-mono">{pig.weight}</td>
               <td className="p-3 border-r border-zinc-100">{pig.location || "N/A"}</td>
               <td className="p-3 border-r border-zinc-100 font-mono text-[9pt]">{pig.birthDate}</td>
@@ -116,7 +157,7 @@ const HerdReport: React.FC<HerdReportProps> = ({ pigs, allPigs = [], title, incl
                 <tbody className="divide-y divide-zinc-100">
                   {pig.healthRecords?.map(record => (
                     <tr key={record.id}>
-                      <td className="p-2 font-semibold text-zinc-700">{record.type}</td>
+                      <td className="p-2 font-semibold text-zinc-700">{translateActivityType(record.type)}</td>
                       <td className="p-2 font-mono">{record.date}</td>
                       <td className="p-2 text-zinc-600 italic leading-relaxed">{record.description}</td>
                     </tr>

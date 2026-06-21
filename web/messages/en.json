@@ -188,7 +188,21 @@
     "limitReached": "Free users can only have up to 20 pigs. Please upgrade to Premium to add more.",
     "porker": "Porker",
     "breeder": "Breeder",
-    "addPigs": "+ Add Pigs"
+    "addPigs": "+ Add Pigs",
+    "male": "Male",
+    "female": "Female",
+    "excellent": "Excellent",
+    "good": "Good",
+    "caution": "Caution",
+    "poor": "Poor",
+    "blank": "Blank",
+    "piglet": "Piglet",
+    "gilt": "Gilt",
+    "sow": "Sow",
+    "boar": "Boar",
+    "barrow": "Barrow",
+    "pregnant": "Pregnant",
+    "lactating": "Lactating"
   },
   "Profile": {
     "owner": "Owner",
@@ -228,21 +242,66 @@
     "title": "Execute Herd Procedure",
     "description": "Select an activity to update pig statuses, record health logs, or schedule future tasks.",
     "categories": {
-      "heat": { "type": "Heat Detection", "desc": "Monitor sows for breeding readiness." },
-      "breeding": { "type": "Breeding/Mating", "desc": "Log successful mating sessions." },
-      "pregnancy": { "type": "Confirm Pregnancy", "desc": "Record ultrasound or physical checks." },
-      "farrowing": { "type": "Farrowing", "desc": "Log new litters and birth details." },
-      "weaning": { "type": "Weaning", "desc": "Record when piglets leave the sow." },
-      "castration": { "type": "Castration", "desc": "Log castration of male pigs." },
-      "teeth": { "type": "Teeth Clipping", "desc": "Clip needle teeth of newborn piglets." },
-      "tail": { "type": "Tail Docking", "desc": "Dock tails to prevent biting and infection." },
-      "deworming": { "type": "Deworming", "desc": "Administer deworming medication." },
-      "iron": { "type": "Iron Injection", "desc": "Give iron shots to prevent anemia." },
-      "vaccination": { "type": "Vaccination", "desc": "Log routine or emergency shots." },
-      "medication": { "type": "Medication", "desc": "Track treatments for sick animals." },
-      "weight": { "type": "Weight Check", "desc": "Log growth progress." },
-      "culling": { "type": "Culling", "desc": "Record removal from herd." },
-      "custom": { "type": "Custom", "desc": "Log any other farm activity or observation." }
+      "heat": {
+        "type": "Heat Detection",
+        "desc": "Monitor sows for breeding readiness."
+      },
+      "breeding": {
+        "type": "Breeding/Mating",
+        "desc": "Log successful mating sessions."
+      },
+      "pregnancy": {
+        "type": "Confirm Pregnancy",
+        "desc": "Record ultrasound or physical checks."
+      },
+      "farrowing": {
+        "type": "Farrowing",
+        "desc": "Log new litters and birth details."
+      },
+      "weaning": {
+        "type": "Weaning",
+        "desc": "Record when piglets leave the sow."
+      },
+      "castration": {
+        "type": "Castration",
+        "desc": "Log castration of male pigs."
+      },
+      "teeth": {
+        "type": "Teeth Clipping",
+        "desc": "Clip needle teeth of newborn piglets."
+      },
+      "tail": {
+        "type": "Tail Docking",
+        "desc": "Dock tails to prevent biting and infection."
+      },
+      "deworming": {
+        "type": "Deworming",
+        "desc": "Administer deworming medication."
+      },
+      "iron": {
+        "type": "Iron Injection",
+        "desc": "Give iron shots to prevent anemia."
+      },
+      "vaccination": {
+        "type": "Vaccination",
+        "desc": "Log routine or emergency shots."
+      },
+      "medication": {
+        "type": "Medication",
+        "desc": "Track treatments for sick animals."
+      },
+      "weight": {
+        "type": "Weight Check",
+        "desc": "Log growth progress."
+      },
+      "culling": {
+        "type": "Culling",
+        "desc": "Record removal from herd."
+      },
+      "custom": {
+        "type": "Custom",
+        "desc": "Log any other farm activity or observation."
+      }
     },
     "logActivity": "Log Activity: {type}",
     "procedureDate": "Procedure Date",
@@ -378,7 +437,39 @@
     "days": "{count} Days",
     "managementSystemReport": "SmartSwine Management System Report",
     "bags": "Bags",
-    "kg": "kg"
+    "kg": "kg",
+    "starter": "Starter",
+    "grower": "Grower",
+    "finisher": "Finisher",
+    "ingredientsList": {
+      "maize": "Maize",
+      "maize_bran": "Maize bran",
+      "soybean_meal": "Soybean meal",
+      "fish_meal": "Fish meal",
+      "rice_bran": "Rice bran",
+      "wheat_bran": "Wheat bran",
+      "common_salt": "Common salt",
+      "vitamin_premix": "Vitamin Premix",
+      "mycotoxin_binder": "Mycotoxin Binder",
+      "oyster_shell": "Oyster Shell",
+      "bone_meal": "Bone Meal",
+      "lysine": "Lysine",
+      "methionine": "Methionine"
+    },
+    "groups": {
+      "energy": "Energy",
+      "protein": "Protein",
+      "vitaminsMineralsSalt": "Vitamins, Minerals & Salt"
+    },
+    "nutrients": {
+      "digestibleProtein": "Digestible Protein (%)",
+      "crudeFiber": "Crude Fiber (%)",
+      "metabolizableEnergy": "Metabolizable Energy (kcal/kg)",
+      "calcium": "Calcium (%)",
+      "phosphorus": "Phosphorus (%)",
+      "lysine": "Lysine (%)",
+      "methionineCystine": "Methionine + Cystine (%)"
+    }
   },
   "Financials": {
     "totalRevenue": "Total Revenue",
@@ -531,32 +622,110 @@
       "general": "General"
     },
     "tips": {
-      "tip6": { "title": "Weaning Age for Smallholders", "content": "Wean piglets at 28 to 35 days instead of earlier. This allows piglets to grow stronger and adapt to solid feed using simple farm resources." },
-      "tip7": { "title": "Gradual Separation Method", "content": "Reduce weaning stress by moving the sow out of the farrowing pen and leaving the piglets in their familiar environment for the first week." },
-      "tip8": { "title": "Draft Prevention for Weaners", "content": "Block cold winds in the nursery pen by installing temporary curtains or wooden boards up to piglet-height (about 50cm)." },
-      "tip11": { "title": "Homemade Rehydration Solution", "content": "Feed a cheap, homemade electrolyte solution (5 tablespoons sugar, 1/2 tablespoon salt in 5 liters clean water) during the first 3 days of weaning to combat stress." },
-      "tip17": { "title": "Clay Soil Mineral Supplement", "content": "Put a clean shovel of fresh, red clay soil (from a clean area) in the farrowing/weaning pen. Piglets eat it to get natural iron and minerals." },
-      "tip20": { "title": "Agricultural Byproduct Boiling", "content": "Boil agricultural byproducts like yam peels, cassava peels, and potato vines to destroy natural toxins and improve digestibility." },
-      "tip21": { "title": "Local Protein Sources", "content": "Supplement commercial feed by growing high-protein forage crops like Moringa, Azolla, or sweet potato leaves on the farm." },
-      "tip22": { "title": "Gestation Feed Restriction", "content": "Limit gestating sows to 2-2.5 kg of feed per day to prevent them from becoming overweight, which causes difficult births." },
-      "tip26": { "title": "Boiling Kitchen Waste", "content": "Boil hotel or kitchen food waste for 30 minutes to destroy African Swine Fever and Foot-and-Mouth disease viruses." },
-      "tip28": { "title": "Charcoal for Digestion", "content": "Place small pieces of wood charcoal in grower pens. Pigs chew it to help bind stomach toxins and reduce diarrhea." },
-      "tip34": { "title": "Hand Mating in Breeding Pen", "content": "Bring the sow in heat to the boar's pen for breeding, rather than letting the boar run loose in the sow herd." },
-      "tip35": { "title": "Standing Heat Response", "content": "Test for heat by pressing your hands firmly on the sow's back; if she stands completely still and stiffens her ears, she is ready to mate." },
-      "tip39": { "title": "DIY Crushed Piglet Protection", "content": "Install \"guard rails\" (heavy wooden poles or metal pipes placed 20cm out from the walls and 20cm off the floor) in farrowing pens." },
-      "tip43": { "title": "Breeding Records Calendar", "content": "Mark the breeding date on a calendar; pregnancy lasts 114 days (3 months, 3 weeks, 3 days), allowing you to prepare the farrowing pen." },
-      "tip47": { "title": "Gilt First Mating Age", "content": "Wait until a gilt is at least 8 months old and on her second or third heat cycle before mating her to ensure a larger first litter." },
-      "tip48": { "title": "Isolation of New Purchases", "content": "Keep newly purchased pigs in a separate pen at least 20 meters away from your main herd for 30 days to check for sickness." },
-      "tip49": { "title": "DIY Footbath Setup", "content": "Place a shallow plastic tub or half-cut tire filled with water and disinfectant (like chlorine or agricultural lime) at the farm gate." },
-      "tip51": { "title": "Visitor Restriction Policy", "content": "Do not allow visitors (especially other pig buyers or farmers) inside your pig pens. Discuss business outside the pen area." },
-      "tip55": { "title": "Natural Parasite Control", "content": "Feed crushed papaya seeds or pumpkin seeds to grower pigs as a cheap, natural remedy to help reduce internal worms." },
-      "tip60": { "title": "Proper Burial of Mortalities", "content": "Bury dead pigs at least 2 meters deep, far away from water sources, and cover the carcass with agricultural lime before refilling the soil." },
-      "tip61": { "title": "Low-Cost Pen Space", "content": "Provide at least 1 square meter of space per finisher pig to reduce fighting, stress, and skin lesions." },
-      "tip62": { "title": "Natural Cross-Ventilation", "content": "Design pig houses with open sides (using wire mesh or bamboo slats) to allow natural breeze to blow through and remove odors." },
-      "tip75": { "title": "DIY Compost Piles", "content": "Pile pig manure in a designated dry corner, cover it with banana leaves or plastic, and turn it weekly with a shovel to make compost." },
-      "tip76": { "title": "Flexible Bag Biogas", "content": "Install a simple, low-cost plastic tubular biogas digester to treat pig manure, producing free cooking gas for the household." },
-      "tip92": { "title": "Castration Age Limit", "content": "Castrate male piglets before they are 7 days old. At this age, the procedure is fast, heals quickly, and causes minimal pain." },
-      "tip94": { "title": "Simple Notebook Records", "content": "Keep a small, cheap notebook in the barn to write down breeding dates, farrowing dates, and treatments for each sow." }
+      "tip6": {
+        "title": "Weaning Age for Smallholders",
+        "content": "Wean piglets at 28 to 35 days instead of earlier. This allows piglets to grow stronger and adapt to solid feed using simple farm resources."
+      },
+      "tip7": {
+        "title": "Gradual Separation Method",
+        "content": "Reduce weaning stress by moving the sow out of the farrowing pen and leaving the piglets in their familiar environment for the first week."
+      },
+      "tip8": {
+        "title": "Draft Prevention for Weaners",
+        "content": "Block cold winds in the nursery pen by installing temporary curtains or wooden boards up to piglet-height (about 50cm)."
+      },
+      "tip11": {
+        "title": "Homemade Rehydration Solution",
+        "content": "Feed a cheap, homemade electrolyte solution (5 tablespoons sugar, 1/2 tablespoon salt in 5 liters clean water) during the first 3 days of weaning to combat stress."
+      },
+      "tip17": {
+        "title": "Clay Soil Mineral Supplement",
+        "content": "Put a clean shovel of fresh, red clay soil (from a clean area) in the farrowing/weaning pen. Piglets eat it to get natural iron and minerals."
+      },
+      "tip20": {
+        "title": "Agricultural Byproduct Boiling",
+        "content": "Boil agricultural byproducts like yam peels, cassava peels, and potato vines to destroy natural toxins and improve digestibility."
+      },
+      "tip21": {
+        "title": "Local Protein Sources",
+        "content": "Supplement commercial feed by growing high-protein forage crops like Moringa, Azolla, or sweet potato leaves on the farm."
+      },
+      "tip22": {
+        "title": "Gestation Feed Restriction",
+        "content": "Limit gestating sows to 2-2.5 kg of feed per day to prevent them from becoming overweight, which causes difficult births."
+      },
+      "tip26": {
+        "title": "Boiling Kitchen Waste",
+        "content": "Boil hotel or kitchen food waste for 30 minutes to destroy African Swine Fever and Foot-and-Mouth disease viruses."
+      },
+      "tip28": {
+        "title": "Charcoal for Digestion",
+        "content": "Place small pieces of wood charcoal in grower pens. Pigs chew it to help bind stomach toxins and reduce diarrhea."
+      },
+      "tip34": {
+        "title": "Hand Mating in Breeding Pen",
+        "content": "Bring the sow in heat to the boar's pen for breeding, rather than letting the boar run loose in the sow herd."
+      },
+      "tip35": {
+        "title": "Standing Heat Response",
+        "content": "Test for heat by pressing your hands firmly on the sow's back; if she stands completely still and stiffens her ears, she is ready to mate."
+      },
+      "tip39": {
+        "title": "DIY Crushed Piglet Protection",
+        "content": "Install \"guard rails\" (heavy wooden poles or metal pipes placed 20cm out from the walls and 20cm off the floor) in farrowing pens."
+      },
+      "tip43": {
+        "title": "Breeding Records Calendar",
+        "content": "Mark the breeding date on a calendar; pregnancy lasts 114 days (3 months, 3 weeks, 3 days), allowing you to prepare the farrowing pen."
+      },
+      "tip47": {
+        "title": "Gilt First Mating Age",
+        "content": "Wait until a gilt is at least 8 months old and on her second or third heat cycle before mating her to ensure a larger first litter."
+      },
+      "tip48": {
+        "title": "Isolation of New Purchases",
+        "content": "Keep newly purchased pigs in a separate pen at least 20 meters away from your main herd for 30 days to check for sickness."
+      },
+      "tip49": {
+        "title": "DIY Footbath Setup",
+        "content": "Place a shallow plastic tub or half-cut tire filled with water and disinfectant (like chlorine or agricultural lime) at the farm gate."
+      },
+      "tip51": {
+        "title": "Visitor Restriction Policy",
+        "content": "Do not allow visitors (especially other pig buyers or farmers) inside your pig pens. Discuss business outside the pen area."
+      },
+      "tip55": {
+        "title": "Natural Parasite Control",
+        "content": "Feed crushed papaya seeds or pumpkin seeds to grower pigs as a cheap, natural remedy to help reduce internal worms."
+      },
+      "tip60": {
+        "title": "Proper Burial of Mortalities",
+        "content": "Bury dead pigs at least 2 meters deep, far away from water sources, and cover the carcass with agricultural lime before refilling the soil."
+      },
+      "tip61": {
+        "title": "Low-Cost Pen Space",
+        "content": "Provide at least 1 square meter of space per finisher pig to reduce fighting, stress, and skin lesions."
+      },
+      "tip62": {
+        "title": "Natural Cross-Ventilation",
+        "content": "Design pig houses with open sides (using wire mesh or bamboo slats) to allow natural breeze to blow through and remove odors."
+      },
+      "tip75": {
+        "title": "DIY Compost Piles",
+        "content": "Pile pig manure in a designated dry corner, cover it with banana leaves or plastic, and turn it weekly with a shovel to make compost."
+      },
+      "tip76": {
+        "title": "Flexible Bag Biogas",
+        "content": "Install a simple, low-cost plastic tubular biogas digester to treat pig manure, producing free cooking gas for the household."
+      },
+      "tip92": {
+        "title": "Castration Age Limit",
+        "content": "Castrate male piglets before they are 7 days old. At this age, the procedure is fast, heals quickly, and causes minimal pain."
+      },
+      "tip94": {
+        "title": "Simple Notebook Records",
+        "content": "Keep a small, cheap notebook in the barn to write down breeding dates, farrowing dates, and treatments for each sow."
+      }
     }
   },
   "Symptoms": {
@@ -1402,7 +1571,19 @@
       "pregnancy": "Pregnancy Confirmation",
       "deworming": "Deworming",
       "weight": "Weight Check",
-      "other": "Other"
+      "other": "Other",
+      "weight_check": "Weight Check",
+      "culling": "Culling",
+      "teeth_clipping": "Teeth Clipping",
+      "tail_docking": "Tail Docking",
+      "iron_injection": "Iron Injection",
+      "weaning": "Weaning",
+      "castration": "Castration",
+      "heat_detection": "Heat Detection",
+      "breeding_mating": "Breeding/Mating",
+      "pregnancy_check": "Pregnancy Check",
+      "farrowing": "Farrowing",
+      "custom": "Custom"
     },
     "reportTitle": "Pig Profile Report: {tag}"
   },
@@ -1690,7 +1871,10 @@
     "joined": "Joined",
     "payrollSummary": "Payroll Summary",
     "totalStaff": "Total Staff",
-    "monthlyPayroll": "Monthly Payroll"
+    "monthlyPayroll": "Monthly Payroll",
+    "detailedHistory": "Detailed transaction history",
+    "narration": "Narration",
+    "balance": "Balance"
   },
   "Common": {
     "loading": "Loading..."

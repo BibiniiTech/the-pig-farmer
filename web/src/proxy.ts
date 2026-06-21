@@ -1,30 +1,46 @@
 import { NextRequest, NextResponse } from "next/server";
-import createMiddleware from 'next-intl/middleware';
-import { routing } from './i18n/routing';
-
-const intlMiddleware = createMiddleware(routing);
 
 export function proxy(request: NextRequest) {
-  // First, run the internationalization middleware
-  const response = intlMiddleware(request);
-
   // Perform device detection
   const ua = request.headers.get("user-agent") || "";
   const isMobile = /Mobile|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i.test(ua);
   const deviceType = isMobile ? "mobile" : "desktop";
 
-  // Use the response from next-intl if available
-  const finalResponse = response || NextResponse.next();
+  const response = NextResponse.next();
 
-  finalResponse.headers.set("x-device-type", deviceType);
-  finalResponse.cookies.set("device-type", deviceType, {
+  response.headers.set("x-device-type", deviceType);
+  response.cookies.set("device-type", deviceType, {
     path: "/",
     httpOnly: false,
     sameSite: "lax",
     maxAge: 60 * 60 * 24,
   });
 
-  return finalResponse;
+  // If the NEXT_LOCALE cookie is not set, detect from Accept-Language header
+  if (!request.cookies.has("NEXT_LOCALE")) {
+    const acceptLanguage = request.headers.get("accept-language") || "";
+    // Supported locales in the app
+    const locales = ['en', 'es', 'fr', 'hi', 'pt', 'th', 'tl', 'vi', 'zh', 'sw', 'id', 'ht', 'my'];
+    let detectedLocale = 'en';
+
+    for (const lang of locales) {
+      if (
+        acceptLanguage.toLowerCase().startsWith(lang) || 
+        acceptLanguage.toLowerCase().includes(`,${lang}`) || 
+        acceptLanguage.toLowerCase().includes(`;${lang}`)
+      ) {
+        detectedLocale = lang;
+        break;
+      }
+    }
+
+    response.cookies.set("NEXT_LOCALE", detectedLocale, {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 365, // 1 year
+    });
+  }
+
+  return response;
 }
 
 export const config = {

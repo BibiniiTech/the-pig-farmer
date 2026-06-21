@@ -31,6 +31,32 @@ interface Pig {
 
 export default function FinancialsPage() {
   const t = useTranslations("Financials");
+  const tHr = useTranslations("HR");
+
+  const translateCategory = (cat: string, type: string) => {
+    if (!cat) return "";
+    const incomeKeys: Record<string, string> = {
+      "Pig Sale": "incomeCategories.pigSale",
+      "Manure Sale": "incomeCategories.manureSale",
+      "Breeding Service": "incomeCategories.breedingService",
+      "Equipment Sale": "incomeCategories.equipmentSale",
+      "Other": "incomeCategories.other",
+    };
+    const expenseKeys: Record<string, string> = {
+      "Feed": "expenseCategories.feed",
+      "Vet/Medication": "expenseCategories.vet",
+      "Vet": "expenseCategories.vet",
+      "Labor/Salary": "expenseCategories.labor",
+      "Labor": "expenseCategories.labor",
+      "Equipment": "expenseCategories.equipment",
+      "Transport": "expenseCategories.transport",
+      "Rent": "expenseCategories.rent",
+      "Utility": "expenseCategories.utility",
+      "Other": "expenseCategories.other",
+    };
+    const key = type === "Income" ? incomeKeys[cat] : expenseKeys[cat];
+    return key ? t(key) : cat;
+  };
   const { user, userProfile, activeFarmUid, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -199,7 +225,7 @@ export default function FinancialsPage() {
                   onClick={() => {
                     const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
                     if (!isPremium) {
-                      alert("Exporting PDF reports is a Premium feature. Upgrade to unlock!");
+                      alert(tHr("premiumFeatureExport"));
                       router.push("/dashboard/billing");
                       return;
                     }
@@ -256,10 +282,10 @@ export default function FinancialsPage() {
                               <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                                 record.type === "Income" ? "bg-emerald-50 text-emerald-800 border border-emerald-100" : "bg-rose-50 text-rose-800 border border-rose-100"
                               }`}>
-                                {record.type}
+                                {record.type === "Income" ? t("income") : t("expense")}
                               </span>
                             </td>
-                            <td className="py-4 font-semibold text-zinc-800">{record.category}</td>
+                            <td className="py-4 font-semibold text-zinc-800">{translateCategory(record.category, record.type)}</td>
                             <td className="py-4 text-zinc-500">{record.description}</td>
                             <td className="py-4 text-zinc-600 font-mono">
                               {linkedPig ? (
@@ -294,12 +320,12 @@ export default function FinancialsPage() {
                         <div className="flex justify-between items-start">
                           <div>
                             <p className="text-[10px] font-bold text-zinc-400 font-mono">{record.date}</p>
-                            <h4 className="font-bold text-zinc-900">{record.category}</h4>
+                            <h4 className="font-bold text-zinc-900">{translateCategory(record.category, record.type)}</h4>
                           </div>
                           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                             record.type === "Income" ? "bg-emerald-50 text-emerald-800 border border-emerald-100" : "bg-rose-50 text-rose-800 border border-rose-100"
                           }`}>
-                            {record.type}
+                            {record.type === "Income" ? t("income") : t("expense")}
                           </span>
                         </div>
 

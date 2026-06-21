@@ -188,7 +188,21 @@
     "limitReached": "Pengguna gratis hanya dapat memiliki hingga 20 babi. Harap tingkatkan ke Premium untuk menambah lebih banyak.",
     "porker": "Babi Pedaging",
     "breeder": "Indukan",
-    "addPigs": "+ Tambah Babi"
+    "addPigs": "+ Tambah Babi",
+    "male": "Pria",
+    "female": "Perempuan",
+    "excellent": "Bagus sekali",
+    "good": "Bagus",
+    "caution": "Peringatan",
+    "poor": "Miskin",
+    "blank": "Kosong",
+    "piglet": "anak babi",
+    "gilt": "emas",
+    "sow": "Menabur",
+    "boar": "Babi hutan",
+    "barrow": "Gerobak dorong",
+    "pregnant": "Hamil",
+    "lactating": "Menyusui"
   },
   "Profile": {
     "owner": "Pemilik",
@@ -228,21 +242,66 @@
     "title": "Eksekusi Prosedur Ternak",
     "description": "Pilih aktivitas untuk memperbarui status babi, mencatat log kesehatan, atau menjadwalkan tugas mendatang.",
     "categories": {
-      "heat": { "type": "Deteksi Birahi", "desc": "Pantau induk untuk kesiapan pembiakan." },
-      "breeding": { "type": "Pembiakan/Perkawinan", "desc": "Log sesi perkawinan yang berhasil." },
-      "pregnancy": { "type": "Konfirmasi Kebuntingan", "desc": "Catat ultrasound atau pemeriksaan fisik." },
-      "farrowing": { "type": "Kelahiran", "desc": "Log batch anakan baru dan detail kelahiran." },
-      "weaning": { "type": "Penyapihan", "desc": "Catat kapan anakan babi meninggalkan induknya." },
-      "castration": { "type": "Kastrasi", "desc": "Log kastrasi babi jantan." },
-      "teeth": { "type": "Pemotongan Gigi", "desc": "Potong gigi jarum anakan babi yang baru lahir." },
-      "tail": { "type": "Pemotongan Ekor", "desc": "Potong ekor untuk mencegah gigitan dan infeksi." },
-      "deworming": { "type": "Pemberian Obat Cacing", "desc": "Berikan obat cacing." },
-      "iron": { "type": "Suntikan Zat Besi", "desc": "Berikan suntikan zat besi untuk mencegah anemia." },
-      "vaccination": { "type": "Vaksinasi", "desc": "Log suntikan rutin atau darurat." },
-      "medication": { "type": "Pengobatan", "desc": "Lacak perawatan untuk hewan yang sakit." },
-      "weight": { "type": "Pengecekan Berat", "desc": "Log kemajuan pertumbuhan." },
-      "culling": { "type": "Penyortiran", "desc": "Catat penghapusan dari ternak." },
-      "custom": { "type": "Kustom", "desc": "Log aktivitas atau observasi peternakan lainnya." }
+      "heat": {
+        "type": "Deteksi Birahi",
+        "desc": "Pantau induk untuk kesiapan pembiakan."
+      },
+      "breeding": {
+        "type": "Pembiakan/Perkawinan",
+        "desc": "Log sesi perkawinan yang berhasil."
+      },
+      "pregnancy": {
+        "type": "Konfirmasi Kebuntingan",
+        "desc": "Catat ultrasound atau pemeriksaan fisik."
+      },
+      "farrowing": {
+        "type": "Kelahiran",
+        "desc": "Log batch anakan baru dan detail kelahiran."
+      },
+      "weaning": {
+        "type": "Penyapihan",
+        "desc": "Catat kapan anakan babi meninggalkan induknya."
+      },
+      "castration": {
+        "type": "Kastrasi",
+        "desc": "Log kastrasi babi jantan."
+      },
+      "teeth": {
+        "type": "Pemotongan Gigi",
+        "desc": "Potong gigi jarum anakan babi yang baru lahir."
+      },
+      "tail": {
+        "type": "Pemotongan Ekor",
+        "desc": "Potong ekor untuk mencegah gigitan dan infeksi."
+      },
+      "deworming": {
+        "type": "Pemberian Obat Cacing",
+        "desc": "Berikan obat cacing."
+      },
+      "iron": {
+        "type": "Suntikan Zat Besi",
+        "desc": "Berikan suntikan zat besi untuk mencegah anemia."
+      },
+      "vaccination": {
+        "type": "Vaksinasi",
+        "desc": "Log suntikan rutin atau darurat."
+      },
+      "medication": {
+        "type": "Pengobatan",
+        "desc": "Lacak perawatan untuk hewan yang sakit."
+      },
+      "weight": {
+        "type": "Pengecekan Berat",
+        "desc": "Log kemajuan pertumbuhan."
+      },
+      "culling": {
+        "type": "Penyortiran",
+        "desc": "Catat penghapusan dari ternak."
+      },
+      "custom": {
+        "type": "Kustom",
+        "desc": "Log aktivitas atau observasi peternakan lainnya."
+      }
     },
     "logActivity": "Log Aktivitas: {type}",
     "procedureDate": "Tanggal Prosedur",
@@ -378,7 +437,39 @@
     "days": "{count} Hari",
     "managementSystemReport": "Laporan Sistem Manajemen SmartSwine",
     "bags": "Karung",
-    "kg": "kg"
+    "kg": "kg",
+    "starter": "Starter",
+    "grower": "Penanam",
+    "finisher": "Penyelesai",
+    "ingredientsList": {
+      "maize": "Jagung",
+      "maize_bran": "dedak jagung",
+      "soybean_meal": "Bungkil kedelai",
+      "fish_meal": "Tepung ikan",
+      "rice_bran": "Dedak padi",
+      "wheat_bran": "dedak gandum",
+      "common_salt": "garam biasa",
+      "vitamin_premix": "Vitamin Premiks",
+      "mycotoxin_binder": "Pengikat Mikotoksin",
+      "oyster_shell": "Cangkang Tiram",
+      "bone_meal": "Tepung Tulang",
+      "lysine": "lisin",
+      "methionine": "Metionin"
+    },
+    "groups": {
+      "energy": "Energi",
+      "protein": "Protein",
+      "vitaminsMineralsSalt": "Vitamin, Mineral & Garam"
+    },
+    "nutrients": {
+      "digestibleProtein": "Protein Tercerna (%)",
+      "crudeFiber": "Serat Kasar (%)",
+      "metabolizableEnergy": "Energi Metabolisme (kkal/kg)",
+      "calcium": "Kalsium (%)",
+      "phosphorus": "Fosfor (%)",
+      "lysine": "Lisin (%)",
+      "methionineCystine": "Metionin + Sistin (%)"
+    }
   },
   "Financials": {
     "totalRevenue": "Total Pendapatan",
@@ -531,32 +622,110 @@
       "general": "Umum"
     },
     "tips": {
-      "tip6": { "title": "Usia Sapih untuk Peternak Kecil", "content": "Sapih anak babi pada usia 28 hingga 35 hari, jangan lebih awal. Ini memungkinkan anak babi tumbuh lebih kuat dan beradaptasi dengan pakan padat menggunakan sumber daya peternakan yang sederhana." },
-      "tip7": { "title": "Metode Pemisahan Bertahap", "content": "Kurangi stres penyapihan dengan memindahkan induk keluar dari kandang melahirkan dan membiarkan anak babi di lingkungan yang mereka kenal selama minggu pertama." },
-      "tip8": { "title": "Pencegahan Angin untuk Babi Sapihan", "content": "Blokir angin dingin di kandang pembesaran dengan memasang tirai sementara atau papan kayu setinggi anak babi (sekitar 50 cm)." },
-      "tip11": { "title": "Larutan Rehidrasi Buatan Sendiri", "content": "Berikan larutan elektrolit buatan sendiri yang murah (5 sendok makan gula, 1/2 sendok makan garam dalam 5 liter air bersih) selama 3 hari pertama penyapihan untuk melawan stres." },
-      "tip17": { "title": "Suplemen Mineral Tanah Liat", "content": "Letakkan satu sekop tanah liat merah segar (dari area yang bersih) di kandang melahirkan/penyapihan. Anak babi memakannya untuk mendapatkan zat besi dan mineral alami." },
-      "tip20": { "title": "Merebus Produk Sampingan Pertanian", "content": "Rebus produk sampingan pertanian seperti kulit ubi, kulit singkong, dan sulur ubi jalar untuk menghancurkan racun alami dan meningkatkan daya cerna." },
-      "tip21": { "title": "Sumber Protein Lokal", "content": "Lengkapi pakan komersial dengan menanam tanaman hijauan berprotein tinggi seperti Kelor, Azolla, atau daun ubi jalar di peternakan." },
-      "tip22": { "title": "Pembatasan Pakan Masa Bunting", "content": "Batasi induk bunting menjadi 2-2,5 kg pakan per hari untuk mencegah mereka menjadi terlalu gemuk, yang menyebabkan kelahiran sulit." },
-      "tip26": { "title": "Merebus Limbah Dapur", "content": "Rebus limbah makanan hotel atau dapur selama 30 menit untuk menghancurkan virus Demam Babi Afrika dan Penyakit Mulut dan Kuku." },
-      "tip28": { "title": "Arang untuk Pencernaan", "content": "Letakkan potongan kecil arang kayu di kandang pembesaran. Babi mengunyahnya untuk membantu mengikat racun perut dan mengurangi diare." },
-      "tip34": { "title": "Perkawinan Tangan di Kandang Pembiakan", "content": "Bawa induk yang sedang birahi ke kandang pejantan untuk dikawinkan, daripada membiarkan pejantan bebas di kawanan induk." },
-      "tip35": { "title": "Respon Birahi Diam", "content": "Uji birahi dengan menekan tangan Anda dengan kuat di punggung induk; jika dia berdiri tegak dan mengeraskan telinganya, dia siap untuk kawin." },
-      "tip39": { "title": "Perlindungan Anak Babi dari Tertindih", "content": "Pasang \"rel pelindung\" (tiang kayu berat atau pipa logam yang diletakkan 20 cm dari dinding dan 20 cm dari lantai) di kandang melahirkan." },
-      "tip43": { "title": "Kalender Catatan Pembiakan", "content": "Tandai tanggal perkawinan di kalender; kebuntingan berlangsung 114 hari (3 bulan, 3 minggu, 3 hari), memungkinkan Anda menyiapkan kandang melahirkan." },
-      "tip47": { "title": "Usia Perkawinan Pertama Dara", "content": "Tunggu sampai babi dara berusia setidaknya 8 bulan dan pada siklus birahi kedua atau ketiga sebelum mengawinkannya untuk memastikan batch pertama yang lebih besar." },
-      "tip48": { "title": "Isolasi Pembelian Baru", "content": "Simpan babi yang baru dibeli di kandang terpisah setidaknya 20 meter dari kawanan utama Anda selama 30 hari untuk memeriksa penyakit." },
-      "tip49": { "title": "Pengaturan Bak Celup Kaki (Footbath) Mandiri", "content": "Letakkan bak plastik dangkal atau ban bekas yang dipotong setengah berisi air dan disinfektan (seperti klorin atau kapur pertanian) di gerbang peternakan." },
-      "tip51": { "title": "Kebijakan Pembatasan Pengunjung", "content": "Jangan izinkan pengunjung (terutama pembeli babi atau peternak lain) masuk ke dalam kandang babi Anda. Diskusikan bisnis di luar area kandang." },
-      "tip55": { "title": "Kontrol Parasit Alami", "content": "Berikan biji pepaya atau biji labu yang dihancurkan kepada babi pembesaran sebagai obat alami murah untuk membantu mengurangi cacing internal." },
-      "tip60": { "title": "Penguburan Kematian yang Layak", "content": "Kubur babi yang mati setidaknya sedalam 2 meter, jauh dari sumber air, dan tutup bangkai dengan kapur pertanian sebelum menimbun kembali tanah." },
-      "tip61": { "title": "Ruang Kandang Biaya Rendah", "content": "Sediakan setidaknya 1 meter persegi ruang per babi finisher untuk mengurangi perkelahian, stres, dan lesi kulit." },
-      "tip62": { "title": "Ventilasi Silang Alami", "content": "Rancang rumah babi dengan sisi terbuka (menggunakan kawat kasa atau bilah bambu) untuk memungkinkan angin alami berhembus dan menghilangkan bau." },
-      "tip75": { "title": "Tumpukan Kompos Mandiri", "content": "Tumpuk kotoran babi di sudut kering yang ditentukan, tutup dengan daun pisang atau plastik, dan balikkan setiap minggu dengan sekop untuk membuat kompos." },
-      "tip76": { "title": "Biogas Kantong Fleksibel", "content": "Pasang digester biogas tubular plastik sederhana yang murah untuk mengolah kotoran babi, menghasilkan gas memasak gratis untuk rumah tangga." },
-      "tip92": { "title": "Batas Usia Kastrasi", "content": "Kastrasi anakan jantan sebelum mereka berusia 7 hari. Pada usia ini, prosedurnya cepat, cepat sembuh, dan menyebabkan rasa sakit minimal." },
-      "tip94": { "title": "Catatan Buku Catatan Sederhana", "content": "Simpan buku catatan kecil yang murah di gudang untuk menuliskan tanggal perkawinan, tanggal kelahiran, dan perawatan untuk setiap induk." }
+      "tip6": {
+        "title": "Usia Sapih untuk Peternak Kecil",
+        "content": "Sapih anak babi pada usia 28 hingga 35 hari, jangan lebih awal. Ini memungkinkan anak babi tumbuh lebih kuat dan beradaptasi dengan pakan padat menggunakan sumber daya peternakan yang sederhana."
+      },
+      "tip7": {
+        "title": "Metode Pemisahan Bertahap",
+        "content": "Kurangi stres penyapihan dengan memindahkan induk keluar dari kandang melahirkan dan membiarkan anak babi di lingkungan yang mereka kenal selama minggu pertama."
+      },
+      "tip8": {
+        "title": "Pencegahan Angin untuk Babi Sapihan",
+        "content": "Blokir angin dingin di kandang pembesaran dengan memasang tirai sementara atau papan kayu setinggi anak babi (sekitar 50 cm)."
+      },
+      "tip11": {
+        "title": "Larutan Rehidrasi Buatan Sendiri",
+        "content": "Berikan larutan elektrolit buatan sendiri yang murah (5 sendok makan gula, 1/2 sendok makan garam dalam 5 liter air bersih) selama 3 hari pertama penyapihan untuk melawan stres."
+      },
+      "tip17": {
+        "title": "Suplemen Mineral Tanah Liat",
+        "content": "Letakkan satu sekop tanah liat merah segar (dari area yang bersih) di kandang melahirkan/penyapihan. Anak babi memakannya untuk mendapatkan zat besi dan mineral alami."
+      },
+      "tip20": {
+        "title": "Merebus Produk Sampingan Pertanian",
+        "content": "Rebus produk sampingan pertanian seperti kulit ubi, kulit singkong, dan sulur ubi jalar untuk menghancurkan racun alami dan meningkatkan daya cerna."
+      },
+      "tip21": {
+        "title": "Sumber Protein Lokal",
+        "content": "Lengkapi pakan komersial dengan menanam tanaman hijauan berprotein tinggi seperti Kelor, Azolla, atau daun ubi jalar di peternakan."
+      },
+      "tip22": {
+        "title": "Pembatasan Pakan Masa Bunting",
+        "content": "Batasi induk bunting menjadi 2-2,5 kg pakan per hari untuk mencegah mereka menjadi terlalu gemuk, yang menyebabkan kelahiran sulit."
+      },
+      "tip26": {
+        "title": "Merebus Limbah Dapur",
+        "content": "Rebus limbah makanan hotel atau dapur selama 30 menit untuk menghancurkan virus Demam Babi Afrika dan Penyakit Mulut dan Kuku."
+      },
+      "tip28": {
+        "title": "Arang untuk Pencernaan",
+        "content": "Letakkan potongan kecil arang kayu di kandang pembesaran. Babi mengunyahnya untuk membantu mengikat racun perut dan mengurangi diare."
+      },
+      "tip34": {
+        "title": "Perkawinan Tangan di Kandang Pembiakan",
+        "content": "Bawa induk yang sedang birahi ke kandang pejantan untuk dikawinkan, daripada membiarkan pejantan bebas di kawanan induk."
+      },
+      "tip35": {
+        "title": "Respon Birahi Diam",
+        "content": "Uji birahi dengan menekan tangan Anda dengan kuat di punggung induk; jika dia berdiri tegak dan mengeraskan telinganya, dia siap untuk kawin."
+      },
+      "tip39": {
+        "title": "Perlindungan Anak Babi dari Tertindih",
+        "content": "Pasang \"rel pelindung\" (tiang kayu berat atau pipa logam yang diletakkan 20 cm dari dinding dan 20 cm dari lantai) di kandang melahirkan."
+      },
+      "tip43": {
+        "title": "Kalender Catatan Pembiakan",
+        "content": "Tandai tanggal perkawinan di kalender; kebuntingan berlangsung 114 hari (3 bulan, 3 minggu, 3 hari), memungkinkan Anda menyiapkan kandang melahirkan."
+      },
+      "tip47": {
+        "title": "Usia Perkawinan Pertama Dara",
+        "content": "Tunggu sampai babi dara berusia setidaknya 8 bulan dan pada siklus birahi kedua atau ketiga sebelum mengawinkannya untuk memastikan batch pertama yang lebih besar."
+      },
+      "tip48": {
+        "title": "Isolasi Pembelian Baru",
+        "content": "Simpan babi yang baru dibeli di kandang terpisah setidaknya 20 meter dari kawanan utama Anda selama 30 hari untuk memeriksa penyakit."
+      },
+      "tip49": {
+        "title": "Pengaturan Bak Celup Kaki (Footbath) Mandiri",
+        "content": "Letakkan bak plastik dangkal atau ban bekas yang dipotong setengah berisi air dan disinfektan (seperti klorin atau kapur pertanian) di gerbang peternakan."
+      },
+      "tip51": {
+        "title": "Kebijakan Pembatasan Pengunjung",
+        "content": "Jangan izinkan pengunjung (terutama pembeli babi atau peternak lain) masuk ke dalam kandang babi Anda. Diskusikan bisnis di luar area kandang."
+      },
+      "tip55": {
+        "title": "Kontrol Parasit Alami",
+        "content": "Berikan biji pepaya atau biji labu yang dihancurkan kepada babi pembesaran sebagai obat alami murah untuk membantu mengurangi cacing internal."
+      },
+      "tip60": {
+        "title": "Penguburan Kematian yang Layak",
+        "content": "Kubur babi yang mati setidaknya sedalam 2 meter, jauh dari sumber air, dan tutup bangkai dengan kapur pertanian sebelum menimbun kembali tanah."
+      },
+      "tip61": {
+        "title": "Ruang Kandang Biaya Rendah",
+        "content": "Sediakan setidaknya 1 meter persegi ruang per babi finisher untuk mengurangi perkelahian, stres, dan lesi kulit."
+      },
+      "tip62": {
+        "title": "Ventilasi Silang Alami",
+        "content": "Rancang rumah babi dengan sisi terbuka (menggunakan kawat kasa atau bilah bambu) untuk memungkinkan angin alami berhembus dan menghilangkan bau."
+      },
+      "tip75": {
+        "title": "Tumpukan Kompos Mandiri",
+        "content": "Tumpuk kotoran babi di sudut kering yang ditentukan, tutup dengan daun pisang atau plastik, dan balikkan setiap minggu dengan sekop untuk membuat kompos."
+      },
+      "tip76": {
+        "title": "Biogas Kantong Fleksibel",
+        "content": "Pasang digester biogas tubular plastik sederhana yang murah untuk mengolah kotoran babi, menghasilkan gas memasak gratis untuk rumah tangga."
+      },
+      "tip92": {
+        "title": "Batas Usia Kastrasi",
+        "content": "Kastrasi anakan jantan sebelum mereka berusia 7 hari. Pada usia ini, prosedurnya cepat, cepat sembuh, dan menyebabkan rasa sakit minimal."
+      },
+      "tip94": {
+        "title": "Catatan Buku Catatan Sederhana",
+        "content": "Simpan buku catatan kecil yang murah di gudang untuk menuliskan tanggal perkawinan, tanggal kelahiran, dan perawatan untuk setiap induk."
+      }
     }
   },
   "Symptoms": {
@@ -1400,9 +1569,21 @@
       "heat": "Deteksi Birahi",
       "breeding": "Pembiakan",
       "pregnancy": "Konfirmasi Kebuntingan",
-      "deworming": "Pemberian Obat Cacing",
+      "deworming": "Obat cacing",
       "weight": "Pengecekan Berat",
-      "other": "Lainnya"
+      "other": "Lainnya",
+      "weight_check": "Pemeriksaan Berat Badan",
+      "culling": "Pemusnahan",
+      "teeth_clipping": "Pemotongan Gigi",
+      "tail_docking": "Docking Ekor",
+      "iron_injection": "Injeksi Besi",
+      "weaning": "Menyapih",
+      "castration": "Pengebirian",
+      "heat_detection": "Deteksi Panas",
+      "breeding_mating": "Berkembang biak/Kawin",
+      "pregnancy_check": "Pemeriksaan Kehamilan",
+      "farrowing": "Farrowing",
+      "custom": "Kebiasaan"
     },
     "reportTitle": "Laporan Profil Babi: {tag}"
   },
@@ -1690,7 +1871,10 @@
     "joined": "Bergabung",
     "payrollSummary": "Ringkasan Gaji",
     "totalStaff": "Total Staf",
-    "monthlyPayroll": "Gaji Bulanan"
+    "monthlyPayroll": "Gaji Bulanan",
+    "detailedHistory": "Riwayat Transaksi Terperinci",
+    "narration": "Cerita",
+    "balance": "Keseimbangan"
   },
   "Common": {
     "loading": "Memuat..."

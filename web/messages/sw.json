@@ -188,7 +188,21 @@
     "limitReached": "Watumiaji wa bure wanaweza kuwa na hadi nguruwe 20 pekee. Tafadhali boresha hadi Premium ili kuongeza zaidi.",
     "porker": "Wa Nyama",
     "breeder": "Mzalishaji",
-    "addPigs": "+ Ongeza Nguruwe"
+    "addPigs": "+ Ongeza Nguruwe",
+    "male": "Mwanaume",
+    "female": "Mwanamke",
+    "excellent": "Bora kabisa",
+    "good": "Nzuri",
+    "caution": "Tahadhari",
+    "poor": "Maskini",
+    "blank": "Tupu",
+    "piglet": "Nguruwe",
+    "gilt": "Gilt",
+    "sow": "Panda",
+    "boar": "Nguruwe",
+    "barrow": "Barrow",
+    "pregnant": "Mjamzito",
+    "lactating": "Kunyonyesha"
   },
   "Profile": {
     "owner": "Mmiliki",
@@ -228,21 +242,66 @@
     "title": "Tekeleza Utaratibu wa Kundi",
     "description": "Chagua shughuli ili kusasisha hali za nguruwe, sajili kumbukumbu za afya, au panga majukumu ya baadaye.",
     "categories": {
-      "heat": { "type": "Kugundua Joto", "desc": "Fuatilia nguruwe jike kwa utayari wa kupandwa." },
-      "breeding": { "type": "Kuzalisha/Kupandisha", "desc": "Sajili vikao vya kupandisha vilivyofanikiwa." },
-      "pregnancy": { "type": "Thibitisha Ujauzito", "desc": "Sajili ultrasound au ukaguzi wa kimwili." },
-      "farrowing": { "type": "Kuzaa", "desc": "Sajili watoto wapya na maelezo ya kuzaliwa." },
-      "weaning": { "type": "Kuachisha Kunyonya", "desc": "Sajili wakati watoto wanapoachishwa kunyonya." },
-      "castration": { "type": "Hasi", "desc": "Sajili kuhasiwa kwa nguruwe dume." },
-      "teeth": { "type": "Kukata Meno", "desc": "Kata meno ya sindano ya watoto wa nguruwe wapya." },
-      "tail": { "type": "Kukata Mkia", "desc": "Kata mikia ili kuzuia kuumana na maambukizi." },
-      "deworming": { "type": "Kupitisha Dawa ya Minyoo", "desc": "Toa dawa ya minyoo." },
-      "iron": { "type": "Sindano ya Chuma", "desc": "Toa sindano za chuma kuzuia upungufu wa damu." },
-      "vaccination": { "type": "Chanjo", "desc": "Sajili chanjo za kawaida au za dharura." },
-      "medication": { "type": "Dawa", "desc": "Fuatilia matibabu kwa wanyama wagonjwa." },
-      "weight": { "type": "Ukaguzi wa Uzito", "desc": "Sajili maendeleo ya ukuaji." },
-      "culling": { "type": "Kuondoa", "desc": "Sajili kuondolewa kwenye kundi." },
-      "custom": { "type": "Maalum", "desc": "Sajili shughuli au uchunguzi mwingine wowote wa shamba." }
+      "heat": {
+        "type": "Kugundua Joto",
+        "desc": "Fuatilia nguruwe jike kwa utayari wa kupandwa."
+      },
+      "breeding": {
+        "type": "Kuzalisha/Kupandisha",
+        "desc": "Sajili vikao vya kupandisha vilivyofanikiwa."
+      },
+      "pregnancy": {
+        "type": "Thibitisha Ujauzito",
+        "desc": "Sajili ultrasound au ukaguzi wa kimwili."
+      },
+      "farrowing": {
+        "type": "Kuzaa",
+        "desc": "Sajili watoto wapya na maelezo ya kuzaliwa."
+      },
+      "weaning": {
+        "type": "Kuachisha Kunyonya",
+        "desc": "Sajili wakati watoto wanapoachishwa kunyonya."
+      },
+      "castration": {
+        "type": "Hasi",
+        "desc": "Sajili kuhasiwa kwa nguruwe dume."
+      },
+      "teeth": {
+        "type": "Kukata Meno",
+        "desc": "Kata meno ya sindano ya watoto wa nguruwe wapya."
+      },
+      "tail": {
+        "type": "Kukata Mkia",
+        "desc": "Kata mikia ili kuzuia kuumana na maambukizi."
+      },
+      "deworming": {
+        "type": "Kupitisha Dawa ya Minyoo",
+        "desc": "Toa dawa ya minyoo."
+      },
+      "iron": {
+        "type": "Sindano ya Chuma",
+        "desc": "Toa sindano za chuma kuzuia upungufu wa damu."
+      },
+      "vaccination": {
+        "type": "Chanjo",
+        "desc": "Sajili chanjo za kawaida au za dharura."
+      },
+      "medication": {
+        "type": "Dawa",
+        "desc": "Fuatilia matibabu kwa wanyama wagonjwa."
+      },
+      "weight": {
+        "type": "Ukaguzi wa Uzito",
+        "desc": "Sajili maendeleo ya ukuaji."
+      },
+      "culling": {
+        "type": "Kuondoa",
+        "desc": "Sajili kuondolewa kwenye kundi."
+      },
+      "custom": {
+        "type": "Maalum",
+        "desc": "Sajili shughuli au uchunguzi mwingine wowote wa shamba."
+      }
     },
     "logActivity": "Sajili Shughuli: {type}",
     "procedureDate": "Tarehe ya Utaratibu",
@@ -378,7 +437,39 @@
     "days": "Siku {count}",
     "managementSystemReport": "Ripoti ya Mfumo wa Usimamizi wa SmartSwine",
     "bags": "Magunia",
-    "kg": "kg"
+    "kg": "kg",
+    "starter": "Mwanzilishi",
+    "grower": "Mkulima",
+    "finisher": "Mkamilishaji",
+    "ingredientsList": {
+      "maize": "Mahindi",
+      "maize_bran": "Pumba za mahindi",
+      "soybean_meal": "Chakula cha soya",
+      "fish_meal": "Chakula cha samaki",
+      "rice_bran": "Pumba za mchele",
+      "wheat_bran": "Ngano ya ngano",
+      "common_salt": "Chumvi ya kawaida",
+      "vitamin_premix": "Vitamini Premix",
+      "mycotoxin_binder": "Binder ya Mycotoxin",
+      "oyster_shell": "Shell ya Oyster",
+      "bone_meal": "Mlo wa Mifupa",
+      "lysine": "Lysine",
+      "methionine": "Methionine"
+    },
+    "groups": {
+      "energy": "Nishati",
+      "protein": "Protini",
+      "vitaminsMineralsSalt": "Vitamini, Madini na Chumvi"
+    },
+    "nutrients": {
+      "digestibleProtein": "Protini inayoweza kuyeyushwa (%)",
+      "crudeFiber": "Fiber ghafi (%)",
+      "metabolizableEnergy": "Nishati Inayoweza Metabolizable (kcal/kg)",
+      "calcium": "Kalsiamu (%)",
+      "phosphorus": "Fosforasi (%)",
+      "lysine": "Lysine (%)",
+      "methionineCystine": "Methionine + Cystine (%)"
+    }
   },
   "Financials": {
     "totalRevenue": "Jumla ya Mapato",
@@ -531,32 +622,110 @@
       "general": "Jumla"
     },
     "tips": {
-      "tip6": { "title": "Umri wa Kuachisha Kunyonya kwa Wakulima Wadogo", "content": "Achisha watoto wa nguruwe kunyonya wakiwa na siku 28 hadi 35 badala ya mapema zaidi. Hii inaruhusu watoto kukua na nguvu na kuzoea chakula kigumu kwa kutumia rasilimali rahisi za shamba." },
-      "tip7": { "title": "Njia ya Kutenganisha Polepole", "content": "Punguza msongo wa kuachisha kunyonya kwa kumtoa mama nje ya banda la kuzaa na kuwaacha watoto katika mazingira yao waliyoyazoea kwa wiki ya kwanza." },
-      "tip8": { "title": "Kuzuia Baridi kwa Wanaoachishwa", "content": "Zuia upepo wa baridi katika banda la watoto kwa kuweka mapazia ya muda au mbao hadi urefu wa watoto (karibu 50cm)." },
-      "tip11": { "title": "Dawa ya Nyumbani ya Kurudisha Maji", "content": "Lisha watoto mchanganyiko rahisi wa nyumbani (vijiko 5 vya sukari, kijiko 1/2 cha chumvi katika lita 5 za maji safi) wakati wa siku 3 za kwanza za kuachisha ili kupambana na msongo." },
-      "tip17": { "title": "Nyongeza ya Madini ya Udongo wa Udongo mwekundu", "content": "Weka sepetu safi ya udongo mwekundu (kutoka eneo safi) katika banda la kuzaa/kuachisha. Watoto hula ili kupata chuma na madini ya asili." },
-      "tip20": { "title": "Kuchemsha Mabaki ya Kilimo", "content": "Chemsha mabaki ya kilimo kama maganda ya viazi vikuu, maganda ya muhogo, na mizabibu ya viazi vitamu ili kuharibu sumu za asili na kuboresha usagaji chakula." },
-      "tip21": { "title": "Vyanzo vya Protini vya Kienyeji", "content": "Ongeza chakula cha duka kwa kupanda mimea ya lishe yenye protini nyingi kama Moringa, Azolla, au majani ya viazi vitamu shambani." },
-      "tip22": { "title": "Kuzuia Chakula Wakati wa Mimba", "content": "Punguza majike wajawazito kufikia kilo 2-2.5 za chakula kwa siku ili kuzuia wasiwe na uzito mkubwa, jambo ambalo husababisha shida wakati wa kuzaa." },
-      "tip26": { "title": "Kuchemsha Mabaki ya Jikoni", "content": "Chemsha mabaki ya chakula ya hoteli au jikoni kwa dakika 30 ili kuharibu virusi vya Homa ya Nguruwe ya Afrika na ugonjwa wa Miguu na Midomo." },
-      "tip28": { "title": "Mkaa kwa Ajili ya Usagaji", "content": "Weka vipande vidogo vya mkaa wa mbao katika mabanda ya wakuao. Nguruwe huutafuna ili kusaidia kufunga sumu tumboni na kupunguza kuhara." },
-      "tip34": { "title": "Kupandisha kwa Mkono katika Banda la Kupandishia", "content": "Mlete jike aliye katika joto kwenye banda la dume kwa ajili ya kupandisha, badala ya kumwacha dume azurure kwenye kundi la majike." },
-      "tip35": { "title": "Kupima Joto kwa Kukandamiza Mgongo", "content": "Pima kama jike yuko katika joto kwa kukandamiza mikono yako kwa nguvu kwenye mgongo wake; ikiwa atasimama tuli kabisa na kusimamisha masikio yake, yuko tayari kupandwa." },
-      "tip39": { "title": "Ulinzi wa Watoto Dhidi ya Kupondwa", "content": "Sakinisha \"mbao za ulinzi\" (mbao nzito au mabomba ya chuma yaliyowekwa 20cm kutoka ukutani na 20cm kutoka sakafuni) katika mabanda ya kuzaa." },
-      "tip43": { "title": "Kalenda ya Kumbukumbu za Uzalishaji", "content": "Weka alama ya tarehe ya kupandisha kwenye kalenda; ujauzito hudumu siku 114 (miezi 3, wiki 3, siku 3), ikikuruhusu kuandaa banda la kuzaa." },
-      "tip47": { "title": "Umri wa Kwanza wa Kupandisha Mtamba", "content": "Subiri mpaka mtamba awe na angalau miezi 8 na awe katika mzunguko wake wa pili au wa tatu wa joto kabla ya kumpandisha ili kuhakikisha anazaa watoto wengi mara ya kwanza." },
-      "tip48": { "title": "Kutenga Nguruwe Wapya Walionunuliwa", "content": "Weka nguruwe wapya walionunuliwa katika banda tofauti angalau mita 20 kutoka kwa kundi lako kuu kwa siku 30 ili kuangalia kama wana ugonjwa." },
-      "tip49": { "title": "Zana ya Kusafishia Miguu (Footbath)", "content": "Weka beseni la plastiki au tairi iliyokatwa nusu iliyojaa maji na dawa ya kuua vijidudu (kama klorini au chokaa cha kilimo) kwenye lango la shamba." },
-      "tip51": { "title": "Sera ya Kuzuia Wageni", "content": "Usiruhusu wageni (hasa wanunuzi wengine wa nguruwe au wakulima) ndani ya mabanda yako ya nguruwe. Jadili biashara nje ya eneo la mabanda." },
-      "tip55": { "title": "Udhibiti wa Asili wa Vimelea", "content": "Lisha nguruwe wakuao mbegu za papai zilizopondwa au mbegu za maboga kama tiba rahisi na ya asili ya kusaidia kupunguza minyoo ya ndani." },
-      "tip60": { "title": "Mazishi Sahihi ya Waliokufa", "content": "Zika nguruwe waliokufa angalau mita 2 kwenda chini, mbali na vyanzo vya maji, na funika mzoga kwa chokaa cha kilimo kabla ya kufukia udongo." },
-      "tip61": { "title": "Nafasi ya Banda ya Gharama nafuu", "content": "Toa angalau mita ya mraba 1 ya nafasi kwa kila nguruwe wa nyama ili kupunguza kupigana, msongo, na vidonda vya ngozi." },
-      "tip62": { "title": "Uingizaji Hewa wa Asili", "content": "Tengeneza nyumba za nguruwe zenye pande wazi (kwa kutumia wavu wa waya au mianzi) ili kuruhusu upepo wa asili kupita na kuondoa harufu." },
-      "tip75": { "title": "Mundo wa Mboji wa Nyumbani", "content": "Rundika samadi ya nguruwe katika kona kavu iliyotengwa, ifunike kwa majani ya ndizi au plastiki, na uigeuze kila wiki kwa sepetu ili kutengeneza mboji." },
-      "tip76": { "title": "Biogas ya Mfuko wa Plastiki", "content": "Sakinisha mtambo rahisi na wa gharama nafuu wa biogas wa mfuko wa plastiki ili kutibu samadi ya nguruwe, ukizalisha gesi ya bure ya kupikia kwa ajili ya nyumbani." },
-      "tip92": { "title": "Kiwango cha Umri wa Hasi", "content": "Wahasi nguruwe dume kabla ya kuwa na siku 7. Katika umri huu, utaratibu ni wa haraka, unapona haraka, na unasababisha maumivu kidogo." },
-      "tip94": { "title": "Kumbukumbu za Daftari Rahisi", "content": "Weka daftari dogo na la bei nafuu bandani ili kuandika tarehe za kupandisha, tarehe za kuzaa, na matibabu kwa kila jike." }
+      "tip6": {
+        "title": "Umri wa Kuachisha Kunyonya kwa Wakulima Wadogo",
+        "content": "Achisha watoto wa nguruwe kunyonya wakiwa na siku 28 hadi 35 badala ya mapema zaidi. Hii inaruhusu watoto kukua na nguvu na kuzoea chakula kigumu kwa kutumia rasilimali rahisi za shamba."
+      },
+      "tip7": {
+        "title": "Njia ya Kutenganisha Polepole",
+        "content": "Punguza msongo wa kuachisha kunyonya kwa kumtoa mama nje ya banda la kuzaa na kuwaacha watoto katika mazingira yao waliyoyazoea kwa wiki ya kwanza."
+      },
+      "tip8": {
+        "title": "Kuzuia Baridi kwa Wanaoachishwa",
+        "content": "Zuia upepo wa baridi katika banda la watoto kwa kuweka mapazia ya muda au mbao hadi urefu wa watoto (karibu 50cm)."
+      },
+      "tip11": {
+        "title": "Dawa ya Nyumbani ya Kurudisha Maji",
+        "content": "Lisha watoto mchanganyiko rahisi wa nyumbani (vijiko 5 vya sukari, kijiko 1/2 cha chumvi katika lita 5 za maji safi) wakati wa siku 3 za kwanza za kuachisha ili kupambana na msongo."
+      },
+      "tip17": {
+        "title": "Nyongeza ya Madini ya Udongo wa Udongo mwekundu",
+        "content": "Weka sepetu safi ya udongo mwekundu (kutoka eneo safi) katika banda la kuzaa/kuachisha. Watoto hula ili kupata chuma na madini ya asili."
+      },
+      "tip20": {
+        "title": "Kuchemsha Mabaki ya Kilimo",
+        "content": "Chemsha mabaki ya kilimo kama maganda ya viazi vikuu, maganda ya muhogo, na mizabibu ya viazi vitamu ili kuharibu sumu za asili na kuboresha usagaji chakula."
+      },
+      "tip21": {
+        "title": "Vyanzo vya Protini vya Kienyeji",
+        "content": "Ongeza chakula cha duka kwa kupanda mimea ya lishe yenye protini nyingi kama Moringa, Azolla, au majani ya viazi vitamu shambani."
+      },
+      "tip22": {
+        "title": "Kuzuia Chakula Wakati wa Mimba",
+        "content": "Punguza majike wajawazito kufikia kilo 2-2.5 za chakula kwa siku ili kuzuia wasiwe na uzito mkubwa, jambo ambalo husababisha shida wakati wa kuzaa."
+      },
+      "tip26": {
+        "title": "Kuchemsha Mabaki ya Jikoni",
+        "content": "Chemsha mabaki ya chakula ya hoteli au jikoni kwa dakika 30 ili kuharibu virusi vya Homa ya Nguruwe ya Afrika na ugonjwa wa Miguu na Midomo."
+      },
+      "tip28": {
+        "title": "Mkaa kwa Ajili ya Usagaji",
+        "content": "Weka vipande vidogo vya mkaa wa mbao katika mabanda ya wakuao. Nguruwe huutafuna ili kusaidia kufunga sumu tumboni na kupunguza kuhara."
+      },
+      "tip34": {
+        "title": "Kupandisha kwa Mkono katika Banda la Kupandishia",
+        "content": "Mlete jike aliye katika joto kwenye banda la dume kwa ajili ya kupandisha, badala ya kumwacha dume azurure kwenye kundi la majike."
+      },
+      "tip35": {
+        "title": "Kupima Joto kwa Kukandamiza Mgongo",
+        "content": "Pima kama jike yuko katika joto kwa kukandamiza mikono yako kwa nguvu kwenye mgongo wake; ikiwa atasimama tuli kabisa na kusimamisha masikio yake, yuko tayari kupandwa."
+      },
+      "tip39": {
+        "title": "Ulinzi wa Watoto Dhidi ya Kupondwa",
+        "content": "Sakinisha \"mbao za ulinzi\" (mbao nzito au mabomba ya chuma yaliyowekwa 20cm kutoka ukutani na 20cm kutoka sakafuni) katika mabanda ya kuzaa."
+      },
+      "tip43": {
+        "title": "Kalenda ya Kumbukumbu za Uzalishaji",
+        "content": "Weka alama ya tarehe ya kupandisha kwenye kalenda; ujauzito hudumu siku 114 (miezi 3, wiki 3, siku 3), ikikuruhusu kuandaa banda la kuzaa."
+      },
+      "tip47": {
+        "title": "Umri wa Kwanza wa Kupandisha Mtamba",
+        "content": "Subiri mpaka mtamba awe na angalau miezi 8 na awe katika mzunguko wake wa pili au wa tatu wa joto kabla ya kumpandisha ili kuhakikisha anazaa watoto wengi mara ya kwanza."
+      },
+      "tip48": {
+        "title": "Kutenga Nguruwe Wapya Walionunuliwa",
+        "content": "Weka nguruwe wapya walionunuliwa katika banda tofauti angalau mita 20 kutoka kwa kundi lako kuu kwa siku 30 ili kuangalia kama wana ugonjwa."
+      },
+      "tip49": {
+        "title": "Zana ya Kusafishia Miguu (Footbath)",
+        "content": "Weka beseni la plastiki au tairi iliyokatwa nusu iliyojaa maji na dawa ya kuua vijidudu (kama klorini au chokaa cha kilimo) kwenye lango la shamba."
+      },
+      "tip51": {
+        "title": "Sera ya Kuzuia Wageni",
+        "content": "Usiruhusu wageni (hasa wanunuzi wengine wa nguruwe au wakulima) ndani ya mabanda yako ya nguruwe. Jadili biashara nje ya eneo la mabanda."
+      },
+      "tip55": {
+        "title": "Udhibiti wa Asili wa Vimelea",
+        "content": "Lisha nguruwe wakuao mbegu za papai zilizopondwa au mbegu za maboga kama tiba rahisi na ya asili ya kusaidia kupunguza minyoo ya ndani."
+      },
+      "tip60": {
+        "title": "Mazishi Sahihi ya Waliokufa",
+        "content": "Zika nguruwe waliokufa angalau mita 2 kwenda chini, mbali na vyanzo vya maji, na funika mzoga kwa chokaa cha kilimo kabla ya kufukia udongo."
+      },
+      "tip61": {
+        "title": "Nafasi ya Banda ya Gharama nafuu",
+        "content": "Toa angalau mita ya mraba 1 ya nafasi kwa kila nguruwe wa nyama ili kupunguza kupigana, msongo, na vidonda vya ngozi."
+      },
+      "tip62": {
+        "title": "Uingizaji Hewa wa Asili",
+        "content": "Tengeneza nyumba za nguruwe zenye pande wazi (kwa kutumia wavu wa waya au mianzi) ili kuruhusu upepo wa asili kupita na kuondoa harufu."
+      },
+      "tip75": {
+        "title": "Mundo wa Mboji wa Nyumbani",
+        "content": "Rundika samadi ya nguruwe katika kona kavu iliyotengwa, ifunike kwa majani ya ndizi au plastiki, na uigeuze kila wiki kwa sepetu ili kutengeneza mboji."
+      },
+      "tip76": {
+        "title": "Biogas ya Mfuko wa Plastiki",
+        "content": "Sakinisha mtambo rahisi na wa gharama nafuu wa biogas wa mfuko wa plastiki ili kutibu samadi ya nguruwe, ukizalisha gesi ya bure ya kupikia kwa ajili ya nyumbani."
+      },
+      "tip92": {
+        "title": "Kiwango cha Umri wa Hasi",
+        "content": "Wahasi nguruwe dume kabla ya kuwa na siku 7. Katika umri huu, utaratibu ni wa haraka, unapona haraka, na unasababisha maumivu kidogo."
+      },
+      "tip94": {
+        "title": "Kumbukumbu za Daftari Rahisi",
+        "content": "Weka daftari dogo na la bei nafuu bandani ili kuandika tarehe za kupandisha, tarehe za kuzaa, na matibabu kwa kila jike."
+      }
     }
   },
   "Symptoms": {
@@ -1400,9 +1569,21 @@
       "heat": "Kugundua Joto",
       "breeding": "Kuzalisha",
       "pregnancy": "Uthibitisho wa Ujauzito",
-      "deworming": "Dawa ya Minyoo",
+      "deworming": "Dawa ya minyoo",
       "weight": "Ukaguzi wa Uzito",
-      "other": "Nyingine"
+      "other": "Nyingine",
+      "weight_check": "Kuangalia Uzito",
+      "culling": "Kukata",
+      "teeth_clipping": "Kukata meno",
+      "tail_docking": "Kuweka Mkia",
+      "iron_injection": "Sindano ya Chuma",
+      "weaning": "Kuachisha ziwa",
+      "castration": "Kuhasiwa",
+      "heat_detection": "Ugunduzi wa joto",
+      "breeding_mating": "Kuzaliana/Kupandana",
+      "pregnancy_check": "Ukaguzi wa Mimba",
+      "farrowing": "Farrowing",
+      "custom": "Desturi"
     },
     "reportTitle": "Ripoti ya Maelezo ya Nguruwe: {tag}"
   },
@@ -1690,7 +1871,10 @@
     "joined": "Alijiunga",
     "payrollSummary": "Muhtasari wa Mishahara",
     "totalStaff": "Jumla ya Wafanyakazi",
-    "monthlyPayroll": "Mshahara wa Kila Mwezi"
+    "monthlyPayroll": "Mshahara wa Kila Mwezi",
+    "detailedHistory": "Historia ya Kina ya Muamala",
+    "narration": "Simulizi",
+    "balance": "Mizani"
   },
   "Common": {
     "loading": "Inapakia..."

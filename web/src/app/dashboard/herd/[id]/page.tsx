@@ -47,6 +47,57 @@ interface HealthRecord {
 export default function PigProfilePage() {
   const t = useTranslations("PigProfile");
   const th = useTranslations("Herd");
+  const tHr = useTranslations("HR");
+  
+  const translateGender = (gender: string) => {
+    if (!gender) return "";
+    const key = gender.toLowerCase();
+    if (["male", "female"].includes(key)) return th(key);
+    return gender;
+  };
+
+  const translatePurpose = (purpose: string) => {
+    if (!purpose) return "";
+    const key = purpose.toLowerCase();
+    if (["breeder", "porker"].includes(key)) return th(key);
+    return purpose;
+  };
+
+  const translateStatus = (status: string) => {
+    if (!status) return "";
+    const key = status.toLowerCase();
+    const validKeys = ["piglet", "gilt", "sow", "boar", "barrow", "pregnant", "lactating"];
+    if (validKeys.includes(key)) {
+      return th(key);
+    }
+    return status;
+  };
+
+  const translateActivityType = (type: string) => {
+    if (!type) return "";
+    const key = type.toLowerCase().replace(/[\s\/]/g, "_");
+    const actionKeys = [
+      "vaccination", "deworming", "medication", "weight_check", "culling", 
+      "teeth_clipping", "tail_docking", "iron_injection", "weaning", 
+      "castration", "heat_detection", "breeding_mating", "pregnancy_check", 
+      "farrowing", "custom"
+    ];
+    if (actionKeys.includes(key)) {
+      return t(`actionTypes.${key}`);
+    }
+    const fallbacks: Record<string, string> = {
+      "treatment": "treatment",
+      "heat": "heat",
+      "breeding": "breeding",
+      "pregnancy": "pregnancy",
+      "weight": "weight",
+      "other": "other"
+    };
+    if (fallbacks[key]) {
+      return t(`actionTypes.${fallbacks[key]}`);
+    }
+    return type;
+  };
   const { user, userProfile, activeFarmUid, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -310,7 +361,7 @@ export default function PigProfilePage() {
                   onClick={() => {
                     const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
                     if (!isPremium) {
-                      alert("Exporting PDF reports is a Premium feature. Upgrade to unlock!");
+                      alert(tHr("premiumFeatureExport"));
                       router.push("/dashboard/billing");
                       return;
                     }
@@ -330,15 +381,15 @@ export default function PigProfilePage() {
               <div className="divide-y divide-zinc-100 text-sm relative z-10">
                 <div className="py-1.5 flex justify-between">
                   <span className="text-zinc-500">{t("gender")}</span>
-                  <span className="font-semibold">{pig.gender}</span>
+                  <span className="font-semibold">{translateGender(pig.gender)}</span>
                 </div>
                 <div className="py-1.5 flex justify-between">
                   <span className="text-zinc-500">{t("purpose")}</span>
-                  <span className="font-semibold">{pig.purpose}</span>
+                  <span className="font-semibold">{translatePurpose(pig.purpose)}</span>
                 </div>
                 <div className="py-1.5 flex justify-between">
                   <span className="text-zinc-500">{t("currentStatus")}</span>
-                  <span className="font-semibold text-emerald-700">{pig.status}</span>
+                  <span className="font-semibold text-emerald-700">{translateStatus(pig.status)}</span>
                 </div>
                 <div className="py-1.5 flex justify-between">
                   <span className="text-zinc-500">{t("weight")}</span>
@@ -408,7 +459,7 @@ export default function PigProfilePage() {
                       <span className="absolute -left-[21px] top-1.5 h-3.5 w-3.5 rounded-full border-2 border-emerald-500 bg-white" />
                       <div>
                         <div className="flex justify-between items-start">
-                          <p className="text-sm font-bold text-zinc-800">{record.type}</p>
+                          <p className="text-sm font-bold text-zinc-800">{translateActivityType(record.type)}</p>
                           <span className="text-xs text-zinc-400 font-mono">{record.date}</span>
                         </div>
                         {record.description && (

@@ -188,7 +188,21 @@
     "limitReached": "Los usuarios gratuitos solo pueden tener hasta 20 cerdos. Mejora a Premium para añadir más.",
     "porker": "Engorde",
     "breeder": "Reproductor",
-    "addPigs": "+ Añadir Cerdos"
+    "addPigs": "+ Añadir Cerdos",
+    "male": "Macho",
+    "female": "Hembra",
+    "excellent": "Excelente",
+    "good": "Bueno",
+    "caution": "Precaución",
+    "poor": "Deficiente",
+    "blank": "Vacío",
+    "piglet": "Lechón",
+    "gilt": "Cerdita",
+    "sow": "Cerda",
+    "boar": "Verraco",
+    "barrow": "Verraco castrado",
+    "pregnant": "Preñada",
+    "lactating": "Lactante"
   },
   "Profile": {
     "owner": "Dueño",
@@ -228,21 +242,66 @@
     "title": "Ejecutar Procedimiento",
     "description": "Selecciona una actividad para actualizar estados, registrar salud o programar tareas.",
     "categories": {
-      "heat": { "type": "Detección de Celo", "desc": "Monitoreo de cerdas listas para monta." },
-      "breeding": { "type": "Monta/Inseminación", "desc": "Registra sesiones exitosas." },
-      "pregnancy": { "type": "Confirmar Preñez", "desc": "Registra chequeos físicos o ecografía." },
-      "farrowing": { "type": "Parto", "desc": "Registra nuevas camadas y nacimientos." },
-      "weaning": { "type": "Destete", "desc": "Registra cuando los lechones dejan la cerda." },
-      "castration": { "type": "Castración", "desc": "Registra castración de machos." },
-      "teeth": { "type": "Descolmillado", "desc": "Corte de dientes de lechones recién nacidos." },
-      "tail": { "type": "Descole", "desc": "Corte de colas para prevenir infecciones." },
-      "deworming": { "type": "Desparasitación", "desc": "Administración de antiparasitarios." },
-      "iron": { "type": "Inyección de Hierro", "desc": "Aplicación de hierro para prevenir anemia." },
-      "vaccination": { "type": "Vacunación", "desc": "Registra inyecciones de rutina." },
-      "medication": { "type": "Medicación", "desc": "Tratamientos para animales enfermos." },
-      "weight": { "type": "Chequeo de Peso", "desc": "Registro de progreso de crecimiento." },
-      "culling": { "type": "Descarte", "desc": "Registro de eliminación de la piara." },
-      "custom": { "type": "Personalizado", "desc": "Cualquier otra actividad u observación." }
+      "heat": {
+        "type": "Detección de Celo",
+        "desc": "Monitoreo de cerdas listas para monta."
+      },
+      "breeding": {
+        "type": "Monta/Inseminación",
+        "desc": "Registra sesiones exitosas."
+      },
+      "pregnancy": {
+        "type": "Confirmar Preñez",
+        "desc": "Registra chequeos físicos o ecografía."
+      },
+      "farrowing": {
+        "type": "Parto",
+        "desc": "Registra nuevas camadas y nacimientos."
+      },
+      "weaning": {
+        "type": "Destete",
+        "desc": "Registra cuando los lechones dejan la cerda."
+      },
+      "castration": {
+        "type": "Castración",
+        "desc": "Registra castración de machos."
+      },
+      "teeth": {
+        "type": "Descolmillado",
+        "desc": "Corte de dientes de lechones recién nacidos."
+      },
+      "tail": {
+        "type": "Descole",
+        "desc": "Corte de colas para prevenir infecciones."
+      },
+      "deworming": {
+        "type": "Desparasitación",
+        "desc": "Administración de antiparasitarios."
+      },
+      "iron": {
+        "type": "Inyección de Hierro",
+        "desc": "Aplicación de hierro para prevenir anemia."
+      },
+      "vaccination": {
+        "type": "Vacunación",
+        "desc": "Registra inyecciones de rutina."
+      },
+      "medication": {
+        "type": "Medicación",
+        "desc": "Tratamientos para animales enfermos."
+      },
+      "weight": {
+        "type": "Chequeo de Peso",
+        "desc": "Registro de progreso de crecimiento."
+      },
+      "culling": {
+        "type": "Descarte",
+        "desc": "Registro de eliminación de la piara."
+      },
+      "custom": {
+        "type": "Personalizado",
+        "desc": "Cualquier otra actividad u observación."
+      }
     },
     "logActivity": "Registrar Actividad: {type}",
     "procedureDate": "Fecha del Procedimiento",
@@ -378,7 +437,39 @@
     "days": "{count} Días",
     "managementSystemReport": "Informe del Sistema de Gestión SmartSwine",
     "bags": "Sacos",
-    "kg": "kg"
+    "kg": "kg",
+    "starter": "Iniciador",
+    "grower": "Crecimiento",
+    "finisher": "Finalizador",
+    "ingredientsList": {
+      "maize": "Maíz",
+      "maize_bran": "Salvado de maíz",
+      "soybean_meal": "Harina de soja",
+      "fish_meal": "Harina de pescado",
+      "rice_bran": "Salvado de arroz",
+      "wheat_bran": "Salvado de trigo",
+      "common_salt": "Sal común",
+      "vitamin_premix": "Premezcla de vitaminas",
+      "mycotoxin_binder": "Aglutinante de micotoxinas",
+      "oyster_shell": "Concha de ostra",
+      "bone_meal": "Harina de hueso",
+      "lysine": "Lisina",
+      "methionine": "Metionina"
+    },
+    "groups": {
+      "energy": "Energía",
+      "protein": "Proteína",
+      "vitaminsMineralsSalt": "Vitaminas, Minerales y Sal"
+    },
+    "nutrients": {
+      "digestibleProtein": "Proteína digestible (%)",
+      "crudeFiber": "Fibra cruda (%)",
+      "metabolizableEnergy": "Energía metabolizable (kcal/kg)",
+      "calcium": "Calcio (%)",
+      "phosphorus": "Fósforo (%)",
+      "lysine": "Lisina (%)",
+      "methionineCystine": "Metionina + Cistina (%)"
+    }
   },
   "Financials": {
     "totalRevenue": "Ingresos Totales",
@@ -531,32 +622,110 @@
       "general": "General"
     },
     "tips": {
-      "tip6": { "title": "Edad de destete para pequeños productores", "content": "Destetar entre los 28 y 35 días en lugar de antes. Esto permite que los lechones crezcan más fuertes y se adapten mejor al alimento sólido." },
-      "tip7": { "title": "Método de separación gradual", "content": "Reduce el estrés retirando a la cerda del corral de parto y dejando a los lechones en su entorno familiar durante la primera semana." },
-      "tip8": { "title": "Prevención de corrientes de aire", "content": "Bloquea vientos fríos en el área de recría instalando cortinas temporales o tablas a la altura de los lechones (unos 50cm)." },
-      "tip11": { "title": "Solución de rehidratación casera", "content": "Usa una solución de electrolitos económica (5 cucharadas de azúcar, 1/2 de sal en 5 litros de agua limpia) los primeros 3 días del destete." },
-      "tip17": { "title": "Suplemento mineral con arcilla", "content": "Coloca una palada de tierra roja limpia en el corral. Los lechones la consumen para obtener hierro y minerales de forma natural." },
-      "tip20": { "title": "Hervido de subproductos", "content": "Hierve cáscaras de yuca, papa o camote para eliminar toxinas naturales y mejorar la digestibilidad." },
-      "tip21": { "title": "Fuentes locales de proteína", "content": "Complementa el alimento comercial cultivando forrajes como Moringa, Azolla o hojas de camote en la granja." },
-      "tip22": { "title": "Restricción de alimento en gestación", "content": "Limita a las cerdas gestantes a 2-2.5 kg diarios para evitar sobrepeso, lo que causa partos difíciles." },
-      "tip26": { "title": "Hervido de residuos de cocina", "content": "Hierve residuos de comida por 30 minutos para destruir virus como la Peste Porcina Africana o la Fiebre Aftosa." },
-      "tip28": { "title": "Carbón para la digestión", "content": "Coloca trozos de carbón vegetal en los corrales. Los cerdos lo mastican para ayudar a absorber toxinas y reducir diarreas." },
-      "tip34": { "title": "Monta controlada", "content": "Lleva a la hembra en celo al corral del verraco en lugar de dejar que el macho ande suelto por la piara." },
-      "tip35": { "title": "Respuesta de inmovilidad", "content": "Prueba el celo presionando el lomo de la cerda; si se queda quieta y levanta las orejas, está lista para la monta." },
-      "tip39": { "title": "Barras protectoras DIY", "content": "Instala barras de protección (postes de madera a 20cm de la pared y 20cm del suelo) en los corrales de parto para evitar aplastamientos." },
-      "tip43": { "title": "Calendario de registros", "content": "Marca la fecha de monta; la gestación dura 114 días (3 meses, 3 semanas, 3 días), permitiéndote preparar el parto a tiempo." },
-      "tip47": { "title": "Edad de primera monta", "content": "Espera hasta que la cerda tenga al menos 8 meses y esté en su segundo o tercer celo para asegurar una camada más numerosa." },
-      "tip48": { "title": "Aislamiento de nuevas compras", "content": "Mantén cerdos nuevos en un corral separado al menos a 20 metros del resto por 30 días para verificar su salud." },
-      "tip49": { "title": "Pediluvio casero", "content": "Coloca un recipiente con agua y desinfectante (como cloro o cal) en la entrada de la granja." },
-      "tip51": { "title": "Restricción de visitas", "content": "No permitas visitas dentro de los corrales. Discute negocios fuera del área de los animales." },
-      "tip55": { "title": "Control natural de parásitos", "content": "Semillas de papaya o calabaza trituradas pueden ayudar a reducir la carga de parásitos internos de forma económica." },
-      "tip60": { "title": "Entierro adecuado", "content": "Entierra animales muertos al menos a 2 metros de profundidad, lejos de fuentes de agua, y cubre con cal." },
-      "tip61": { "title": "Espacio por animal", "content": "Provee al menos 1 metro cuadrado por cerdo en engorde para reducir peleas, estrés y lesiones en la piel." },
-      "tip62": { "title": "Ventilación cruzada", "content": "Diseña porquerizas con costados abiertos para permitir que la brisa elimine olores y gases." },
-      "tip75": { "title": "Compostaje DIY", "content": "Apila el estiércol en un rincón seco, cubre con hojas y voltea semanalmente para crear abono orgánico." },
-      "tip76": { "title": "Biodigestor de bolsa", "content": "Instala un biodigestor plástico económico para tratar desechos y producir gas de cocina gratuito." },
-      "tip92": { "title": "Edad de castración", "content": "Castra antes de los 7 días. A esta edad el procedimiento es rápido, sana pronto y causa menos dolor." },
-      "tip94": { "title": "Registros en cuaderno", "content": "Mantén un cuaderno pequeño en el galpón para anotar fechas clave y tratamientos de cada cerda." }
+      "tip6": {
+        "title": "Edad de destete para pequeños productores",
+        "content": "Destetar entre los 28 y 35 días en lugar de antes. Esto permite que los lechones crezcan más fuertes y se adapten mejor al alimento sólido."
+      },
+      "tip7": {
+        "title": "Método de separación gradual",
+        "content": "Reduce el estrés retirando a la cerda del corral de parto y dejando a los lechones en su entorno familiar durante la primera semana."
+      },
+      "tip8": {
+        "title": "Prevención de corrientes de aire",
+        "content": "Bloquea vientos fríos en el área de recría instalando cortinas temporales o tablas a la altura de los lechones (unos 50cm)."
+      },
+      "tip11": {
+        "title": "Solución de rehidratación casera",
+        "content": "Usa una solución de electrolitos económica (5 cucharadas de azúcar, 1/2 de sal en 5 litros de agua limpia) los primeros 3 días del destete."
+      },
+      "tip17": {
+        "title": "Suplemento mineral con arcilla",
+        "content": "Coloca una palada de tierra roja limpia en el corral. Los lechones la consumen para obtener hierro y minerales de forma natural."
+      },
+      "tip20": {
+        "title": "Hervido de subproductos",
+        "content": "Hierve cáscaras de yuca, papa o camote para eliminar toxinas naturales y mejorar la digestibilidad."
+      },
+      "tip21": {
+        "title": "Fuentes locales de proteína",
+        "content": "Complementa el alimento comercial cultivando forrajes como Moringa, Azolla o hojas de camote en la granja."
+      },
+      "tip22": {
+        "title": "Restricción de alimento en gestación",
+        "content": "Limita a las cerdas gestantes a 2-2.5 kg diarios para evitar sobrepeso, lo que causa partos difíciles."
+      },
+      "tip26": {
+        "title": "Hervido de residuos de cocina",
+        "content": "Hierve residuos de comida por 30 minutos para destruir virus como la Peste Porcina Africana o la Fiebre Aftosa."
+      },
+      "tip28": {
+        "title": "Carbón para la digestión",
+        "content": "Coloca trozos de carbón vegetal en los corrales. Los cerdos lo mastican para ayudar a absorber toxinas y reducir diarreas."
+      },
+      "tip34": {
+        "title": "Monta controlada",
+        "content": "Lleva a la hembra en celo al corral del verraco en lugar de dejar que el macho ande suelto por la piara."
+      },
+      "tip35": {
+        "title": "Respuesta de inmovilidad",
+        "content": "Prueba el celo presionando el lomo de la cerda; si se queda quieta y levanta las orejas, está lista para la monta."
+      },
+      "tip39": {
+        "title": "Barras protectoras DIY",
+        "content": "Instala barras de protección (postes de madera a 20cm de la pared y 20cm del suelo) en los corrales de parto para evitar aplastamientos."
+      },
+      "tip43": {
+        "title": "Calendario de registros",
+        "content": "Marca la fecha de monta; la gestación dura 114 días (3 meses, 3 semanas, 3 días), permitiéndote preparar el parto a tiempo."
+      },
+      "tip47": {
+        "title": "Edad de primera monta",
+        "content": "Espera hasta que la cerda tenga al menos 8 meses y esté en su segundo o tercer celo para asegurar una camada más numerosa."
+      },
+      "tip48": {
+        "title": "Aislamiento de nuevas compras",
+        "content": "Mantén cerdos nuevos en un corral separado al menos a 20 metros del resto por 30 días para verificar su salud."
+      },
+      "tip49": {
+        "title": "Pediluvio casero",
+        "content": "Coloca un recipiente con agua y desinfectante (como cloro o cal) en la entrada de la granja."
+      },
+      "tip51": {
+        "title": "Restricción de visitas",
+        "content": "No permitas visitas dentro de los corrales. Discute negocios fuera del área de los animales."
+      },
+      "tip55": {
+        "title": "Control natural de parásitos",
+        "content": "Semillas de papaya o calabaza trituradas pueden ayudar a reducir la carga de parásitos internos de forma económica."
+      },
+      "tip60": {
+        "title": "Entierro adecuado",
+        "content": "Entierra animales muertos al menos a 2 metros de profundidad, lejos de fuentes de agua, y cubre con cal."
+      },
+      "tip61": {
+        "title": "Espacio por animal",
+        "content": "Provee al menos 1 metro cuadrado por cerdo en engorde para reducir peleas, estrés y lesiones en la piel."
+      },
+      "tip62": {
+        "title": "Ventilación cruzada",
+        "content": "Diseña porquerizas con costados abiertos para permitir que la brisa elimine olores y gases."
+      },
+      "tip75": {
+        "title": "Compostaje DIY",
+        "content": "Apila el estiércol en un rincón seco, cubre con hojas y voltea semanalmente para crear abono orgánico."
+      },
+      "tip76": {
+        "title": "Biodigestor de bolsa",
+        "content": "Instala un biodigestor plástico económico para tratar desechos y producir gas de cocina gratuito."
+      },
+      "tip92": {
+        "title": "Edad de castración",
+        "content": "Castra antes de los 7 días. A esta edad el procedimiento es rápido, sana pronto y causa menos dolor."
+      },
+      "tip94": {
+        "title": "Registros en cuaderno",
+        "content": "Mantén un cuaderno pequeño en el galpón para anotar fechas clave y tratamientos de cada cerda."
+      }
     }
   },
   "Symptoms": {
@@ -1394,7 +1563,7 @@
     "manualWeightLog": "Peso actualizado manualmente en detalles",
     "weightCheckDesc": "{notes}\nPeso actualizado a: {weight} kg",
     "actionTypes": {
-      "medication": "Medicación",
+      "medication": "Medicamento",
       "vaccination": "Vacunación",
       "treatment": "Tratamiento",
       "heat": "Detección de Celo",
@@ -1402,7 +1571,19 @@
       "pregnancy": "Confirmar Preñez",
       "deworming": "Desparasitación",
       "weight": "Chequeo de Peso",
-      "other": "Otro"
+      "other": "Otro",
+      "weight_check": "Control de peso",
+      "culling": "Descarte",
+      "teeth_clipping": "Corte de colmillos",
+      "tail_docking": "Corte de cola",
+      "iron_injection": "Inyección de hierro",
+      "weaning": "Destete",
+      "castration": "Castración",
+      "heat_detection": "Detección de celo",
+      "breeding_mating": "Cruce",
+      "pregnancy_check": "Diagnóstico de gestación",
+      "farrowing": "Parto",
+      "custom": "Personalizado"
     },
     "reportTitle": "Informe de Perfil: {tag}"
   },
@@ -1690,7 +1871,10 @@
     "joined": "Ingreso",
     "payrollSummary": "Resumen de Nómina",
     "totalStaff": "Personal Total",
-    "monthlyPayroll": "Nómina Mensual"
+    "monthlyPayroll": "Nómina Mensual",
+    "detailedHistory": "Detailed transaction history",
+    "narration": "Narration",
+    "balance": "Balance"
   },
   "Common": {
     "loading": "Cargando..."

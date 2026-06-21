@@ -188,7 +188,21 @@
     "limitReached": "Itilizatè gratis yo ka gen jiska 20 kochon sèlman. Tanpri amelyore nan Premium pou ajoute plis.",
     "porker": "Kochon Vyann",
     "breeder": "Repwodiktè",
-    "addPigs": "+ Ajoute Kochon"
+    "addPigs": "+ Ajoute Kochon",
+    "male": "Gason",
+    "female": "Fi",
+    "excellent": "Ekselan",
+    "good": "Bon",
+    "caution": "Atansyon",
+    "poor": "Pòv",
+    "blank": "Vid",
+    "piglet": "Kochon",
+    "gilt": "Dore",
+    "sow": "Simen",
+    "boar": "Kochon",
+    "barrow": "Barrow",
+    "pregnant": "Ansent",
+    "lactating": "Laktasyon"
   },
   "Profile": {
     "owner": "Mèt",
@@ -228,21 +242,66 @@
     "title": "Egzekite Pwosedi Elevaj",
     "description": "Chwazi yon aktivite pou mete ajou estati kochon, anrejistre sante, oswa planifye travay k ap vini yo.",
     "categories": {
-      "heat": { "type": "Deteksyon Chalè", "desc": "Siveye truie yo pou wè si yo pare pou kwaze." },
-      "breeding": { "type": "Kwazman", "desc": "Anrejistre sesyon kwazman ki reyisi." },
-      "pregnancy": { "type": "Konfime Gwosès", "desc": "Anrejistre ekografi oswa chèk fizik." },
-      "farrowing": { "type": "Akouchman", "desc": "Anrejistre nouvo pòte ak detay nesans." },
-      "weaning": { "type": "Sevraj", "desc": "Anrejistre lè ti kochon yo kite manman yo." },
-      "castration": { "type": "Kastrasyon", "desc": "Anrejistre kastrasyon kochon mal yo." },
-      "teeth": { "type": "Koupe Dan", "desc": "Koupe dan ti kochon ki fèk fèt yo." },
-      "tail": { "type": "Koupe Ke", "desc": "Koupe ke pou anpeche mòde ak enfeksyon." },
-      "deworming": { "type": "Deveminasyon", "desc": "Administre medikaman kont vè." },
-      "iron": { "type": "Piki Fè", "desc": "Bay piki fè pou anpeche anemi." },
-      "vaccination": { "type": "Vaksen", "desc": "Anrejistre vaksen woutin oswa ijans." },
-      "medication": { "type": "Medikaman", "desc": "Swiv tretman pou bèt ki malad yo." },
-      "weight": { "type": "Tcheke Pwa", "desc": "Anrejistre pwogrè kwasans." },
-      "culling": { "type": "Retire nan Fèm", "desc": "Anrejistre bèt ki soti nan elevaj la." },
-      "custom": { "type": "Pèsonalize", "desc": "Anrejistre nenpòt lòt aktivite oswa obsèvasyon." }
+      "heat": {
+        "type": "Deteksyon Chalè",
+        "desc": "Siveye truie yo pou wè si yo pare pou kwaze."
+      },
+      "breeding": {
+        "type": "Kwazman",
+        "desc": "Anrejistre sesyon kwazman ki reyisi."
+      },
+      "pregnancy": {
+        "type": "Konfime Gwosès",
+        "desc": "Anrejistre ekografi oswa chèk fizik."
+      },
+      "farrowing": {
+        "type": "Akouchman",
+        "desc": "Anrejistre nouvo pòte ak detay nesans."
+      },
+      "weaning": {
+        "type": "Sevraj",
+        "desc": "Anrejistre lè ti kochon yo kite manman yo."
+      },
+      "castration": {
+        "type": "Kastrasyon",
+        "desc": "Anrejistre kastrasyon kochon mal yo."
+      },
+      "teeth": {
+        "type": "Koupe Dan",
+        "desc": "Koupe dan ti kochon ki fèk fèt yo."
+      },
+      "tail": {
+        "type": "Koupe Ke",
+        "desc": "Koupe ke pou anpeche mòde ak enfeksyon."
+      },
+      "deworming": {
+        "type": "Deveminasyon",
+        "desc": "Administre medikaman kont vè."
+      },
+      "iron": {
+        "type": "Piki Fè",
+        "desc": "Bay piki fè pou anpeche anemi."
+      },
+      "vaccination": {
+        "type": "Vaksen",
+        "desc": "Anrejistre vaksen woutin oswa ijans."
+      },
+      "medication": {
+        "type": "Medikaman",
+        "desc": "Swiv tretman pou bèt ki malad yo."
+      },
+      "weight": {
+        "type": "Tcheke Pwa",
+        "desc": "Anrejistre pwogrè kwasans."
+      },
+      "culling": {
+        "type": "Retire nan Fèm",
+        "desc": "Anrejistre bèt ki soti nan elevaj la."
+      },
+      "custom": {
+        "type": "Pèsonalize",
+        "desc": "Anrejistre nenpòt lòt aktivite oswa obsèvasyon."
+      }
     },
     "logActivity": "Anrejistre Aktivite: {type}",
     "procedureDate": "Dat Pwosedi a",
@@ -378,7 +437,39 @@
     "days": "{count} Jou",
     "managementSystemReport": "Rapò Sistèm Jesyon SmartSwine",
     "bags": "Sak",
-    "kg": "kg"
+    "kg": "kg",
+    "starter": "Starter",
+    "grower": "Kiltivatè",
+    "finisher": "Finisher",
+    "ingredientsList": {
+      "maize": "Mayi",
+      "maize_bran": "Bran mayi",
+      "soybean_meal": "Manje soya",
+      "fish_meal": "Manje pwason",
+      "rice_bran": "Bran diri",
+      "wheat_bran": "Bran ble",
+      "common_salt": "Sèl komen",
+      "vitamin_premix": "Vitamin Premix",
+      "mycotoxin_binder": "Mikotoksin Binder",
+      "oyster_shell": "Oyster Shell",
+      "bone_meal": "Zo repa",
+      "lysine": "Lizin",
+      "methionine": "Metionin"
+    },
+    "groups": {
+      "energy": "Enèji",
+      "protein": "Pwoteyin",
+      "vitaminsMineralsSalt": "Vitamin, mineral ak sèl"
+    },
+    "nutrients": {
+      "digestibleProtein": "Pwoteyin dijèstib (%)",
+      "crudeFiber": "Fib brit (%)",
+      "metabolizableEnergy": "Enèji metabolizab (kcal/kg)",
+      "calcium": "Kalsyòm (%)",
+      "phosphorus": "Fosfò (%)",
+      "lysine": "Lizin (%)",
+      "methionineCystine": "Metionin + Sistenn (%)"
+    }
   },
   "Financials": {
     "totalRevenue": "Total Revni",
@@ -531,32 +622,110 @@
       "general": "Jeneral"
     },
     "tips": {
-      "tip6": { "title": "Laj pou Sevraj pou Ti Elevaj", "content": "Sevre ti kochon yo ant 28 a 35 jou olye de pi bonè. Sa pèmèt ti kochon yo vin pi fò ak adapte yo ak manje solid ak resous fèm nan." },
-      "tip7": { "title": "Metòd Separasyon Graduèl", "content": "Diminye estrès sevraj la lè w deplase truie a soti nan pak akouchman an epi kite ti kochon yo nan anviwònman yo konnen an pandan premye semèn nan." },
-      "tip8": { "title": "Prevansyon Kouran lè pou Ti Kochon yo", "content": "Bloke van frèt nan pak ti kochon yo lè w enstale rido tanporè oswa planch bwa ki rive nan wotè ti kochon yo (apeprè 50cm)." },
-      "tip11": { "title": "Solisyon Reyidratasyon Lakay", "content": "Bay yon solisyon elektwolit bon mache ki fèt lakay (5 kiyè sik, 1/2 kiyè sèl nan 5 lit dlo pwòp) pandan premye 3 jou sevraj yo pou konbat estrès." },
-      "tip17": { "title": "Sipleman Mineral ak Tè Wouj", "content": "Mete yon pèl tè wouj fre (ki soti nan yon kote ki pwòp) nan pak akouchman/sevraj la. Ti kochon yo manje l pou yo jwenn fè ak mineral natirèl." },
-      "tip20": { "title": "Bouyi Rès Rekòt yo", "content": "Bouyi rès rekòt tankou po yanm, po manyòk, ak fèy patat pou detwi toksin natirèl yo epi fè yo pi fasil pou dijere." },
-      "tip21": { "title": "Sous Pwoteyin Lokal", "content": "Konplete manje komèsyal yo lè w plante plant ki gen anpil pwoteyin tankou Moringa, Azolla, oswa fèy patat nan fèm nan." },
-      "tip22": { "title": "Restriksyon Manje pandan Gwosès", "content": "Limite truie ki ansent yo a 2-2.5 kg manje pa jou pou anpeche yo vin twò gwo, sa ki ka lakòz akouchman difisil." },
-      "tip26": { "title": "Bouyi Rès Manje nan Kwizin", "content": "Bouyi rès manje nan otèl oswa kwizin pandan 30 minit pou detwi viris Pès Kochon Afrikèn ak maladi Lang ak Sabo." },
-      "tip28": { "title": "Chabon pou Dijesyon", "content": "Mete ti moso chabon bwa nan pak kochon k ap grandi yo. Kochon yo moulen l pou ede mare toksin nan lestomak epi diminye dyare." },
-      "tip34": { "title": "Kwazman Kontwole nan Pak Vera a", "content": "Mennen truie ki cho a nan pak vera a pou kwazman, olye w kite vera a lib nan mitan tout truie yo." },
-      "tip35": { "title": "Tès Chalè Truie a", "content": "Teste si truie a cho lè w peze men w fò sou do l; si l rete kanpe nèt san l pa bouje ak zòrèy li dwat, li pare pou l kwaze." },
-      "tip39": { "title": "Pwoteksyon kont Kraze Ti Kochon", "content": "Enstale \"ba pwoteksyon\" (macho bwa lou oswa tiyo metal ki mete 20cm lwen miray la ak 20cm wotè atè a) nan pak akouchman yo." },
-      "tip43": { "title": "Kalandriye Dosye Repwodiksyon", "content": "Make dat kwazman an sou yon kalandriye; gwosès la dire 114 jou (3 mwa, 3 semèn, 3 jou), sa k ap pèmèt ou prepare pak akouchman an." },
-      "tip47": { "title": "Laj pou Premye Kwazman Gilt", "content": "Tann jiskaske yon gilt gen omwen 8 mwa ak nan dezyèm oswa twazyèm sik chalè li anvan w kwaze l pou w ka gen yon premye pòte ki pi gwo." },
-      "tip48": { "title": "Izolasyon Kochon ki Fèk Achte", "content": "Kenbe kochon ki fèk achte yo nan yon pak separe omwen 20 mèt lwen lòt kochon yo pandan 30 jou pou tcheke si yo pa malad." },
-      "tip49": { "title": "Enstale yon Basen dezenfektan (Footbath)", "content": "Mete yon basen plastik plat oswa mwatye kawotchou ki gen dlo ak dezenfektan (tankou klowòks oswa lacho) nan papòt fèm nan." },
-      "tip51": { "title": "Politik Restriksyon Vizitè", "content": "Pa kite vizitè (sitou lòt achtè kochon oswa fèmye) antre andedan pak kochon ou yo. Diskite biznis deyò zòn pak la." },
-      "tip55": { "title": "Kontrol Parazit Natirèl", "content": "Bay kochon k ap grandi yo grenn papay kraze oswa grenn kalbas kòm yon remèd natirèl bon mache pou ede diminye vè nan vant." },
-      "tip60": { "title": "Antereman Bèt ki Mouri yo", "content": "Antere kochon ki mouri yo omwen 2 mèt fon, lwen sous dlo, epi kouvri kadav la ak lacho anvan w mete tè sou li." },
-      "tip61": { "title": "Espas Pak a Bon Pri", "content": "Bay omwen 1 mèt kare espas pou chak kochon vyann pou diminye goumen, estrès, ak blesi sou po." },
-      "tip62": { "title": "Ventilasyon Natirèl", "content": "Konstwi kay kochon yo ak kote yo louvri (ak griyaj oswa banbou) pou pèmèt lè sikile epi retire move sant." },
-      "tip75": { "title": "Fè Konpòs Lakay", "content": "Pile fimye kochon an nan yon kwen sèk, kouvri l ak fèy bannann oswa plastik, epi vire l chak semèn ak yon pèl pou fè konpòs." },
-      "tip76": { "title": "Biogaz ak Plastik", "content": "Enstale yon senp sistèm biogaz ak tiyo plastik bon mache pou trete fimye kochon an, sa k ap pwodwi gaz gratis pou fè manje nan kay la." },
-      "tip92": { "title": "Laj pou Kastrasyon", "content": "Kastre ti kochon mal yo anvan yo gen 7 jou. Nan laj sa a, pwosedi a rapid, li geri vit, epi li pa fè yo twòp mal." },
-      "tip94": { "title": "Dosye sou yon Senp Kaye", "content": "Kenbe yon ti kaye bon mache nan fèm nan pou ekri dat kwazman, dat akouchman, ak tretman pou chak truie." }
+      "tip6": {
+        "title": "Laj pou Sevraj pou Ti Elevaj",
+        "content": "Sevre ti kochon yo ant 28 a 35 jou olye de pi bonè. Sa pèmèt ti kochon yo vin pi fò ak adapte yo ak manje solid ak resous fèm nan."
+      },
+      "tip7": {
+        "title": "Metòd Separasyon Graduèl",
+        "content": "Diminye estrès sevraj la lè w deplase truie a soti nan pak akouchman an epi kite ti kochon yo nan anviwònman yo konnen an pandan premye semèn nan."
+      },
+      "tip8": {
+        "title": "Prevansyon Kouran lè pou Ti Kochon yo",
+        "content": "Bloke van frèt nan pak ti kochon yo lè w enstale rido tanporè oswa planch bwa ki rive nan wotè ti kochon yo (apeprè 50cm)."
+      },
+      "tip11": {
+        "title": "Solisyon Reyidratasyon Lakay",
+        "content": "Bay yon solisyon elektwolit bon mache ki fèt lakay (5 kiyè sik, 1/2 kiyè sèl nan 5 lit dlo pwòp) pandan premye 3 jou sevraj yo pou konbat estrès."
+      },
+      "tip17": {
+        "title": "Sipleman Mineral ak Tè Wouj",
+        "content": "Mete yon pèl tè wouj fre (ki soti nan yon kote ki pwòp) nan pak akouchman/sevraj la. Ti kochon yo manje l pou yo jwenn fè ak mineral natirèl."
+      },
+      "tip20": {
+        "title": "Bouyi Rès Rekòt yo",
+        "content": "Bouyi rès rekòt tankou po yanm, po manyòk, ak fèy patat pou detwi toksin natirèl yo epi fè yo pi fasil pou dijere."
+      },
+      "tip21": {
+        "title": "Sous Pwoteyin Lokal",
+        "content": "Konplete manje komèsyal yo lè w plante plant ki gen anpil pwoteyin tankou Moringa, Azolla, oswa fèy patat nan fèm nan."
+      },
+      "tip22": {
+        "title": "Restriksyon Manje pandan Gwosès",
+        "content": "Limite truie ki ansent yo a 2-2.5 kg manje pa jou pou anpeche yo vin twò gwo, sa ki ka lakòz akouchman difisil."
+      },
+      "tip26": {
+        "title": "Bouyi Rès Manje nan Kwizin",
+        "content": "Bouyi rès manje nan otèl oswa kwizin pandan 30 minit pou detwi viris Pès Kochon Afrikèn ak maladi Lang ak Sabo."
+      },
+      "tip28": {
+        "title": "Chabon pou Dijesyon",
+        "content": "Mete ti moso chabon bwa nan pak kochon k ap grandi yo. Kochon yo moulen l pou ede mare toksin nan lestomak epi diminye dyare."
+      },
+      "tip34": {
+        "title": "Kwazman Kontwole nan Pak Vera a",
+        "content": "Mennen truie ki cho a nan pak vera a pou kwazman, olye w kite vera a lib nan mitan tout truie yo."
+      },
+      "tip35": {
+        "title": "Tès Chalè Truie a",
+        "content": "Teste si truie a cho lè w peze men w fò sou do l; si l rete kanpe nèt san l pa bouje ak zòrèy li dwat, li pare pou l kwaze."
+      },
+      "tip39": {
+        "title": "Pwoteksyon kont Kraze Ti Kochon",
+        "content": "Enstale \"ba pwoteksyon\" (macho bwa lou oswa tiyo metal ki mete 20cm lwen miray la ak 20cm wotè atè a) nan pak akouchman yo."
+      },
+      "tip43": {
+        "title": "Kalandriye Dosye Repwodiksyon",
+        "content": "Make dat kwazman an sou yon kalandriye; gwosès la dire 114 jou (3 mwa, 3 semèn, 3 jou), sa k ap pèmèt ou prepare pak akouchman an."
+      },
+      "tip47": {
+        "title": "Laj pou Premye Kwazman Gilt",
+        "content": "Tann jiskaske yon gilt gen omwen 8 mwa ak nan dezyèm oswa twazyèm sik chalè li anvan w kwaze l pou w ka gen yon premye pòte ki pi gwo."
+      },
+      "tip48": {
+        "title": "Izolasyon Kochon ki Fèk Achte",
+        "content": "Kenbe kochon ki fèk achte yo nan yon pak separe omwen 20 mèt lwen lòt kochon yo pandan 30 jou pou tcheke si yo pa malad."
+      },
+      "tip49": {
+        "title": "Enstale yon Basen dezenfektan (Footbath)",
+        "content": "Mete yon basen plastik plat oswa mwatye kawotchou ki gen dlo ak dezenfektan (tankou klowòks oswa lacho) nan papòt fèm nan."
+      },
+      "tip51": {
+        "title": "Politik Restriksyon Vizitè",
+        "content": "Pa kite vizitè (sitou lòt achtè kochon oswa fèmye) antre andedan pak kochon ou yo. Diskite biznis deyò zòn pak la."
+      },
+      "tip55": {
+        "title": "Kontrol Parazit Natirèl",
+        "content": "Bay kochon k ap grandi yo grenn papay kraze oswa grenn kalbas kòm yon remèd natirèl bon mache pou ede diminye vè nan vant."
+      },
+      "tip60": {
+        "title": "Antereman Bèt ki Mouri yo",
+        "content": "Antere kochon ki mouri yo omwen 2 mèt fon, lwen sous dlo, epi kouvri kadav la ak lacho anvan w mete tè sou li."
+      },
+      "tip61": {
+        "title": "Espas Pak a Bon Pri",
+        "content": "Bay omwen 1 mèt kare espas pou chak kochon vyann pou diminye goumen, estrès, ak blesi sou po."
+      },
+      "tip62": {
+        "title": "Ventilasyon Natirèl",
+        "content": "Konstwi kay kochon yo ak kote yo louvri (ak griyaj oswa banbou) pou pèmèt lè sikile epi retire move sant."
+      },
+      "tip75": {
+        "title": "Fè Konpòs Lakay",
+        "content": "Pile fimye kochon an nan yon kwen sèk, kouvri l ak fèy bannann oswa plastik, epi vire l chak semèn ak yon pèl pou fè konpòs."
+      },
+      "tip76": {
+        "title": "Biogaz ak Plastik",
+        "content": "Enstale yon senp sistèm biogaz ak tiyo plastik bon mache pou trete fimye kochon an, sa k ap pwodwi gaz gratis pou fè manje nan kay la."
+      },
+      "tip92": {
+        "title": "Laj pou Kastrasyon",
+        "content": "Kastre ti kochon mal yo anvan yo gen 7 jou. Nan laj sa a, pwosedi a rapid, li geri vit, epi li pa fè yo twòp mal."
+      },
+      "tip94": {
+        "title": "Dosye sou yon Senp Kaye",
+        "content": "Kenbe yon ti kaye bon mache nan fèm nan pou ekri dat kwazman, dat akouchman, ak tretman pou chak truie."
+      }
     }
   },
   "Symptoms": {
@@ -1395,14 +1564,26 @@
     "weightCheckDesc": "{notes}\nPwa mete ajou: {weight} kg",
     "actionTypes": {
       "medication": "Medikaman",
-      "vaccination": "Vaksen",
+      "vaccination": "Vaksinasyon",
       "treatment": "Tretman",
       "heat": "Deteksyon Chalè",
       "breeding": "Kwazman",
       "pregnancy": "Konfimasyon Gwosès",
-      "deworming": "Deveminasyon",
+      "deworming": "Deworm",
       "weight": "Tcheke Pwa",
-      "other": "Lòt"
+      "other": "Lòt",
+      "weight_check": "Tcheke pwa",
+      "culling": "Culling",
+      "teeth_clipping": "Koupe dan",
+      "tail_docking": "Tail Docking",
+      "iron_injection": "Piki fè",
+      "weaning": "Sevre",
+      "castration": "Kastrasyon",
+      "heat_detection": "Deteksyon chalè",
+      "breeding_mating": "Elvaj/Akoupaj",
+      "pregnancy_check": "Tcheke gwosès",
+      "farrowing": "Farrowing",
+      "custom": "Custom"
     },
     "reportTitle": "Rapò Pwofil Kochon: {tag}"
   },
@@ -1690,7 +1871,10 @@
     "joined": "Antre",
     "payrollSummary": "Rezime Pewòl",
     "totalStaff": "Total Estaf",
-    "monthlyPayroll": "Pewòl Chak Mwa"
+    "monthlyPayroll": "Pewòl Chak Mwa",
+    "detailedHistory": "Istwa Tranzaksyon Detaye",
+    "narration": "Narasyon",
+    "balance": "Balans"
   },
   "Common": {
     "loading": "Ap chaje..."
