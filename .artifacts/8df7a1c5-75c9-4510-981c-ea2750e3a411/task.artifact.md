@@ -1,0 +1,4 @@
+- [x] Enforce `pk_live_` prefix in `BillingPage.tsx`
+- [x] Update `.env.local` placeholder
+- [x] Verify logic changes
+- [x] Create walkthrough

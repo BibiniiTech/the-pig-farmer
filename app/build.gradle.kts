@@ -1,8 +1,8 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.app)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.google.services)
-    alias(libs.plugins.crashlytics)
+    alias(libs.plugins.gms.google.services)
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 android {
@@ -14,13 +14,21 @@ android {
         applicationId = "com.bibiniitech.smartswine"
         minSdk = 24
         targetSdk = 35
-        versionCode = 23
-        versionName = "1.23"
+        versionCode = 24
+        versionName = "1.24"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        debug {
+            // Disable Crashlytics symbol upload for debug builds to avoid sync issues
+            // when the symbols host is unreachable.
+            configure<com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension> {
+                mappingFileUploadEnabled = false
+                nativeSymbolUploadEnabled = false
+            }
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -53,13 +61,6 @@ android {
     lint {
         disable += "CredentialsPlayConsole"
         disable += "OldTargetApi"
-    }
-
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
 }
 
