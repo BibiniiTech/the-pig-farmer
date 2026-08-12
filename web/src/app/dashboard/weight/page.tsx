@@ -12,17 +12,7 @@ import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import { ScaleIcon, InfoIcon } from "@/components/icons/DashboardIcons";
 import { useTranslations } from "next-intl";
-
-interface Pig {
-  id: string;
-  tagNumber: string;
-  breed: string;
-  gender: string;
-  status: string;
-  weight?: number;
-  lastWeightDate?: string;
-  location: string;
-}
+import { Pig } from "@/lib/types";
 
 export default function WeightCheckerPage() {
   const t = useTranslations("Weight");

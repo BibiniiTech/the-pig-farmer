@@ -3,21 +3,7 @@
 import React from "react";
 import ReportLayout from "./ReportLayout";
 import { useTranslations } from "next-intl";
-
-interface FinancialRecord {
-  id: string;
-  date: string;
-  type: string;
-  category: string;
-  amount: number;
-  description: string;
-  pigId?: string;
-}
-
-interface Pig {
-  id: string;
-  tagNumber: string;
-}
+import { Pig, FinancialRecord } from "@/lib/types";
 
 interface FinancialReportProps {
   records: FinancialRecord[];

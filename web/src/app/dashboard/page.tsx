@@ -15,6 +15,7 @@ import DesktopHeader from "@/components/layouts/DesktopHeader";
 import TaskCompletionModal from "@/components/TaskCompletionModal";
 import SettingsModal from "@/components/SettingsModal";
 import { useTranslations, useLocale } from "next-intl";
+import { Pig } from "@/lib/types";
 import {
   HerdDataIcon,
   FeedManagementIcon,
@@ -26,23 +27,6 @@ import {
   WeightCheckerIcon,
   TrainingTipsIcon,
 } from "@/components/icons/DashboardIcons";
-
-interface Pig {
-  id: string;
-  tagNumber: string;
-  birthDate: string;
-  breed: string;
-  gender: string;
-  weight: number;
-  purpose: string;
-  sowTag: string;
-  boarTag: string;
-  location: string;
-  source: string;
-  status: string;
-  notes: string;
-  lastWeightDate?: string;
-}
 
 interface HerdStats {
   total: number;

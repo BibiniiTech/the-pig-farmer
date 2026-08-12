@@ -4,26 +4,7 @@ import React from "react";
 import ReportLayout from "./ReportLayout";
 import { useTranslations } from "next-intl";
 import { calculateAgeMonths } from "@/lib/swineGrowthDatabase";
-
-interface HealthRecord {
-  id: string;
-  date: string;
-  type: string;
-  description: string;
-}
-
-interface Pig {
-  id: string;
-  tagNumber: string;
-  birthDate: string;
-  breed: string;
-  gender: string;
-  weight: number;
-  lastWeightDate?: string;
-  purpose: string;
-  location: string;
-  healthRecords?: HealthRecord[];
-}
+import { Pig, HealthRecord } from "@/lib/types";
 
 interface HerdReportProps {
   pigs: Pig[];

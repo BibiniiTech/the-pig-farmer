@@ -58,6 +58,10 @@ export interface Pig {
   isTeethClipped?: boolean;
   isTailDocked?: boolean;
   isWeaned?: boolean;
+  weaned?: boolean;
+  castrated?: boolean | null;
+  teethClipped?: boolean;
+  tailDocked?: boolean;
   ironInjections?: number;
   castrationDate?: string;
   lastBreedingDate?: string;

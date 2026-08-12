@@ -13,7 +13,7 @@ android {
     defaultConfig {
         applicationId = "com.bibiniitech.smartswine"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 25
         versionName = "1.25"
 
