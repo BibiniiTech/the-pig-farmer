@@ -1,6 +1,7 @@
 package com.example.smartswine.ui.feed
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.smartswine.data.FeedRepository
 import com.example.smartswine.model.FeedIngredient
@@ -19,7 +20,7 @@ import java.util.Date
 import java.util.Locale
 import kotlin.math.abs
 
-class FeedViewModel : ViewModel() {
+class FeedViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = FeedRepository()
 
     // Active Farm ID for multi-user support
@@ -90,7 +91,7 @@ class FeedViewModel : ViewModel() {
         // Try to sync/initialize defaults in the background
         viewModelScope.launch {
             try {
-                repository.initializeDefaultIngredients()
+                repository.initializeDefaultIngredients(getApplication())
                 repository.initializeDefaultRequirements()
             } catch (e: Exception) {
                 // Log and ignore initialization errors when offline

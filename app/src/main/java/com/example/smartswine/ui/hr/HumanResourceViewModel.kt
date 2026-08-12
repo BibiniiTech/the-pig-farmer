@@ -80,20 +80,24 @@ class HumanResourceViewModel : ViewModel() {
                 val userDoc = db.collection("users").document(userId).get().await()
                 val isPremium = userDoc.getBoolean("isPremium") == true
 
+                val batch = db.batch()
+                
                 // 1. Create the staff record in Firestore first
-                val ref = db.collection("users").document(userId)
+                val staffRef = db.collection("users").document(userId)
                     .collection("staff").document()
-                val newStaff = cleanedStaff.copy(id = ref.id)
-                ref.set(newStaff).await()
+                val newStaff = cleanedStaff.copy(id = staffRef.id)
+                batch.set(staffRef, newStaff)
 
-                // 2. If app access is enabled AND user is premium, create the account and send invitation
+                // 2. If app access is enabled AND user is premium, register in registry
                 if (isPremium && newStaff.allowAppAccess && newStaff.email.isNotBlank()) {
-                    // Register in staff_registry for automated discovery
-                    db.collection("staff_registry").document(newStaff.email)
-                        .set(mapOf("managerUid" to userId))
-                        .await()
+                    val registryRef = db.collection("staff_registry").document(newStaff.email)
+                    batch.set(registryRef, mapOf("managerUid" to userId))
                     
-                    inviteStaffMember(context, newStaff.email)
+                    // Commit batch before starting invitation process
+                    batch.commit().await()
+                    inviteStaffMember(userId, newStaff.id, newStaff.email)
+                } else {
+                    batch.commit().await()
                 }
             } catch (e: Exception) {
                 Log.e("HRViewModel", "Error adding staff: ${e.message}")
@@ -124,6 +128,7 @@ class HumanResourceViewModel : ViewModel() {
 
             val responseCode = conn.responseCode
             Log.d("HRViewModel", "REST signUp response code: $responseCode")
+            // 200 is success, 400 with EMAIL_EXISTS is also "fine" for our flow
             responseCode == 200
         } catch (e: Exception) {
             Log.e("HRViewModel", "REST signUp failed: ${e.message}")
@@ -133,11 +138,16 @@ class HumanResourceViewModel : ViewModel() {
         }
     }
 
-    private suspend fun inviteStaffMember(context: Context, email: String) {
+    private suspend fun inviteStaffMember(managerUid: String, staffId: String, email: String) {
         val cleanEmail = email.trim().lowercase()
         if (cleanEmail.isBlank()) return
 
+        val staffRef = db.collection("users").document(managerUid)
+            .collection("staff").document(staffId)
+
         try {
+            staffRef.update("inviteStatus", "pending").await()
+
             val apiKey = FirebaseApp.getInstance().options.apiKey
             if (!apiKey.isNullOrEmpty()) {
                 // Create the user account via REST API to avoid mutating default Auth instance state
@@ -146,9 +156,19 @@ class HumanResourceViewModel : ViewModel() {
             
             // Send the password reset email using the default Auth instance (safe, stateless operation)
             auth.sendPasswordResetEmail(cleanEmail).await()
+            staffRef.update("inviteStatus", "sent").await()
             Log.d("HRViewModel", "Invitation email sent to $cleanEmail")
         } catch (e: Exception) {
             Log.e("HRViewModel", "Failed to invite staff: ${e.message}")
+            staffRef.update("inviteStatus", "failed").await()
+        }
+    }
+
+    fun resendInvitation(context: Context, staffMember: StaffMember) {
+        val userId = activeFarmId ?: auth.currentUser?.uid ?: return
+        if (staffMember.email.isBlank()) return
+        viewModelScope.launch {
+            inviteStaffMember(userId, staffMember.id, staffMember.email)
         }
     }
 
@@ -194,38 +214,43 @@ class HumanResourceViewModel : ViewModel() {
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                // Verify premium status before allowing registry operations
                 val userDoc = db.collection("users").document(userId).get().await()
                 val isPremium = userDoc.getBoolean("isPremium") == true
 
-                // Fetch the existing member first to see if they already had access
                 val oldMemberDoc = db.collection("users").document(userId)
                     .collection("staff").document(cleanedStaff.id)
-                    .get()
-                    .await()
+                    .get().await()
                 val oldMember = oldMemberDoc.toObject(StaffMember::class.java)
                 
                 val shouldInvite = isPremium && cleanedStaff.allowAppAccess && cleanedStaff.email.isNotBlank() &&
                         (oldMember == null || !oldMember.allowAppAccess || oldMember.email.trim().lowercase() != cleanedStaff.email)
 
-                // Update registry based on app access status and premium status
+                val batch = db.batch()
+
+                // Update registry
                 if (isPremium && cleanedStaff.allowAppAccess && cleanedStaff.email.isNotBlank()) {
-                    db.collection("staff_registry").document(cleanedStaff.email)
-                        .set(mapOf("managerUid" to userId))
-                        .await()
+                    val registryRef = db.collection("staff_registry").document(cleanedStaff.email)
+                    batch.set(registryRef, mapOf("managerUid" to userId))
                 } else if (cleanedStaff.email.isNotBlank()) {
-                    // Remove from registry if manager is not premium or access is revoked
-                    db.collection("staff_registry").document(cleanedStaff.email)
-                        .delete()
-                        .await()
+                    val registryRef = db.collection("staff_registry").document(cleanedStaff.email)
+                    batch.delete(registryRef)
+                }
+                
+                // Cleanup old email if changed
+                val oldEmail = oldMember?.email?.trim()?.lowercase() ?: ""
+                if (oldEmail.isNotBlank() && oldEmail != cleanedStaff.email) {
+                    val oldRegistryRef = db.collection("staff_registry").document(oldEmail)
+                    batch.delete(oldRegistryRef)
                 }
 
-                db.collection("users").document(userId)
+                val staffRef = db.collection("users").document(userId)
                     .collection("staff").document(cleanedStaff.id)
-                    .set(cleanedStaff).await()
+                batch.set(staffRef, cleanedStaff)
+
+                batch.commit().await()
 
                 if (shouldInvite) {
-                    inviteStaffMember(context, cleanedStaff.email)
+                    inviteStaffMember(userId, cleanedStaff.id, cleanedStaff.email)
                 }
             } catch (e: Exception) {
                 Log.e("HRViewModel", "Error updating staff: ${e.message}")

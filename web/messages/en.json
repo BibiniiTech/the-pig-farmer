@@ -1520,6 +1520,12 @@
     "active": "Active",
     "inactive": "Inactive",
     "onLeave": "On Leave",
+    "inviteStatus": "Invitation Status",
+    "invite_sent": "Invitation Sent",
+    "invite_pending": "Sending...",
+    "invite_failed": "Failed",
+    "invite_none": "Not Invited",
+    "resend": "Resend",
     "premiumFeatureAdd": "Adding staff members is a Premium Feature. Please upgrade to expand your team.",
     "premiumFeatureExport": "Exporting PDF reports is a Premium feature. Upgrade to unlock!",
     "confirmDelete": "Are you sure you want to remove this staff member?",
@@ -1878,5 +1884,15 @@
   },
   "Common": {
     "loading": "Loading..."
+  },
+  "Notifications": {
+    "title": "Upcoming Activities",
+    "noActivities": "No upcoming activities",
+    "allTasksCompleted": "All tasks are up to date",
+    "generalTask": "General Task",
+    "weightUpdateTitle": "Weight Update Needed",
+    "weightUpdateReminder": "Pig {tag} has not been weighed in 30 days. Please update its weight.",
+    "lowStockTitle": "Low Stock Alert",
+    "lowStockReminder": "Stock for {name} is low ({qty} remaining). Please restock."
   }
 }

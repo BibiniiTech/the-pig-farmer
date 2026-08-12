@@ -18,10 +18,9 @@ import {
 } from "@/components/icons/DashboardIcons";
 import {
   formulateFeed,
-  FeedIngredient,
-  NutritionalRequirement,
   FormulationResult
 } from "@/lib/feedCalculator";
+import { FeedIngredient, NutritionalRequirement, FeedInventoryItem, FeedInventoryTransaction } from "@/lib/types";
 import PremiumWrapper from "@/components/PremiumWrapper";
 import { ExportPdfIcon } from '@/components/icons/DashboardIcons';
 
@@ -37,31 +36,6 @@ const WarningIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
   </svg>
 );
-
-// Interfaces
-interface FeedInventoryItem {
-  id: string;
-  name: string;
-  feedType: string;
-  quantity: number;
-  unit: string;
-  unitWeight: number;
-  minThreshold: number;
-  costPerUnit: number;
-  lastUpdated: string;
-}
-
-interface FeedInventoryTransaction {
-  id: string;
-  itemId: string;
-  itemName: string;
-  type: string; // "Restock" or "Usage"
-  quantity: number;
-  unit: string;
-  cost: number;
-  date: string;
-  notes: string;
-}
 
 const defaultRequirements: NutritionalRequirement[] = [
   { stage: "Starter", digestibleProtein: 17.0, metabolizableEnergy: 3350.0, calcium: 0.90, phosphorus: 0.75, lysine: 7.90, methionineCystine: 5.20, tryptophan: 1.25, crudeFiber: 3.0, minDailyFeed: 0.35, maxDailyFeed: 0.85 },

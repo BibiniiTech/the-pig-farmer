@@ -12,6 +12,7 @@ import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import { useTranslations } from "next-intl";
 import { calculateAgeMonths } from "@/lib/swineGrowthDatabase";
+import { Pig } from "@/lib/types";
 import {
   HeatIcon,
   BreedingIcon,
@@ -29,25 +30,6 @@ import {
   CullingIcon,
   NoteAddIcon
 } from "@/components/icons/HerdActivityIcons";
-
-interface Pig {
-  id: string;
-  tagNumber: string;
-  gender: string;
-  breed: string;
-  status: string;
-  location: string;
-  weight: number;
-  ironInjections?: number;
-  birthDate?: string;
-  castrated?: boolean;
-  teethClipped?: boolean;
-  tailDocked?: boolean;
-  weaned?: boolean;
-  lastBreedingDate?: string;
-  lastBoarTag?: string;
-  sowTag?: string;
-}
 
 const addDays = (dateStr: string, days: number) => {
   const result = new Date(dateStr);

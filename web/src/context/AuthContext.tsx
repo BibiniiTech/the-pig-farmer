@@ -6,43 +6,7 @@ import { doc, getDoc, collection, getDocs, query, limit, writeBatch, onSnapshot,
 import { auth, db } from "@/lib/firebase";
 import { defaultIngredients } from "@/lib/defaultIngredients";
 import { getCurrencyByCountry } from "@/lib/currencyUtils";
-
-interface UserProfile {
-  firstName: string;
-  lastName: string;
-  farmName: string;
-  country: string;
-  email: string;
-  isPremium: boolean;
-  isAdmin: boolean;
-  isKofisPerson: boolean;
-  subscriptionSource?: string;
-  appLanguage?: string;
-  settings?: {
-    weaningDays?: string;
-    farrowingDays?: string;
-    ironDay1?: string;
-    ironDay2?: string;
-    autoClassifyBarrows?: boolean;
-    autoClassifySows?: boolean;
-    notificationsEnabled?: boolean;
-    selectedCurrency?: string;
-    currencySymbol?: string;
-    giltAgeThresholdWeeks?: string;
-    porkerUseAge?: boolean;
-    porkerStarterAge?: string;
-    porkerGrowerAge?: string;
-    porkerStarterWeight?: string;
-    porkerGrowerWeight?: string;
-    breederUseAge?: boolean;
-    breederPigletAge?: string;
-    breederWeanerAge?: string;
-    breederGrowerAge?: string;
-    breederPigletWeight?: string;
-    breederWeanerWeight?: string;
-    breederGrowerWeight?: string;
-  };
-}
+import { UserProfile } from "@/lib/types";
 
 interface AuthContextType {
   user: User | null;

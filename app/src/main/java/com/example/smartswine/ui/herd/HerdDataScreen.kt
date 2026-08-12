@@ -42,7 +42,9 @@ import com.example.smartswine.ui.theme.SmartSwineTheme
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
+import com.example.smartswine.utils.DateUtils
 
 @Composable
 fun HerdDataScreen(
@@ -504,7 +506,7 @@ fun AddPigDialog(
     var isMultiple by remember { mutableStateOf(false) }
     
     // Common fields
-    val birthDate = remember { mutableStateOf("") }
+    val birthDate = remember { mutableStateOf(DateUtils.formatToInternal(Date())) }
     val breed = remember { mutableStateOf("") }
     val purpose = remember { mutableStateOf("Breeder") }
     val sowTag = remember { mutableStateOf("") }

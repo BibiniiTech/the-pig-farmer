@@ -1,0 +1,3 @@
+- `[x]` Update `PdfGenerator.kt` to handle multiple keys for total daily requirement
+- `[x]` Verify total row logic in `generateFeedRequirementPdf`
+- `[x]` Create walkthrough summary

@@ -126,6 +126,47 @@ class NotificationWorker(context: Context, params: WorkerParameters) : Coroutine
                 }
             }
 
+            // Fetch pigs for weight update reminders
+            val pigsSnapshot = db.collection("users").document(userId)
+                .collection("pigs")
+                .get()
+                .await()
+            
+            pigsSnapshot.documents.forEach { doc ->
+                val lastWeight = doc.getString("lastWeightDate") ?: doc.getString("birthDate") ?: ""
+                val tag = doc.getString("tagNumber") ?: "Unknown"
+                if (lastWeight.isNotEmpty()) {
+                    val lastDate = DateUtils.parseInternal(lastWeight) ?: DateUtils.parseProduction(lastWeight)
+                    if (lastDate != null) {
+                        val diff = today.timeInMillis - lastDate.time
+                        val days = TimeUnit.MILLISECONDS.toDays(diff)
+                        if (days >= 30) {
+                            val title = Translator.getString("weight_update_title", langCode)
+                            val message = Translator.getString("weight_update_reminder", langCode, tag)
+                            notificationsToShow.add(Triple(title, message, doc.id.hashCode() + 100000))
+                        }
+                    }
+                }
+            }
+
+            // Fetch feed inventory for low stock alerts
+            val feedSnapshot = db.collection("users").document(userId)
+                .collection("feed_inventory")
+                .get()
+                .await()
+            
+            feedSnapshot.documents.forEach { doc ->
+                val qty = doc.getDouble("quantity") ?: 0.0
+                val threshold = doc.getDouble("minThreshold") ?: 0.0
+                val name = doc.getString("name") ?: "Feed"
+                val unit = doc.getString("unit") ?: "bags"
+                if (qty <= threshold && threshold > 0) {
+                    val title = Translator.getString("low_stock_title", langCode)
+                    val message = Translator.getString("low_stock_reminder", langCode, name, "$qty $unit")
+                    notificationsToShow.add(Triple(title, message, doc.id.hashCode() + 200000))
+                }
+            }
+
             if (notificationsToShow.isNotEmpty()) {
                 if (notificationsToShow.size == 1) {
                     val (title, message, id) = notificationsToShow[0]

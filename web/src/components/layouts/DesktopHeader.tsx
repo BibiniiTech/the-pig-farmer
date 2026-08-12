@@ -38,6 +38,8 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
   const [selectedLang, setSelectedLang] = useState("en");
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
   const [taskCount, setTaskCount] = useState(0);
+  const [weightAlertCount, setWeightAlertCount] = useState(0);
+  const [stockAlertCount, setStockAlertCount] = useState(0);
   const router = useRouter();
 
   useEffect(() => {
@@ -48,37 +50,71 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
 
   useEffect(() => {
     if (!activeFarmUid) return;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // 1. Task Listener
     const tasksQuery = query(
       collection(db, "users", activeFarmUid, "tasks"),
       where("completed", "==", false)
     );
-    const unsubscribe = onSnapshot(tasksQuery, (snapshot) => {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
+    const unsubscribeTasks = onSnapshot(tasksQuery, (snapshot) => {
       const activeTasks = snapshot.docs.filter(docSnap => {
         const task = docSnap.data();
         if (!task.date) return false;
-
         try {
           const taskDate = new Date(task.date);
           if (isNaN(taskDate.getTime())) return false;
-
           taskDate.setHours(0, 0, 0, 0);
-          const diffTime = taskDate.getTime() - today.getTime();
-          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-          // Match Android logic: Show notifications for tasks within -2 to +2 day window
+          const diffDays = Math.ceil((taskDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
           return diffDays >= -2 && diffDays <= 2;
-        } catch (e) {
-          return false;
-        }
+        } catch (e) { return false; }
       });
-
       setTaskCount(activeTasks.length);
     });
-    return () => unsubscribe();
+
+    // 2. Pig Listener for Weight Reminders
+    const pigsQuery = collection(db, "users", activeFarmUid, "pigs");
+    const unsubscribePigs = onSnapshot(pigsQuery, (snapshot) => {
+      const weightAlerts = snapshot.docs.filter(docSnap => {
+        const pig = docSnap.data();
+        const lastWeight = pig.lastWeightDate || pig.birthDate;
+        if (!lastWeight) return false;
+
+        let lastDate: Date;
+        if (lastWeight.includes('/')) {
+          const parts = lastWeight.split('/');
+          lastDate = new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
+        } else {
+          lastDate = new Date(lastWeight);
+        }
+
+        if (isNaN(lastDate.getTime())) return false;
+        const diffDays = Math.floor((today.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
+        return diffDays >= 30;
+      });
+      setWeightAlertCount(weightAlerts.length);
+    });
+
+    // 3. Feed Listener for Stock Alerts
+    const feedQuery = collection(db, "users", activeFarmUid, "feed_inventory");
+    const unsubscribeFeed = onSnapshot(feedQuery, (snapshot) => {
+      const stockAlerts = snapshot.docs.filter(docSnap => {
+        const item = docSnap.data();
+        return item.quantity <= item.minThreshold && item.minThreshold > 0;
+      });
+      setStockAlertCount(stockAlerts.length);
+    });
+
+    return () => {
+      unsubscribeTasks();
+      unsubscribePigs();
+      unsubscribeFeed();
+    };
   }, [activeFarmUid]);
+
+  const totalNotifications = taskCount + weightAlertCount + stockAlertCount;
 
   const handleLanguageChange = async (langCode: string) => {
     setSelectedLang(langCode);
@@ -137,9 +173,9 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
               </svg>
-              {taskCount > 0 && (
+              {totalNotifications > 0 && (
                 <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[11px] font-bold text-white ring-2 ring-white">
-                  {taskCount}
+                  {totalNotifications}
                 </span>
               )}
             </button>

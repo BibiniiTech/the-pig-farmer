@@ -271,7 +271,7 @@ object PdfGenerator {
                 table.addCell(Paragraph(String.format(Locale.getDefault(), "%.1f", daily * days)))
             }
 
-            val totalDaily = requirements["Total Daily Requirement"] ?: 0.0
+            val totalDaily = requirements["Total Daily Requirement"] ?: requirements["Daily Total"] ?: 0.0
             table.addCell(Paragraph(tr("total", lang)).setBold())
             table.addCell(Paragraph(String.format(Locale.getDefault(), "%.1f", totalDaily)).setBold())
             table.addCell(Paragraph(String.format(Locale.getDefault(), "%.1f", totalDaily * days)).setBold())

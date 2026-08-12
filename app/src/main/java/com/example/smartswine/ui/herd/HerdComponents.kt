@@ -28,11 +28,7 @@ fun PigItem(pig: Pig, onClick: () -> Unit) {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             val performance = remember(pig.breed, pig.birthDate, pig.weight) {
-                val birthDate = DateUtils.parseInternal(pig.birthDate)
-                val ageDays = if (birthDate != null) {
-                    val diffMs = System.currentTimeMillis() - birthDate.time
-                    (diffMs / (1000 * 60 * 60 * 24)).toInt()
-                } else -1
+                val ageDays = DateUtils.calculateAgeDays(pig.birthDate)
                 
                 com.example.smartswine.utils.SwineGrowthDatabase.evaluatePerformance(
                     breed = pig.breed,

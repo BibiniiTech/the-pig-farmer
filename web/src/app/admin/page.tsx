@@ -21,6 +21,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useDevice } from "@/context/DeviceContext";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import { useTranslations } from "next-intl";
+import { FeedIngredient } from "@/lib/types";
 import {
   ChevronLeftIcon,
   StorefrontIcon,
@@ -62,26 +63,6 @@ interface ProviderListing {
   category: string;
   country: string;
   createdAt: number;
-}
-
-interface FeedIngredient {
-  id: string;
-  name: string;
-  mainCategory: string;
-  crudeProtein: number;
-  metabolizableEnergy: number;
-  crudeFiber: number;
-  dryMatter: number;
-  calcium: number;
-  phosphorus: number;
-  lysine: number;
-  methionine: number;
-  nameTranslations: Record<string, string>;
-  maxStarter: number;
-  maxGrower: number;
-  maxFinisher: number;
-  visible: boolean;
-  unit: string;
 }
 
 interface TrainingVideo {

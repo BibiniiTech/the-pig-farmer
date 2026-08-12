@@ -13,4 +13,5 @@ data class StaffMember(
     val status: String = "Active", // Active, Inactive, On Leave
     val allowAppAccess: Boolean = false,
     val email: String = "",
+    val inviteStatus: String = "none", // none, pending, sent, failed
 )

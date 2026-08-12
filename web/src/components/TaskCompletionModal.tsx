@@ -22,33 +22,7 @@ import {
   CullingIcon
 } from "@/components/icons/HerdActivityIcons";
 
-interface Pig {
-  id: string;
-  tagNumber: string;
-  gender: string;
-  breed: string;
-  status: string;
-  location: string;
-  weight: number;
-  ironInjections?: number;
-  birthDate?: string;
-  castrated?: boolean;
-  teethClipped?: boolean;
-  tailDocked?: boolean;
-  weaned?: boolean;
-  lastBreedingDate?: string;
-  lastBoarTag?: string;
-  sowTag?: string;
-}
-
-interface TaskItem {
-  id: string;
-  name: string;
-  date: string;
-  notes: string;
-  pigIds: string[];
-  completed?: boolean;
-}
+import { Pig, TaskItem } from "@/lib/types";
 
 interface TaskCompletionModalProps {
   isOpen: boolean;
@@ -516,7 +490,10 @@ export default function TaskCompletionModal({
         if (isWeightCheck) {
           const pigWeight = parseFloat(pigWeights[pigId]) || 0;
           if (pigWeight > 0) {
-            batch.update(pigRef, { weight: pigWeight });
+            batch.update(pigRef, {
+              weight: pigWeight,
+              lastWeightDate: new Date().toLocaleDateString('en-GB')
+            });
             finalDescription = t("weightUpdateLog", { notes, weight: pigWeight });
           }
         }

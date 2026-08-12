@@ -36,7 +36,7 @@ import com.example.smartswine.utils.stringResource
 fun ProductionActivitiesScreen(
     viewModel: ProductionViewModel,
     herdViewModel: HerdViewModel,
-    onBack: () -> Unit
+    onBack: () -> Unit,
 ) {
     val pigs by herdViewModel.pigs.collectAsStateWithLifecycle()
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
@@ -54,7 +54,7 @@ fun ProductionActivitiesScreen(
                 ),
                 trackHeat = trackHeat,
                 checkPregnancy = checkPregnancy,
-                pregnancyConfirmed = extra["pregnancyConfirmed"] as? Boolean ?: false,
+                pregnancyConfirmed = (extra["pregnancyConfirmed"] as? Boolean) ?: false,
                 details = extra
             )
         },
@@ -68,7 +68,7 @@ fun ProductionActivitiesContent(
     pigs: List<Pig>,
     isLoading: Boolean,
     onLogActivity: (List<String>, String, String, String, Boolean, Boolean, Map<String, Any>) -> Unit,
-    onBack: () -> Unit
+    onBack: () -> Unit,
 ) {
     val showLogDialogState = remember { mutableStateOf<ProductionActivityType?>(null) }
     val showLogDialog = showLogDialogState.value
@@ -199,9 +199,9 @@ fun ActivityCard(
                             tint = MaterialTheme.colorScheme.onPrimaryContainer,
                             modifier = Modifier.size(24.dp)
                         )
-                    } else if (activity.icon != null) {
+                    } else activity.icon?.let {
                         Icon(
-                            imageVector = activity.icon,
+                            imageVector = it,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onPrimaryContainer
                         )
@@ -238,7 +238,7 @@ fun LogActivityDialog(
     val selectedPigsState = remember { mutableStateOf(setOf<Pig>()) }
     val selectedSowState = remember { mutableStateOf<Pig?>(null) }
     val selectedBoarState = remember { mutableStateOf<Pig?>(null) }
-    val expandedState = remember { mutableStateOf(false) }
+    val expandedState = remember { mutableStateOf(value = false) }
     val sowExpandedState = remember { mutableStateOf(false) }
     val boarExpandedState = remember { mutableStateOf(false) }
     val notesState = remember { mutableStateOf("") }
@@ -447,7 +447,8 @@ fun LogActivityDialog(
                             expanded = sowExpandedState.value,
                             onDismissRequest = { sowExpandedState.value = false }
                         ) {
-                            pigs.filter { it.gender.equals("Female", ignoreCase = true) && (it.status == "Sow" || it.status == "Gilt" || it.status == "Pregnant" || it.status == "Lactating" || it.status == "Nursing" || it.status == "Finisher") }
+                            pigs.asSequence()
+                                .filter { it.gender.equals("Female", ignoreCase = true) && (it.status == "Sow" || it.status == "Gilt" || it.status == "Pregnant" || it.status == "Lactating" || it.status == "Nursing" || it.status == "Finisher") }
                                 .sortedBy { it.tagNumber }
                                 .forEach { pig ->
                                     DropdownMenuItem(

@@ -19,6 +19,7 @@ interface Pig {
   breed: string;
   gender: string;
   weight: number;
+  lastWeightDate?: string;
   purpose: string;
   location: string;
   healthRecords?: HealthRecord[];

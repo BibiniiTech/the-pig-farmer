@@ -216,15 +216,7 @@ fun PigProfileContent(
 
                 val locale = LocalAppLanguage.current.toLocale()
                 val ageDays = remember(pig.birthDate) {
-                    try {
-                        val birthDate = DateUtils.parseInternal(pig.birthDate)
-                        if (birthDate != null) {
-                            val diffMs = System.currentTimeMillis() - birthDate.time
-                            (diffMs / (1000 * 60 * 60 * 24)).toInt()
-                        } else -1
-                    } catch (_: Exception) {
-                        -1
-                    }
+                    DateUtils.calculateAgeDays(pig.birthDate)
                 }
 
                 val performance = remember(pig.breed, ageDays, pig.weight) {

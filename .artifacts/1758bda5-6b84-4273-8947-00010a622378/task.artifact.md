@@ -1,0 +1,15 @@
+- [x] **Android: Models & Strings**
+    - [x] Add `lastWeightDate` to `Pig.kt`
+    - [x] Add new notification strings to `TranslationUtils.kt`
+- [x] **Android: Logic Updates**
+    - [x] Update `HerdViewModel` to update `lastWeightDate` on weight checks
+    - [x] Enhance `NotificationWorker` with weight and stock alert logic
+- [x] **Web: Models & Strings**
+    - [x] Update `Pig` interface in web app files
+    - [x] Add translation strings to `en.json` (and other locales)
+- [x] **Web: Logic Updates**
+    - [x] Update weight saving logic in `WeightCheckerPage.tsx`
+    - [x] Update `DesktopHeader.tsx` for unified notification counting
+    - [x] Update `DashboardPage.tsx` for categorized notification drawer
+- [x] **Verification**
+    - [x] Verify build and notification triggers

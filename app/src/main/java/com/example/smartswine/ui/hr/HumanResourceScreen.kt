@@ -63,6 +63,7 @@ fun HumanResourceScreen(
         onAddStaff = { viewModel.addStaff(context, it) },
         onUpdateStaff = { viewModel.updateStaff(context, it) },
         onDeleteStaff = { viewModel.deleteStaff(it) },
+        onResendInvite = { viewModel.resendInvitation(context, it) },
         onPaySalary = { member, month, notes -> viewModel.logSalaryPayment(member, month, notes, currentLanguage.code) },
     ) {
         if (!isPremium) onNavigateToPaywall()
@@ -196,6 +197,7 @@ fun HumanResourceScreenContent(
     onAddStaff: (StaffMember) -> Unit,
     onUpdateStaff: (StaffMember) -> Unit,
     onDeleteStaff: (String) -> Unit,
+    onResendInvite: (StaffMember) -> Unit,
     onPaySalary: (StaffMember, String, String) -> Unit,
     onGenerateReport: () -> Unit
 ) {
@@ -275,6 +277,7 @@ fun HumanResourceScreenContent(
                             currencySymbol = currencySymbol,
                             onEdit = { staffToEdit.value = member },
                             onDelete = { onDeleteStaff(member.id) },
+                            onResendInvite = { onResendInvite(member) },
                             onPaySalary = { m, mon, n -> onPaySalary(m, mon, n) }
                         )
                     }
@@ -353,6 +356,7 @@ fun StaffMemberItem(
     currencySymbol: String,
     onEdit: () -> Unit,
     onDelete: () -> Unit,
+    onResendInvite: () -> Unit,
     onPaySalary: (StaffMember, String, String) -> Unit
 ) {
     val showDeleteConfirm = remember { mutableStateOf(value = false) }
@@ -385,6 +389,40 @@ fun StaffMemberItem(
                 }
                 if (member.allowAppAccess) {
                     Text("${stringResource("allow_app_access")}: ${member.email}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+                    
+                    if (member.inviteStatus != "none") {
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Text(
+                                text = "${stringResource("invite_status")}: ",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Text(
+                                text = when (member.inviteStatus) {
+                                    "pending" -> stringResource("invite_pending")
+                                    "sent" -> stringResource("invite_sent")
+                                    "failed" -> stringResource("invite_failed")
+                                    else -> member.inviteStatus
+                                },
+                                style = MaterialTheme.typography.bodySmall,
+                                fontWeight = FontWeight.Bold,
+                                color = when (member.inviteStatus) {
+                                    "sent" -> MaterialTheme.colorScheme.primary
+                                    "failed" -> MaterialTheme.colorScheme.error
+                                    else -> MaterialTheme.colorScheme.onSurfaceVariant
+                                }
+                            )
+                            if (member.inviteStatus == "failed" || member.inviteStatus == "sent") {
+                                TextButton(
+                                    onClick = onResendInvite,
+                                    contentPadding = PaddingValues(0.dp),
+                                    modifier = Modifier.height(24.dp)
+                                ) {
+                                    Text(stringResource("resend_invite"), style = MaterialTheme.typography.bodySmall)
+                                }
+                            }
+                        }
+                    }
                 }
             }
             Column(horizontalAlignment = Alignment.End) {
@@ -717,6 +755,7 @@ fun HumanResourceScreenPreview() {
             onAddStaff = {},
             onUpdateStaff = {},
             onDeleteStaff = {},
+            onResendInvite = {},
             onPaySalary = { _, _, _ -> },
             onGenerateReport = {}
         )
@@ -740,6 +779,7 @@ fun HumanResourceScreenDarkPreview() {
             onAddStaff = {},
             onUpdateStaff = {},
             onDeleteStaff = {},
+            onResendInvite = {},
             onPaySalary = { _, _, _ -> },
             onGenerateReport = {}
         )
@@ -760,6 +800,7 @@ fun HumanResourceScreenEmptyPreview() {
             onAddStaff = {},
             onUpdateStaff = {},
             onDeleteStaff = {},
+            onResendInvite = {},
             onPaySalary = { _, _, _ -> },
             onGenerateReport = {}
         )

@@ -44,6 +44,27 @@ object DateUtils {
 
     fun parseInternal(dateStr: String): Date? = try { getInternalDateFormat().parse(dateStr) } catch (_: Exception) { null }
     fun parseProduction(dateStr: String): Date? = try { getProductionDateFormat().parse(dateStr) } catch (_: Exception) { null }
+
+    fun parseSwineDate(dateStr: String): Date? {
+        val trimmed = dateStr.trim()
+        if (trimmed.isEmpty()) return null
+
+        // 1. yyyy-MM-dd
+        try {
+            val date = getProductionDateFormat().parse(trimmed)
+            if (date != null) return date
+        } catch (_: Exception) {
+        }
+
+        // 2. dd/MM/yyyy
+        try {
+            val date = getInternalDateFormat().parse(trimmed)
+            if (date != null) return date
+        } catch (_: Exception) {
+        }
+
+        return null
+    }
     
     fun parseDisplay(dateStr: String, locale: Locale = Locale.getDefault()): Date? {
         // Try current locale
@@ -154,7 +175,7 @@ object DateUtils {
 
     fun calculateAgeMonths(birthDateStr: String): Int {
         return try {
-            val birthDate = getInternalDateFormat().parse(birthDateStr) ?: return 0
+            val birthDate = parseSwineDate(birthDateStr) ?: return 0
             val today = Calendar.getInstance()
             val birth = Calendar.getInstance().apply { time = birthDate }
             
@@ -165,6 +186,29 @@ object DateUtils {
                 months--
             }
             months
+        } catch (_: Exception) {
+            0
+        }
+    }
+
+    fun calculateAgeDays(birthDateStr: String): Int {
+        return try {
+            val birthDate = parseSwineDate(birthDateStr) ?: return 0
+            val today = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+            val birth = Calendar.getInstance().apply {
+                time = birthDate
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+            val diffMs = today.timeInMillis - birth.timeInMillis
+            (diffMs / (1000 * 60 * 60 * 24)).toInt()
         } catch (_: Exception) {
             0
         }

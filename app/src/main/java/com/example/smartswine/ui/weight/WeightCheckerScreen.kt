@@ -39,9 +39,9 @@ import androidx.compose.ui.platform.LocalContext
 fun WeightCheckerScreen(
     onBack: () -> Unit,
     pigs: List<Pig> = emptyList(),
-    onUpdatePigWeight: (String, Double) -> Unit = { _, _ -> }
+    onUpdatePigWeight: (String, Double) -> Unit = { _, _ -> },
 ) {
-    var isKg by remember { mutableStateOf(true) }
+    var isKg by remember { mutableStateOf(value = true) }
     
     Scaffold(
         topBar = {
@@ -144,7 +144,7 @@ fun WeightConverterCard() {
                 OutlinedTextField(
                     value = lbsText,
                     onValueChange = { newValue ->
-                        if (newValue.isEmpty() || newValue.toDoubleOrNull() != null) {
+                        if (newValue.isEmpty() || (newValue.toDoubleOrNull() != null)) {
                             lbsText = newValue
                             if (newValue.isNotEmpty()) {
                                 val kgs = newValue.toDouble() * 0.453592
@@ -174,7 +174,7 @@ fun WeightConverterCard() {
                 OutlinedTextField(
                     value = kgsText,
                     onValueChange = { newValue ->
-                        if (newValue.isEmpty() || newValue.toDoubleOrNull() != null) {
+                        if (newValue.isEmpty() || (newValue.toDoubleOrNull() != null)) {
                             kgsText = newValue
                             if (newValue.isNotEmpty()) {
                                 val lbs = newValue.toDouble() / 0.453592
@@ -202,7 +202,7 @@ fun TapeMeasurementCard(
     isKg: Boolean,
     onUnitChange: (Boolean) -> Unit,
     pigs: List<Pig> = emptyList(),
-    onUpdatePigWeight: (String, Double) -> Unit = { _, _ -> }
+    onUpdatePigWeight: (String, Double) -> Unit = { _, _ -> },
 ) {
     var girthText by remember { mutableStateOf("") }
     var lengthText by remember { mutableStateOf("") }
@@ -328,10 +328,10 @@ fun TapeMeasurementCard(
             if (girth > 0 && length > 0) {
                 val rawWeightLbs = calculatePigWeightLbs(girth, length, isKg)
                 val liveWeightLbs = if (rawWeightLbs < 150.0 && rawWeightLbs > 0) rawWeightLbs + 7.0 else rawWeightLbs
-                val liveWeightKgs = Math.round(liveWeightLbs * 0.453592 * 100.0) / 100.0
+                val liveWeightKgs = kotlin.math.round(liveWeightLbs * 0.453592 * 100.0) / 100.0
                 
                 val carcassWeightLbs = liveWeightLbs * 0.72
-                val carcassWeightKgs = Math.round(liveWeightKgs * 0.72 * 100.0) / 100.0
+                val carcassWeightKgs = kotlin.math.round(liveWeightKgs * 0.72 * 100.0) / 100.0
 
                 Spacer(Modifier.height(24.dp))
                 
@@ -369,8 +369,10 @@ fun TapeMeasurementCard(
                 Spacer(Modifier.height(12.dp))
                 
                 val filteredPigs = remember(pigs, pigSearchQuery) {
-                    pigs.filter { it.tagNumber.isNotBlank() && it.tagNumber.contains(pigSearchQuery, ignoreCase = true) }
+                    pigs.asSequence()
+                        .filter { it.tagNumber.isNotBlank() && it.tagNumber.contains(pigSearchQuery, ignoreCase = true) }
                         .sortedBy { it.tagNumber }
+                        .toList()
                 }
                 
                 ExposedDropdownMenuBox(

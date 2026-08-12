@@ -65,7 +65,8 @@ fun FinancialsScreenContent(
 ) {
     val isPremium = com.example.smartswine.utils.LocalIsPremium.current
     val context = LocalContext.current
-    val currentLanguageCode = com.example.smartswine.utils.LocalAppLanguage.current.code
+    val appLanguage = com.example.smartswine.utils.LocalAppLanguage.current
+    val locale = remember(appLanguage) { appLanguage.toLocale() }
     val showAddDialog = remember { mutableStateOf(value = false) }
     val showExportDialog = remember { mutableStateOf(value = false) }
 
@@ -77,7 +78,7 @@ fun FinancialsScreenContent(
                         .fillMaxWidth()
                         .padding(start = 16.dp, end = 16.dp, top = 20.dp, bottom = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource("back"))
@@ -163,12 +164,18 @@ fun FinancialsScreenContent(
                         val currentYearStr = java.text.SimpleDateFormat("yyyy", Locale.getDefault()).format(cal.time)
                         records.filter { it.date.contains(currentMonthStr) && it.date.contains(currentYearStr) }
                     }
-                    "Last 3 Months" -> records // TODO: Implement proper date range filtering
+                    "Last 3 Months" -> {
+                        val threeMonthsAgo = java.util.Calendar.getInstance().apply { add(java.util.Calendar.MONTH, -3) }
+                        records.filter { record ->
+                            val recordDate = DateUtils.parseDisplay(record.date, locale)
+                            (recordDate != null) && recordDate.after(threeMonthsAgo.time)
+                        }
+                    }
                     "Income Only", "income_only" -> records.filter { it.type == "Income" }
                     "Expenses Only", "expenses_only" -> records.filter { it.type == "Expense" }
                     else -> records
                 }
-                PdfGenerator.generateFinancialReportPdf(context, filteredRecords, allPigs, lang = currentLanguageCode)
+                PdfGenerator.generateFinancialReportPdf(context, filteredRecords, allPigs, lang = appLanguage.code)
                 showExportDialog.value = false
             }
         )
@@ -423,8 +430,8 @@ fun AddFinancialRecordDialog(
     var category by remember { mutableStateOf("Feed") }
     var customCategory by remember { mutableStateOf("") }
     var expandedType by remember { mutableStateOf(value = false) }
-    var expandedCategory by remember { mutableStateOf(false) }
-    var expandedPigs by remember { mutableStateOf(false) }
+    var expandedCategory by remember { mutableStateOf(value = false) }
+    var expandedPigs by remember { mutableStateOf(value = false) }
     val selectedPigIds = remember { mutableStateListOf<String>() }
     val scrollState = rememberScrollState()
 

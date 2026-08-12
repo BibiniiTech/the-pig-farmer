@@ -37,6 +37,7 @@ data class Pig(
     var tailDocked: Boolean = false,
     
     val ironInjections: Int = 0,
+    val lastWeightDate: String = "",
     
     @get:Exclude
     @set:Exclude
@@ -44,6 +45,15 @@ data class Pig(
     
     val notes: String = ""
 ) {
+    @get:Exclude
+    val genderEnum: PigGender get() = PigGender.fromString(gender)
+    
+    @get:Exclude
+    val purposeEnum: PigPurpose get() = PigPurpose.fromString(purpose)
+    
+    @get:Exclude
+    val statusEnum: PigStatus get() = PigStatus.fromString(status)
+
     // Firestore mapping for 'is' prefixed fields
     @Suppress("unused")
     @get:PropertyName("isCastrated")

@@ -14,35 +14,7 @@ import HerdReport from "@/components/reports/HerdReport";
 import { evaluatePerformance, calculateAgeMonths, calculateAgeDays } from "@/lib/swineGrowthDatabase";
 import { ExportPdfIcon } from "@/components/icons/DashboardIcons";
 import { useTranslations } from "next-intl";
-
-interface Pig {
-  id: string;
-  tagNumber: string;
-  birthDate: string;
-  breed: string;
-  gender: string;
-  weight: number;
-  purpose: string;
-  sowTag: string;
-  boarTag: string;
-  location: string;
-  source: string;
-  status: string;
-  notes: string;
-  castrated?: boolean;
-  castrationDate?: string;
-  teethClipped?: boolean;
-  tailDocked?: boolean;
-  ironInjections?: number;
-  weaned?: boolean;
-}
-
-interface HealthRecord {
-  id: string;
-  date: string;
-  type: string;
-  description: string;
-}
+import { Pig, HealthRecord } from "@/lib/types";
 
 export default function PigProfilePage() {
   const t = useTranslations("PigProfile");
@@ -224,7 +196,7 @@ export default function PigProfilePage() {
           date: new Date().toISOString().split("T")[0],
           type: "Weight Check",
           description: t("manualWeightLog")
-        });
+        }, { merge: true });
       }
 
       setShowEditModal(false);
@@ -251,7 +223,7 @@ export default function PigProfilePage() {
         date: recordDate,
         type: recordType,
         description: finalDesc
-      });
+      }, { merge: true });
 
       if (recordType === "Weight Check" && recordWeight) {
         const pigDocRef = doc(db, "users", activeFarmUid, "pigs", pigId);

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { collection, onSnapshot, doc, setDoc, deleteDoc, updateDoc } from "firebase/firestore";
+import { collection, onSnapshot, doc, setDoc, deleteDoc, updateDoc, writeBatch } from "firebase/firestore";
 import { db, auth } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 import { useDevice } from "@/context/DeviceContext";
@@ -14,18 +14,7 @@ import HRReport from "@/components/reports/HRReport";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { ExportPdfIcon } from "@/components/icons/DashboardIcons";
 import { useTranslations } from "next-intl";
-
-interface StaffMember {
-  id: string;
-  name: string;
-  role: string;
-  phone: string;
-  salary: number;
-  joinDate: string;
-  status: string; // "Active", "Inactive", "On Leave"
-  allowAppAccess: boolean;
-  email: string;
-}
+import { StaffMember } from "@/lib/types";
 
 async function signUpUserRest(apiKey: string, email: string): Promise<boolean> {
   try {
@@ -51,19 +40,25 @@ async function signUpUserRest(apiKey: string, email: string): Promise<boolean> {
   }
 }
 
-async function inviteStaffMember(email: string) {
+async function inviteStaffMember(activeFarmUid: string, staffId: string, email: string) {
   const cleanEmail = email.trim().toLowerCase();
-  if (!cleanEmail) return;
+  if (!cleanEmail || !activeFarmUid || !staffId) return;
+
+  const staffRef = doc(db, "users", activeFarmUid, "staff", staffId);
 
   try {
+    await updateDoc(staffRef, { inviteStatus: "pending" });
+
     const apiKey = auth.app.options.apiKey;
     if (apiKey) {
       await signUpUserRest(apiKey, cleanEmail);
     }
     await sendPasswordResetEmail(auth, cleanEmail);
+    await updateDoc(staffRef, { inviteStatus: "sent" });
     console.log("Invitation email sent to", cleanEmail);
   } catch (err) {
     console.error("Failed to invite staff:", err);
+    await updateDoc(staffRef, { inviteStatus: "failed" });
   }
 }
 
@@ -141,18 +136,25 @@ export default function HumanResourcesPage() {
         joinDate,
         status,
         allowAppAccess,
-        email: email.trim()
+        email: email.trim(),
+        inviteStatus: allowAppAccess ? "pending" : "none"
       };
 
-      await setDoc(newRef, newMember);
-
-      // Register in staff_registry and send invite if conditions are met
       const isPremium = userProfile?.isPremium || false;
       const cleanEmail = email.trim().toLowerCase();
+
+      const batch = writeBatch(db);
+      batch.set(newRef, newMember);
+
       if (isPremium && allowAppAccess && cleanEmail) {
         const registryRef = doc(db, "staff_registry", cleanEmail);
-        await setDoc(registryRef, { managerUid: activeFarmUid });
-        await inviteStaffMember(cleanEmail);
+        batch.set(registryRef, { managerUid: activeFarmUid });
+      }
+
+      await batch.commit();
+
+      if (isPremium && allowAppAccess && cleanEmail) {
+        await inviteStaffMember(activeFarmUid, newRef.id, cleanEmail);
       }
 
       // Reset
@@ -180,23 +182,25 @@ export default function HumanResourcesPage() {
       const shouldInvite = isPremium && allowAppAccess && cleanEmail &&
         (!editingStaff.allowAppAccess || oldEmail !== cleanEmail);
 
+      const batch = writeBatch(db);
+
       // Update registry
       if (isPremium && allowAppAccess && cleanEmail) {
         const registryRef = doc(db, "staff_registry", cleanEmail);
-        await setDoc(registryRef, { managerUid: activeFarmUid });
+        batch.set(registryRef, { managerUid: activeFarmUid });
       } else if (cleanEmail) {
         const registryRef = doc(db, "staff_registry", cleanEmail);
-        await deleteDoc(registryRef);
+        batch.delete(registryRef);
       }
       
       // If the email was changed, make sure we clean up the old email from registry
       if (oldEmail && oldEmail !== cleanEmail) {
         const oldRegistryRef = doc(db, "staff_registry", oldEmail);
-        await deleteDoc(oldRegistryRef);
+        batch.delete(oldRegistryRef);
       }
 
       const staffDocRef = doc(db, "users", activeFarmUid, "staff", editingStaff.id);
-      await updateDoc(staffDocRef, {
+      batch.update(staffDocRef, {
         name: name.trim(),
         role,
         phone: phone.trim(),
@@ -204,13 +208,16 @@ export default function HumanResourcesPage() {
         joinDate,
         status,
         allowAppAccess,
-        email: cleanEmail
+        email: cleanEmail,
+        ...(shouldInvite ? { inviteStatus: "pending" } : {})
       });
+
+      await batch.commit();
 
       setEditingStaff(null);
 
       if (shouldInvite) {
-        await inviteStaffMember(cleanEmail);
+        await inviteStaffMember(activeFarmUid, editingStaff.id, cleanEmail);
       }
     } catch (err) {
       console.error("Failed to update staff:", err);
@@ -249,22 +256,35 @@ export default function HumanResourcesPage() {
       const cleanEmail = member.email?.trim().toLowerCase() || "";
       const newAllowAccess = !member.allowAppAccess;
 
+      const batch = writeBatch(db);
+
       if (isPremium && newAllowAccess && cleanEmail) {
-        // Add to registry and invite
         const registryRef = doc(db, "staff_registry", cleanEmail);
-        await setDoc(registryRef, { managerUid: activeFarmUid });
-        await inviteStaffMember(cleanEmail);
+        batch.set(registryRef, { managerUid: activeFarmUid });
       } else if (cleanEmail) {
-        // Remove from registry
         const registryRef = doc(db, "staff_registry", cleanEmail);
-        await deleteDoc(registryRef);
+        batch.delete(registryRef);
       }
 
       const ref = doc(db, "users", activeFarmUid, "staff", member.id);
-      await updateDoc(ref, { allowAppAccess: newAllowAccess });
+      batch.update(ref, {
+        allowAppAccess: newAllowAccess,
+        ...(newAllowAccess ? { inviteStatus: "pending" } : {})
+      });
+
+      await batch.commit();
+
+      if (isPremium && newAllowAccess && cleanEmail) {
+        await inviteStaffMember(activeFarmUid, member.id, cleanEmail);
+      }
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleResendInvite = async (member: StaffMember) => {
+    if (!activeFarmUid || !member.email) return;
+    await inviteStaffMember(activeFarmUid, member.id, member.email);
   };
 
   if (loading || !user) {
@@ -407,15 +427,36 @@ export default function HumanResourcesPage() {
                     </div>
 
                     <div className="pt-3 border-t border-zinc-100 flex items-center justify-between">
-                      <label className="flex items-center gap-2 cursor-pointer text-xs text-zinc-600">
-                        <input
-                          type="checkbox"
-                          checked={member.allowAppAccess}
-                          onChange={() => handleToggleAccess(member)}
-                          className="h-4 w-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500"
-                        />
-                        <span>{t("appAccess")}</span>
-                      </label>
+                      <div className="flex flex-col gap-1">
+                        <label className="flex items-center gap-2 cursor-pointer text-xs text-zinc-600">
+                          <input
+                            type="checkbox"
+                            checked={member.allowAppAccess}
+                            onChange={() => handleToggleAccess(member)}
+                            className="h-4 w-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500"
+                          />
+                          <span>{t("appAccess")}</span>
+                        </label>
+                        {member.allowAppAccess && member.inviteStatus && member.inviteStatus !== "none" && (
+                          <div className="flex items-center gap-2 text-[10px]">
+                            <span className="text-zinc-500">{t("inviteStatus")}:</span>
+                            <span className={`font-bold ${
+                              member.inviteStatus === "sent" ? "text-emerald-600" :
+                              member.inviteStatus === "failed" ? "text-rose-600" : "text-amber-600"
+                            }`}>
+                              {t(`invite_${member.inviteStatus}`)}
+                            </span>
+                            {(member.inviteStatus === "failed" || member.inviteStatus === "sent") && (
+                              <button
+                                onClick={() => handleResendInvite(member)}
+                                className="text-emerald-600 hover:underline font-bold"
+                              >
+                                {t("resend")}
+                              </button>
+                            )}
+                          </div>
+                        )}
+                      </div>
 
                       <div className="space-x-3 text-xs">
                         <button onClick={() => startEdit(member)} className="text-emerald-600 hover:underline font-bold">

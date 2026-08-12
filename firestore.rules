@@ -63,8 +63,13 @@ service cloud.firestore {
 
     // Staff Registry: Read for the user themselves, Write for the manager
     match /staff_registry/{email} {
-      allow read: if isAuthenticated() && (('email' in request.auth.token && request.auth.token.email.lower() == email.lower()) || isOwner(get(/databases/$(database)/documents/staff_registry/$(email)).data.managerUid));
-      allow write: if isAuthenticated(); // Broad for now, handled by app logic, but can be tightened
+      allow read: if isAuthenticated() && (
+        ('email' in request.auth.token && request.auth.token.email.lower() == email.lower()) ||
+        (exists(/databases/$(database)/documents/staff_registry/$(email)) && isOwner(get(/databases/$(database)/documents/staff_registry/$(email)).data.managerUid))
+      );
+      allow create: if isAuthenticated() && isOwner(request.resource.data.managerUid);
+      allow update: if isAuthenticated() && isOwner(resource.data.managerUid) && isOwner(request.resource.data.managerUid);
+      allow delete: if isAuthenticated() && isOwner(resource.data.managerUid);
     }
 
     // User Data and Subcollections

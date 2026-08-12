@@ -41,6 +41,7 @@ interface Pig {
   source: string;
   status: string;
   notes: string;
+  lastWeightDate?: string;
 }
 
 interface HerdStats {
@@ -67,6 +68,14 @@ interface TaskItem {
   notes: string;
   pigIds: string[];
   completed?: boolean;
+}
+
+interface FeedInventoryItem {
+  id: string;
+  name: string;
+  quantity: number;
+  minThreshold: number;
+  unit: string;
 }
 
 interface TaskGroup {
@@ -228,6 +237,7 @@ const ArchiveIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export default function DashboardPage() {
   const t = useTranslations("Dashboard");
+  const tNotif = useTranslations("Notifications");
   const locale = useLocale();
   const { user, userProfile, activeFarmUid, isStaff, loading } = useAuth();
   const { isMobile } = useDevice();
@@ -241,6 +251,8 @@ export default function DashboardPage() {
 
   const [allPigs, setAllPigs] = useState<Pig[]>([]);
   const [tasks, setTasks] = useState<TaskItem[]>([]);
+  const [weightAlerts, setWeightAlerts] = useState<Pig[]>([]);
+  const [stockAlerts, setStockAlerts] = useState<FeedInventoryItem[]>([]);
   const [isNotificationDrawerOpen, setIsNotificationDrawerOpen] = useState(false);
   const [isCompletionModalOpen, setIsCompletionModalOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
@@ -318,7 +330,25 @@ export default function DashboardPage() {
     const unsubscribePigs = onSnapshot(pigsQuery, (snapshot) => {
       const pigList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Pig));
       setAllPigs(pigList);
-      
+
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const alerts = pigList.filter(pig => {
+        const lastWeight = pig.lastWeightDate || pig.birthDate;
+        if (!lastWeight) return false;
+        let lastDate: Date;
+        if (lastWeight.includes('/')) {
+          const parts = lastWeight.split('/');
+          lastDate = new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
+        } else {
+          lastDate = new Date(lastWeight);
+        }
+        if (isNaN(lastDate.getTime())) return false;
+        const diffDays = Math.floor((today.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
+        return diffDays >= 30;
+      });
+      setWeightAlerts(alerts);
+
       const breeders = pigList.filter(p => p.purpose === "Breeder");
       const porkers = pigList.filter(p => p.purpose === "Porker");
 
@@ -348,7 +378,9 @@ export default function DashboardPage() {
     // 2. Listen to Feed Inventory Count
     const feedQuery = collection(db, "users", activeFarmUid, "feed_inventory");
     const unsubscribeFeed = onSnapshot(feedQuery, (snapshot) => {
+      const feedList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as FeedInventoryItem));
       setFeedCount(snapshot.size);
+      setStockAlerts(feedList.filter(item => item.quantity <= item.minThreshold && item.minThreshold > 0));
     }, (error) => console.error("Error querying feed:", error));
 
     // 3. Listen to Recent Financial Transactions
@@ -740,45 +772,105 @@ export default function DashboardPage() {
                 </button>
               </div>
               
-              <div className="flex-1 overflow-y-auto p-6 space-y-4 no-scrollbar">
-                {groupedTasks.length === 0 ? (
+              <div className="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar">
+                {(groupedTasks.length === 0 && weightAlerts.length === 0 && stockAlerts.length === 0) ? (
                   <div className="flex flex-col items-center justify-center h-48 text-center">
-                    <p className="text-sm font-semibold text-zinc-400">{t("noActivities")}</p>
-                    <p className="text-xs text-zinc-400 mt-1">{t("allTasksCompleted")}</p>
+                    <p className="text-sm font-semibold text-zinc-400">{tNotif("noActivities")}</p>
+                    <p className="text-xs text-zinc-400 mt-1">{tNotif("allTasksCompleted")}</p>
                   </div>
                 ) : (
-                  groupedTasks.map((taskGroup, index) => (
-                    <div
-                      key={index}
-                      onClick={() => {
-                        setTasksToEdit(taskGroup.originalTasks);
-                        setIsCompletionModalOpen(true);
-                        setIsNotificationDrawerOpen(false);
-                      }}
-                      className={`p-4 rounded-xl border transition cursor-pointer flex items-center justify-between ${
-                        taskGroup.isOverdue
-                          ? "bg-red-50 border-red-200 hover:bg-red-100/50"
-                          : "bg-zinc-50 border-zinc-200 hover:bg-zinc-100"
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className={`p-2 rounded-lg ${taskGroup.isOverdue ? "bg-red-100 text-red-700" : "bg-emerald-50 text-emerald-700"}`}>
-                          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                          </svg>
-                        </span>
-                        <div>
-                          <h4 className="font-bold text-zinc-900 text-sm">{taskGroup.activity}</h4>
-                          <p className={`text-xs mt-0.5 ${taskGroup.isOverdue ? "text-red-700/80" : "text-zinc-500"}`}>
-                            {taskGroup.target === "General" ? t("generalTask") : taskGroup.target}
-                          </p>
-                        </div>
+                  <>
+                    {/* Tasks Section */}
+                    {groupedTasks.length > 0 && (
+                      <div className="space-y-3">
+                        <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest px-1">{t("upcomingActivities")}</h3>
+                        {groupedTasks.map((taskGroup, index) => (
+                          <div
+                            key={`task-${index}`}
+                            onClick={() => {
+                              setTasksToEdit(taskGroup.originalTasks);
+                              setIsCompletionModalOpen(true);
+                              setIsNotificationDrawerOpen(false);
+                            }}
+                            className={`p-4 rounded-xl border transition cursor-pointer flex items-center justify-between ${
+                              taskGroup.isOverdue ? "bg-red-50 border-red-200 hover:bg-red-100/50" : "bg-zinc-50 border-zinc-200 hover:bg-zinc-100"
+                            }`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <span className={`p-2 rounded-lg ${taskGroup.isOverdue ? "bg-red-100 text-red-700" : "bg-emerald-50 text-emerald-700"}`}>
+                                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                                </svg>
+                              </span>
+                              <div>
+                                <h4 className="font-bold text-zinc-900 text-sm">{taskGroup.activity}</h4>
+                                <p className={`text-xs mt-0.5 ${taskGroup.isOverdue ? "text-red-700/80" : "text-zinc-500"}`}>
+                                  {taskGroup.target === "General" ? tNotif("generalTask") : taskGroup.target}
+                                </p>
+                              </div>
+                            </div>
+                            <span className={`text-[10px] font-bold px-2 py-1 rounded-full ${taskGroup.isOverdue ? "bg-red-200 text-red-800" : "bg-zinc-200 text-zinc-600"}`}>
+                              {taskGroup.date}
+                            </span>
+                          </div>
+                        ))}
                       </div>
-                      <span className={`text-[10px] font-bold px-2 py-1 rounded-full ${taskGroup.isOverdue ? "bg-red-200 text-red-800" : "bg-zinc-200 text-zinc-600"}`}>
-                        {taskGroup.date}
-                      </span>
-                    </div>
-                  ))
+                    )}
+
+                    {/* Weight Alerts Section */}
+                    {weightAlerts.length > 0 && (
+                      <div className="space-y-3">
+                        <h3 className="text-[10px] font-bold text-amber-600 uppercase tracking-widest px-1">{tNotif("weightUpdateTitle")}</h3>
+                        {weightAlerts.map((pig) => (
+                          <div
+                            key={`weight-${pig.id}`}
+                            onClick={() => {
+                              router.push("/dashboard/weight");
+                              setIsNotificationDrawerOpen(false);
+                            }}
+                            className="p-4 rounded-xl border border-amber-200 bg-amber-50 hover:bg-amber-100 transition cursor-pointer flex items-center gap-3"
+                          >
+                            <span className="p-2 rounded-lg bg-amber-100 text-amber-700">
+                              <WeightCheckerIcon className="h-5 w-5" />
+                            </span>
+                            <div>
+                              <h4 className="font-bold text-zinc-900 text-sm">{tNotif("weightUpdateTitle")}</h4>
+                              <p className="text-xs text-amber-800/80 mt-0.5">
+                                {tNotif("weightUpdateReminder", { tag: pig.tagNumber })}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Stock Alerts Section */}
+                    {stockAlerts.length > 0 && (
+                      <div className="space-y-3">
+                        <h3 className="text-[10px] font-bold text-rose-600 uppercase tracking-widest px-1">{tNotif("lowStockTitle")}</h3>
+                        {stockAlerts.map((item) => (
+                          <div
+                            key={`stock-${item.id}`}
+                            onClick={() => {
+                              router.push("/dashboard/feed");
+                              setIsNotificationDrawerOpen(false);
+                            }}
+                            className="p-4 rounded-xl border border-rose-200 bg-rose-50 hover:bg-rose-100 transition cursor-pointer flex items-center gap-3"
+                          >
+                            <span className="p-2 rounded-lg bg-rose-100 text-rose-700">
+                              <FeedManagementIcon className="h-5 w-5" />
+                            </span>
+                            <div>
+                              <h4 className="font-bold text-zinc-900 text-sm">{tNotif("lowStockTitle")}</h4>
+                              <p className="text-xs text-rose-800/80 mt-0.5">
+                                {tNotif("lowStockReminder", { name: item.name, qty: `${item.quantity} ${item.unit}` })}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </div>

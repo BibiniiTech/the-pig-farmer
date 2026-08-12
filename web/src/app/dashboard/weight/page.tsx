@@ -20,6 +20,7 @@ interface Pig {
   gender: string;
   status: string;
   weight?: number;
+  lastWeightDate?: string;
   location: string;
 }
 
@@ -169,7 +170,10 @@ export default function WeightCheckerPage() {
       const pigRef = doc(db, "users", activeFarmUid, "pigs", selectedPigId);
       
       // Update primary pig document weight
-      await updateDoc(pigRef, { weight: weightNum });
+      await updateDoc(pigRef, {
+        weight: weightNum,
+        lastWeightDate: new Date().toLocaleDateString('en-GB')
+      });
 
       // Add a health log entry
       const logCollection = collection(db, "users", activeFarmUid, "pigs", selectedPigId, "health_records");

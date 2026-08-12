@@ -14,22 +14,7 @@ import HerdReport from "@/components/reports/HerdReport";
 import { evaluatePerformance, calculateAgeMonths, calculateAgeDays } from "@/lib/swineGrowthDatabase";
 import { ExportPdfIcon } from "@/components/icons/DashboardIcons";
 import { useTranslations } from "next-intl";
-
-interface Pig {
-  id: string;
-  tagNumber: string;
-  birthDate: string;
-  breed: string;
-  gender: string;
-  weight: number;
-  purpose: string;
-  sowTag: string;
-  boarTag: string;
-  location: string;
-  source: string;
-  status: string;
-  notes: string;
-}
+import { Pig } from "@/lib/types";
 
 const STANDARD_BREEDS = [
   "Large White",
@@ -282,7 +267,7 @@ export default function HerdPage() {
           status: purpose === "Breeder" ? (gender === "Male" ? "Boar" : "Sow") : "Piglet",
           notes
         };
-        await setDoc(newRef, newPig);
+        await setDoc(newRef, newPig, { merge: true });
 
         if (source === "Brought to farm" && purchasePrice > 0) {
           const finRef = doc(collection(db, "users", activeFarmUid, "financials"));
@@ -318,7 +303,7 @@ export default function HerdPage() {
             status: purpose === "Breeder" ? "Boar" : "Piglet",
             notes: notes || "Batch addition (Male)"
           };
-          await setDoc(newRef, newPig);
+          await setDoc(newRef, newPig, { merge: true });
         }
 
         for (const entry of validFemales) {
@@ -338,7 +323,7 @@ export default function HerdPage() {
             status: purpose === "Breeder" ? "Sow" : "Piglet",
             notes: notes || "Batch addition (Female)"
           };
-          await setDoc(newRef, newPig);
+          await setDoc(newRef, newPig, { merge: true });
         }
 
         if (source === "Brought to farm" && purchasePrice > 0) {

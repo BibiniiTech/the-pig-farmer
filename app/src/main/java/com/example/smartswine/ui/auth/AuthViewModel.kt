@@ -17,6 +17,32 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 @Keep
+data class UserSettings(
+    val weaningDays: String = "56",
+    val farrowingDays: String = "114",
+    val ironDay1: String = "3",
+    val ironDay2: String = "10",
+    val autoClassifyBarrows: Boolean = true,
+    val autoClassifySows: Boolean = true,
+    val notificationsEnabled: Boolean = true,
+    val selectedCurrency: String = "USD",
+    val currencySymbol: String = "$",
+    val giltAgeThresholdWeeks: String = "26",
+    val porkerUseAge: Boolean = true,
+    val porkerStarterAge: String = "16",
+    val porkerGrowerAge: String = "24",
+    val porkerStarterWeight: String = "25",
+    val porkerGrowerWeight: String = "60",
+    val breederUseAge: Boolean = true,
+    val breederPigletAge: String = "8",
+    val breederWeanerAge: String = "16",
+    val breederGrowerAge: String = "24",
+    val breederPigletWeight: String = "10",
+    val breederWeanerWeight: String = "25",
+    val breederGrowerWeight: String = "60",
+)
+
+@Keep
 data class UserProfile(
     val firstName: String = "",
     val lastName: String = "",
@@ -40,6 +66,7 @@ data class UserProfile(
     var isKofisPerson: Boolean = false,
 
     val subscriptionSource: String = "",
+    val settings: UserSettings = UserSettings(),
 )
 
 class AuthViewModel : ViewModel() {
@@ -280,7 +307,7 @@ class AuthViewModel : ViewModel() {
         } else {
             profile
         }
-        db.collection("users").document(uid).set(finalProfile)
+        db.collection("users").document(uid).set(finalProfile, com.google.firebase.firestore.SetOptions.merge())
             .addOnSuccessListener {
                 _userProfile.value = finalProfile
                 _isProfileComplete.value = true

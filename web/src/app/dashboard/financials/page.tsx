@@ -13,21 +13,7 @@ import DesktopHeader from "@/components/layouts/DesktopHeader";
 import FinancialReport from "@/components/reports/FinancialReport";
 import { ExportPdfIcon } from "@/components/icons/DashboardIcons";
 import { useTranslations } from "next-intl";
-
-interface FinancialRecord {
-  id: string;
-  date: string;
-  type: string; // "Income" or "Expense"
-  category: string;
-  amount: number;
-  description: string;
-  pigId?: string;
-}
-
-interface Pig {
-  id: string;
-  tagNumber: string;
-}
+import { FinancialRecord, Pig } from "@/lib/types";
 
 export default function FinancialsPage() {
   const t = useTranslations("Financials");

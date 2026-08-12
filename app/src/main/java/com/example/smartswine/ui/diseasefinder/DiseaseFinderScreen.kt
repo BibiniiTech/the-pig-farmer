@@ -32,7 +32,7 @@ data class Disease(
     val symptomKeys: List<String>,
     val descriptionKey: String,
     val severity: Severity = Severity.MODERATE,
-    val preventionKey: String = ""
+    val preventionKey: String = "",
 )
 
 enum class Severity(val key: String) {
@@ -742,7 +742,7 @@ object DiseaseDatabase {
 fun DiseaseFinderScreen(onNavigateToPaywall: () -> Unit, onBack: () -> Unit) {
     val selectedSymptoms = remember { mutableStateOf(setOf<String>()) }
     val diagnosisResult = remember { mutableStateOf<List<Pair<Disease, Int>>>(emptyList()) }
-    val showResults = remember { mutableStateOf(false) }
+    val showResults = remember { mutableStateOf(value = false) }
 
     DiseaseFinderContent(
         selectedSymptoms = selectedSymptoms.value,
@@ -756,11 +756,13 @@ fun DiseaseFinderScreen(onNavigateToPaywall: () -> Unit, onBack: () -> Unit) {
         diagnosisResult = diagnosisResult.value,
         showResults = showResults.value,
         onAnalyze = {
-            val results = DiseaseDatabase.diseases.map { disease ->
-                val matchCount = disease.symptomKeys.count { it in selectedSymptoms.value }
-                disease to matchCount
-            }.filter { it.second > 0 }
+            val results = DiseaseDatabase.diseases.asSequence()
+                .map { disease ->
+                    val matchCount = disease.symptomKeys.count { it in selectedSymptoms.value }
+                    disease to matchCount
+                }.filter { it.second > 0 }
                 .sortedByDescending { it.second }
+                .toList()
             diagnosisResult.value = results
             showResults.value = true
         },

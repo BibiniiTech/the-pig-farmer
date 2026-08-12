@@ -51,7 +51,7 @@ fun getIngredientName(ingredient: FeedIngredient): String {
     val context = LocalContext.current
     val key = getIngredientNameKey(ingredient, context)
     val name = stringResource(key)
-    return if (name == key && ingredient.name.isNotEmpty()) {
+    return if ((name == key) && ingredient.name.isNotEmpty()) {
         ingredient.name
     } else {
         name
@@ -133,7 +133,7 @@ fun FeedScreen(
     }
 
     val context = LocalContext.current
-    val showExportDialog = remember { mutableStateOf(false) }
+    val showExportDialog = remember { mutableStateOf(value = false) }
     val coroutineScope = rememberCoroutineScope()
 
     val lang = LocalAppLanguage.current.code
@@ -298,7 +298,7 @@ fun FeedExportDialog(
                     "Custom" -> Translator.getString("custom", lang)
                     else -> selectedRange.value
                 }
-                val title = "${Translator.getString("feed_inventory_report", lang)} - $rangeLabel" + if (selectedRange.value == "Custom") " (${startDateStr} to ${finalEndDate})" else ""
+                        val title = "${Translator.getString("feed_inventory_report", lang)} - $rangeLabel" + if (selectedRange.value == "Custom") " ($startDateStr to $finalEndDate)" else ""
                 onExport(feedInventoryItems, title, startDateStr, finalEndDate)
             }) { Text(stringResource("export")) }
         },
@@ -1019,11 +1019,11 @@ fun FeedFormulatorDialog(
     // Group ingredients by category, filtering out mandatory ones
     val groupedIngredients = remember(ingredients) {
         val categoryOrder = listOf("Energy", "Protein", "Vitamins, Minerals & Salt")
-        ingredients
+        ingredients.asSequence()
             .filter { ing -> mandatoryNames.none { mandatory -> ing.name.contains(mandatory, ignoreCase = true) } }
             .groupBy { 
                 val cat = it.mainCategory.ifBlank { it.category }
-                if (cat.isBlank()) "Uncategorized" else cat
+                cat.ifBlank { "Uncategorized" }
             }
             .mapValues { entry -> entry.value.sortedBy { it.name.lowercase() } }
             .toSortedMap(compareBy<String> { 
@@ -1099,7 +1099,7 @@ fun FeedFormulatorDialog(
                                     )
                                     val count = categoryIngredients.count { selectedIngredients.contains(it.id) }
                                     if (count > 0) {
-                                        Badge { Text("$count") }
+                                        Badge { Text(count.toString()) }
                                     }
                                 }
                             }

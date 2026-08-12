@@ -1,0 +1,6 @@
+- `[x]` Implement "Last 3 Months" filter in `FinancialsScreen.kt`
+- `[x]` Review and fix warnings in `SmartSwineApp.kt`
+- `[x]` Review and fix warnings in `WeightCheckerScreen.kt`
+- `[x]` Review and fix warnings in `DiseaseFinderScreen.kt`
+- `[x]` Delete `TranslationUtils.kt.corrupted` and `TranslationUtils.kt.restored`
+- `[x]` Final build and verification

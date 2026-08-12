@@ -1,0 +1,11 @@
+- [x] Security Logic Centralization
+    - [x] Update `SecurityManager.kt` with `SecurityStatus` (Safe, Violation, Warning)
+    - [x] Add `isRooted()`, `isSignatureValid()`, `isHookingFrameworkActive()` to `SecurityManager`
+- [x] MainActivity Refactoring
+    - [x] Extract `SmartSwineApp` to `SmartSwineApp.kt`
+    - [x] Simplify `MainActivity.kt` to only handle initialization and `setContent`
+- [x] DashboardScreen Decomposition
+    - [x] Create `QuoteCard.kt` and move `QuoteCard` component there
+    - [x] Use `ManagementGrid` component in `DashboardScreen.kt`
+    - [x] Use `UpcomingActivitiesList` component in `DashboardScreen.kt`
+    - [x] Cleanup unused code in `DashboardScreen.kt`

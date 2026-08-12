@@ -3,15 +3,14 @@ package com.example.smartswine.ui.herd
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.smartswine.model.Pig
-import com.example.smartswine.model.HealthRecord
-import com.example.smartswine.model.FinancialRecord
-import com.example.smartswine.model.TaskItem
+import com.example.smartswine.model.*
+import com.example.smartswine.data.HerdRepository
+import com.example.smartswine.data.TaskRepository
+import com.example.smartswine.data.FinancialRepository
 import com.example.smartswine.ui.settings.SettingsViewModel
 import com.example.smartswine.utils.DateUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.WriteBatch
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -22,6 +21,10 @@ import java.util.concurrent.TimeUnit
 class HerdViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
+    
+    private val herdRepository = HerdRepository(db)
+    private val taskRepository = TaskRepository(db)
+    private val financialRepository = FinancialRepository(db)
     
     // Data classes for Add Pig Form
     data class MultiPigEntry(
@@ -55,10 +58,6 @@ class HerdViewModel : ViewModel() {
     
     // Active Farm ID for multi-user support
     private var activeFarmId: String? = null
-    private var pigsListener: ListenerRegistration? = null
-    private var archivedPigsListener: ListenerRegistration? = null
-    private var singlePigListeners = mutableMapOf<String, ListenerRegistration>()
-    private var healthRecordsListeners = mutableMapOf<String, ListenerRegistration>()
 
     fun setActiveFarmId(uid: String) {
         if (activeFarmId != uid) {
@@ -82,7 +81,7 @@ class HerdViewModel : ViewModel() {
 
     val sowTags = _pigs.map { activePigs ->
         activePigs.asSequence()
-            .filter { it.gender == "Female" }
+            .filter { it.genderEnum == PigGender.FEMALE }
             .map { it.tagNumber }
             .distinct()
             .sorted()
@@ -91,7 +90,7 @@ class HerdViewModel : ViewModel() {
 
     val boarTags = _pigs.map { activePigs ->
         activePigs.asSequence()
-            .filter { it.gender == "Male" }
+            .filter { it.genderEnum == PigGender.MALE }
             .map { it.tagNumber }
             .distinct()
             .sorted()
@@ -115,7 +114,7 @@ class HerdViewModel : ViewModel() {
                     (pig.location.contains(query, ignoreCase = true))
             ) &&
             ((purpose == null) || (pig.purpose == purpose)) &&
-            ((status == null) || (if (status == "Pregnant") pig.status.equals("Pregnant", ignoreCase = true) else (pig.status == status)))
+            ((status == null) || (if (status == PigStatus.PREGNANT.displayName) pig.status.equals(PigStatus.PREGNANT.displayName, ignoreCase = true) else (pig.status == status)))
         }.sortedBy { it.tagNumber }.toList()
     }
 
@@ -140,21 +139,21 @@ class HerdViewModel : ViewModel() {
 
     private fun healStuckPregnancies(userId: String, pigList: List<Pig>) {
         val pigsToCheck = pigList.filter { 
-            it.status == "Pregnant" || it.status == "Lactating" || it.status == "Nursing" 
+            val s = it.statusEnum
+            s == PigStatus.PREGNANT || s == PigStatus.LACTATING || s == PigStatus.NURSING 
         }
         if (pigsToCheck.isEmpty()) return
         
         viewModelScope.launch {
             pigsToCheck.forEach { pig ->
                 try {
-                    val pigRef = db.collection("users").document(userId).collection("pigs").document(pig.id)
-                    val records = pigRef.collection("health_records").get().await().toObjects(HealthRecord::class.java)
+                    val records = herdRepository.getHealthRecords(userId, pig.id).first()
                     
-                    val isValid = when (pig.status) {
-                        "Pregnant" -> records.any { r ->
+                    val isValid = when (pig.statusEnum) {
+                        PigStatus.PREGNANT -> records.any { r ->
                             r.type == "Breeding/Mating" || r.type == "Confirm Pregnancy" || r.type == "Pregnancy Check"
                         }
-                        "Lactating", "Nursing" -> records.any { r ->
+                        PigStatus.LACTATING, PigStatus.NURSING -> records.any { r ->
                             r.type == "Farrowing"
                         }
                         else -> true
@@ -163,7 +162,7 @@ class HerdViewModel : ViewModel() {
                     if (!isValid) {
                         Log.d("HerdViewModel", "Healing pig ${pig.tagNumber}: stuck in ${pig.status} status with no history records.")
                         val revertedStatus = getCalculatedStatus(pig)
-                        pigRef.update("status", revertedStatus).await()
+                        herdRepository.updatePig(userId, pig.copy(status = revertedStatus.displayName))
                     }
                 } catch (e: Exception) {
                     Log.e("HerdViewModel", "Error healing status for pig ${pig.id}: ${e.message}")
@@ -174,43 +173,23 @@ class HerdViewModel : ViewModel() {
 
     private fun fetchHerd() {
         val userId = activeFarmId ?: auth.currentUser?.uid ?: return
-        pigsListener?.remove()
-        pigsListener = db.collection("users").document(userId).collection("pigs")
-            .addSnapshotListener { snapshot, e ->
-                if (auth.currentUser == null) {
-                    pigsListener?.remove()
-                    pigsListener = null
-                    return@addSnapshotListener
-                }
-                if (e != null) return@addSnapshotListener
-                if (snapshot != null) {
-                    val pigList = snapshot.documents.asSequence().mapNotNull { doc ->
-                        doc.toObject(Pig::class.java)?.copy(id = doc.id)
-                    }.map { calculatePigStatus(it) }.toList()
-                    _pigs.value = pigList
-                    healStuckPregnancies(userId, pigList)
-                }
-            }
         
-        archivedPigsListener?.remove()
-        archivedPigsListener = db.collection("users").document(userId).collection("archived_pigs")
-            .addSnapshotListener { snapshot, e ->
-                if (auth.currentUser == null) {
-                    archivedPigsListener?.remove()
-                    archivedPigsListener = null
-                    return@addSnapshotListener
-                }
-                if (e != null) return@addSnapshotListener
-                if (snapshot != null) {
-                    val archivedList = snapshot.documents.mapNotNull { doc ->
-                        doc.toObject(Pig::class.java)?.copy(id = doc.id)
-                    }
-                    _archivedPigs.value = archivedList
-                }
+        viewModelScope.launch {
+            herdRepository.getPigs(userId).collect { pigList ->
+                val calculatedPigs = pigList.map { calculatePigStatus(it) }
+                _pigs.value = calculatedPigs
+                healStuckPregnancies(userId, calculatedPigs)
             }
+        }
+
+        viewModelScope.launch {
+            herdRepository.getArchivedPigs(userId).collect { archivedList ->
+                _archivedPigs.value = archivedList
+            }
+        }
     }
 
-    private fun getCalculatedStatus(pig: Pig): String {
+    private fun getCalculatedStatus(pig: Pig): PigStatus {
         val birthDate = DateUtils.parseInternal(pig.birthDate)
 
         val ageDays = if (birthDate != null) {
@@ -218,110 +197,49 @@ class HerdViewModel : ViewModel() {
             TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)
         } else 0L
 
-        if (pig.purpose == "Porker") {
+        if (pig.purposeEnum == PigPurpose.PORKER) {
             return when {
-                ageDays <= 28 && !pig.weaned -> "Piglet"
-                ageDays <= 70 -> "Starter"
-                ageDays <= 112 -> "Grower"
-                else -> "Finisher"
+                ageDays <= 28 && !pig.weaned -> PigStatus.PIGLET
+                ageDays <= 70 -> PigStatus.STARTER
+                ageDays <= 112 -> PigStatus.GROWER
+                else -> PigStatus.FINISHER
             }
-        } else if (pig.purpose == "Breeder") {
+        } else if (pig.purposeEnum == PigPurpose.BREEDER) {
             if (ageDays > 182) { // 6 months
-                if (pig.gender == "Female") {
-                    return if (pig.hasFarrowed) "Sow" else "Gilt"
-                } else if (pig.gender == "Male") {
-                    return if (pig.castrated == true) "Barrow" else "Boar"
+                if (pig.genderEnum == PigGender.FEMALE) {
+                    return if (pig.hasFarrowed) PigStatus.SOW else PigStatus.GILT
+                } else if (pig.genderEnum == PigGender.MALE) {
+                    return if (pig.castrated == true) PigStatus.BARROW else PigStatus.BOAR
                 }
             } else {
                 return when {
-                    ageDays <= 28 && !pig.weaned -> "Piglet"
-                    ageDays <= 70 -> "Starter"
-                    else -> "Grower"
+                    ageDays <= 28 && !pig.weaned -> PigStatus.PIGLET
+                    ageDays <= 70 -> PigStatus.STARTER
+                    else -> PigStatus.GROWER
                 }
             }
         }
-        return "Unknown"
+        return PigStatus.UNKNOWN
     }
 
     private fun calculatePigStatus(pig: Pig): Pig {
         // High-priority states that are set manually via activities
-        if (pig.status == "Pregnant" || pig.status == "Lactating" || pig.status == "Nursing") {
+        val s = pig.statusEnum
+        if (s == PigStatus.PREGNANT || s == PigStatus.LACTATING || s == PigStatus.NURSING) {
             return pig
         }
-        return pig.copy(status = getCalculatedStatus(pig))
-    }
-
-    private fun parseAnyDate(dateStr: String): Date {
-        return DateUtils.parseDisplay(dateStr)
-            ?: DateUtils.parseInternal(dateStr)
-            ?: DateUtils.parseTask(dateStr)
-            ?: Date(0)
-    }
-
-    private suspend fun recalculatePigStatusFromHistory(pigId: String, userId: String) {
-        val pigRef = db.collection("users").document(userId).collection("pigs").document(pigId)
-        val pigSnapshot = pigRef.get().await()
-        if (!pigSnapshot.exists()) return
-        val pig = pigSnapshot.toObject(Pig::class.java) ?: return
-        
-        val records = pigRef.collection("health_records").get().await().toObjects(HealthRecord::class.java)
-        val sortedRecords = records.sortedByDescending { parseAnyDate(it.date) }
-        
-        var newStatus: String? = null
-        for (r in sortedRecords) {
-            when (r.type) {
-                "Farrowing" -> {
-                    newStatus = "Lactating"
-                    break
-                }
-                "Breeding/Mating" -> {
-                    if (!r.description.contains("Confirm Pregnancy", ignoreCase = true)) {
-                        newStatus = "Pregnant"
-                        break
-                    }
-                }
-                "Confirm Pregnancy", "Pregnancy Check" -> {
-                    if (r.description.contains("Confirmed", ignoreCase = true) || !r.description.contains("Failed", ignoreCase = true)) {
-                        newStatus = "Pregnant"
-                        break
-                    }
-                }
-                "Weaning" -> {
-                    newStatus = if (pig.gender == "Female") "Sow" else "Starter"
-                    break
-                }
-            }
-        }
-        
-        val targetStatus = newStatus ?: getCalculatedStatus(pig)
-        if (pig.status != targetStatus) {
-            pigRef.update("status", targetStatus).await()
-        }
+        return pig.copy(status = getCalculatedStatus(pig).displayName)
     }
 
     fun getPig(pigId: String): StateFlow<Pig?> {
-        // Try to find the pig in our already loaded lists to provide an immediate value
-        val initialPig = _pigs.value.find { it.id == pigId } ?: _archivedPigs.value.find { it.id == pigId }
-        val pigState = MutableStateFlow(initialPig)
+        val pigState = MutableStateFlow<Pig?>(null)
         val userId = activeFarmId ?: auth.currentUser?.uid ?: return pigState.asStateFlow()
         
-        singlePigListeners[pigId]?.remove()
-        singlePigListeners[pigId] = db.collection("users").document(userId).collection("pigs").document(pigId)
-            .addSnapshotListener { snapshot, error ->
-                if (auth.currentUser == null) {
-                    singlePigListeners[pigId]?.remove()
-                    singlePigListeners.remove(pigId)
-                    return@addSnapshotListener
-                }
-                if (snapshot != null && snapshot.exists()) {
-                    val pig = snapshot.toObject(Pig::class.java)?.copy(id = snapshot.id)
-                    pigState.value = pig?.let { calculatePigStatus(it) }
-                } else if (error == null && snapshot != null && !snapshot.exists()) {
-                    // Document explicitly does not exist
-                    pigState.value = null
-                }
-                // If error is present (e.g. offline and not in cache), we keep the initialPig value
+        viewModelScope.launch {
+            herdRepository.getPig(userId, pigId).collect { pig ->
+                pigState.value = pig?.let { calculatePigStatus(it) }
             }
+        }
         return pigState.asStateFlow()
     }
 
@@ -331,23 +249,11 @@ class HerdViewModel : ViewModel() {
         // Clear existing records to prevent showing stale data from previous pig
         _healthRecords.value = emptyList()
         
-        healthRecordsListeners[pigId]?.remove()
-        healthRecordsListeners[pigId] = db.collection("users").document(userId).collection("pigs").document(pigId)
-            .collection("health_records")
-            .orderBy("date")
-            .addSnapshotListener { snapshot, _ ->
-                if (auth.currentUser == null) {
-                    healthRecordsListeners[pigId]?.remove()
-                    healthRecordsListeners.remove(pigId)
-                    return@addSnapshotListener
-                }
-                if (snapshot != null) {
-                    val records = snapshot.documents.mapNotNull { doc ->
-                        doc.toObject(HealthRecord::class.java)?.copy(id = doc.id)
-                    }
-                    _healthRecords.value = records
-                }
+        viewModelScope.launch {
+            herdRepository.getHealthRecords(userId, pigId).collect { records ->
+                _healthRecords.value = records
             }
+        }
     }
 
     fun addHealthRecord(
@@ -361,226 +267,11 @@ class HerdViewModel : ViewModel() {
         val userId = activeFarmId ?: auth.currentUser?.uid ?: return
         viewModelScope.launch {
             try {
-                val isFuture = DateUtils.isFutureDate(record.date)
-                
-                val pigRef = db.collection("users").document(userId).collection("pigs").document(pigId)
-                val pigDoc = pigRef.get().await()
-                val pigTag = pigDoc.getString("tagNumber") ?: pigId
-                
-                if (isFuture) {
-                    val taskRef = db.collection("users").document(userId).collection("tasks").document()
-                    val task = TaskItem(
-                        id = taskRef.id,
-                        name = "${record.type}: Pig $pigTag",
-                        date = DateUtils.convertToTaskDate(record.date),
-                        notes = record.description,
-                        pigIds = listOf(pigId)
-                    )
-                    db.collection("users").document(userId).collection("tasks").document(taskRef.id).set(task).await()
-                    val updatedRecord = record.copy(taskId = taskRef.id)
-                    pigRef.collection("health_records").add(updatedRecord).await()
-                } else {
-                    val batch = db.batch()
-                    val isCulling = record.type == "Culling"
-                    val recordRef = if (isCulling) {
-                        db.collection("users").document(userId).collection("archived_pigs").document(pigId).collection("health_records").document()
-                    } else {
-                        pigRef.collection("health_records").document()
-                    }
-                    val updatedRecord = record.copy(id = recordRef.id)
-                    
-                    handleSpecializedActivityLogic(batch, pigId, updatedRecord, trackHeat, checkPregnancy, pregnancyConfirmed, details, userId, pigTag)
-                    
-                    batch.set(recordRef, updatedRecord)
-                    batch.commit().await()
-                }
+                herdRepository.addHealthRecordWithLogic(
+                    userId, pigId, record, trackHeat, checkPregnancy, pregnancyConfirmed, details
+                )
             } catch (e: Exception) {
                 _error.value = "Failed to add health record: ${e.message}"
-            }
-        }
-    }
-
-    private suspend fun handleSpecializedActivityLogic(
-        batch: WriteBatch,
-        pigId: String,
-        record: HealthRecord,
-        trackHeat: Boolean,
-        checkPregnancy: Boolean,
-        pregnancyConfirmed: Boolean,
-        details: Map<String, Any>,
-        userId: String,
-        pigTag: String
-    ) {
-        val pigRef = db.collection("users").document(userId).collection("pigs").document(pigId)
-        
-        when (record.type) {
-            "Heat Detection" -> {
-                if (trackHeat) {
-                    val tRef = db.collection("users").document(userId).collection("tasks").document()
-                    val taskDate = DateUtils.addDaysToDate(record.date, 21)
-                    batch.set(tRef, TaskItem(
-                        id = tRef.id,
-                        name = "Heat Detection: Pig $pigTag",
-                        date = taskDate,
-                        notes = "Auto-created 21 days after heat detection on ${record.date}",
-                        pigIds = listOf(pigId)
-                    ))
-                }
-            }
-            "Breeding/Mating" -> {
-                batch.update(pigRef, "lastBreedingDate", record.date)
-                val boarTag = details["boarTag"]?.toString() ?: ""
-                if (boarTag.isNotEmpty()) batch.update(pigRef, "lastBoarTag", boarTag)
-                
-                batch.update(pigRef, "purpose", "Breeder")
-                if (checkPregnancy) {
-                    val tRef = db.collection("users").document(userId).collection("tasks").document()
-                    val taskDate = DateUtils.addDaysToDate(record.date, 21)
-                    batch.set(tRef, TaskItem(
-                        id = tRef.id,
-                        name = "Confirm Pregnancy: Pig $pigTag",
-                        date = taskDate,
-                        notes = "Scheduled 21 days after mating on ${record.date}",
-                        pigIds = listOf(pigId)
-                    ))
-                } else {
-                    batch.update(pigRef, "status", "Pregnant")
-                    val tRef = db.collection("users").document(userId).collection("tasks").document()
-                    val taskDate = DateUtils.addDaysToDate(record.date, 114)
-                    batch.set(tRef, TaskItem(
-                        id = tRef.id,
-                        name = "Farrowing: Pig $pigTag",
-                        date = taskDate,
-                        notes = "Scheduled 114 days after mating on ${record.date}",
-                        pigIds = listOf(pigId)
-                    ))
-                }
-            }
-            "Confirm Pregnancy", "Pregnancy Check" -> {
-                batch.update(pigRef, "purpose", "Breeder")
-                if (pregnancyConfirmed) {
-                    batch.update(pigRef, "status", "Pregnant")
-                    val pigDoc = pigRef.get().await()
-                    val lastMating = pigDoc.getString("lastBreedingDate") ?: record.date
-                    val tRef = db.collection("users").document(userId).collection("tasks").document()
-                    val taskDate = DateUtils.addDaysToDate(lastMating, 114)
-                    batch.set(tRef, TaskItem(
-                        id = tRef.id,
-                        name = "Farrowing: Pig $pigTag",
-                        date = taskDate,
-                        notes = "Scheduled 114 days after mating on $lastMating",
-                        pigIds = listOf(pigId)
-                    ))
-                }
-            }
-            "Farrowing" -> {
-                val numMales = details["numMales"]?.toString()?.toIntOrNull() ?: 0
-                val numFemales = details["numFemales"]?.toString()?.toIntOrNull() ?: 0
-                val maleTagsStr = details["maleTags"]?.toString() ?: ""
-                val femaleTagsStr = details["femaleTags"]?.toString() ?: ""
-                
-                val maleTags = maleTagsStr.split(",").map { it.trim() }.filter { it.isNotEmpty() }
-                val femaleTags = femaleTagsStr.split(",").map { it.trim() }.filter { it.isNotEmpty() }
-
-                val pigDoc = pigRef.get().await()
-                val breed = pigDoc.getString("breed") ?: ""
-                val location = pigDoc.getString("location") ?: ""
-                val sowTagSnapshot = pigDoc.getString("tagNumber") ?: ""
-                val boarTag = pigDoc.getString("lastBoarTag") ?: ""
-
-                val finalMaleTags = maleTags.toMutableList()
-                for (i in finalMaleTags.size until numMales) {
-                    finalMaleTags.add("${sowTagSnapshot}-M${i + 1}")
-                }
-
-                val finalFemaleTags = femaleTags.toMutableList()
-                for (i in finalFemaleTags.size until numFemales) {
-                    finalFemaleTags.add("${sowTagSnapshot}-F${i + 1}")
-                }
-
-                finalMaleTags.forEach { tag ->
-                    val newPigRef = db.collection("users").document(userId).collection("pigs").document()
-                    batch.set(newPigRef, Pig(id = newPigRef.id, tagNumber = tag, gender = "Male", breed = breed, birthDate = record.date, status = "Piglet", sowTag = sowTagSnapshot, boarTag = boarTag, location = location))
-                }
-                finalFemaleTags.forEach { tag ->
-                    val newPigRef = db.collection("users").document(userId).collection("pigs").document()
-                    batch.set(newPigRef, Pig(id = newPigRef.id, tagNumber = tag, gender = "Female", breed = breed, birthDate = record.date, status = "Piglet", sowTag = sowTagSnapshot, boarTag = boarTag, location = location))
-                }
-                batch.update(pigRef, "status", "Lactating", "hasFarrowed", true, "weaned", false, "purpose", "Breeder")
-            }
-            "Weaning" -> {
-                val pigDoc = pigRef.get().await()
-                val statusVal = pigDoc.getString("status") ?: ""
-                val isMom = statusVal == "Lactating" || statusVal == "Nursing" || statusVal == "Sow"
-                
-                if (isMom) {
-                    batch.update(pigRef, "status", "Sow")
-                } else {
-                    val weaningLoc = details["weaningLocation"]?.toString() ?: ""
-                    batch.update(pigRef, "status", "Starter", "weaned", true)
-                    if (weaningLoc.isNotEmpty()) {
-                        batch.update(pigRef, "location", weaningLoc)
-                    }
-                    val sowTagVal = pigDoc.getString("sowTag") ?: ""
-                    if (sowTagVal.isNotEmpty()) {
-                        val otherOffspring = db.collection("users").document(userId).collection("pigs").whereEqualTo("sowTag", sowTagVal).whereEqualTo("weaned", false).get().await()
-                        if (otherOffspring.documents.all { it.id == pigId }) {
-                            val sowSnapshot = db.collection("users").document(userId).collection("pigs").whereEqualTo("tagNumber", sowTagVal).limit(1).get().await()
-                            if (!sowSnapshot.isEmpty) {
-                                db.collection("users").document(userId).collection("pigs").document(sowSnapshot.documents[0].id).update("status", "Sow")
-                            }
-                        }
-                    }
-                }
-            }
-            "Castration" -> {
-                val pigDoc = pigRef.get().await()
-                if (pigDoc.getString("gender")?.equals("Male", ignoreCase = true) == true) {
-                    batch.update(pigRef, "castrated", true, "castrationDate", record.date)
-                }
-            }
-            "Teeth Clipping" -> {
-                batch.update(pigRef, "teethClipped", true)
-            }
-            "Tail Docking" -> {
-                batch.update(pigRef, "tailDocked", true)
-            }
-            "Iron Injection" -> {
-                val pigDoc = pigRef.get().await()
-                val currentInjections = (pigDoc.getLong("ironInjections") ?: 0L).toInt()
-                batch.update(pigRef, "ironInjections", currentInjections + 1)
-            }
-            "Weight Check" -> {
-                val weightVal = details["weight"]?.toString()?.toDoubleOrNull() ?: 0.0
-                if (weightVal > 0.0) {
-                    batch.update(pigRef, "weight", weightVal)
-                }
-            }
-            "Culling" -> {
-                val reason = details["cullingReason"]?.toString() ?: "Unknown"
-                val salePriceVal = details["salePrice"]?.toString()?.toDoubleOrNull() ?: 0.0
-                
-                val pigDoc = pigRef.get().await()
-                val pigObj = pigDoc.toObject(Pig::class.java)
-                if (pigObj != null) {
-                    batch.set(db.collection("users").document(userId).collection("archived_pigs").document(pigId), 
-                        pigObj.copy(status = "Culled ($reason)"))
-                }
-                batch.delete(pigRef)
-                
-                if (reason == "Sold" && salePriceVal > 0) {
-                    val fRef = db.collection("users").document(userId).collection("financials").document()
-                    batch.set(fRef, FinancialRecord(
-                        id = fRef.id, 
-                        type = "Income", 
-                        category = "Pig Sale", 
-                        amount = salePriceVal, 
-                        date = record.date, 
-                        description = "Sale of Pig $pigTag", 
-                        pigId = pigId
-                    ))
-                }
-                cleanupTasksForPig(pigId, userId)
             }
         }
     }
@@ -598,58 +289,9 @@ class HerdViewModel : ViewModel() {
         if (recordId.isEmpty()) return
         viewModelScope.launch {
             try {
-                val isFuture = DateUtils.isFutureDate(record.date)
-                
-                val pigRef = db.collection("users").document(userId).collection("pigs").document(pigId)
-                val pigDoc = pigRef.get().await()
-                val pigTag = pigDoc.getString("tagNumber") ?: pigId
-                
-                var updatedRecord = record
-                
-                // Sync with Task
-                record.taskId?.let { tId ->
-                    if (isFuture) {
-                        db.collection("users").document(userId).collection("tasks").document(tId)
-                            .update(
-                                "date", DateUtils.convertToTaskDate(record.date), 
-                                "name", "${record.type}: Pig $pigTag", 
-                                "notes", record.description
-                            ).await()
-                    } else {
-                        db.collection("users").document(userId).collection("tasks").document(tId).delete().await()
-                        updatedRecord = record.copy(taskId = null)
-                    }
-                } ?: run {
-                    if (isFuture) {
-                        val taskRef = db.collection("users").document(userId).collection("tasks").document()
-                        val task = TaskItem(
-                            id = taskRef.id,
-                            name = "${record.type}: Pig $pigTag",
-                            date = DateUtils.convertToTaskDate(record.date),
-                            notes = record.description,
-                            pigIds = listOf(pigId)
-                        )
-                        db.collection("users").document(userId).collection("tasks").document(taskRef.id).set(task).await()
-                        updatedRecord = record.copy(taskId = taskRef.id)
-                    }
-                }
-
-                if (!isFuture) {
-                    val batch = db.batch()
-                    val isCulling = record.type == "Culling"
-                    val recordRef = if (isCulling) {
-                        db.collection("users").document(userId).collection("archived_pigs").document(pigId).collection("health_records").document(recordId)
-                    } else {
-                        pigRef.collection("health_records").document(recordId)
-                    }
-                    
-                    handleSpecializedActivityLogic(batch, pigId, updatedRecord, trackHeat, checkPregnancy, pregnancyConfirmed, details, userId, pigTag)
-                    
-                    batch.set(recordRef, updatedRecord)
-                    batch.commit().await()
-                } else {
-                    pigRef.collection("health_records").document(recordId).set(updatedRecord).await()
-                }
+                herdRepository.updateHealthRecordWithLogic(
+                    userId, pigId, record, trackHeat, checkPregnancy, pregnancyConfirmed, details
+                )
             } catch (e: Exception) {
                 _error.value = "Failed to update health record: ${e.message}"
             }
@@ -660,24 +302,13 @@ class HerdViewModel : ViewModel() {
         val userId = activeFarmId ?: auth.currentUser?.uid ?: return
         viewModelScope.launch {
             try {
-                var docRef = db.collection("users").document(userId).collection("pigs").document(pigId)
-                    .collection("health_records").document(recordId)
-                var doc = docRef.get().await()
-                if (!doc.exists()) {
-                    docRef = db.collection("users").document(userId).collection("archived_pigs").document(pigId)
-                        .collection("health_records").document(recordId)
-                    doc = docRef.get().await()
-                }
-                
-                val taskId = doc.getString("taskId")
-                if (!taskId.isNullOrEmpty()) {
-                    db.collection("users").document(userId).collection("tasks").document(taskId).delete().await()
-                }
-
-                docRef.delete().await()
+                herdRepository.deleteHealthRecord(userId, pigId, recordId)
 
                 // Recalculate and update the pig's status based on the remaining history
-                recalculatePigStatusFromHistory(pigId, userId)
+                val pig = herdRepository.getPig(userId, pigId).first()
+                if (pig != null) {
+                    herdRepository.recalculatePigStatusFromHistory(userId, pigId, getCalculatedStatus(pig))
+                }
             } catch (e: Exception) {
                 _error.value = "Failed to delete health record: ${e.message}"
             }
@@ -701,10 +332,11 @@ class HerdViewModel : ViewModel() {
                     }
                 }
 
-                val pigRef = db.collection("users").document(userId).collection("pigs").document()
-                val pigWithId = calculatePigStatus(pig).copy(id = pigRef.id)
+                val pigWithCalculatedStatus = calculatePigStatus(pig)
                 
                 db.runTransaction { transaction ->
+                    val pigRef = db.collection("users").document(userId).collection("pigs").document()
+                    val pigWithId = pigWithCalculatedStatus.copy(id = pigRef.id)
                     transaction.set(pigRef, pigWithId)
                     
                     if (pig.castrated == true && pig.castrationDate.isNotEmpty()) {
@@ -832,12 +464,11 @@ class HerdViewModel : ViewModel() {
         if (pig.id.isEmpty()) return
         viewModelScope.launch {
             try {
-                val pigRef = db.collection("users").document(userId).collection("pigs").document(pig.id)
-                val currentPigDoc = pigRef.get().await()
-                val oldWeight = currentPigDoc.getDouble("weight") ?: 0.0
+                val currentPig = herdRepository.getPig(userId, pig.id).first()
+                val oldWeight = currentPig?.weight ?: 0.0
                 
                 val updatedPig = calculatePigStatus(pig)
-                pigRef.set(updatedPig).await()
+                herdRepository.updatePig(userId, updatedPig)
                 
                 // If weight was updated manually, add a history record for it to clear warnings
                 if (updatedPig.weight != oldWeight && updatedPig.weight > 0) {
@@ -846,8 +477,7 @@ class HerdViewModel : ViewModel() {
                         type = "Weight Check",
                         description = "Weight updated manually in pig details",
                     )
-                    // Just add the record directly to health_records subcollection
-                    pigRef.collection("health_records").add(record).await()
+                    herdRepository.addHealthRecordWithLogic(userId, pig.id, record)
                 }
             } catch (_: Exception) {
                 _error.value = "Failed to update pig"
@@ -856,9 +486,6 @@ class HerdViewModel : ViewModel() {
     }
 
     fun updatePigWeight(pigId: String, weight: Double) {
-        val userId = activeFarmId ?: auth.currentUser?.uid ?: return
-        if (pigId.isEmpty()) return
-        
         // Use the common addHealthRecord logic which handles both the history entry 
         // AND updating the current weight in the pig document via handleSpecializedActivityLogic
         val record = HealthRecord(
@@ -878,13 +505,7 @@ class HerdViewModel : ViewModel() {
                     status = "Archived ($reason)",
                     notes = pig.notes + "\nArchived on: ${DateUtils.formatToInternal(Date())} Reason: $reason",
                 )
-                db.runTransaction { transaction ->
-                    val pigRef = db.collection("users").document(userId).collection("pigs").document(pig.id)
-                    val archiveRef = db.collection("users").document(userId).collection("archived_pigs").document(pig.id)
-                    
-                    transaction.set(archiveRef, archivedPig)
-                    transaction.delete(pigRef)
-                }.await()
+                herdRepository.archivePig(userId, pig.id, archivedPig)
             } catch (e: Exception) {
                 _error.value = "Failed to archive pig: ${e.message}"
             }
@@ -896,10 +517,7 @@ class HerdViewModel : ViewModel() {
         if (pig.id.isEmpty()) return
         viewModelScope.launch {
             try {
-                db.runTransaction { transaction ->
-                    transaction.delete(db.collection("users").document(userId).collection("pigs").document(pig.id))
-                    // Note: We could also trigger a background cleanup for tasks here if needed
-                }.await()
+                herdRepository.deletePig(userId, pig.id)
                 // Explicitly cleanup tasks after deletion
                 cleanupTasksForPig(pig.id, userId)
             } catch (_: Exception) {
@@ -914,19 +532,15 @@ class HerdViewModel : ViewModel() {
                 val tasks = db.collection("users").document(userId).collection("tasks")
                     .whereArrayContains("pigIds", pigId).get().await()
                 
-                val batch = db.batch()
                 tasks.forEach { doc ->
                     val task = doc.toObject(TaskItem::class.java)
                     if (task.pigIds.size <= 1) {
-                        batch.delete(doc.reference)
+                        taskRepository.deleteTask(userId, doc.id)
                     } else {
                         val newPigIds = task.pigIds.filter { it != pigId }
-                        // Simplify name by removing the pig's tag if possible
-                        // (Requires knowing the tag, but we can just update the IDs for now)
-                        batch.update(doc.reference, "pigIds", newPigIds)
+                        taskRepository.updateTask(userId, task.copy(pigIds = newPigIds))
                     }
                 }
-                batch.commit().await()
             } catch (e: Exception) {
                 Log.e("HerdViewModel", "Task cleanup error", e)
             }
@@ -935,28 +549,28 @@ class HerdViewModel : ViewModel() {
 
     // Statistics for the Ribbon
     val stats = pigs.map { allPigs ->
-        val breeders = allPigs.filter { it.purpose == "Breeder" }
-        val porkers = allPigs.filter { it.purpose == "Porker" }
+        val breeders = allPigs.filter { it.purposeEnum == PigPurpose.BREEDER }
+        val porkers = allPigs.filter { it.purposeEnum == PigPurpose.PORKER }
 
         mapOf(
             "total" to allPigs.size,
             "breeders_count" to breeders.size,
             "porkers_count" to porkers.size,
-            "piglets_total" to allPigs.count { it.status == "Piglet" },
+            "piglets_total" to allPigs.count { it.statusEnum == PigStatus.PIGLET },
             
             // Breeder specific categories
-            "breeders_piglets" to breeders.count { it.status == "Piglet" },
-            "breeders_starter" to breeders.count { it.status == "Starter" },
-            "breeders_grower" to breeders.count { it.status == "Grower" },
-            "boars" to breeders.count { it.status == "Boar" },
-            "gilts" to breeders.count { it.status == "Gilt" },
-            "Pregnant" to breeders.count { it.status == "Pregnant" },
-            "Lactating" to breeders.count { it.status == "Lactating" },
-            "sows" to breeders.count { it.status == "Sow" },
+            "breeders_piglets" to breeders.count { it.statusEnum == PigStatus.PIGLET },
+            "breeders_starter" to breeders.count { it.statusEnum == PigStatus.STARTER },
+            "breeders_grower" to breeders.count { it.statusEnum == PigStatus.GROWER },
+            "boars" to breeders.count { it.statusEnum == PigStatus.BOAR },
+            "gilts" to breeders.count { it.statusEnum == PigStatus.GILT },
+            "Pregnant" to breeders.count { it.statusEnum == PigStatus.PREGNANT },
+            "Lactating" to breeders.count { it.statusEnum == PigStatus.LACTATING },
+            "sows" to breeders.count { it.statusEnum == PigStatus.SOW },
 
-            "Finisher" to porkers.count { it.status == "Finisher" },
-            "Grower" to porkers.count { it.status == "Grower" },
-            "Starter" to porkers.count { it.status == "Starter" },
+            "Finisher" to porkers.count { it.statusEnum == PigStatus.FINISHER },
+            "Grower" to porkers.count { it.statusEnum == PigStatus.GROWER },
+            "Starter" to porkers.count { it.statusEnum == PigStatus.STARTER },
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
@@ -1000,9 +614,5 @@ class HerdViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        pigsListener?.remove()
-        archivedPigsListener?.remove()
-        singlePigListeners.values.forEach { it.remove() }
-        healthRecordsListeners.values.forEach { it.remove() }
     }
 }

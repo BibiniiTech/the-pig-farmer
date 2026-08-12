@@ -1,0 +1,14 @@
+- [x] Android: Harmonize Data Models
+    - [x] Update `Pig.kt` with full parity and Firestore annotations
+    - [x] Update `FeedIngredient.kt` with detailed nutritional profile
+    - [x] Update `UserProfile` in `AuthViewModel.kt` to include settings
+    - [x] Update `HerdRepository.kt` to use safe update patterns
+- [x] Web: Centralize and Expand Types
+    - [x] Create `web/src/lib/types.ts`
+    - [x] Update `app/dashboard/herd/page.tsx` to use central types and merge updates
+    - [x] Update `app/dashboard/activities/page.tsx`
+    - [x] Update `components/TaskCompletionModal.tsx`
+    - [x] Update other pages/components as needed
+- [x] Verification
+    - [x] Verify Android build
+    - [x] Verify Web build
