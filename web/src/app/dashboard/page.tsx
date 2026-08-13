@@ -15,7 +15,7 @@ import DesktopHeader from "@/components/layouts/DesktopHeader";
 import TaskCompletionModal from "@/components/TaskCompletionModal";
 import SettingsModal from "@/components/SettingsModal";
 import { useTranslations, useLocale } from "next-intl";
-import { Pig } from "@/lib/types";
+import { Pig, TaskItem } from "@/lib/types";
 import {
   HerdDataIcon,
   FeedManagementIcon,
@@ -43,15 +43,6 @@ interface HerdStats {
   Starter: number;
   Grower: number;
   Finisher: number;
-}
-
-interface TaskItem {
-  id: string;
-  name: string;
-  date: string;
-  notes: string;
-  pigIds: string[];
-  completed?: boolean;
 }
 
 interface FeedInventoryItem {
