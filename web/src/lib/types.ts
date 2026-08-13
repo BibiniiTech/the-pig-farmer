@@ -67,6 +67,7 @@ export interface Pig {
   lastBreedingDate?: string;
   lastBoarTag?: string;
   hasFarrowed?: boolean;
+  healthRecords?: HealthRecord[];
 }
 
 export interface HealthRecord {
@@ -85,7 +86,7 @@ export interface TaskItem {
   date: string;
   notes: string;
   pigIds: string[];
-  completed: boolean;
+  completed?: boolean;
   healthRecordIds?: string[];
 }
 
