@@ -106,7 +106,13 @@
     "noActivities": "Nenhuma atividade próxima",
     "allTasksCompleted": "Todas as tarefas foram concluídas!",
     "generalTask": "Tarefa Geral",
-    "language": "Idioma"
+    "language": "Idioma",
+    "feed": "Alimentação",
+    "inventory": "Estoque de ração",
+    "calculator": "Calcular Ração e Nutrição",
+    "mixFeed": "Misturar e Formular Ração",
+    "analyzeFeed": "Análise Nutricional da Ração",
+    "marketHub": "Centro de Mercado Suíno"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -835,26 +841,26 @@
       "dis_asf": {
         "name": "Peste Suína Africana (PSA)",
         "scientificName": "Asfivirus",
-        "description": "Doença viral altamente contagiosa e mortal. Não existe vacina.",
-        "prevention": "Biosseguridade rigorosa e restrição de acesso."
+        "description": "Uma doença viral altamente contagiosa e mortal prevalente na África Ocidental. Não existe vacina.",
+        "prevention": "Biosseguridade rigorosa e restrição de acesso à fazenda."
       },
       "dis_fmd": {
         "name": "Febre Aftosa",
         "scientificName": "Aphthovirus",
-        "description": "Causa bolhas na boca e patas.",
+        "description": "Doença viral que causa bolhas na boca e nos pés.",
         "prevention": "Vacinação e controle de movimentação."
       },
       "dis_prrs": {
         "name": "PRRS (Orelha Azul)",
         "scientificName": "Arterivirus",
-        "description": "Falha respiratória e reprodutiva.",
-        "prevention": "Biosseguridade e vacinação."
+        "description": "Causa falha respiratória e problemas reprodutivos.",
+        "prevention": "Biosseguridade e vacinação do rebanho."
       },
       "dis_erysipelas": {
         "name": "Erisipela Suína",
         "scientificName": "Erysipelothrix rhusiopathiae",
-        "description": "Bacteriana, causa lesões de pele e artrite.",
-        "prevention": "Vacinação regular e higiene."
+        "description": "Infecção bacteriana que causa lesões cutâneas distintas e artrite.",
+        "prevention": "Vacinação regular e higiene das baias."
       }
     },
     "diagnosisMatches": "Correspondências de diagnóstico clínico",
@@ -866,7 +872,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 PROTOCOLO DE BIOSSEGURANÇA DE EMERGÊNCIA:",
     "clinicalDiagnosisMatches": "Correspondências de diagnóstico clínico",
     "hallmarkBadge": "Sinal característico",
-    "hallmarkSignPresent": "Sinal de marca presente: %1$s",
+    "hallmarkSignPresent": "Sinal de marca presente: {sign}",
     "otherSignsWatch": "Outros sinais a serem observados:",
     "preventionTreatmentLabel": "Prevenção/Tratamento: {treatment}",
     "bio_proto_asf": "QUARENTENA DE EMERGÊNCIA IMEDIATA: A Peste Suína Africana é um vírus letal de notificação obrigatória. 1) Feche os portões da granja imediatamente. 2) Interrompa movimentação de porcos, veículos, ração e esterco. 3) Desinfete pedilúvios e pneus com Virkon S ou soda a 2%. 4) Notifique a Defesa Sanitária imediatamente.",
@@ -878,8 +884,8 @@
     "bio_proto_vesicular_stomatitis": "LESIÃO VESICULAR DE NOTIFICAÇÃO: Estomatite Vesicular é idêntica à Febre Aftosa. 1) Isole suínos infectados. 2) Use luvas de proteção. 3) Solicite diagnóstico diferencial laboratorial.",
     "bio_proto_senecavirus": "DOENÇA VESICULAR OBRIGATÓRIA: Senecavirus A causa lesões indistinguíveis de Febre Aftosa. 1) Quarentena imediata. 2) Proíba transporte para fora da granja. 3) Notifique veterinários para PCR diferencial obrigatório.",
     "bio_proto_svd": "DOENÇA VESICULAR SUÍNA (SVD): 1) Isolamento rígido de animais afetados. 2) Restrinja fluxo de veículos e visitas. 3) Notifique o departamento de saúde animal imediatamente.",
-    "clinicalMatchPercent": "%1$d%% Correspondência clínica",
-    "matchedSignsCount": "{matched}$d de {total}$d sinais",
+    "clinicalMatchPercent": "{percent}% Correspondência clínica",
+    "matchedSignsCount": "{matched} de {total} sinais",
     "matchPercentSuffix": "({percent}% de correspondência)"
   },
   "HR": {
@@ -1272,7 +1278,7 @@
     "snooze1Month": "1 mês",
     "deleteNotificationQuestion": "Excluir notificação?",
     "deleteNotificationConfirm": "Tem certeza de que deseja excluir esta notificação?",
-    "lastWeighedDaysAgo": "Porco #%1$s: última pesagem há %2$s dias",
+    "lastWeighedDaysAgo": "Porco #{tag}: última pesagem há {days} dias",
     "stockLeftMinFormat": "{current}: {unit} kg restantes (Mínimo: {min} kg)",
     "pigs": "Porcos",
     "pig": "Porco",

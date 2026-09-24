@@ -107,6 +107,21 @@ const ArrowRightIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const ArrowLeftIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <line x1="19" y1="12" x2="5" y2="12" />
+    <polyline points="12 19 5 12 12 5" />
+  </svg>
+);
+
 function CompactPigDropdownCard({ pig }: { pig: Pig }) {
   const ageDays = calculateAgeDays(pig.birthDate);
   const performance = evaluatePerformance(pig.breed, ageDays, pig.weight);
@@ -672,7 +687,7 @@ function DashboardContent() {
   }
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
+    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-x-hidden">
       {/* Fixed SmartSwine Watermark Background Logo */}
       <div className="fixed inset-0 pointer-events-none flex items-center justify-center -z-0 select-none overflow-hidden">
         <img
@@ -690,35 +705,6 @@ function DashboardContent() {
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
           <PassCountdownBanner />
 
-          {/* Header Welcome Bar */}
-          <div className="flex flex-col items-center text-center sm:flex-row sm:justify-between sm:items-center sm:text-left gap-4 bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-            <div className="flex flex-col gap-1">
-              <h1 className="text-xl sm:text-2xl font-bold text-zinc-900">
-                {t("welcome", { farmName: userProfile?.farmName || "SmartSwine" })}
-              </h1>
-              <div className="hidden sm:block">
-                <p className="text-xs text-zinc-500">
-                  {isStaff ? t("staffMember") : t("farmOwner")} {userProfile?.isPremium && `• ${t("premium")}`}
-                </p>
-              </div>
-            </div>
-            {userProfile?.isPremium ? (
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800 border border-emerald-200/50">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                {t("premiumAccessActive")}
-              </span>
-            ) : (
-              <div className="flex items-center gap-3">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-zinc-100 px-3 py-1 text-xs font-semibold text-zinc-600 border border-zinc-200">
-                  {t("freeTier")}
-                </span>
-                <Link href="/dashboard/billing" className="inline-flex items-center rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-3 py-1 text-xs font-bold text-emerald-700 transition-all">
-                  {t("upgrade")}
-                </Link>
-              </div>
-            )}
-          </div>
-
           {/* Collapsible Accordion Navigation Options (Opens One at a Time) */}
           <div className="space-y-4">
             {/* 1. HERD DATA ACCORDION */}
@@ -735,9 +721,6 @@ function DashboardContent() {
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
                       <h2 className="text-xl sm:text-2xl font-black text-zinc-900 truncate">{t("herdData")}</h2>
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
-                        {herdStats.total} {t("totalPigs", { count: herdStats.total }).split(":")[0] || "Pigs"}
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -906,10 +889,7 @@ function DashboardContent() {
                   </div>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <h2 className="text-xl sm:text-2xl font-black text-zinc-900 truncate">{t("feedManagement")}</h2>
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-orange-100 text-orange-800">
-                        {feedCount} {t("items") || "Items"}
-                      </span>
+                      <h2 className="text-xl sm:text-2xl font-black text-zinc-900 truncate">{t("feed") || "Feed"}</h2>
                     </div>
                   </div>
                 </div>
@@ -1061,9 +1041,6 @@ function DashboardContent() {
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
                       <h2 className="text-xl sm:text-2xl font-black text-zinc-900 truncate">{t("herdActivities")}</h2>
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-100 text-cyan-800">
-                        {groupedTasks.length} {t("pending") || "Pending"}
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -1123,7 +1100,8 @@ function DashboardContent() {
                             onClick={() => setActivityPage(1)}
                             className="text-xs font-bold text-cyan-700 hover:text-cyan-800 inline-flex items-center gap-1.5 py-1 px-3 rounded-lg hover:bg-cyan-50 transition"
                           >
-                            {t("nextPage") || "Next Page →"}
+                            <span>{t("next") || "Next"}</span>
+                            <ArrowRightIcon className="h-3.5 w-3.5" />
                           </button>
                         </div>
                       ) : (
@@ -1133,45 +1111,13 @@ function DashboardContent() {
                             onClick={() => setActivityPage(0)}
                             className="text-xs font-bold text-cyan-700 hover:text-cyan-800 inline-flex items-center gap-1.5 py-1 px-3 rounded-lg hover:bg-cyan-50 transition"
                           >
-                            {t("prevPage") || "← Previous Page"}
+                            <ArrowLeftIcon className="h-3.5 w-3.5" />
+                            <span>{t("previous") || "Previous"}</span>
                           </button>
                         </div>
                       )}
                     </div>
                   </div>
-
-                  {/* Upcoming Pending Activities */}
-                  {groupedTasks.length > 0 && (
-                    <div className="space-y-3 pt-2">
-                      <h3 className="text-xs font-bold text-zinc-600 uppercase tracking-wider">
-                        {t("upcomingActivities") || "Upcoming Pending Activities"} ({groupedTasks.length})
-                      </h3>
-                      <div className="space-y-2">
-                        {groupedTasks.slice(0, 4).map((taskGroup, idx) => (
-                          <div
-                            key={`act-${idx}`}
-                            onClick={() => {
-                              setTasksToEdit(taskGroup.originalTasks);
-                              setIsCompletionModalOpen(true);
-                            }}
-                            className={`p-3.5 rounded-xl border transition cursor-pointer flex items-center justify-between ${
-                              taskGroup.isOverdue ? "bg-red-50 border-red-200" : "bg-white border-zinc-200 hover:bg-zinc-50"
-                            }`}
-                          >
-                            <div>
-                              <p className="text-xs font-bold text-zinc-900">{getActivityTranslation(taskGroup.activity)}</p>
-                              <p className="text-[11px] text-zinc-500">{t("target") || "Target"}: {taskGroup.target}</p>
-                            </div>
-                            <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full ${
-                              taskGroup.isOverdue ? "bg-red-100 text-red-800" : "bg-zinc-100 text-zinc-700"
-                            }`}>
-                              {taskGroup.date}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
                 </div>
               )}
             </div>
@@ -1243,16 +1189,18 @@ function DashboardContent() {
                     </div>
                   </div>
 
+                  <Link
+                    href="/dashboard/financials"
+                    className="w-full py-2.5 rounded-xl border border-teal-600 text-teal-700 hover:bg-teal-50 text-xs font-bold transition flex items-center justify-center gap-2 shadow-xs"
+                  >
+                    {t("viewAll") || "View All"}
+                    <ArrowRightIcon className="h-3.5 w-3.5" />
+                  </Link>
+
                   <div className="flex items-center justify-between">
                     <h3 className="text-xs font-bold text-zinc-600 uppercase tracking-wider">
                       {t("recentTransactions")}
                     </h3>
-                    <Link
-                      href="/dashboard/financials"
-                      className="text-xs font-bold text-teal-700 hover:text-teal-800 inline-flex items-center gap-1"
-                    >
-                      {t("viewFullAccounting") || "View Full Accounting →"}
-                    </Link>
                   </div>
 
                   {recentFinancials.length === 0 ? (
@@ -1274,14 +1222,6 @@ function DashboardContent() {
                       ))}
                     </div>
                   )}
-
-                  <Link
-                    href="/dashboard/financials"
-                    className="w-full py-2.5 rounded-xl border border-teal-600 text-teal-700 hover:bg-teal-50 text-xs font-bold transition flex items-center justify-center gap-2"
-                  >
-                    {t("viewAll") || "View All"}
-                    <ArrowRightIcon className="h-3.5 w-3.5" />
-                  </Link>
                 </div>
               )}
             </div>

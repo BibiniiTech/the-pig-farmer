@@ -248,6 +248,60 @@ function FinancialsContent() {
   const targetSellingPrice20Margin = costOfProductionPerKg * 1.2;
   const targetSellingPriceFinisher = breakEvenPerFinisher * 1.2;
 
+  // Expense Distribution & Benchmarks Calculations
+  const expenseRecords = useMemo(() => records.filter((r) => r.type === "Expense"), [records]);
+  const feedTotal = useMemo(
+    () => expenseRecords.filter((r) => r.category?.toLowerCase() === "feed").reduce((sum, r) => sum + (r.amount || 0), 0),
+    [expenseRecords]
+  );
+  const medicineTotal = useMemo(
+    () =>
+      expenseRecords
+        .filter((r) =>
+          ["vet", "vet/medication", "medicine", "vaccination", "medication"].includes(r.category?.toLowerCase())
+        )
+        .reduce((sum, r) => sum + (r.amount || 0), 0),
+    [expenseRecords]
+  );
+  const laborTotal = useMemo(
+    () =>
+      expenseRecords
+        .filter((r) => ["labor", "labor/salary", "salary"].includes(r.category?.toLowerCase()))
+        .reduce((sum, r) => sum + (r.amount || 0), 0),
+    [expenseRecords]
+  );
+  const otherTotal = Math.max(0, totalExpense - feedTotal - medicineTotal - laborTotal);
+
+  const feedPct = totalExpense > 0 ? (feedTotal / totalExpense) * 100 : 0;
+  const healthPct = totalExpense > 0 ? (medicineTotal / totalExpense) * 100 : 0;
+  const laborPct = totalExpense > 0 ? (laborTotal / totalExpense) * 100 : 0;
+  const otherPct = totalExpense > 0 ? (otherTotal / totalExpense) * 100 : 0;
+
+  const benchmarkAssessment = useMemo(() => {
+    if (totalExpense === 0) {
+      return {
+        text: "No expense records yet.",
+        color: "text-zinc-500",
+      };
+    }
+    if (feedPct >= 65 && feedPct <= 75) {
+      return {
+        text: `Optimal: Feed is ${feedPct.toFixed(1)}% of total expenses (target 65-75%).`,
+        color: "text-emerald-700",
+      };
+    }
+    if (feedPct > 75) {
+      return {
+        text: `Alert: Feed is ${feedPct.toFixed(1)}% of total expenses. Higher than recommended 75% benchmark.`,
+        color: "text-rose-700",
+      };
+    }
+    return {
+      text: `Feed is ${feedPct.toFixed(1)}% of total expenses (below standard 65-75% range).`,
+      color: "text-amber-700",
+    };
+  }, [totalExpense, feedPct]);
+
   if (loading || !user) {
     return (
       <div className="flex h-screen items-center justify-center bg-white text-zinc-900">
@@ -257,7 +311,7 @@ function FinancialsContent() {
   }
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
+    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-x-hidden">
       {/* Watermark Logo Background */}
       {!isMobile && (
         <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
@@ -273,6 +327,24 @@ function FinancialsContent() {
         {!isMobile && <DesktopHeader />}
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
+          {/* Top Bar with Back Button and Heading */}
+          <div className="flex items-center justify-between gap-4">
+            <button
+              type="button"
+              onClick={() => router.push("/dashboard")}
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-50 hover:text-zinc-900 transition font-bold text-xs shadow-xs"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              <span>Back</span>
+            </button>
+            <h1 className="text-xl sm:text-2xl font-black text-teal-900 text-center flex-1">
+              Financials
+            </h1>
+            <div className="w-16" />
+          </div>
+
           {/* Dashboard balance summaries */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[
@@ -333,6 +405,63 @@ function FinancialsContent() {
                   <span className="text-xs font-bold text-emerald-800">
                     ({currencySymbol}{targetSellingPrice20Margin.toFixed(2)}/kg)
                   </span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Expense Distribution & Financial Benchmarks Card */}
+          <div className="bg-teal-50/70 border border-teal-200/80 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <div className="flex items-center gap-2 text-teal-800">
+                <span className="p-1.5 rounded-lg bg-teal-100 text-teal-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
+                  </svg>
+                </span>
+                <h3 className="text-base font-bold text-teal-950">Expense Distribution & Financial Benchmarks</h3>
+              </div>
+            </div>
+
+            <div className="border-t border-teal-200/50 pt-3 space-y-3">
+              {/* Feed Distribution */}
+              <div className="space-y-1">
+                <div className="flex justify-between text-xs font-semibold text-zinc-700">
+                  <span>Feed ({feedPct.toFixed(1)}%):</span>
+                  <span>{currencySymbol}{feedTotal.toFixed(2)}</span>
+                </div>
+                <div className="w-full h-2 bg-zinc-200 rounded-full overflow-hidden">
+                  <div
+                    className={`h-full transition-all duration-500 ${feedPct > 75 ? "bg-rose-600" : "bg-emerald-600"}`}
+                    style={{ width: `${Math.min(feedPct, 100)}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Health / Vet */}
+              <div className="flex justify-between text-xs text-zinc-600 font-medium">
+                <span>Health / Veterinary (Target: 5–10% • {healthPct.toFixed(1)}%):</span>
+                <span className="font-bold text-zinc-800">{currencySymbol}{medicineTotal.toFixed(2)}</span>
+              </div>
+
+              {/* Labor & Operations */}
+              <div className="flex justify-between text-xs text-zinc-600 font-medium">
+                <span>Labor & Operations (Target: 10–15% • {laborPct.toFixed(1)}%):</span>
+                <span className="font-bold text-zinc-800">{currencySymbol}{laborTotal.toFixed(2)}</span>
+              </div>
+
+              {/* Other Expenses */}
+              {otherTotal > 0 && (
+                <div className="flex justify-between text-xs text-zinc-500 font-medium">
+                  <span>Other Operations ({otherPct.toFixed(1)}%):</span>
+                  <span className="font-semibold text-zinc-700">{currencySymbol}{otherTotal.toFixed(2)}</span>
+                </div>
+              )}
+
+              {/* Benchmark Assessment Note */}
+              <div className="pt-2 border-t border-teal-200/40">
+                <p className={`text-xs font-bold ${benchmarkAssessment.color}`}>
+                  • {benchmarkAssessment.text}
                 </p>
               </div>
             </div>

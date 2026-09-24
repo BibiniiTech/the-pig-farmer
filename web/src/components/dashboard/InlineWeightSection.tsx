@@ -31,21 +31,28 @@ const ScaleIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-const TapeIcon = (props: React.SVGProps<SVGSVGElement>) => (
+const StraightenIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <rect x="2" y="6" width="20" height="12" rx="2" />
-    <line x1="6" y1="6" x2="6" y2="10" />
-    <line x1="10" y1="6" x2="10" y2="10" />
-    <line x1="14" y1="6" x2="14" y2="10" />
-    <line x1="18" y1="6" x2="18" y2="10" />
+    <rect x="2" y="7" width="20" height="10" rx="2" />
+    <line x1="6" y1="7" x2="6" y2="11" />
+    <line x1="10" y1="7" x2="10" y2="13" />
+    <line x1="14" y1="7" x2="14" y2="11" />
+    <line x1="18" y1="7" x2="18" y2="13" />
   </svg>
 );
 
-const MeatIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <circle cx="12" cy="12" r="9" />
-    <path d="M8 12c0-2.2 1.8-4 4-4s4 1.8 4 4" />
-    <line x1="12" y1="16" x2="12.01" y2="16" />
+const CalculateIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <rect x="4" y="2" width="16" height="20" rx="3" />
+    <line x1="8" y1="6" x2="16" y2="6" />
+    <line x1="16" y1="14" x2="16" y2="18" />
+    <circle cx="8.5" cy="10.5" r="1" fill="currentColor" />
+    <circle cx="12" cy="10.5" r="1" fill="currentColor" />
+    <circle cx="15.5" cy="10.5" r="1" fill="currentColor" />
+    <circle cx="8.5" cy="14" r="1" fill="currentColor" />
+    <circle cx="12" cy="14" r="1" fill="currentColor" />
+    <circle cx="8.5" cy="17.5" r="1" fill="currentColor" />
+    <circle cx="12" cy="17.5" r="1" fill="currentColor" />
   </svg>
 );
 
@@ -140,8 +147,8 @@ export default function InlineWeightSection({
 
   // Sub-option 4: Carcass Weight states
   const [liveWeightKg, setLiveWeightKg] = useState("100");
-  const [dressingPercent, setDressingPercent] = useState(74);
-  const [isHeadOff, setIsHeadOff] = useState(false);
+  const [dressingType, setDressingType] = useState<"head_on" | "head_off">("head_on");
+  const [showPrimalCuts, setShowPrimalCuts] = useState(false);
 
   const toggleSubOption = (key: string) => {
     setOpenSubOption((prev) => {
@@ -349,22 +356,31 @@ export default function InlineWeightSection({
   // Carcass Calculations
   const carcassMetrics = (() => {
     const liveWeight = parseFloat(liveWeightKg) || 0;
-    const baseCarcass = liveWeight * (dressingPercent / 100);
-    const hotCarcass = baseCarcass * (isHeadOff ? 0.935 : 1.0);
-    const coldCarcass = hotCarcass * 0.98; // ~2% cooler shrink
+    const dressingPercent = dressingType === "head_on" ? 74 : 68;
+    const carcassKg = Math.round(liveWeight * (dressingPercent / 100) * 10) / 10;
+    const carcassLbs = Math.round(carcassKg * 2.20462 * 10) / 10;
+    const usableMeatKg = Math.round(carcassKg * 0.78 * 10) / 10;
+    const usableMeatLbs = Math.round(usableMeatKg * 2.20462 * 10) / 10;
+    const visceraKg = Math.round(Math.max(0, liveWeight - carcassKg) * 10) / 10;
+    const visceraLbs = Math.round(visceraKg * 2.20462 * 10) / 10;
 
     return {
       liveWeight,
-      hotCarcass: Math.round(hotCarcass * 10) / 10,
-      coldCarcass: Math.round(coldCarcass * 10) / 10,
+      dressingPercent,
+      carcassKg,
+      carcassLbs,
+      usableMeatKg,
+      usableMeatLbs,
+      visceraKg,
+      visceraLbs,
       cuts: [
-        { name: "Ham / Leg (Hindquarter)", percent: 24, kg: Math.round(coldCarcass * 0.24 * 10) / 10 },
-        { name: "Loin / Chops / Roast", percent: 18, kg: Math.round(coldCarcass * 0.18 * 10) / 10 },
-        { name: "Belly / Bacon", percent: 16, kg: Math.round(coldCarcass * 0.16 * 10) / 10 },
-        { name: "Shoulder / Boston Butt", percent: 16, kg: Math.round(coldCarcass * 0.16 * 10) / 10 },
-        { name: "Spare Ribs", percent: 5, kg: Math.round(coldCarcass * 0.05 * 10) / 10 },
-        { name: "Trimmings / Sausage Meat", percent: 12, kg: Math.round(coldCarcass * 0.12 * 10) / 10 },
-        { name: "Bone, Fat & Trim Loss", percent: 9, kg: Math.round(coldCarcass * 0.09 * 10) / 10 },
+        { name: "Ham / Leg (Hindquarter)", percent: 24, kg: Math.round(carcassKg * 0.24 * 10) / 10 },
+        { name: "Loin / Chops / Roast", percent: 18, kg: Math.round(carcassKg * 0.18 * 10) / 10 },
+        { name: "Belly / Bacon", percent: 16, kg: Math.round(carcassKg * 0.16 * 10) / 10 },
+        { name: "Shoulder / Boston Butt", percent: 16, kg: Math.round(carcassKg * 0.16 * 10) / 10 },
+        { name: "Spare Ribs", percent: 5, kg: Math.round(carcassKg * 0.05 * 10) / 10 },
+        { name: "Trimmings / Sausage Meat", percent: 12, kg: Math.round(carcassKg * 0.12 * 10) / 10 },
+        { name: "Bone, Fat & Trim Loss", percent: 9, kg: Math.round(carcassKg * 0.09 * 10) / 10 },
       ],
     };
   })();
@@ -440,7 +456,7 @@ export default function InlineWeightSection({
         >
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-lg bg-slate-100 text-slate-700 border border-slate-300 flex items-center justify-center shrink-0">
-              <TapeIcon className="h-5 w-5" />
+              <StraightenIcon className="h-5 w-5" />
             </div>
             <div>
               <span className="text-sm font-bold text-zinc-900">Weigh with Tape</span>
@@ -482,6 +498,30 @@ export default function InlineWeightSection({
                 >
                   Centimeters
                 </button>
+              </div>
+            </div>
+
+            {/* Pig Diagram & Instructions */}
+            <div className="bg-white p-4 rounded-xl border border-zinc-200 space-y-3">
+              <div className="relative w-full max-w-sm mx-auto flex items-center justify-center p-2 bg-slate-50/50 rounded-lg border border-slate-100">
+                <img
+                  src="/ic_pig_scale.png"
+                  alt="Pig measurement diagram"
+                  className="max-h-52 w-auto object-contain rounded"
+                />
+              </div>
+              <div className="bg-amber-50/80 border border-amber-200/80 rounded-lg p-3 text-xs text-amber-950 space-y-1.5">
+                <div className="font-bold flex items-center gap-1.5 text-amber-900">
+                  <svg className="w-4 h-4 text-amber-700 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Important Notes</span>
+                </div>
+                <ul className="list-disc list-inside space-y-1 text-amber-900/90 text-[11px] leading-relaxed">
+                  <li><strong>Point A (Body Length):</strong> Measure from the base of the ears to the base of the tail making sure the tape is firm on the body and not loose.</li>
+                  <li><strong>Point B (Heart Girth):</strong> Measure the thorax (just behind the front legs) making sure the tape fits snugly along the body and meets tightly.</li>
+                  <li>Ensure the pig is standing squarely on level ground for the most accurate result.</li>
+                </ul>
               </div>
             </div>
 
@@ -798,7 +838,7 @@ export default function InlineWeightSection({
         >
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-lg bg-slate-100 text-slate-700 border border-slate-300 flex items-center justify-center shrink-0">
-              <MeatIcon className="h-5 w-5" />
+              <CalculateIcon className="h-5 w-5" />
             </div>
             <div>
               <span className="text-sm font-bold text-zinc-900">Find Carcass Weight</span>
@@ -816,12 +856,12 @@ export default function InlineWeightSection({
 
         {openSubOption === "carcass" && (
           <div className="border-t border-slate-100 p-4 bg-zinc-50/40 space-y-4 animate-fadeIn">
-            <p className="text-xs text-zinc-500 font-medium">
+            <p className="text-xs text-zinc-500 font-medium text-center">
               Calculate hot/cold carcass dressing weight and estimated primal cut yields based on live weight.
             </p>
 
-            {/* Inputs: Live Weight, Dressing %, Head on/off */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {/* Inputs: Live Weight & Dressing Type Buttons */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg mx-auto">
               <div className="bg-white p-3 rounded-xl border border-zinc-200 space-y-1">
                 <label className="text-[10px] font-black uppercase text-zinc-400">
                   Live Pig Weight (kg)
@@ -836,89 +876,107 @@ export default function InlineWeightSection({
                 />
               </div>
 
-              <div className="bg-white p-3 rounded-xl border border-zinc-200 space-y-1">
-                <div className="flex justify-between">
-                  <label className="text-[10px] font-black uppercase text-zinc-400">
-                    Dressing %
-                  </label>
-                  <span className="text-xs font-bold text-slate-800">{dressingPercent}%</span>
-                </div>
-                <input
-                  type="range"
-                  min="65"
-                  max="82"
-                  step="1"
-                  value={dressingPercent}
-                  onChange={(e) => setDressingPercent(parseInt(e.target.value, 10))}
-                  className="w-full accent-slate-700 mt-2"
-                />
-                <p className="text-[9px] text-zinc-400">Industry typical: 72% - 76%</p>
-              </div>
-
-              <div className="bg-white p-3 rounded-xl border border-zinc-200 flex flex-col justify-between">
+              <div className="bg-white p-3 rounded-xl border border-zinc-200 space-y-1 flex flex-col justify-between">
                 <label className="text-[10px] font-black uppercase text-zinc-400">
-                  Head Dressing Style
+                  Dressing Type
                 </label>
-                <div className="flex rounded-lg border border-zinc-300 bg-zinc-50 p-0.5 mt-1">
+                <div className="flex gap-2">
                   <button
                     type="button"
-                    onClick={() => setIsHeadOff(false)}
-                    className={`flex-1 py-1.5 text-[11px] font-bold rounded-md transition ${
-                      !isHeadOff ? "bg-slate-700 text-white" : "text-zinc-600 hover:text-zinc-900"
+                    onClick={() => setDressingType("head_on")}
+                    className={`flex-1 py-2 text-xs font-bold rounded-lg transition border ${
+                      dressingType === "head_on"
+                        ? "bg-emerald-700 border-emerald-800 text-white shadow-xs"
+                        : "bg-zinc-100 border-zinc-200 text-zinc-700 hover:bg-zinc-200"
                     }`}
                   >
-                    Head On
+                    Head-On (~74%)
                   </button>
                   <button
                     type="button"
-                    onClick={() => setIsHeadOff(true)}
-                    className={`flex-1 py-1.5 text-[11px] font-bold rounded-md transition ${
-                      isHeadOff ? "bg-slate-700 text-white" : "text-zinc-600 hover:text-zinc-900"
+                    onClick={() => setDressingType("head_off")}
+                    className={`flex-1 py-2 text-xs font-bold rounded-lg transition border ${
+                      dressingType === "head_off"
+                        ? "bg-emerald-700 border-emerald-800 text-white shadow-xs"
+                        : "bg-zinc-100 border-zinc-200 text-zinc-700 hover:bg-zinc-200"
                     }`}
                   >
-                    Head Off (-6.5%)
+                    Head-Off (~68%)
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Results Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
-              <div className="bg-white p-3 rounded-xl border border-slate-200">
-                <p className="text-[10px] text-zinc-400 uppercase font-bold">Live Weight</p>
-                <p className="text-base sm:text-lg font-black text-slate-900">{carcassMetrics.liveWeight} kg</p>
-              </div>
-              <div className="bg-white p-3 rounded-xl border border-slate-200">
-                <p className="text-[10px] text-zinc-400 uppercase font-bold">Dressing %</p>
-                <p className="text-base sm:text-lg font-black text-slate-700">{dressingPercent}%</p>
-              </div>
-              <div className="bg-white p-3 rounded-xl border border-slate-200">
-                <p className="text-[10px] text-zinc-400 uppercase font-bold">Hot Carcass</p>
-                <p className="text-base sm:text-lg font-black text-rose-700">{carcassMetrics.hotCarcass} kg</p>
-              </div>
-              <div className="bg-white p-3 rounded-xl border border-slate-200">
-                <p className="text-[10px] text-zinc-400 uppercase font-bold">Cold Carcass</p>
-                <p className="text-base sm:text-lg font-black text-emerald-700">{carcassMetrics.coldCarcass} kg</p>
-              </div>
-            </div>
+            {/* 3 Result Cards */}
+            {carcassMetrics.liveWeight > 0 && (
+              <div className="space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {/* Card 1: Estimated Carcass Weight (Clickable) */}
+                  <div
+                    onClick={() => setShowPrimalCuts((prev) => !prev)}
+                    className="cursor-pointer bg-white p-4 rounded-xl border-2 border-emerald-500/50 hover:border-emerald-600 transition shadow-xs space-y-1 relative group"
+                    title="Click to toggle Estimated Primal Cuts Yield breakdown"
+                  >
+                    <div className="flex items-center justify-between">
+                      <p className="text-[11px] font-bold text-zinc-600">Estimated Carcass Weight</p>
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                        {showPrimalCuts ? "Hide Cuts ▲" : "View Cuts ▼"}
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-zinc-400">{carcassMetrics.dressingPercent}% dressing</p>
+                    <p className="text-lg font-black text-emerald-700">
+                      {carcassMetrics.carcassKg} kg{" "}
+                      <span className="text-xs font-semibold text-zinc-500">({carcassMetrics.carcassLbs} lbs)</span>
+                    </p>
+                  </div>
 
-            {/* Primal Cuts Breakdown */}
-            <div className="bg-white border border-slate-200 rounded-xl p-4 space-y-3">
-              <h4 className="text-xs font-black uppercase tracking-wider text-slate-900">
-                Estimated Primal Cuts Yield (Cold Carcass Basis)
-              </h4>
-              <div className="divide-y divide-zinc-100 text-xs">
-                {carcassMetrics.cuts.map((cut, i) => (
-                  <div key={i} className="py-2 flex items-center justify-between">
-                    <span className="font-semibold text-zinc-800">{cut.name}</span>
-                    <div className="flex items-center gap-3">
-                      <span className="text-[11px] text-zinc-400 font-medium">{cut.percent}%</span>
-                      <span className="font-bold text-slate-900 min-w-[50px] text-right">{cut.kg} kg</span>
+                  {/* Card 2: Estimated Usable Meat */}
+                  <div className="bg-white p-4 rounded-xl border border-zinc-200 shadow-xs space-y-1">
+                    <p className="text-[11px] font-bold text-zinc-600">Estimated Usable Meat</p>
+                    <p className="text-[10px] text-zinc-400">~78% of carcass weight</p>
+                    <p className="text-lg font-black text-blue-700">
+                      {carcassMetrics.usableMeatKg} kg{" "}
+                      <span className="text-xs font-semibold text-zinc-500">({carcassMetrics.usableMeatLbs} lbs)</span>
+                    </p>
+                  </div>
+
+                  {/* Card 3: Viscera & Offal */}
+                  <div className="bg-white p-4 rounded-xl border border-zinc-200 shadow-xs space-y-1">
+                    <p className="text-[11px] font-bold text-zinc-600">Viscera & Offal</p>
+                    <p className="text-[10px] text-zinc-400">Blood, viscera & gut fill</p>
+                    <p className="text-lg font-black text-rose-700">
+                      -{carcassMetrics.visceraKg} kg{" "}
+                      <span className="text-xs font-semibold text-zinc-500">({carcassMetrics.visceraLbs} lbs)</span>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Primal Cuts Breakdown (Shown when showPrimalCuts is true) */}
+                {showPrimalCuts && (
+                  <div className="bg-white border border-slate-200 rounded-xl p-4 space-y-3 animate-fadeIn">
+                    <div className="flex items-center justify-between border-b border-zinc-100 pb-2">
+                      <h4 className="text-xs font-black uppercase tracking-wider text-slate-900">
+                        Estimated Primal Cuts Yield Breakdown
+                      </h4>
+                      <span className="text-[11px] font-medium text-zinc-500">
+                        Basis: {carcassMetrics.carcassKg} kg carcass
+                      </span>
+                    </div>
+                    <div className="divide-y divide-zinc-100 text-xs">
+                      {carcassMetrics.cuts.map((cut, i) => (
+                        <div key={i} className="py-2 flex items-center justify-between">
+                          <span className="font-semibold text-zinc-800">{cut.name}</span>
+                          <div className="flex items-center gap-3">
+                            <span className="text-[11px] text-zinc-400 font-medium">{cut.percent}%</span>
+                            <span className="font-bold text-slate-900 min-w-[55px] text-right">{cut.kg} kg</span>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                ))}
+                )}
               </div>
-            </div>
+            )}
           </div>
         )}
       </div>

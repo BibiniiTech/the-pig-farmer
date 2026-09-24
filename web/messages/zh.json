@@ -106,7 +106,13 @@
     "noActivities": "暂无待办活动",
     "allTasksCompleted": "所有任务已完成！",
     "generalTask": "常规任务",
-    "language": "语言"
+    "language": "语言",
+    "feed": "饲料",
+    "inventory": "饲料库存",
+    "calculator": "计算饲料配比",
+    "mixFeed": "搅拌配料",
+    "analyzeFeed": "营养分析",
+    "marketHub": "市场中心"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -835,44 +841,44 @@
       "dis_asf": {
         "name": "非洲猪瘟 (ASF)",
         "scientificName": "Asfivirus",
-        "description": "一种高度接触性、致命性的病毒性疾病。目前尚无疫苗。",
-        "prevention": "严格的生物安全措施，限制进入。"
+        "description": "一种在西非流行的具有高度传染性和致命性的病毒性疾病。目前尚无疫苗。",
+        "prevention": "严格的生物安全措施并限制人员进入农场。"
       },
       "dis_fmd": {
         "name": "口蹄疫 (FMD)",
         "scientificName": "Aphthovirus",
-        "description": "引起口腔和足部水泡的病毒性疾病。",
-        "prevention": "接种疫苗和移动控制。"
+        "description": "在口腔和足部引起水疱的病毒性疾病。",
+        "prevention": "疫苗接种和移动控制。"
       },
       "dis_prrs": {
-        "name": "蓝耳病 (PRRS)",
+        "name": "猪繁殖与呼吸综合征 (PRRS / 蓝耳病)",
         "scientificName": "Arterivirus",
-        "description": "引起呼吸衰竭和繁殖障碍。",
-        "prevention": "生物安全和猪群疫苗接种。"
+        "description": "引起呼吸衰竭和繁殖问题。",
+        "prevention": "生物安全和全群疫苗接种。"
       },
       "dis_erysipelas": {
         "name": "猪丹毒",
         "scientificName": "Erysipelothrix rhusiopathiae",
-        "description": "引起特征性皮肤病灶和关节炎的细菌感染。",
-        "prevention": "定期接种疫苗和栏舍卫生。"
+        "description": "引起特征性皮肤病变和关节炎的细菌感染。",
+        "prevention": "定期疫苗接种和猪舍卫生。"
       },
       "dis_csf": {
-        "name": "猪瘟",
+        "name": "古典猪瘟 (CSF)",
         "scientificName": "Pestivirus",
-        "description": "高度接触性的病毒性疾病，与非瘟类似。",
-        "prevention": "疫苗接种和严格的生物安全。"
+        "description": "类似于非洲猪瘟的高度传染性病毒性疾病。",
+        "prevention": "疫苗接种和严格的生物安全措施。"
       },
       "dis_anthrax": {
         "name": "炭疽",
         "scientificName": "Bacillus anthracis",
         "description": "可感染人类的严重细菌性疾病。",
-        "prevention": "接种疫苗，严禁解剖尸体。"
+        "prevention": "疫苗接种，避免解剖尸体。"
       },
       "dis_brucellosis": {
         "name": "布鲁氏菌病",
         "scientificName": "Brucella suis",
-        "description": "引起繁殖障碍的细菌性疾病。",
-        "prevention": "监测、淘汰和环境消毒。"
+        "description": "引起繁殖失败的细菌性疾病。",
+        "prevention": "检测、淘汰和消毒。"
       },
       "dis_coccidiosis": {
         "name": "球虫病",
@@ -881,7 +887,7 @@
         "prevention": "产房卫生。"
       },
       "dis_pneumonia": {
-        "name": "猪支原体肺炎",
+        "name": "支原体肺炎",
         "scientificName": "Mycoplasma hyopneumoniae",
         "description": "导致生长缓慢的慢性呼吸道疾病。",
         "prevention": "疫苗接种和改善通风。"
@@ -890,10 +896,10 @@
         "name": "沙门氏菌病",
         "scientificName": "Salmonella typhimurium",
         "description": "引起严重肠道问题的细菌感染。",
-        "prevention": "清洁饮水和卫生管理。"
+        "prevention": "清洁饮水和卫生。"
       },
       "dis_ppv": {
-        "name": "猪细小病毒病 (PPV)",
+        "name": "猪细小病毒 (PPV)",
         "scientificName": "Porcine Parvovirus",
         "description": "后备母猪繁殖失败的常见原因。",
         "prevention": "配种前接种疫苗。"
@@ -901,8 +907,8 @@
       "dis_rhinitis": {
         "name": "萎缩性鼻炎",
         "scientificName": "Bordetella bronchiseptica",
-        "description": "引起鼻部变形和呼吸道问题。",
-        "prevention": "疫苗接种和空气质量管理。"
+        "description": "引起鼻部畸形和呼吸道问题。",
+        "prevention": "疫苗接种和空气质量控制。"
       },
       "dis_leptospirosis": {
         "name": "钩端螺旋体病",
@@ -913,23 +919,23 @@
       "dis_influenza": {
         "name": "猪流感",
         "scientificName": "Influenza A virus",
-        "description": "快速传播的呼吸道感染。",
+        "description": "传播迅速的呼吸道感染。",
         "prevention": "通风和生物安全。"
       },
       "dis_edema": {
-        "name": "仔猪水肿病",
+        "name": "水肿病",
         "scientificName": "Escherichia coli",
-        "description": "由大肠杆菌毒素引起的断奶仔猪疾病。",
-        "prevention": "改善卫生和日粮调整。"
+        "description": "断奶仔猪由大肠杆菌毒素引起。",
+        "prevention": "改善卫生和饮食。"
       },
       "dis_dysentery": {
         "name": "猪痢疾",
         "scientificName": "Brachyspira hyodysenteriae",
-        "description": "严重的粘液出血性腹泻。",
+        "description": "严重的黏液出血性腹泻。",
         "prevention": "饮水加药和消毒。"
       },
       "dis_mange": {
-        "name": "猪疥癣",
+        "name": "疥癣",
         "scientificName": "Sarcoptes scabiei",
         "description": "引起极度不适的寄生虫性皮肤病。",
         "prevention": "杀螨剂治疗。"
@@ -938,31 +944,31 @@
         "name": "缺铁性贫血",
         "scientificName": "Iron Deficiency",
         "description": "室内饲养且未补充铁剂的仔猪常见。",
-        "prevention": "出生后注射铁剂。"
+        "prevention": "出生时注射铁剂。"
       },
       "dis_ulcers": {
         "name": "胃溃疡",
         "scientificName": "Gastric Ulcers",
         "description": "由饲料过细或应激引起。",
-        "prevention": "调整饲料颗粒度。"
+        "prevention": "调整饲料颗粒大小。"
       },
       "dis_pss": {
         "name": "猪应激综合征",
         "scientificName": "Genetic stress susceptibility",
-        "description": "由应激触发的遗传性状况。",
-        "prevention": "遗传筛选和温和操作。"
+        "description": "由应激激发的遗传性疾病。",
+        "prevention": "遗传筛选和温和驱赶。"
       },
       "dis_tge": {
         "name": "传染性胃肠炎 (TGE)",
         "scientificName": "Coronavirus",
-        "description": "引起幼龄仔猪高死亡率的病毒性疾病。",
-        "prevention": "生物安全。"
+        "description": "幼龄仔猪死亡率极高的病毒性疾病。",
+        "prevention": "生物安全措施。"
       },
       "dis_pasteurellosis": {
         "name": "巴氏杆菌病",
         "scientificName": "Pasteurella multocida",
         "description": "细菌性肺炎。",
-        "prevention": "抗生素治疗和通风。"
+        "prevention": "抗生素治疗和加强通风。"
       },
       "dis_strep": {
         "name": "猪链球菌病",
@@ -974,76 +980,76 @@
         "name": "霉菌毒素中毒",
         "scientificName": "Mycotoxicosis",
         "description": "由霉变饲料引起。",
-        "prevention": "添加脱霉剂和干燥存储。"
+        "prevention": "使用脱毒剂和干燥储存。"
       },
       "dis_greasy_pig": {
         "name": "渗出性皮炎 (油皮病)",
         "scientificName": "Staphylococcus hyicus",
-        "description": "引起油性皮肤病灶的细菌感染。",
-        "prevention": "卫生管理和抗生素。"
+        "description": "引起油脂状皮肤病变的细菌感染。",
+        "prevention": "环境消毒和抗生素。"
       },
       "dis_pseudorabies": {
-        "name": "伪狂犬病",
+        "name": "伪狂犬病 (阿留申病)",
         "scientificName": "Suid herpesvirus 1",
         "description": "影响神经和呼吸系统的病毒性疾病。",
         "prevention": "疫苗接种和净化计划。"
       },
       "dis_pcv2": {
-        "name": "猪圆环病毒 2 型 (PCV2)",
+        "name": "猪圆环病毒 (PCV2)",
         "scientificName": "Circovirus",
-        "description": "引起中猪消瘦和呼吸道问题。",
+        "description": "引起生长猪消瘦和呼吸道问题。",
         "prevention": "疫苗接种。"
       },
       "dis_ped": {
         "name": "猪流行性腹泻 (PED)",
         "scientificName": "Coronavirus",
-        "description": "与 TGE 类似，对初生仔猪致命。",
-        "prevention": "严格的生物安全。"
+        "description": "类似于 TGE，对新生仔猪具有极高致死率。",
+        "prevention": "严格的生物安全措施。"
       },
       "dis_je": {
-        "name": "乙型脑炎",
+        "name": "流行性乙型脑炎",
         "scientificName": "Flavivirus",
-        "description": "蚊媒病毒性疾病。",
-        "prevention": "灭蚊和疫苗接种。"
+        "description": "由蚊子传播的病毒性疾病。",
+        "prevention": "防蚊灭蚊和疫苗接种。"
       },
       "dis_rabies": {
         "name": "狂犬病",
         "scientificName": "Lyssavirus",
-        "description": "致命病毒病，通常通过咬伤传播。",
-        "prevention": "宠物疫苗接种和野生动物控制。"
+        "description": "通常通过咬伤感染的致命病毒性疾病。",
+        "prevention": "宠物接种疫苗和控制野生动物。"
       },
       "dis_pox": {
         "name": "猪痘",
         "scientificName": "Suipoxvirus",
-        "description": "病毒性皮肤病，常通过虱子传播。",
-        "prevention": "灭虱。"
+        "description": "病毒性皮肤病，通常由虱子传播。",
+        "prevention": "控制虱子。"
       },
       "dis_vs": {
         "name": "水疱性口炎",
         "scientificName": "Rhabdovirus",
-        "description": "引起水疱；外观酷似口蹄疫。",
+        "description": "引起水疱；症状类似口蹄疫。",
         "prevention": "昆虫控制和隔离。"
       },
       "dis_clostridial": {
         "name": "梭菌性肠炎",
         "scientificName": "Clostridium perfringens",
         "description": "引起严重肠道损伤的细菌感染。",
-        "prevention": "母猪接种疫苗和卫生。"
+        "prevention": "母猪免疫和卫生管理。"
       },
       "dis_glassers": {
-        "name": "副猪嗜血杆菌病 (多发性浆膜炎)",
+        "name": "副猪嗜血杆菌病 (格拉瑟氏病)",
         "scientificName": "Haemophilus parasuis",
-        "description": "引起心包、胸膜和关节发炎。",
-        "prevention": "抗生素和应激管理。"
+        "description": "引起心包、胸膜和关节浆膜炎症。",
+        "prevention": "抗生素治疗和应激管理。"
       },
       "dis_app": {
         "name": "猪传染性胸膜肺炎 (APP)",
         "scientificName": "A. pleuropneumoniae",
         "description": "严重的细菌性肺炎。",
-        "prevention": "抗生素和环境改善。"
+        "prevention": "抗生素治疗和改善环境。"
       },
       "dis_ileitis": {
-        "name": "增生性肠炎 (回肠炎)",
+        "name": "回肠炎 (罗松氏菌病)",
         "scientificName": "Lawsonia intracellularis",
         "description": "小肠细菌感染。",
         "prevention": "疫苗接种和抗生素。"
@@ -1052,114 +1058,114 @@
         "name": "结核病",
         "scientificName": "Mycobacterium avium",
         "description": "慢性细菌性疾病。",
-        "prevention": "防鸟和卫生。"
+        "prevention": "防鸟措施和消毒。"
       },
       "dis_tetanus": {
         "name": "破伤风",
         "scientificName": "Clostridium tetani",
         "description": "影响神经系统的细菌毒素。",
-        "prevention": "手术/阉割时的卫生。"
+        "prevention": "手术/阉割期间的卫生。"
       },
       "dis_eperythrozoonosis": {
         "name": "附红细胞体病",
         "scientificName": "Mycoplasma suis",
-        "description": "引起贫血的血液寄生虫病。",
-        "prevention": "害虫控制和针头清洁。"
+        "description": "引起贫血的血液寄生虫。",
+        "prevention": "昆虫控制和清洁针头。"
       },
       "dis_ascaris": {
-        "name": "猪蛔虫病",
+        "name": "猪蛔虫",
         "scientificName": "Large Roundworm",
         "description": "引起肺部和肝脏损伤的体内寄生虫。",
         "prevention": "定期驱虫。"
       },
       "dis_whipworms": {
-        "name": "猪鞭虫病",
+        "name": "鞭虫",
         "scientificName": "Trichuris suis",
-        "description": "大肠内的体内寄生虫。",
-        "prevention": "驱虫和卫生。"
+        "description": "寄生于大肠的体内寄生虫。",
+        "prevention": "驱虫和环境卫生。"
       },
       "dis_lungworms": {
-        "name": "猪肺线虫病",
+        "name": "肺线虫",
         "scientificName": "Metastrongylus spp.",
-        "description": "肺部寄生虫。",
+        "description": "寄生于肺部的体内寄生虫。",
         "prevention": "控制蚯蚓和驱虫。"
       },
       "dis_kidney_worms": {
-        "name": "猪肾虫病",
+        "name": "肾虫",
         "scientificName": "Stephanurus dentatus",
-        "description": "影响肾脏和肝脏。",
-        "prevention": "管理与卫生。"
+        "description": "影响肾脏和肝脏的体内寄生虫。",
+        "prevention": "管理和卫生。"
       },
       "dis_lice": {
         "name": "猪虱",
         "scientificName": "Haematopinus suis",
         "description": "吸血的体外寄生虫。",
-        "prevention": "杀虫治疗。"
+        "prevention": "杀虫剂处理。"
       },
       "dis_ringworm": {
-        "name": "钱癣 (皮肤真菌病)",
+        "name": "钱癣 (真菌病)",
         "scientificName": "Dermatophytosis",
         "description": "真菌性皮肤感染。",
-        "prevention": "卫生和局部治疗。"
+        "prevention": "卫生和局部用药。"
       },
       "dis_mulberry_heart": {
-        "name": "桑椹心病",
+        "name": "桑葚心病",
         "scientificName": "Vit E/Se Deficiency",
         "description": "影响心脏的营养缺乏症。",
-        "prevention": "补充维 E 和硒。"
+        "prevention": "补充维生素 E/硒。"
       },
       "dis_vit_a": {
         "name": "维生素 A 缺乏症",
         "scientificName": "Vitamin A Deficiency",
         "description": "营养缺乏。",
-        "prevention": "日粮调整。"
+        "prevention": "调整日粮。"
       },
       "dis_rickets": {
         "name": "佝偻病",
         "scientificName": "Vit D/Ca/P Deficiency",
         "description": "影响骨骼生长的营养缺乏症。",
-        "prevention": "矿物质平衡和阳光照射。"
+        "prevention": "平衡矿物质和日光照射。"
       },
       "dis_salt_poisoning": {
-        "name": "食盐中毒 (缺水)",
+        "name": "食盐中毒",
         "scientificName": "Water Deprivation",
-        "description": "因长期缺水后暴饮引起。",
-        "prevention": "保证充足淡水供应。"
+        "description": "由缺水后过量饮水引起。",
+        "prevention": "保证持续的清洁饮水。"
       },
       "dis_heat_stroke": {
         "name": "中暑",
         "scientificName": "Heat Stroke",
-        "description": "因通风不良或缺乏遮荫引起。",
-        "prevention": "通风、降温和遮荫。"
+        "description": "由于通风不良或缺乏遮荫引起过热。",
+        "prevention": "加强通风、降温和遮荫。"
       },
       "dis_rectal_prolapse": {
-        "name": "脱肛",
+        "name": "直肠脱垂",
         "scientificName": "Rectal Prolapse",
         "description": "常继发于咳嗽、腹泻或冷应激。",
-        "prevention": "解决原发病并手术。"
+        "prevention": "处理原发病并手术治疗。"
       },
       "dis_umbilical_hernia": {
         "name": "脐疝",
         "scientificName": "Umbilical Hernia",
-        "description": "发育缺陷或脐部感染。",
-        "prevention": "卫生和遗传选择。"
+        "description": "发育缺陷或脐带感染。",
+        "prevention": "卫生 and 遗传改良。"
       },
       "dis_scrotal_hernia": {
         "name": "阴囊疝",
         "scientificName": "Scrotal Hernia",
         "description": "遗传性发育缺陷。",
-        "prevention": "遗传选择和手术修复。"
+        "prevention": "遗传改良和手术修复。"
       },
       "dis_splayleg": {
-        "name": "仔猪倒立 (八字腿)",
+        "name": "八字腿 (splayleg)",
         "scientificName": "Myofibrillar hypoplasia",
-        "description": "仔猪出生后后腿无法站立。",
-        "prevention": "胶带绑腿和增加地面摩擦力。"
+        "description": "仔猪出生时后腿无法站立。",
+        "prevention": "绑扎双腿和增加地面摩擦力。"
       },
       "dis_vulvovaginitis": {
         "name": "外阴阴道炎",
         "scientificName": "Zearalenone Toxicity",
-        "description": "由饲料中的霉菌毒素 (玉米赤霉烯酮) 引起。",
+        "description": "由饲料中的雌激素类真菌毒素引起。",
         "prevention": "更换饲料来源。"
       },
       "dis_seneca": {
@@ -1171,326 +1177,326 @@
       "dis_deltacoronavirus": {
         "name": "猪丁型冠状病毒",
         "scientificName": "PDCoV",
-        "description": "引起各日龄猪只病毒性腹泻。",
-        "prevention": "生物安全。"
+        "description": "各年龄段均可发生的病毒性腹泻。",
+        "prevention": "生物安全措施。"
       },
       "dis_rotavirus": {
-        "name": "轮状病毒性腹泻",
+        "name": "轮状病毒腹泻",
         "scientificName": "Rotavirus",
         "description": "断奶腹泻的常见原因。",
-        "prevention": "疫苗接种和卫生。"
+        "prevention": "疫苗接种和卫生管理。"
       },
       "dis_teschen": {
-        "name": "特申/塔耳凡病 (猪传染性脑脊髓炎)",
+        "name": "泰舍恩/塔耳凡病",
         "scientificName": "Sapelovirus/Teschovirus",
-        "description": "神经系统病毒感染。",
-        "prevention": "生物安全。"
+        "description": "神经系统的病毒性感染。",
+        "prevention": "生物安全措施。"
       },
       "dis_vesicular": {
         "name": "猪水疱病",
         "scientificName": "Enterovirus",
         "description": "模拟口蹄疫的病毒性疾病。",
-        "prevention": "严格检疫。"
+        "prevention": "严格隔离。"
       },
       "dis_melioidosis": {
         "name": "类鼻疽",
         "scientificName": "Burkholderia pseudomallei",
-        "description": "土壤/水中的细菌性疾病。",
-        "prevention": "清洁饮水和卫生。"
+        "description": "来自土壤/水的细菌性疾病。",
+        "prevention": "清洁饮水和卫生管理。"
       },
       "dis_trypanosomiasis": {
         "name": "锥虫病",
         "scientificName": "Trypanosoma spp.",
-        "description": "通过采采蝇传播的原虫病。",
-        "prevention": "灭蝇和药物治疗。"
+        "description": "由采采蝇传播的寄生虫病。",
+        "prevention": "控制苍蝇和药物治疗。"
       },
       "dis_cysticercosis": {
-        "name": "猪囊尾蚴病 (米猪肉)",
+        "name": "囊尾蚴病 (米猪肉)",
         "scientificName": "Taenia solium larvae",
-        "description": "猪肌肉中的人绦虫幼虫期。",
-        "prevention": "严禁接触人类排泄物。"
+        "description": "人类绦虫在猪肌肉中的幼虫阶段。",
+        "prevention": "防止猪接触人类粪便。"
       },
       "dis_toxoplasmosis": {
         "name": "弓形虫病",
         "scientificName": "Toxoplasma gondii",
-        "description": "人畜共患原虫感染。",
-        "prevention": "控制猫类进入和生物安全。"
+        "description": "人畜共患的寄生虫感染。",
+        "prevention": "控制猫进入猪场和生物安全。"
       },
       "dis_listeriosis": {
-        "name": "李斯特菌病",
+        "name": "李氏杆菌病",
         "scientificName": "Listeria monocytogenes",
-        "description": "神经系统细菌感染。",
-        "prevention": "卫生和饲料管理。"
+        "description": "神经系统的细菌感染。",
+        "prevention": "环境卫生和饲料卫生。"
       },
       "dis_ear_necrosis": {
         "name": "耳朵坏死",
         "scientificName": "Ear Necrosis",
-        "description": "常由应激、过密或感染引起。",
-        "prevention": "降低密度，处理继发感染。"
+        "description": "通常由应激、过度拥挤或感染引起。",
+        "prevention": "降低饲养密度并治疗继发感染。"
       },
       "dis_sunburn": {
         "name": "晒伤",
         "scientificName": "Solar dermatitis",
-        "description": "影响户外养殖的白皮猪。",
+        "description": "影响户外饲养的白皮猪。",
         "prevention": "提供遮荫。"
       },
       "dis_tail_biting": {
         "name": "咬尾",
         "scientificName": "Behavioral stress",
-        "description": "因应激/乏味引起的行为问题。",
-        "prevention": "减少应激，丰富环境。"
+        "description": "应激/无聊引起的行为问题。",
+        "prevention": "减少应激和丰富环境。"
       },
       "dis_navel_ill": {
         "name": "脐炎",
         "scientificName": "Navel Infection",
         "description": "出生时脐带感染。",
-        "prevention": "出生时碘伏浸泡和卫生。"
+        "prevention": "出生时脐带消毒和环境卫生。"
       },
       "dis_iron_toxicity": {
         "name": "铁中毒",
         "scientificName": "Ferrous excess",
-        "description": "铁剂过量导致猝死。",
-        "prevention": "注射准确剂量。"
+        "description": "可能发生于向维生素 E 缺乏的仔猪注射铁剂时。",
+        "prevention": "确保母猪日粮营养平衡。"
       },
       "dis_aflatoxicosis": {
         "name": "黄曲霉毒素中毒",
         "scientificName": "Aspergillus flavus toxin",
-        "description": "霉菌毒素中毒。",
-        "prevention": "避免霉变饲料，使用脱霉剂。"
+        "description": "霉变谷物或饲料引起的霉菌毒素中毒，导致肝损伤和黄疸。",
+        "prevention": "避免喂发霉饲料，将谷物储存在干燥条件下，并使用毒素吸附剂。"
       },
       "dis_parakeratosis": {
-        "name": "猪皮炎 (缺锌)",
+        "name": "皮肤角化不全 (锌缺乏症)",
         "scientificName": "Zinc deficiency",
-        "description": "猪只缺锌引起。",
-        "prevention": "确保日粮中锌水平充足。"
+        "description": "营养性疾病，引起严重的皮肤结痂、增厚病变。",
+        "prevention": "确保饲料中钙锌比例平衡，并提供锌补充剂。"
       },
       "dis_biotin_deficiency": {
         "name": "生物素缺乏症",
         "scientificName": "Vitamin H deficiency",
-        "description": "生猪生物素缺乏。",
-        "prevention": "提供生物素补充剂。"
+        "description": "营养缺乏导致蹄裂、皮肤病变和跛行。",
+        "prevention": "在饲料中补充生物素，避免使用粗糙、潮湿的水泥地面。"
       },
       "dis_gossypol_toxicity": {
         "name": "棉酚中毒",
         "scientificName": "Gossypol poisoning",
-        "description": "棉籽粕中毒。",
-        "prevention": "限制饲料中生棉籽粕比例。"
+        "description": "饲喂生棉籽饼或过量棉籽饼引起的中毒，导致呼吸困难。",
+        "prevention": "严格控制日粮中棉粕用量，添加硫酸亚铁中和游离棉酚毒性。"
       },
       "dis_cassava_poisoning": {
         "name": "木薯中毒",
         "scientificName": "Cyanogenic glycosides",
-        "description": "生木薯引起的氰化物中毒。",
-        "prevention": "喂食前煮熟或发酵。"
+        "description": "采食生木薯或加工不当的木薯根或皮引起的氰化物中毒。",
+        "prevention": "在喂食前将木薯剥皮、煮沸、晒干或发酵。"
       },
       "dis_sweet_potato_toxicity": {
-        "name": "红薯中毒",
+        "name": "甘薯中毒",
         "scientificName": "Ipomeamarone toxicity",
-        "description": "甘薯黑斑病中毒。",
-        "prevention": "禁止喂食霉变或损坏的红薯。"
+        "description": "霉变甘薯引起的中毒，导致严重呼吸困难。",
+        "prevention": "丢弃受损或霉变的甘薯，仅喂食健康的块根。"
       },
       "dis_mma": {
-        "name": "MMA 综合征 (乳房炎-子宫炎-无乳综合征)",
+        "name": "产后无乳综合征 (MMA)",
         "scientificName": "Mastitis-Metritis-Agalactia",
-        "description": "母猪产后感染。",
-        "prevention": "产房清洁和精准营养。"
+        "description": "乳腺炎、子宫炎和无乳症，导致分娩后母猪发热和缺乳。",
+        "prevention": "保持产房严格卫生，确保母猪营养充足。"
       },
       "dis_pwd": {
-        "name": "断奶后腹泻",
+        "name": "断奶后腹泻 (PWD)",
         "scientificName": "Escherichia coli (F4/F18)",
-        "description": "断奶仔猪大肠杆菌病。",
-        "prevention": "卫生管理和日粮调整。"
+        "description": "仔猪断奶后不久发生的细菌性腹泻，引起脱水。",
+        "prevention": "减少断奶应激，保持高度卫生，并提供清洁饮水。"
       },
       "dis_trichinellosis": {
         "name": "旋毛虫病",
         "scientificName": "Trichinella spiralis",
-        "description": "人畜共患寄生虫病。",
-        "prevention": "严禁喂食生垃圾；害虫控制。"
+        "description": "因采食生肉碎屑引起的人畜共患寄生虫病，导致肌肉僵硬与剧烈疼痛。",
+        "prevention": "禁止喂生泔水，食物残渣煮沸30分钟，并控制啮齿动物。"
       },
       "dis_hydatid_disease": {
-        "name": "包虫病",
+        "name": "包虫病（棘球蚴病）",
         "scientificName": "Echinococcus granulosus",
-        "description": "幼绦虫感染。",
-        "prevention": "农场犬只驱虫；严禁喂食内脏。"
+        "description": "寄生虫幼虫感染，在器官组织中形成充满液体的囊肿。",
+        "prevention": "定期为牧羊犬驱虫，防止它们吃生猪内脏。"
       },
       "dis_phe": {
-        "name": "增生性出血性肠病",
+        "name": "猪出血性肠病",
         "scientificName": "Lawsonia intracellularis",
-        "description": "青年猪急性肠道出血。",
-        "prevention": "疫苗接种和卫生。"
+        "description": "生长育肥猪的急性血性腹泻和突然死亡。",
+        "prevention": "保持良好卫生，并在兽医指导下使用适当的抗生素。"
       },
       "dis_mycoplasma_arthritis": {
         "name": "支原体关节炎",
         "scientificName": "Mycoplasma hyosynoviae",
-        "description": "细菌性关节病。",
-        "prevention": "卫生和隔离。"
+        "description": "支原体感染引起的关节肿胀、跛行和腿部无力。",
+        "prevention": "改善房屋条件，降低饲养密度，并尽早治疗。"
       },
       "dis_foot_rot": {
-        "name": "蹄叶炎 (腐蹄病)",
+        "name": "蹄腐病 (坏死性杆菌病)",
         "scientificName": "Fusobacterium necrophorum",
-        "description": "引起跛行的足部感染。",
-        "prevention": "保持猪栏干燥；蹄部护理。"
+        "description": "细菌从蹄部外伤侵入，导致蹄部腐烂和跛行。",
+        "prevention": "修补粗糙水泥地面，保持地面干燥，并在需要时使用蹄浴。"
       },
       "dis_babesiosis": {
-        "name": "巴贝斯虫病",
+        "name": "蜱传巴贝斯虫病",
         "scientificName": "Babesia trautmanni",
-        "description": "蜱传原虫感染。",
-        "prevention": "杀螨喷雾控制蜱虫。"
+        "description": "蜱传播的血液寄生虫病，引起高烧、贫血和深色尿液。",
+        "prevention": "使用杀蜱药控制蜱虫，并保持猪栏无杂草。"
       },
       "dis_anaplasmosis": {
         "name": "无形体病",
         "scientificName": "Anaplasma marginale",
-        "description": "生猪血液感染。",
-        "prevention": "媒介控制。"
+        "description": "蜱传播的细菌感染，导致贫血、发热和黄疸。",
+        "prevention": "实施媒介和蜱虫控制计划。"
       },
       "dis_sow_hysteria": {
-        "name": "母猪歇斯底里 (咬仔)",
+        "name": "母猪癔病",
         "scientificName": "Puerperal psychosis",
-        "description": "母猪产后表现出的攻击性或恐慌。",
-        "prevention": "提供安静的分娩环境。"
+        "description": "行为障碍，分娩母猪变得具有攻击性并咬啃仔猪。",
+        "prevention": "提供安静的分娩环境，监督初产母猪，必要时使用镇静剂。"
       },
       "dis_thorny_headed_worm": {
-        "name": "棘头虫病",
+        "name": "棘头虫",
         "scientificName": "Macracanthorhynchus hirudinaceus",
-        "description": "肠道寄生虫。",
-        "prevention": "防止接触金龟子幼虫。"
+        "description": "因采食甲虫而感染的寄生虫，可导致肠穿孔。",
+        "prevention": "避免在甲虫滋生的土壤上放养，并使用驱虫药。"
       },
       "dis_strongyloidiasis": {
-        "name": "类圆线虫病",
+        "name": "类圆线虫病 (线虫)",
         "scientificName": "Strongyloides ransomi",
-        "description": "线虫感染。",
-        "prevention": "保持栏舍干燥；驱虫。"
+        "description": "肠道线虫引起仔猪严重腹泻 and 死亡。",
+        "prevention": "保持分娩栏干燥清洁，并在分娩前对母猪进行驱虫。"
       },
       "dis_hyostrongylosis": {
-        "name": "红色胃线虫病",
+        "name": "红色胃线虫",
         "scientificName": "Hyostrongylus rubidus",
-        "description": "放牧生猪的肠道线虫。",
-        "prevention": "牧场管理；驱虫。"
+        "description": "胃线虫感染，引起胃炎、贫血和体重减轻。",
+        "prevention": "轮换牧场，保持舍内干燥，并实施驱虫计划。"
       },
       "dis_oesophagostomiasis": {
-        "name": "结节虫病",
+        "name": "结节虫感染",
         "scientificName": "Oesophagostomum spp.",
-        "description": "肠道线虫病。",
-        "prevention": "驱虫和卫生。"
+        "description": "肠道寄生虫，在肠壁引起结节，导致母猪消瘦。",
+        "prevention": "定期清洁猪圈，常规使用广谱驱虫药。"
       },
       "dis_fascioliasis": {
-        "name": "肝片吸虫病",
+        "name": "片形吸虫病 (肝片吸虫)",
         "scientificName": "Fasciola gigantica",
-        "description": "肝吸虫感染。",
-        "prevention": "控制蜗牛；远离潮湿牧场。"
+        "description": "影响肝脏的寄生虫病，常见于潮湿或沼泽牧场。",
+        "prevention": "防止猪在沼泽地放牧，并控制椎实螺。"
       },
       "dis_emcv": {
-        "name": "脑心肌炎病毒 (EMCV)",
+        "name": "脑心肌炎 (EMCV)",
         "scientificName": "Cardiovirus",
-        "description": "病毒性心肌炎和繁殖障碍。",
-        "prevention": "灭鼠 (老鼠传播 EMCV)。"
+        "description": "由啮齿动物传播的病毒感染，导致突发性心力衰竭和流产。",
+        "prevention": "实施严格的灭鼠措施，保护饲料免受污染。"
       },
       "dis_demodectic_mange": {
-        "name": "蠕形螨病",
+        "name": "蠕形螨",
         "scientificName": "Demodex phylloides",
-        "description": "螨虫感染。",
-        "prevention": "杀螨治疗。"
+        "description": "显微镜下可见的皮肤螨虫，引起鳞屑斑和小脓疱。",
+        "prevention": "改善猪群营养，隔离病猪，并施用杀螨剂。"
       },
       "dis_pityriasis_rosea": {
         "name": "玫瑰糠疹",
         "scientificName": "Pseudo-ringworm",
-        "description": "非传染性皮肤病。",
-        "prevention": "可自愈；保持环境清洁。"
+        "description": "青年猪的非传染性皮肤病，形成环状痂皮。",
+        "prevention": "通常可自愈；保持垫料清洁干燥并减少应激。"
       },
       "dis_photosensitization": {
-        "name": "光敏性皮炎",
+        "name": "光敏症",
         "scientificName": "Solar dermatitis",
-        "description": "皮肤对阳光过敏。",
-        "prevention": "避免阳光直射；检查牧场植物。"
+        "description": "浅色皮肤的猪在食用特定植物后，出现类似严重晒伤的反应。",
+        "prevention": "提供遮阳处，清除致敏杂草，并让猪待在室内。"
       },
       "dis_shoulder_ulcers": {
-        "name": "肩部溃疡",
+        "name": "母猪肩部溃疡",
         "scientificName": "Decubitus ulcers",
-        "description": "瘦弱母猪在硬地面上产生的疮口。",
-        "prevention": "提供柔软垫料；增加喂食量。"
+        "description": "饲养在坚硬水泥地面上的消瘦母猪肩部受压产生的褥疮。",
+        "prevention": "提供柔软垫料，保持母猪良好的体况，并使用橡胶垫。"
       },
       "dis_ear_biting": {
-        "name": "咬耳",
+        "name": "咬耳癖",
         "scientificName": "Stress response behavior",
-        "description": "应激反应行为。",
-        "prevention": "降低密度；丰富环境。"
+        "description": "猪咬掉同圈猪只耳朵的异常行为，可引起坏死。",
+        "prevention": "降低饲养密度，改善通风，并提供链条等玩具作为娱乐。"
       },
       "dis_gastric_torsion": {
-        "name": "胃扭转",
+        "name": "胃扭转 (胀气)",
         "scientificName": "Gastric dilation-volvulus",
-        "description": "胃部扭转。",
-        "prevention": "避免单餐过量喂食。"
+        "description": "胃部突然胀气和扭转，导致迅速死亡。",
+        "prevention": "避免在长期饥饿后喂食大餐，并将每日饲料分成多餐喂食。"
       },
       "dis_c_difficile": {
-        "name": "艰难梭菌感染",
+        "name": "艰难梭菌感染 (CDI)",
         "scientificName": "Clostridioides difficile",
-        "description": "仔猪细菌性腹泻。",
-        "prevention": "清洁环境和良好通风。"
+        "description": "新生仔猪的细菌感染，引起水样泻和胀气。",
+        "prevention": "彻底清洗和消毒产房，并确保早期获得初乳。"
       },
       "dis_cold_stress": {
-        "name": "冷应激",
+        "name": "冷应激 (低温症)",
         "scientificName": "Hypothermia susceptibility",
-        "description": "幼龄仔猪受凉。",
-        "prevention": "提供保温灯和干燥垫料。"
+        "description": "仔猪身体严重受凉，导致发抖和高死亡率。",
+        "prevention": "提供保温灯、保育箱，并保持分娩舍干燥、无风。"
       },
       "dis_necrotic_enteritis": {
         "name": "坏死性肠炎",
         "scientificName": "Clostridium perfringens Type C",
-        "description": "梭菌性肠道感染。",
-        "prevention": "母猪接种疫苗和栏舍消毒。"
+        "description": "细菌毒素病，导致仔猪严重血痢和高死亡率。",
+        "prevention": "在分娩前为母猪接种疫苗，并保持产圈绝对卫生。"
       },
       "dis_navel_bleeding": {
-        "name": "脐带出血",
+        "name": "脐带流血",
         "scientificName": "Umbilical hemorrhage",
-        "description": "脐带处大出血。",
-        "prevention": "结扎出血脐带；检查饲料维 K 含量。"
+        "description": "新生仔猪脐带过度流血。",
+        "prevention": "出生时结扎脐带，避免喂母猪受霉菌毒素污染的饲料。"
       },
       "dis_spirochetal_colitis": {
-        "name": "螺旋体结肠炎",
+        "name": "猪螺旋体结肠炎",
         "scientificName": "Brachyspira pilosicoli",
-        "description": "大肠细菌感染。",
-        "prevention": "药物治疗和栏舍消毒。"
+        "description": "生长猪的轻度腹泻病，导致增重缓慢。",
+        "prevention": "对料槽进行消毒，并用抗生素治疗病猪。"
       },
       "dis_salmonella_septicemia": {
-        "name": "沙门氏菌败血症",
+        "name": "猪沙门氏菌败血症",
         "scientificName": "Salmonella choleraesuis",
-        "description": "沙门氏菌引起的血液感染。",
-        "prevention": "清洁饮水；生物安全。"
+        "description": "严重的沙门氏菌血液感染，导致皮肤呈紫色并迅速死亡。",
+        "prevention": "隔离病猪、在水中投药并保持严格的生物安全措施。"
       },
       "dis_prdc": {
-        "name": "猪呼吸道综合征 (PRDC)",
+        "name": "猪呼吸道疾病综合征 (PRDC)",
         "scientificName": "Porcine Respiratory Disease Complex",
-        "description": "中猪呼吸道综合征。",
-        "prevention": "通风、疫苗接种和密度控制。"
+        "description": "混合病毒和细菌性呼吸道感染，导致咳嗽和生长缓慢。",
+        "prevention": "改善通风、避免过度拥挤并控制原发病毒。"
       },
       "dis_ergotism": {
-        "name": "麦角中毒",
+        "name": "麦角中毒 (麦角病)",
         "scientificName": "Claviceps purpurea",
-        "description": "由霉变麦类引起的中毒。",
-        "prevention": "检查饲料是否有黑色麦角颗粒。"
+        "description": "食用受麦角菌感染的谷物引起的真菌中毒，导致组织坏死。",
+        "prevention": "筛选饲料谷物以清除深色麦角，并更换受污染的饲料。"
       },
       "dis_bvdv_pig": {
-        "name": "猪牛病毒性腹泻 (BVDV)",
+        "name": "猪BVDV感染",
         "scientificName": "Pestivirus",
-        "description": "猪感染牛病毒性腹泻病毒。",
-        "prevention": "猪牛分开饲养。"
+        "description": "与牛接触感染牛病毒性腹泻病毒，导致流产。",
+        "prevention": "将猪与牛羊分开饲养，并限制跨物种接触。"
       },
       "dis_endocarditis": {
-        "name": "内心膜炎",
+        "name": "细菌性心内膜炎",
         "scientificName": "Streptococcal endocarditis",
-        "description": "心瓣膜感染。",
-        "prevention": "尽早处理原发感染。"
+        "description": "心瓣膜感染，导致心力衰竭并在应激期间突然死亡。",
+        "prevention": "及时治疗关节炎和外伤，并淘汰易感个体。"
       },
       "dis_polyserositis": {
-        "name": "多发性浆膜炎",
+        "name": "支原体多发性浆膜炎",
         "scientificName": "Mycoplasma hyorhinis",
-        "description": "体腔内壁感染。",
-        "prevention": "抗生素治疗；减少应激。"
+        "description": "保育猪肺、心脏和关节表面的纤维素性炎症。",
+        "prevention": "尽量减少断奶应激，避免混群，并保持良好通风。"
       },
       "dis_congenital_tremor": {
         "name": "先天性震颤",
         "scientificName": "Atypical Porcine Pestivirus",
-        "description": "抖抖病。",
-        "prevention": "配种前让后备母猪适应农场环境。"
+        "description": "新生仔猪的神经系统疾病，引起严重颤抖。",
+        "prevention": "避免使用受影响公猪的精液，并减少母猪妊娠期间的应激。"
       }
     },
     "diagnosisMatches": "临床诊断匹配",
@@ -1502,7 +1508,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 紧急生物安全协议：",
     "clinicalDiagnosisMatches": "临床诊断匹配",
     "hallmarkBadge": "特征性症状",
-    "hallmarkSignPresent": "存在标志标志：%1$s",
+    "hallmarkSignPresent": "存在标志标志：{sign}",
     "otherSignsWatch": "其他需要注意的迹象：",
     "preventionTreatmentLabel": "预防/治疗：{treatment}",
     "bio_proto_asf": "立即紧急封锁隔离：非洲猪瘟为高致死性法定报告疫病。1) 立即关闭农场大门。2) 停止猪只、车辆、饲料及粪便流动。3) 用卫可或2%烧碱对消毒靴池与车轮彻底消毒。4) 立即联系官方兽医部门。",
@@ -1514,8 +1520,8 @@
     "bio_proto_vesicular_stomatitis": "法定水疱性病变警报：水疱性口炎与口蹄疫临床极难区分。1) 立即隔离患病生猪。2) 穿戴防护手套。3) 上报官方兽医进行实验室鉴别诊断。",
     "bio_proto_senecavirus": "法定报告水疱病：塞内卡病毒 A 症状与口蹄疫一致。1) 立即圈舍隔离。2) 严格限制离场运输。3) 立即报请官方兽医进行鉴别 PCR 确诊。",
     "bio_proto_svd": "法定报告水疱病：猪水疱病 (SVD)。1) 严格隔离发病猪只。2) 限制所有车辆与外来人员进出。3) 立即向动物卫生监督部门报告。",
-    "clinicalMatchPercent": "%1$d%% 临床匹配",
-    "matchedSignsCount": "{matched}$d 个标志（共 {total}$d 个）",
+    "clinicalMatchPercent": "{percent}% 临床匹配",
+    "matchedSignsCount": "{matched} 个标志（共 {total} 个）",
     "matchPercentSuffix": "({percent}% 匹配)"
   },
   "HR": {
@@ -1932,7 +1938,7 @@
     "snooze1Month": "1个月",
     "deleteNotificationQuestion": "删除通知？",
     "deleteNotificationConfirm": "您确定要删除此通知吗？",
-    "lastWeighedDaysAgo": "猪只 #%1$s: 上次称重在 %2$s 天前",
+    "lastWeighedDaysAgo": "猪只 #{tag}: 上次称重在 {days} 天前",
     "stockLeftMinFormat": "{current}: 剩余 {unit} kg (最低: {min} kg)",
     "pigs": "生猪",
     "pig": "猪",

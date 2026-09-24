@@ -247,6 +247,8 @@ export default function HerdPage() {
     try {
       const pigsCollection = collection(db, "users", activeFarmUid, "pigs");
 
+      const todayStr = new Date().toISOString().split("T")[0];
+
       if (!isMultiple) {
         // Single Add
         if (!tagNumber.trim()) return;
@@ -258,6 +260,7 @@ export default function HerdPage() {
           breed,
           gender,
           weight,
+          lastWeightDate: weight > 0 ? todayStr : "",
           purpose,
           sowTag,
           boarTag,
@@ -268,11 +271,21 @@ export default function HerdPage() {
         };
         await setDoc(newRef, newPig, { merge: true });
 
+        if (weight > 0) {
+          const healthRef = doc(collection(newRef, "health_records"));
+          await setDoc(healthRef, {
+            id: healthRef.id,
+            date: todayStr,
+            type: "Weight Check",
+            description: "Initial weight record.",
+          });
+        }
+
         if (source === "Brought to farm" && purchasePrice > 0) {
           const finRef = doc(collection(db, "users", activeFarmUid, "financials"));
           await setDoc(finRef, {
             id: finRef.id,
-            date: new Date().toISOString().split("T")[0],
+            date: todayStr,
             type: "Expense",
             category: "Livestock Purchase",
             amount: purchasePrice,
@@ -294,6 +307,7 @@ export default function HerdPage() {
             breed,
             gender: "Male",
             weight: entry.weight,
+            lastWeightDate: entry.weight > 0 ? todayStr : "",
             purpose,
             sowTag,
             boarTag,
@@ -303,6 +317,16 @@ export default function HerdPage() {
             notes: notes || "Batch addition (Male)"
           };
           await setDoc(newRef, newPig, { merge: true });
+
+          if (entry.weight > 0) {
+            const healthRef = doc(collection(newRef, "health_records"));
+            await setDoc(healthRef, {
+              id: healthRef.id,
+              date: todayStr,
+              type: "Weight Check",
+              description: "Initial weight record.",
+            });
+          }
         }
 
         for (const entry of validFemales) {
@@ -314,6 +338,7 @@ export default function HerdPage() {
             breed,
             gender: "Female",
             weight: entry.weight,
+            lastWeightDate: entry.weight > 0 ? todayStr : "",
             purpose,
             sowTag,
             boarTag,
@@ -323,6 +348,16 @@ export default function HerdPage() {
             notes: notes || "Batch addition (Female)"
           };
           await setDoc(newRef, newPig, { merge: true });
+
+          if (entry.weight > 0) {
+            const healthRef = doc(collection(newRef, "health_records"));
+            await setDoc(healthRef, {
+              id: healthRef.id,
+              date: todayStr,
+              type: "Weight Check",
+              description: "Initial weight record.",
+            });
+          }
         }
 
         if (source === "Brought to farm" && purchasePrice > 0) {
@@ -367,7 +402,7 @@ export default function HerdPage() {
   }
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
+    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-x-hidden">
       {/* Watermark Logo Background */}
       {!isMobile && (
         <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
@@ -386,6 +421,17 @@ export default function HerdPage() {
           {/* Top Actions & Toggle Bar */}
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => router.push("/dashboard")}
+                className="p-2 hover:bg-zinc-100 rounded-xl transition-colors text-zinc-600 border border-zinc-200 bg-white shadow-xs flex items-center justify-center shrink-0"
+                aria-label="Back to dashboard"
+                title="Back to dashboard"
+              >
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
               <button
                 onClick={() => setViewingArchived(false)}
                 className={`px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-sm ${

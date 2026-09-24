@@ -106,7 +106,13 @@
     "noActivities": "Tidak ada aktivitas mendatang",
     "allTasksCompleted": "Semua tugas selesai!",
     "generalTask": "Tugas Umum",
-    "language": "Bahasa"
+    "language": "Bahasa",
+    "feed": "Memberi makan",
+    "inventory": "Inventarisasi Pakan",
+    "calculator": "Kalkulator Kebutuhan Pakan",
+    "mixFeed": "Formulasi Pencampuran Pakan",
+    "analyzeFeed": "Analisis Kandungan Nutrisi Pakan",
+    "marketHub": "Sentra Pasar Babi"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -835,32 +841,32 @@
       "dis_asf": {
         "name": "Demam Babi Afrika (ASF)",
         "scientificName": "Asfivirus",
-        "description": "Penyakit virus yang sangat menular dan mematikan yang lazim di Afrika Barat. Belum ada vaksin.",
-        "prevention": "Biosekuriti ketat dan batasi akses peternakan."
+        "description": "Penyakit virus yang sangat menular dan mematikan yang umum terjadi di Afrika Barat. Tidak ada vaksin yang ada.",
+        "prevention": "Ketat biosekuriti dan membatasi akses peternakan."
       },
       "dis_fmd": {
-        "name": "Penyakit Mulut dan Kuku (PMK/FMD)",
+        "name": "Penyakit Mulut dan Kuku (PMK)",
         "scientificName": "Aphthovirus",
-        "description": "Penyakit virus yang menyebabkan lepuh pada mulut dan kaki.",
-        "prevention": "Vaksinasi dan kontrol pergerakan."
+        "description": "Penyakit virus menyebabkan lecet pada mulut dan kaki.",
+        "prevention": "Vaksinasi dan pengendalian pergerakan."
       },
       "dis_prrs": {
         "name": "PRRS (Telinga Biru)",
         "scientificName": "Arterivirus",
         "description": "Menyebabkan kegagalan pernapasan dan masalah reproduksi.",
-        "prevention": "Biosekuriti dan vaksinasi ternak."
+        "prevention": "Keamanan hayati dan vaksinasi kawanan."
       },
       "dis_erysipelas": {
-        "name": "Swine Erysipelas",
+        "name": "Babi Erysipelas",
         "scientificName": "Erysipelothrix rhusiopathiae",
-        "description": "Infeksi bakteri yang menyebabkan lesi kulit yang khas dan radang sendi.",
+        "description": "Infeksi bakteri menyebabkan lesi kulit dan radang sendi yang berbeda.",
         "prevention": "Vaksinasi rutin dan kebersihan kandang."
       },
       "dis_csf": {
         "name": "Demam Babi Klasik",
         "scientificName": "Pestivirus",
         "description": "Penyakit virus yang sangat menular mirip dengan ASF.",
-        "prevention": "Vaksinasi dan biosekuriti ketat."
+        "prevention": "Vaksinasi dan biosekuriti yang ketat."
       },
       "dis_anthrax": {
         "name": "Antraks",
@@ -869,94 +875,94 @@
         "prevention": "Vaksinasi dan hindari membuka bangkai."
       },
       "dis_brucellosis": {
-        "name": "Bruselosis",
+        "name": "Brucellosis",
         "scientificName": "Brucella suis",
         "description": "Penyakit bakteri yang menyebabkan kegagalan reproduksi.",
-        "prevention": "Pengujian, penyortiran, dan sanitasi."
+        "prevention": "Pengujian, pemusnahan, dan sanitasi."
       },
       "dis_coccidiosis": {
         "name": "Koksidiosis",
         "scientificName": "Isospora suis",
-        "description": "Penyakit parasit yang terutama menyerang anak babi.",
-        "prevention": "Kebersihan kandang melahirkan."
+        "description": "Penyakit parasit terutama menyerang anak babi.",
+        "prevention": "Kebersihan pena farrowing."
       },
       "dis_pneumonia": {
         "name": "Pneumonia Mikoplasma",
         "scientificName": "Mycoplasma hyopneumoniae",
-        "description": "Penyakit pernapasan kronis yang menyebabkan pertumbuhan buruk.",
-        "prevention": "Vaksinasi dan ventilasi yang lebih baik."
+        "description": "Penyakit pernapasan kronis yang menyebabkan pertumbuhan yang buruk.",
+        "prevention": "Vaksinasi dan peningkatan ventilasi."
       },
       "dis_salmonellosis": {
-        "name": "Salmonelosis",
+        "name": "Salmonellosis",
         "scientificName": "Salmonella typhimurium",
-        "description": "Infeksi bakteri yang menyebabkan masalah usus yang parah.",
-        "prevention": "Air bersih dan kebersihan."
+        "description": "Infeksi bakteri menyebabkan masalah usus yang parah.",
+        "prevention": "Air bersih dan higienis."
       },
       "dis_ppv": {
-        "name": "Porcine Parvovirus (PPV)",
+        "name": "Parvovirus Babi (PPV)",
         "scientificName": "Porcine Parvovirus",
-        "description": "Penyebab umum kegagalan reproduksi pada babi dara.",
-        "prevention": "Vaksinasi sebelum kawin."
+        "description": "Penyebab umum kegagalan reproduksi pada babi.",
+        "prevention": "Vaksinasi sebelum berkembang biak."
       },
       "dis_rhinitis": {
-        "name": "Rhinitis Atropi",
+        "name": "Rinitis Atrofi",
         "scientificName": "Bordetella bronchiseptica",
-        "description": "Menyebabkan distorsi moncong dan masalah pernapasan.",
+        "description": "Menyebabkan distorsi pada moncong dan masalah pernapasan.",
         "prevention": "Vaksinasi dan kualitas udara."
       },
       "dis_leptospirosis": {
         "name": "Leptospirosis",
         "scientificName": "Leptospira spp.",
         "description": "Penyakit bakteri zoonosis yang menyerang ginjal.",
-        "prevention": "Kontrol pengerat dan vaksinasi."
+        "prevention": "Pengendalian hewan pengerat dan vaksinasi."
       },
       "dis_influenza": {
         "name": "Influenza Babi",
         "scientificName": "Influenza A virus",
-        "description": "Infeksi pernapasan yang menyebar cepat.",
+        "description": "Infeksi pernafasan yang menyebar dengan cepat.",
         "prevention": "Ventilasi dan biosekuriti."
       },
       "dis_edema": {
         "name": "Penyakit Edema",
         "scientificName": "Escherichia coli",
-        "description": "Disebabkan oleh toksin E. coli pada anak babi yang baru disapih.",
-        "prevention": "Peningkatan sanitasi dan diet."
+        "description": "Disebabkan oleh racun E. coli pada anak babi yang disapih.",
+        "prevention": "Peningkatan sanitasi dan pola makan."
       },
       "dis_dysentery": {
         "name": "Disentri Babi",
         "scientificName": "Brachyspira hyodysenteriae",
-        "description": "Diare mucohaemorrhagic yang parah.",
-        "prevention": "Pengobatan air dan disinfeksi."
+        "description": "Diare mukohaemoragik berat.",
+        "prevention": "Obat air dan desinfeksi."
       },
       "dis_mange": {
-        "name": "Kudis Sarcoptic (Mange)",
+        "name": "Kudis Sarcoptik",
         "scientificName": "Sarcoptes scabiei",
-        "description": "Penyakit kulit parasit yang menyebabkan ketidaknyamanan ekstrem.",
-        "prevention": "Perawatan akarisida."
+        "description": "Penyakit kulit parasit menyebabkan ketidaknyamanan yang luar biasa.",
+        "prevention": "Pengobatan akarisida."
       },
       "dis_anemia": {
-        "name": "Anemia Defisiensi Zat Besi",
+        "name": "Anemia Defisiensi Besi",
         "scientificName": "Iron Deficiency",
-        "description": "Umum pada anak babi di dalam ruangan tanpa suplemen zat besi.",
+        "description": "Biasa terjadi pada anak babi dalam ruangan tanpa suplemen zat besi.",
         "prevention": "Suntikan zat besi saat lahir."
       },
       "dis_ulcers": {
-        "name": "Ulkus Lambung",
+        "name": "Bisul Lambung",
         "scientificName": "Gastric Ulcers",
-        "description": "Disebabkan oleh pakan halus atau stres.",
-        "prevention": "Sesuaikan ukuran partikel pakan."
+        "description": "Disebabkan oleh pakan yang halus atau stres.",
+        "prevention": "Sesuaikan ukuran partikel umpan."
       },
       "dis_pss": {
-        "name": "Porcine Stress Syndrome",
+        "name": "Sindrom Stres Babi",
         "scientificName": "Genetic stress susceptibility",
         "description": "Kondisi genetik yang dipicu oleh stres.",
         "prevention": "Seleksi genetik dan penanganan yang tenang."
       },
       "dis_tge": {
-        "name": "Transmissible Gastroenteritis (TGE)",
+        "name": "Gastroenteritis Menular (TGE)",
         "scientificName": "Coronavirus",
-        "description": "Penyakit virus dengan mortalitas tinggi pada anak babi muda.",
-        "prevention": "Biosekuriti."
+        "description": "Penyakit virus dengan angka kematian tinggi pada anak babi muda.",
+        "prevention": "Keamanan hayati."
       },
       "dis_pasteurellosis": {
         "name": "Pasteurellosis",
@@ -967,80 +973,80 @@
       "dis_strep": {
         "name": "Streptococcus suis",
         "scientificName": "S. suis",
-        "description": "Infeksi bakteri yang menyebabkan meningitis.",
+        "description": "Infeksi bakteri menyebabkan meningitis.",
         "prevention": "Antibiotik dan pengurangan stres."
       },
       "dis_mycotoxicosis": {
         "name": "Mikotoksikosis",
         "scientificName": "Mycotoxicosis",
         "description": "Disebabkan oleh pakan yang terkontaminasi jamur.",
-        "prevention": "Pengikat toksin dan penyimpanan kering."
+        "prevention": "Pengikat racun dan penyimpanan kering."
       },
       "dis_greasy_pig": {
-        "name": "Greasy Pig Disease",
+        "name": "Penyakit Babi Berminyak",
         "scientificName": "Staphylococcus hyicus",
-        "description": "Infeksi bakteri yang menyebabkan lesi kulit berminyak.",
+        "description": "Infeksi bakteri menyebabkan lesi kulit berminyak.",
         "prevention": "Sanitasi dan antibiotik."
       },
       "dis_pseudorabies": {
-        "name": "Pseudorabies (Aujeszky's)",
+        "name": "Pseudorabies (Aujeszky)",
         "scientificName": "Suid herpesvirus 1",
-        "description": "Penyakit virus yang menyerang sistem saraf dan pernapasan.",
-        "prevention": "Vaksinasi dan program eradikasi."
+        "description": "Penyakit virus mempengaruhi sistem saraf dan pernafasan.",
+        "prevention": "Program vaksinasi dan pemberantasan."
       },
       "dis_pcv2": {
-        "name": "Porcine Circovirus (PCV2)",
+        "name": "Circovirus Babi (PCV2)",
         "scientificName": "Circovirus",
-        "description": "Menyebabkan kekurusan dan masalah pernapasan pada babi grower.",
+        "description": "Menyebabkan masalah wasting dan pernapasan pada petani.",
         "prevention": "Vaksinasi."
       },
       "dis_ped": {
-        "name": "Porcine Epidemic Diarrhea (PED)",
+        "name": "Diare Epidemi Babi (PED)",
         "scientificName": "Coronavirus",
         "description": "Mirip dengan TGE, sangat fatal bagi neonatus.",
-        "prevention": "Biosekuriti ketat."
+        "prevention": "Keamanan hayati yang ketat."
       },
       "dis_je": {
         "name": "Ensefalitis Jepang",
         "scientificName": "Flavivirus",
-        "description": "Penyakit virus yang ditularkan melalui nyamuk.",
-        "prevention": "Kontrol nyamuk dan vaksinasi."
+        "description": "Penyakit virus yang ditularkan oleh nyamuk.",
+        "prevention": "Pengendalian nyamuk dan vaksinasi."
       },
       "dis_rabies": {
-        "name": "Rabies",
+        "name": "rabies",
         "scientificName": "Lyssavirus",
-        "description": "Penyakit virus fatal biasanya dari gigitan.",
-        "prevention": "Vaksinasi hewan peliharaan dan kontrol satwa liar."
+        "description": "Penyakit virus yang fatal biasanya disebabkan oleh gigitan.",
+        "prevention": "Vaksinasi hewan peliharaan dan pengendalian satwa liar."
       },
       "dis_pox": {
         "name": "Cacar Babi",
         "scientificName": "Suipoxvirus",
-        "description": "Penyakit kulit virus, sering disebarkan oleh kutu.",
-        "prevention": "Kontrol kutu."
+        "description": "Penyakit kulit akibat virus, sering kali disebarkan oleh kutu.",
+        "prevention": "Pengendalian kutu."
       },
       "dis_vs": {
         "name": "Stomatitis Vesikular",
         "scientificName": "Rhabdovirus",
-        "description": "Menyebabkan lepuh; terlihat seperti PMK.",
-        "prevention": "Kontrol serangga dan karantina."
+        "description": "Menyebabkan lecet; sepertinya FMD.",
+        "prevention": "Pengendalian serangga dan karantina."
       },
       "dis_clostridial": {
-        "name": "Enteritis Clostridial",
+        "name": "Enteritis Klostridial",
         "scientificName": "Clostridium perfringens",
-        "description": "Infeksi bakteri yang menyebabkan kerusakan usus yang parah.",
-        "prevention": "Vaksinasi induk dan kebersihan."
+        "description": "Infeksi bakteri menyebabkan kerusakan usus yang parah.",
+        "prevention": "Vaksinasi babi dan kebersihan."
       },
       "dis_glassers": {
         "name": "Penyakit Glasser",
         "scientificName": "Haemophilus parasuis",
-        "description": "Menyebabkan peradangan pada membran di sekitar jantung, paru-paru, sendi.",
+        "description": "Menyebabkan radang selaput di sekitar jantung, paru-paru, persendian.",
         "prevention": "Antibiotik dan manajemen stres."
       },
       "dis_app": {
-        "name": "Actinobacillus Pleuropneumonia (APP)",
+        "name": "Actinobacillus Pleuropneumonia (APLIKASI)",
         "scientificName": "A. pleuropneumoniae",
-        "description": "Pneumonia bakteri yang parah.",
-        "prevention": "Antibiotik dan lingkungan yang ditingkatkan."
+        "description": "Pneumonia bakterial yang parah.",
+        "prevention": "Antibiotik dan perbaikan lingkungan."
       },
       "dis_ileitis": {
         "name": "Ileitis (Lawsonia)",
@@ -1049,130 +1055,130 @@
         "prevention": "Vaksinasi dan antibiotik."
       },
       "dis_tb": {
-        "name": "Tuberkulosis",
+        "name": "TBC",
         "scientificName": "Mycobacterium avium",
         "description": "Penyakit bakteri kronis.",
-        "prevention": "Perlindungan dari burung dan sanitasi."
+        "prevention": "Pemeriksaan burung dan sanitasi."
       },
       "dis_tetanus": {
         "name": "Tetanus",
         "scientificName": "Clostridium tetani",
-        "description": "Toksin bakteri yang menyerang sistem saraf.",
-        "prevention": "Sanitasi selama operasi/kastrasi."
+        "description": "Racun bakteri mempengaruhi sistem saraf.",
+        "prevention": "Sanitasi selama operasi/kebiri."
       },
       "dis_eperythrozoonosis": {
-        "name": "Eperythrozoonosis",
+        "name": "Eperitrozoonosis",
         "scientificName": "Mycoplasma suis",
-        "description": "Parasit darah yang menyebabkan anemia.",
-        "prevention": "Kontrol serangga dan jarum bersih."
+        "description": "Parasit darah menyebabkan anemia.",
+        "prevention": "Pengendalian serangga dan jarum bersih."
       },
       "dis_ascaris": {
         "name": "Ascaris suum",
         "scientificName": "Cacing Gelang Besar",
-        "description": "Parasit internal yang menyebabkan kerusakan paru-paru dan hati.",
-        "prevention": "Pemberian obat cacing secara rutin."
+        "description": "Parasit internal menyebabkan kerusakan paru-paru dan hati.",
+        "prevention": "Pemberian obat cacing secara teratur."
       },
       "dis_whipworms": {
-        "name": "Cacing Cambuk",
+        "name": "cacing cambuk",
         "scientificName": "Trichuris suis",
         "description": "Parasit internal di usus besar.",
-        "prevention": "Pemberian obat cacing dan sanitasi."
+        "prevention": "Obat cacing dan sanitasi."
       },
       "dis_lungworms": {
-        "name": "Cacing Paru",
+        "name": "Cacing paru-paru",
         "scientificName": "Metastrongylus spp.",
         "description": "Parasit internal paru-paru.",
-        "prevention": "Kontrol cacing tanah dan pemberian obat cacing."
+        "prevention": "Pengendalian cacing tanah dan obat cacing."
       },
       "dis_kidney_worms": {
         "name": "Cacing Ginjal",
         "scientificName": "Stephanurus dentatus",
-        "description": "Parasit internal yang menyerang ginjal dan hati.",
+        "description": "Parasit internal mempengaruhi ginjal dan hati.",
         "prevention": "Manajemen dan kebersihan."
       },
       "dis_lice": {
         "name": "Kutu Babi",
         "scientificName": "Haematopinus suis",
-        "description": "Parasit eksternal yang menghisap darah.",
+        "description": "Parasit eksternal menghisap darah.",
         "prevention": "Perawatan insektisida."
       },
       "dis_ringworm": {
-        "name": "Kurap (Ringworm)",
+        "name": "Kurap",
         "scientificName": "Dermatophytosis",
-        "description": "Infeksi jamur kulit.",
-        "prevention": "Sanitasi dan perawatan topikal."
+        "description": "Infeksi jamur pada kulit.",
+        "prevention": "Sanitasi dan pengobatan topikal."
       },
       "dis_mulberry_heart": {
         "name": "Penyakit Jantung Murbei",
         "scientificName": "Vit E/Se Deficiency",
-        "description": "Defisiensi nutrisi yang menyerang jantung.",
+        "description": "Kekurangan nutrisi mempengaruhi jantung.",
         "prevention": "Suplementasi."
       },
       "dis_vit_a": {
         "name": "Defisiensi Vitamin A",
         "scientificName": "Vitamin A Deficiency",
-        "description": "Defisiensi nutrisi.",
-        "prevention": "Penyesuaian diet."
+        "description": "Kekurangan nutrisi.",
+        "prevention": "Penyesuaian pola makan."
       },
       "dis_rickets": {
         "name": "Rakhitis",
         "scientificName": "Vit D/Ca/P Deficiency",
-        "description": "Defisiensi nutrisi yang menyerang pertumbuhan tulang.",
+        "description": "Kekurangan nutrisi mempengaruhi pertumbuhan tulang.",
         "prevention": "Mineral seimbang dan sinar matahari."
       },
       "dis_salt_poisoning": {
         "name": "Keracunan Garam",
         "scientificName": "Water Deprivation",
-        "description": "Disebabkan oleh kurangnya air diikuti oleh konsumsi berlebihan.",
-        "prevention": "Akses air segar yang konstan."
+        "description": "Disebabkan oleh kekurangan air yang diikuti dengan konsumsi berlebihan.",
+        "prevention": "Akses air bersih yang konstan."
       },
       "dis_heat_stroke": {
-        "name": "Heat Stroke",
+        "name": "Serangan Panas",
         "scientificName": "Heat Stroke",
-        "description": "Kepanasan karena ventilasi atau tempat berteduh yang buruk.",
-        "prevention": "Ventilasi, pendinginan, dan tempat berteduh."
+        "description": "Terlalu panas karena ventilasi atau naungan yang buruk.",
+        "prevention": "Ventilasi, pendinginan, dan naungan."
       },
       "dis_rectal_prolapse": {
-        "name": "Prolaps Rektum",
+        "name": "Prolaps rektum",
         "scientificName": "Rectal Prolapse",
-        "description": "Seringkali menyusul batuk, diare, atau stres dingin.",
-        "prevention": "Atasi penyebab utama dan operasi."
+        "description": "Sering kali terjadi setelah batuk, diare, atau stres akibat pilek.",
+        "prevention": "Atasi penyebab utama dan pembedahan."
       },
       "dis_umbilical_hernia": {
         "name": "Hernia Umbilikalis",
         "scientificName": "Umbilical Hernia",
         "description": "Cacat perkembangan atau infeksi pusar.",
-        "prevention": "Sanitasi dan genetik."
+        "prevention": "Sanitasi dan genetika."
       },
       "dis_scrotal_hernia": {
-        "name": "Hernia Skrotalis",
+        "name": "Hernia Skrotum",
         "scientificName": "Scrotal Hernia",
         "description": "Cacat perkembangan genetik.",
-        "prevention": "Genetik dan perbaikan bedah."
+        "prevention": "Genetika dan perbaikan bedah."
       },
       "dis_splayleg": {
-        "name": "Splayleg",
+        "name": "kaki melebar",
         "scientificName": "Myofibrillar hypoplasia",
-        "description": "Anak babi lahir tidak mampu berdiri dengan kaki belakang.",
-        "prevention": "Membalut kaki dan traksi lantai."
+        "description": "Anak babi yang lahir tidak mampu berdiri dengan kaki belakangnya.",
+        "prevention": "Merekatkan traksi kaki dan lantai."
       },
       "dis_vulvovaginitis": {
         "name": "Vulvovaginitis",
         "scientificName": "Zearalenone Toxicity",
-        "description": "Disebabkan oleh toksin jamur estrogenik dalam pakan.",
-        "prevention": "Ganti sumber pakan."
+        "description": "Disebabkan oleh racun jamur estrogenik dalam pakan.",
+        "prevention": "Ubah sumber umpan."
       },
       "dis_seneca": {
-        "name": "Virus Seneca Valley (SVV)",
+        "name": "Virus Lembah Seneca (SVV)",
         "scientificName": "Senecavirus A",
-        "description": "Menyebabkan lepuh mirip dengan PMK.",
+        "description": "Menyebabkan lecet mirip dengan FMD.",
         "prevention": "Biosekuriti dan diagnosis."
       },
       "dis_deltacoronavirus": {
-        "name": "Deltacoronavirus Babi",
+        "name": "Virus Deltacorona Babi",
         "scientificName": "PDCoV",
-        "description": "Diare virus di semua usia.",
-        "prevention": "Biosekuriti."
+        "description": "Diare akibat virus pada segala usia.",
+        "prevention": "Keamanan hayati."
       },
       "dis_rotavirus": {
         "name": "Diare Rotavirus",
@@ -1184,37 +1190,37 @@
         "name": "Penyakit Teschen/Talfan",
         "scientificName": "Sapelovirus/Teschovirus",
         "description": "Infeksi virus pada sistem saraf.",
-        "prevention": "Biosekuriti."
+        "prevention": "Keamanan hayati."
       },
       "dis_vesicular": {
         "name": "Penyakit Vesikular Babi",
         "scientificName": "Enterovirus",
-        "description": "Penyakit virus yang meniru PMK.",
-        "prevention": "Karantina ketat."
+        "description": "Penyakit virus meniru FMD.",
+        "prevention": "Karantina yang ketat."
       },
       "dis_melioidosis": {
         "name": "Melioidosis",
         "scientificName": "Burkholderia pseudomallei",
         "description": "Penyakit bakteri dari tanah/air.",
-        "prevention": "Air bersih dan kebersihan."
+        "prevention": "Air bersih dan higienis."
       },
       "dis_trypanosomiasis": {
         "name": "Tripanosomiasis",
         "scientificName": "Trypanosoma spp.",
-        "description": "Penyakit protozoa yang disebarkan oleh lalat tsetse.",
-        "prevention": "Kontrol lalat dan pengobatan."
+        "description": "Penyakit protozoa disebarkan oleh lalat tsetse.",
+        "prevention": "Pengendalian lalat dan pengobatan."
       },
       "dis_cysticercosis": {
         "name": "Sistiserkosis",
         "scientificName": "Taenia solium larvae",
         "description": "Tahap larva cacing pita manusia pada otot babi.",
-        "prevention": "Cegah akses ke limbah manusia."
+        "prevention": "Cegah akses terhadap kotoran manusia."
       },
       "dis_toxoplasmosis": {
         "name": "Toksoplasmosis",
         "scientificName": "Toxoplasma gondii",
         "description": "Infeksi protozoa zoonosis.",
-        "prevention": "Kontrol kucing dan biosekuriti."
+        "prevention": "Pengendalian kucing dan biosekuriti."
       },
       "dis_listeriosis": {
         "name": "Listeriosis",
@@ -1225,272 +1231,272 @@
       "dis_ear_necrosis": {
         "name": "Nekrosis Telinga",
         "scientificName": "Ear Necrosis",
-        "description": "Sering disebabkan oleh stres, kepadatan berlebih, atau infeksi.",
+        "description": "Seringkali disebabkan oleh stres, kepadatan penduduk, atau infeksi.",
         "prevention": "Kurangi kepadatan dan obati infeksi sekunder."
       },
       "dis_sunburn": {
-        "name": "Terbakar Sinar Matahari",
+        "name": "Terbakar sinar matahari",
         "scientificName": "Solar dermatitis",
         "description": "Menyerang babi berkulit putih di luar ruangan.",
-        "prevention": "Sediakan tempat berteduh."
+        "prevention": "Berikan keteduhan."
       },
       "dis_tail_biting": {
-        "name": "Gigit Ekor",
+        "name": "Menggigit Ekor",
         "scientificName": "Behavioral stress",
         "description": "Masalah perilaku karena stres/kebosanan.",
-        "prevention": "Kurangi stres dan perkaya lingkungan."
+        "prevention": "Mengurangi stres dan memperkaya lingkungan."
       },
       "dis_navel_ill": {
-        "name": "Infeksi Pusar (Navel Ill)",
+        "name": "sakit pusar",
         "scientificName": "Navel Infection",
         "description": "Infeksi tali pusat saat lahir.",
-        "prevention": "Celup yodium saat lahir dan sanitasi."
+        "prevention": "Pencelupan yodium saat lahir dan sanitasi."
       },
       "dis_iron_toxicity": {
-        "name": "Toksisitas Zat Besi",
+        "name": "Toksisitas Besi",
         "scientificName": "Ferrous excess",
-        "description": "Pemberian zat besi berlebih yang menyebabkan kematian mendadak.",
-        "prevention": "Suntikkan dosis yang akurat."
+        "description": "Dapat terjadi jika zat besi disuntikkan pada anak babi yang kekurangan Vit E.",
+        "prevention": "Pastikan pola makan babi seimbang."
       },
       "dis_aflatoxicosis": {
         "name": "Aflatoksikosis",
         "scientificName": "Aspergillus flavus toxin",
-        "description": "Keracunan toksin jamur.",
-        "prevention": "Hindari pakan berjamur dan gunakan pengikat toksin."
+        "description": "Keracunan racun dari biji-bijian atau pakan yang berjamur menyebabkan kerusakan hati dan penyakit kuning.",
+        "prevention": "Hindari pemberian pakan berjamur, simpan biji-bijian dalam kondisi kering, dan gunakan bahan pengikat racun."
       },
       "dis_parakeratosis": {
-        "name": "Parakeratosis",
+        "name": "Parakeratosis (Defisiensi Seng)",
         "scientificName": "Zinc deficiency",
-        "description": "Defisiensi seng pada babi.",
-        "prevention": "Pastikan kadar seng yang memadai dalam diet."
+        "description": "Penyakit nutrisi menyebabkan lesi kulit yang parah dan menebal.",
+        "prevention": "Pastikan rasio kalsium-seng seimbang dalam pakan dan berikan suplemen seng."
       },
       "dis_biotin_deficiency": {
         "name": "Defisiensi Biotin",
         "scientificName": "Vitamin H deficiency",
-        "description": "Defisiensi biotin pada babi.",
-        "prevention": "Sediakan suplemen biotin."
+        "description": "Kekurangan nutrisi menyebabkan kuku pecah-pecah, luka pada kulit, dan timpang.",
+        "prevention": "Lengkapi diet dengan biotin dan hindari lantai beton yang kasar dan basah."
       },
       "dis_gossypol_toxicity": {
         "name": "Toksisitas Gossypol",
         "scientificName": "Gossypol poisoning",
-        "description": "Keracunan bungkil biji kapas.",
-        "prevention": "Batasi bungkil biji kapas mentah dalam pakan."
+        "description": "Keracunan karena memberi makan tepung biji kapas mentah atau berlebihan, menyebabkan gangguan pernapasan.",
+        "prevention": "Batasi penggunaan bungkil biji kapas tanpa detoksifikasi; tambahkan besi sulfat (FeSO4) dalam pakan untuk mengikat racun gosipol bebas."
       },
       "dis_cassava_poisoning": {
         "name": "Keracunan Singkong",
         "scientificName": "Cyanogenic glycosides",
-        "description": "Keracunan sianida dari singkong mentah.",
-        "prevention": "Masak atau fermentasi singkong sebelum diberikan."
+        "description": "Keracunan sianida dari akar atau kulit singkong mentah atau yang tidak diproses dengan benar.",
+        "prevention": "Kupas, rebus, keringkan di bawah sinar matahari, atau fermentasi singkong sebelum diberikan."
       },
       "dis_sweet_potato_toxicity": {
         "name": "Toksisitas Ubi Jalar",
         "scientificName": "Ipomeamarone toxicity",
-        "description": "Keracunan Ipomeamarone.",
-        "prevention": "Jangan berikan ubi jalar yang berjamur atau rusak."
+        "description": "Keracunan dari ubi jalar yang berjamur, menyebabkan gangguan pernafasan yang parah.",
+        "prevention": "Buang ubi yang rusak atau berjamur; beri makan hanya umbi yang sehat."
       },
       "dis_mma": {
-        "name": "Sindrom MMA",
+        "name": "Disgalaktia Pascapersalinan (MMA)",
         "scientificName": "Mastitis-Metritis-Agalactia",
-        "description": "Infeksi pasca melahirkan pada induk.",
-        "prevention": "Kebersihan kandang melahirkan dan nutrisi yang tepat."
+        "description": "Mastitis, metritis, dan agalaktia menyebabkan demam dan kekurangan susu pada induk babi setelah beranak.",
+        "prevention": "Pertahankan kebersihan kandang yang ketat dan pastikan nutrisi babi cukup."
       },
       "dis_pwd": {
-        "name": "Diare Pasca Sapih",
+        "name": "Diare Pasca Penyapihan (PWD)",
         "scientificName": "Escherichia coli (F4/F18)",
-        "description": "Kolibasilosis pada babi yang disapih.",
-        "prevention": "Sanitasi dan penyesuaian diet."
+        "description": "Diare bakteri pada anak babi segera setelah disapih, menyebabkan dehidrasi.",
+        "prevention": "Mengurangi stres penyapihan, menjaga sanitasi yang baik, dan menyediakan air minum yang bersih."
       },
       "dis_trichinellosis": {
-        "name": "Trikinelosis",
+        "name": "Trichinellosis",
         "scientificName": "Trichinella spiralis",
-        "description": "Infeksi parasit zoonosis.",
-        "prevention": "Jangan berikan sampah mentah; kontrol hama."
+        "description": "Penyakit zoonosis parasitik yang disebabkan oleh Trichinella spiralis akibat mengonsumsi sisa daging mentah atau bangkai tikus, dengan kista bersarang di otot bergaris.",
+        "prevention": "Jangan memberi makan swill mentah, merebus sisa makanan selama 30 menit, dan mengendalikan hewan pengerat."
       },
       "dis_hydatid_disease": {
-        "name": "Penyakit Hidatid",
+        "name": "Penyakit Hidatidosis (Echinococcosis)",
         "scientificName": "Echinococcus granulosus",
-        "description": "Infeksi cacing pita larva.",
-        "prevention": "Obati cacing anjing peternakan; cegah akses ke jeroan."
+        "description": "Penyakit zoonosis yang disebabkan oleh larva cacing pita Echinococcus, membentuk kista berisi cairan pada organ hati dan paru-paru babi.",
+        "prevention": "Berikan obat cacing pada anjing peternakan secara teratur dan cegah mereka memakan organ babi mentah."
       },
       "dis_phe": {
-        "name": "Proliferative Hemorrhagic Enteropathy",
+        "name": "Enteropati Hemoragik Babi",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Pendarahan usus akut pada babi dewasa muda.",
-        "prevention": "Vaksinasi dan kebersihan."
+        "description": "Diare berdarah akut dan kematian mendadak pada babi peternak/babi finisher.",
+        "prevention": "Pertahankan sanitasi yang baik dan gunakan antibiotik yang sesuai di bawah bimbingan dokter hewan."
       },
       "dis_mycoplasma_arthritis": {
         "name": "Artritis Mikoplasma",
         "scientificName": "Mycoplasma hyosynoviae",
-        "description": "Penyakit sendi bakteri.",
-        "prevention": "Sanitasi dan karantina."
+        "description": "Infeksi bakteri menyebabkan pembengkakan sendi, ketimpangan, dan kelemahan kaki.",
+        "prevention": "Perbaiki kondisi kandang, kurangi kepadatan ternak, dan obati sejak dini."
       },
       "dis_foot_rot": {
-        "name": "Busuk Kaki (Foot Rot)",
+        "name": "Busuk Kaki (Necrobacillosis)",
         "scientificName": "Fusobacterium necrophorum",
-        "description": "Infeksi kaki yang menyebabkan kepincangan.",
-        "prevention": "Jaga kandang tetap kering; rawat kuku."
+        "description": "Infeksi bakteri memasuki luka pada kuku, menyebabkan pembusukan dan ketimpangan.",
+        "prevention": "Perbaiki beton yang kasar, jaga lantai tetap kering, dan gunakan rendaman kaki jika diperlukan."
       },
       "dis_babesiosis": {
-        "name": "Babesiosis",
+        "name": "Babesiosis yang ditularkan melalui kutu",
         "scientificName": "Babesia trautmanni",
-        "description": "Infeksi protozoa yang ditularkan melalui caplak.",
-        "prevention": "Semprot akarisida untuk kontrol caplak."
+        "description": "Parasit darah yang ditularkan melalui kutu menyebabkan demam tinggi, anemia, dan urin berwarna gelap.",
+        "prevention": "Kendalikan kutu menggunakan akarisida dan jauhkan kandang dari tumbuh-tumbuhan."
       },
       "dis_anaplasmosis": {
         "name": "Anaplasmosis",
         "scientificName": "Anaplasma marginale",
-        "description": "Infeksi darah pada babi.",
-        "prevention": "Kontrol vektor."
+        "description": "Infeksi bakteri yang ditularkan melalui kutu menyebabkan anemia, demam, dan penyakit kuning.",
+        "prevention": "Menerapkan program pengendalian vektor dan centang."
       },
       "dis_sow_hysteria": {
-        "name": "Histeria Induk",
+        "name": "Menabur Histeria",
         "scientificName": "Puerperal psychosis",
-        "description": "Agresi atau panik pada induk setelah melahirkan.",
-        "prevention": "Sediakan area melahirkan yang tenang."
+        "description": "Gangguan perilaku dimana babi yang sedang melahirkan menjadi agresif dan menggigit anak babi.",
+        "prevention": "Sediakan lingkungan bersalin yang tenang, awasi anakan, dan gunakan obat penenang jika diperlukan."
       },
       "dis_thorny_headed_worm": {
-        "name": "Cacing Kepala Berduri",
+        "name": "Cacing berkepala berduri",
         "scientificName": "Macracanthorhynchus hirudinaceus",
-        "description": "Parasit usus.",
-        "prevention": "Cegah akses ke larva kumbang Juni."
+        "description": "Cacing parasit didapat dengan memakan kumbang sehingga menyebabkan usus berlubang.",
+        "prevention": "Hindari pemeliharaan di lahan bebas di tanah yang dipenuhi kumbang dan gunakan obat cacing."
       },
       "dis_strongyloidiasis": {
-        "name": "Strongyloidiasis",
+        "name": "Strongyloidiasis (cacing benang)",
         "scientificName": "Strongyloides ransomi",
-        "description": "Infeksi cacing benang.",
-        "prevention": "Jaga kandang tetap kering; pemberian obat cacing."
+        "description": "Cacing kremi menyebabkan diare parah dan kematian pada anak babi.",
+        "prevention": "Jaga agar kandang pelepasliaran tetap kering dan bersih, dan tabur cacing sebelum melakukan pelarangan."
       },
       "dis_hyostrongylosis": {
-        "name": "Cacing Lambung Merah",
+        "name": "Cacing Perut Merah",
         "scientificName": "Hyostrongylus rubidus",
-        "description": "Cacing usus pada babi yang digembalakan.",
-        "prevention": "Manajemen pastura yang bersih; pemberian obat cacing."
+        "description": "Infeksi cacing perut menyebabkan maag, anemia, dan penurunan berat badan.",
+        "prevention": "Rotasi padang rumput, jaga agar kandang tetap kering, dan terapkan jadwal pemberantasan cacing."
       },
       "dis_oesophagostomiasis": {
-        "name": "Cacing Nodular",
+        "name": "Infeksi Cacing Nodular",
         "scientificName": "Oesophagostomum spp.",
-        "description": "Cacing usus pada babi.",
-        "prevention": "Pemberian obat cacing dan sanitasi."
+        "description": "Parasit usus menyebabkan bintil-bintil di dinding usus, menyebabkan babi kurus.",
+        "prevention": "Sanitasi kandang secara teratur dan penggunaan obat anthelmintik spektrum luas secara rutin."
       },
       "dis_fascioliasis": {
-        "name": "Fasioliasis",
+        "name": "Fascioliasis (Kebetulan Hati)",
         "scientificName": "Fasciola gigantica",
-        "description": "Infeksi cacing hati.",
-        "prevention": "Kontrol siput; jauhkan dari pastura basah."
+        "description": "Cacing parasit yang menyerang hati, umum terjadi di padang rumput basah atau berawa.",
+        "prevention": "Cegah babi merumput di daerah rawa dan kendalikan keong lumpur."
       },
       "dis_emcv": {
-        "name": "EMCV",
+        "name": "Ensefalomiokarditis (EMCV)",
         "scientificName": "Cardiovirus",
-        "description": "Miokarditis virus dan kegagalan reproduksi.",
-        "prevention": "Kontrol pengerat (pengerat menyebarkan EMCV)."
+        "description": "Infeksi virus yang ditularkan melalui hewan pengerat menyebabkan gagal jantung mendadak dan aborsi.",
+        "prevention": "Terapkan pengendalian hewan pengerat yang ketat dan lindungi pakan dari kontaminasi."
       },
       "dis_demodectic_mange": {
-        "name": "Kudis Demodectic",
+        "name": "Demodex kudis",
         "scientificName": "Demodex phylloides",
-        "description": "Infeksi tungau kulit.",
-        "prevention": "Perawatan akarisida."
+        "description": "Tungau kulit mikroskopis menyebabkan bintik-bintik bersisik dan pustula kecil.",
+        "prevention": "Perbaiki nutrisi ternak, isolasi babi yang terkena dampak, dan gunakan akarisida."
       },
       "dis_pityriasis_rosea": {
-        "name": "Pityriasis Rosea",
+        "name": "Pitiriasis Rosea",
         "scientificName": "Pseudo-ringworm",
-        "description": "Kondisi kulit tidak menular.",
-        "prevention": "Pemulihan spontan; jaga lingkungan tetap bersih."
+        "description": "Kondisi kulit tidak menular pada babi muda yang membentuk kerak seperti cincin.",
+        "prevention": "Biasanya menyelesaikan sendiri; menjaga kebersihan, tempat tidur kering dan mengurangi stres."
       },
       "dis_photosensitization": {
         "name": "Fotosensitisasi",
         "scientificName": "Solar dermatitis",
-        "description": "Hipersensitivitas kulit terhadap sinar matahari.",
-        "prevention": "Jauhkan dari sinar matahari langsung; periksa tanaman pastura."
+        "description": "Reaksi parah seperti terbakar sinar matahari pada babi berkulit terang setelah memakan tumbuhan tertentu.",
+        "prevention": "Sediakan tempat berteduh, singkirkan gulma yang menimbulkan kepekaan, dan pelihara babi di dalam ruangan."
       },
       "dis_shoulder_ulcers": {
-        "name": "Ulkus Bahu",
+        "name": "Menabur Bisul Bahu",
         "scientificName": "Decubitus ulcers",
-        "description": "Luka pada induk kurus di lantai keras.",
-        "prevention": "Sediakan alas tidur yang empuk; tingkatkan pakan."
+        "description": "Luka tekan di bahu babi kurus yang ditempatkan di atas beton keras.",
+        "prevention": "Sediakan alas tidur empuk, jaga kondisi tubuh babi baik, dan gunakan alas karet."
       },
       "dis_ear_biting": {
-        "name": "Gigit Telinga",
+        "name": "Kanibalisme Telinga",
         "scientificName": "Stress response behavior",
-        "description": "Respons perilaku terhadap stres.",
-        "prevention": "Kurangi kepadatan stok; perkaya lingkungan."
+        "description": "Perilaku tidak normal dimana babi menggigit telinga teman kandangnya sehingga menyebabkan nekrosis.",
+        "prevention": "Kurangi kepadatan, tingkatkan ventilasi, dan berikan pengayaan seperti rantai."
       },
       "dis_gastric_torsion": {
-        "name": "Torsi Lambung",
+        "name": "Torsi Lambung (Kembung)",
         "scientificName": "Gastric dilation-volvulus",
-        "description": "Lambung terpelintir.",
-        "prevention": "Hindari pemberian makan berlebih dalam satu kali makan."
+        "description": "Perut kembung dan terpelintir secara tiba-tiba, menyebabkan kematian dengan cepat.",
+        "prevention": "Hindari memberi makan dalam porsi besar setelah puasa panjang dan bagilah makanan harian menjadi beberapa porsi."
       },
       "dis_c_difficile": {
-        "name": "Infeksi C. difficile",
+        "name": "Clostridium difficile (CDI)",
         "scientificName": "Clostridioides difficile",
-        "description": "Diare bakteri pada anak babi.",
-        "prevention": "Lingkungan bersih dan ventilasi yang tepat."
+        "description": "Infeksi bakteri pada anak babi yang baru lahir menyebabkan diare encer dan kembung.",
+        "prevention": "Bersihkan dan disinfeksi kandang farrowing secara menyeluruh dan pastikan kolostrum dini."
       },
       "dis_cold_stress": {
-        "name": "Stres Dingin",
+        "name": "Stres Dingin (Hipotermia)",
         "scientificName": "Hypothermia susceptibility",
-        "description": "Kedinginan pada anak babi muda.",
-        "prevention": "Sediakan lampu pemanas dan alas tidur kering."
+        "description": "Pendinginan tubuh yang parah pada anak babi, menyebabkan menggigil dan kematian yang tinggi.",
+        "prevention": "Sediakan lampu penghangat, kotak merayap, dan jaga agar area peternakan tetap kering dan bebas angin."
       },
       "dis_necrotic_enteritis": {
         "name": "Enteritis Nekrotik",
         "scientificName": "Clostridium perfringens Type C",
-        "description": "Infeksi usus clostridial.",
-        "prevention": "Vaksinasi induk dan sanitasi kandang."
+        "description": "Penyakit toksin bakteri menyebabkan diare berdarah parah dan kematian tinggi pada anak babi.",
+        "prevention": "Vaksinasi induk babi sebelum beranak dan jaga kebersihan kandang secara mutlak."
       },
       "dis_navel_bleeding": {
         "name": "Pendarahan Pusar",
         "scientificName": "Umbilical hemorrhage",
-        "description": "Pendarahan dari tali pusat.",
-        "prevention": "Ikat pusar yang berdarah; periksa vitamin K pakan."
+        "description": "Pendarahan berlebihan dari tali pusat pada anak babi yang baru lahir.",
+        "prevention": "Ikat tali pusar saat lahir dan hindari pemberian pakan yang terkontaminasi mikotoksin kepada induk babi."
       },
       "dis_spirochetal_colitis": {
-        "name": "Kolitis Spirochetal",
+        "name": "Kolitis Spirochetal Babi",
         "scientificName": "Brachyspira pilosicoli",
-        "description": "Infeksi bakteri usus besar.",
-        "prevention": "Pengobatan dan sanitasi kandang."
+        "description": "Penyakit diare ringan pada babi yang sedang tumbuh, menyebabkan pertambahan berat badan yang buruk.",
+        "prevention": "Sanitasi tempat pakan dan obati babi yang terkena dampak dengan antibiotik."
       },
       "dis_salmonella_septicemia": {
         "name": "Septikemia Salmonella",
         "scientificName": "Salmonella choleraesuis",
-        "description": "Infeksi darah dari Salmonella.",
-        "prevention": "Air bersih; biosekuriti."
+        "description": "Infeksi salmonella aliran darah yang parah menyebabkan kulit berwarna ungu dan kematian yang cepat.",
+        "prevention": "Isolasi babi yang sakit, beri obat air, dan pertahankan biosekuriti yang ketat."
       },
       "dis_prdc": {
-        "name": "PRDC",
+        "name": "Kompleks Penyakit Pernafasan Babi",
         "scientificName": "Porcine Respiratory Disease Complex",
-        "description": "Kompleks penyakit pernapasan pada babi grower.",
-        "prevention": "Ventilasi, vaksinasi, dan kontrol kepadatan."
+        "description": "Infeksi pernafasan campuran virus dan bakteri menyebabkan batuk dan pertumbuhan terhambat.",
+        "prevention": "Tingkatkan ventilasi, hindari kepadatan berlebih, dan kendalikan virus primer."
       },
       "dis_ergotism": {
-        "name": "Ergotisme",
+        "name": "Keracunan Ergot (Ergotisme)",
         "scientificName": "Claviceps purpurea",
-        "description": "Keracunan dari biji-bijian/gandum yang berjamur.",
-        "prevention": "Periksa biji-bijian pakan untuk badan ergot hitam."
+        "description": "Keracunan jamur dari biji-bijian sereal yang terinfeksi ergot, menyebabkan nekrosis jaringan.",
+        "prevention": "Saring biji-bijian pakan untuk mencari tubuh ergot berwarna gelap dan ganti pakan yang terkontaminasi."
       },
       "dis_bvdv_pig": {
-        "name": "BVDV pada Babi",
+        "name": "Infeksi BVDV pada Babi",
         "scientificName": "Pestivirus",
-        "description": "Virus Bovine Viral Diarrhea pada babi.",
-        "prevention": "Isolasi babi dari sapi."
+        "description": "Infeksi virus Bovine Viral Diarrhea akibat kontak dengan sapi sehingga menyebabkan aborsi.",
+        "prevention": "Pisahkan babi dari sapi dan domba, dan batasi kontak lintas spesies."
       },
       "dis_endocarditis": {
-        "name": "Endokarditis",
+        "name": "Endokarditis Bakterial",
         "scientificName": "Streptococcal endocarditis",
-        "description": "Infeksi katup jantung.",
-        "prevention": "Obati infeksi utama sejak dini."
+        "description": "Infeksi katup jantung menyebabkan gagal jantung dan kematian mendadak saat stres.",
+        "prevention": "Segera obati penyakit sendi dan luka, dan pilihlah berdasarkan genetika yang rentan."
       },
       "dis_polyserositis": {
-        "name": "Poliserositis",
+        "name": "Poliserositis Mikoplasma",
         "scientificName": "Mycoplasma hyorhinis",
-        "description": "Infeksi lapisan rongga tubuh.",
-        "prevention": "Pengobatan antibiotik; minimalkan stres."
+        "description": "Peradangan fibrosa pada paru-paru, jantung, dan permukaan sendi pada anak yang disapih.",
+        "prevention": "Minimalkan stres saat menyapih, hindari mencampurkan sampah, dan berikan ventilasi yang baik."
       },
       "dis_congenital_tremor": {
-        "name": "Tremor Kongenital",
+        "name": "Tremor Bawaan",
         "scientificName": "Atypical Porcine Pestivirus",
-        "description": "Penyakit babi gemetar.",
-        "prevention": "Aklimatisasi babi dara ke peternakan sebelum kawin."
+        "description": "Kondisi neurologis pada anak babi yang baru lahir menyebabkan gemetar parah.",
+        "prevention": "Hindari penggunaan air mani dari babi hutan yang terkena dampak dan minimalkan stres pada induk babi selama masa kehamilan."
       }
     },
     "diagnosisMatches": "Clinical Diagnosis Matches",
@@ -1502,7 +1508,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 EMERGENCY BIOSECURITY PROTOCOL:",
     "clinicalDiagnosisMatches": "Kecocokan Diagnosis Klinis",
     "hallmarkBadge": "Gejala Utama",
-    "hallmarkSignPresent": "Tanda ciri hadir: %1$s",
+    "hallmarkSignPresent": "Tanda ciri hadir: {sign}",
     "otherSignsWatch": "Tanda-tanda lain yang harus diwaspadai:",
     "preventionTreatmentLabel": "Pencegahan / Pengobatan: {treatment}",
     "bio_proto_asf": "IMMEDIATE EMERGENCY QUARANTINE: African Swine Fever is a lethal, legally notifiable virus. 1) Lock down farm gates immediately. 2) Stop all movement of pigs, vehicles, feed, and manure. 3) Disinfect all boot baths and tyres with Virkon S or 2% caustic soda. 4) Contact your District/National Veterinary Officer immediately.",
@@ -1514,8 +1520,8 @@
     "bio_proto_vesicular_stomatitis": "REPORTABLE VESICULAR LESION ALERT: Vesicular Stomatitis is clinically indistinguishable from Foot and Mouth Disease. 1) Isolate infected pigs immediately. 2) Wear protective gloves. 3) Report to state veterinarian for lab differential diagnosis.",
     "bio_proto_senecavirus": "REPORTABLE VESICULAR DISEASE: Senecavirus A lesions are clinically indistinguishable from Foot and Mouth Disease (FMD). 1) Quarantine pen immediately. 2) Restrict off-farm movement. 3) Notify livestock veterinary authorities for mandatory differential PCR testing.",
     "bio_proto_svd": "REPORTABLE VESICULAR DISEASE: Swine Vesicular Disease (SVD). 1) Strict isolation of infected animals. 2) Restrict all vehicle and visitor movements. 3) Report to state animal health department immediately.",
-    "clinicalMatchPercent": "%1$d%% Pertandingan Klinis",
-    "matchedSignsCount": "{matched}$d dari {total}$d tanda",
+    "clinicalMatchPercent": "{percent}% Pertandingan Klinis",
+    "matchedSignsCount": "{matched} dari {total} tanda",
     "matchPercentSuffix": "({percent}% match)"
   },
   "HR": {
@@ -1932,7 +1938,7 @@
     "snooze1Month": "1 Bulan",
     "deleteNotificationQuestion": "Hapus Notifikasi?",
     "deleteNotificationConfirm": "Apakah Anda yakin ingin menghapus notifikasi ini?",
-    "lastWeighedDaysAgo": "Babi #%1$s: Terakhir ditimbang %2$s hari yang lalu",
+    "lastWeighedDaysAgo": "Babi #{tag}: Terakhir ditimbang {days} hari yang lalu",
     "stockLeftMinFormat": "{current}: {unit} kg tersisa (Min: {min} kg)",
     "pigs": "Babi",
     "pig": "Babi",

@@ -124,7 +124,13 @@
     "noActivities": "No upcoming activities",
     "allTasksCompleted": "All tasks are completed!",
     "generalTask": "General Task",
-    "language": "Language"
+    "language": "Language",
+    "feed": "Fidim",
+    "inventory": "Inventori bilong ol kaikai",
+    "calculator": "Kalkulaitim kaikai bilong pik",
+    "mixFeed": "Miksaim kaikai bilong pik",
+    "analyzeFeed": "Skelim marasin na gutpela samting long kaikai",
+    "marketHub": "Ples Bung Maket bilong Pik"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -866,664 +872,664 @@
     },
     "diseases": {
       "dis_asf": {
-        "name": "African Swine Fever (ASF)",
+        "name": "Afrikan Swine Fiva (ASF)",
         "scientificName": "Asfivirus",
-        "description": "A highly contagious and deadly viral disease prevalent in West Africa. No vaccine exists.",
-        "prevention": "Strict biosecurity and restrict farm access."
+        "description": "Wanpela sik we i save kalap hariap na i save kilim man na i save kamap planti long Wes Afrika. Nogat wanpela sut i stap.",
+        "prevention": "Strongim 'biosecurity' na tambuim ol manmeri long go insait long fam."
       },
       "dis_fmd": {
-        "name": "Foot and Mouth Disease (FMD)",
+        "name": "Sik bilong lek na maus (FMD)",
         "scientificName": "Aphthovirus",
-        "description": "Viral disease causing blisters on the mouth and feet.",
-        "prevention": "Vaccination and movement control."
+        "description": "Sik bilong vaires i save kamapim ol sua long maus na lek.",
+        "prevention": "Vaksinesen na bosim muvmen."
       },
       "dis_prrs": {
-        "name": "PRRS (Blue Ear)",
+        "name": "PRRS (Blupela yau)",
         "scientificName": "Arterivirus",
-        "description": "Causes respiratory failure and reproductive issues.",
-        "prevention": "Biosecurity and herd vaccination."
+        "description": "I save kamapim hevi long pulim win na hevi long karim pikinini.",
+        "prevention": "Biosekyuriti na givim sut long ol animal."
       },
       "dis_erysipelas": {
         "name": "Swine Erysipelas",
         "scientificName": "Erysipelothrix rhusiopathiae",
-        "description": "Bacterial infection causing distinct skin lesions and arthritis.",
-        "prevention": "Regular vaccination and pen hygiene."
+        "description": "Infeksen bilong ol binatang jem we i save kamapim ol sua long skin na sik atraitis.",
+        "prevention": "Givim sut oltaim na klinim pen."
       },
       "dis_csf": {
-        "name": "Classical Swine Fever",
+        "name": "Klasikel Swine Fiva",
         "scientificName": "Pestivirus",
-        "description": "Highly contagious viral disease similar to ASF.",
-        "prevention": "Vaccination and strict biosecurity."
+        "description": "Sik we i save kalap hariap tru wankain olsem ASF.",
+        "prevention": "Vaksinesen na strongpela 'biosecurity'."
       },
       "dis_anthrax": {
         "name": "Anthrax",
         "scientificName": "Bacillus anthracis",
-        "description": "Serious bacterial disease that can affect humans.",
-        "prevention": "Vaccination and avoid opening carcasses."
+        "description": "Bikpela sik bilong ol binatang jem we inap long bagarapim ol manmeri.",
+        "prevention": "Givim sut na noken opim bodi bilong ol animal."
       },
       "dis_brucellosis": {
-        "name": "Brucellosis",
+        "name": "Bruselosis",
         "scientificName": "Brucella suis",
-        "description": "Bacterial disease causing reproductive failure.",
-        "prevention": "Testing, culling, and sanitation."
+        "description": "Sik bilong ol binatang jem we i save kamapim hevi long karim pikinini.",
+        "prevention": "Testing, kilim, na senitesen."
       },
       "dis_coccidiosis": {
         "name": "Coccidiosis",
         "scientificName": "Isospora suis",
-        "description": "Parasitic disease primarily affecting piglets.",
+        "description": "Sik bilong ol binatang nogut i save kamap long ol liklik buai.",
         "prevention": "Farrowing pen hygiene."
       },
       "dis_pneumonia": {
         "name": "Mycoplasmal Pneumonia",
         "scientificName": "Mycoplasma hyopneumoniae",
-        "description": "Chronic respiratory disease leading to poor growth.",
-        "prevention": "Vaccination and improved ventilation."
+        "description": "Sik bilong pulim win we i save mekim man i no gro gut.",
+        "prevention": "Vaksinesen na gutpela rot bilong pulim win."
       },
       "dis_salmonellosis": {
         "name": "Salmonellosis",
         "scientificName": "Salmonella typhimurium",
-        "description": "Bacterial infection causing severe gut issues.",
-        "prevention": "Clean water and hygiene."
+        "description": "Infeksen bilong ol binatang jem i save kamapim ol bikpela hevi long bel.",
+        "prevention": "Klinpela wara na klinpela pasin."
       },
       "dis_ppv": {
         "name": "Porcine Parvovirus (PPV)",
         "scientificName": "Porcine Parvovirus",
-        "description": "Common cause of reproductive failure in gilts.",
-        "prevention": "Vaccination before breeding."
+        "description": "As bilong hevi bilong karim pikinini long ol 'gilts'.",
+        "prevention": "Givim sut pastaim long karim pikinini."
       },
       "dis_rhinitis": {
         "name": "Atrophic Rhinitis",
         "scientificName": "Bordetella bronchiseptica",
-        "description": "Causes distortion of the snout and respiratory issues.",
-        "prevention": "Vaccination and air quality."
+        "description": "I save mekim maus i paul na i gat hevi long pulim win.",
+        "prevention": "Vaksinesen na gutpela bilong win."
       },
       "dis_leptospirosis": {
         "name": "Leptospirosis",
         "scientificName": "Leptospira spp.",
-        "description": "Zoonotic bacterial disease affecting kidneys.",
-        "prevention": "Rodent control and vaccination."
+        "description": "Sik bilong ol binatang jem we i save bagarapim ol kidni.",
+        "prevention": "Kontrolim ol rat na givim sut."
       },
       "dis_influenza": {
         "name": "Swine Influenza",
         "scientificName": "Influenza A virus",
-        "description": "Rapidly spreading respiratory infection.",
-        "prevention": "Ventilation and biosecurity."
+        "description": "Sik bilong pulim win we i save kalap hariap.",
+        "prevention": "Ventilesen na 'biosecurity'."
       },
       "dis_edema": {
-        "name": "Edema Disease",
+        "name": "Sik bilong Edema",
         "scientificName": "Escherichia coli",
-        "description": "Caused by E. coli toxins in weaned piglets.",
-        "prevention": "Improved sanitation and diet."
+        "description": "Em i kamap long ol marasin nogut bilong E. coli long ol liklik buai we ol i lusim susu.",
+        "prevention": "Gutpela senitesen na kaikai."
       },
       "dis_dysentery": {
-        "name": "Swine Dysentery",
+        "name": "Swine Disentery",
         "scientificName": "Brachyspira hyodysenteriae",
-        "description": "Severe mucohaemorrhagic diarrhea.",
-        "prevention": "Water medication and disinfection."
+        "description": "Bikpela sik pekpek wara.",
+        "prevention": "Wara marasin na kilim ol binatang."
       },
       "dis_mange": {
         "name": "Sarcoptic Mange",
         "scientificName": "Sarcoptes scabiei",
-        "description": "Parasitic skin disease causing extreme discomfort.",
-        "prevention": "Acaricide treatment."
+        "description": "Sik bilong skin we i save kamapim bikpela pen.",
+        "prevention": "Acaricide tritmen."
       },
       "dis_anemia": {
-        "name": "Iron Deficiency Anemia",
+        "name": "Sot long Ain Anemia",
         "scientificName": "Iron Deficiency",
-        "description": "Common in indoor piglets without iron supplements.",
-        "prevention": "Iron injections at birth."
+        "description": "Em i save kamap long ol liklik buai insait long haus we i no gat ol marasin bilong ain.",
+        "prevention": "Ol sut bilong ain taim pikinini i bon."
       },
       "dis_ulcers": {
-        "name": "Gastric Ulcers",
+        "name": "Ol sua long bel",
         "scientificName": "Gastric Ulcers",
-        "description": "Caused by fine feed or stress.",
-        "prevention": "Adjust feed particle size."
+        "description": "Em i kamap long gutpela kaikai o hevi.",
+        "prevention": "Stretim sais bilong ol liklik hap kaikai."
       },
       "dis_pss": {
         "name": "Porcine Stress Syndrome",
         "scientificName": "Genetic stress susceptibility",
-        "description": "Genetic condition triggered by stress.",
-        "prevention": "Genetic selection and calm handling."
+        "description": "Jenetik kondisen we i kamap long hevi.",
+        "prevention": "Jenetik seleksen na pasin bilong lukautim gut."
       },
       "dis_tge": {
-        "name": "Transmissible Gastroenteritis (TGE)",
+        "name": "Transmisible Gastroenteritis (TGE)",
         "scientificName": "Coronavirus",
-        "description": "Viral disease with high mortality in young piglets.",
-        "prevention": "Biosecurity."
+        "description": "Sik bilong vaires we i save kilim planti liklik buai.",
+        "prevention": "Biosekyuriti."
       },
       "dis_pasteurellosis": {
         "name": "Pasteurellosis",
         "scientificName": "Pasteurella multocida",
-        "description": "Bacterial pneumonia.",
-        "prevention": "Antibiotics and ventilation."
+        "description": "Pneumonia bilong ol binatang jem.",
+        "prevention": "Antibaiotik na win."
       },
       "dis_strep": {
         "name": "Streptococcus suis",
         "scientificName": "S. suis",
-        "description": "Bacterial infection causing meningitis.",
-        "prevention": "Antibiotics and stress reduction."
+        "description": "Infeksen bilong ol binatang jem we i save kamapim sik 'meningitis'.",
+        "prevention": "Antibaiotik na daunim hevi."
       },
       "dis_mycotoxicosis": {
         "name": "Mycotoxicosis",
         "scientificName": "Mycotoxicosis",
-        "description": "Caused by mold-contaminated feed.",
-        "prevention": "Toxin binders and dry storage."
+        "description": "Em i kamap long kaikai we i gat 'mold' long en.",
+        "prevention": "Ol samting bilong pasim marasin nogut na drai stoa."
       },
       "dis_greasy_pig": {
-        "name": "Greasy Pig Disease",
+        "name": "Sik bilong pik i gat gris",
         "scientificName": "Staphylococcus hyicus",
-        "description": "Bacterial infection causing greasy skin lesions.",
-        "prevention": "Sanitation and antibiotics."
+        "description": "Infeksen bilong ol binatang jem we i save kamapim ol sua long skin.",
+        "prevention": "Senitesen na ol marasin bilong kilim ol binatang jem."
       },
       "dis_pseudorabies": {
-        "name": "Pseudorabies (Aujeszky's)",
+        "name": "Pseudorabies (bilong Aujeszky)",
         "scientificName": "Suid herpesvirus 1",
-        "description": "Viral disease affecting nervous and respiratory systems.",
-        "prevention": "Vaccination and eradication programs."
+        "description": "Sik bilong vaires we i save bagarapim ol 'nervous' na 'respiratory system'.",
+        "prevention": "Ol program bilong givim sut na pinisim sik."
       },
       "dis_pcv2": {
         "name": "Porcine Circovirus (PCV2)",
         "scientificName": "Circovirus",
-        "description": "Causes wasting and respiratory issues in growers.",
-        "prevention": "Vaccination."
+        "description": "I save kamapim hevi long westim na pulim win long ol groa.",
+        "prevention": "Vaksinesen."
       },
       "dis_ped": {
         "name": "Porcine Epidemic Diarrhea (PED)",
         "scientificName": "Coronavirus",
-        "description": "Similar to TGE, highly fatal to neonates.",
-        "prevention": "Strict biosecurity."
+        "description": "Wankain olsem TGE, em i save kilim planti bebi.",
+        "prevention": "Strongpela 'biosecurity'."
       },
       "dis_je": {
         "name": "Japanese Encephalitis",
         "scientificName": "Flavivirus",
-        "description": "Mosquito-borne viral disease.",
-        "prevention": "Mosquito control and vaccination."
+        "description": "Sik bilong ol moskito.",
+        "prevention": "Kontrolim ol moskito na givim sut."
       },
       "dis_rabies": {
         "name": "Rabies",
         "scientificName": "Lyssavirus",
-        "description": "Fatal viral disease usually from bites.",
-        "prevention": "Vaccination of pets and wildlife control."
+        "description": "Sik bilong vaires we i save kilim man i save kamap long ol man i kaikaim man.",
+        "prevention": "Givim sut long ol animal bilong haus na kontrolim ol wel animal."
       },
       "dis_pox": {
         "name": "Swine Pox",
         "scientificName": "Suipoxvirus",
-        "description": "Viral skin disease, often spread by lice.",
-        "prevention": "Louse control."
+        "description": "Sik bilong skin we i save kamap long ol binatang jem, planti taim ol liklik binatang i save kalap long en.",
+        "prevention": "Kontrolim ol sua."
       },
       "dis_vs": {
         "name": "Vesicular Stomatitis",
         "scientificName": "Rhabdovirus",
-        "description": "Causes blisters; looks like FMD.",
-        "prevention": "Insect control and quarantine."
+        "description": "I save kamapim ol sua; i luk olsem FMD.",
+        "prevention": "Kontrol bilong ol binatang na kwarentin."
       },
       "dis_clostridial": {
         "name": "Clostridial Enteritis",
         "scientificName": "Clostridium perfringens",
-        "description": "Bacterial infection causing severe gut damage.",
-        "prevention": "Vaccination of sows and hygiene."
+        "description": "Infeksen bilong ol binatang jem i save bagarapim tru bel.",
+        "prevention": "Givim sut long ol bulmakau meri na klinim bodi."
       },
       "dis_glassers": {
-        "name": "Glasser's Disease",
+        "name": "Sik bilong Glasser",
         "scientificName": "Haemophilus parasuis",
-        "description": "Causes inflammation of membranes around heart, lungs, joints.",
-        "prevention": "Antibiotics and stress management."
+        "description": "I save kamapim sua long ol 'membrane' klostu long bel, lewa, na ol join.",
+        "prevention": "Antibaiotik na menesmen bilong stres."
       },
       "dis_app": {
         "name": "Actinobacillus Pleuropneumonia (APP)",
         "scientificName": "A. pleuropneumoniae",
-        "description": "Severe bacterial pneumonia.",
-        "prevention": "Antibiotics and improved environment."
+        "description": "Bikpela sik 'bacterial pneumonia'.",
+        "prevention": "Antibaiotik na gutpela ples."
       },
       "dis_ileitis": {
         "name": "Ileitis (Lawsonia)",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Bacterial infection of the small intestine.",
-        "prevention": "Vaccination and antibiotics."
+        "description": "Infeksen bilong ol binatang jem long liklik 'intestine'.",
+        "prevention": "Vaksinesen na antibaiotik."
       },
       "dis_tb": {
-        "name": "Tuberculosis",
+        "name": "Tibi",
         "scientificName": "Mycobacterium avium",
-        "description": "Chronic bacterial disease.",
-        "prevention": "Bird proofing and sanitation."
+        "description": "Sik bilong ol baktiria we i save stap longpela taim.",
+        "prevention": "Pasin bilong pasim ol pisin na klinim ples."
       },
       "dis_tetanus": {
         "name": "Tetanus",
         "scientificName": "Clostridium tetani",
-        "description": "Bacterial toxin affecting the nervous system.",
-        "prevention": "Sanitation during surgery/castration."
+        "description": "Posin bilong ol binatang jem we i save bagarapim 'nervous system'.",
+        "prevention": "Klinpela samting long taim bilong operesen/kastresen."
       },
       "dis_eperythrozoonosis": {
         "name": "Eperythrozoonosis",
         "scientificName": "Mycoplasma suis",
-        "description": "Blood parasite causing anemia.",
-        "prevention": "Insect control and clean needles."
+        "description": "Blut binatang i save kamapim sik 'anemia'.",
+        "prevention": "Kontrolim ol binatang na klinim ol nil."
       },
       "dis_ascaris": {
         "name": "Ascaris suum",
         "scientificName": "Large Roundworm",
-        "description": "Internal parasite causing lung and liver damage.",
-        "prevention": "Regular deworming."
+        "description": "Ol binatang nogut insait long bodi i save bagarapim lewa na lewa.",
+        "prevention": "Rausim ol binatang oltaim."
       },
       "dis_whipworms": {
-        "name": "Whipworms",
+        "name": "Ol wipwom",
         "scientificName": "Trichuris suis",
-        "description": "Internal parasite in the large intestine.",
-        "prevention": "Deworming and sanitation."
+        "description": "Insait long 'internal parasite' insait long bikpela 'intestine'.",
+        "prevention": "Rausim ol binatang na klinim ples."
       },
       "dis_lungworms": {
-        "name": "Lungworms",
+        "name": "Ol 'lungworms'",
         "scientificName": "Metastrongylus spp.",
-        "description": "Internal parasite of the lungs.",
-        "prevention": "Earthworm control and deworming."
+        "description": "Intenel binatang bilong lewa.",
+        "prevention": "Kontrolim ol 'earthworm' na rausim ol 'earthworm'."
       },
       "dis_kidney_worms": {
-        "name": "Kidney Worms",
+        "name": "Kidni Worm",
         "scientificName": "Stephanurus dentatus",
-        "description": "Internal parasite affecting kidneys and liver.",
-        "prevention": "Management and hygiene."
+        "description": "Ol binatang jem insait long bodi i save bagarapim ol kidni na leva.",
+        "prevention": "Menesmen na klinpela sindaun."
       },
       "dis_lice": {
         "name": "Swine Lice",
         "scientificName": "Haematopinus suis",
-        "description": "External parasite sucking blood.",
-        "prevention": "Insecticide treatment."
+        "description": "Ol binatang nogut i save pulim blut.",
+        "prevention": "Tritmen bilong marasin bilong kilim ol binatang."
       },
       "dis_ringworm": {
         "name": "Ringworm",
         "scientificName": "Dermatophytosis",
-        "description": "Fungal skin infection.",
-        "prevention": "Sanitation and topical treatment."
+        "description": "Sik long skin we i save kamap long ol binatang jem.",
+        "prevention": "Senitesen na tritmen bilong skin."
       },
       "dis_mulberry_heart": {
-        "name": "Mulberry Heart Disease",
+        "name": "Mulberi Hat Sik",
         "scientificName": "Vit E/Se Deficiency",
-        "description": "Nutritional deficiency affecting the heart.",
-        "prevention": "Supplementation."
+        "description": "Sot long kaikai i save bagarapim bel.",
+        "prevention": "Suplementesen."
       },
       "dis_vit_a": {
-        "name": "Vitamin A Deficiency",
+        "name": "Sot long Vitamin A",
         "scientificName": "Vitamin A Deficiency",
-        "description": "Nutritional deficiency.",
-        "prevention": "Dietary adjustment."
+        "description": "Sot long kaikai.",
+        "prevention": "Stretim kaikai."
       },
       "dis_rickets": {
         "name": "Rickets",
         "scientificName": "Vit D/Ca/P Deficiency",
-        "description": "Nutritional deficiency affecting bone growth.",
-        "prevention": "Balanced minerals and sunlight."
+        "description": "Sot long kaikai i save bagarapim gro bilong bun.",
+        "prevention": "Ol mineral na sanlait i stap gut."
       },
       "dis_salt_poisoning": {
-        "name": "Salt Poisoning",
+        "name": "Sol Poisin",
         "scientificName": "Water Deprivation",
-        "description": "Caused by lack of water followed by over-consumption.",
-        "prevention": "Constant fresh water access."
+        "description": "Em i kamap bikos i no gat wara na bihain ol i dring planti tumas.",
+        "prevention": "Oltaim kisim fres wara."
       },
       "dis_heat_stroke": {
-        "name": "Heat Stroke",
+        "name": "Hat Strok",
         "scientificName": "Heat Stroke",
-        "description": "Overheating due to poor ventilation or shade.",
-        "prevention": "Ventilation, cooling, and shade."
+        "description": "I hat tumas bikos i no gat gutpela win o sedo.",
+        "prevention": "Ventilesen, kol, na sedo."
       },
       "dis_rectal_prolapse": {
         "name": "Rectal Prolapse",
         "scientificName": "Rectal Prolapse",
-        "description": "Often follows coughing, diarrhea, or cold stress.",
-        "prevention": "Address primary cause and surgery."
+        "description": "Planti taim i save kamap bihain long kus, pekpek wara, o kol.",
+        "prevention": "Lukluk long namba wan as na operesen."
       },
       "dis_umbilical_hernia": {
         "name": "Umbilical Hernia",
         "scientificName": "Umbilical Hernia",
-        "description": "Developmental defect or navel infection.",
-        "prevention": "Sanitation and genetics."
+        "description": "Divelopmen hevi o sik long 'navel'.",
+        "prevention": "Senitesen na jenetiks."
       },
       "dis_scrotal_hernia": {
         "name": "Scrotal Hernia",
         "scientificName": "Scrotal Hernia",
-        "description": "Genetic developmental defect.",
-        "prevention": "Genetics and surgical repair."
+        "description": "Jenetik divelopmen hevi.",
+        "prevention": "Genetics na operesen bilong stretim."
       },
       "dis_splayleg": {
         "name": "Splayleg",
         "scientificName": "Myofibrillar hypoplasia",
-        "description": "Piglets born unable to stand with hind legs.",
-        "prevention": "Taping legs and floor traction."
+        "description": "Ol liklik pik i bon na ol i no inap sanap wantaim baksait lek.",
+        "prevention": "Tepim lek na plua traksen."
       },
       "dis_vulvovaginitis": {
         "name": "Vulvovaginitis",
         "scientificName": "Zearalenone Toxicity",
-        "description": "Caused by estrogenic fungal toxins in feed.",
-        "prevention": "Change feed source."
+        "description": "Em i kamap long ol 'estrogenic fungal toxins' insait long kaikai.",
+        "prevention": "Senisim as bilong kaikai."
       },
       "dis_seneca": {
         "name": "Seneca Valley Virus (SVV)",
         "scientificName": "Senecavirus A",
-        "description": "Causes blisters similar to FMD.",
-        "prevention": "Biosecurity and diagnosis."
+        "description": "I save kamapim ol sua wankain olsem FMD.",
+        "prevention": "Biosekyuriti na wok painimaut."
       },
       "dis_deltacoronavirus": {
         "name": "Porcine Deltacoronavirus",
         "scientificName": "PDCoV",
-        "description": "Viral diarrhea in all ages.",
-        "prevention": "Biosecurity."
+        "description": "Viral pekpek wara long olgeta krismas.",
+        "prevention": "Biosekyuriti."
       },
       "dis_rotavirus": {
         "name": "Rotavirus Diarrhea",
         "scientificName": "Rotavirus",
-        "description": "Common cause of weaning diarrhea.",
-        "prevention": "Vaccination and hygiene."
+        "description": "As bilong pekpek wara taim em i lusim susu.",
+        "prevention": "Vaksinesen na klinpela sindaun."
       },
       "dis_teschen": {
-        "name": "Teschen/Talfan Disease",
+        "name": "Teschen/Talfan Sik",
         "scientificName": "Sapelovirus/Teschovirus",
-        "description": "Viral infection of the nervous system.",
-        "prevention": "Biosecurity."
+        "description": "Infeksen bilong vaires long 'nervous system'.",
+        "prevention": "Biosekyuriti."
       },
       "dis_vesicular": {
-        "name": "Swine Vesicular Disease",
+        "name": "Sik bilong ol rop bilong buai",
         "scientificName": "Enterovirus",
-        "description": "Viral disease mimicking FMD.",
-        "prevention": "Strict quarantine."
+        "description": "Sik bilong vaires i wankain olsem FMD.",
+        "prevention": "Strongpela kwarentin."
       },
       "dis_melioidosis": {
         "name": "Melioidosis",
         "scientificName": "Burkholderia pseudomallei",
-        "description": "Bacterial disease from soil/water.",
-        "prevention": "Clean water and hygiene."
+        "description": "Sik bilong ol binatang jem i kam long graun/wara.",
+        "prevention": "Klinpela wara na klinpela pasin."
       },
       "dis_trypanosomiasis": {
         "name": "Trypanosomiasis",
         "scientificName": "Trypanosoma spp.",
-        "description": "Protozoan disease spread by tsetse flies.",
-        "prevention": "Fly control and medication."
+        "description": "Sik bilong ol 'protozoan' we ol 'tsetse' flai i save kalap long en.",
+        "prevention": "Kontrol bilong flai na marasin."
       },
       "dis_cysticercosis": {
         "name": "Cysticercosis",
         "scientificName": "Taenia solium larvae",
-        "description": "Larval stage of human tapeworm in pig muscle.",
-        "prevention": "Prevent access to human waste."
+        "description": "Larval stej bilong human tapeworm insait long masol bilong buai.",
+        "prevention": "Stopim rot bilong kisim ol pipia bilong ol man."
       },
       "dis_toxoplasmosis": {
         "name": "Toxoplasmosis",
         "scientificName": "Toxoplasma gondii",
         "description": "Zoonotic protozoan infection.",
-        "prevention": "Cat control and biosecurity."
+        "prevention": "Kontrol bilong pusi na 'biosecurity'."
       },
       "dis_listeriosis": {
         "name": "Listeriosis",
         "scientificName": "Listeria monocytogenes",
-        "description": "Bacterial infection of nervous system.",
-        "prevention": "Sanitation and feed hygiene."
+        "description": "Infeksen bilong ol binatang jem long 'nervous system'.",
+        "prevention": "Senitesen na klinpela kaikai."
       },
       "dis_ear_necrosis": {
-        "name": "Ear Necrosis",
+        "name": "Yau Nekrosis",
         "scientificName": "Ear Necrosis",
-        "description": "Often caused by stress, overcrowding, or infection.",
-        "prevention": "Reduce density and treat secondary infection."
+        "description": "Planti taim dispela i save kamap bikos long hevi, planti manmeri tumas, o sik.",
+        "prevention": "Daunim density na tritim seken infeksen."
       },
       "dis_sunburn": {
-        "name": "Sunburn",
+        "name": "San i kukim",
         "scientificName": "Solar dermatitis",
-        "description": "Affects white-skinned pigs outdoors.",
-        "prevention": "Provide shade."
+        "description": "I save bagarapim ol buai i gat waitpela skin ausait.",
+        "prevention": "Givim sedo."
       },
       "dis_tail_biting": {
-        "name": "Tail Biting",
+        "name": "Katim Tel",
         "scientificName": "Behavioral stress",
-        "description": "Behavioral issue due to stress/boredom.",
-        "prevention": "Reduce stress and enrich environment."
+        "description": "Hevi bilong pasin bikos long stres/les.",
+        "prevention": "Daunim hevi na mekim envairomen i kamap gutpela."
       },
       "dis_navel_ill": {
         "name": "Navel Ill",
         "scientificName": "Navel Infection",
-        "description": "Infection of the umbilical cord at birth.",
-        "prevention": "Iodine dip at birth and sanitation."
+        "description": "Infeksen long rop bilong bel taim pikinini i bon.",
+        "prevention": "Iodine dip long taim bilong karim pikinini na senitesen."
       },
       "dis_iron_toxicity": {
-        "name": "Iron Toxicity",
+        "name": "Posin bilong ain",
         "scientificName": "Ferrous excess",
-        "description": "Excess iron administration leading to sudden death.",
-        "prevention": "Inject accurate dosage."
+        "description": "Em inap kamap sapos ol i sutim ain long ol liklik buai we i sot long Vit E.",
+        "prevention": "Mekim gut olsem kaikai bilong ol bulmakau i gat gutpela mak."
       },
       "dis_aflatoxicosis": {
         "name": "Aflatoxicosis",
         "scientificName": "Aspergillus flavus toxin",
-        "description": "Fungal toxin poisoning.",
-        "prevention": "Avoid moldy feed and use toxin binders."
+        "description": "Toksin poisin i kam long ol wit o kaikai i gat 'mold' na dispela i save bagarapim 'liver' na 'jaundice'.",
+        "prevention": "Noken givim ol kaikai i gat 'mold', putim ol wit samting long ples we i drai, na yusim ol marasin bilong pasim marasin nogut."
       },
       "dis_parakeratosis": {
-        "name": "Parakeratosis",
+        "name": "Parakeratosis (Zinc Deficiency)",
         "scientificName": "Zinc deficiency",
-        "description": "Zinc deficiency in swine.",
-        "prevention": "Ensure adequate zinc levels in diet."
+        "description": "Sik bilong kaikai i save kamapim ol bikpela sua long skin.",
+        "prevention": "Mekim gutpela mak bilong 'calcium-to-zinc' insait long kaikai na givim ol 'zinc suplement'."
       },
       "dis_biotin_deficiency": {
-        "name": "Biotin Deficiency",
+        "name": "Sot long Biotin",
         "scientificName": "Vitamin H deficiency",
-        "description": "Biotin deficiency in swine.",
-        "prevention": "Provide biotin supplements."
+        "description": "Sapos man i sot long kaikai, dispela i save mekim na lek bilong lek i bruk, skin i gat sua, na lek nogut.",
+        "prevention": "Givim 'biotin' long kaikai na abrusim ol simen plua we i no strong tumas."
       },
       "dis_gossypol_toxicity": {
-        "name": "Gossypol Toxicity",
+        "name": "Posin bilong Gossypol",
         "scientificName": "Gossypol poisoning",
-        "description": "Cottonseed meal poisoning.",
-        "prevention": "Limit raw cottonseed meal in feed."
+        "description": "Poisin i kamap taim man i kaikai 'raw' o planti 'cottonseed', na dispela i save kamapim hevi long pulim win.",
+        "prevention": "Noken kaikai planti 'cottonseed' na yusim 'iron sulfate' long daunim 'gossypol'."
       },
       "dis_cassava_poisoning": {
-        "name": "Cassava Poisoning",
+        "name": "Poisin bilong maniok",
         "scientificName": "Cyanogenic glycosides",
-        "description": "Cyanide poisoning from raw cassava.",
-        "prevention": "Cook or ferment cassava before feeding."
+        "description": "Posin bilong 'cyanide' long ol rop o skin bilong maniok we ol i no bin kukim o ol i no bin prosesim gut.",
+        "prevention": "Rausim skin bilong maniok, boilim, draim long san, o mekim maniok i kamap strong pastaim long yu givim kaikai."
       },
       "dis_sweet_potato_toxicity": {
-        "name": "Sweet Potato Toxicity",
+        "name": "Posin bilong swit poteto",
         "scientificName": "Ipomeamarone toxicity",
-        "description": "Ipomeamarone poisoning.",
-        "prevention": "Do not feed moldy or damaged sweet potatoes."
+        "description": "Poisin i kam long ol swit poteto we i gat 'mold', na dispela i save kamapim bikpela hevi long pulim win.",
+        "prevention": "Tromoi ol swit poteto we i bagarap o i gat 'mold'; givim ol helti rop tasol."
       },
       "dis_mma": {
-        "name": "MMA Syndrome",
+        "name": "Postpartum Dysgalactia (MMA)",
         "scientificName": "Mastitis-Metritis-Agalactia",
-        "description": "Post-farrowing infection in sows.",
-        "prevention": "Clean farrowing pens and proper nutrition."
+        "description": "Mastitis, metritis, na agalactia i save kamapim fiva na sot long susu long ol bulmakau meri bihain long ol i karim pikinini.",
+        "prevention": "Lukautim gutpela pasin bilong lukautim banis bilong ol bulmakau na mekim gutpela kaikai long ol bulmakau."
       },
       "dis_pwd": {
-        "name": "Post-Weaning Diarrhea",
+        "name": "Pekpek wara bihain long lusim susu (PWD)",
         "scientificName": "Escherichia coli (F4/F18)",
-        "description": "Colibacillosis in weaned pigs.",
-        "prevention": "Sanitation and diet adjustment."
+        "description": "Pekpek wara i save kamap long ol liklik buai bihain liklik long ol i lusim susu, na dispela i save mekim ol i sot long wara.",
+        "prevention": "Daunim hevi bilong lusim susu, lukautim gutpela klinim ples, na givim klinpela wara bilong dring."
       },
       "dis_trichinellosis": {
         "name": "Trichinellosis",
         "scientificName": "Trichinella spiralis",
-        "description": "Zoonotic parasitic infection.",
-        "prevention": "Do not feed raw garbage; pest control."
+        "description": "Sik bilong ol animal we i save kamap taim man i kaikai ol hap mit we i no kukim yet, na dispela i save mekim ol masol i kamap strong.",
+        "prevention": "Noken givim kaikai long ol 'swill', boilim ol hap kaikai inap 30 minit, na bosim ol rat."
       },
       "dis_hydatid_disease": {
-        "name": "Hydatid Disease",
+        "name": "Hydatidosis",
         "scientificName": "Echinococcus granulosus",
-        "description": "Larval tapeworm infection.",
-        "prevention": "Deworm farm dogs; prevent access to offal."
+        "description": "Infeksen bilong ol 'parasitic larval' we i save kamapim ol 'cyst' we i pulap long wara insait long ol bodi bodi.",
+        "prevention": "Yu mas rausim ol 'worm' long ol dok bilong fam oltaim na pasim ol long kaikai ol 'raw organ' bilong buai."
       },
       "dis_phe": {
-        "name": "Proliferative Hemorrhagic Enteropathy",
+        "name": "Porcine Hemorrhagic Enteropathy",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Acute intestinal bleeding in young adult pigs.",
-        "prevention": "Vaccination and hygiene."
+        "description": "Bikpela pekpek wara na dai wantu tasol long ol buai we i save groim/pinis.",
+        "prevention": "Lukautim gutpela ples bilong klinim na yusim ol stretpela marasin bilong kilim jem aninit long stia bilong dokta bilong ol animal."
       },
       "dis_mycoplasma_arthritis": {
-        "name": "Mycoplasma Arthritis",
+        "name": "Mycoplasmal Arthritis",
         "scientificName": "Mycoplasma hyosynoviae",
-        "description": "Bacterial joint disease.",
-        "prevention": "Sanitation and quarantine."
+        "description": "Infeksen bilong ol binatang jem we i save mekim ol join i solap, lek nogut, na lek i no strong.",
+        "prevention": "Mekim gutpela sindaun bilong haus, daunim namba bilong ol animal, na tritim hariap."
       },
       "dis_foot_rot": {
-        "name": "Foot Rot",
+        "name": "Rot bilong lek (Necrobacillosis)",
         "scientificName": "Fusobacterium necrophorum",
-        "description": "Infection of the foot causing lameness.",
-        "prevention": "Keep pens dry; treat hooves."
+        "description": "Infeksen bilong ol binatang jem i go insait long ol bagarap long lek, na i save mekim lek i bagarap na lek nogut.",
+        "prevention": "Stretim ol simen we i no gutpela, larim plua i stap drai, na yusim ol ples bilong waswas long lek sapos i gat nid."
       },
       "dis_babesiosis": {
-        "name": "Babesiosis",
+        "name": "Tik-borne Babesiosis",
         "scientificName": "Babesia trautmanni",
-        "description": "Tick-borne protozoan infection.",
-        "prevention": "Acaricide spray for tick control."
+        "description": "Blut binatang we i save kalap long ol 'tick' na i save kamapim bikpela fiva, 'anemia', na blakpela pispis.",
+        "prevention": "Kontrolim ol tik yusim ol marasin bilong kilim ol tik na larim ol banis i no gat ol diwai na gras."
       },
       "dis_anaplasmosis": {
         "name": "Anaplasmosis",
         "scientificName": "Anaplasma marginale",
-        "description": "Blood infection in swine.",
-        "prevention": "Vector control."
+        "description": "Ol sik we i save kamap long ol binatang jem we i save kamapim 'anemia', fiva, na 'jaundice'.",
+        "prevention": "Putim ol 'vector' na 'tick' kontrol program."
       },
       "dis_sow_hysteria": {
         "name": "Sow Hysteria",
         "scientificName": "Puerperal psychosis",
-        "description": "Aggression or panic in sows after farrowing.",
-        "prevention": "Provide quiet farrowing area."
+        "description": "Hevi bilong pasin we ol buai i save karim pikinini i save kros na kaikaim ol pikinini buai.",
+        "prevention": "Givim wanpela kwaet ples bilong karim pikinini, lukautim ol 'gilt', na yusim ol marasin bilong daunim bel hevi sapos i gat nid."
       },
       "dis_thorny_headed_worm": {
-        "name": "Thorny-Headed Worm",
+        "name": "Wom i gat nil het",
         "scientificName": "Macracanthorhynchus hirudinaceus",
-        "description": "Intestinal parasite.",
-        "prevention": "Prevent access to June beetle grubs."
+        "description": "Ol 'parasitic worm' i save kisim taim ol i kaikaim ol 'beetle', na dispela i save kamapim hul long bel.",
+        "prevention": "Noken lukautim fri long ol graun we i gat ol 'beetle' na yusim ol marasin bilong rausim ol binatang jem."
       },
       "dis_strongyloidiasis": {
-        "name": "Strongyloidiasis",
+        "name": "Strongyloidiasis (Threadworm)",
         "scientificName": "Strongyloides ransomi",
-        "description": "Threadworm infection.",
-        "prevention": "Keep pens dry; deworming."
+        "description": "Intestinal threadworm i save kamapim bikpela pekpek wara na dai long ol pikinini buai.",
+        "prevention": "Larim ol bokis bilong karim pikinini i drai na klin, na rausim ol binatang jem pastaim long karim pikinini."
       },
       "dis_hyostrongylosis": {
-        "name": "Red Stomach Worm",
+        "name": "Retpela Bel Wom",
         "scientificName": "Hyostrongylus rubidus",
-        "description": "Intestinal worm in grazing pigs.",
-        "prevention": "Clean pasture management; deworming."
+        "description": "Sik bilong 'stomach worm' we i save kamapim sik 'gastritis', 'anemia', na 'weight loss'.",
+        "prevention": "Senisim ol gras, mekim haus i stap drai, na bihainim wanpela sediul bilong rausim ol binatang nogut."
       },
       "dis_oesophagostomiasis": {
-        "name": "Nodular Worm",
+        "name": "Nodular Worm Infeksen",
         "scientificName": "Oesophagostomum spp.",
-        "description": "Intestinal worm in swine.",
-        "prevention": "Deworming and sanitation."
+        "description": "Intestinal parasit i save kamapim ol nodul long wol bilong bel, na dispela i save mekim ol bulmakau i kamap liklik.",
+        "prevention": "Oltaim klinim pen na yusim ol bikpela marasin bilong kilim ol binatang."
       },
       "dis_fascioliasis": {
-        "name": "Fascioliasis",
+        "name": "Fascioliasis (Liver Fluke)",
         "scientificName": "Fasciola gigantica",
-        "description": "Liver fluke infection.",
-        "prevention": "Snail control; keep away from wet pastures."
+        "description": "Parasitic fluke i save bagarapim 'liver', we i save kamap long ol ples we i gat wara o ples tais.",
+        "prevention": "Pasim ol buai long kaikai gras long ol ples we i gat planti tais na kontrolim ol 'mud snail'."
       },
       "dis_emcv": {
-        "name": "EMCV",
+        "name": "Encephalomyocarditis (EMCV)",
         "scientificName": "Cardiovirus",
-        "description": "Viral myocarditis and reproductive failure.",
-        "prevention": "Rodent control (rodents spread EMCV)."
+        "description": "Viral infeksen we i save kamap long ol rat na i save mekim hat i no wok gut na rausim bel.",
+        "prevention": "Mekim strongpela wok bilong bosim ol rat na lukautim kaikai bilong ol long ol binatang nogut."
       },
       "dis_demodectic_mange": {
-        "name": "Demodectic Mange",
+        "name": "Demodex Mange",
         "scientificName": "Demodex phylloides",
-        "description": "Skin mite infection.",
-        "prevention": "Acaricide treatment."
+        "description": "Skin mite we i no klia tumas na i save kamapim ol liklik mak na ol liklik 'pustules'.",
+        "prevention": "Mekim gutpela kaikai bilong ol animal, rausim ol buai i gat sik, na putim marasin bilong kilim ol buai."
       },
       "dis_pityriasis_rosea": {
         "name": "Pityriasis Rosea",
         "scientificName": "Pseudo-ringworm",
-        "description": "Non-contagious skin condition.",
-        "prevention": "Spontaneous recovery; keep environment clean."
+        "description": "Skin we i no inap kalap long ol narapela long ol yangpela buai we i save kamapim ol 'ring-like crusts'.",
+        "prevention": "Planti taim em i save stretim hevi bilong em yet; lukautim klinpela, draipela bet na daunim hevi."
       },
       "dis_photosensitization": {
         "name": "Photosensitization",
         "scientificName": "Solar dermatitis",
-        "description": "Skin hypersensitivity to sunlight.",
-        "prevention": "Keep out of direct sunlight; check pasture plants."
+        "description": "Bikpela san i save kamap long ol buai i gat waitpela skin bihain long ol i kaikai sampela kain diwai.",
+        "prevention": "Givim sedo, rausim ol gras nogut we i save mekim ol i kisim sik, na putim ol buai insait long haus."
       },
       "dis_shoulder_ulcers": {
-        "name": "Shoulder Ulcers",
+        "name": "Sow Solda Ulcers",
         "scientificName": "Decubitus ulcers",
-        "description": "Sores in thin sows on hard floors.",
-        "prevention": "Provide soft bedding; increase feed."
+        "description": "Ol sua i stap long solda bilong ol liklik bulmakau meri we i stap antap long strongpela simen.",
+        "prevention": "Givim ol malumalum bet, lukautim ol bulmakau long gutpela bodi, na yusim ol mat bilong raba."
       },
       "dis_ear_biting": {
-        "name": "Ear Biting",
+        "name": "Pasin bilong kaikai man long yau",
         "scientificName": "Stress response behavior",
-        "description": "Behavioral stress response.",
-        "prevention": "Reduce stocking density; enrich environment."
+        "description": "Nogut pasin we ol buai i save kaikaim yau bilong ol poroman bilong ol, na dispela i save kamapim sik 'necrosis'.",
+        "prevention": "Daunim pasin bilong bungim planti manmeri, mekim win i kam insait gut, na givim ol samting olsem ol sen."
       },
       "dis_gastric_torsion": {
-        "name": "Gastric Torsion",
+        "name": "Gastric Torsion (Bloat)",
         "scientificName": "Gastric dilation-volvulus",
-        "description": "Twisted stomach.",
-        "prevention": "Avoid overfeeding in single meals."
+        "description": "Bel i pulap na i tantanim wantu tasol, na dispela i mekim na man i dai hariap.",
+        "prevention": "Noken givim bikpela kaikai bihain long yu tambu long kaikai longpela taim na brukim kaikai bilong olgeta de i go long ol liklik hap."
       },
       "dis_c_difficile": {
-        "name": "C. difficile Infection",
+        "name": "Clostridium difficile (CDI)",
         "scientificName": "Clostridioides difficile",
-        "description": "Bacterial diarrhea in piglets.",
-        "prevention": "Clean environment and proper ventilation."
+        "description": "Infeksen bilong ol binatang jem long ol nupela pikinini buai i save kamapim pekpek wara na bel i solap.",
+        "prevention": "Klinim na kilim ol jem gut long ol banis bilong ol bebi na mekim 'colostrum' i kamap hariap."
       },
       "dis_cold_stress": {
-        "name": "Cold Stress",
+        "name": "Kol Stres (Hypothermia)",
         "scientificName": "Hypothermia susceptibility",
-        "description": "Chilling in young piglets.",
-        "prevention": "Provide heat lamps and dry bedding."
+        "description": "Bikpela kol bilong bodi bilong ol pikinini buai, na dispela i save mekim ol i guria na planti i save dai.",
+        "prevention": "Givim ol 'heat lamp', ol 'creep box', na mekim ples bilong karim pikinini i drai na i no gat win."
       },
       "dis_necrotic_enteritis": {
-        "name": "Necrotic Enteritis",
+        "name": "Nekrotik Enteritis",
         "scientificName": "Clostridium perfringens Type C",
-        "description": "Clostridial gut infection.",
-        "prevention": "Sow vaccination and pen sanitation."
+        "description": "Sik bilong ol binatang jem we i save kamapim bikpela pekpek wara na planti pikinini buai i save dai.",
+        "prevention": "Givim sut long ol bulmakau meri pastaim long ol i karim pikinini na lukautim gut banis."
       },
       "dis_navel_bleeding": {
-        "name": "Navel Bleeding",
+        "name": "Blut i kapsait long nus",
         "scientificName": "Umbilical hemorrhage",
-        "description": "Hemorrhage from umbilical cord.",
-        "prevention": "Tie off bleeding navels; check feed vitamin K."
+        "description": "Planti blut i save ron long 'umbilical cord' bilong ol nupela pikinini buai.",
+        "prevention": "Pasim rop bilong bel taim pikinini i bon na noken givim kaikai i gat 'mycotoxin' long ol bulmakau meri."
       },
       "dis_spirochetal_colitis": {
-        "name": "Spirochetal Colitis",
+        "name": "Porcine Spirochetal Colitis",
         "scientificName": "Brachyspira pilosicoli",
-        "description": "Bacterial large intestine infection.",
-        "prevention": "Medication and pen sanitation."
+        "description": "Sik bilong pekpek wara i no bikpela tumas long ol buai i wok long gro, na i save mekim ol i no kisim gutpela hevi.",
+        "prevention": "Klinim ol ples bilong kaikai na givim marasin bilong kilim ol buai long ol buai i gat sik."
       },
       "dis_salmonella_septicemia": {
         "name": "Salmonella Septicemia",
         "scientificName": "Salmonella choleraesuis",
-        "description": "Blood infection from Salmonella.",
-        "prevention": "Clean water; biosecurity."
+        "description": "Bikpela sik salmonella long blut we i save kamapim pepol skin na dai hariap.",
+        "prevention": "Putim ol sik buai i stap wanpis, givim marasin wara, na lukautim gut 'biosecurity'."
       },
       "dis_prdc": {
-        "name": "PRDC",
+        "name": "Porcine Respiratory Disease Complex",
         "scientificName": "Porcine Respiratory Disease Complex",
-        "description": "Respiratory complex in grower pigs.",
-        "prevention": "Ventilation, vaccination, and density control."
+        "description": "Ol sik bilong pulim win we i save kamap long ol vaires na baktiria we i save mekim man i kus na i no gro gut.",
+        "prevention": "Mekim gutpela rot bilong pulim win, noken pulap tumas, na bosim ol namba wan vaires."
       },
       "dis_ergotism": {
-        "name": "Ergotism",
+        "name": "Ergot Poisoning (Ergotism)",
         "scientificName": "Claviceps purpurea",
-        "description": "Poisoning from moldy rye/grains.",
-        "prevention": "Inspect feed grains for black ergot bodies."
+        "description": "Posin bilong ol 'fungal' long ol 'serial greins' we i gat sik 'ergot', na dispela i save kamapim bagarap long ol 'tissue necrosis'.",
+        "prevention": "Skrinim ol kaikai bilong kaikai long ol 'dark ergot body' na senisim ol kaikai we i gat doti long en."
       },
       "dis_bvdv_pig": {
-        "name": "BVDV in Pigs",
+        "name": "BVDV Infeksen long ol buai",
         "scientificName": "Pestivirus",
-        "description": "Bovine Viral Diarrhea virus in swine.",
-        "prevention": "Isolate pigs from cattle."
+        "description": "Bovine Viral Diarrhea vaires infeksen taim man i bungim ol bulmakau, na dispela i mekim na ol i rausim bel.",
+        "prevention": "Putim ol pik i stap longwe long ol bulmakau na sipsip, na tambuim ol 'crossspecies' kontek."
       },
       "dis_endocarditis": {
-        "name": "Endocarditis",
+        "name": "Bacterial Endocarditis",
         "scientificName": "Streptococcal endocarditis",
-        "description": "Heart valve infection.",
-        "prevention": "Treat primary infections early."
+        "description": "Het valv infeksen i save mekim hat i no wok gut na dai wantu tasol long taim bilong hevi.",
+        "prevention": "Tritim hariap ol sik na sua long ol join, na makim ol 'genetics' we inap long kisim sik."
       },
       "dis_polyserositis": {
-        "name": "Polyserositis",
+        "name": "Mycoplasma Polyserositis",
         "scientificName": "Mycoplasma hyorhinis",
-        "description": "Infection of body cavity linings.",
-        "prevention": "Antibiotic treatment; minimize stress."
+        "description": "'Fibrinous inflammation' bilong 'lung', 'heart', na ol 'joint surfaces' bilong ol 'weaners'.",
+        "prevention": "Daunim hevi bilong lusim susu, noken miksim ol pikinini, na givim gutpela win."
       },
       "dis_congenital_tremor": {
         "name": "Congenital Tremor",
         "scientificName": "Atypical Porcine Pestivirus",
-        "description": "Shaky pig disease.",
-        "prevention": "Acclimatize gilts to farm before breeding."
+        "description": "Neurological kondisen long ol nupela pikinini buai i save mekim ol i guria nogut tru.",
+        "prevention": "Noken yusim wara bilong ol 'boar' we i gat sik na daunim hevi bilong 'sow' taim em i gat bel."
       }
     },
     "diagnosisMatches": "Clinical Diagnosis Matches",
@@ -1535,7 +1541,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 EMERGENCY BIOSECURITY PROTOCOL:",
     "clinicalDiagnosisMatches": "Klinikal Sik i Luk Olsem",
     "hallmarkBadge": "Bikpela Mak",
-    "hallmarkSignPresent": "Mak mak i stap: %1$s",
+    "hallmarkSignPresent": "Mak mak i stap: {sign}",
     "otherSignsWatch": "Ol narapela sain yu mas was gut long en:",
     "preventionTreatmentLabel": "Prevensen / Tritmen: {treatment}",
     "bio_proto_asf": "IMMEDIATE EMERGENCY QUARANTINE: African Swine Fever is a lethal, legally notifiable virus. 1) Lock down farm gates immediately. 2) Stop all movement of pigs, vehicles, feed, and manure. 3) Disinfect all boot baths and tyres with Virkon S or 2% caustic soda. 4) Contact your District/National Veterinary Officer immediately.",
@@ -1547,8 +1553,8 @@
     "bio_proto_vesicular_stomatitis": "REPORTABLE VESICULAR LESION ALERT: Vesicular Stomatitis is clinically indistinguishable from Foot and Mouth Disease. 1) Isolate infected pigs immediately. 2) Wear protective gloves. 3) Report to state veterinarian for lab differential diagnosis.",
     "bio_proto_senecavirus": "REPORTABLE VESICULAR DISEASE: Senecavirus A lesions are clinically indistinguishable from Foot and Mouth Disease (FMD). 1) Quarantine pen immediately. 2) Restrict off-farm movement. 3) Notify livestock veterinary authorities for mandatory differential PCR testing.",
     "bio_proto_svd": "REPORTABLE VESICULAR DISEASE: Swine Vesicular Disease (SVD). 1) Strict isolation of infected animals. 2) Restrict all vehicle and visitor movements. 3) Report to state animal health department immediately.",
-    "clinicalMatchPercent": "%1$d%% Clinical Match",
-    "matchedSignsCount": "{matched}$d bilong {total}$d sain",
+    "clinicalMatchPercent": "{percent}% Clinical Match",
+    "matchedSignsCount": "{matched} bilong {total} sain",
     "matchPercentSuffix": "({percent}% match)"
   },
   "HR": {
@@ -1983,7 +1989,7 @@
     "snooze1Month": "1 mun",
     "deleteNotificationQuestion": "Rausim toksave?",
     "deleteNotificationConfirm": "Yu save tru olsem yu laik rausim dispela toksave?",
-    "lastWeighedDaysAgo": "Pig #%1$s: Laspela taim ol i bin skelim %2$s de i go pinis",
+    "lastWeighedDaysAgo": "Pig #{tag}: Laspela taim ol i bin skelim {days} de i go pinis",
     "stockLeftMinFormat": "{current}: {unit} kg i stap yet (Min: {min} kg)",
     "pigs": "Ol Pik",
     "pig": "Pik",

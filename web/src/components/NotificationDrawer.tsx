@@ -550,7 +550,7 @@ export default function NotificationDrawer({
                                   {pigDisplay} ({pig.breed || "Breeder"}) • Pen: {pig.location || "General"}
                                 </p>
                                 <p className="text-[10px] text-amber-700 font-semibold">
-                                  {tNotif("lastWeighedDaysAgo", { days: daysSince })}
+                                  {tNotif("lastWeighedDaysAgo", { tag: pig.tagNumber || pig.id, days: daysSince })}
                                 </p>
                               </div>
                             </div>

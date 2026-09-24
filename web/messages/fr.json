@@ -106,7 +106,13 @@
     "noActivities": "Aucune activité à venir",
     "allTasksCompleted": "Toutes les tâches sont terminées !",
     "generalTask": "Tâche générale",
-    "language": "Langue"
+    "language": "Langue",
+    "feed": "Alimentation",
+    "inventory": "Inventaire des aliments",
+    "calculator": "Calculer la ration",
+    "mixFeed": "Fabriquer l'aliment",
+    "analyzeFeed": "Analyser l'aliment",
+    "marketHub": "Pôle Marché"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -839,9 +845,9 @@
         "prevention": "Biosécurité stricte et restriction de l'accès à la ferme."
       },
       "dis_fmd": {
-        "name": "Fièvre aphteuse",
+        "name": "Fièvre aphteuse (FA)",
         "scientificName": "Aphthovirus",
-        "description": "Maladie virale provoquant des ampoules sur la bouche et les pattes.",
+        "description": "Maladie virale provoquant des ampoules sur la bouche et les pieds.",
         "prevention": "Vaccination et contrôle des mouvements."
       },
       "dis_prrs": {
@@ -851,10 +857,10 @@
         "prevention": "Biosécurité et vaccination du troupeau."
       },
       "dis_erysipelas": {
-        "name": "Rouget du porc",
+        "name": "Érysipèle du porc",
         "scientificName": "Erysipelothrix rhusiopathiae",
-        "description": "Infection bactérienne provoquant des lésions cutanées distinctes et de l'arthrite.",
-        "prevention": "Vaccination régulière et hygiène des cases."
+        "description": "Infection bactérienne causant des lésions cutanées distinctes et de l'arthrite.",
+        "prevention": "Vaccination régulière et hygiène des enclos."
       },
       "dis_csf": {
         "name": "Peste porcine classique",
@@ -872,13 +878,13 @@
         "name": "Brucellose",
         "scientificName": "Brucella suis",
         "description": "Maladie bactérienne provoquant des échecs de reproduction.",
-        "prevention": "Tests, réforme et assainissement."
+        "prevention": "Dépistage, réforme et assainissement."
       },
       "dis_coccidiosis": {
         "name": "Coccidiose",
         "scientificName": "Isospora suis",
         "description": "Maladie parasitaire affectant principalement les porcelets.",
-        "prevention": "Hygiène de la case de mise bas."
+        "prevention": "Hygiène de l'enclos de mise bas."
       },
       "dis_pneumonia": {
         "name": "Pneumonie mycoplasmique",
@@ -889,19 +895,19 @@
       "dis_salmonellosis": {
         "name": "Salmonellose",
         "scientificName": "Salmonella typhimurium",
-        "description": "Infection bactérienne provoquant de graves problèmes intestinaux.",
+        "description": "Infection bactérienne causant de graves problèmes intestinaux.",
         "prevention": "Eau propre et hygiène."
       },
       "dis_ppv": {
         "name": "Parvovirus porcin (PPV)",
         "scientificName": "Porcine Parvovirus",
-        "description": "Cause courante d'échec de reproduction chez les cochetes.",
+        "description": "Cause fréquente d'échec de reproduction chez les cochettes.",
         "prevention": "Vaccination avant la saillie."
       },
       "dis_rhinitis": {
         "name": "Rhinite atrophique",
         "scientificName": "Bordetella bronchiseptica",
-        "description": "Provoque une déformation du groin et des problèmes respiratoires.",
+        "description": "Provoque une distorsion du groin et des problèmes respiratoires.",
         "prevention": "Vaccination et qualité de l'air."
       },
       "dis_leptospirosis": {
@@ -920,31 +926,31 @@
         "name": "Maladie de l'œdème",
         "scientificName": "Escherichia coli",
         "description": "Causée par les toxines d'E. coli chez les porcelets sevrés.",
-        "prevention": "Amélioration de l'assainissement et du régime alimentaire."
+        "prevention": "Amélioration de l'assainissement et de l'alimentation."
       },
       "dis_dysentery": {
         "name": "Dysenterie porcine",
         "scientificName": "Brachyspira hyodysenteriae",
-        "description": "Diarrhée muco-hémorragique sévère.",
+        "description": "Diarrhée mucohémorragique sévère.",
         "prevention": "Médication de l'eau et désinfection."
       },
       "dis_mange": {
         "name": "Gale sarcoptique",
         "scientificName": "Sarcoptes scabiei",
-        "description": "Maladie cutanée parasitaire provoquant un inconfort extrême.",
+        "description": "Maladie cutanée parasitaire causant un inconfort extrême.",
         "prevention": "Traitement acaricide."
       },
       "dis_anemia": {
         "name": "Anémie ferriprive",
         "scientificName": "Carence en fer",
-        "description": "Courante chez les porcelets en intérieur sans suppléments de fer.",
+        "description": "Fréquente chez les porcelets en intérieur sans suppléments de fer.",
         "prevention": "Injections de fer à la naissance."
       },
       "dis_ulcers": {
         "name": "Ulcères gastriques",
         "scientificName": "Ulcères gastriques",
-        "description": "Causés par des aliments trop fins ou le stress.",
-        "prevention": "Ajuster la taille des particules des aliments."
+        "description": "Causés par une alimentation trop fine ou le stress.",
+        "prevention": "Ajuster la taille des particules de l'aliment."
       },
       "dis_pss": {
         "name": "Syndrome de stress porcin",
@@ -955,7 +961,7 @@
       "dis_tge": {
         "name": "Gastro-entérite transmissible (GET)",
         "scientificName": "Coronavirus",
-        "description": "Maladie virale à forte mortalité chez les jeunes porcelets.",
+        "description": "Maladie virale à mortalité élevée chez les jeunes porcelets.",
         "prevention": "Biosécurité."
       },
       "dis_pasteurellosis": {
@@ -979,7 +985,7 @@
       "dis_greasy_pig": {
         "name": "Maladie du porc gras (Épidermite exsudative)",
         "scientificName": "Staphylococcus hyicus",
-        "description": "Infection bactérienne provoquant des lésions cutanées graisseuses.",
+        "description": "Infection bactérienne causant des lésions cutanées graisseuses.",
         "prevention": "Assainissement et antibiotiques."
       },
       "dis_pseudorabies": {
@@ -997,7 +1003,7 @@
       "dis_ped": {
         "name": "Diarrhée épidémique porcine (DEP)",
         "scientificName": "Coronavirus",
-        "description": "Similaire à la GET, hautement mortelle pour les nouveau-nés.",
+        "description": "Similaire à la GET, très fatale pour les nouveau-nés.",
         "prevention": "Biosécurité stricte."
       },
       "dis_je": {
@@ -1009,7 +1015,7 @@
       "dis_rabies": {
         "name": "Rage",
         "scientificName": "Lyssavirus",
-        "description": "Maladie virale mortelle généralement transmise par des morsures.",
+        "description": "Maladie virale mortelle généralement due à des morsures.",
         "prevention": "Vaccination des animaux domestiques et contrôle de la faune sauvage."
       },
       "dis_pox": {
@@ -1021,23 +1027,23 @@
       "dis_vs": {
         "name": "Stomatite vésiculeuse",
         "scientificName": "Rhabdovirus",
-        "description": "Provoque des ampoules ; ressemble à la fièvre aphteuse.",
+        "description": "Provoque des ampoules ; ressemble à la FA.",
         "prevention": "Contrôle des insectes et quarantaine."
       },
       "dis_clostridial": {
         "name": "Entérite clostridienne",
         "scientificName": "Clostridium perfringens",
-        "description": "Infection bactérienne provoquant de graves dommages intestinaux.",
+        "description": "Infection bactérienne causant de graves dommages intestinaux.",
         "prevention": "Vaccination des truies et hygiène."
       },
       "dis_glassers": {
         "name": "Maladie de Glässer",
         "scientificName": "Haemophilus parasuis",
-        "description": "Provoque une inflammation des membranes autour du cœur, des poumons et des articulations.",
+        "description": "Provoque l'inflammation des membranes autour du cœur, des poumons et des articulations.",
         "prevention": "Antibiotiques et gestion du stress."
       },
       "dis_app": {
-        "name": "Pleuropneumonie porcine (APP)",
+        "name": "Pleuropneumonie (APP)",
         "scientificName": "A. pleuropneumoniae",
         "description": "Pneumonie bactérienne sévère.",
         "prevention": "Antibiotiques et amélioration de l'environnement."
@@ -1058,22 +1064,22 @@
         "name": "Tétanos",
         "scientificName": "Clostridium tetani",
         "description": "Toxine bactérienne affectant le système nerveux.",
-        "prevention": "Assainissement lors de la chirurgie/castration."
+        "prevention": "Hygiène pendant la chirurgie/castration."
       },
       "dis_eperythrozoonosis": {
         "name": "Épérythrozoonose",
         "scientificName": "Mycoplasma suis",
-        "description": "Parasite sanguin provoquant une anémie.",
+        "description": "Parasite sanguin causant une anémie.",
         "prevention": "Contrôle des insectes et aiguilles propres."
       },
       "dis_ascaris": {
-        "name": "Ascaris suum",
+        "name": "Ascaris suum (Grand ver rond)",
         "scientificName": "Grand ver rond",
-        "description": "Parasite interne provoquant des dommages aux poumons et au foie.",
+        "description": "Parasite interne causant des dommages aux poumons et au foie.",
         "prevention": "Vermifugation régulière."
       },
       "dis_whipworms": {
-        "name": "Trichures",
+        "name": "Trichures (Vers en fouet)",
         "scientificName": "Trichuris suis",
         "description": "Parasite interne dans le gros intestin.",
         "prevention": "Vermifugation et assainissement."
@@ -1121,21 +1127,21 @@
         "prevention": "Minéraux équilibrés et lumière du soleil."
       },
       "dis_salt_poisoning": {
-        "name": "Intoxication au sel",
+        "name": "Intoxication par le sel",
         "scientificName": "Privation d'eau",
-        "description": "Causée par un manque d'eau suivi d'une consommation excessive.",
-        "prevention": "Accès permanent à de l'eau fraîche."
+        "description": "Causée par un manque d'eau suivi d'une surconsommation.",
+        "prevention": "Accès permanent à l'eau fraîche."
       },
       "dis_heat_stroke": {
         "name": "Coup de chaleur",
         "scientificName": "Coup de chaleur",
-        "description": "Surchauffe due à une mauvaise ventilation ou un manque d'ombre.",
+        "description": "Surchauffe due à une mauvaise ventilation ou à l'absence d'ombre.",
         "prevention": "Ventilation, refroidissement et ombre."
       },
       "dis_rectal_prolapse": {
         "name": "Prolapsus rectal",
         "scientificName": "Prolapsus rectal",
-        "description": "Suit souvent la toux, la diarrhée ou le stress lié au froid.",
+        "description": "Suit souvent la toux, la diarrhée ou le stress dû au froid.",
         "prevention": "Traiter la cause primaire et chirurgie."
       },
       "dis_umbilical_hernia": {
@@ -1151,21 +1157,21 @@
         "prevention": "Génétique et réparation chirurgicale."
       },
       "dis_splayleg": {
-        "name": "Splayleg (Porcelets à pattes écartées)",
+        "name": "Splayleg (Écartement des pattes)",
         "scientificName": "Hypoplasie myofibrillaire",
         "description": "Porcelets nés incapables de se tenir debout avec les pattes arrière.",
-        "prevention": "Bander les pattes et traction au sol."
+        "prevention": "Ligature des pattes et traction au sol."
       },
       "dis_vulvovaginitis": {
         "name": "Vulvovaginite",
         "scientificName": "Toxicité à la zéaralénone",
-        "description": "Causée par des toxines fongiques œstrogéniques dans les aliments.",
-        "prevention": "Changer la source des aliments."
+        "description": "Causée par des toxines fongiques estrogéniques dans l'aliment.",
+        "prevention": "Changer de source d'aliment."
       },
       "dis_seneca": {
         "name": "Virus de la vallée de Seneca (SVV)",
         "scientificName": "Senecavirus A",
-        "description": "Provoque des ampoules similaires à la fièvre aphteuse.",
+        "description": "Provoque des ampoules similaires à la FA.",
         "prevention": "Biosécurité et diagnostic."
       },
       "dis_deltacoronavirus": {
@@ -1175,7 +1181,7 @@
         "prevention": "Biosécurité."
       },
       "dis_rotavirus": {
-        "name": "Diarrhée à rotavirus",
+        "name": "Diarrhée à Rotavirus",
         "scientificName": "Rotavirus",
         "description": "Cause fréquente de diarrhée au sevrage.",
         "prevention": "Vaccination et hygiène."
@@ -1189,20 +1195,20 @@
       "dis_vesicular": {
         "name": "Maladie vésiculeuse du porc",
         "scientificName": "Enterovirus",
-        "description": "Maladie virale imitant la fièvre aphteuse.",
+        "description": "Maladie virale imitant la FA.",
         "prevention": "Quarantaine stricte."
       },
       "dis_melioidosis": {
         "name": "Mélioïdose",
         "scientificName": "Burkholderia pseudomallei",
-        "description": "Maladie bactérienne provenant du sol/de l'eau.",
+        "description": "Maladie bactérienne provenant du sol/eau.",
         "prevention": "Eau propre et hygiène."
       },
       "dis_trypanosomiasis": {
         "name": "Trypanosomiase",
         "scientificName": "Trypanosoma spp.",
-        "description": "Maladie à protozoaires propagée par les mouches tsé-tsé.",
-        "prevention": "Contrôle des mouches et médicaments."
+        "description": "Maladie protozoaire propagée par les mouches tsé-tsé.",
+        "prevention": "Contrôle des mouches et médication."
       },
       "dis_cysticercosis": {
         "name": "Cysticercose",
@@ -1213,7 +1219,7 @@
       "dis_toxoplasmosis": {
         "name": "Toxoplasmose",
         "scientificName": "Toxoplasma gondii",
-        "description": "Infection zoonotique à protozoaires.",
+        "description": "Infection protozoaire zoonotique.",
         "prevention": "Contrôle des chats et biosécurité."
       },
       "dis_listeriosis": {
@@ -1231,266 +1237,266 @@
       "dis_sunburn": {
         "name": "Coup de soleil",
         "scientificName": "Dermatite solaire",
-        "description": "Affecte les cochons à peau blanche en extérieur.",
+        "description": "Affecte les porcs à peau blanche en extérieur.",
         "prevention": "Fournir de l'ombre."
       },
       "dis_tail_biting": {
         "name": "Morsure de queue",
         "scientificName": "Stress comportemental",
-        "description": "Problème comportemental dû au stress ou à l'ennui.",
+        "description": "Problème comportemental dû au stress/ennui.",
         "prevention": "Réduire le stress et enrichir l'environnement."
       },
       "dis_navel_ill": {
-        "name": "Infection du nombril",
+        "name": "Infection de l'ombilic (Navel Ill)",
         "scientificName": "Infection ombilicale",
         "description": "Infection du cordon ombilical à la naissance.",
         "prevention": "Trempage à l'iode à la naissance et assainissement."
       },
       "dis_iron_toxicity": {
-        "name": "Toxicité du fer",
+        "name": "Toxicité ferrique",
         "scientificName": "Excès ferreux",
-        "description": "Administration excessive de fer entraînant la mort subite.",
-        "prevention": "Injecter le dosage précis."
+        "description": "Peut survenir si le fer est injecté à des porcelets carencés en Vit E.",
+        "prevention": "Assurer une alimentation équilibrée de la truie."
       },
       "dis_aflatoxicosis": {
         "name": "Aflatoxicose",
         "scientificName": "Toxine d'Aspergillus flavus",
-        "description": "Empoisonnement par toxine fongique.",
-        "prevention": "Éviter les aliments moisis et utiliser des capteurs de toxines."
+        "description": "Empoisonnement par des toxines provenant de grains ou d'aliments moisis, entraînant des lésions hépatiques et un ictère.",
+        "prevention": "Éviter les aliments moisis, stocker les grains au sec et utiliser des liants de toxines."
       },
       "dis_parakeratosis": {
-        "name": "Parakératose",
+        "name": "Parakératose (Carence en zinc)",
         "scientificName": "Carence en zinc",
-        "description": "Carence en zinc chez le porc.",
-        "prevention": "Assurer des niveaux de zinc adéquats dans le régime alimentaire."
+        "description": "Maladie nutritionnelle provoquant des lésions cutanées croûteuses et épaissies sévères.",
+        "prevention": "Assurer un équilibre calcium/zinc dans l'alimentation et supplémenter en zinc."
       },
       "dis_biotin_deficiency": {
         "name": "Carence en biotine",
         "scientificName": "Carence en vitamine H",
-        "description": "Carence en biotine chez le porc.",
-        "prevention": "Fournir des suppléments de biotine."
+        "description": "Carence nutritionnelle causant des sabots fendus, des lésions cutanées et de la boiterie.",
+        "prevention": "Supplémenter l'alimentation en biotine et éviter les sols en béton rugueux et humides."
       },
       "dis_gossypol_toxicity": {
         "name": "Toxicité du gossypol",
         "scientificName": "Empoisonnement au gossypol",
-        "description": "Empoisonnement par le tourteau de coton.",
-        "prevention": "Limiter le tourteau de coton brut dans les aliments."
+        "description": "Intoxication due à l'alimentation avec du tourteau de coton brut ou en excès, causant une détresse respiratoire.",
+        "prevention": "Limiter le tourteau de coton dans la ration et utiliser du sulfate de fer."
       },
       "dis_cassava_poisoning": {
-        "name": "Empoisonnement au manioc",
+        "name": "Empoisonnement par le manioc",
         "scientificName": "Glycosides cyanogènes",
-        "description": "Empoisonnement au cyanure provenant du manioc brut.",
-        "prevention": "Cuire ou fermenter le manioc avant de le donner aux animaux."
+        "description": "Intoxication au cyanure par des racines ou épluchures de manioc crues ou mal préparées.",
+        "prevention": "Éplucher, bouillir, sécher au soleil ou fermenter le manioc avant de nourrir."
       },
       "dis_sweet_potato_toxicity": {
-        "name": "Toxicité de la patate douce",
+        "name": "Intoxication par la patate douce",
         "scientificName": "Toxicité à l'ipomeamarone",
-        "description": "Empoisonnement à l'ipomeamarone.",
-        "prevention": "Ne pas donner de patates douces moisies ou endommagées."
+        "description": "Intoxication due à des patates douces moisies, provoquant une grave détresse respiratoire.",
+        "prevention": "Jeter les patates douces endommagées ou moisies ; ne nourrir qu'avec des tubercules sains."
       },
       "dis_mma": {
-        "name": "Syndrome MMA",
+        "name": "Dysgalactie post-partum (MMA)",
         "scientificName": "Mammite-Métrite-Agalactie",
-        "description": "Infection post-mise bas chez les truies.",
-        "prevention": "Nettoyer les cases de mise bas et nutrition appropriée."
+        "description": "Mammite, métrite et agalactie provoquant de la fièvre et un manque de lait chez les truies après la mise bas.",
+        "prevention": "Maintenir une hygiène stricte des cases de mise bas et assurer une nutrition adéquate."
       },
       "dis_pwd": {
-        "name": "Diarrhée post-sevrage",
+        "name": "Diarrhée post-sevrage (DPS)",
         "scientificName": "Escherichia coli (F4/F18)",
-        "description": "Colibacillose chez les porcs sevrés.",
-        "prevention": "Assainissement et ajustement du régime alimentaire."
+        "description": "Diarrhée bactérienne chez les porcelets peu après le sevrage, provoquant une déshydratation.",
+        "prevention": "Réduire le stress du sevrage, maintenir une hygiène élevée et fournir de l'eau propre."
       },
       "dis_trichinellosis": {
         "name": "Trichinellose",
         "scientificName": "Trichinella spiralis",
-        "description": "Infection parasitaire zoonotique.",
-        "prevention": "Ne pas donner de déchets bruts ; contrôle des nuisibles."
+        "description": "Parasitose zoonotique due à la consommation de restes de viande crue, causant une raideur musculaire.",
+        "prevention": "Ne pas nourrir avec des eaux grasses crues, bouillir les restes de nourriture pendant 30 minutes."
       },
       "dis_hydatid_disease": {
         "name": "Hydatidose",
         "scientificName": "Echinococcus granulosus",
-        "description": "Infection par larve de ténia.",
-        "prevention": "Vermifuger les chiens de ferme ; empêcher l'accès aux abats."
+        "description": "Infection larvaire parasitaire provoquant des kystes remplis de liquide dans les organes.",
+        "prevention": "Vermifuger régulièrement les chiens de ferme et leur éviter de manger des organes de porc crus."
       },
       "dis_phe": {
-        "name": "Entéropathie hémorragique proliférative",
+        "name": "Entéropathie hémorragique porcine",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Saignement intestinal aigu chez les jeunes porcs adultes.",
-        "prevention": "Vaccination et hygiène."
+        "description": "Diarrhée sanglante aiguë et mort subite chez les porcs en croissance ou finition.",
+        "prevention": "Maintenir une bonne hygiène et utiliser les antibiotiques appropriés sous conseil vétérinaire."
       },
       "dis_mycoplasma_arthritis": {
-        "name": "Arthrite à mycoplasme",
+        "name": "Arthrite à mycoplasmes",
         "scientificName": "Mycoplasma hyosynoviae",
-        "description": "Maladie articulaire bactérienne.",
-        "prevention": "Assainissement et quarantaine."
+        "description": "Infection bactérienne provoquant des articulations enflées, de la boiterie et une faiblesse des pattes.",
+        "prevention": "Améliorer les conditions de logement, réduire la densité et traiter tôt."
       },
       "dis_foot_rot": {
-        "name": "Piétin (Fourchet)",
+        "name": "Piétin (Nécrobacillose)",
         "scientificName": "Fusobacterium necrophorum",
-        "description": "Infection du pied provoquant une boiterie.",
-        "prevention": "Garder les cases sèches ; traiter les sabots."
+        "description": "Infection bactérienne pénétrant par les blessures des sabots, provoquant pourriture et boiterie.",
+        "prevention": "Réparer le béton rugueux, garder les sols secs et utiliser des pédiluves si nécessaire."
       },
       "dis_babesiosis": {
-        "name": "Babésiose",
+        "name": "Babésiose transmise par les tiques",
         "scientificName": "Babesia trautmanni",
-        "description": "Infection à protozoaires transmise par les tiques.",
-        "prevention": "Pulvérisation d'acaricide pour le contrôle des tiques."
+        "description": "Parasite sanguin transmis par les tiques causant forte fièvre, anémie et urine foncée.",
+        "prevention": "Contrôler les tiques avec des acaricides et débroussailler autour des enclos."
       },
       "dis_anaplasmosis": {
         "name": "Anaplasmose",
         "scientificName": "Anaplasma marginale",
-        "description": "Infection sanguine chez le porc.",
-        "prevention": "Contrôle des vecteurs."
+        "description": "Infection bactérienne transmise par les tiques provoquant anémie, fièvre et jaunisse.",
+        "prevention": "Mettre en œuvre des programmes de lutte contre les tiques et les vecteurs."
       },
       "dis_sow_hysteria": {
         "name": "Hystérie de la truie",
         "scientificName": "Psychose puerpérale",
-        "description": "Agressivité ou panique chez les truies après la mise bas.",
-        "prevention": "Fournir une zone de mise bas calme."
+        "description": "Trouble comportemental où les truies deviennent agressives et mordent leurs porcelets à la mise bas.",
+        "prevention": "Fournir un environnement calme, surveiller les cochettes et utiliser des sédatifs si besoin."
       },
       "dis_thorny_headed_worm": {
-        "name": "Acanthocéphale (Ver à tête épineuse)",
+        "name": "Ver à tête épineuse",
         "scientificName": "Macracanthorhynchus hirudinaceus",
-        "description": "Parasite intestinal.",
-        "prevention": "Empêcher l'accès aux larves de hanneton."
+        "description": "Ver parasite contracté en mangeant des coléoptères, causant une perforation intestinale.",
+        "prevention": "Éviter l'élevage en plein air sur des sols infestés et utiliser des vermifuges."
       },
       "dis_strongyloidiasis": {
         "name": "Strongyloïdose",
         "scientificName": "Strongyloides ransomi",
-        "description": "Infection par anguillule.",
-        "prevention": "Garder les cases sèches ; vermifugation."
+        "description": "Strongle intestinal provoquant une grave diarrhée et une forte mortalité chez les porcelets.",
+        "prevention": "Garder les maternités propres et sèches, vermifuger les truies avant mise bas."
       },
       "dis_hyostrongylosis": {
-        "name": "Ver rouge de l'estomac",
+        "name": "Strongle rouge de l'estomac",
         "scientificName": "Hyostrongylus rubidus",
-        "description": "Ver intestinal chez les porcs au pâturage.",
-        "prevention": "Gestion propre des pâturages ; vermifugation."
+        "description": "Infection par un ver de l'estomac causant gastrite, anémie et perte de poids.",
+        "prevention": "Pratiquer la rotation des pâturages, garder les bâtiments secs et vermifuger régulièrement."
       },
       "dis_oesophagostomiasis": {
-        "name": "Ver nodulaire",
+        "name": "Oesophagostomose (Ver nodulaire)",
         "scientificName": "Oesophagostomum spp.",
-        "description": "Ver intestinal chez le porc.",
-        "prevention": "Vermifugation et assainissement."
+        "description": "Parasite intestinal provoquant des nodules dans la paroi intestinale, menant à des truies maigres.",
+        "prevention": "Hygiène régulière des enclos et utilisation de vermifuges à large spectre."
       },
       "dis_fascioliasis": {
-        "name": "Fasciolose",
+        "name": "Fasciolose (Grande douve)",
         "scientificName": "Fasciola gigantica",
-        "description": "Infection par douve du foie.",
-        "prevention": "Contrôle des escargots ; éloigner des pâturages humides."
+        "description": "Douve parasitaire affectant le foie, fréquente dans les pâturages humides ou marécageux.",
+        "prevention": "Empêcher les porcs de paître dans les zones humides et lutter contre les limnées."
       },
       "dis_emcv": {
-        "name": "VEMC",
+        "name": "Encéphalomyocardite (EMCV)",
         "scientificName": "Cardiovirus",
-        "description": "Myocardite virale et échec de reproduction.",
-        "prevention": "Contrôle des rongeurs (les rongeurs propagent le VEMC)."
+        "description": "Infection virale transmise par les rongeurs, causant mort subite par arrêt cardiaque et avortement.",
+        "prevention": "Lutte stricte contre les rongeurs et protection des aliments contre les souillures."
       },
       "dis_demodectic_mange": {
         "name": "Gale démodécique",
         "scientificName": "Demodex phylloides",
-        "description": "Infection par acarien cutané.",
-        "prevention": "Traitement acaricide."
+        "description": "Acarien cutané microscopique provoquant des plaques squameuses et de petites pustules.",
+        "prevention": "Améliorer la nutrition, isoler les porcs atteints et appliquer des acaricides."
       },
       "dis_pityriasis_rosea": {
-        "name": "Pityriasis rosea",
+        "name": "Pityriasis rosé",
         "scientificName": "Pseudo-teigne",
-        "description": "Condition cutanée non contagieuse.",
-        "prevention": "Récupération spontanée ; garder l'environnement propre."
+        "description": "Affection cutanée non contagieuse chez les jeunes porcs formant des croûtes annulaires.",
+        "prevention": "Guérit généralement seule ; maintenir une litière propre et sèche."
       },
       "dis_photosensitization": {
         "name": "Photosensibilisation",
         "scientificName": "Dermatite solaire",
-        "description": "Hypersensibilité cutanée à la lumière du soleil.",
-        "prevention": "Tenir à l'écart de la lumière directe du soleil ; vérifier les plantes du pâturage."
+        "description": "Réaction cutanée sévère au soleil chez les porcs blancs après ingestion de certaines plantes.",
+        "prevention": "Fournir de l'ombre, éliminer les plantes sensibilisantes et garder les porcs à l'abri."
       },
       "dis_shoulder_ulcers": {
-        "name": "Ulcères de l'épaule",
+        "name": "Ulcères de l'épaule de la truie",
         "scientificName": "Ulcères de décubitus",
-        "description": "Plaies chez les truies maigres sur sols durs.",
-        "prevention": "Fournir une litière souple ; augmenter l'alimentation."
+        "description": "Escarres de décubitus sur l'épaule des truies maigres logées sur béton dur.",
+        "prevention": "Fournir une litière souple, veiller à l'état corporel des truies et utiliser des tapis."
       },
       "dis_ear_biting": {
-        "name": "Morsure d'oreille",
+        "name": "Cannibalisme d'oreilles",
         "scientificName": "Comportement de réponse au stress",
-        "description": "Réponse comportementale au stress.",
-        "prevention": "Réduire la densité de peuplement ; enrichir l'environnement."
+        "description": "Comportement anormal où les porcs mordent les oreilles de leurs congénères, causant une nécrose.",
+        "prevention": "Réduire la densité, améliorer la ventilation et fournir des objets à mordre (chaînes)."
       },
       "dis_gastric_torsion": {
-        "name": "Torsion gastrique",
+        "name": "Torsion gastrique (Météorisation)",
         "scientificName": "Dilatation-torsion de l'estomac",
-        "description": "Estomac tordu.",
-        "prevention": "Éviter de trop nourrir en un seul repas."
+        "description": "Gonflement soudain et torsion de l'estomac, entraînant une mort très rapide.",
+        "prevention": "Éviter les repas volumineux après un long jeûne et fractionner les rations."
       },
       "dis_c_difficile": {
-        "name": "Infection à C. difficile",
+        "name": "Infection à Clostridium difficile",
         "scientificName": "Clostridioides difficile",
-        "description": "Diarrhée bactérienne chez les porcelets.",
-        "prevention": "Environnement propre et ventilation adéquate."
+        "description": "Infection bactérienne chez le porcelet nouveau-né causant diarrhée aqueuse et ballonnements.",
+        "prevention": "Nettoyer et désinfecter les enclos de mise bas, assurer une prise rapide de colostrum."
       },
       "dis_cold_stress": {
-        "name": "Stress lié au froid",
+        "name": "Stress lié au froid (Hypothermie)",
         "scientificName": "Susceptibilité à l'hypothermie",
-        "description": "Refroidissement chez les jeunes porcelets.",
-        "prevention": "Fournir des lampes chauffantes et une litière sèche."
+        "description": "Refroidissement corporel sévère chez les porcelets, causant des tremblements et une forte mortalité.",
+        "prevention": "Fournir des lampes chauffantes, des boîtes à porcelets et éviter les courants d'air."
       },
       "dis_necrotic_enteritis": {
         "name": "Entérite nécrotique",
         "scientificName": "Clostridium perfringens Type C",
-        "description": "Infection intestinale clostridienne.",
-        "prevention": "Vaccination des truies et assainissement des cases."
+        "description": "Maladie bactérienne causant une grave diarrhée sanglante et une mortalité élevée chez les porcelets.",
+        "prevention": "Vacciner les truies avant mise bas et maintenir une hygiène absolue."
       },
       "dis_navel_bleeding": {
-        "name": "Saignement du nombril",
+        "name": "Saignement du cordon",
         "scientificName": "Hémorragie ombilicale",
-        "description": "Hémorragie du cordon ombilical.",
-        "prevention": "Lier les nombrils qui saignent ; vérifier la vitamine K dans les aliments."
+        "description": "Hémorragie excessive du cordon ombilical chez les porcelets nouveau-nés.",
+        "prevention": "Ligaturer le cordon à la naissance, éviter les mycotoxines dans l'aliment des truies."
       },
       "dis_spirochetal_colitis": {
-        "name": "Colite spirochétienne",
+        "name": "Colite spirochétique porcine",
         "scientificName": "Brachyspira pilosicoli",
-        "description": "Infection bactérienne du gros intestin.",
-        "prevention": "Médicaments et assainissement des cases."
+        "description": "Maladie diarrhéique modérée chez les porcs en croissance, limitant le gain de poids.",
+        "prevention": "Désinfecter les auges et traiter les sujets atteints avec des antibiotiques."
       },
       "dis_salmonella_septicemia": {
         "name": "Septicémie à Salmonella",
         "scientificName": "Salmonella choleraesuis",
-        "description": "Infection sanguine par Salmonella.",
-        "prevention": "Eau propre ; biosécurité."
+        "description": "Infection généralisée grave à Salmonella causant une coloration violette de la peau et la mort rapide.",
+        "prevention": "Isoler les malades, traiter l'eau et appliquer des mesures strictes de biosécurité."
       },
       "dis_prdc": {
-        "name": "CRPP",
+        "name": "Complexe respiratoire porcin (CRP)",
         "scientificName": "Complexe respiratoire porcin",
-        "description": "Complexe respiratoire chez les porcs en croissance.",
-        "prevention": "Ventilation, vaccination et contrôle de la densité."
+        "description": "Infection respiratoire mixte virale et bactérienne provoquant toux et retard de croissance.",
+        "prevention": "Améliorer la ventilation, éviter la surpopulation et contrôler les virus primaires."
       },
       "dis_ergotism": {
         "name": "Ergotisme",
         "scientificName": "Claviceps purpurea",
-        "description": "Empoisonnement par le seigle ou les grains moisis.",
-        "prevention": "Inspecter les grains pour détecter les corps noirs de l'ergot."
+        "description": "Intoxication par l'ergot de seigle présent dans les céréales, provoquant une nécrose des tissus.",
+        "prevention": "Trier les grains pour éliminer les ergots et remplacer l'aliment contaminé."
       },
       "dis_bvdv_pig": {
-        "name": "BVDV chez les porcs",
+        "name": "Infection par le BVDV chez le porc",
         "scientificName": "Pestivirus",
-        "description": "Virus de la diarrhée virale bovine chez les porcins.",
-        "prevention": "Isoler les porcs des bovins."
+        "description": "Infection par le virus de la diarrhée virale bovine par contact avec des bovins, causant l'avortement.",
+        "prevention": "Séparer les porcs des bovins/ovins et limiter les contacts inter-espèces."
       },
       "dis_endocarditis": {
-        "name": "Endocardite",
+        "name": "Endocardite bactérienne",
         "scientificName": "Endocardite streptococcique",
-        "description": "Infection des valves cardiaques.",
-        "prevention": "Traiter les infections primaires tôt."
+        "description": "Infection des valves cardiaques causant une insuffisance cardiaque et une mort subite lors d'un stress.",
+        "prevention": "Traiter rapidement les infections articulaires et plaies, éviter les génétiques sensibles."
       },
       "dis_polyserositis": {
-        "name": "Polysérosite",
+        "name": "Polysérosite à mycoplasmes",
         "scientificName": "Mycoplasma hyorhinis",
-        "description": "Infection des parois des cavités corporelles.",
-        "prevention": "Traitement antibiotique ; minimiser le stress."
+        "description": "Inflammation fibrineuse de la plèvre, du péritoine et des articulations chez les sevrés.",
+        "prevention": "Minimiser le stress du sevrage, éviter les mélanges de portées et bien ventiler."
       },
       "dis_congenital_tremor": {
         "name": "Tremblement congénital",
         "scientificName": "Pestivirus porcin atypique",
-        "description": "Maladie du porcelet trembleur.",
-        "prevention": "Acclimater les cochetes à la ferme avant la saillie."
+        "description": "Trouble neurologique chez le porcelet nouveau-né provoquant de graves tremblements.",
+        "prevention": "Éviter d'utiliser la semence de verrats affectés et réduire le stress des truies gestantes."
       }
     },
     "diagnosisMatches": "Correspondances de diagnostic clinique",
@@ -1502,7 +1508,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 PROTOCOLE DE BIOSÉCURITÉ D'URGENCE :",
     "clinicalDiagnosisMatches": "Correspondances de diagnostic clinique",
     "hallmarkBadge": "Signe distinctif",
-    "hallmarkSignPresent": "Signe de poinçon présent : %1$s",
+    "hallmarkSignPresent": "Signe de poinçon présent : {sign}",
     "otherSignsWatch": "Autres signes à surveiller :",
     "preventionTreatmentLabel": "Prévention/Traitement : {treatment}",
     "bio_proto_asf": "QUARANTAINE D'URGENCE IMMÉDIATE : La peste porcine africaine est un virus mortel à déclaration obligatoire. 1) Verrouillez immédiatement les portes de la ferme. 2) Arrêtez tout déplacement de porcs, véhicules, aliments et lisier. 3) Désinfectez pédiluves et roues avec Virkon S ou soude à 2%. 4) Contactez immédiatement les autorités vétérinaires.",
@@ -1514,8 +1520,8 @@
     "bio_proto_vesicular_stomatitis": "ALERTE LÉSIONS VÉSICULEUSES SIGNALABLES : La stomatite vésiculeuse est cliniquement similaire à la fièvre aphteuse. 1) Isolez immédiatement les porcs atteints. 2) Portez des gants de protection. 3) Signalez au vétérinaire pour diagnostic différentiel en laboratoire.",
     "bio_proto_senecavirus": "MALADIE VÉSICULEUSE SIGNALABLE : Les lésions dues au Sénécavirus A ressemblent à celles de la fièvre aphteuse. 1) Isolez immédiatement le box. 2) Bloquez les sorties de l'élevage. 3) Signalez aux autorités pour test PCR différentiel obligatoire.",
     "bio_proto_svd": "MALADIE VÉSICULEUSE SIGNALABLE : Maladie vésiculeuse du porc (SVD). 1) Isolement strict des animaux atteints. 2) Limitez les mouvements des véhicules et visiteurs. 3) Alertez immédiatement le service de santé animale.",
-    "clinicalMatchPercent": "%1$d%% Correspondance clinique",
-    "matchedSignsCount": "{matched}$d sur {total}$d signes",
+    "clinicalMatchPercent": "{percent}% Correspondance clinique",
+    "matchedSignsCount": "{matched} sur {total} signes",
     "matchPercentSuffix": "({percent}% de correspondance)"
   },
   "HR": {
@@ -1932,7 +1938,7 @@
     "snooze1Month": "1 Mois",
     "deleteNotificationQuestion": "Supprimer la notification ?",
     "deleteNotificationConfirm": "Êtes-vous sûr de vouloir supprimer cette notification ?",
-    "lastWeighedDaysAgo": "Porc n°%1$s : Pesé pour la dernière fois il y a %2$s jours",
+    "lastWeighedDaysAgo": "Porc n°{tag} : Pesé pour la dernière fois il y a {days} jours",
     "stockLeftMinFormat": "{current} : {unit} kg restants (Min : {min} kg)",
     "pigs": "Porcs",
     "pig": "Porc",

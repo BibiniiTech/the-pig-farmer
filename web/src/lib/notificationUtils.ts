@@ -208,8 +208,9 @@ export function calculateWeightAlerts(
     if (dismissedAlerts.includes(pig.id)) return false;
     const snoozeUntil = snoozedAlerts[pig.id];
     if (snoozeUntil && snoozeUntil > now) return false;
-
-    const lastWeight = pig.lastWeightDate || pig.birthDate;
+    const lastWeight = (pig.lastWeightDate && pig.lastWeightDate.trim().length > 0)
+      ? pig.lastWeightDate
+      : (pig.weight <= 0 ? pig.birthDate : null);
     if (!lastWeight) return false;
 
     let lastDate: Date;

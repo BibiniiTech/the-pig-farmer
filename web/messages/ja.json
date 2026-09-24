@@ -124,7 +124,13 @@
     "noActivities": "No upcoming activities",
     "allTasksCompleted": "All tasks are completed!",
     "generalTask": "General Task",
-    "language": "Language"
+    "language": "Language",
+    "feed": "飼料",
+    "inventory": "飼料在庫",
+    "calculator": "飼料設計・給与量計算",
+    "mixFeed": "飼料自家配合",
+    "analyzeFeed": "栄養成分分析",
+    "marketHub": "養豚資材・出荷流通ハブ"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -866,664 +872,664 @@
     },
     "diseases": {
       "dis_asf": {
-        "name": "African Swine Fever (ASF)",
+        "name": "アフリカ豚コレラ (ASF)",
         "scientificName": "Asfivirus",
-        "description": "A highly contagious and deadly viral disease prevalent in West Africa. No vaccine exists.",
-        "prevention": "Strict biosecurity and restrict farm access."
+        "description": "西アフリカで流行している、伝染性が高く致死性の高いウイルス性疾患。ワクチンは存在しません。",
+        "prevention": "厳格なバイオセキュリティと農場のアクセスの制限。"
       },
       "dis_fmd": {
-        "name": "Foot and Mouth Disease (FMD)",
+        "name": "口蹄疫 (FMD)",
         "scientificName": "Aphthovirus",
-        "description": "Viral disease causing blisters on the mouth and feet.",
-        "prevention": "Vaccination and movement control."
+        "description": "口や足に水疱を引き起こすウイルス性の病気。",
+        "prevention": "ワクチン接種と移動制限。"
       },
       "dis_prrs": {
-        "name": "PRRS (Blue Ear)",
+        "name": "豚生殖器呼吸器症候群 (PRRS)",
         "scientificName": "Arterivirus",
-        "description": "Causes respiratory failure and reproductive issues.",
-        "prevention": "Biosecurity and herd vaccination."
+        "description": "呼吸不全や生殖問題を引き起こします。",
+        "prevention": "バイオセキュリティと集団ワクチン接種。"
       },
       "dis_erysipelas": {
-        "name": "Swine Erysipelas",
+        "name": "豚丹毒（とんだんどく）",
         "scientificName": "Erysipelothrix rhusiopathiae",
-        "description": "Bacterial infection causing distinct skin lesions and arthritis.",
-        "prevention": "Regular vaccination and pen hygiene."
+        "description": "明らかな皮膚病変や関節炎を引き起こす細菌感染。",
+        "prevention": "定期的なワクチン接種とペンの衛生管理。"
       },
       "dis_csf": {
-        "name": "Classical Swine Fever",
+        "name": "古典的豚コレラ",
         "scientificName": "Pestivirus",
-        "description": "Highly contagious viral disease similar to ASF.",
-        "prevention": "Vaccination and strict biosecurity."
+        "description": "ASFと同様の伝染性の高いウイルス性疾患。",
+        "prevention": "ワクチン接種と厳格なバイオセキュリティ。"
       },
       "dis_anthrax": {
-        "name": "Anthrax",
+        "name": "炭疽菌",
         "scientificName": "Bacillus anthracis",
-        "description": "Serious bacterial disease that can affect humans.",
-        "prevention": "Vaccination and avoid opening carcasses."
+        "description": "人間に影響を与える可能性のある重篤な細菌性疾患。",
+        "prevention": "ワクチン接種をし、死体を開かないようにしてください。"
       },
       "dis_brucellosis": {
-        "name": "Brucellosis",
+        "name": "ブルセラ症",
         "scientificName": "Brucella suis",
-        "description": "Bacterial disease causing reproductive failure.",
-        "prevention": "Testing, culling, and sanitation."
+        "description": "生殖不全を引き起こす細菌性疾患。",
+        "prevention": "検査、殺処分、衛生管理。"
       },
       "dis_coccidiosis": {
-        "name": "Coccidiosis",
+        "name": "子豚コクシジウム症",
         "scientificName": "Isospora suis",
-        "description": "Parasitic disease primarily affecting piglets.",
-        "prevention": "Farrowing pen hygiene."
+        "description": "主に子豚に影響を及ぼす寄生虫症。",
+        "prevention": "分娩舎の衛生状態。"
       },
       "dis_pneumonia": {
-        "name": "Mycoplasmal Pneumonia",
+        "name": "マイコプラズマ肺炎",
         "scientificName": "Mycoplasma hyopneumoniae",
-        "description": "Chronic respiratory disease leading to poor growth.",
-        "prevention": "Vaccination and improved ventilation."
+        "description": "成長不良を引き起こす慢性呼吸器疾患。",
+        "prevention": "ワクチン接種と換気の改善。"
       },
       "dis_salmonellosis": {
-        "name": "Salmonellosis",
+        "name": "サルモネラ症",
         "scientificName": "Salmonella typhimurium",
-        "description": "Bacterial infection causing severe gut issues.",
-        "prevention": "Clean water and hygiene."
+        "description": "重度の腸疾患を引き起こす細菌感染。",
+        "prevention": "きれいな水と衛生。"
       },
       "dis_ppv": {
-        "name": "Porcine Parvovirus (PPV)",
+        "name": "ブタパルボウイルス (PPV)",
         "scientificName": "Porcine Parvovirus",
-        "description": "Common cause of reproductive failure in gilts.",
-        "prevention": "Vaccination before breeding."
+        "description": "未経産雌豚の生殖不全の一般的な原因。",
+        "prevention": "繁殖前のワクチン接種。"
       },
       "dis_rhinitis": {
-        "name": "Atrophic Rhinitis",
+        "name": "萎縮性鼻炎",
         "scientificName": "Bordetella bronchiseptica",
-        "description": "Causes distortion of the snout and respiratory issues.",
-        "prevention": "Vaccination and air quality."
+        "description": "鼻の歪みや呼吸器系の問題を引き起こします。",
+        "prevention": "ワクチン接種と大気の質。"
       },
       "dis_leptospirosis": {
-        "name": "Leptospirosis",
+        "name": "レプトスピラ症",
         "scientificName": "Leptospira spp.",
-        "description": "Zoonotic bacterial disease affecting kidneys.",
-        "prevention": "Rodent control and vaccination."
+        "description": "腎臓に影響を与える人獣共通細菌性疾患。",
+        "prevention": "げっ歯類の駆除とワクチン接種。"
       },
       "dis_influenza": {
-        "name": "Swine Influenza",
+        "name": "豚インフルエンザ",
         "scientificName": "Influenza A virus",
-        "description": "Rapidly spreading respiratory infection.",
-        "prevention": "Ventilation and biosecurity."
+        "description": "急速に広がる呼吸器感染症。",
+        "prevention": "換気とバイオセキュリティ。"
       },
       "dis_edema": {
-        "name": "Edema Disease",
+        "name": "浮腫疾患",
         "scientificName": "Escherichia coli",
-        "description": "Caused by E. coli toxins in weaned piglets.",
-        "prevention": "Improved sanitation and diet."
+        "description": "離乳した子豚の大腸菌毒素によって引き起こされます。",
+        "prevention": "衛生環境と食生活の改善。"
       },
       "dis_dysentery": {
-        "name": "Swine Dysentery",
+        "name": "豚赤レン症",
         "scientificName": "Brachyspira hyodysenteriae",
-        "description": "Severe mucohaemorrhagic diarrhea.",
-        "prevention": "Water medication and disinfection."
+        "description": "重度の粘膜出血性下痢。",
+        "prevention": "水の投薬と消毒。"
       },
       "dis_mange": {
-        "name": "Sarcoptic Mange",
+        "name": "豚疥癬（ヒゼンダニ症）",
         "scientificName": "Sarcoptes scabiei",
-        "description": "Parasitic skin disease causing extreme discomfort.",
-        "prevention": "Acaricide treatment."
+        "description": "極度の不快感を引き起こす寄生性皮膚疾患。",
+        "prevention": "殺ダニ剤治療。"
       },
       "dis_anemia": {
-        "name": "Iron Deficiency Anemia",
+        "name": "鉄欠乏性貧血",
         "scientificName": "Iron Deficiency",
-        "description": "Common in indoor piglets without iron supplements.",
-        "prevention": "Iron injections at birth."
+        "description": "鉄サプリメントを摂取していない屋内飼育の子豚によく見られます。",
+        "prevention": "出産時に鉄剤注射。"
       },
       "dis_ulcers": {
-        "name": "Gastric Ulcers",
+        "name": "胃潰瘍",
         "scientificName": "Gastric Ulcers",
-        "description": "Caused by fine feed or stress.",
-        "prevention": "Adjust feed particle size."
+        "description": "微細な餌やストレスが原因。",
+        "prevention": "飼料の粒度を調整します。"
       },
       "dis_pss": {
-        "name": "Porcine Stress Syndrome",
+        "name": "豚ストレス症候群",
         "scientificName": "Genetic stress susceptibility",
-        "description": "Genetic condition triggered by stress.",
-        "prevention": "Genetic selection and calm handling."
+        "description": "ストレスによって引き起こされる遺伝的疾患。",
+        "prevention": "遺伝子の選択と冷静な対応。"
       },
       "dis_tge": {
-        "name": "Transmissible Gastroenteritis (TGE)",
+        "name": "伝染性胃腸炎 (TGE)",
         "scientificName": "Coronavirus",
-        "description": "Viral disease with high mortality in young piglets.",
-        "prevention": "Biosecurity."
+        "description": "若い子豚の死亡率が高いウイルス性疾患。",
+        "prevention": "バイオセキュリティ。"
       },
       "dis_pasteurellosis": {
-        "name": "Pasteurellosis",
+        "name": "パスツレラ症",
         "scientificName": "Pasteurella multocida",
-        "description": "Bacterial pneumonia.",
-        "prevention": "Antibiotics and ventilation."
+        "description": "細菌性肺炎。",
+        "prevention": "抗生物質と換気。"
       },
       "dis_strep": {
-        "name": "Streptococcus suis",
+        "name": "レンサ球菌症 (Streptococcus suis)",
         "scientificName": "S. suis",
-        "description": "Bacterial infection causing meningitis.",
-        "prevention": "Antibiotics and stress reduction."
+        "description": "髄膜炎を引き起こす細菌感染。",
+        "prevention": "抗生物質とストレス軽減。"
       },
       "dis_mycotoxicosis": {
-        "name": "Mycotoxicosis",
+        "name": "マイコト中毒症",
         "scientificName": "Mycotoxicosis",
-        "description": "Caused by mold-contaminated feed.",
-        "prevention": "Toxin binders and dry storage."
+        "description": "カビに汚染された飼料が原因。",
+        "prevention": "毒素結合剤と乾燥保管。"
       },
       "dis_greasy_pig": {
-        "name": "Greasy Pig Disease",
+        "name": "滲出性表皮炎（スス病）",
         "scientificName": "Staphylococcus hyicus",
-        "description": "Bacterial infection causing greasy skin lesions.",
-        "prevention": "Sanitation and antibiotics."
+        "description": "脂っぽい皮膚病変を引き起こす細菌感染。",
+        "prevention": "衛生と抗生物質。"
       },
       "dis_pseudorabies": {
-        "name": "Pseudorabies (Aujeszky's)",
+        "name": "オーエスキー病（仮性狂犬病）",
         "scientificName": "Suid herpesvirus 1",
-        "description": "Viral disease affecting nervous and respiratory systems.",
-        "prevention": "Vaccination and eradication programs."
+        "description": "神経系や呼吸器系に影響を及ぼすウイルス性疾患。",
+        "prevention": "ワクチン接種と根絶プログラム。"
       },
       "dis_pcv2": {
-        "name": "Porcine Circovirus (PCV2)",
+        "name": "豚サーコウイルス2型感染症 (PCV2)",
         "scientificName": "Circovirus",
-        "description": "Causes wasting and respiratory issues in growers.",
-        "prevention": "Vaccination."
+        "description": "生産者に消耗や呼吸器系の問題を引き起こします。",
+        "prevention": "予防接種。"
       },
       "dis_ped": {
-        "name": "Porcine Epidemic Diarrhea (PED)",
+        "name": "豚流行性下痢 (PED)",
         "scientificName": "Coronavirus",
-        "description": "Similar to TGE, highly fatal to neonates.",
-        "prevention": "Strict biosecurity."
+        "description": "TGE と同様、新生児にとって非常に致死的です。",
+        "prevention": "厳格なバイオセキュリティ。"
       },
       "dis_je": {
-        "name": "Japanese Encephalitis",
+        "name": "日本脳炎",
         "scientificName": "Flavivirus",
-        "description": "Mosquito-borne viral disease.",
-        "prevention": "Mosquito control and vaccination."
+        "description": "蚊が媒介するウイルス性疾患。",
+        "prevention": "蚊の駆除とワクチン接種。"
       },
       "dis_rabies": {
-        "name": "Rabies",
+        "name": "狂犬病",
         "scientificName": "Lyssavirus",
-        "description": "Fatal viral disease usually from bites.",
-        "prevention": "Vaccination of pets and wildlife control."
+        "description": "通常、咬傷によって引き起こされる致死的なウイルス性疾患。",
+        "prevention": "ペットのワクチン接種と野生動物の駆除。"
       },
       "dis_pox": {
-        "name": "Swine Pox",
+        "name": "豚痘",
         "scientificName": "Suipoxvirus",
-        "description": "Viral skin disease, often spread by lice.",
-        "prevention": "Louse control."
+        "description": "ウイルス性皮膚疾患。シラミによって広がることが多い。",
+        "prevention": "シラミの制御。"
       },
       "dis_vs": {
-        "name": "Vesicular Stomatitis",
+        "name": "水疱性口内炎",
         "scientificName": "Rhabdovirus",
-        "description": "Causes blisters; looks like FMD.",
-        "prevention": "Insect control and quarantine."
+        "description": "水疱を引き起こす。口蹄疫のようです。",
+        "prevention": "昆虫の防除と検疫。"
       },
       "dis_clostridial": {
-        "name": "Clostridial Enteritis",
+        "name": "クロストリジウム性腸炎",
         "scientificName": "Clostridium perfringens",
-        "description": "Bacterial infection causing severe gut damage.",
-        "prevention": "Vaccination of sows and hygiene."
+        "description": "重度の腸損傷を引き起こす細菌感染。",
+        "prevention": "雌豚のワクチン接種と衛生管理。"
       },
       "dis_glassers": {
-        "name": "Glasser's Disease",
+        "name": "グラッサー病",
         "scientificName": "Haemophilus parasuis",
-        "description": "Causes inflammation of membranes around heart, lungs, joints.",
-        "prevention": "Antibiotics and stress management."
+        "description": "心臓、肺、関節の周囲の膜に炎症を引き起こします。",
+        "prevention": "抗生物質とストレス管理。"
       },
       "dis_app": {
-        "name": "Actinobacillus Pleuropneumonia (APP)",
+        "name": "放線桿菌性肺炎球菌 (APP)",
         "scientificName": "A. pleuropneumoniae",
-        "description": "Severe bacterial pneumonia.",
-        "prevention": "Antibiotics and improved environment."
+        "description": "重度の細菌性肺炎。",
+        "prevention": "抗生物質と環境の改善。"
       },
       "dis_ileitis": {
-        "name": "Ileitis (Lawsonia)",
+        "name": "回腸炎（ローソニア感染症 / 増殖性腸炎）",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Bacterial infection of the small intestine.",
-        "prevention": "Vaccination and antibiotics."
+        "description": "小腸の細菌感染症。",
+        "prevention": "ワクチン接種と抗生物質。"
       },
       "dis_tb": {
-        "name": "Tuberculosis",
+        "name": "結核",
         "scientificName": "Mycobacterium avium",
-        "description": "Chronic bacterial disease.",
-        "prevention": "Bird proofing and sanitation."
+        "description": "慢性細菌性疾患。",
+        "prevention": "防鳥と衛生管理。"
       },
       "dis_tetanus": {
-        "name": "Tetanus",
+        "name": "破傷風",
         "scientificName": "Clostridium tetani",
-        "description": "Bacterial toxin affecting the nervous system.",
-        "prevention": "Sanitation during surgery/castration."
+        "description": "神経系に影響を与える細菌毒素。",
+        "prevention": "手術・去勢時の衛生管理。"
       },
       "dis_eperythrozoonosis": {
-        "name": "Eperythrozoonosis",
+        "name": "人獣共通感染症",
         "scientificName": "Mycoplasma suis",
-        "description": "Blood parasite causing anemia.",
-        "prevention": "Insect control and clean needles."
+        "description": "貧血を引き起こす血液寄生虫。",
+        "prevention": "虫よけと清潔な針。"
       },
       "dis_ascaris": {
-        "name": "Ascaris suum",
+        "name": "豚回虫症",
         "scientificName": "Large Roundworm",
-        "description": "Internal parasite causing lung and liver damage.",
-        "prevention": "Regular deworming."
+        "description": "肺や肝臓に障害を引き起こす内部寄生虫。",
+        "prevention": "定期的な駆虫。"
       },
       "dis_whipworms": {
-        "name": "Whipworms",
+        "name": "鞭虫",
         "scientificName": "Trichuris suis",
-        "description": "Internal parasite in the large intestine.",
-        "prevention": "Deworming and sanitation."
+        "description": "大腸の内部寄生虫。",
+        "prevention": "駆虫と衛生管理。"
       },
       "dis_lungworms": {
-        "name": "Lungworms",
+        "name": "肺虫",
         "scientificName": "Metastrongylus spp.",
-        "description": "Internal parasite of the lungs.",
-        "prevention": "Earthworm control and deworming."
+        "description": "肺の内部寄生虫。",
+        "prevention": "ミミズの駆除と駆虫。"
       },
       "dis_kidney_worms": {
-        "name": "Kidney Worms",
+        "name": "腎臓虫",
         "scientificName": "Stephanurus dentatus",
-        "description": "Internal parasite affecting kidneys and liver.",
-        "prevention": "Management and hygiene."
+        "description": "腎臓や肝臓に影響を及ぼす内部寄生虫。",
+        "prevention": "管理と衛生管理。"
       },
       "dis_lice": {
-        "name": "Swine Lice",
+        "name": "ブタシラミ",
         "scientificName": "Haematopinus suis",
-        "description": "External parasite sucking blood.",
-        "prevention": "Insecticide treatment."
+        "description": "血を吸う外部寄生虫。",
+        "prevention": "殺虫処理。"
       },
       "dis_ringworm": {
-        "name": "Ringworm",
+        "name": "白癬",
         "scientificName": "Dermatophytosis",
-        "description": "Fungal skin infection.",
-        "prevention": "Sanitation and topical treatment."
+        "description": "真菌性皮膚感染症。",
+        "prevention": "衛生と局所治療。"
       },
       "dis_mulberry_heart": {
-        "name": "Mulberry Heart Disease",
+        "name": "マルベリーハート病（ビタミンE・セレン欠乏症）",
         "scientificName": "Vit E/Se Deficiency",
-        "description": "Nutritional deficiency affecting the heart.",
-        "prevention": "Supplementation."
+        "description": "心臓に影響を与える栄養不足。",
+        "prevention": "補足。"
       },
       "dis_vit_a": {
-        "name": "Vitamin A Deficiency",
+        "name": "ビタミンA欠乏症",
         "scientificName": "Vitamin A Deficiency",
-        "description": "Nutritional deficiency.",
-        "prevention": "Dietary adjustment."
+        "description": "栄養不足。",
+        "prevention": "食事の調整。"
       },
       "dis_rickets": {
-        "name": "Rickets",
+        "name": "くる病（カルシウム・リン欠乏症）",
         "scientificName": "Vit D/Ca/P Deficiency",
-        "description": "Nutritional deficiency affecting bone growth.",
-        "prevention": "Balanced minerals and sunlight."
+        "description": "骨の成長に影響を与える栄養不足。",
+        "prevention": "バランスのとれたミネラルと太陽の光。"
       },
       "dis_salt_poisoning": {
-        "name": "Salt Poisoning",
+        "name": "食塩中毒（水制限症候群）",
         "scientificName": "Water Deprivation",
-        "description": "Caused by lack of water followed by over-consumption.",
-        "prevention": "Constant fresh water access."
+        "description": "水分不足と過剰摂取が原因。",
+        "prevention": "常に新鮮な水にアクセスできます。"
       },
       "dis_heat_stroke": {
-        "name": "Heat Stroke",
+        "name": "熱中症",
         "scientificName": "Heat Stroke",
-        "description": "Overheating due to poor ventilation or shade.",
-        "prevention": "Ventilation, cooling, and shade."
+        "description": "風通しが悪かったり、日陰にあると過熱します。",
+        "prevention": "換気、冷却、日陰。"
       },
       "dis_rectal_prolapse": {
-        "name": "Rectal Prolapse",
+        "name": "直腸脱（脱腸）",
         "scientificName": "Rectal Prolapse",
-        "description": "Often follows coughing, diarrhea, or cold stress.",
-        "prevention": "Address primary cause and surgery."
+        "description": "多くの場合、咳、下痢、または寒さによるストレスの後に起こります。",
+        "prevention": "主な原因と手術に対処します。"
       },
       "dis_umbilical_hernia": {
-        "name": "Umbilical Hernia",
+        "name": "臍ヘルニア",
         "scientificName": "Umbilical Hernia",
-        "description": "Developmental defect or navel infection.",
-        "prevention": "Sanitation and genetics."
+        "description": "発達障害またはへその感染症。",
+        "prevention": "衛生と遺伝学。"
       },
       "dis_scrotal_hernia": {
-        "name": "Scrotal Hernia",
+        "name": "陰嚢ヘルニア",
         "scientificName": "Scrotal Hernia",
-        "description": "Genetic developmental defect.",
-        "prevention": "Genetics and surgical repair."
+        "description": "遺伝的発達障害。",
+        "prevention": "遺伝学と外科的修復。"
       },
       "dis_splayleg": {
-        "name": "Splayleg",
+        "name": "開脚症（スプレーレッグ）",
         "scientificName": "Myofibrillar hypoplasia",
-        "description": "Piglets born unable to stand with hind legs.",
-        "prevention": "Taping legs and floor traction."
+        "description": "生まれつき後ろ足で立つことができない子豚。",
+        "prevention": "脚と床のトラクションをテーピングします。"
       },
       "dis_vulvovaginitis": {
-        "name": "Vulvovaginitis",
+        "name": "外陰膣炎",
         "scientificName": "Zearalenone Toxicity",
-        "description": "Caused by estrogenic fungal toxins in feed.",
-        "prevention": "Change feed source."
+        "description": "飼料中のエストロゲン性真菌毒素によって引き起こされます。",
+        "prevention": "フィードソースを変更します。"
       },
       "dis_seneca": {
-        "name": "Seneca Valley Virus (SVV)",
+        "name": "セネカバレーウイルス (SVV)",
         "scientificName": "Senecavirus A",
-        "description": "Causes blisters similar to FMD.",
-        "prevention": "Biosecurity and diagnosis."
+        "description": "口蹄疫と同様の水疱を引き起こします。",
+        "prevention": "バイオセキュリティと診断。"
       },
       "dis_deltacoronavirus": {
-        "name": "Porcine Deltacoronavirus",
+        "name": "ブタデルタコロナウイルス",
         "scientificName": "PDCoV",
-        "description": "Viral diarrhea in all ages.",
-        "prevention": "Biosecurity."
+        "description": "あらゆる年齢層におけるウイルス性下痢。",
+        "prevention": "バイオセキュリティ。"
       },
       "dis_rotavirus": {
-        "name": "Rotavirus Diarrhea",
+        "name": "ロタウイルス下痢症",
         "scientificName": "Rotavirus",
-        "description": "Common cause of weaning diarrhea.",
-        "prevention": "Vaccination and hygiene."
+        "description": "離乳期の下痢の一般的な原因。",
+        "prevention": "予防接種と衛生。"
       },
       "dis_teschen": {
-        "name": "Teschen/Talfan Disease",
+        "name": "テッシェン/タルファン病",
         "scientificName": "Sapelovirus/Teschovirus",
-        "description": "Viral infection of the nervous system.",
-        "prevention": "Biosecurity."
+        "description": "神経系のウイルス感染。",
+        "prevention": "バイオセキュリティ。"
       },
       "dis_vesicular": {
-        "name": "Swine Vesicular Disease",
+        "name": "ブタ水疱症",
         "scientificName": "Enterovirus",
-        "description": "Viral disease mimicking FMD.",
-        "prevention": "Strict quarantine."
+        "description": "口蹄疫に似たウイルス性疾患。",
+        "prevention": "厳格な検疫。"
       },
       "dis_melioidosis": {
-        "name": "Melioidosis",
+        "name": "メリイド症",
         "scientificName": "Burkholderia pseudomallei",
-        "description": "Bacterial disease from soil/water.",
-        "prevention": "Clean water and hygiene."
+        "description": "土壌/水からの細菌性疾患。",
+        "prevention": "きれいな水と衛生。"
       },
       "dis_trypanosomiasis": {
-        "name": "Trypanosomiasis",
+        "name": "トリパノソーマ症",
         "scientificName": "Trypanosoma spp.",
-        "description": "Protozoan disease spread by tsetse flies.",
-        "prevention": "Fly control and medication."
+        "description": "ツェツェバエによって広がる原虫病。",
+        "prevention": "ハエ駆除と投薬。"
       },
       "dis_cysticercosis": {
-        "name": "Cysticercosis",
+        "name": "嚢虫症",
         "scientificName": "Taenia solium larvae",
-        "description": "Larval stage of human tapeworm in pig muscle.",
-        "prevention": "Prevent access to human waste."
+        "description": "ブタの筋肉におけるヒトサナダムシの幼虫期。",
+        "prevention": "人間の排泄物へのアクセスを防ぎます。"
       },
       "dis_toxoplasmosis": {
-        "name": "Toxoplasmosis",
+        "name": "トキソプラズマ症",
         "scientificName": "Toxoplasma gondii",
-        "description": "Zoonotic protozoan infection.",
-        "prevention": "Cat control and biosecurity."
+        "description": "人獣共通感染症原虫感染症。",
+        "prevention": "猫の駆除とバイオセキュリティ。"
       },
       "dis_listeriosis": {
-        "name": "Listeriosis",
+        "name": "リステリア症",
         "scientificName": "Listeria monocytogenes",
-        "description": "Bacterial infection of nervous system.",
-        "prevention": "Sanitation and feed hygiene."
+        "description": "神経系の細菌感染症。",
+        "prevention": "衛生と飼料の衛生。"
       },
       "dis_ear_necrosis": {
-        "name": "Ear Necrosis",
+        "name": "耳壊死",
         "scientificName": "Ear Necrosis",
-        "description": "Often caused by stress, overcrowding, or infection.",
-        "prevention": "Reduce density and treat secondary infection."
+        "description": "多くの場合、ストレス、過密状態、または感染によって引き起こされます。",
+        "prevention": "密度を減らし、二次感染を治療します。"
       },
       "dis_sunburn": {
-        "name": "Sunburn",
+        "name": "日焼け",
         "scientificName": "Solar dermatitis",
-        "description": "Affects white-skinned pigs outdoors.",
-        "prevention": "Provide shade."
+        "description": "屋外の白い肌の豚に影響を与えます。",
+        "prevention": "日陰を提供します。"
       },
       "dis_tail_biting": {
-        "name": "Tail Biting",
+        "name": "尾かじり（共食い）",
         "scientificName": "Behavioral stress",
-        "description": "Behavioral issue due to stress/boredom.",
-        "prevention": "Reduce stress and enrich environment."
+        "description": "ストレス/退屈による行動上の問題。",
+        "prevention": "ストレスを軽減し、環境を豊かにします。"
       },
       "dis_navel_ill": {
-        "name": "Navel Ill",
+        "name": "へその病気",
         "scientificName": "Navel Infection",
-        "description": "Infection of the umbilical cord at birth.",
-        "prevention": "Iodine dip at birth and sanitation."
+        "description": "出生時のへその緒の感染。",
+        "prevention": "出生時のヨウ素浸漬と衛生管理。"
       },
       "dis_iron_toxicity": {
-        "name": "Iron Toxicity",
+        "name": "鉄の毒性",
         "scientificName": "Ferrous excess",
-        "description": "Excess iron administration leading to sudden death.",
-        "prevention": "Inject accurate dosage."
+        "description": "ビタミンE欠乏の子豚に鉄分を注射すると発生する可能性があります。",
+        "prevention": "雌豚の食事がバランスのとれたものであることを確認してください。"
       },
       "dis_aflatoxicosis": {
-        "name": "Aflatoxicosis",
+        "name": "アフラト中毒症",
         "scientificName": "Aspergillus flavus toxin",
-        "description": "Fungal toxin poisoning.",
-        "prevention": "Avoid moldy feed and use toxin binders."
+        "description": "カビの生えた穀物や飼料による毒素中毒で、肝臓障害や黄疸を引き起こします。",
+        "prevention": "カビの生えた飼料を与えることを避け、穀物を乾燥した状態で保管し、毒素結合剤を使用してください。"
       },
       "dis_parakeratosis": {
-        "name": "Parakeratosis",
+        "name": "不全角化症（亜鉛欠乏症）",
         "scientificName": "Zinc deficiency",
-        "description": "Zinc deficiency in swine.",
-        "prevention": "Ensure adequate zinc levels in diet."
+        "description": "重度の痂皮状の肥厚した皮膚病変を引き起こす栄養性疾患。",
+        "prevention": "飼料中のカルシウムと亜鉛のバランスの取れた比率を確保し、亜鉛のサプリメントを与えてください。"
       },
       "dis_biotin_deficiency": {
-        "name": "Biotin Deficiency",
+        "name": "ビオチン欠乏症",
         "scientificName": "Vitamin H deficiency",
-        "description": "Biotin deficiency in swine.",
-        "prevention": "Provide biotin supplements."
+        "description": "ひび割れ、皮膚病変、跛行を引き起こす栄養不足。",
+        "prevention": "食事にビオチンを補給し、ザラザラした濡れたコンクリートの床を避けてください。"
       },
       "dis_gossypol_toxicity": {
-        "name": "Gossypol Toxicity",
+        "name": "ゴシポールの毒性",
         "scientificName": "Gossypol poisoning",
-        "description": "Cottonseed meal poisoning.",
-        "prevention": "Limit raw cottonseed meal in feed."
+        "description": "生の綿実粕または過剰な綿実粕を与えると中毒を起こし、呼吸困難を引き起こします。",
+        "prevention": "食事中の綿実粕を制限し、ゴシポールを中和するために硫酸鉄を使用します。"
       },
       "dis_cassava_poisoning": {
-        "name": "Cassava Poisoning",
+        "name": "キャッサバ中毒",
         "scientificName": "Cyanogenic glycosides",
-        "description": "Cyanide poisoning from raw cassava.",
-        "prevention": "Cook or ferment cassava before feeding."
+        "description": "生または不適切に加工されたキャッサバの根または皮によるシアン化物中毒。",
+        "prevention": "キャッサバは、皮をむくか、茹でるか、天日干しするか、発酵させてから与えてください。"
       },
       "dis_sweet_potato_toxicity": {
-        "name": "Sweet Potato Toxicity",
+        "name": "サツマイモの毒性",
         "scientificName": "Ipomeamarone toxicity",
-        "description": "Ipomeamarone poisoning.",
-        "prevention": "Do not feed moldy or damaged sweet potatoes."
+        "description": "カビの生えたサツマイモによる中毒で、重度の呼吸困難を引き起こします。",
+        "prevention": "傷んだりカビが生えたサツマイモは捨ててください。健康な塊茎のみを与えてください。"
       },
       "dis_mma": {
-        "name": "MMA Syndrome",
+        "name": "産後異音障害（MMA）",
         "scientificName": "Mastitis-Metritis-Agalactia",
-        "description": "Post-farrowing infection in sows.",
-        "prevention": "Clean farrowing pens and proper nutrition."
+        "description": "乳腺炎、子宮炎、無乳炎は、分娩後の雌豚に発熱と乳汁不足を引き起こします。",
+        "prevention": "分娩舎の衛生状態を厳格に維持し、母豚に十分な栄養を確保してください。"
       },
       "dis_pwd": {
-        "name": "Post-Weaning Diarrhea",
+        "name": "離乳後下痢 (PWD)",
         "scientificName": "Escherichia coli (F4/F18)",
-        "description": "Colibacillosis in weaned pigs.",
-        "prevention": "Sanitation and diet adjustment."
+        "description": "離乳直後の子豚の細菌性下痢は脱水症状を引き起こします。",
+        "prevention": "離乳時のストレスを軽減し、高い衛生状態を維持し、きれいな飲料水を提供します。"
       },
       "dis_trichinellosis": {
-        "name": "Trichinellosis",
+        "name": "旋毛虫症（トリヒナ症）",
         "scientificName": "Trichinella spiralis",
-        "description": "Zoonotic parasitic infection.",
-        "prevention": "Do not feed raw garbage; pest control."
+        "description": "生の肉の残骸を食べることによって引き起こされる人獣共通感染症の寄生虫症で、筋肉の硬直を引き起こします。",
+        "prevention": "生のスウィルを与えず、生ゴミを30分間煮沸し、げっ歯類を駆除してください。"
       },
       "dis_hydatid_disease": {
-        "name": "Hydatid Disease",
+        "name": "包虫症（エキノコックス症）",
         "scientificName": "Echinococcus granulosus",
-        "description": "Larval tapeworm infection.",
-        "prevention": "Deworm farm dogs; prevent access to offal."
+        "description": "臓器内に液体で満たされた嚢胞を引き起こす寄生虫感染症。",
+        "prevention": "農場の犬を定期的に駆虫し、生の豚の臓器を食べないようにしましょう。"
       },
       "dis_phe": {
-        "name": "Proliferative Hemorrhagic Enteropathy",
+        "name": "豚出血性腸症",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Acute intestinal bleeding in young adult pigs.",
-        "prevention": "Vaccination and hygiene."
+        "description": "生産者/仕上げ豚の急性血性下痢と突然死。",
+        "prevention": "良好な衛生状態を維持し、獣医師の指導の下で適切な抗生物質を使用してください。"
       },
       "dis_mycoplasma_arthritis": {
-        "name": "Mycoplasma Arthritis",
+        "name": "マイコプラズマ性関節炎",
         "scientificName": "Mycoplasma hyosynoviae",
-        "description": "Bacterial joint disease.",
-        "prevention": "Sanitation and quarantine."
+        "description": "関節の腫れ、跛行、足の脱力を引き起こす細菌感染。",
+        "prevention": "住宅環境を改善し、飼育密度を減らし、早期に治療する。"
       },
       "dis_foot_rot": {
-        "name": "Foot Rot",
+        "name": "足腐れ病（壊死桿菌症）",
         "scientificName": "Fusobacterium necrophorum",
-        "description": "Infection of the foot causing lameness.",
-        "prevention": "Keep pens dry; treat hooves."
+        "description": "蹄の傷口に細菌が感染し、腐敗や跛行を引き起こします。",
+        "prevention": "粗いコンクリートを修復し、床を乾いた状態に保ち、必要に応じて足湯を使用します。"
       },
       "dis_babesiosis": {
-        "name": "Babesiosis",
+        "name": "ダニ媒介バベシア症",
         "scientificName": "Babesia trautmanni",
-        "description": "Tick-borne protozoan infection.",
-        "prevention": "Acaricide spray for tick control."
+        "description": "マダニが媒介する血液寄生虫で、高熱、貧血、暗色尿を引き起こします。",
+        "prevention": "殺ダニ剤を使用してダニを駆除し、囲いに植物が生えないようにします。"
       },
       "dis_anaplasmosis": {
-        "name": "Anaplasmosis",
+        "name": "アナプラズマ症",
         "scientificName": "Anaplasma marginale",
-        "description": "Blood infection in swine.",
-        "prevention": "Vector control."
+        "description": "貧血、発熱、黄疸を引き起こすダニ媒介細菌感染症。",
+        "prevention": "ベクターおよびティック制御プログラムを実装します。"
       },
       "dis_sow_hysteria": {
-        "name": "Sow Hysteria",
+        "name": "雌豚ヒステリー",
         "scientificName": "Puerperal psychosis",
-        "description": "Aggression or panic in sows after farrowing.",
-        "prevention": "Provide quiet farrowing area."
+        "description": "分娩中の雌豚が攻撃的になり、子豚に噛みつく行動障害。",
+        "prevention": "静かな分娩環境を提供し、未経産雌豚を監視し、必要に応じて鎮静剤を使用します。"
       },
       "dis_thorny_headed_worm": {
-        "name": "Thorny-Headed Worm",
+        "name": "トゲトゲのワーム",
         "scientificName": "Macracanthorhynchus hirudinaceus",
-        "description": "Intestinal parasite.",
-        "prevention": "Prevent access to June beetle grubs."
+        "description": "カブトムシを食べることによって得られる寄生虫で、腸穿孔を引き起こします。",
+        "prevention": "カブトムシが蔓延する土壌での放し飼いは避け、駆虫剤を使用してください。"
       },
       "dis_strongyloidiasis": {
-        "name": "Strongyloidiasis",
+        "name": "線虫症（糸虫症）",
         "scientificName": "Strongyloides ransomi",
-        "description": "Threadworm infection.",
-        "prevention": "Keep pens dry; deworming."
+        "description": "腸糸状虫は重度の下痢を引き起こし、子豚に死亡をもたらします。",
+        "prevention": "分娩箱は乾燥した清潔な状態に保ち、分娩前に雌豚の駆虫を行ってください。"
       },
       "dis_hyostrongylosis": {
-        "name": "Red Stomach Worm",
+        "name": "赤い胃の虫",
         "scientificName": "Hyostrongylus rubidus",
-        "description": "Intestinal worm in grazing pigs.",
-        "prevention": "Clean pasture management; deworming."
+        "description": "胃炎、貧血、体重減少を引き起こす胃虫感染症。",
+        "prevention": "牧草地をローテーションし、住居を乾燥した状態に保ち、駆虫スケジュールを実行します。"
       },
       "dis_oesophagostomiasis": {
-        "name": "Nodular Worm",
+        "name": "結節性ワーム感染症",
         "scientificName": "Oesophagostomum spp.",
-        "description": "Intestinal worm in swine.",
-        "prevention": "Deworming and sanitation."
+        "description": "腸内寄生虫は腸壁に結節を引き起こし、雌豚の痩せにつながります。",
+        "prevention": "定期的な小屋の衛生管理と、広範囲の駆虫薬の日常的な使用。"
       },
       "dis_fascioliasis": {
-        "name": "Fascioliasis",
+        "name": "筋膜症（肝吸虫）",
         "scientificName": "Fasciola gigantica",
-        "description": "Liver fluke infection.",
-        "prevention": "Snail control; keep away from wet pastures."
+        "description": "肝臓に影響を与える寄生虫。湿った牧草地や湿地の牧草地によく見られます。",
+        "prevention": "湿地帯で豚が放牧されるのを防ぎ、カタツムリを防除します。"
       },
       "dis_emcv": {
-        "name": "EMCV",
+        "name": "脳心筋炎（EMCV）",
         "scientificName": "Cardiovirus",
-        "description": "Viral myocarditis and reproductive failure.",
-        "prevention": "Rodent control (rodents spread EMCV)."
+        "description": "げっ歯類媒介ウイルス感染症は、突然の心不全や中絶を引き起こします。",
+        "prevention": "厳格なげっ歯類管理を実施し、飼料を汚染から守ります。"
       },
       "dis_demodectic_mange": {
-        "name": "Demodectic Mange",
+        "name": "ニキビダニ症",
         "scientificName": "Demodex phylloides",
-        "description": "Skin mite infection.",
-        "prevention": "Acaricide treatment."
+        "description": "鱗片状の斑点や小さな膿疱を引き起こす微細な皮膚ダニ。",
+        "prevention": "群れの栄養状態を改善し、影響を受けた豚を隔離し、殺ダニ剤を散布します。"
       },
       "dis_pityriasis_rosea": {
-        "name": "Pityriasis Rosea",
+        "name": "ばら色粃糠疹",
         "scientificName": "Pseudo-ringworm",
-        "description": "Non-contagious skin condition.",
-        "prevention": "Spontaneous recovery; keep environment clean."
+        "description": "リング状の痂皮を形成する若い豚の非伝染性皮膚疾患。",
+        "prevention": "通常は自己解決します。寝具を清潔で乾燥した状態に保ち、ストレスを軽減します。"
       },
       "dis_photosensitization": {
-        "name": "Photosensitization",
+        "name": "光感作",
         "scientificName": "Solar dermatitis",
-        "description": "Skin hypersensitivity to sunlight.",
-        "prevention": "Keep out of direct sunlight; check pasture plants."
+        "description": "特定の植物を食べた後の肌の色が白い豚に起こる重度の日焼けのような反応。",
+        "prevention": "日陰を作り、感作性の雑草を取り除き、豚を屋内に保管します。"
       },
       "dis_shoulder_ulcers": {
-        "name": "Shoulder Ulcers",
+        "name": "雌豚の肩潰瘍",
         "scientificName": "Decubitus ulcers",
-        "description": "Sores in thin sows on hard floors.",
-        "prevention": "Provide soft bedding; increase feed."
+        "description": "硬いコンクリートの上で飼育されている痩せた雌豚の肩に褥瘡。",
+        "prevention": "柔らかい寝具を提供し、雌豚の体調を良好に保ち、ゴム製マットを使用してください。"
       },
       "dis_ear_biting": {
-        "name": "Ear Biting",
+        "name": "耳の共食い",
         "scientificName": "Stress response behavior",
-        "description": "Behavioral stress response.",
-        "prevention": "Reduce stocking density; enrich environment."
+        "description": "ブタがペンメイトの耳を噛み、壊死を引き起こす異常行動。",
+        "prevention": "混雑を軽減し、換気を改善し、チェーン店のような充実感を提供します。"
       },
       "dis_gastric_torsion": {
-        "name": "Gastric Torsion",
+        "name": "胃捻転（膨満）",
         "scientificName": "Gastric dilation-volvulus",
-        "description": "Twisted stomach.",
-        "prevention": "Avoid overfeeding in single meals."
+        "description": "突然の腹部膨満とねじれにより、急速な死につながります。",
+        "prevention": "長期間の絶食後に大量の食事を与えることは避け、毎日の食事を何回かに分けて与えてください。"
       },
       "dis_c_difficile": {
-        "name": "C. difficile Infection",
+        "name": "クロストリジウム・ディフィシル（CDI）",
         "scientificName": "Clostridioides difficile",
-        "description": "Bacterial diarrhea in piglets.",
-        "prevention": "Clean environment and proper ventilation."
+        "description": "生まれたばかりの子豚の細菌感染により、水様性の下痢や膨満感が引き起こされます。",
+        "prevention": "分娩舎を徹底的に洗浄および消毒し、早期の初乳を確保します。"
       },
       "dis_cold_stress": {
-        "name": "Cold Stress",
+        "name": "寒冷ストレス（低体温症）",
         "scientificName": "Hypothermia susceptibility",
-        "description": "Chilling in young piglets.",
-        "prevention": "Provide heat lamps and dry bedding."
+        "description": "子豚の体がひどく冷えて震えが起こり、死亡率が高くなります。",
+        "prevention": "加熱ランプ、クリープボックスを用意し、分娩エリアを乾燥した、隙間風がない状態に保ちます。"
       },
       "dis_necrotic_enteritis": {
-        "name": "Necrotic Enteritis",
+        "name": "壊死性腸炎",
         "scientificName": "Clostridium perfringens Type C",
-        "description": "Clostridial gut infection.",
-        "prevention": "Sow vaccination and pen sanitation."
+        "description": "子豚に重度の血性下痢と高い死亡率を引き起こす細菌毒素疾患。",
+        "prevention": "分娩前に雌豚にワクチンを接種し、囲いの絶対的な衛生状態を維持します。"
       },
       "dis_navel_bleeding": {
-        "name": "Navel Bleeding",
+        "name": "へその出血",
         "scientificName": "Umbilical hemorrhage",
-        "description": "Hemorrhage from umbilical cord.",
-        "prevention": "Tie off bleeding navels; check feed vitamin K."
+        "description": "生まれたばかりの子豚のへその緒からの過剰な出血。",
+        "prevention": "出生時にはへその緒を結び、マイコトキシンに汚染された飼料を雌豚に与えないようにしてください。"
       },
       "dis_spirochetal_colitis": {
-        "name": "Spirochetal Colitis",
+        "name": "豚スピロヘータ大腸炎",
         "scientificName": "Brachyspira pilosicoli",
-        "description": "Bacterial large intestine infection.",
-        "prevention": "Medication and pen sanitation."
+        "description": "成長期の豚における軽度の下痢性疾患で、体重増加不良を引き起こします。",
+        "prevention": "餌入れを消毒し、感染した豚を抗生物質で治療します。"
       },
       "dis_salmonella_septicemia": {
-        "name": "Salmonella Septicemia",
+        "name": "サルモネラ敗血症",
         "scientificName": "Salmonella choleraesuis",
-        "description": "Blood infection from Salmonella.",
-        "prevention": "Clean water; biosecurity."
+        "description": "重度の血流サルモネラ感染症により、皮膚が紫色になり急速に死に至る。",
+        "prevention": "病気の豚を隔離し、水を治療し、厳格なバイオセキュリティを維持します。"
       },
       "dis_prdc": {
-        "name": "PRDC",
+        "name": "豚呼吸器疾患複合体",
         "scientificName": "Porcine Respiratory Disease Complex",
-        "description": "Respiratory complex in grower pigs.",
-        "prevention": "Ventilation, vaccination, and density control."
+        "description": "咳や成長不良を引き起こすウイルスと細菌の混合呼吸器感染症。",
+        "prevention": "換気を改善し、過密を避け、一次ウイルスを制御します。"
       },
       "dis_ergotism": {
-        "name": "Ergotism",
+        "name": "麦角中毒（麦角症）",
         "scientificName": "Claviceps purpurea",
-        "description": "Poisoning from moldy rye/grains.",
-        "prevention": "Inspect feed grains for black ergot bodies."
+        "description": "麦角に感染した穀物による真菌中毒で、組織壊死を引き起こします。",
+        "prevention": "穀物をふるい分けして黒っぽい麦角体を除去し、汚染された飼料を置き換えます。"
       },
       "dis_bvdv_pig": {
-        "name": "BVDV in Pigs",
+        "name": "豚のBVDV感染症",
         "scientificName": "Pestivirus",
-        "description": "Bovine Viral Diarrhea virus in swine.",
-        "prevention": "Isolate pigs from cattle."
+        "description": "ウシウイルス 牛との接触により下痢ウイルスに感染し、流産を引き起こします。",
+        "prevention": "豚を牛や羊から隔離し、異種間の接触を制限してください。"
       },
       "dis_endocarditis": {
-        "name": "Endocarditis",
+        "name": "細菌性心内膜炎",
         "scientificName": "Streptococcal endocarditis",
-        "description": "Heart valve infection.",
-        "prevention": "Treat primary infections early."
+        "description": "ストレス時の心不全や突然死を引き起こす心臓弁感染症。",
+        "prevention": "関節の病気や傷を迅速に治療し、影響を受けやすい遺伝的要因を排除します。"
       },
       "dis_polyserositis": {
-        "name": "Polyserositis",
+        "name": "マイコプラズマ多発性漿膜炎",
         "scientificName": "Mycoplasma hyorhinis",
-        "description": "Infection of body cavity linings.",
-        "prevention": "Antibiotic treatment; minimize stress."
+        "description": "離乳期の肺、心臓、関節表面の線維性炎症。",
+        "prevention": "離乳時のストレスを最小限に抑え、猫砂の混合を避け、適切に換気してください。"
       },
       "dis_congenital_tremor": {
-        "name": "Congenital Tremor",
+        "name": "先天性振戦",
         "scientificName": "Atypical Porcine Pestivirus",
-        "description": "Shaky pig disease.",
-        "prevention": "Acclimatize gilts to farm before breeding."
+        "description": "生まれたばかりの子豚に激しい震えを引き起こす神経疾患。",
+        "prevention": "影響を受けた雄豚の精液の使用を避け、妊娠中の雌豚のストレスを最小限に抑えます。"
       }
     },
     "diagnosisMatches": "Clinical Diagnosis Matches",
@@ -1535,7 +1541,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 EMERGENCY BIOSECURITY PROTOCOL:",
     "clinicalDiagnosisMatches": "臨床診断の一致",
     "hallmarkBadge": "特異的徴候",
-    "hallmarkSignPresent": "ホールマークサインあり: %1$s",
+    "hallmarkSignPresent": "ホールマークサインあり: {sign}",
     "otherSignsWatch": "注意すべきその他の兆候:",
     "preventionTreatmentLabel": "予防/治療: {treatment}",
     "bio_proto_asf": "IMMEDIATE EMERGENCY QUARANTINE: African Swine Fever is a lethal, legally notifiable virus. 1) Lock down farm gates immediately. 2) Stop all movement of pigs, vehicles, feed, and manure. 3) Disinfect all boot baths and tyres with Virkon S or 2% caustic soda. 4) Contact your District/National Veterinary Officer immediately.",
@@ -1547,8 +1553,8 @@
     "bio_proto_vesicular_stomatitis": "REPORTABLE VESICULAR LESION ALERT: Vesicular Stomatitis is clinically indistinguishable from Foot and Mouth Disease. 1) Isolate infected pigs immediately. 2) Wear protective gloves. 3) Report to state veterinarian for lab differential diagnosis.",
     "bio_proto_senecavirus": "REPORTABLE VESICULAR DISEASE: Senecavirus A lesions are clinically indistinguishable from Foot and Mouth Disease (FMD). 1) Quarantine pen immediately. 2) Restrict off-farm movement. 3) Notify livestock veterinary authorities for mandatory differential PCR testing.",
     "bio_proto_svd": "REPORTABLE VESICULAR DISEASE: Swine Vesicular Disease (SVD). 1) Strict isolation of infected animals. 2) Restrict all vehicle and visitor movements. 3) Report to state animal health department immediately.",
-    "clinicalMatchPercent": "%1$d%% クリニカルマッチ",
-    "matchedSignsCount": "{total}$d 件中 {matched}$d 件の標識",
+    "clinicalMatchPercent": "{percent}% クリニカルマッチ",
+    "matchedSignsCount": "{total} 件中 {matched} 件の標識",
     "matchPercentSuffix": "({percent}% match)"
   },
   "HR": {
@@ -1983,7 +1989,7 @@
     "snooze1Month": "1ヶ月",
     "deleteNotificationQuestion": "通知を削除しますか?",
     "deleteNotificationConfirm": "この通知を削除してもよろしいですか?",
-    "lastWeighedDaysAgo": "豚 #%1$s: 最後に体重を測定したのは %2$s 日前です",
+    "lastWeighedDaysAgo": "豚 #{tag}: 最後に体重を測定したのは {days} 日前です",
     "stockLeftMinFormat": "{current}: 残り {unit} kg (最小: {min} kg)",
     "pigs": "豚",
     "pig": "豚",

@@ -124,7 +124,13 @@
     "noActivities": "No upcoming activities",
     "allTasksCompleted": "All tasks are completed!",
     "generalTask": "General Task",
-    "language": "Language"
+    "language": "Language",
+    "feed": "Emmere y’emmere",
+    "inventory": "Inventory y’emmere y’ebisolo",
+    "calculator": "Bala emmere y'embizi",
+    "mixFeed": "Tabula emmere y'embizi",
+    "analyzeFeed": "Kebera ebirungo by'emmere",
+    "marketHub": "Ekifo ky'Akatale k'Embizi"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -866,664 +872,664 @@
     },
     "diseases": {
       "dis_asf": {
-        "name": "African Swine Fever (ASF)",
+        "name": "Omusujja gw’embizzi mu Afrika (ASF) .",
         "scientificName": "Asfivirus",
-        "description": "A highly contagious and deadly viral disease prevalent in West Africa. No vaccine exists.",
-        "prevention": "Strict biosecurity and restrict farm access."
+        "description": "Obulwadde bw’akawuka obusiigibwa ennyo era obutta abantu obubunye mu West Africa. Tewali ddagala ligema liriwo.",
+        "prevention": "Okunyweza obukuumi bw’ebiramu n’okukugira okutuuka ku faamu."
       },
       "dis_fmd": {
-        "name": "Foot and Mouth Disease (FMD)",
+        "name": "Obulwadde bw’ekigere n’akamwa (FMD) .",
         "scientificName": "Aphthovirus",
-        "description": "Viral disease causing blisters on the mouth and feet.",
-        "prevention": "Vaccination and movement control."
+        "description": "Obulwadde bw’akawuka obuvaako ebizimba ku kamwa n’ebigere.",
+        "prevention": "Okugema n’okufuga entambula."
       },
       "dis_prrs": {
-        "name": "PRRS (Blue Ear)",
+        "name": "PRRS (Okutu kwa Bbululu) .",
         "scientificName": "Arterivirus",
-        "description": "Causes respiratory failure and reproductive issues.",
-        "prevention": "Biosecurity and herd vaccination."
+        "description": "Kivaako okulemererwa okussa n’ensonga z’okuzaala.",
+        "prevention": "Biosecurity n’okugema ekisibo."
       },
       "dis_erysipelas": {
-        "name": "Swine Erysipelas",
+        "name": "Embizzi Erysipelas",
         "scientificName": "Erysipelothrix rhusiopathiae",
-        "description": "Bacterial infection causing distinct skin lesions and arthritis.",
-        "prevention": "Regular vaccination and pen hygiene."
+        "description": "Obulwadde bwa bakitiriya obuleeta ebiwundu eby’enjawulo ku lususu n’endwadde z’enkizi.",
+        "prevention": "Okugema buli kiseera n’obuyonjo bw’ekkalaamu."
       },
       "dis_csf": {
-        "name": "Classical Swine Fever",
+        "name": "Omusujja gw’embizzi ogw’edda",
         "scientificName": "Pestivirus",
-        "description": "Highly contagious viral disease similar to ASF.",
-        "prevention": "Vaccination and strict biosecurity."
+        "description": "Obulwadde bw’akawuka obusiigibwa ennyo obufaananako ne ASF.",
+        "prevention": "Okugema n’okukuuma ebiramu mu ngeri enkakali."
       },
       "dis_anthrax": {
-        "name": "Anthrax",
+        "name": "Obulwadde bwa Anthrax",
         "scientificName": "Bacillus anthracis",
-        "description": "Serious bacterial disease that can affect humans.",
-        "prevention": "Vaccination and avoid opening carcasses."
+        "description": "Obulwadde obw’amaanyi obuva ku bakitiriya obuyinza okukwata abantu.",
+        "prevention": "Okugema n’okwewala okuggulawo emirambo."
       },
       "dis_brucellosis": {
-        "name": "Brucellosis",
+        "name": "Obulwadde bwa Brucellosis",
         "scientificName": "Brucella suis",
-        "description": "Bacterial disease causing reproductive failure.",
-        "prevention": "Testing, culling, and sanitation."
+        "description": "Obulwadde bwa bakitiriya obuleeta okulemererwa okuzaala.",
+        "prevention": "Okugezesa, okutta, n’okuyonja."
       },
       "dis_coccidiosis": {
-        "name": "Coccidiosis",
+        "name": "Obulwadde bwa Coccidiosis",
         "scientificName": "Isospora suis",
-        "description": "Parasitic disease primarily affecting piglets.",
-        "prevention": "Farrowing pen hygiene."
+        "description": "Obulwadde obuva mu biwuka okusinga obukwata embizzi.",
+        "prevention": "Obuyonjo bw’ekkalaamu y’okuzaala."
       },
       "dis_pneumonia": {
-        "name": "Mycoplasmal Pneumonia",
+        "name": "Obulwadde bw’ekifuba obuyitibwa Mycoplasmal Pneumonia",
         "scientificName": "Mycoplasma hyopneumoniae",
-        "description": "Chronic respiratory disease leading to poor growth.",
-        "prevention": "Vaccination and improved ventilation."
+        "description": "Obulwadde bw’okussa obutawona obuvaako okukula obubi.",
+        "prevention": "Okugema n’okulongoosa empewo."
       },
       "dis_salmonellosis": {
-        "name": "Salmonellosis",
+        "name": "Obulwadde bwa Salmonellosis",
         "scientificName": "Salmonella typhimurium",
-        "description": "Bacterial infection causing severe gut issues.",
-        "prevention": "Clean water and hygiene."
+        "description": "Obulwadde bwa bakitiriya obuleeta ensonga ez’amaanyi mu byenda.",
+        "prevention": "Amazzi amayonjo n’obuyonjo."
       },
       "dis_ppv": {
-        "name": "Porcine Parvovirus (PPV)",
+        "name": "Akawuka k’embizzi (PPV) .",
         "scientificName": "Porcine Parvovirus",
-        "description": "Common cause of reproductive failure in gilts.",
-        "prevention": "Vaccination before breeding."
+        "description": "Ekitera okuvaako okulemererwa okuzaala mu gilts.",
+        "prevention": "Okugema nga tonnazaala."
       },
       "dis_rhinitis": {
-        "name": "Atrophic Rhinitis",
+        "name": "Obulwadde bw’enkizi obuyitibwa Atrophic Rhinitis",
         "scientificName": "Bordetella bronchiseptica",
-        "description": "Causes distortion of the snout and respiratory issues.",
-        "prevention": "Vaccination and air quality."
+        "description": "Avaako okukyusakyusa ennyindo n’ensonga z’okussa.",
+        "prevention": "Okugema n’omutindo gw’empewo."
       },
       "dis_leptospirosis": {
-        "name": "Leptospirosis",
+        "name": "Obulwadde bwa Leptospirosis",
         "scientificName": "Leptospira spp.",
-        "description": "Zoonotic bacterial disease affecting kidneys.",
-        "prevention": "Rodent control and vaccination."
+        "description": "Obulwadde bwa bakitiriya obuyitibwa Zoonotic bacterial disease obukosa ensigo.",
+        "prevention": "Okufuga ebiwuka n’okugema."
       },
       "dis_influenza": {
-        "name": "Swine Influenza",
+        "name": "Ssenyiga w’embizzi",
         "scientificName": "Influenza A virus",
-        "description": "Rapidly spreading respiratory infection.",
-        "prevention": "Ventilation and biosecurity."
+        "description": "Obulwadde bw’okussa obusaasaana amangu.",
+        "prevention": "Okuyingiza empewo n’obukuumi bw’ebiramu."
       },
       "dis_edema": {
-        "name": "Edema Disease",
+        "name": "Obulwadde bw’okuzimba",
         "scientificName": "Escherichia coli",
-        "description": "Caused by E. coli toxins in weaned piglets.",
-        "prevention": "Improved sanitation and diet."
+        "description": "Kiva ku butwa bwa E. coli mu baana b’embizzi abavudde ku mabeere.",
+        "prevention": "Okulongoosa mu buyonjo n’endya."
       },
       "dis_dysentery": {
-        "name": "Swine Dysentery",
+        "name": "Obulwadde bw’okusannyalala kw’embizzi",
         "scientificName": "Brachyspira hyodysenteriae",
-        "description": "Severe mucohaemorrhagic diarrhea.",
-        "prevention": "Water medication and disinfection."
+        "description": "Ekiddukano eky’amaanyi ekiva mu mucohaemorrhagic.",
+        "prevention": "Eddagala ly’amazzi n’okutta obuwuka."
       },
       "dis_mange": {
-        "name": "Sarcoptic Mange",
+        "name": "Sarcoptic Mange (Eby’okulya ebiyitibwa Sarcoptic Mange).",
         "scientificName": "Sarcoptes scabiei",
-        "description": "Parasitic skin disease causing extreme discomfort.",
-        "prevention": "Acaricide treatment."
+        "description": "Obulwadde bw’olususu obuvaako ebiwuka obuleeta obuzibu obw’ekitalo.",
+        "prevention": "Obujjanjabi bw’eddagala eritta acaricide."
       },
       "dis_anemia": {
-        "name": "Iron Deficiency Anemia",
+        "name": "Okukendeera kw’omusaayi olw’obutaba na kyuma",
         "scientificName": "Iron Deficiency",
-        "description": "Common in indoor piglets without iron supplements.",
-        "prevention": "Iron injections at birth."
+        "description": "Etera okubeera mu baana b’embizzi ab’omunda abatalina kyuma.",
+        "prevention": "Empiso z’ekyuma nga bazaalibwa."
       },
       "dis_ulcers": {
-        "name": "Gastric Ulcers",
+        "name": "Amabwa g’omu lubuto",
         "scientificName": "Gastric Ulcers",
-        "description": "Caused by fine feed or stress.",
-        "prevention": "Adjust feed particle size."
+        "description": "Kiva ku mmere ennungi oba situleesi.",
+        "prevention": "Teekateeka obunene bw’obutundutundu bw’emmere."
       },
       "dis_pss": {
-        "name": "Porcine Stress Syndrome",
+        "name": "Obulwadde bw’okunyigirizibwa kw’embizzi",
         "scientificName": "Genetic stress susceptibility",
-        "description": "Genetic condition triggered by stress.",
-        "prevention": "Genetic selection and calm handling."
+        "description": "Embeera y’obuzaale ereetebwa situleesi.",
+        "prevention": "Okulonda obuzaale n’okukwata mu bukkakkamu."
       },
       "dis_tge": {
-        "name": "Transmissible Gastroenteritis (TGE)",
+        "name": "Obulwadde bw’olubuto obusiigibwa (TGE) .",
         "scientificName": "Coronavirus",
-        "description": "Viral disease with high mortality in young piglets.",
-        "prevention": "Biosecurity."
+        "description": "Obulwadde bw’akawuka nga bufa nnyo mu baana b’embizzi abato.",
+        "prevention": "Obukuumi bw’ebiramu."
       },
       "dis_pasteurellosis": {
-        "name": "Pasteurellosis",
+        "name": "Obulwadde bwa Pasturellosis",
         "scientificName": "Pasteurella multocida",
-        "description": "Bacterial pneumonia.",
-        "prevention": "Antibiotics and ventilation."
+        "description": "Obulwadde bw’ekifuba obuva ku bakitiriya.",
+        "prevention": "Eddagala eritta obuwuka n’okuyingiza empewo."
       },
       "dis_strep": {
-        "name": "Streptococcus suis",
+        "name": "Obulwadde bwa Streptococcus suis",
         "scientificName": "S. suis",
-        "description": "Bacterial infection causing meningitis.",
-        "prevention": "Antibiotics and stress reduction."
+        "description": "Obulwadde bwa bakitiriya obuleeta obulwadde bwa meningitis.",
+        "prevention": "Eddagala eritta obuwuka n’okukendeeza ku situleesi."
       },
       "dis_mycotoxicosis": {
-        "name": "Mycotoxicosis",
+        "name": "Obulwadde bwa mycotoxicosis",
         "scientificName": "Mycotoxicosis",
-        "description": "Caused by mold-contaminated feed.",
-        "prevention": "Toxin binders and dry storage."
+        "description": "Kiva ku mmere erimu ebikuta.",
+        "prevention": "Ebisiba obutwa n’okutereka mu nkalu."
       },
       "dis_greasy_pig": {
-        "name": "Greasy Pig Disease",
+        "name": "Obulwadde bw’embizzi ezirimu amafuta",
         "scientificName": "Staphylococcus hyicus",
-        "description": "Bacterial infection causing greasy skin lesions.",
-        "prevention": "Sanitation and antibiotics."
+        "description": "Obulwadde bwa bakitiriya obuleeta ebiwundu by’olususu ebirimu amafuta.",
+        "prevention": "Obuyonjo n’eddagala eritta obuwuka."
       },
       "dis_pseudorabies": {
-        "name": "Pseudorabies (Aujeszky's)",
+        "name": "Ebigambo eby’obulimba (ebya Aujeszky) .",
         "scientificName": "Suid herpesvirus 1",
-        "description": "Viral disease affecting nervous and respiratory systems.",
-        "prevention": "Vaccination and eradication programs."
+        "description": "Obulwadde bw’akawuka obukosa enkola y’obusimu n’okussa.",
+        "prevention": "Enteekateeka z’okugema n’okumalawo."
       },
       "dis_pcv2": {
-        "name": "Porcine Circovirus (PCV2)",
+        "name": "Akawuka k’embizzi (PCV2) .",
         "scientificName": "Circovirus",
-        "description": "Causes wasting and respiratory issues in growers.",
-        "prevention": "Vaccination."
+        "description": "Kireeta okusaasaana n’ensonga z’okussa mu balimi.",
+        "prevention": "Okugema."
       },
       "dis_ped": {
-        "name": "Porcine Epidemic Diarrhea (PED)",
+        "name": "Ekiddukano ekilwaza embizzi (PED) .",
         "scientificName": "Coronavirus",
-        "description": "Similar to TGE, highly fatal to neonates.",
-        "prevention": "Strict biosecurity."
+        "description": "Okufaananako ne TGE, kitta nnyo abaana abazaalibwa.",
+        "prevention": "Obukuumi bw’ebiramu obukakali."
       },
       "dis_je": {
-        "name": "Japanese Encephalitis",
+        "name": "Obulwadde bw’obwongo obw’e Japan",
         "scientificName": "Flavivirus",
-        "description": "Mosquito-borne viral disease.",
-        "prevention": "Mosquito control and vaccination."
+        "description": "Obulwadde bw’akawuka obuva ku nsiri.",
+        "prevention": "Okulwanyisa ensiri n’okugema."
       },
       "dis_rabies": {
-        "name": "Rabies",
+        "name": "Obulwadde bw’akafuba",
         "scientificName": "Lyssavirus",
-        "description": "Fatal viral disease usually from bites.",
-        "prevention": "Vaccination of pets and wildlife control."
+        "description": "Obulwadde bw’akawuka obutta abantu ebiseera ebisinga buva ku kulumwa.",
+        "prevention": "Okugema ebisolo by’omu nnyumba n’okulwanyisa ebisolo by’omu nsiko."
       },
       "dis_pox": {
-        "name": "Swine Pox",
+        "name": "Obulwadde bw’embizzi",
         "scientificName": "Suipoxvirus",
-        "description": "Viral skin disease, often spread by lice.",
-        "prevention": "Louse control."
+        "description": "Obulwadde bw’olususu obuva ku kawuka, obutera okusaasaanyizibwa enkwale.",
+        "prevention": "Okufuga enkwale."
       },
       "dis_vs": {
-        "name": "Vesicular Stomatitis",
+        "name": "Obulwadde bw’omu lubuto obuyitibwa Vesicular Stomatitis",
         "scientificName": "Rhabdovirus",
-        "description": "Causes blisters; looks like FMD.",
-        "prevention": "Insect control and quarantine."
+        "description": "Avaako ebizimba; kirabika nga FMD.",
+        "prevention": "Okulwanyisa ebiwuka n’okubiteeka mu kalantiini."
       },
       "dis_clostridial": {
-        "name": "Clostridial Enteritis",
+        "name": "Obulwadde bw’omu lubuto (Clostridial Enteritis).",
         "scientificName": "Clostridium perfringens",
-        "description": "Bacterial infection causing severe gut damage.",
-        "prevention": "Vaccination of sows and hygiene."
+        "description": "Obulwadde bwa bakitiriya obuleeta okwonooneka okw’amaanyi mu byenda.",
+        "prevention": "Okugema ente ennume n’obuyonjo."
       },
       "dis_glassers": {
-        "name": "Glasser's Disease",
+        "name": "Obulwadde bwa Glasser",
         "scientificName": "Haemophilus parasuis",
-        "description": "Causes inflammation of membranes around heart, lungs, joints.",
-        "prevention": "Antibiotics and stress management."
+        "description": "Kireeta okuzimba obuwuka obuyitibwa membranes okwetoloola omutima, amawuggwe, ennyondo.",
+        "prevention": "Eddagala eritta obuwuka n’okuziyiza situleesi."
       },
       "dis_app": {
-        "name": "Actinobacillus Pleuropneumonia (APP)",
+        "name": "Obulwadde bwa Actinobacillus Obulwadde bw’okusannyalala (APP) .",
         "scientificName": "A. pleuropneumoniae",
-        "description": "Severe bacterial pneumonia.",
-        "prevention": "Antibiotics and improved environment."
+        "description": "Obulwadde bw’ekifuba obw’amaanyi obuva ku bakitiriya.",
+        "prevention": "Eddagala eritta obuwuka n’obutonde obulongooseddwa."
       },
       "dis_ileitis": {
-        "name": "Ileitis (Lawsonia)",
+        "name": "Obulwadde bwa Ileitis (Lawsonia) .",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Bacterial infection of the small intestine.",
-        "prevention": "Vaccination and antibiotics."
+        "description": "Obulwadde bwa bakitiriya mu kyenda ekitono.",
+        "prevention": "Okugema n’eddagala eritta obuwuka."
       },
       "dis_tb": {
-        "name": "Tuberculosis",
+        "name": "Akafuba",
         "scientificName": "Mycobacterium avium",
-        "description": "Chronic bacterial disease.",
-        "prevention": "Bird proofing and sanitation."
+        "description": "Obulwadde bwa bakitiriya obutawona.",
+        "prevention": "Okuziyiza ebinyonyi n’obuyonjo."
       },
       "dis_tetanus": {
-        "name": "Tetanus",
+        "name": "Obulwadde bwa Tetanus",
         "scientificName": "Clostridium tetani",
-        "description": "Bacterial toxin affecting the nervous system.",
-        "prevention": "Sanitation during surgery/castration."
+        "description": "Obutwa bwa bakitiriya obukosa enkola y’obusimu.",
+        "prevention": "Obuyonjo mu kiseera ky’okulongoosa/okuggyamu embuto."
       },
       "dis_eperythrozoonosis": {
-        "name": "Eperythrozoonosis",
+        "name": "Obulwadde bwa Eperythrozoonosis",
         "scientificName": "Mycoplasma suis",
-        "description": "Blood parasite causing anemia.",
-        "prevention": "Insect control and clean needles."
+        "description": "Ekiwuka mu musaayi ekivaako okukendeeza ku musaayi.",
+        "prevention": "Okulwanyisa ebiwuka n’okuyonja empiso."
       },
       "dis_ascaris": {
         "name": "Ascaris suum",
         "scientificName": "Large Roundworm",
-        "description": "Internal parasite causing lung and liver damage.",
-        "prevention": "Regular deworming."
+        "description": "Ekiwuka eky’omunda ekivaako amawuggwe n’ekibumba okwonooneka.",
+        "prevention": "Okuggya ensowera buli kiseera."
       },
       "dis_whipworms": {
-        "name": "Whipworms",
+        "name": "Ensigo eziyitibwa whipworms",
         "scientificName": "Trichuris suis",
-        "description": "Internal parasite in the large intestine.",
-        "prevention": "Deworming and sanitation."
+        "description": "Ekiwuka eky’omunda mu kyenda ekinene.",
+        "prevention": "Okuggya ensowera n’okuyonja."
       },
       "dis_lungworms": {
-        "name": "Lungworms",
+        "name": "Ensigo z’amawuggwe",
         "scientificName": "Metastrongylus spp.",
-        "description": "Internal parasite of the lungs.",
-        "prevention": "Earthworm control and deworming."
+        "description": "Ekiwuka eky’omunda mu mawuggwe.",
+        "prevention": "Okufuga ensowera n’okuziggyamu ensowera."
       },
       "dis_kidney_worms": {
-        "name": "Kidney Worms",
+        "name": "Ensigo z’ekibumba",
         "scientificName": "Stephanurus dentatus",
-        "description": "Internal parasite affecting kidneys and liver.",
-        "prevention": "Management and hygiene."
+        "description": "Obuwuuka obw’omunda obukosa ensigo n’ekibumba.",
+        "prevention": "Enzirukanya y’emirimu n’obuyonjo."
       },
       "dis_lice": {
-        "name": "Swine Lice",
+        "name": "Enkwale z’embizzi",
         "scientificName": "Haematopinus suis",
-        "description": "External parasite sucking blood.",
-        "prevention": "Insecticide treatment."
+        "description": "Ekiwuka eky’ebweru nga kisonseka omusaayi.",
+        "prevention": "Obujjanjabi bw’eddagala ly’ebiwuka."
       },
       "dis_ringworm": {
-        "name": "Ringworm",
+        "name": "Ensigo y’empeta",
         "scientificName": "Dermatophytosis",
-        "description": "Fungal skin infection.",
-        "prevention": "Sanitation and topical treatment."
+        "description": "Obulwadde bw’olususu mu ffene.",
+        "prevention": "Obuyonjo n’okujjanjaba ku mubiri."
       },
       "dis_mulberry_heart": {
-        "name": "Mulberry Heart Disease",
+        "name": "Obulwadde bw'omutima obwa Mulberry",
         "scientificName": "Vit E/Se Deficiency",
-        "description": "Nutritional deficiency affecting the heart.",
-        "prevention": "Supplementation."
+        "description": "Ebbula ly’emmere ekosa omutima.",
+        "prevention": "Okwongerako."
       },
       "dis_vit_a": {
-        "name": "Vitamin A Deficiency",
+        "name": "Obutaba na Vitamin A",
         "scientificName": "Vitamin A Deficiency",
-        "description": "Nutritional deficiency.",
-        "prevention": "Dietary adjustment."
+        "description": "Obutaba na mmere nnungi.",
+        "prevention": "Ennongoosereza mu mmere."
       },
       "dis_rickets": {
-        "name": "Rickets",
+        "name": "Ebiwuka ebiyitibwa Rickets",
         "scientificName": "Vit D/Ca/P Deficiency",
-        "description": "Nutritional deficiency affecting bone growth.",
-        "prevention": "Balanced minerals and sunlight."
+        "description": "Ebbula ly’emmere ekosa okukula kw’amagumba.",
+        "prevention": "Eby’obuggagga bw’omu ttaka ebikwatagana n’omusana."
       },
       "dis_salt_poisoning": {
-        "name": "Salt Poisoning",
+        "name": "Obutwa bw’omunnyo",
         "scientificName": "Water Deprivation",
-        "description": "Caused by lack of water followed by over-consumption.",
-        "prevention": "Constant fresh water access."
+        "description": "Kiva ku bbula ly’amazzi nga kigobererwa okunywa ennyo.",
+        "prevention": "Okufuna amazzi amayonjo buli kiseera."
       },
       "dis_heat_stroke": {
-        "name": "Heat Stroke",
+        "name": "Okusannyalala kw’ebbugumu",
         "scientificName": "Heat Stroke",
-        "description": "Overheating due to poor ventilation or shade.",
-        "prevention": "Ventilation, cooling, and shade."
+        "description": "Okubuguma ennyo olw’empewo embi oba ekisiikirize.",
+        "prevention": "Okuyingiza empewo, okunyogoza, n’ekisiikirize."
       },
       "dis_rectal_prolapse": {
-        "name": "Rectal Prolapse",
+        "name": "Okugwa kw’omumwa gwa nnabaana",
         "scientificName": "Rectal Prolapse",
-        "description": "Often follows coughing, diarrhea, or cold stress.",
-        "prevention": "Address primary cause and surgery."
+        "description": "Ebiseera ebisinga kiddirirwa okusesema, ekiddukano oba situleesi y’omusujja.",
+        "prevention": "Kola ku nsonga enkulu n’okulongoosebwa."
       },
       "dis_umbilical_hernia": {
-        "name": "Umbilical Hernia",
+        "name": "Obulwadde bw’okusannyalala mu nnabaana",
         "scientificName": "Umbilical Hernia",
-        "description": "Developmental defect or navel infection.",
-        "prevention": "Sanitation and genetics."
+        "description": "Obulema mu nkula oba yinfekisoni mu nnyindo.",
+        "prevention": "Obuyonjo n’obuzaale."
       },
       "dis_scrotal_hernia": {
-        "name": "Scrotal Hernia",
+        "name": "Obulwadde bwa Scrotal Hernia",
         "scientificName": "Scrotal Hernia",
-        "description": "Genetic developmental defect.",
-        "prevention": "Genetics and surgical repair."
+        "description": "Obulema mu nkula y’obuzaale.",
+        "prevention": "Ensengekera y’obuzaale n’okuddaabiriza mu kulongoosa."
       },
       "dis_splayleg": {
-        "name": "Splayleg",
+        "name": "Splayleg y’okuyimba",
         "scientificName": "Myofibrillar hypoplasia",
-        "description": "Piglets born unable to stand with hind legs.",
-        "prevention": "Taping legs and floor traction."
+        "description": "Embizzi ezizaalibwa nga tezisobola kuyimirira nga zirina amagulu ag’emabega.",
+        "prevention": "Okusiiga amagulu n’okusika wansi."
       },
       "dis_vulvovaginitis": {
-        "name": "Vulvovaginitis",
+        "name": "Obulwadde bw’obukyala obuyitibwa Vulvovaginitis",
         "scientificName": "Zearalenone Toxicity",
-        "description": "Caused by estrogenic fungal toxins in feed.",
-        "prevention": "Change feed source."
+        "description": "Kiva ku butwa bwa ffene obuyitibwa estrogenic fungal toxins mu mmere.",
+        "prevention": "Kyusa ensibuko y’emmere y’emmere."
       },
       "dis_seneca": {
-        "name": "Seneca Valley Virus (SVV)",
+        "name": "Akawuka akayitibwa Seneca Valley Virus (SVV) .",
         "scientificName": "Senecavirus A",
-        "description": "Causes blisters similar to FMD.",
-        "prevention": "Biosecurity and diagnosis."
+        "description": "Avaako ebizimba ebifaananako ne FMD.",
+        "prevention": "Obukuumi bw’ebiramu n’okuzuula obulwadde."
       },
       "dis_deltacoronavirus": {
-        "name": "Porcine Deltacoronavirus",
+        "name": "Akawuka k’embizzi aka Deltacorona",
         "scientificName": "PDCoV",
-        "description": "Viral diarrhea in all ages.",
-        "prevention": "Biosecurity."
+        "description": "Ekiddukano ekiva mu kawuka mu myaka gyonna.",
+        "prevention": "Obukuumi bw’ebiramu."
       },
       "dis_rotavirus": {
-        "name": "Rotavirus Diarrhea",
+        "name": "Rotavirus Ekiddukano",
         "scientificName": "Rotavirus",
-        "description": "Common cause of weaning diarrhea.",
-        "prevention": "Vaccination and hygiene."
+        "description": "Ekitera okuvaako ekiddukano okuva ku mabeere.",
+        "prevention": "Okugema n’obuyonjo."
       },
       "dis_teschen": {
-        "name": "Teschen/Talfan Disease",
+        "name": "Obulwadde bwa Teschen/Talfan",
         "scientificName": "Sapelovirus/Teschovirus",
-        "description": "Viral infection of the nervous system.",
-        "prevention": "Biosecurity."
+        "description": "Obulwadde bw’akawuka mu nkola y’obusimu.",
+        "prevention": "Obukuumi bw’ebiramu."
       },
       "dis_vesicular": {
-        "name": "Swine Vesicular Disease",
+        "name": "Obulwadde bw’emisuwa gy’embizzi",
         "scientificName": "Enterovirus",
-        "description": "Viral disease mimicking FMD.",
-        "prevention": "Strict quarantine."
+        "description": "Obulwadde bw’akawuka obukoppa FMD.",
+        "prevention": "Kalantiini enkakali."
       },
       "dis_melioidosis": {
-        "name": "Melioidosis",
+        "name": "Obulwadde bwa Melioidosis",
         "scientificName": "Burkholderia pseudomallei",
-        "description": "Bacterial disease from soil/water.",
-        "prevention": "Clean water and hygiene."
+        "description": "Obulwadde bwa bakitiriya okuva mu ttaka/amazzi.",
+        "prevention": "Amazzi amayonjo n’obuyonjo."
       },
       "dis_trypanosomiasis": {
-        "name": "Trypanosomiasis",
+        "name": "Obulwadde bwa Trypanosomiasis",
         "scientificName": "Trypanosoma spp.",
-        "description": "Protozoan disease spread by tsetse flies.",
-        "prevention": "Fly control and medication."
+        "description": "Obulwadde bwa protozoan obusaasaanyizibwa ensekere za tsetse.",
+        "prevention": "Okufuga enseenene n’okukozesa eddagala."
       },
       "dis_cysticercosis": {
-        "name": "Cysticercosis",
+        "name": "Obulwadde bwa Cysticercosis",
         "scientificName": "Taenia solium larvae",
-        "description": "Larval stage of human tapeworm in pig muscle.",
-        "prevention": "Prevent access to human waste."
+        "description": "Omutendera gw’enkwaso (larval stage) y’ensowera y’omuntu mu binywa by’embizzi.",
+        "prevention": "Okutangira okufuna kasasiro w’abantu."
       },
       "dis_toxoplasmosis": {
-        "name": "Toxoplasmosis",
+        "name": "Obulwadde bwa Toxoplasmosis",
         "scientificName": "Toxoplasma gondii",
-        "description": "Zoonotic protozoan infection.",
-        "prevention": "Cat control and biosecurity."
+        "description": "Obulwadde bwa zoonotic protozoan.",
+        "prevention": "Okufuga embwa n’obukuumi bw’ebiramu."
       },
       "dis_listeriosis": {
-        "name": "Listeriosis",
+        "name": "Obulwadde bwa Listeriosis",
         "scientificName": "Listeria monocytogenes",
-        "description": "Bacterial infection of nervous system.",
-        "prevention": "Sanitation and feed hygiene."
+        "description": "Obulwadde bwa bakitiriya mu nkola y’obusimu.",
+        "prevention": "Obuyonjo n’obuyonjo bw’emmere y’ebisolo."
       },
       "dis_ear_necrosis": {
-        "name": "Ear Necrosis",
+        "name": "Obulwadde bw’amatu Necrosis",
         "scientificName": "Ear Necrosis",
-        "description": "Often caused by stress, overcrowding, or infection.",
-        "prevention": "Reduce density and treat secondary infection."
+        "description": "Ebiseera ebisinga kiva ku situleesi, omujjuzo oba yinfekisoni.",
+        "prevention": "Okukendeeza ku density n’okujjanjaba yinfekisoni ey’okubiri."
       },
       "dis_sunburn": {
-        "name": "Sunburn",
+        "name": "Okwokya omusana",
         "scientificName": "Solar dermatitis",
-        "description": "Affects white-skinned pigs outdoors.",
-        "prevention": "Provide shade."
+        "description": "Akwata embizzi ez’amalusu amazungu ebweru.",
+        "prevention": "Waayo ekisiikirize."
       },
       "dis_tail_biting": {
-        "name": "Tail Biting",
+        "name": "Okuluma Omukira",
         "scientificName": "Behavioral stress",
-        "description": "Behavioral issue due to stress/boredom.",
-        "prevention": "Reduce stress and enrich environment."
+        "description": "Ensonga y‟enneeyisa olw‟okunyigirizibwa/okuboola.",
+        "prevention": "Kendeeza ku situleesi n’okugaggawaza embeera."
       },
       "dis_navel_ill": {
-        "name": "Navel Ill",
+        "name": "Obulwadde bw’omumwa gwa nnabaana",
         "scientificName": "Navel Infection",
-        "description": "Infection of the umbilical cord at birth.",
-        "prevention": "Iodine dip at birth and sanitation."
+        "description": "Obulwadde bw’omusuwa gw’omu nnabaana ng’ozaalibwa.",
+        "prevention": "Okunnyika ayodini ng’ozaalibwa n’obuyonjo."
       },
       "dis_iron_toxicity": {
-        "name": "Iron Toxicity",
+        "name": "Obutwa bw’ekyuma",
         "scientificName": "Ferrous excess",
-        "description": "Excess iron administration leading to sudden death.",
-        "prevention": "Inject accurate dosage."
+        "description": "Kiyinza okubaawo singa ekyuma kifukibwa mu baana b’embizzi ababulamu Vit E.",
+        "prevention": "Kakasa nti emmere y’okusiga ebeera ya bbalansi."
       },
       "dis_aflatoxicosis": {
-        "name": "Aflatoxicosis",
+        "name": "Obulwadde bwa Aflatoxicosis",
         "scientificName": "Aspergillus flavus toxin",
-        "description": "Fungal toxin poisoning.",
-        "prevention": "Avoid moldy feed and use toxin binders."
+        "description": "Obutwa obuva mu mpeke oba emmere erimu ekikuta ekivaako ekibumba okwonooneka n’okuzimba ekibumba.",
+        "prevention": "Weewale okuliisa emmere erimu ekikuta, tereka empeke mu mbeera enkalu, era kozesa ebisiba obutwa."
       },
       "dis_parakeratosis": {
-        "name": "Parakeratosis",
+        "name": "Obulwadde bwa Parakeratosis (Obulwadde bwa Zinc) .",
         "scientificName": "Zinc deficiency",
-        "description": "Zinc deficiency in swine.",
-        "prevention": "Ensure adequate zinc levels in diet."
+        "description": "Obulwadde bw’endya obuleeta ebiwundu by’olususu eby’amaanyi ebizimba, ebigonvu.",
+        "prevention": "Kakasa nti omugerageranyo gwa calcium ne zinc gukwatagana mu mmere y’emmere era owe ebirungo ebiyamba zinc."
       },
       "dis_biotin_deficiency": {
-        "name": "Biotin Deficiency",
+        "name": "Obutabeera na Biotin",
         "scientificName": "Vitamin H deficiency",
-        "description": "Biotin deficiency in swine.",
-        "prevention": "Provide biotin supplements."
+        "description": "Ebbula ly’emmere ekivaako ebigere okwatika, ebiwundu ku lususu, n’okulema.",
+        "prevention": "Okwongera ku mmere ne biotin era weewale wansi wa seminti omukalu era omubisi."
       },
       "dis_gossypol_toxicity": {
-        "name": "Gossypol Toxicity",
+        "name": "Obutwa bwa Gossypol",
         "scientificName": "Gossypol poisoning",
-        "description": "Cottonseed meal poisoning.",
-        "prevention": "Limit raw cottonseed meal in feed."
+        "description": "Obutwa obuva mu kuliisa obuwunga bwa ppamba obubisi oba obuyitiridde, ekivaako obuzibu mu kussa.",
+        "prevention": "Komya emmere ya ppamba mu mmere era kozesa iron sulfate okumalawo gossypol."
       },
       "dis_cassava_poisoning": {
-        "name": "Cassava Poisoning",
+        "name": "Obutwa bwa Kaawa",
         "scientificName": "Cyanogenic glycosides",
-        "description": "Cyanide poisoning from raw cassava.",
-        "prevention": "Cook or ferment cassava before feeding."
+        "description": "Obutwa bwa Cyanide okuva mu bikoola oba ebikuta bya muwogo ebibisi oba ebitali bituufu.",
+        "prevention": "Sekula, fumba, okukala mu musana oba okuzimbulukusa muwogo nga tonnaba kuliisa."
       },
       "dis_sweet_potato_toxicity": {
-        "name": "Sweet Potato Toxicity",
+        "name": "Obutwa mu Sweet Potato",
         "scientificName": "Ipomeamarone toxicity",
-        "description": "Ipomeamarone poisoning.",
-        "prevention": "Do not feed moldy or damaged sweet potatoes."
+        "description": "Obutwa obuva mu bitooke ebifuuse ekikuta, ekivaako obuzibu obw’amaanyi mu kussa.",
+        "prevention": "Suula ebitooke ebyonooneddwa oba ebifuuse ekikuta; liisa ebikuta ebiramu byokka."
       },
       "dis_mma": {
-        "name": "MMA Syndrome",
+        "name": "Obulwadde bwa Dysgalactia oluvannyuma lw’okuzaala (MMA) .",
         "scientificName": "Mastitis-Metritis-Agalactia",
-        "description": "Post-farrowing infection in sows.",
-        "prevention": "Clean farrowing pens and proper nutrition."
+        "description": "Obulwadde bw’amabeere, obulwadde bwa metritis, ne agalactia ebivaako omusujja n’obutaba na mata mu nte oluvannyuma lw’okuzaala.",
+        "prevention": "Kuuma obuyonjo obukakali obw’ekiyumba ky’okuzaala n’okukakasa nti endya emala ey’okusiga."
       },
       "dis_pwd": {
-        "name": "Post-Weaning Diarrhea",
+        "name": "Ekiddukano oluvannyuma lw’okuggya ku mabeere (PWD) .",
         "scientificName": "Escherichia coli (F4/F18)",
-        "description": "Colibacillosis in weaned pigs.",
-        "prevention": "Sanitation and diet adjustment."
+        "description": "Ekiddukano kya bakitiriya mu baana b’embizzi nga wayiseewo akaseera katono nga bavudde ku mabeere, ekivaako okuggwaamu amazzi mu mubiri.",
+        "prevention": "Kendeeza ku situleesi y’okuggya ku mabeere, kuuma obuyonjo obw’amaanyi, n’okuwa amazzi amayonjo ag’okunywa."
       },
       "dis_trichinellosis": {
-        "name": "Trichinellosis",
+        "name": "Obulwadde bwa Trichinellosis",
         "scientificName": "Trichinella spiralis",
-        "description": "Zoonotic parasitic infection.",
-        "prevention": "Do not feed raw garbage; pest control."
+        "description": "Zoonotic parasitic disease okuva mu kulya ebisasiro by’ennyama embisi, ekivaako ebinywa okukaluba.",
+        "prevention": "Toliisa swill embisi, fumba ebisasiro by’emmere okumala eddakiika 30, n’okufuga ebiwuka."
       },
       "dis_hydatid_disease": {
-        "name": "Hydatid Disease",
+        "name": "Obulwadde bwa Hydatidosis",
         "scientificName": "Echinococcus granulosus",
-        "description": "Larval tapeworm infection.",
-        "prevention": "Deworm farm dogs; prevent access to offal."
+        "description": "Obulwadde bw’enkwaso (parasitic larval infection) obuleeta ebizimba ebijjudde amazzi mu bitundu by’omubiri.",
+        "prevention": "Embwa z’oku ffaamu ziggyamu ensowera buli kiseera n’ozireme okulya ebitundu by’embizzi ebibisi."
       },
       "dis_phe": {
-        "name": "Proliferative Hemorrhagic Enteropathy",
+        "name": "Obulwadde bw’omu lubuto obuvaamu omusaayi mu mbizzi",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Acute intestinal bleeding in young adult pigs.",
-        "prevention": "Vaccination and hygiene."
+        "description": "Ekiddukano eky’omusaayi ogw’amaanyi n’okufa okw’amangu mu mbizzi ezirima/ezimaliriza.",
+        "prevention": "Kuuma obuyonjo obulungi era kozesa eddagala eritta obuwuka erisaanira wansi w’obulagirizi bw’omusawo w’ebisolo."
       },
       "dis_mycoplasma_arthritis": {
-        "name": "Mycoplasma Arthritis",
+        "name": "Obulwadde bw’endwadde z’enkizi (Mycoplasmal Arthritis).",
         "scientificName": "Mycoplasma hyosynoviae",
-        "description": "Bacterial joint disease.",
-        "prevention": "Sanitation and quarantine."
+        "description": "Obulwadde bwa bakitiriya obuvaako ennyondo okuzimba, okulema, n’amagulu okunafuwa.",
+        "prevention": "Okulongoosa embeera y’amayumba, okukendeeza ku bungi bw’ebintu ebiterekeddwa, n’okujjanjaba nga bukyali."
       },
       "dis_foot_rot": {
-        "name": "Foot Rot",
+        "name": "Okuvunda kw’ebigere (Necrobacillosis) .",
         "scientificName": "Fusobacterium necrophorum",
-        "description": "Infection of the foot causing lameness.",
-        "prevention": "Keep pens dry; treat hooves."
+        "description": "Obuwuka obuleeta obuwuka obuyingira mu buvune mu bigere, ekivaako okuvunda n’okulema.",
+        "prevention": "Ddabiriza seminti omukalu, wansi kuuma nga mukalu, era kozesa ebinaabirwamu bwe kiba kyetaagisa."
       },
       "dis_babesiosis": {
-        "name": "Babesiosis",
+        "name": "Obulwadde bwa Babesiosis obuleetebwa enkwale",
         "scientificName": "Babesia trautmanni",
-        "description": "Tick-borne protozoan infection.",
-        "prevention": "Acaricide spray for tick control."
+        "description": "Ekiwuka ky’omusaayi ekitambuzibwa enkwale ekivaako omusujja omungi, okukendeeza omusaayi n’omusulo omuddugavu.",
+        "prevention": "Fuga enkwale ng’okozesa eddagala eritta enkwale era okuume ekkalaamu nga teziriimu bimera."
       },
       "dis_anaplasmosis": {
-        "name": "Anaplasmosis",
+        "name": "Obulwadde bwa Anaplasmosis",
         "scientificName": "Anaplasma marginale",
-        "description": "Blood infection in swine.",
-        "prevention": "Vector control."
+        "description": "Obulwadde bwa bakitiriya obuva ku nkwale obuleeta okukendeeza ku musaayi, omusujja, n’obulwadde bwa jaundice.",
+        "prevention": "Teeka mu nkola pulogulaamu z’okufuga vector ne tick."
       },
       "dis_sow_hysteria": {
-        "name": "Sow Hysteria",
+        "name": "Siga Hysteria (Obulwadde bwa Hysteria).",
         "scientificName": "Puerperal psychosis",
-        "description": "Aggression or panic in sows after farrowing.",
-        "prevention": "Provide quiet farrowing area."
+        "description": "Obuzibu mu nneeyisa ng’embizzi ezizaala zifuuka za bukambwe ne ziluma omwana w’embizzi.",
+        "prevention": "Waayo embeera esirifu ey’okuzaala, londoola gilts, era kozesa eddagala eriweweeza ku bulwadde bwe kiba kyetaagisa."
       },
       "dis_thorny_headed_worm": {
-        "name": "Thorny-Headed Worm",
+        "name": "Ensigo ey’omutwe ogw’amaggwa",
         "scientificName": "Macracanthorhynchus hirudinaceus",
-        "description": "Intestinal parasite.",
-        "prevention": "Prevent access to June beetle grubs."
+        "description": "Ensigo eyitibwa parasitic worm efunibwa olw’okulya enkwale, ekivaako okukutuka kw’ekyenda.",
+        "prevention": "Weewale okulunda mu ddembe ku ttaka eririmu enkwale era kozesa eddagala eritta ensowera."
       },
       "dis_strongyloidiasis": {
-        "name": "Strongyloidiasis",
+        "name": "Obulwadde bwa Strongyloidiasis (Obulwadde bw’obuwuzi) .",
         "scientificName": "Strongyloides ransomi",
-        "description": "Threadworm infection.",
-        "prevention": "Keep pens dry; deworming."
+        "description": "Ensigo y’omu byenda ereeta ekiddukano eky’amaanyi n’okufa mu baana b’embizzi.",
+        "prevention": "Ebibokisi by’okuzaala bikuume nga bikalu era nga biyonjo, era n’okuggya ensowera mu nsigo nga tonnazaala."
       },
       "dis_hyostrongylosis": {
-        "name": "Red Stomach Worm",
+        "name": "Ensigo Y’omu Lubuto Emmyufu",
         "scientificName": "Hyostrongylus rubidus",
-        "description": "Intestinal worm in grazing pigs.",
-        "prevention": "Clean pasture management; deworming."
+        "description": "Obulwadde bw’ensowera mu lubuto ekivaako okuzimba olubuto, okukendeera kw’omusaayi, n’okugejja.",
+        "prevention": "Kyuusa amalundiro, ennyumba zikuume nga nkalu, era oteeke mu nkola enteekateeka y’okutta ensowera."
       },
       "dis_oesophagostomiasis": {
-        "name": "Nodular Worm",
+        "name": "Obulwadde bw’ensowera eziyitibwa Nodular Worm",
         "scientificName": "Oesophagostomum spp.",
-        "description": "Intestinal worm in swine.",
-        "prevention": "Deworming and sanitation."
+        "description": "Ekiwuka ky’ekyenda ekivaako ebizimba mu bbugwe w’ekyenda, ekivaako enkoko ennyimpi.",
+        "prevention": "Obuyonjo bw’ekkalaamu buli kiseera n’okukozesa eddagala eriweweeza ku bulwadde bwa broad-spectrum anthelmintics bulijjo."
       },
       "dis_fascioliasis": {
-        "name": "Fascioliasis",
+        "name": "Obulwadde bwa Fascioliasis (Obulwadde bw’ekibumba) .",
         "scientificName": "Fasciola gigantica",
-        "description": "Liver fluke infection.",
-        "prevention": "Snail control; keep away from wet pastures."
+        "description": "Obulwadde bwa parasitic fluke obukosa ekibumba, obutera okubeera mu malundiro amabisi oba ag’entobazzi.",
+        "prevention": "Zitangira embizzi okuliisa mu bifo ebirimu entobazzi n’okufuga ensenene z’ebitosi."
       },
       "dis_emcv": {
-        "name": "EMCV",
+        "name": "Obulwadde bw’emisuwa gy’obwongo (EMCV) .",
         "scientificName": "Cardiovirus",
-        "description": "Viral myocarditis and reproductive failure.",
-        "prevention": "Rodent control (rodents spread EMCV)."
+        "description": "Obulwadde bw’akawuka obuva mu nvunza obuvaako omutima okulemererwa mu bwangu n’okuggyamu embuto.",
+        "prevention": "Teeka mu nkola enkola enkakali ey’okulwanyisa ebiwuka n’okukuuma emmere okuva ku bucaafu."
       },
       "dis_demodectic_mange": {
-        "name": "Demodectic Mange",
+        "name": "Omulimu gwa Demodex Mange",
         "scientificName": "Demodex phylloides",
-        "description": "Skin mite infection.",
-        "prevention": "Acaricide treatment."
+        "description": "Enkwaso z’olususu ezirabika obulungi ezireeta amabala n’obuzimba obutonotono.",
+        "prevention": "Okulongoosa endya y’ekisibo, okwawula embizzi ezikoseddwa, n’okusiiga eddagala eritta acaricides."
       },
       "dis_pityriasis_rosea": {
-        "name": "Pityriasis Rosea",
+        "name": "Obulwadde bwa Pityriasis Rosea",
         "scientificName": "Pseudo-ringworm",
-        "description": "Non-contagious skin condition.",
-        "prevention": "Spontaneous recovery; keep environment clean."
+        "description": "Embeera y’olususu etali ya kusiigibwa mu mbizzi ento ezikola ebikuta ebiringa empeta.",
+        "prevention": "Ebiseera ebisinga okwesalirawo; okukuuma ebitanda ebiyonjo era ebikalu n’okukendeeza ku situleesi."
       },
       "dis_photosensitization": {
-        "name": "Photosensitization",
+        "name": "Okuwunyiriza ekitangaala",
         "scientificName": "Solar dermatitis",
-        "description": "Skin hypersensitivity to sunlight.",
-        "prevention": "Keep out of direct sunlight; check pasture plants."
+        "description": "Okukola ennyo ng’okwokya omusana mu mbizzi ez’olususu olutangaavu oluvannyuma lw’okulya ebimera ebitongole.",
+        "prevention": "Okuwa ekisiikirize, ggyawo omuddo oguwunyiriza, era embizzi zikuume mu nnyumba."
       },
       "dis_shoulder_ulcers": {
-        "name": "Shoulder Ulcers",
+        "name": "Siga Amabwa Ku Kibegabega",
         "scientificName": "Decubitus ulcers",
-        "description": "Sores in thin sows on hard floors.",
-        "prevention": "Provide soft bedding; increase feed."
+        "description": "Amabwa aga puleesa ku bibegabega by’embizzi ennyimpi eziteekeddwa ku seminti omukalu.",
+        "prevention": "Waayo ebitanda ebigonvu, kuuma enkoko nga ziri mu mbeera nnungi, era kozesa ebitanda bya kapiira."
       },
       "dis_ear_biting": {
-        "name": "Ear Biting",
+        "name": "Okulya abantu mu matu",
         "scientificName": "Stress response behavior",
-        "description": "Behavioral stress response.",
-        "prevention": "Reduce stocking density; enrich environment."
+        "description": "Enneeyisa etali ya bulijjo ng’embizzi ziluma amatu ga bannaabwe mu kiyumba, ekivaako okufa.",
+        "prevention": "Kendeeza ku mujjuzo, okulongoosa empewo, n’okugaggawaza ng’enjegere."
       },
       "dis_gastric_torsion": {
-        "name": "Gastric Torsion",
+        "name": "Okuwuguka kw’olubuto (Bloat) .",
         "scientificName": "Gastric dilation-volvulus",
-        "description": "Twisted stomach.",
-        "prevention": "Avoid overfeeding in single meals."
+        "description": "Okuzimba n’okukyusakyusa olubuto mu bwangu, ekivaako okufa amangu.",
+        "prevention": "Weewale okuliisa emmere ennene oluvannyuma lw’okusiiba okumala ebbanga eddene era emmere ya buli lunaku ogigabanyemu ebitundu."
       },
       "dis_c_difficile": {
-        "name": "C. difficile Infection",
+        "name": "Ekirungo kya Clostridium difficile (CDI) .",
         "scientificName": "Clostridioides difficile",
-        "description": "Bacterial diarrhea in piglets.",
-        "prevention": "Clean environment and proper ventilation."
+        "description": "Obulwadde bwa bakitiriya mu baana b’embizzi abaakazaalibwa ekivaako ekiddukano eky’amazzi n’okuzimba.",
+        "prevention": "Okwoza bulungi n’okutta obuwuka mu biyumba by’okuzaala era okakasa nti enseke zifuluma nga bukyali."
       },
       "dis_cold_stress": {
-        "name": "Cold Stress",
+        "name": "Situleesi y’obunnyogovu (Hypothermia) .",
         "scientificName": "Hypothermia susceptibility",
-        "description": "Chilling in young piglets.",
-        "prevention": "Provide heat lamps and dry bedding."
+        "description": "Omubiri okunyogoga ennyo mu baana b’embizzi, ekivaako okukankana n’okufa ennyo.",
+        "prevention": "Waayo amataala ag’ebbugumu, creep boxes, era ekifo w’ozaala kikuume nga kikalu era nga temuli muyaga."
       },
       "dis_necrotic_enteritis": {
-        "name": "Necrotic Enteritis",
+        "name": "Obulwadde bw’omu lubuto obuyitibwa Necrotic Enteritis",
         "scientificName": "Clostridium perfringens Type C",
-        "description": "Clostridial gut infection.",
-        "prevention": "Sow vaccination and pen sanitation."
+        "description": "Obulwadde bw’obutwa bwa bakitiriya obuleeta ekiddukano eky’amaanyi eky’omusaayi n’okufa ennyo mu baana b’embizzi.",
+        "prevention": "Gema enkoko nga tonnazaala era okuume obuyonjo bw’ekkalaamu obujjuvu."
       },
       "dis_navel_bleeding": {
-        "name": "Navel Bleeding",
+        "name": "Okuvaamu omusaayi mu nnyindo",
         "scientificName": "Umbilical hemorrhage",
-        "description": "Hemorrhage from umbilical cord.",
-        "prevention": "Tie off bleeding navels; check feed vitamin K."
+        "description": "Okuvaamu omusaayi omungi okuva mu nnabaana mu baana b’embizzi abaakazaalibwa.",
+        "prevention": "Siba emiguwa gy’omu nnabaana ng’ozaalibwa era weewale okuliisa enkoko emmere erimu obutwa bwa mycotoxin."
       },
       "dis_spirochetal_colitis": {
-        "name": "Spirochetal Colitis",
+        "name": "Obulwadde bw’olubuto obuyitibwa Spirochetal Colitis obw’embizzi",
         "scientificName": "Brachyspira pilosicoli",
-        "description": "Bacterial large intestine infection.",
-        "prevention": "Medication and pen sanitation."
+        "description": "Obulwadde bw’ekiddukano obutono mu mbizzi ezikula, ekivaako okugejja obubi.",
+        "prevention": "Okwoza mu bifo omuliira embizzi n’okujjanjaba embizzi ezikoseddwa n’eddagala eritta obuwuka."
       },
       "dis_salmonella_septicemia": {
-        "name": "Salmonella Septicemia",
+        "name": "Obulwadde bwa Salmonella Septicemia",
         "scientificName": "Salmonella choleraesuis",
-        "description": "Blood infection from Salmonella.",
-        "prevention": "Clean water; biosecurity."
+        "description": "Obulwadde bwa salmonella obw’amaanyi mu musaayi obuleeta olususu olwa kakobe n’okufa amangu.",
+        "prevention": "Okwawula embizzi endwadde, ddagala amazzi, era okuuma obukuumi obukakafu obw’ebiramu."
       },
       "dis_prdc": {
-        "name": "PRDC",
+        "name": "Obulwadde bw’okussa obw’embizzi Complex",
         "scientificName": "Porcine Respiratory Disease Complex",
-        "description": "Respiratory complex in grower pigs.",
-        "prevention": "Ventilation, vaccination, and density control."
+        "description": "Obulwadde bw’okussa obutabuddwamu akawuka ne bakitiriya ekivaako okusesema n’okukula obubi.",
+        "prevention": "Okulongoosa empewo, weewale okujjula, n’okufuga akawuka akasookerwako."
       },
       "dis_ergotism": {
-        "name": "Ergotism",
+        "name": "Obutwa mu Ergot (Ergotism) .",
         "scientificName": "Claviceps purpurea",
-        "description": "Poisoning from moldy rye/grains.",
-        "prevention": "Inspect feed grains for black ergot bodies."
+        "description": "Obutwa bwa ffene okuva mu mpeke z’emmere ey’empeke ezirimu ergot, ekivaako okufa kw’ebitundu by’omubiri.",
+        "prevention": "Screen feed grains for dark ergot bodies era okyuse emmere erimu obucaafu."
       },
       "dis_bvdv_pig": {
-        "name": "BVDV in Pigs",
+        "name": "Obulwadde bwa BVDV mu mbizzi",
         "scientificName": "Pestivirus",
-        "description": "Bovine Viral Diarrhea virus in swine.",
-        "prevention": "Isolate pigs from cattle."
+        "description": "Obulwadde bw’akawuka ka Bovine Viral Diarrhea virus okuva mu kukwatagana n’ente, ekivaako okuggyamu embuto.",
+        "prevention": "Embizzi zikuume nga zaawuddwa ku nte n’endiga, era zikugira okukwatagana kw’ebika ebisalagana."
       },
       "dis_endocarditis": {
-        "name": "Endocarditis",
+        "name": "Obulwadde bw’omutima obuva ku bakitiriya",
         "scientificName": "Streptococcal endocarditis",
-        "description": "Heart valve infection.",
-        "prevention": "Treat primary infections early."
+        "description": "Obulwadde bwa valve y’omutima ekivaako omutima okulemererwa n’okufa amangu mu kiseera ky’okunyigirizibwa.",
+        "prevention": "Yanguwa okujjanjaba endwadde z’ennyondo n’ebiwundu, era londa ku buzaale obusobola okukwatibwa."
       },
       "dis_polyserositis": {
-        "name": "Polyserositis",
+        "name": "Obulwadde bwa Mycoplasma Polycerositis",
         "scientificName": "Mycoplasma hyorhinis",
-        "description": "Infection of body cavity linings.",
-        "prevention": "Antibiotic treatment; minimize stress."
+        "description": "Okuzimba kw’amawuggwe, omutima n’ennyondo mu baana abaggya ku mabeere mu ngeri ya fibrinous.",
+        "prevention": "Kendeeza ku situleesi y’okuggya ku mabeere, weewale okutabula ebisasiro, era osse empewo ennungi."
       },
       "dis_congenital_tremor": {
-        "name": "Congenital Tremor",
+        "name": "Okukankana Okuzaaliranwa",
         "scientificName": "Atypical Porcine Pestivirus",
-        "description": "Shaky pig disease.",
-        "prevention": "Acclimatize gilts to farm before breeding."
+        "description": "Embeera y’obusimu mu baana b’embizzi abaakazaalibwa ekivaako okukankana okw’amaanyi.",
+        "prevention": "Weewale okukozesa ensigo okuva mu mbizzi ezikoseddwa era okendeeze ku situleesi y’okusiga ng’oli lubuto."
       }
     },
     "diagnosisMatches": "Clinical Diagnosis Matches",
@@ -1535,7 +1541,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 EMERGENCY BIOSECURITY PROTOCOL:",
     "clinicalDiagnosisMatches": "Okukwatagana kw'obujjanjabi",
     "hallmarkBadge": "Akabonero ak'amaanyi",
-    "hallmarkSignPresent": "Ekipande kya Hallmark ekiriwo: %1$s",
+    "hallmarkSignPresent": "Ekipande kya Hallmark ekiriwo: {sign}",
     "otherSignsWatch": "Obubonero obulala bw’olina okwegendereza:",
     "preventionTreatmentLabel": "Okuziyiza / Obujjanjabi: {treatment} .",
     "bio_proto_asf": "IMMEDIATE EMERGENCY QUARANTINE: African Swine Fever is a lethal, legally notifiable virus. 1) Lock down farm gates immediately. 2) Stop all movement of pigs, vehicles, feed, and manure. 3) Disinfect all boot baths and tyres with Virkon S or 2% caustic soda. 4) Contact your District/National Veterinary Officer immediately.",
@@ -1547,8 +1553,8 @@
     "bio_proto_vesicular_stomatitis": "REPORTABLE VESICULAR LESION ALERT: Vesicular Stomatitis is clinically indistinguishable from Foot and Mouth Disease. 1) Isolate infected pigs immediately. 2) Wear protective gloves. 3) Report to state veterinarian for lab differential diagnosis.",
     "bio_proto_senecavirus": "REPORTABLE VESICULAR DISEASE: Senecavirus A lesions are clinically indistinguishable from Foot and Mouth Disease (FMD). 1) Quarantine pen immediately. 2) Restrict off-farm movement. 3) Notify livestock veterinary authorities for mandatory differential PCR testing.",
     "bio_proto_svd": "REPORTABLE VESICULAR DISEASE: Swine Vesicular Disease (SVD). 1) Strict isolation of infected animals. 2) Restrict all vehicle and visitor movements. 3) Report to state animal health department immediately.",
-    "clinicalMatchPercent": "%1$d%% Okukwatagana kw'obujjanjabi",
-    "matchedSignsCount": "{matched}$d ya {total}$d obubonero",
+    "clinicalMatchPercent": "{percent}% Okukwatagana kw'obujjanjabi",
+    "matchedSignsCount": "{matched} ya {total} obubonero",
     "matchPercentSuffix": "({percent}% match)"
   },
   "HR": {
@@ -1983,7 +1989,7 @@
     "snooze1Month": "Omwezi 1",
     "deleteNotificationQuestion": "Okusazaamu Okumanyisibwa?",
     "deleteNotificationConfirm": "Okakasa nti oyagala kusazaamu kiwandiiko kino?",
-    "lastWeighedDaysAgo": "Embizzi #%1$s: Yasemba okupima %2$s ennaku eziyise",
+    "lastWeighedDaysAgo": "Embizzi #{tag}: Yasemba okupima {days} ennaku eziyise",
     "stockLeftMinFormat": "{current}: {unit} kkiro esigaddewo (Ekitono: {min} kkiro)",
     "pigs": "Embizzi",
     "pig": "Embizzi",

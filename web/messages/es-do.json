@@ -106,7 +106,13 @@
     "noActivities": "No hay actividades próximas",
     "allTasksCompleted": "¡Todas las tareas completadas!",
     "generalTask": "Tarea general",
-    "language": "Idioma"
+    "language": "Idioma",
+    "feed": "Alimentación",
+    "inventory": "Inventario de alimentos",
+    "calculator": "Calcular comida de puercos",
+    "mixFeed": "Mezclar alimento concentrado",
+    "analyzeFeed": "Analizar nutrientes del concentrado",
+    "marketHub": "Centro de Mercado"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -835,26 +841,26 @@
       "dis_asf": {
         "name": "Peste Porcina Africana (PPA)",
         "scientificName": "Asfivirus",
-        "description": "Enfermedad viral altamente contagiosa y mortal. No existe vacuna.",
-        "prevention": "Bioseguirdad estricta y restricción de acceso."
+        "description": "Una enfermedad viral altamente contagiosa y mortal prevalente en África Occidental. No existe vacuna.",
+        "prevention": "Bioseguridad estricta y restricción del acceso a la granja."
       },
       "dis_fmd": {
-        "name": "Fiebre Aftosa",
+        "name": "Fiebre Aftosa (FA)",
         "scientificName": "Aphthovirus",
-        "description": "Enfermedad viral que causa ampollas en boca y patas.",
-        "prevention": "Vacunación y control de movimiento."
+        "description": "Enfermedad viral que causa ampollas en la boca y los pies.",
+        "prevention": "Vacunación y control de movimientos."
       },
       "dis_prrs": {
-        "name": "PRRS (Orea Azul)",
+        "name": "PRRS (Oreja Azul)",
         "scientificName": "Arterivirus",
-        "description": "Causa fallas respiratorias y problemas reproductivos.",
-        "prevention": "Bioseguridad y vacunación de la piara."
+        "description": "Causa insuficiencia respiratoria y problemas reproductivos.",
+        "prevention": "Bioseguridad y vacunación del hato."
       },
       "dis_erysipelas": {
         "name": "Erisipela Porcina",
         "scientificName": "Erysipelothrix rhusiopathiae",
-        "description": "Infección bacteriana que causa lesiones en la piel y artritis.",
-        "prevention": "Vacunación regular e higiene."
+        "description": "Infección bacteriana que causa lesiones cutáneas distintivas y artritis.",
+        "prevention": "Vacunación regular e higiene de los corrales."
       },
       "dis_csf": {
         "name": "Peste Porcina Clásica",
@@ -865,26 +871,26 @@
       "dis_anthrax": {
         "name": "Ántrax",
         "scientificName": "Bacillus anthracis",
-        "description": "Enfermedad bacteriana grave que puede afectar a humanos.",
-        "prevention": "Vacunación y no abrir cadáveres."
+        "description": "Enfermedad bacteriana grave que puede afectar a los humanos.",
+        "prevention": "Vacunación y evitar abrir cadáveres."
       },
       "dis_brucellosis": {
         "name": "Brucelosis",
         "scientificName": "Brucella suis",
         "description": "Enfermedad bacteriana que causa fallas reproductivas.",
-        "prevention": "Pruebas, descarte y sanidad."
+        "prevention": "Pruebas, eliminación de animales positivos y saneamiento."
       },
       "dis_coccidiosis": {
-        "name": "Coccidiosis",
+        "name": "coccidiosis",
         "scientificName": "Isospora suis",
-        "description": "Enfermedad parasitaria que afecta principalmente lechones.",
-        "prevention": "Higiene en parideras."
+        "description": "Enfermedad parasitaria que afecta principalmente a los lechones.",
+        "prevention": "Higiene de la paridera."
       },
       "dis_pneumonia": {
         "name": "Neumonía Micoplásmica",
         "scientificName": "Mycoplasma hyopneumoniae",
-        "description": "Enfermedad respiratoria crónica que reduce el crecimiento.",
-        "prevention": "Vacunación y mejora de ventilación."
+        "description": "Enfermedad respiratoria crónica que conduce a un crecimiento deficiente.",
+        "prevention": "Vacunación y mejora de la ventilación."
       },
       "dis_salmonellosis": {
         "name": "Salmonelosis",
@@ -893,21 +899,21 @@
         "prevention": "Agua limpia e higiene."
       },
       "dis_ppv": {
-        "name": "Parvovirus Porcino (PPV)",
+        "name": "Parvovirus Porcina (PPV)",
         "scientificName": "Porcine Parvovirus",
-        "description": "Causa común de fallas reproductivas en cerdillas.",
-        "prevention": "Vacunación antes de la monta."
+        "description": "Causa común de falla reproductiva en cerditas.",
+        "prevention": "Vacunación antes del servicio."
       },
       "dis_rhinitis": {
         "name": "Rinitis Atrófica",
         "scientificName": "Bordetella bronchiseptica",
-        "description": "Causa deformación del hocico y problemas respiratorios.",
-        "prevention": "Vacunación y calidad de aire."
+        "description": "Causa distorsión del hocico y problemas respiratorios.",
+        "prevention": "Vacunación y calidad del aire."
       },
       "dis_leptospirosis": {
-        "name": "Leptospirosis",
+        "name": "leptospirosis",
         "scientificName": "Leptospira spp.",
-        "description": "Enfermedad bacteriana zoonótica que afecta riñones.",
+        "description": "Enfermedad bacteriana zoonótica que afecta los riñones.",
         "prevention": "Control de roedores y vacunación."
       },
       "dis_influenza": {
@@ -920,43 +926,43 @@
         "name": "Enfermedad del Edema",
         "scientificName": "Escherichia coli",
         "description": "Causada por toxinas de E. coli en lechones destetados.",
-        "prevention": "Mejora en sanidad y dieta."
+        "prevention": "Mejora del saneamiento y la dieta."
       },
       "dis_dysentery": {
         "name": "Disentería Porcina",
         "scientificName": "Brachyspira hyodysenteriae",
         "description": "Diarrea mucohemorrágica grave.",
-        "prevention": "Medicación en agua y desinfección."
+        "prevention": "Medicación del agua y desinfección."
       },
       "dis_mange": {
         "name": "Sarna Sarcóptica",
         "scientificName": "Sarcoptes scabiei",
-        "description": "Parasitosis cutánea que causa gran malestar.",
-        "prevention": "Tratamiento con acaricidas."
+        "description": "Enfermedad cutánea parasitaria que causa un malestar extremo.",
+        "prevention": "Tratamiento acaricida."
       },
       "dis_anemia": {
-        "name": "Anemia Ferropénica",
+        "name": "Anemia por Deficiencia de Hierro",
         "scientificName": "Deficiencia de Hierro",
-        "description": "Común en lechones sin acceso a tierra o suplementos.",
-        "prevention": "Inyección de hierro al nacer."
+        "description": "Común en lechones de interior sin suplementos de hierro.",
+        "prevention": "Inyecciones de hierro al nacer."
       },
       "dis_ulcers": {
         "name": "Úlceras Gástricas",
         "scientificName": "Gastric Ulcers",
         "description": "Causadas por alimento muy fino o estrés.",
-        "prevention": "Ajustar tamaño de partícula del alimento."
+        "prevention": "Ajustar el tamaño de partícula del alimento."
       },
       "dis_pss": {
-        "name": "Síndrome de Estrés Porcino",
+        "name": "Síndrome de Estrés Porcina",
         "scientificName": "Susceptibilidad genética",
-        "description": "Condición genética activada por el estrés.",
+        "description": "Condición genética desencadenada por el estrés.",
         "prevention": "Selección genética y manejo tranquilo."
       },
       "dis_tge": {
-        "name": "Gastroenteritis Transmisible (GET)",
+        "name": "Gastroenteritis Transmisible (TGE)",
         "scientificName": "Coronavirus",
         "description": "Enfermedad viral con alta mortalidad en lechones jóvenes.",
-        "prevention": "Bioseguridad."
+        "prevention": "Bioseguridad estricta y desinfección."
       },
       "dis_pasteurellosis": {
         "name": "Pasteurelosis",
@@ -965,39 +971,39 @@
         "prevention": "Antibióticos y ventilación."
       },
       "dis_strep": {
-        "name": "Streptococcus suis",
+        "name": "estreptococo suis",
         "scientificName": "S. suis",
         "description": "Infección bacteriana que causa meningitis.",
-        "prevention": "Antibióticos y reducción de estrés."
+        "prevention": "Antibióticos y reducción del estrés."
       },
       "dis_mycotoxicosis": {
         "name": "Micotoxicosis",
         "scientificName": "Micotoxicosis",
-        "description": "Causada por alimento contaminado con hongos.",
-        "prevention": "Secuestrantes de toxinas y almacenamiento seco."
+        "description": "Causada por alimento contaminado con moho.",
+        "prevention": "Aglutinantes de toxinas y almacenamiento en seco."
       },
       "dis_greasy_pig": {
-        "name": "Eczema Exudativo (Cerdo Graso)",
+        "name": "Enfermedad del Cerdo Graso",
         "scientificName": "Staphylococcus hyicus",
-        "description": "Infección bacteriana que causa lesiones grasosas.",
-        "prevention": "Sanidad y antibióticos."
+        "description": "Infección bacteriana que causa lesiones cutáneas grasosas.",
+        "prevention": "Saneamiento y antibióticos."
       },
       "dis_pseudorabies": {
         "name": "Pseudorrabia (Aujeszky)",
         "scientificName": "Suid herpesvirus 1",
-        "description": "Afecta sistemas nervioso y respiratorio.",
+        "description": "Enfermedad viral que afecta los sistemas nervioso y respiratorio.",
         "prevention": "Vacunación y programas de erradicación."
       },
       "dis_pcv2": {
-        "name": "Circovirus Porcino (PCV2)",
+        "name": "Circovirus Porcina (PCV2)",
         "scientificName": "Circovirus",
-        "description": "Causa desmedro y problemas respiratorios en crecimiento.",
+        "description": "Causa desmedro y problemas respiratorios en cerdos de crecimiento.",
         "prevention": "Vacunación."
       },
       "dis_ped": {
-        "name": "Diarrea Epidémica Porcina (DEP)",
+        "name": "Diarrea Epidémica Porcina (PED)",
         "scientificName": "Coronavirus",
-        "description": "Similar a la GET, altamente fatal en neonatos.",
+        "description": "Similar a la TGE, altamente fatal para los recién nacidos.",
         "prevention": "Bioseguridad estricta."
       },
       "dis_je": {
@@ -1009,38 +1015,38 @@
       "dis_rabies": {
         "name": "Rabia",
         "scientificName": "Lyssavirus",
-        "description": "Enfermedad viral fatal transmitida por mordidas.",
-        "prevention": "Vacunación de mascotas y control de fauna silvestre."
+        "description": "Enfermedad viral fatal generalmente por mordeduras.",
+        "prevention": "Vacunación de mascotas y control de vida silvestre."
       },
       "dis_pox": {
         "name": "Viruela Porcina",
         "scientificName": "Suipoxvirus",
-        "description": "Virosis cutánea, a menudo propagada por piojos.",
+        "description": "Enfermedad cutánea viral, a menudo propagada por piojos.",
         "prevention": "Control de piojos."
       },
       "dis_vs": {
         "name": "Estomatitis Vesicular",
         "scientificName": "Rhabdovirus",
-        "description": "Causa ampollas; se parece a la Fiebre Aftosa.",
+        "description": "Causa ampollas; se parece a la FA.",
         "prevention": "Control de insectos y cuarentena."
       },
       "dis_clostridial": {
         "name": "Enteritis Clostridial",
         "scientificName": "Clostridium perfringens",
-        "description": "Infección bacteriana que daña gravemente el intestino.",
+        "description": "Infección bacteriana que causa daños intestinales graves.",
         "prevention": "Vacunación de cerdas e higiene."
       },
       "dis_glassers": {
         "name": "Enfermedad de Glässer",
         "scientificName": "Haemophilus parasuis",
-        "description": "Inflamación de membranas en corazón, pulmones y articulaciones.",
-        "prevention": "Antibióticos y manejo de estrés."
+        "description": "Causa inflamación de membranas alrededor del corazón, pulmones y articulaciones.",
+        "prevention": "Antibióticos y manejo del estrés."
       },
       "dis_app": {
-        "name": "Pleuroponeumonía Porcina (APP)",
+        "name": "Pleuroponeumonía (APP)",
         "scientificName": "A. pleuropneumoniae",
-        "description": "Neumonía bacteriana severa.",
-        "prevention": "Antibióticos y mejora ambiental."
+        "description": "Neumonía bacteriana grave.",
+        "prevention": "Antibióticos y mejora del medio ambiente."
       },
       "dis_ileitis": {
         "name": "Ileítis (Lawsonia)",
@@ -1049,16 +1055,16 @@
         "prevention": "Vacunación y antibióticos."
       },
       "dis_tb": {
-        "name": "Tuberculosis",
+        "name": "tuberculosis",
         "scientificName": "Mycobacterium avium",
         "description": "Enfermedad bacteriana crónica.",
-        "prevention": "Control de aves y sanidad."
+        "prevention": "Protección contra aves y saneamiento."
       },
       "dis_tetanus": {
         "name": "Tétanos",
         "scientificName": "Clostridium tetani",
         "description": "Toxina bacteriana que afecta el sistema nervioso.",
-        "prevention": "Sanidad en cirugías/castración."
+        "prevention": "Saneamiento durante cirugía/castración."
       },
       "dis_eperythrozoonosis": {
         "name": "Eperitrozoonosis",
@@ -1069,25 +1075,25 @@
       "dis_ascaris": {
         "name": "Ascaris suum",
         "scientificName": "Lombriz Grande",
-        "description": "Parásito interno que daña pulmones e hígado.",
+        "description": "Parásito interno que causa daño pulmonar y hepático.",
         "prevention": "Desparasitación regular."
       },
       "dis_whipworms": {
-        "name": "Tricocéfalos",
+        "name": "Tricocéfalos (Whipworms)",
         "scientificName": "Trichuris suis",
-        "description": "Parásitos en el intestino grueso.",
-        "prevention": "Desparasitación y sanidad."
+        "description": "Parásito interno en el intestino grueso.",
+        "prevention": "Desparasitación y saneamiento."
       },
       "dis_lungworms": {
-        "name": "Gusanos del pulmón",
+        "name": "Metastrongylus (Gusanos pulmonares)",
         "scientificName": "Metastrongylus spp.",
-        "description": "Parásitos internos de los pulmones.",
+        "description": "Parásito interno de los pulmones.",
         "prevention": "Control de lombrices de tierra y desparasitación."
       },
       "dis_kidney_worms": {
-        "name": "Gusanos del riñón",
+        "name": "Gusanos del Riñón",
         "scientificName": "Stephanurus dentatus",
-        "description": "Afectan riñones e hígado.",
+        "description": "Parásito interno que afecta los riñones y el hígado.",
         "prevention": "Manejo e higiene."
       },
       "dis_lice": {
@@ -1100,30 +1106,30 @@
         "name": "Tiña",
         "scientificName": "Dermatofitosis",
         "description": "Infección fúngica de la piel.",
-        "prevention": "Sanidad y tratamiento tópico."
+        "prevention": "Saneamiento y tratamiento tópico."
       },
       "dis_mulberry_heart": {
         "name": "Enfermedad del Corazón de Mora",
         "scientificName": "Deficiencia Vit E/Se",
-        "description": "Deficiencia nutricional que afecta el corazón.",
+        "description": "Deficiencia nutricional que afecta al corazón.",
         "prevention": "Suplementación."
       },
       "dis_vit_a": {
-        "name": "Deficiencia Vitamina A",
+        "name": "Deficiencia de Vitamina A",
         "scientificName": "Deficiencia Vitamina A",
         "description": "Deficiencia nutricional.",
-        "prevention": "Ajuste de dieta."
+        "prevention": "Ajuste dietético."
       },
       "dis_rickets": {
         "name": "Raquitismo",
         "scientificName": "Deficiencia Vit D/Ca/P",
-        "description": "Afecta el crecimiento de los huesos.",
-        "prevention": "Minerales balanceados y luz solar."
+        "description": "Deficiencia nutricional que afecta el crecimiento óseo.",
+        "prevention": "Minerales equilibrados y luz solar."
       },
       "dis_salt_poisoning": {
-        "name": "Intoxicación por Sal (Privación de agua)",
+        "name": "Intoxicación por Sal",
         "scientificName": "Privación de agua",
-        "description": "Causada por falta de agua seguida de sobreconsumo.",
+        "description": "Causada por falta de agua seguida de consumo excesivo.",
         "prevention": "Acceso constante a agua fresca."
       },
       "dis_heat_stroke": {
@@ -1135,14 +1141,14 @@
       "dis_rectal_prolapse": {
         "name": "Prolapso Rectal",
         "scientificName": "Prolapso Rectal",
-        "description": "Suele seguir a tos, diarrea o estrés por frío.",
-        "prevention": "Tratar causa primaria y cirugía."
+        "description": "A menudo sigue a la tos, diarrea o estrés por frío.",
+        "prevention": "Tratar la causa primaria y cirugía."
       },
       "dis_umbilical_hernia": {
         "name": "Hernia Umbilical",
         "scientificName": "Hernia Umbilical",
-        "description": "Defecto de desarrollo o infección de ombligo.",
-        "prevention": "Sanidad y genética."
+        "description": "Defecto de desarrollo o infección del ombligo.",
+        "prevention": "Saneamiento y genética."
       },
       "dis_scrotal_hernia": {
         "name": "Hernia Escrotal",
@@ -1153,23 +1159,23 @@
       "dis_splayleg": {
         "name": "Splayleg (Patas Abiertas)",
         "scientificName": "Hipoplasia miofibrilar",
-        "description": "Lechones nacidos sin poder pararse.",
-        "prevention": "Vendaje de patas y tracción en suelo."
+        "description": "Lechones nacidos incapaces de pararse con las patas traseras.",
+        "prevention": "Vendar las patas y tracción en el suelo."
       },
       "dis_vulvovaginitis": {
-        "name": "Vulvovaginitis",
+        "name": "vulvovaginitis",
         "scientificName": "Toxicidad por Zearalenona",
-        "description": "Causada por toxinas de hongos en el alimento.",
-        "prevention": "Cambiar fuente de alimento."
+        "description": "Causada por toxinas fúngicas estrogénicas en el alimento.",
+        "prevention": "Cambiar la fuente de alimento."
       },
       "dis_seneca": {
-        "name": "Virus de Seneca Valley (SVV)",
+        "name": "Virus del Valle de Seneca (SVV)",
         "scientificName": "Senecavirus A",
-        "description": "Causa ampollas similares a la Aftosa.",
+        "description": "Causa ampollas similares a la FA.",
         "prevention": "Bioseguridad y diagnóstico."
       },
       "dis_deltacoronavirus": {
-        "name": "Deltacoronavirus Porcino",
+        "name": "Deltacoronavirus Porcina",
         "scientificName": "PDCoV",
         "description": "Diarrea viral en todas las edades.",
         "prevention": "Bioseguridad."
@@ -1189,308 +1195,308 @@
       "dis_vesicular": {
         "name": "Enfermedad Vesicular Porcina",
         "scientificName": "Enterovirus",
-        "description": "Virosis que imita a la Fiebre Aftosa.",
+        "description": "Enfermedad viral que imita a la FA.",
         "prevention": "Cuarentena estricta."
       },
       "dis_melioidosis": {
-        "name": "Melioidosis",
+        "name": "melioidosis",
         "scientificName": "Burkholderia pseudomallei",
-        "description": "Bacteriosis del suelo/agua.",
+        "description": "Enfermedad bacteriana del suelo/agua.",
         "prevention": "Agua limpia e higiene."
       },
       "dis_trypanosomiasis": {
-        "name": "Tripanosomiasis",
+        "name": "Tripanossomíase",
         "scientificName": "Trypanosoma spp.",
-        "description": "Enfermedad por protozoarios transmitida por moscas.",
+        "description": "Enfermedad protozoaria transmitida por la mosca tsetsé.",
         "prevention": "Control de moscas y medicación."
       },
       "dis_cysticercosis": {
         "name": "Cisticercosis",
         "scientificName": "Larvas de Taenia solium",
-        "description": "Etapa larvaria de la solitaria humana en el cerdo.",
-        "prevention": "Evitar acceso a desechos humanos."
+        "description": "Etapa larvaria de la tenia humana en el músculo del cerdo.",
+        "prevention": "Evitar el acceso a desechos humanos."
       },
       "dis_toxoplasmosis": {
-        "name": "Toxoplasmosis",
+        "name": "toxoplasmosis",
         "scientificName": "Toxoplasma gondii",
-        "description": "Infección zoonótica por protozoarios.",
+        "description": "Infección protozoaria zoonótica.",
         "prevention": "Control de gatos y bioseguridad."
       },
       "dis_listeriosis": {
-        "name": "Listeriosis",
+        "name": "listeriosis",
         "scientificName": "Listeria monocytogenes",
         "description": "Infección bacteriana del sistema nervioso.",
-        "prevention": "Sanidad e higiene de alimento."
+        "prevention": "Saneamiento e higiene de los alimentos."
       },
       "dis_ear_necrosis": {
-        "name": "Necrosis de Oreja",
+        "name": "Necrosis de la Oreja",
         "scientificName": "Necrosis de Oreja",
-        "description": "Causada por estrés, hacinamiento o infección.",
-        "prevention": "Reducir densidad y tratar infección."
+        "description": "A menudo causada por estrés, hacinamiento o infección.",
+        "prevention": "Reducir la densidad y tratar la infección secundaria."
       },
       "dis_sunburn": {
         "name": "Quemadura Solar",
         "scientificName": "Dermatitis solar",
-        "description": "Afecta cerdos blancos en exterior.",
-        "prevention": "Proveer sombra."
+        "description": "Afecta a cerdos de piel blanca en exteriores.",
+        "prevention": "Proporcionar sombra."
       },
       "dis_tail_biting": {
         "name": "Mordedura de Cola",
         "scientificName": "Estrés conductual",
-        "description": "Problema de conducta por estrés o aburrimiento.",
-        "prevention": "Reducir estrés y enriquecer entorno."
+        "description": "Problema de comportamiento debido al estrés/aburrimiento.",
+        "prevention": "Reducir el estrés y enriquecer el medio ambiente."
       },
       "dis_navel_ill": {
-        "name": "Infección de Ombligo",
+        "name": "Infección del Ombligo (Navel Ill)",
         "scientificName": "Infección umbilical",
-        "description": "Infección del cordón al nacer.",
-        "prevention": "Desinfección con yodo al nacer."
+        "description": "Infección del cordón umbilical al nacer.",
+        "prevention": "Desinfección con yodo al nacer y saneamiento."
       },
       "dis_iron_toxicity": {
         "name": "Toxicidad por Hierro",
         "scientificName": "Exceso de hierro",
-        "description": "Exceso de administración que causa muerte súbita.",
-        "prevention": "Inyectar dosis exacta."
+        "description": "Puede ocurrir si se inyecta hierro a lechones deficientes en Vit E.",
+        "prevention": "Asegurar que la dieta de la cerda esté equilibrada."
       },
       "dis_aflatoxicosis": {
         "name": "Aflatoxicosis",
         "scientificName": "Toxina de Aspergillus flavus",
-        "description": "Envenenamiento por toxinas fúngicas.",
-        "prevention": "Evitar alimento mohoso."
+        "description": "Envenenamiento por toxinas de granos o alimentos mohosos que causan daño hepático e ictericia.",
+        "prevention": "Evitar alimento mohoso, almacenar granos en seco y usar secuestrantes de toxinas."
       },
       "dis_parakeratosis": {
-        "name": "Paraqueratosis",
+        "name": "Paraqueratosis (Deficiencia de zinc)",
         "scientificName": "Deficiencia de Zinc",
-        "description": "Deficiencia de zinc en cerdos.",
-        "prevention": "Niveles adecuados de zinc en la dieta."
+        "description": "Enfermedad nutricional que causa lesiones cutáneas severas, costrosas y engrosadas.",
+        "prevention": "Asegurar relación calcio-zinc equilibrada y suplementar con zinc."
       },
       "dis_biotin_deficiency": {
-        "name": "Deficiencia de Biotina",
+        "name": "Deficiencia de biotina",
         "scientificName": "Deficiencia de Vitamina H",
-        "description": "Deficiencia de biotina.",
-        "prevention": "Suplementos de biotina."
+        "description": "Deficiencia nutricional que causa pezuñas agrietadas, lesiones en la piel y cojera.",
+        "prevention": "Suplementar dieta con biotina y evitar pisos de concreto húmedos o rugosos."
       },
       "dis_gossypol_toxicity": {
-        "name": "Toxicidad por Gosipol",
+        "name": "Toxicidad por gosipol",
         "scientificName": "Intoxicación por gosipol",
-        "description": "Envenenamiento por harina de semilla de algodón.",
-        "prevention": "Limitar harina de algodón cruda."
+        "description": "Intoxicación por alimentar con harina de algodón cruda o en exceso, causando dificultad respiratoria.",
+        "prevention": "Limitar harina de algodón en la dieta y usar sulfato de hierro."
       },
       "dis_cassava_poisoning": {
-        "name": "Intoxicación por Yuca",
+        "name": "Intoxicación por yuca",
         "scientificName": "Glucósidos cianogénicos",
-        "description": "Envenenamiento por cianuro de yuca cruda.",
-        "prevention": "Cocinar o fermentar la yuca."
+        "description": "Envenenamiento por cianuro debido a raíces o cáscaras de yuca crudas o mal procesadas.",
+        "prevention": "Pelar, hervir, secar al sol o fermentar la yuca antes de ofrecerla."
       },
       "dis_sweet_potato_toxicity": {
-        "name": "Toxicidad por Camote",
+        "name": "Intoxicación por camote",
         "scientificName": "Toxicidad por Ipomeamarona",
-        "description": "Envenenamiento por ipomeamarona.",
-        "prevention": "No alimentar con camotes dañados o mohosos."
+        "description": "Envenenamiento por camotes mohosos, causando dificultad respiratoria severa.",
+        "prevention": "Desechar camotes dañados o mohosos; alimentar solo con tubérculos sanos."
       },
       "dis_mma": {
-        "name": "Síndrome MMA",
+        "name": "Disgalactia postparto (MMA)",
         "scientificName": "Mastitis-Metritis-Agalactia",
-        "description": "Infección post-parto en cerdas.",
-        "prevention": "Limpieza de parideras y nutrición."
+        "description": "Mastitis, metritis y agalactia que causan fiebre y falta de leche en cerdas después del parto.",
+        "prevention": "Mantener higiene estricta en parideras y asegurar nutrición adecuada de la cerda."
       },
       "dis_pwd": {
-        "name": "Diarrea Post-Destete",
+        "name": "Diarrea post-destete (DPD)",
         "scientificName": "Escherichia coli (F4/F18)",
-        "description": "Colibacilosis en cerdos destetados.",
-        "prevention": "Sanidad y ajuste de dieta."
+        "description": "Diarrea bacteriana en lechones poco después del destete, causando deshidratación.",
+        "prevention": "Reducir estrés del destete, mantener alta higiene y dar agua limpia."
       },
       "dis_trichinellosis": {
-        "name": "Triquinosis",
+        "name": "Triquinelosis",
         "scientificName": "Trichinella spiralis",
-        "description": "Infección zoonótica parasitaria.",
-        "prevention": "No alimentar con desechos crudos; control de plagas."
+        "description": "Enfermedad parasitaria zoonótica por comer restos de carne cruda, causa rigidez muscular.",
+        "prevention": "No alimentar con residuos crudos, hervir restos de comida por 30 minutos."
       },
       "dis_hydatid_disease": {
         "name": "Hidatidosis",
         "scientificName": "Echinococcus granulosus",
-        "description": "Infección por larvas de solitaria.",
-        "prevention": "Desparasitar perros; no dar vísceras crudas."
+        "description": "Infección parasitaria larvaria que causa quistes llenos de líquido en los órganos.",
+        "prevention": "Desparasitar perros de granja regularmente y evitar que coman vísceras crudas."
       },
       "dis_phe": {
-        "name": "Enteropatía Hemorrágica Proliferativa",
+        "name": "Enteropatía hemorrágica porcina",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Sangrado intestinal agudo.",
-        "prevention": "Vacunación e higiene."
+        "description": "Diarrea sanguinolenta aguda y muerte súbita en cerdos de engorde.",
+        "prevention": "Mantener buena higiene y usar antibióticos adecuados bajo supervisión veterinaria."
       },
       "dis_mycoplasma_arthritis": {
-        "name": "Artritis por Micoplasma",
+        "name": "Artritis por micoplasma",
         "scientificName": "Mycoplasma hyosynoviae",
-        "description": "Enfermedad bacteriana de articulaciones.",
-        "prevention": "Sanidad y cuarentena."
+        "description": "Infección bacteriana que causa articulaciones hinchadas, cojera y debilidad en patas.",
+        "prevention": "Mejorar alojamiento, reducir densidad y tratar de forma temprana."
       },
       "dis_foot_rot": {
-        "name": "Pododermatitis (Gabarro)",
+        "name": "Pedero (Necrobilosis)",
         "scientificName": "Fusobacterium necrophorum",
-        "description": "Infección del pie que causa cojera.",
-        "prevention": "Mantener corrales secos; cuidado de cascos."
+        "description": "Infección bacteriana que entra por lesiones en pezuña, causando pudrición y cojera.",
+        "prevention": "Reparar concreto rugoso, mantener pisos secos y usar pediluvios."
       },
       "dis_babesiosis": {
-        "name": "Babesiosis",
+        "name": "Babesiosis transmitida por garrapatas",
         "scientificName": "Babesia trautmanni",
-        "description": "Infección por protozoarios transmitida por garrapatas.",
-        "prevention": "Control de garrapatas."
+        "description": "Parásito sanguíneo transmitido por garrapatas que causa fiebre alta, anemia y orina oscura.",
+        "prevention": "Controlar garrapatas con acaricidas y mantener corrales limpios de maleza."
       },
       "dis_anaplasmosis": {
-        "name": "Anaplasmosis",
+        "name": "anaplasmosis",
         "scientificName": "Anaplasma marginale",
-        "description": "Infección sanguínea.",
-        "prevention": "Control de vectores."
+        "description": "Infección bacteriana transmitida por garrapatas que causa anemia, fiebre e ictericia.",
+        "prevention": "Implementar programas de control de vectores y garrapatas."
       },
       "dis_sow_hysteria": {
-        "name": "Histeria de la Cerda",
+        "name": "Histeria de la cerda",
         "scientificName": "Psicosis puerperal",
-        "description": "Agresión o pánico post-parto.",
-        "prevention": "Proveer área de parto tranquila."
+        "description": "Trastorno de conducta donde cerdas primerizas se vuelven agresivas y muerden a los lechones.",
+        "prevention": "Proporcionar ambiente tranquilo para el parto, vigilar primerizas y usar sedantes si es necesario."
       },
       "dis_thorny_headed_worm": {
-        "name": "Gusano de Cabeza Espinosa",
+        "name": "Gusano de cabeza espinosa",
         "scientificName": "Macracanthorhynchus hirudinaceus",
-        "description": "Parásito intestinal.",
-        "prevention": "Evitar acceso a larvas de escarabajo."
+        "description": "Parásito intestinal adquirido al comer escarabajos, causa perforación del intestino.",
+        "prevention": "Evitar pastoreo en suelos con escarabajos y usar desparasitantes."
       },
       "dis_strongyloidiasis": {
         "name": "Estrongiloidiasis",
         "scientificName": "Strongyloides ransomi",
-        "description": "Infección por nematodos.",
-        "prevention": "Mantener corrales secos; desparasitación."
+        "description": "Gusano intestinal que causa diarrea severa y alta mortalidad en lechones.",
+        "prevention": "Mantener parideras limpias y secas, desparasitar cerdas antes del parto."
       },
       "dis_hyostrongylosis": {
-        "name": "Gusano Rojo del Estómago",
+        "name": "Gusano rojo del estómago",
         "scientificName": "Hyostrongylus rubidus",
-        "description": "Parásito en cerdos de pastoreo.",
-        "prevention": "Gestión de pastos y desparasitación."
+        "description": "Infección estomacal por gusanos que causa gastritis, anemia y pérdida de peso.",
+        "prevention": "Rotar pasturas, mantener alojamiento seco y desparasitar regularmente."
       },
       "dis_oesophagostomiasis": {
-        "name": "Gusano Nodular",
+        "name": "Esofagostomiasis (Gusano nodular)",
         "scientificName": "Oesophagostomum spp.",
-        "description": "Parásito intestinal.",
-        "prevention": "Desparasitación y sanidad."
+        "description": "Parásito intestinal que causa nódulos en la pared del intestino, provocando delgadez.",
+        "prevention": "Higiene regular de corrales y uso rutinario de antihelmínticos de amplio espectro."
       },
       "dis_fascioliasis": {
-        "name": "Fasciolosis",
+        "name": "Fasciolasis (Duela del hígado)",
         "scientificName": "Fasciola gigantica",
-        "description": "Infección por duela del hígado.",
-        "prevention": "Control de caracoles; evitar pastos húmedos."
+        "description": "Parásito que afecta el hígado, común en pastos húmedos o pantanosos.",
+        "prevention": "Evitar el pastoreo de cerdos en áreas pantanosas y controlar caracoles de lodo."
       },
       "dis_emcv": {
-        "name": "EMCV",
+        "name": "Encefalomiocarditis (EMCV)",
         "scientificName": "Cardiovirus",
-        "description": "Miocarditis viral y fallas reproductivas.",
-        "prevention": "Control de roedores (ellos lo propagan)."
+        "description": "Infección viral transmitida por roedores que causa insuficiencia cardíaca súbita y aborto.",
+        "prevention": "Implementar control estricto de roedores y proteger el alimento contra contaminación."
       },
       "dis_demodectic_mange": {
-        "name": "Sarna Demodécica",
+        "name": "Sarna demodéctica",
         "scientificName": "Demodex phylloides",
-        "description": "Infección por ácaros.",
-        "prevention": "Tratamiento acaricida."
+        "description": "Ácaro microscópico de la piel que causa manchas escamosas y pequeñas pústulas.",
+        "prevention": "Mejorar nutrición, aislar animales afectados y aplicar acaricidas."
       },
       "dis_pityriasis_rosea": {
-        "name": "Pitiriasis Rosada",
+        "name": "Pitiriasis rosada",
         "scientificName": "Pseudo-tiña",
-        "description": "Condición cutánea no contagiosa.",
-        "prevention": "Recuperación espontánea; limpieza."
+        "description": "Condición de la piel no contagiosa en cerdos jóvenes que forma costras en anillo.",
+        "prevention": "Suele curarse sola; mantener cama limpia y seca, y reducir estrés."
       },
       "dis_photosensitization": {
         "name": "Fotosensibilización",
         "scientificName": "Dermatitis solar",
-        "description": "Hipersensibilidad cutánea a la luz solar.",
-        "prevention": "Evitar luz directa; revisar plantas del pasto."
+        "description": "Reacción cutánea severa a la luz solar en cerdos blancos tras comer ciertas plantas.",
+        "prevention": "Proporcionar sombra, eliminar malezas sensibilizantes y resguardar a los cerdos."
       },
       "dis_shoulder_ulcers": {
-        "name": "Úlceras de Hombro",
+        "name": "Úlceras de hombro en cerdas",
         "scientificName": "Úlceras por decúbito",
-        "description": "Llagas en cerdas flacas en suelos duros.",
-        "prevention": "Camas suaves y mejor alimentación."
+        "description": "Llagas de presión en los hombros de cerdas delgadas alojadas en concreto duro.",
+        "prevention": "Proporcionar cama suave, mantener cerdas en buena condición corporal y usar tapetes."
       },
       "dis_ear_biting": {
-        "name": "Mordedura de Oreja",
+        "name": "Canibalismo de orejas",
         "scientificName": "Respuesta al estrés",
-        "description": "Conducta debida a estrés.",
-        "prevention": "Reducir densidad; enriquecer entorno."
+        "description": "Conducta anormal donde los cerdos muerden las orejas de sus compañeros, causando necrosis.",
+        "prevention": "Reducir hacinamiento, mejorar ventilación y dar enriquecimiento (cadenas)."
       },
       "dis_gastric_torsion": {
-        "name": "Torsión Gástrica",
+        "name": "Torsión gástrica (Timpanismo)",
         "scientificName": "Vólvulo gástrico",
-        "description": "Estómago torcido.",
-        "prevention": "Evitar comidas muy grandes de una vez."
+        "description": "Hinchazón súbita y torsión del estómago, provocando muerte rápida.",
+        "prevention": "Evitar comidas copiosas tras ayunos largos y dividir la ración diaria."
       },
       "dis_c_difficile": {
-        "name": "Infección por C. difficile",
+        "name": "Infección por Clostridium difficile",
         "scientificName": "Clostridioides difficile",
-        "description": "Diarrea bacteriana en lechones.",
-        "prevention": "Ambiente limpio y ventilación."
+        "description": "Infección bacteriana en lechones recién nacidos que causa diarrea acuosa e hinchazón.",
+        "prevention": "Limpiar y desinfectar parideras a fondo, y asegurar consumo temprano de calostro."
       },
       "dis_cold_stress": {
-        "name": "Estrés por Frío",
+        "name": "Estrés por frío (Hipotermia)",
         "scientificName": "Susceptibilidad a hipotermia",
-        "description": "Enfriamiento en lechones.",
-        "prevention": "Lámparas de calor y cama seca."
+        "description": "Enfriamiento corporal grave en lechones, causa temblores y alta mortalidad.",
+        "prevention": "Proporcionar lámparas de calor, cajas térmicas y evitar corrientes de aire."
       },
       "dis_necrotic_enteritis": {
-        "name": "Enteritis Necrótica",
+        "name": "Enteritis necrótica",
         "scientificName": "Clostridium perfringens Tipo C",
-        "description": "Infección intestinal clostridial.",
-        "prevention": "Vacunación de cerdas y sanidad."
+        "description": "Toxina bacteriana que causa diarrea sanguinolenta grave y alta mortalidad en lechones.",
+        "prevention": "Vacinar cerdas antes del parto y mantener higiene absoluta."
       },
       "dis_navel_bleeding": {
-        "name": "Sangrado de Ombligo",
+        "name": "Sangrado umbilical",
         "scientificName": "Hemorragia umbilical",
-        "description": "Sangrado del cordón.",
-        "prevention": "Amarrar ombligos; revisar Vit K en dieta."
+        "description": "Hemorragia excesiva del cordón umbilical en lechones recién nacidos.",
+        "prevention": "Atar cordones umbilicales al nacer, evitar alimento con micotoxinas en cerdas."
       },
       "dis_spirochetal_colitis": {
-        "name": "Colitis Espiroquetal",
+        "name": "Colitis espiroquética porcina",
         "scientificName": "Brachyspira pilosicoli",
-        "description": "Infección del intestino grueso.",
-        "prevention": "Medicación y sanidad."
+        "description": "Diarrea leve en cerdos en crecimiento que afecta la ganancia de peso.",
+        "prevention": "Desinfectar comederos y tratar cerdos afectados con antibióticos."
       },
       "dis_salmonella_septicemia": {
         "name": "Septicemia por Salmonella",
         "scientificName": "Salmonella choleraesuis",
-        "description": "Infección en sangre por Salmonella.",
-        "prevention": "Agua limpia; bioseguridad."
+        "description": "Infección grave en sangre por Salmonella que causa piel morada y muerte rápida.",
+        "prevention": "Aislar enfermos, medicar el agua y mantener bioseuridad estricta."
       },
       "dis_prdc": {
-        "name": "PRDC",
+        "name": "Complejo respiratorio porcino (CRP)",
         "scientificName": "Complejo Respiratorio Porcino",
-        "description": "Problemas respiratorios en crecimiento.",
-        "prevention": "Ventilación, vacunas y control de densidad."
+        "description": "Infección respiratoria mixta viral y bacteriana que causa tos y retraso en crecimiento.",
+        "prevention": "Mejorar ventilación, evitar hacinamiento y controlar virus primarios."
       },
       "dis_ergotism": {
         "name": "Ergotismo",
         "scientificName": "Claviceps purpurea",
-        "description": "Envenenamiento por granos mohosos.",
-        "prevention": "Inspeccionar granos."
+        "description": "Envenenamiento por hongos de granos con cornezuelo, provoca necrosis de tejidos.",
+        "prevention": "Limpiar granos de cornezuelo oscuro y reemplazar alimento contaminado."
       },
       "dis_bvdv_pig": {
-        "name": "BVDV en Cerdos",
+        "name": "Infección por BVDV en cerdos",
         "scientificName": "Pestivirus",
-        "description": "Virus de la Diarrea Viral Bovina en porcinos.",
-        "prevention": "Aislar cerdos de vacas."
+        "description": "Infección por el virus de la diarrea viral bovina por contacto con vacas, causa abortos.",
+        "prevention": "Separar cerdos de vacas/ovejas y restringir contacto entre especies."
       },
       "dis_endocarditis": {
-        "name": "Endocarditis",
+        "name": "Endocarditis bacteriana",
         "scientificName": "Endocarditis estreptocócica",
-        "description": "Infección de válvulas cardiacas.",
-        "prevention": "Tratar infecciones primarias pronto."
+        "description": "Infección en válvulas del corazón que causa paro cardíaco ante situaciones de estrés.",
+        "prevention": "Tratar heridas y poliartritis a tiempo, evitar líneas genéticas susceptibles."
       },
       "dis_polyserositis": {
-        "name": "Poliserositis",
+        "name": "Poliserositis por micoplasma",
         "scientificName": "Mycoplasma hyorhinis",
-        "description": "Infección de cavidades corporales.",
-        "prevention": "Antibióticos; minimizar estrés."
+        "description": "Inflamación con fibrina en pleura, peritoneo y articulaciones en lechones destetados.",
+        "prevention": "Minimizar estrés del destete, evitar mezclar camadas y ventilar bien."
       },
       "dis_congenital_tremor": {
-        "name": "Temblor Congénito",
+        "name": "Temblor congénito",
         "scientificName": "Pestivirus porcino atípico",
-        "description": "Enfermedad del cerdo tembloroso.",
-        "prevention": "Acclimatar cerdillas a la granja antes de monta."
+        "description": "Trastorno neurológico en lechones recién nacidos que causa temblores severos.",
+        "prevention": "Evitar usar semen de machos afectados y reducir estrés en cerdas gestantes."
       }
     },
     "diagnosisMatches": "Coincidencias de diagnóstico clínico",
@@ -1502,7 +1508,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 PROTOCOLO DE BIOSEGURIDAD DE EMERGENCIA:",
     "clinicalDiagnosisMatches": "Coincidencias de diagnóstico clínico",
     "hallmarkBadge": "Signo clave",
-    "hallmarkSignPresent": "Signo distintivo presente: %1$s",
+    "hallmarkSignPresent": "Signo distintivo presente: {sign}",
     "otherSignsWatch": "Otras señales a tener en cuenta:",
     "preventionTreatmentLabel": "Prevención/Tratamiento: {treatment}",
     "bio_proto_asf": "CUARENTENA DE EMERGENCIA INMEDIATA: La Peste Porcina Africana es un virus letal y de notificación obligatoria. 1) Cierre las puertas de la granja de inmediato. 2) Detenga todo movimiento de cerdos, vehículos, alimento y estiércol. 3) Desinfecte pediluvios y ruedas con Virkon S o soda cáustica al 2%. 4) Contacte a las autoridades veterinarias de inmediato.",
@@ -1514,8 +1520,8 @@
     "bio_proto_vesicular_stomatitis": "ALERTA DE LESIÓN VESICULAR REPORTABLE: La Estomatitis Vesicular es clínicamente indistinguible de la Fiebre Aftosa. 1) Aísle cerdos infectados de inmediato. 2) Use guantes protectores. 3) Reporte al veterinario oficial para diagnóstico diferencial de laboratorio.",
     "bio_proto_senecavirus": "ENFERMEDAD VESICULAR REPORTABLE: Las lesiones de Senecavirus A son indistinguibles de la Fiebre Aftosa (FA). 1) Cuarentena inmediata del corral. 2) Restrinja movimiento fuera de la granja. 3) Notifique a las autoridades veterinarias para prueba PCR diferencial obligatoria.",
     "bio_proto_svd": "ENFERMEDAD VESICULAR REPORTABLE: Enfermedad Vesicular Porcina (EVP). 1) Aislamiento estricto de animales infectados. 2) Restrinja movimientos de vehículos y visitantes. 3) Reporte al departamento de salud animal de inmediato.",
-    "clinicalMatchPercent": "%1$d%% Coincidencia clínica",
-    "matchedSignsCount": "{matched}$d de {total}$d signos",
+    "clinicalMatchPercent": "{percent}% Coincidencia clínica",
+    "matchedSignsCount": "{matched} de {total} signos",
     "matchPercentSuffix": "({percent}% de coincidencia)"
   },
   "HR": {
@@ -1932,7 +1938,7 @@
     "snooze1Month": "1 Mes",
     "deleteNotificationQuestion": "¿Eliminar Notificación?",
     "deleteNotificationConfirm": "¿Está seguro de que desea eliminar esta notificación?",
-    "lastWeighedDaysAgo": "Cerdo #%1$s: Último pesaje hace %2$s días",
+    "lastWeighedDaysAgo": "Cerdo #{tag}: Último pesaje hace {days} días",
     "stockLeftMinFormat": "{current}: {unit} kg restantes (Mín: {min} kg)",
     "pigs": "Cerdos",
     "pig": "Cerdo",

@@ -133,7 +133,13 @@
     "noActivities": "No upcoming activities",
     "allTasksCompleted": "All tasks are completed!",
     "generalTask": "General Task",
-    "language": "Language"
+    "language": "Language",
+    "feed": "Feed",
+    "inventory": "Feed Inventory",
+    "calculator": "Calculate Feed",
+    "mixFeed": "Mix Feed",
+    "analyzeFeed": "Analyze Feed",
+    "marketHub": "Market Hub"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -1291,248 +1297,248 @@
       "dis_iron_toxicity": {
         "name": "Iron Toxicity",
         "scientificName": "Ferrous excess",
-        "description": "Excess iron administration leading to sudden death.",
-        "prevention": "Inject accurate dosage."
+        "description": "Can occur if iron is injected into Vit E deficient piglets.",
+        "prevention": "Ensure sow diet is balanced."
       },
       "dis_aflatoxicosis": {
         "name": "Aflatoxicosis",
         "scientificName": "Aspergillus flavus toxin",
-        "description": "Fungal toxin poisoning.",
-        "prevention": "Avoid moldy feed and use toxin binders."
+        "description": "Toxin poisoning from moldy grains or feed causing liver damage and jaundice.",
+        "prevention": "Avoid feeding moldy feed, store grains in dry conditions, and use toxin binders."
       },
       "dis_parakeratosis": {
-        "name": "Parakeratosis",
+        "name": "Parakeratosis (Zinc Deficiency)",
         "scientificName": "Zinc deficiency",
-        "description": "Zinc deficiency in swine.",
-        "prevention": "Ensure adequate zinc levels in diet."
+        "description": "Nutritional disease causing severe crusty, thickened skin lesions.",
+        "prevention": "Ensure balanced calcium-to-zinc ratio in feed and provide zinc supplements."
       },
       "dis_biotin_deficiency": {
         "name": "Biotin Deficiency",
         "scientificName": "Vitamin H deficiency",
-        "description": "Biotin deficiency in swine.",
-        "prevention": "Provide biotin supplements."
+        "description": "Nutritional deficiency causing cracked hooves, skin lesions, and lameness.",
+        "prevention": "Supplement diet with biotin and avoid rough, wet concrete floors."
       },
       "dis_gossypol_toxicity": {
         "name": "Gossypol Toxicity",
         "scientificName": "Gossypol poisoning",
-        "description": "Cottonseed meal poisoning.",
-        "prevention": "Limit raw cottonseed meal in feed."
+        "description": "Poisoning from feeding raw or excess cottonseed meal, causing respiratory distress.",
+        "prevention": "Limit cottonseed meal in diet and use iron sulfate to neutralize gossypol."
       },
       "dis_cassava_poisoning": {
         "name": "Cassava Poisoning",
         "scientificName": "Cyanogenic glycosides",
-        "description": "Cyanide poisoning from raw cassava.",
-        "prevention": "Cook or ferment cassava before feeding."
+        "description": "Cyanide poisoning from raw or improperly processed cassava roots or peels.",
+        "prevention": "Peel, boil, sun-dry, or ferment cassava before feeding."
       },
       "dis_sweet_potato_toxicity": {
         "name": "Sweet Potato Toxicity",
         "scientificName": "Ipomeamarone toxicity",
-        "description": "Ipomeamarone poisoning.",
-        "prevention": "Do not feed moldy or damaged sweet potatoes."
+        "description": "Poisoning from moldy sweet potatoes, causing severe respiratory distress.",
+        "prevention": "Discard damaged or moldy sweet potatoes; feed only healthy tubers."
       },
       "dis_mma": {
-        "name": "MMA Syndrome",
+        "name": "Postpartum Dysgalactia (MMA)",
         "scientificName": "Mastitis-Metritis-Agalactia",
-        "description": "Post-farrowing infection in sows.",
-        "prevention": "Clean farrowing pens and proper nutrition."
+        "description": "Mastitis, metritis, and agalactia causing fever and lack of milk in sows after farrowing.",
+        "prevention": "Maintain strict farrowing pen hygiene and ensure adequate sow nutrition."
       },
       "dis_pwd": {
-        "name": "Post-Weaning Diarrhea",
+        "name": "Post-Weaning Diarrhea (PWD)",
         "scientificName": "Escherichia coli (F4/F18)",
-        "description": "Colibacillosis in weaned pigs.",
-        "prevention": "Sanitation and diet adjustment."
+        "description": "Bacterial diarrhea in piglets shortly after weaning, causing dehydration.",
+        "prevention": "Reduce weaning stress, maintain high sanitation, and provide clean drinking water."
       },
       "dis_trichinellosis": {
         "name": "Trichinellosis",
         "scientificName": "Trichinella spiralis",
-        "description": "Zoonotic parasitic infection.",
-        "prevention": "Do not feed raw garbage; pest control."
+        "description": "Zoonotic parasitic disease from eating raw meat scraps, causing muscle stiffness.",
+        "prevention": "Do not feed raw swill, boil food scraps for 30 minutes, and control rodents."
       },
       "dis_hydatid_disease": {
-        "name": "Hydatid Disease",
+        "name": "Hydatidosis",
         "scientificName": "Echinococcus granulosus",
-        "description": "Larval tapeworm infection.",
-        "prevention": "Deworm farm dogs; prevent access to offal."
+        "description": "Parasitic larval infection causing fluid-filled cysts in organs.",
+        "prevention": "Deworm farm dogs regularly and prevent them from eating raw pig organs."
       },
       "dis_phe": {
-        "name": "Proliferative Hemorrhagic Enteropathy",
+        "name": "Porcine Hemorrhagic Enteropathy",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Acute intestinal bleeding in young adult pigs.",
-        "prevention": "Vaccination and hygiene."
+        "description": "Acute bloody diarrhea and sudden death in grower/finisher pigs.",
+        "prevention": "Maintain good sanitation and use appropriate antibiotics under vet guidance."
       },
       "dis_mycoplasma_arthritis": {
-        "name": "Mycoplasma Arthritis",
+        "name": "Mycoplasmal Arthritis",
         "scientificName": "Mycoplasma hyosynoviae",
-        "description": "Bacterial joint disease.",
-        "prevention": "Sanitation and quarantine."
+        "description": "Bacterial infection causing swollen joints, lameness, and leg weakness.",
+        "prevention": "Improve housing conditions, reduce stocking density, and treat early."
       },
       "dis_foot_rot": {
-        "name": "Foot Rot",
+        "name": "Foot Rot (Necrobacillosis)",
         "scientificName": "Fusobacterium necrophorum",
-        "description": "Infection of the foot causing lameness.",
-        "prevention": "Keep pens dry; treat hooves."
+        "description": "Bacterial infection entering hoof injuries, causing rotting and lameness.",
+        "prevention": "Repair rough concrete, keep floors dry, and use foot baths if needed."
       },
       "dis_babesiosis": {
-        "name": "Babesiosis",
+        "name": "Tick-borne Babesiosis",
         "scientificName": "Babesia trautmanni",
-        "description": "Tick-borne protozoan infection.",
-        "prevention": "Acaricide spray for tick control."
+        "description": "Tick-transmitted blood parasite causing high fever, anemia, and dark urine.",
+        "prevention": "Control ticks using acaricides and keep pens free of vegetation."
       },
       "dis_anaplasmosis": {
         "name": "Anaplasmosis",
         "scientificName": "Anaplasma marginale",
-        "description": "Blood infection in swine.",
-        "prevention": "Vector control."
+        "description": "Tick-borne bacterial infection causing anemia, fever, and jaundice.",
+        "prevention": "Implement vector and tick control programs."
       },
       "dis_sow_hysteria": {
         "name": "Sow Hysteria",
         "scientificName": "Puerperal psychosis",
-        "description": "Aggression or panic in sows after farrowing.",
-        "prevention": "Provide quiet farrowing area."
+        "description": "Behavioral disorder where farrowing sows become aggressive and bite piglets.",
+        "prevention": "Provide a quiet farrowing environment, supervise gilts, and use sedatives if needed."
       },
       "dis_thorny_headed_worm": {
-        "name": "Thorny-Headed Worm",
+        "name": "Thorny-headed Worm",
         "scientificName": "Macracanthorhynchus hirudinaceus",
-        "description": "Intestinal parasite.",
-        "prevention": "Prevent access to June beetle grubs."
+        "description": "Parasitic worm acquired by eating beetles, causing gut perforation.",
+        "prevention": "Avoid free-range rearing on beetle-infested soils and use dewormers."
       },
       "dis_strongyloidiasis": {
-        "name": "Strongyloidiasis",
+        "name": "Strongyloidiasis (Threadworm)",
         "scientificName": "Strongyloides ransomi",
-        "description": "Threadworm infection.",
-        "prevention": "Keep pens dry; deworming."
+        "description": "Intestinal threadworm causing severe diarrhea and mortality in piglets.",
+        "prevention": "Keep farrowing crates dry and clean, and deworm sows before farrowing."
       },
       "dis_hyostrongylosis": {
         "name": "Red Stomach Worm",
         "scientificName": "Hyostrongylus rubidus",
-        "description": "Intestinal worm in grazing pigs.",
-        "prevention": "Clean pasture management; deworming."
+        "description": "Stomach worm infection causing gastritis, anemia, and weight loss.",
+        "prevention": "Rotate pastures, keep housing dry, and implement a deworming schedule."
       },
       "dis_oesophagostomiasis": {
-        "name": "Nodular Worm",
+        "name": "Nodular Worm Infection",
         "scientificName": "Oesophagostomum spp.",
-        "description": "Intestinal worm in swine.",
-        "prevention": "Deworming and sanitation."
+        "description": "Intestinal parasite causing nodules in the gut wall, leading to thin sows.",
+        "prevention": "Regular pen sanitation and routine use of broad-spectrum anthelmintics."
       },
       "dis_fascioliasis": {
-        "name": "Fascioliasis",
+        "name": "Fascioliasis (Liver Fluke)",
         "scientificName": "Fasciola gigantica",
-        "description": "Liver fluke infection.",
-        "prevention": "Snail control; keep away from wet pastures."
+        "description": "Parasitic fluke affecting the liver, common in wet or swampy pastures.",
+        "prevention": "Prevent pigs from grazing in swampy areas and control mud snails."
       },
       "dis_emcv": {
-        "name": "EMCV",
+        "name": "Encephalomyocarditis (EMCV)",
         "scientificName": "Cardiovirus",
-        "description": "Viral myocarditis and reproductive failure.",
-        "prevention": "Rodent control (rodents spread EMCV)."
+        "description": "Rodent-borne viral infection causing sudden heart failure and abortion.",
+        "prevention": "Implement strict rodent control and protect feed from contamination."
       },
       "dis_demodectic_mange": {
-        "name": "Demodectic Mange",
+        "name": "Demodex Mange",
         "scientificName": "Demodex phylloides",
-        "description": "Skin mite infection.",
-        "prevention": "Acaricide treatment."
+        "description": "Microscopic skin mite causing scaly spots and small pustules.",
+        "prevention": "Improve herd nutrition, isolate affected pigs, and apply acaricides."
       },
       "dis_pityriasis_rosea": {
         "name": "Pityriasis Rosea",
         "scientificName": "Pseudo-ringworm",
-        "description": "Non-contagious skin condition.",
-        "prevention": "Spontaneous recovery; keep environment clean."
+        "description": "Non-contagious skin condition in young pigs forming ring-like crusts.",
+        "prevention": "Usually self-resolving; maintain clean, dry bedding and reduce stress."
       },
       "dis_photosensitization": {
         "name": "Photosensitization",
         "scientificName": "Solar dermatitis",
-        "description": "Skin hypersensitivity to sunlight.",
-        "prevention": "Keep out of direct sunlight; check pasture plants."
+        "description": "Severe sunburn-like reaction in light-skinned pigs after eating specific plants.",
+        "prevention": "Provide shade, remove sensitizing weeds, and keep pigs indoors."
       },
       "dis_shoulder_ulcers": {
-        "name": "Shoulder Ulcers",
+        "name": "Sow Shoulder Ulcers",
         "scientificName": "Decubitus ulcers",
-        "description": "Sores in thin sows on hard floors.",
-        "prevention": "Provide soft bedding; increase feed."
+        "description": "Pressure sores on the shoulders of thin sows housed on hard concrete.",
+        "prevention": "Provide soft bedding, keep sows in good body condition, and use rubber mats."
       },
       "dis_ear_biting": {
-        "name": "Ear Biting",
+        "name": "Ear Cannibalism",
         "scientificName": "Stress response behavior",
-        "description": "Behavioral stress response.",
-        "prevention": "Reduce stocking density; enrich environment."
+        "description": "Abnormal behavior where pigs bite ears of pen-mates, causing necrosis.",
+        "prevention": "Reduce crowding, improve ventilation, and provide enrichment like chains."
       },
       "dis_gastric_torsion": {
-        "name": "Gastric Torsion",
+        "name": "Gastric Torsion (Bloat)",
         "scientificName": "Gastric dilation-volvulus",
-        "description": "Twisted stomach.",
-        "prevention": "Avoid overfeeding in single meals."
+        "description": "Sudden bloating and twisting of the stomach, leading to rapid death.",
+        "prevention": "Avoid feeding large meals after long fasts and divide daily feed into portions."
       },
       "dis_c_difficile": {
-        "name": "C. difficile Infection",
+        "name": "Clostridium difficile (CDI)",
         "scientificName": "Clostridioides difficile",
-        "description": "Bacterial diarrhea in piglets.",
-        "prevention": "Clean environment and proper ventilation."
+        "description": "Bacterial infection in newborn piglets causing watery diarrhea and bloating.",
+        "prevention": "Clean and disinfect farrowing pens thoroughly and ensure early colostrum."
       },
       "dis_cold_stress": {
-        "name": "Cold Stress",
+        "name": "Cold Stress (Hypothermia)",
         "scientificName": "Hypothermia susceptibility",
-        "description": "Chilling in young piglets.",
-        "prevention": "Provide heat lamps and dry bedding."
+        "description": "Severe body cooling in piglets, causing shivering and high mortality.",
+        "prevention": "Provide heat lamps, creep boxes, and keep farrowing area dry and draft-free."
       },
       "dis_necrotic_enteritis": {
         "name": "Necrotic Enteritis",
         "scientificName": "Clostridium perfringens Type C",
-        "description": "Clostridial gut infection.",
-        "prevention": "Sow vaccination and pen sanitation."
+        "description": "Bacterial toxin disease causing severe bloody diarrhea and high mortality in piglets.",
+        "prevention": "Vaccinate sows before farrowing and maintain absolute pen hygiene."
       },
       "dis_navel_bleeding": {
         "name": "Navel Bleeding",
         "scientificName": "Umbilical hemorrhage",
-        "description": "Hemorrhage from umbilical cord.",
-        "prevention": "Tie off bleeding navels; check feed vitamin K."
+        "description": "Excessive bleeding from the umbilical cord in newborn piglets.",
+        "prevention": "Tie umbilical cords at birth and avoid feeding mycotoxin-contaminated feed to sows."
       },
       "dis_spirochetal_colitis": {
-        "name": "Spirochetal Colitis",
+        "name": "Porcine Spirochetal Colitis",
         "scientificName": "Brachyspira pilosicoli",
-        "description": "Bacterial large intestine infection.",
-        "prevention": "Medication and pen sanitation."
+        "description": "Mild diarrheal disease in growing pigs, causing poor weight gain.",
+        "prevention": "Sanitize feeding troughs and treat affected pigs with antibiotics."
       },
       "dis_salmonella_septicemia": {
         "name": "Salmonella Septicemia",
         "scientificName": "Salmonella choleraesuis",
-        "description": "Blood infection from Salmonella.",
-        "prevention": "Clean water; biosecurity."
+        "description": "Severe bloodstream salmonella infection causing purple skin and rapid death.",
+        "prevention": "Isolate sick pigs, medicate water, and maintain strict biosecurity."
       },
       "dis_prdc": {
-        "name": "PRDC",
+        "name": "Porcine Respiratory Disease Complex",
         "scientificName": "Porcine Respiratory Disease Complex",
-        "description": "Respiratory complex in grower pigs.",
-        "prevention": "Ventilation, vaccination, and density control."
+        "description": "Mixed viral and bacterial respiratory infection causing coughing and poor growth.",
+        "prevention": "Improve ventilation, avoid overcrowding, and control primary viruses."
       },
       "dis_ergotism": {
-        "name": "Ergotism",
+        "name": "Ergot Poisoning (Ergotism)",
         "scientificName": "Claviceps purpurea",
-        "description": "Poisoning from moldy rye/grains.",
-        "prevention": "Inspect feed grains for black ergot bodies."
+        "description": "Fungal poisoning from ergot-infected cereal grains, causing tissue necrosis.",
+        "prevention": "Screen feed grains for dark ergot bodies and replace contaminated feed."
       },
       "dis_bvdv_pig": {
-        "name": "BVDV in Pigs",
+        "name": "BVDV Infection in Pigs",
         "scientificName": "Pestivirus",
-        "description": "Bovine Viral Diarrhea virus in swine.",
-        "prevention": "Isolate pigs from cattle."
+        "description": "Bovine Viral Diarrhea virus infection from contact with cattle, causing abortion.",
+        "prevention": "Keep pigs separate from cattle and sheep, and restrict cross-species contacts."
       },
       "dis_endocarditis": {
-        "name": "Endocarditis",
+        "name": "Bacterial Endocarditis",
         "scientificName": "Streptococcal endocarditis",
-        "description": "Heart valve infection.",
-        "prevention": "Treat primary infections early."
+        "description": "Heart valve infection causing heart failure and sudden death during stress.",
+        "prevention": "Promptly treat joint-ill and wounds, and select against susceptible genetics."
       },
       "dis_polyserositis": {
-        "name": "Polyserositis",
+        "name": "Mycoplasma Polyserositis",
         "scientificName": "Mycoplasma hyorhinis",
-        "description": "Infection of body cavity linings.",
-        "prevention": "Antibiotic treatment; minimize stress."
+        "description": "Fibrinous inflammation of lung, heart, and joint surfaces in weaners.",
+        "prevention": "Minimize weaning stress, avoid mixing litters, and ventilate properly."
       },
       "dis_congenital_tremor": {
         "name": "Congenital Tremor",
         "scientificName": "Atypical Porcine Pestivirus",
-        "description": "Shaky pig disease.",
-        "prevention": "Acclimatize gilts to farm before breeding."
+        "description": "Neurological condition in newborn piglets causing severe trembling.",
+        "prevention": "Avoid using semen from affected boars and minimize sow stress during gestation."
       }
     },
     "diagnosisMatches": "Clinical Diagnosis Matches",
@@ -1544,7 +1550,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 EMERGENCY BIOSECURITY PROTOCOL:",
     "clinicalDiagnosisMatches": "Clinical Diagnosis Matches",
     "hallmarkBadge": "Hallmark",
-    "hallmarkSignPresent": "Hallmark sign present: %1$s",
+    "hallmarkSignPresent": "Hallmark sign present: {sign}",
     "otherSignsWatch": "Other signs to watch out for:",
     "preventionTreatmentLabel": "Prevention / Treatment: {treatment}",
     "bio_proto_asf": "IMMEDIATE EMERGENCY QUARANTINE: African Swine Fever is a lethal, legally notifiable virus. 1) Lock down farm gates immediately. 2) Stop all movement of pigs, vehicles, feed, and manure. 3) Disinfect all boot baths and tyres with Virkon S or 2% caustic soda. 4) Contact your District/National Veterinary Officer immediately.",
@@ -1556,8 +1562,8 @@
     "bio_proto_vesicular_stomatitis": "REPORTABLE VESICULAR LESION ALERT: Vesicular Stomatitis is clinically indistinguishable from Foot and Mouth Disease. 1) Isolate infected pigs immediately. 2) Wear protective gloves. 3) Report to state veterinarian for lab differential diagnosis.",
     "bio_proto_senecavirus": "REPORTABLE VESICULAR DISEASE: Senecavirus A lesions are clinically indistinguishable from Foot and Mouth Disease (FMD). 1) Quarantine pen immediately. 2) Restrict off-farm movement. 3) Notify livestock veterinary authorities for mandatory differential PCR testing.",
     "bio_proto_svd": "REPORTABLE VESICULAR DISEASE: Swine Vesicular Disease (SVD). 1) Strict isolation of infected animals. 2) Restrict all vehicle and visitor movements. 3) Report to state animal health department immediately.",
-    "clinicalMatchPercent": "%1$d%% Clinical Match",
-    "matchedSignsCount": "{matched}$d of {total}$d signs",
+    "clinicalMatchPercent": "{percent}% Clinical Match",
+    "matchedSignsCount": "{matched} of {total} signs",
     "matchPercentSuffix": "({percent}% match)"
   },
   "HR": {
@@ -1992,7 +1998,7 @@
     "snooze1Month": "1 Month",
     "deleteNotificationQuestion": "Delete Notification?",
     "deleteNotificationConfirm": "Are you sure you want to delete this notification?",
-    "lastWeighedDaysAgo": "Pig #%1$s: Last weighed %2$s days ago",
+    "lastWeighedDaysAgo": "Pig #{tag}: Last weighed {days} days ago",
     "stockLeftMinFormat": "{current}: {unit} kg remaining (Min: {min} kg)",
     "pigs": "Pigs",
     "pig": "Pig",

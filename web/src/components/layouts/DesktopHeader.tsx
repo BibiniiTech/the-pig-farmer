@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { doc, setDoc, collection, query, where, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
-import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import NotificationDrawer from "@/components/NotificationDrawer";
 import TaskCompletionModal from "@/components/TaskCompletionModal";
@@ -19,6 +18,7 @@ import {
 } from "@/lib/notificationUtils";
 import { Pig, TaskItem } from "@/lib/types";
 import { useTranslations } from "next-intl";
+import SettingsModal from "@/components/SettingsModal";
 
 interface AppLanguageOption {
   code: string;
@@ -60,6 +60,7 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
   // Notification Drawer & Modals state
   const [isNotificationDrawerOpen, setIsNotificationDrawerOpen] = useState(false);
   const [isCompletionModalOpen, setIsCompletionModalOpen] = useState(false);
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [tasksToEdit, setTasksToEdit] = useState<TaskItem[]>([]);
   const [allPigs, setAllPigs] = useState<Pig[]>([]);
   const [rawTasks, setRawTasks] = useState<TaskItem[]>([]);
@@ -166,7 +167,12 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
                 </svg>
               </button>
             )}
-            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
+            <button
+              type="button"
+              onClick={() => setIsSettingsModalOpen(true)}
+              className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer text-left select-none"
+              title="Farm Settings & Profile"
+            >
               <div className="h-8 w-8 rounded-lg bg-emerald-50 border border-emerald-500/30 p-0.5 flex items-center justify-center overflow-hidden shadow-xs flex-shrink-0">
                 <img
                   src={userProfile?.farmLogo || "/app_logo.png"}
@@ -180,7 +186,7 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
               <span className="font-bold text-sm bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 bg-clip-text text-transparent mr-2 truncate max-w-[200px]">
                 {userProfile?.farmName || "SmartSwine"}
               </span>
-            </Link>
+            </button>
           </div>
 
           <div className="flex items-center gap-3">
@@ -284,7 +290,6 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
 
             <div className="h-6 w-px bg-zinc-200 mx-1" />
 
-            <NavbarDropdown />
             <UserProfileDropdown />
           </div>
         </div>
@@ -310,6 +315,12 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
           activeFarmUid={activeFarmUid}
         />
       )}
+
+      {/* Settings Modal */}
+      <SettingsModal
+        isOpen={isSettingsModalOpen}
+        onClose={() => setIsSettingsModalOpen(false)}
+      />
     </>
   );
 }

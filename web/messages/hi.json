@@ -106,7 +106,13 @@
     "noActivities": "कोई आगामी गतिविधि नहीं",
     "allTasksCompleted": "सभी कार्य पूरे हो गए हैं!",
     "generalTask": "सामान्य कार्य",
-    "language": "भाषा"
+    "language": "भाषा",
+    "feed": "चारा",
+    "inventory": "चारा सूची",
+    "calculator": "दाना (चारा) गणना करें",
+    "mixFeed": "संतुलित दाना तैयार करें",
+    "analyzeFeed": "चारा पोषण विश्लेषण करें",
+    "marketHub": "सूअर बाज़ार केंद्र"
   },
   "Login": {
     "title": "SmartSwine वेब",
@@ -759,13 +765,13 @@
       "dis_asf": {
         "name": "अफ्रीकी स्वाइन फीवर (ASF)",
         "scientificName": "Asfivirus",
-        "description": "अत्यधिक संक्रामक और घातक बीमारी। कोई टीका नहीं है।",
-        "prevention": "कड़ी सुरक्षा और फार्म तक पहुंच सीमित करें।"
+        "description": "पश्चिम अफ्रीका में प्रचलित एक अत्यधिक संक्रामक और घातक वायरल बीमारी। इसका कोई टीका मौजूद नहीं है।",
+        "prevention": "सख्त जैव सुरक्षा (Biosecurity) और फार्म तक पहुंच को सीमित करें।"
       },
       "dis_fmd": {
-        "name": "खुरपका और मुंहपका रोग (FMD)",
+        "name": "खुरपका-मुंहपका रोग (FMD)",
         "scientificName": "Aphthovirus",
-        "description": "मुंह और पैरों पर छाले पैदा करता है।",
+        "description": "मुंह और पैरों पर छाले पैदा करने वाली वायरल बीमारी।",
         "prevention": "टीकाकरण और आवाजाही नियंत्रण।"
       }
     },
@@ -778,7 +784,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 EMERGENCY BIOSECURITY PROTOCOL:",
     "clinicalDiagnosisMatches": "नैदानिक ​​निदान मिलान",
     "hallmarkBadge": "प्रमुख लक्षण",
-    "hallmarkSignPresent": "हॉलमार्क चिह्न मौजूद: %1$s",
+    "hallmarkSignPresent": "हॉलमार्क चिह्न मौजूद: {sign}",
     "otherSignsWatch": "ध्यान देने योग्य अन्य संकेत:",
     "preventionTreatmentLabel": "रोकथाम/उपचार: {treatment}",
     "bio_proto_asf": "IMMEDIATE EMERGENCY QUARANTINE: African Swine Fever is a lethal, legally notifiable virus. 1) Lock down farm gates immediately. 2) Stop all movement of pigs, vehicles, feed, and manure. 3) Disinfect all boot baths and tyres with Virkon S or 2% caustic soda. 4) Contact your District/National Veterinary Officer immediately.",
@@ -790,8 +796,8 @@
     "bio_proto_vesicular_stomatitis": "REPORTABLE VESICULAR LESION ALERT: Vesicular Stomatitis is clinically indistinguishable from Foot and Mouth Disease. 1) Isolate infected pigs immediately. 2) Wear protective gloves. 3) Report to state veterinarian for lab differential diagnosis.",
     "bio_proto_senecavirus": "REPORTABLE VESICULAR DISEASE: Senecavirus A lesions are clinically indistinguishable from Foot and Mouth Disease (FMD). 1) Quarantine pen immediately. 2) Restrict off-farm movement. 3) Notify livestock veterinary authorities for mandatory differential PCR testing.",
     "bio_proto_svd": "REPORTABLE VESICULAR DISEASE: Swine Vesicular Disease (SVD). 1) Strict isolation of infected animals. 2) Restrict all vehicle and visitor movements. 3) Report to state animal health department immediately.",
-    "clinicalMatchPercent": "%1$d%% क्लिनिकल मैच",
-    "matchedSignsCount": "{total}$d संकेतों में से {matched}$d",
+    "clinicalMatchPercent": "{percent}% क्लिनिकल मैच",
+    "matchedSignsCount": "{total} संकेतों में से {matched}",
     "matchPercentSuffix": "({percent}% match)"
   },
   "HR": {
@@ -1005,7 +1011,7 @@
     "snooze1Month": "1 महीना",
     "deleteNotificationQuestion": "अधिसूचना हटाएँ?",
     "deleteNotificationConfirm": "क्या आप वाकई इस अधिसूचना को हटाना चाहते हैं?",
-    "lastWeighedDaysAgo": "सुअर #%1$s: अंतिम बार वजन %2$s दिन पहले किया गया था",
+    "lastWeighedDaysAgo": "सुअर #{tag}: अंतिम बार वजन {days} दिन पहले किया गया था",
     "stockLeftMinFormat": "{current}: {unit} किग्रा शेष (न्यूनतम: {min} किग्रा)",
     "pigs": "सूअर",
     "pig": "सूअर",

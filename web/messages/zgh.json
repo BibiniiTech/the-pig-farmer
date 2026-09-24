@@ -124,7 +124,13 @@
     "noActivities": "No upcoming activities",
     "allTasksCompleted": "All tasks are completed!",
     "generalTask": "General Task",
-    "language": "Language"
+    "language": "Language",
+    "feed": "ⴰⵖⴻⵓⵎ",
+    "inventory": "ⴰⵎⴻⵙⵏⵉⵍⴻⵙ ⵏ ⵡⵓⵞⵞⵉ",
+    "calculator": "Siḍen učči n imudar",
+    "mixFeed": "Ssebrek učči n imudar",
+    "analyzeFeed": "Tasleṭ n učči",
+    "marketHub": "Ammas n ugadaz n iles"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -866,664 +872,664 @@
     },
     "diseases": {
       "dis_asf": {
-        "name": "African Swine Fever (ASF)",
+        "name": "ⵜⴰⵡⵍⴰ ⵏ ⵢⵉⵍⴻⴼ ⵏ Tefriqt (ASF)",
         "scientificName": "Asfivirus",
-        "description": "A highly contagious and deadly viral disease prevalent in West Africa. No vaccine exists.",
-        "prevention": "Strict biosecurity and restrict farm access."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ ⵓⵏⴼⴰⴼⴰⴷ ⵢⴻⵜⵜⵡⴰⵙⵇⴻⴷⵛⴻⵏ ⵙ ⵡⴰⵟⴰⵙ ⵢⴻⵔⵏⴰ ⵢⴻⵜⵜⵎⴻⵜⵜⴰⵜ, ⵢⴻⵜⵜⵡⴰⵙⵙⴻⵏ ⴷⴻⴳ Tefriqt ⵏ Ugafa. ⵓⵔ ⵢⴻⵍⵍⵉ ⴰⵔⴰ ⵓⵛⵕⴰⴹ.",
+        "prevention": "Biosecurité ⵙ ⵍⵇⴻⴷⴷ ⴷ ⵓⵙⵃⵓⵍⴼⵓ ⵏ ⵓⵏⴻⴽⵛⵓⵎ ⵏ ⵜⴼⴻⵍⵍⴰⵃⵜ."
       },
       "dis_fmd": {
-        "name": "Foot and Mouth Disease (FMD)",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵓⴹⴰⵔ ⴷ ⵢⵉⵎⵉ (FMD)",
         "scientificName": "Aphthovirus",
-        "description": "Viral disease causing blisters on the mouth and feet.",
-        "prevention": "Vaccination and movement control."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ virus ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵜⵉⴼⴻⴽⴽⴰ ⴷⴻⴳ ⵢⵉⵎⵉ ⴷ ⵢⵉⴹⴰⵔⵔⴻⵏ.",
+        "prevention": "ⵜⴰⵛⴻⵣⵎⴻⴹ ⴷ ⵓⵃⴻⵣⵣⴻⴱ ⵏ ⵓⵎⵓⵙⵙⵓ."
       },
       "dis_prrs": {
-        "name": "PRRS (Blue Ear)",
+        "name": "PRRS (ⴰⵎⴻⵥⵥⵓⵖ ⴰⵣⴻⴳⵣⴰⵡ)",
         "scientificName": "Arterivirus",
-        "description": "Causes respiratory failure and reproductive issues.",
-        "prevention": "Biosecurity and herd vaccination."
+        "description": "ⵙⵙⴻⴱⴱⴰ ⵏ ⵜⴽⴻⵔⴽⴰⵙ ⵏ ⵓⵙⵏⵓⴼⴼⴻⵙ ⴷ ⵜⴻⵎⵙⴰⵍ ⵏ ⵜⵎⴻⵟⵟⵓⵜ.",
+        "prevention": "Biosecurité ⴷ ⵜⵇⴻⴹⵄⵉⵜ ⵏ ⵜⵇⴻⴹⵄⵉⵜ."
       },
       "dis_erysipelas": {
-        "name": "Swine Erysipelas",
+        "name": "ⵉⵔⵉⵙⵉⴱⵉⵍ ⵏ ⵢⵉⵍⴻⴼ",
         "scientificName": "Erysipelothrix rhusiopathiae",
-        "description": "Bacterial infection causing distinct skin lesions and arthritis.",
-        "prevention": "Regular vaccination and pen hygiene."
+        "description": "ⵉⵏⴼⴻⴽⵙⵉ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵢⵉⵏ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵍⵇⴻⵍⵍⴰ ⵏ ⵜⴼⴻⴽⴽⴰ ⴷ ⵜⴼⴻⴽⴽⴰ ⵢⴻⵎⴳⴰⵔⴰⴷⴻⵏ.",
+        "prevention": "ⵜⴰⵛⴻⵣⵎⴻⴹ ⵏ ⵍⵇⴰⵏⵓⵏ ⴷ ⵜⴻⵣⴷⴻⴳ ⵏ ⵍⵇⴰⵍⴻⴱ."
       },
       "dis_csf": {
-        "name": "Classical Swine Fever",
+        "name": "ⵜⴰⵡⵍⴰ ⵏ ⵢⵉⵍⴻⴼ ⴰⴽⵍⴰⵙⵉⴽ",
         "scientificName": "Pestivirus",
-        "description": "Highly contagious viral disease similar to ASF.",
-        "prevention": "Vaccination and strict biosecurity."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ virus ⵢⴻⵜⵜⵡⴰⵙⵇⴻⴷⵛⴻⵏ ⵙ ⵡⴰⵟⴰⵙ ⴰⵎ ASF.",
+        "prevention": "ⵜⴰⵛⴻⵣⵎⴻⴹ ⴷ ⵜⵖⴻⵍⵍⵉⵙⵜ ⵜⴰⵖⴻⵍⵏⴰⵡⵜ ⵙ ⵍⴵⴻⵀⴷ."
       },
       "dis_anthrax": {
-        "name": "Anthrax",
+        "name": "ⴰⵏⵜⵔⴰⴽⵙ",
         "scientificName": "Bacillus anthracis",
-        "description": "Serious bacterial disease that can affect humans.",
-        "prevention": "Vaccination and avoid opening carcasses."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵜ ⵥⵥⴰⵢⴻⵏ ⵉⵣⴻⵎⵔⴻⵏ ⴰⴷ ⵉⵃⴰⵣ ⴰⵎⴷⴰⵏ.",
+        "prevention": "ⵜⴰⵛⴻⴳⴳⴻⵄⵜ ⴷ ⵜⵃⴻⵇⵔⴰⵏⵉⵜ ⵏ ⵓⵍⴷⵉ ⵏ ⵜⴼⴻⴽⴽⴰ."
       },
       "dis_brucellosis": {
-        "name": "Brucellosis",
+        "name": "ⴱⵔⵓⵙⵉⵍⵓⵍⵓⵙ",
         "scientificName": "Brucella suis",
-        "description": "Bacterial disease causing reproductive failure.",
-        "prevention": "Testing, culling, and sanitation."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵢⵉⵏ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵍⵇⴻⵍⵍⴰ ⵏ ⵜⵎⴻⵟⵟⵓⵜ.",
+        "prevention": "ⵜⴻⵙⵜⵉⵏⴳ, ⴰⵇⴻⵙⵙⴻⵔ, ⴷ ⵓⵙⵉⵣⴷⴻⴳ."
       },
       "dis_coccidiosis": {
-        "name": "Coccidiosis",
+        "name": "ⴽⵓⴽⵙⵉⴷⵉⵢⵓⵙⵉⵙ",
         "scientificName": "Isospora suis",
-        "description": "Parasitic disease primarily affecting piglets.",
-        "prevention": "Farrowing pen hygiene."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ ⵜⵎⴻⵥⴷⵉⵢⵉⵏ (parasites) ⵢⴻⵜⵜⴰⵟⵟⴰⴼⴻⵏ ⵙ ⵓⵎⴰⵜⴰ ⵉⴳⴻⵔⴷⴰⵏ ⵏ ⵢⵉⵍⴻⴼ.",
+        "prevention": "ⵜⴻⵣⴷⴻⴳ ⵏ ⵓⵇⵍⴰⵎ ⵏ Farrowing."
       },
       "dis_pneumonia": {
-        "name": "Mycoplasmal Pneumonia",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵜⴼⴻⴽⴽⴰ ⵏ Mikoplazma",
         "scientificName": "Mycoplasma hyopneumoniae",
-        "description": "Chronic respiratory disease leading to poor growth.",
-        "prevention": "Vaccination and improved ventilation."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ ⵓⵙⵏⵓⴼⴼⴻⵙ ⵉⵅⵓⵚⵚⴻⵏ ⵢⴻⵜⵜⴰⵡⵉⵏ ⵖⴻⵔ ⵜⵏⴻⴼⵍⵉⵜ ⵏ ⵍⵅⵉⵔ.",
+        "prevention": "ⵜⴰⵛⴻⴳⴳⴻⵄⵜ ⴷ ⵓⵙⵏⴻⵔⵏⵉ ⵏ ⵜⴼⴻⴽⴽⴰ."
       },
       "dis_salmonellosis": {
-        "name": "Salmonellosis",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵙⴰⵍⵎⵓⵏⵉⵍⵓⵙ",
         "scientificName": "Salmonella typhimurium",
-        "description": "Bacterial infection causing severe gut issues.",
-        "prevention": "Clean water and hygiene."
+        "description": "ⵉⵏⴼⴻⴽⵙⵉ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵢⵉⵏ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵜⵉⵎⵙⴰⵍ ⵏ ⵜⴼⴻⴽⴽⴰ ⵙ ⵡⴰⵟⴰⵙ.",
+        "prevention": "ⴰⵎⴰⵏ ⵣⴻⴷⴷⵉⴳⴻⵏ ⴷ ⵜⴻⵣⴷⴻⴳ."
       },
       "dis_ppv": {
-        "name": "Porcine Parvovirus (PPV)",
+        "name": "ⴰⵏⴼⴰⴼⴰⴷ ⵏ ⵢⵉⵍⴻⴼ (PPV)",
         "scientificName": "Porcine Parvovirus",
-        "description": "Common cause of reproductive failure in gilts.",
-        "prevention": "Vaccination before breeding."
+        "description": "ⵙⵙⴻⴱⴱⴰ ⵜⴰⵎⴻⵇⵇⵔⴰⵏⵜ ⵏ ⵜⴽⴻⵔⴽⴰⵙ ⵏ ⵜⵎⴻⵟⵟⵓⵜ ⴷⴻⴳ ⴳⵉⵍⵜⵙ.",
+        "prevention": "ⵜⴰⵛⴻⴳⴳⴻⵄⵜ ⵙⴻⵏⴷ ⵏ ⵜⵎⴻⵟⵟⵓⵜ."
       },
       "dis_rhinitis": {
-        "name": "Atrophic Rhinitis",
+        "name": "ⵔⵀⵉⵏⵉⵜⵉⵙ Atrofik",
         "scientificName": "Bordetella bronchiseptica",
-        "description": "Causes distortion of the snout and respiratory issues.",
-        "prevention": "Vaccination and air quality."
+        "description": "ⵙⵙⴻⴱⴱⴰ ⵏ ⵜⵎⴻⵥⵥⵓⵖⵜ ⴷ ⵜⴻⵎⵙⴰⵍ ⵏ ⵓⵙⵏⵓⴼⴼⴻⵙ.",
+        "prevention": "ⵜⵉⵣⵔⵉ ⴷ ⵍⵇⴰⵄⴰ ⵏ ⵍⵀⴰⵡⴰ."
       },
       "dis_leptospirosis": {
-        "name": "Leptospirosis",
+        "name": "Leptospirusis",
         "scientificName": "Leptospira spp.",
-        "description": "Zoonotic bacterial disease affecting kidneys.",
-        "prevention": "Rodent control and vaccination."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵢⵉⵏ ⵏ ⵜⵥⴻⴳⵡⴰ (zoonotique) ⵉⵃⵓⵣⴰⵏ ⵉⵥⵓⵔⴰⵏ.",
+        "prevention": "ⴰⵃⴰⵔⴻⴱ ⵖⴻⴼ ⵢⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⴷ ⵜⵛⴻⵣⵎⴻⴹⵜ."
       },
       "dis_influenza": {
-        "name": "Swine Influenza",
+        "name": "ⴰⵏⴼⴰⴼⴰⴷ ⵏ ⵢⵉⵍⴻⴼ",
         "scientificName": "Influenza A virus",
-        "description": "Rapidly spreading respiratory infection.",
-        "prevention": "Ventilation and biosecurity."
+        "description": "ⴰⴹⴹⴰⵏ ⵏ ⵓⵙⵏⵓⴼⴼⴻⵙ ⵢⴻⵜⵜⵡⴰⵙⵏⴻⵔⵏⴰⵏ ⵙ ⵜⵖⴰⵡⵍⴰ.",
+        "prevention": "Ventilasyon ⴷ ⵜⵖⴻⵍⵍⵉⵙⵜ ⵜⴰⵖⴻⵍⵏⴰⵡⵜ."
       },
       "dis_edema": {
-        "name": "Edema Disease",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ Edema",
         "scientificName": "Escherichia coli",
-        "description": "Caused by E. coli toxins in weaned piglets.",
-        "prevention": "Improved sanitation and diet."
+        "description": "ⵙⵙⴻⴱⴱⴰ ⵏ ⵜⵎⴻⵙ ⵏ E. coli ⴷⴻⴳ ⵢⵉⴳⴻⵔⴷⴰⵏ ⵏ ⵢⵉⵍⴻⴼ ⵢⴻⵜⵜⵡⴰⵙⴼⴻⴹⴻⵏ.",
+        "prevention": "ⵙⵙⴻⵍⵀⵓ ⵏ ⵜⴷⴰⵡⵙⴰ ⴷ ⵜⵎⴻⵏⴷⴰⵡⵜ."
       },
       "dis_dysentery": {
-        "name": "Swine Dysentery",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵢⵉⵍⴻⴼ",
         "scientificName": "Brachyspira hyodysenteriae",
-        "description": "Severe mucohaemorrhagic diarrhea.",
-        "prevention": "Water medication and disinfection."
+        "description": "ⵜⴰⵣⵎⴻⵔⵜ ⵏ ⵜⴼⴻⴽⴽⴰ ⵏ ⵜⴼⴻⴽⴽⴰ ⵙ ⵡⴰⵟⴰⵙ.",
+        "prevention": "ⴰⵎⴰⵏ ⵏ ⴷⴷⵡⴰⵡⵉ ⴷ ⵜⵎⴻⵥⴷⵉⵢⵉⵏ."
       },
       "dis_mange": {
-        "name": "Sarcoptic Mange",
+        "name": "Sarkuptik Mange",
         "scientificName": "Sarcoptes scabiei",
-        "description": "Parasitic skin disease causing extreme discomfort.",
-        "prevention": "Acaricide treatment."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ ⵜⴼⴻⴽⴽⴰ ⵏ ⵜⴼⴻⴽⴽⴰ ⵏ ⵜⴼⴻⴽⴽⴰ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵍⵃⵉⵔ ⴰⵎⴻⵇⵇⵔⴰⵏ.",
+        "prevention": "ⵜⵉⴷⴷⵉ ⵏ ⴰⴽⴰⵔⵉⵙⵉⴷ."
       },
       "dis_anemia": {
-        "name": "Iron Deficiency Anemia",
+        "name": "ⴰⵏⴻⵎⵉⴰ ⵏ ⵍⴻⵅⵚⴰⵚ ⵏ ⵡⵓⵣⵣⴰⵍ",
         "scientificName": "Iron Deficiency",
-        "description": "Common in indoor piglets without iron supplements.",
-        "prevention": "Iron injections at birth."
+        "description": "ⵢⴻⵜⵜⵡⴰⵙⵙⴻⵏ ⴷⴻⴳ ⵢⵉⵍⴻⴼ ⵏ ⴷⴰⵅⴻⵍ ⵡⴰⵔ ⵜⵜⴰⵡⵉⵍⴰⵜ ⵏ ⵡⵓⵣⵣⴰⵍ.",
+        "prevention": "Injeksiyen ⵏ ⵡⵓⵣⵣⴰⵍ ⴷⴻⴳ ⵜⵍⴰⵍⵉⵜ."
       },
       "dis_ulcers": {
-        "name": "Gastric Ulcers",
+        "name": "ⵉⵖⴻⵙ ⵏ ⵓⵄⴻⴱⴱⵓⴹ",
         "scientificName": "Gastric Ulcers",
-        "description": "Caused by fine feed or stress.",
-        "prevention": "Adjust feed particle size."
+        "description": "ⵙⵙⴻⴱⴱⴰⵙ ⴷ ⵍⵇⵓⵜ ⵢⴻⵍⵀⴰⵏ ⵏⴻⵖ ⴷ ⵍⵃⵉⵔ.",
+        "prevention": "ⴰⴷⵊⵓⵙⵜ ⵏ ⵜⴼⴻⴽⴽⴰ ⵏ ⵜⴼⴻⴽⴽⴰ."
       },
       "dis_pss": {
-        "name": "Porcine Stress Syndrome",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵓⵃⴻⵣⵣⴻⴱ ⵏ ⵢⵉⵍⴻⴼ",
         "scientificName": "Genetic stress susceptibility",
-        "description": "Genetic condition triggered by stress.",
-        "prevention": "Genetic selection and calm handling."
+        "description": "ⵜⴰⴳⵏⵉⵜ ⵜⴰⴳⴻⵏⵙⵉⵜ ⵉ ⴷⵢⴻⵜⵜⵡⴰⵙⴱⴻⴷⴷⴻⵏ ⵙ ⵍⵃⵉⵔ.",
+        "prevention": "ⴰⴼⵔⴰⵏ ⵏ ⵜⴳⴻⵏⵙⵉⵜ ⴷ ⵓⵙⵃⵓⵍⴼⵓ ⵙ ⵍⵃⵉⵔ."
       },
       "dis_tge": {
-        "name": "Transmissible Gastroenteritis (TGE)",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵓⵄⴻⴱⴱⵓⴹ ⵢⴻⵜⵜⵡⴰⵟⵟⴼⴻⵏ (TGE)",
         "scientificName": "Coronavirus",
-        "description": "Viral disease with high mortality in young piglets.",
-        "prevention": "Biosecurity."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ virus ⵙ ⵜⵎⴻⵜⵜⴰⵏⵜ ⵏ ⵢⵉⴳⴻⵔⴷⴰⵏ ⵉⵎⴻⵥⵢⴰⵏⴻⵏ.",
+        "prevention": "ⵜⴰⵖⴻⵍⵍⵉⵙⵜ ⵜⴰⵖⴻⵍⵏⴰⵡⵜ."
       },
       "dis_pasteurellosis": {
-        "name": "Pasteurellosis",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ Pasṭuriluz",
         "scientificName": "Pasteurella multocida",
-        "description": "Bacterial pneumonia.",
-        "prevention": "Antibiotics and ventilation."
+        "description": "ⵜⴰⴱⴰⴽⵜⵉⵔⵉⵜ ⵏ ⵜⴼⴻⴽⴽⴰ.",
+        "prevention": "Antibiotik ⴷ ⵜⵎⴻⵥⵥⵓⵖⵜ."
       },
       "dis_strep": {
-        "name": "Streptococcus suis",
+        "name": "Streptokokus ⵙⵓⵉⵙ",
         "scientificName": "S. suis",
-        "description": "Bacterial infection causing meningitis.",
-        "prevention": "Antibiotics and stress reduction."
+        "description": "ⵉⵏⴼⴻⴽⵙⵉ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵢⵉⵏ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵙ ⵜⵎⴻⵥⵥⵓⵖⵜ.",
+        "prevention": "Antibiotik ⴷ ⵓⵙⵏⴻⴼⵍⵉ ⵏ ⵍⵃⵉⵔ."
       },
       "dis_mycotoxicosis": {
-        "name": "Mycotoxicosis",
+        "name": "Mikutoksikoz",
         "scientificName": "Mycotoxicosis",
-        "description": "Caused by mold-contaminated feed.",
-        "prevention": "Toxin binders and dry storage."
+        "description": "ⵙⵙⴻⴱⴱⴰⵙ ⴷ ⵍⵇⵓⵜ ⵢⴻⵜⵜⵡⴰⵙⵅⴻⴷⵎⴻⵏ ⵙ ⵍⵇⵓⵜ.",
+        "prevention": "Toxin ⵏ ⵜⵎⴻⵥⴷⵉⵢⵉⵏ ⴷ ⵜⵎⴻⵥⴷⵉⵢⵉⵏ ⵏ ⵜⵎⴻⵥⴷⵉⵢⵉⵏ."
       },
       "dis_greasy_pig": {
-        "name": "Greasy Pig Disease",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵢⵉⵍⴻⴼ ⴰⵣⴻⵎⵎⵓⵔ",
         "scientificName": "Staphylococcus hyicus",
-        "description": "Bacterial infection causing greasy skin lesions.",
-        "prevention": "Sanitation and antibiotics."
+        "description": "ⵉⵏⴼⴻⴽⵙⵉ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵢⵉⵏ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵍⵃⵉⵔⴼⴰⵜ ⵏ ⵜⴼⴻⴽⴽⴰ ⵙ ⵣⵣⵉⵜ.",
+        "prevention": "ⵜⴰⵣⵎⴻⵔⵜ ⴷ ⵜⵎⴻⵥⴷⵉⵢⵉⵏ."
       },
       "dis_pseudorabies": {
-        "name": "Pseudorabies (Aujeszky's)",
+        "name": "ⵜⴰⴱⴱⵓⵔⵜ ⵏ ⵜⴽⴻⵔⴽⴰⵙ (ⵏ Aujeszky)",
         "scientificName": "Suid herpesvirus 1",
-        "description": "Viral disease affecting nervous and respiratory systems.",
-        "prevention": "Vaccination and eradication programs."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ virus ⵉⵃⵓⵣⴰⵏ ⵉⵏⴰⴳⵔⴰⵡⴻⵏ ⵏ ⵜⴼⴻⴽⴽⴰ ⴷ ⵜⴼⴻⴽⴽⴰ.",
+        "prevention": "ⴰⵀⵉⵍⴻⵏ ⵏ ⵓⵛⵕⴰⴹ ⴷ ⵓⵙⵇⴻⵔⴷⴻⵛ."
       },
       "dis_pcv2": {
-        "name": "Porcine Circovirus (PCV2)",
+        "name": "ⴰⵏⴼⴰⴼⴰⴷ ⵏ ⵢⵉⵍⴻⴼ (PCV2)",
         "scientificName": "Circovirus",
-        "description": "Causes wasting and respiratory issues in growers.",
-        "prevention": "Vaccination."
+        "description": "ⵙⵙⴻⴱⴱⴰ ⵏ ⵡⵓⴳⵓⵔⴻⵏ ⵏ ⵓⵙⴼⵓⴳⴻⵍ ⴷ ⵓⵙⵏⵓⴼⴼⴻⵙ ⴷⴻⴳ ⵢⵉⵎⴻⴽⵙⴰⵡⴻⵏ.",
+        "prevention": "ⴰⵛⵔⴰⴹ."
       },
       "dis_ped": {
-        "name": "Porcine Epidemic Diarrhea (PED)",
+        "name": "ⵜⴰⵄⴻⴱⴱⵓⴹⵜ ⵏ ⵡⴰⵟⵟⴰⵏ ⵏ ⵢⵉⵍⴻⴼ (PED)",
         "scientificName": "Coronavirus",
-        "description": "Similar to TGE, highly fatal to neonates.",
-        "prevention": "Strict biosecurity."
+        "description": "ⴰⵎ TGE, ⵢⴻⵜⵜⵎⴻⵜⵜⴰⵜ ⴰⵟⴰⵙ ⵉ ⵢⵉⴳⴻⵔⴷⴰⵏ ⵉ ⴷⵉⵍⵓⵍⵢⴻⵏ.",
+        "prevention": "ⵜⴰⵖⴻⵍⵍⵉⵙⵜ ⵜⴰⵖⴻⵍⵏⴰⵡⵜ ⵙ ⵍⴵⴻⵀⴷ."
       },
       "dis_je": {
-        "name": "Japanese Encephalitis",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵓⵇⴻⵔⵔⵓⵢ ⵏ Japun",
         "scientificName": "Flavivirus",
-        "description": "Mosquito-borne viral disease.",
-        "prevention": "Mosquito control and vaccination."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ ⵓⵏⴼⴰⴼⴰⴷ ⵢⴻⵜⵜⵡⴰⵟⵟⴼⴻⵏ ⵙⵖⵓⵔ ⵜⵉⵣⵉⵣⵡⵉⵜ.",
+        "prevention": "ⴰⵃⴰⵔⴻⴱ ⵖⴻⴼ ⵜⵉⵣⵉⵣⵡⵉⵜ ⴷ ⵜⵛⴻⵣⵎⴻⴹⵜ."
       },
       "dis_rabies": {
-        "name": "Rabies",
+        "name": "ⵔⴰⴱⵉⴻⵙ",
         "scientificName": "Lyssavirus",
-        "description": "Fatal viral disease usually from bites.",
-        "prevention": "Vaccination of pets and wildlife control."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ virus ⵏ ⵜⵎⴻⵜⵜⴰⵏⵜ ⵙ ⵓⵎⴰⵜⴰ ⵙⴻⴳ ⵜⵎⴻⵥⵥⵓⵖⵜ.",
+        "prevention": "ⵜⴰⵛⴻⴳⴳⴻⵄⵜ ⵏ ⵢⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵏ ⵓⵅⵅⴰⵎ ⴷ ⵓⵃⴰⵔⴻⴱ ⵖⴻⴼ ⵜⵓⴷⴻⵔⵜ ⵏ ⵜⵥⴻⴳⵡⴰ."
       },
       "dis_pox": {
-        "name": "Swine Pox",
+        "name": "ⵜⴰⵚⴻⴽⴽⴰ ⵏ ⵢⵉⵍⴻⴼ",
         "scientificName": "Suipoxvirus",
-        "description": "Viral skin disease, often spread by lice.",
-        "prevention": "Louse control."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ ⵓⴳⵍⵉⵎ ⵙ ⵓⵏⴼⴰⴼⴰⴷ, ⵢⴻⵜⵜⵡⴰⵙⵏⴻⵔⵏⴰⵢ ⵙ ⵡⴰⵟⴰⵙ ⵙ ⵢⵉⵖⴻⵔⵙⵉⵡⴻⵏ.",
+        "prevention": "ⴰⵃⴰⵔⴻⴱ ⵖⴻⴼ ⵢⵉⵖⴻⵔⵙⵉⵡⴻⵏ."
       },
       "dis_vs": {
-        "name": "Vesicular Stomatitis",
+        "name": "Stomatitis ⵏ ⵜⴼⴻⴽⴽⴰ",
         "scientificName": "Rhabdovirus",
-        "description": "Causes blisters; looks like FMD.",
-        "prevention": "Insect control and quarantine."
+        "description": "ⵙⵙⴻⴱⴱⴰ ⵏ ⵜⴱⵓⵛⵉⴹⴰⵏⵜ; ⵜⴱⴰⵏⴷ ⴰⵎ FMD.",
+        "prevention": "ⴰⵃⴰⵔⴻⴱ ⵖⴻⴼ ⵢⵉⴱⴻⵄⵄⴰⵛ ⴷ ⵓⵙⵃⵓⵍⴼⵓ."
       },
       "dis_clostridial": {
-        "name": "Clostridial Enteritis",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵓⵄⴻⴱⴱⵓⴹ ⵏ ⴽⵍⵓⵙⵜⵔⵉⴷⵢⴰ",
         "scientificName": "Clostridium perfringens",
-        "description": "Bacterial infection causing severe gut damage.",
-        "prevention": "Vaccination of sows and hygiene."
+        "description": "ⵉⵏⴼⴻⴽⵙⵉ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵢⵉⵏ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵍⴻⵅⵚⴰⵚ ⵏ ⵜⴼⴻⴽⴽⴰ ⵙ ⵡⴰⵟⴰⵙ.",
+        "prevention": "ⵜⴰⵛⴻⵣⵎⴻⴹ ⵏ ⵜⵎⴻⵥⵢⴰⵏⵉⵏ ⴷ ⵜⴻⵣⴷⴻⴳ."
       },
       "dis_glassers": {
-        "name": "Glasser's Disease",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ Glasser",
         "scientificName": "Haemophilus parasuis",
-        "description": "Causes inflammation of membranes around heart, lungs, joints.",
-        "prevention": "Antibiotics and stress management."
+        "description": "ⵢⴻⵜⵜⴰⵡⵉⴷ ⴰⵃⴻⵎⵎⴰⵍ ⵏ ⵜⵎⴻⵥⵥⵓⵖⵉⵏ ⵏ ⵡⵓⵍ, ⵏ ⵢⵉⴼⴰⵙⵙⴻⵏ, ⵏ ⵢⵉⵖⴻⵙ.",
+        "prevention": "Antibiotik ⴷ ⵜⵎⴻⵀⵍⴰ ⵏ ⵍⵃⵉⵔ."
       },
       "dis_app": {
-        "name": "Actinobacillus Pleuropneumonia (APP)",
+        "name": "Aktinobasillus Plurunyumuniya (APP)",
         "scientificName": "A. pleuropneumoniae",
-        "description": "Severe bacterial pneumonia.",
-        "prevention": "Antibiotics and improved environment."
+        "description": "Pneumonie ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵜ ⵙ ⵡⴰⵟⴰⵙ.",
+        "prevention": "Antibiotik ⴷ ⵜⵡⴻⵏⵏⴰⴹⵜ ⵢⴻⵍⵀⴰⵏ."
       },
       "dis_ileitis": {
-        "name": "Ileitis (Lawsonia)",
+        "name": "ⵉⵍⴻⵉⵜⵉⵙ (ⵍⴰⵡⵚⵓⵏⵢⴰ)",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Bacterial infection of the small intestine.",
-        "prevention": "Vaccination and antibiotics."
+        "description": "ⵉⵏⴼⴻⴽⵙⵉ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵢⵉⵏ ⵏ ⵜⴼⴻⴽⴽⴰ ⵜⴰⵎⴻⵥⵢⴰⵏⵜ.",
+        "prevention": "ⵜⴰⵛⴻⵣⵎⴻⴹ ⴷ ⵜⵎⴻⵥⴷⵉⵢⵉⵏ."
       },
       "dis_tb": {
-        "name": "Tuberculosis",
+        "name": "ⵜⵓⴱⴻⵔⴽⵓⵍⵓⵣ",
         "scientificName": "Mycobacterium avium",
-        "description": "Chronic bacterial disease.",
-        "prevention": "Bird proofing and sanitation."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵢⵉⵏ ⵉⵅⵓⵚⵚⴻⵏ.",
+        "prevention": "ⵉⴳⴹⴰⴹ ⵏ ⵜⵎⴻⵥⴷⵉⵜ ⴷ ⵜⵎⴻⵥⴷⵉⵜ."
       },
       "dis_tetanus": {
-        "name": "Tetanus",
+        "name": "ⵜⵉⵟⴰⵏⵓⵙ",
         "scientificName": "Clostridium tetani",
-        "description": "Bacterial toxin affecting the nervous system.",
-        "prevention": "Sanitation during surgery/castration."
+        "description": "Toxin ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵜ ⵉⵃⵓⵣⴰⵏ ⴰⵥⴰⵔ ⵏ ⵜⴼⴻⴽⴽⴰ.",
+        "prevention": "ⵜⴰⵙⴻⵣⴷⴻⴳ ⴷⴻⴳ ⵜⴰⵍⵍⵉⵜ ⵏ ⵜⵎⴻⵥⵔⵉ/ⵜⵎⴻⵥⵥⵓⵖⵜ."
       },
       "dis_eperythrozoonosis": {
-        "name": "Eperythrozoonosis",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ Epiritruzunuz",
         "scientificName": "Mycoplasma suis",
-        "description": "Blood parasite causing anemia.",
-        "prevention": "Insect control and clean needles."
+        "description": "ⴰⴼⴻⵔⴷⵉⵙ ⵏ ⵢⵉⴷⴰⵎⵎⴻⵏ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⴰⵏⴻⵎⵉⴰ.",
+        "prevention": "ⴰⵃⴰⵔⴻⴱ ⵖⴻⴼ ⵢⵉⴱⴻⵄⵄⴰⵛ ⴷ ⵓⵙⵉⵣⴷⴻⴳ ⵏ ⵜⵎⴻⵥⵥⵓⵖⵉⵏ."
       },
       "dis_ascaris": {
-        "name": "Ascaris suum",
+        "name": "ⴰⵙⴽⴰⵔⵉⵙ ⵙⵓⵓⵎ",
         "scientificName": "Large Roundworm",
-        "description": "Internal parasite causing lung and liver damage.",
-        "prevention": "Regular deworming."
+        "description": "Parasite ⵏ ⴷⴰⵅⴻⵍ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵍⵅⵉⵔ ⵏ ⵜⴼⴻⴽⴽⴰ ⴷ ⵜⴰⵙⴰ.",
+        "prevention": "ⴰⵙⴻⵏⵇⴻⵙ ⵏ ⵢⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵙ ⵍⵇⴰⵏⵓⵏ."
       },
       "dis_whipworms": {
-        "name": "Whipworms",
+        "name": "ⵉⵖⴻⵔⵙⵉⵡⴻⵏ",
         "scientificName": "Trichuris suis",
-        "description": "Internal parasite in the large intestine.",
-        "prevention": "Deworming and sanitation."
+        "description": "Parasit ⵏ ⴷⴰⵅⴻⵍ ⴷⴻⴳ ⵜⴼⴻⴽⴽⴰ ⵜⴰⵎⴻⵇⵇⵔⴰⵏⵜ.",
+        "prevention": "Deworming ⴷ ⵜⴷⴰⵡⵙⴰ."
       },
       "dis_lungworms": {
-        "name": "Lungworms",
+        "name": "ⵉⵖⴻⵔⵙⵉⵡⴻⵏ",
         "scientificName": "Metastrongylus spp.",
-        "description": "Internal parasite of the lungs.",
-        "prevention": "Earthworm control and deworming."
+        "description": "Parazit ⵏ ⴷⴰⵅⴻⵍ ⵏ ⵜⴼⴻⴽⴽⴰ.",
+        "prevention": "ⴰⵃⴰⵔⴻⴱ ⵖⴻⴼ ⵢⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵏ ⵜⵎⵓⵔⵜ ⴷ ⵓⵙⴼⴻⴹ ⵏ ⵢⵉⵖⴻⵔⵙⵉⵡⴻⵏ."
       },
       "dis_kidney_worms": {
-        "name": "Kidney Worms",
+        "name": "ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵏ ⵜⵉⵥⵥⴰⵍ",
         "scientificName": "Stephanurus dentatus",
-        "description": "Internal parasite affecting kidneys and liver.",
-        "prevention": "Management and hygiene."
+        "description": "Parasit ⵏ ⴷⴰⵅⴻⵍ ⵉⵃⵓⵣⴰⵏ ⵜⵉⵥⴻⴹⵡⴰ ⴷ ⵜⴰⵙⴰ.",
+        "prevention": "ⵜⴰⴷⴱⴻⵍⵜ ⴷ ⵜⴻⵣⴷⴻⴳ."
       },
       "dis_lice": {
-        "name": "Swine Lice",
+        "name": "ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵏ ⵢⵉⵍⴻⴼ",
         "scientificName": "Haematopinus suis",
-        "description": "External parasite sucking blood.",
-        "prevention": "Insecticide treatment."
+        "description": "Parasit ⵏ ⴱⴻⵕⵕⴰ ⵢⴻⵙⵙⵓⵙⴻⵎ ⵉⴷⴰⵎⵎⴻⵏ.",
+        "prevention": "ⵜⵉⴷⴷⵉ ⵏ ⵢⵉⴱⴻⵄⵄⴰⵛ."
       },
       "dis_ringworm": {
-        "name": "Ringworm",
+        "name": "ⴰⵖⴻⵔⵙⵉⵡ",
         "scientificName": "Dermatophytosis",
-        "description": "Fungal skin infection.",
-        "prevention": "Sanitation and topical treatment."
+        "description": "ⵉⵏⴼⴻⴽⵙⵉ ⵏ ⵜⴼⴻⴽⴽⴰ ⵏ ⵜⴼⴻⴽⴽⴰ.",
+        "prevention": "ⵜⴰⵣⴷⴻⴳ ⴷ ⵜⴷⴰⵡⵙⴰ ⵏ ⵜⵎⵓⵔⵜ."
       },
       "dis_mulberry_heart": {
-        "name": "Mulberry Heart Disease",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵡⵓⵍ ⵏ Mulberry",
         "scientificName": "Vit E/Se Deficiency",
-        "description": "Nutritional deficiency affecting the heart.",
-        "prevention": "Supplementation."
+        "description": "ⵍⵇⴻⵍⵍⴰ ⵏ ⵜⵎⴻⵞⵞⴰ ⵉⵃⵓⵣⴰⵏ ⵓⵍ.",
+        "prevention": "ⴰⵙⴻⵎⵖⴻⵔ."
       },
       "dis_vit_a": {
-        "name": "Vitamin A Deficiency",
+        "name": "ⵍⴻⵅⵚⴰⵚ ⵏ ⴱⵉⵜⴰⵎⵉⵏ ⴰ",
         "scientificName": "Vitamin A Deficiency",
-        "description": "Nutritional deficiency.",
-        "prevention": "Dietary adjustment."
+        "description": "ⵍⴻⵅⵚⴰⵚ ⵏ ⵜⵓⵞⵞⵉⵜ.",
+        "prevention": "ⴰⵙⴻⴳⴳⴻⵎ ⵏ ⵜⵎⴻⵏⴷⴰⵡⵜ."
       },
       "dis_rickets": {
-        "name": "Rickets",
+        "name": "ⵔⵉⴽⴻⵜ",
         "scientificName": "Vit D/Ca/P Deficiency",
-        "description": "Nutritional deficiency affecting bone growth.",
-        "prevention": "Balanced minerals and sunlight."
+        "description": "ⵍⴻⵅⵚⴰⵚ ⵏ ⵜⵓⵞⵞⵉⵜ ⵉⵃⵓⵣⴰⵏ ⵍⴻⴱⵏⵉ ⵏ ⵢⵉⵖⴻⵙ.",
+        "prevention": "ⵎⵉⵏⴻⵔⴰⵍⵙ ⴷ ⵜⴰⴼⴰⵜ ⵏ ⵢⵉⵟⵉⵊ ⵙ ⵍⵎⵉⵣⴰⵏ."
       },
       "dis_salt_poisoning": {
-        "name": "Salt Poisoning",
+        "name": "ⴰⵙⴻⵎⵎⵉⴹ ⵏ ⵜⵉⵙⵙⵉⵜ",
         "scientificName": "Water Deprivation",
-        "description": "Caused by lack of water followed by over-consumption.",
-        "prevention": "Constant fresh water access."
+        "description": "ⵙⵙⴻⴱⴱⴰ ⵏ ⵍⴻⵅⵚⴰⵚ ⵏ ⵡⴰⵎⴰⵏ ⴹⴻⴼⵔⴻⵏⵜ-ⵉⴷ ⵓⵙⵇⴻⵔⴷⴻⵛ ⵏ ⵜⵖⴰⵡⵙⵉⵡⵉⵏ ⵙ ⵡⴰⵟⴰⵙ.",
+        "prevention": "ⴰⵙⴻⴽⵛⴻⵎ ⵏ ⵡⴰⵎⴰⵏ ⵏ ⵜⵎⴻⵙ ⵙ ⵍⴻⴱⴷⴰ."
       },
       "dis_heat_stroke": {
-        "name": "Heat Stroke",
+        "name": "ⵜⴰⵖⴻⵛⵜ ⵏ ⵍⵃⵓⵎⴰⵏ",
         "scientificName": "Heat Stroke",
-        "description": "Overheating due to poor ventilation or shade.",
-        "prevention": "Ventilation, cooling, and shade."
+        "description": "ⴰⵃⴻⵎⵎⴰⵍ ⵏ ⵜⵎⴻⵙ ⵙ ⵙⵙⴻⴱⴱⴰ ⵏ ⵍⵅⵉⵔ ⵏ ⵜⵎⴻⵙ ⵏⴻⵖ ⵏ ⵜⵉⵍⵉ.",
+        "prevention": "ⴰⵃⴻⵣⵣⴻⴱ, ⴰⵙⴻⵎⵎⵉⴹ, ⴷ ⵜⵉⵍⵉ."
       },
       "dis_rectal_prolapse": {
-        "name": "Rectal Prolapse",
+        "name": "ⴰⵖⴻⵍⵍⵓⵢ ⵏ ⵓⵄⴻⴱⴱⵓⴹ",
         "scientificName": "Rectal Prolapse",
-        "description": "Often follows coughing, diarrhea, or cold stress.",
-        "prevention": "Address primary cause and surgery."
+        "description": "ⵙ ⵡⴰⵟⴰⵙ ⵢⴻⵜⵜⴹⴻⴱⴱⵉⵕⴷ ⴰⵙⴻⴽⵃⴻⵍ, ⵜⴰⵄⴻⴱⴱⵓⴹⵜ, ⵏⴻⵖ ⵍⵃⵉⵔ ⵏ ⵓⵙⴻⵎⵎⵉⴹ.",
+        "prevention": "ⴰⴷⴷⵔⴻⵙⵙ ⵙⵙⴻⴱⴱⴰ ⵜⴰⵎⴻⵣⵡⴰⵔⵓⵜ ⴷ ⵜⵎⴻⵥⵔⵉ."
       },
       "dis_umbilical_hernia": {
-        "name": "Umbilical Hernia",
+        "name": "ⵀⴻⵔⵏⵉⴰ ⵏ ⵓⵄⴻⴱⴱⵓⴹ",
         "scientificName": "Umbilical Hernia",
-        "description": "Developmental defect or navel infection.",
-        "prevention": "Sanitation and genetics."
+        "description": "ⴷⴻⴼⴻⴽⵜ ⵏ ⵜⵏⴻⴼⵍⵉⵜ ⵏⴻⵖ ⵉⵏⴼⴻⴽⵙⵉ ⵏ ⵜⴼⴻⴽⴽⴰ.",
+        "prevention": "ⵜⴰⵣⵎⴻⵔⵜ ⴷ ⵜⴳⴻⵏⵙⵉⵜ."
       },
       "dis_scrotal_hernia": {
-        "name": "Scrotal Hernia",
+        "name": "ⵀⴻⵔⵏⵉⴰ Skrotal",
         "scientificName": "Scrotal Hernia",
-        "description": "Genetic developmental defect.",
-        "prevention": "Genetics and surgical repair."
+        "description": "ⴷⴻⴼⴻⴽⵜ ⵏ ⵜⵏⴻⴼⵍⵉⵜ ⵏ ⵜⴳⴻⵏⵙⵉⵜ.",
+        "prevention": "ⴳⴻⵏⴻⵜⵉⴽ ⴷ ⵜⵎⴻⵥⵔⵉ."
       },
       "dis_splayleg": {
         "name": "Splayleg",
         "scientificName": "Myofibrillar hypoplasia",
-        "description": "Piglets born unable to stand with hind legs.",
-        "prevention": "Taping legs and floor traction."
+        "description": "ⵉⴳⴻⵔⴷⴰⵏ ⵏ ⵢⵉⵍⴻⴼ ⵉ ⴷⵉⵍⵓⵍⵢⴻⵏ ⵓⵔ ⵣⵎⵉⵔⴻⵏ ⴰⵔⴰ ⴰⴷ ⴱⴻⴷⴷⴻⵏ ⵙ ⵢⵉⴹⴰⵔⵔⴻⵏ ⵏ ⴷⴻⴼⴼⵉⵔ.",
+        "prevention": "Taping ⵉⴹⴰⵔⵔⴻⵏ ⴷ ⵜⴽⴻⵔⵔⵓⵙⵜ ⵏ ⵍⵇⴰⵄⴰ."
       },
       "dis_vulvovaginitis": {
-        "name": "Vulvovaginitis",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵓⵄⴻⴱⴱⵓⴹ",
         "scientificName": "Zearalenone Toxicity",
-        "description": "Caused by estrogenic fungal toxins in feed.",
-        "prevention": "Change feed source."
+        "description": "ⵙⵙⴻⴱⴱⴰ ⵏ ⵜⵎⴻⵙ ⵏ ⵜⴼⴻⴽⴽⴰ ⵏ ⵜⵎⴻⵟⵟⵓⵜ ⴷⴻⴳ ⵜⴼⴻⴽⴽⴰ.",
+        "prevention": "ⴱⴻⴷⴷⴻⵍ ⴰⵖⴱⴰⵍⵓ ⵏ ⵜⵎⴻⵞⵞⴰ."
       },
       "dis_seneca": {
-        "name": "Seneca Valley Virus (SVV)",
+        "name": "ⴰⵏⴼⴰⴼⴰⴷ ⵏ Tegzirt ⵏ Seneka (SVV)",
         "scientificName": "Senecavirus A",
-        "description": "Causes blisters similar to FMD.",
-        "prevention": "Biosecurity and diagnosis."
+        "description": "ⵙⵙⴻⴱⴱⴰ ⵏ ⵜⴱⵓⵛⵉⴹⴰⵏⵜ ⵢⴻⵛⴱⴰⵏ FMD.",
+        "prevention": "Biosekurité ⴷ diagnostik."
       },
       "dis_deltacoronavirus": {
-        "name": "Porcine Deltacoronavirus",
+        "name": "ⴰⵏⴼⴰⴼⴰⴷ Deltakuruna ⵏ ⵢⵉⵍⴻⴼ",
         "scientificName": "PDCoV",
-        "description": "Viral diarrhea in all ages.",
-        "prevention": "Biosecurity."
+        "description": "ⵜⴰⵣⵎⴻⵔⵜ ⵏ ⵜⴼⴻⴽⴽⴰ ⵏ virus ⴷⴻⴳ ⵢⴰⵍ ⵍⴻⵄⵎⴻⵕ.",
+        "prevention": "ⵜⴰⵖⴻⵍⵍⵉⵙⵜ ⵜⴰⵖⴻⵍⵏⴰⵡⵜ."
       },
       "dis_rotavirus": {
-        "name": "Rotavirus Diarrhea",
+        "name": "ⵜⴰⵄⴻⴱⴱⵓⴹⵜ ⵏ Rutavirus",
         "scientificName": "Rotavirus",
-        "description": "Common cause of weaning diarrhea.",
-        "prevention": "Vaccination and hygiene."
+        "description": "ⵙⵙⴻⴱⴱⴰ ⵜⴰⵎⴻⵇⵇⵔⴰⵏⵜ ⵏ ⵜⵎⴻⵟⵟⵓⵜ ⵏ ⵜⵎⴻⵟⵟⵓⵜ.",
+        "prevention": "ⵜⴰⵛⴻⵣⵎⴻⴹ ⴷ ⵜⴻⵣⴷⴻⴳ."
       },
       "dis_teschen": {
-        "name": "Teschen/Talfan Disease",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵜⴻⵛⵛⴻⵏ/ⵜⴰⵍⴼⴰⵏ",
         "scientificName": "Sapelovirus/Teschovirus",
-        "description": "Viral infection of the nervous system.",
-        "prevention": "Biosecurity."
+        "description": "ⵉⵏⴼⴻⴽⵙⵉ Virus ⵏ ⵜⴼⴻⴽⴽⴰ ⵏ ⵜⴼⴻⴽⴽⴰ.",
+        "prevention": "ⵜⴰⵖⴻⵍⵍⵉⵙⵜ ⵜⴰⵖⴻⵍⵏⴰⵡⵜ."
       },
       "dis_vesicular": {
-        "name": "Swine Vesicular Disease",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵜⴼⴻⴽⴽⴰ ⵏ ⵢⵉⵍⴻⴼ",
         "scientificName": "Enterovirus",
-        "description": "Viral disease mimicking FMD.",
-        "prevention": "Strict quarantine."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ virus ⵢⴻⵜⵜⵇⴰⴷⴰⵔⴻⵏ FMD.",
+        "prevention": "ⵜⴰⵃⴻⵎⵍⴰ ⵏ ⵓⵄⴰⵇⴻⴱ ⵥⵥⴰⵢⴻⵏ."
       },
       "dis_melioidosis": {
-        "name": "Melioidosis",
+        "name": "Meliyuduz",
         "scientificName": "Burkholderia pseudomallei",
-        "description": "Bacterial disease from soil/water.",
-        "prevention": "Clean water and hygiene."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵢⵉⵏ ⵙⴻⴳ ⵡⴰⴽⴰⵍ/ⴰⵎⴰⵏ.",
+        "prevention": "ⴰⵎⴰⵏ ⵣⴻⴷⴷⵉⴳⴻⵏ ⴷ ⵜⴻⵣⴷⴻⴳ."
       },
       "dis_trypanosomiasis": {
-        "name": "Trypanosomiasis",
+        "name": "Tripanusumiyaz",
         "scientificName": "Trypanosoma spp.",
-        "description": "Protozoan disease spread by tsetse flies.",
-        "prevention": "Fly control and medication."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ ⵢⵉⴼⴻⵔⴷⵉⵙⴻⵏ (protozoaires) ⵢⴻⵜⵜⵡⴰⵙⵏⴻⵔⵏⴰⵢ ⵙⵖⵓⵔ ⵉⵎⵓⴹⴰⵏ ⵏ ⵜⵙⴻⵜⵙⴻ.",
+        "prevention": "ⴰⵃⴰⵔⴻⴱ ⵖⴻⴼ ⵜⴼⴻⴽⴽⴰ ⴷ ⴷⴷⵡⴰⵡⵉ."
       },
       "dis_cysticercosis": {
-        "name": "Cysticercosis",
+        "name": "Sistiserkosis",
         "scientificName": "Taenia solium larvae",
-        "description": "Larval stage of human tapeworm in pig muscle.",
-        "prevention": "Prevent access to human waste."
+        "description": "Larval ⵙⵜⴰⴳⴻ ⵏ ⵜⵎⴻⵥⵥⵓⵖⵜ ⵏ ⵓⵎⴷⴰⵏ ⴷⴻⴳ ⵜⴼⴻⴽⴽⴰ ⵏ ⵢⵉⵍⴻⴼ.",
+        "prevention": "ⵃⴻⴱⵙⴻⵜ ⴰⵏⴻⴽⵛⵓⵎ ⵖⴻⵔ ⵜⵖⴰⵡⵙⵉⵡⵉⵏ ⵏ ⵓⵎⴷⴰⵏ."
       },
       "dis_toxoplasmosis": {
-        "name": "Toxoplasmosis",
+        "name": "Tuksuplazmuz",
         "scientificName": "Toxoplasma gondii",
-        "description": "Zoonotic protozoan infection.",
-        "prevention": "Cat control and biosecurity."
+        "description": "ⵉⵏⴼⴻⴽⵙⵉ ⵏ ⵢⵉⴼⴻⵔⴷⵉⵙⴻⵏ ⵏ ⵜⵥⴻⴳⵡⴰ ⵏ ⵜⵥⴻⴳⵡⴰ.",
+        "prevention": "ⵛⴰⵜ ⵏ ⵜⵖⴻⵍⵍⵉⵙⵜ ⴷ ⵜⵖⴻⵍⵍⵉⵙⵜ ⵜⴰⵖⴻⵍⵏⴰⵡⵜ."
       },
       "dis_listeriosis": {
-        "name": "Listeriosis",
+        "name": "ⵜⴰⵙⵜⴻⵔⵢⵓⵙⵉⵜ",
         "scientificName": "Listeria monocytogenes",
-        "description": "Bacterial infection of nervous system.",
-        "prevention": "Sanitation and feed hygiene."
+        "description": "ⵉⵏⴼⴻⴽⵙⵉ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵢⵉⵏ ⵏ ⵓⵏⴰⴳⵔⴰⵡ ⵏ ⵜⴼⴻⴽⴽⴰ.",
+        "prevention": "ⵜⴻⵣⴷⴻⴳ ⴷ ⵜⴻⵣⴷⴻⴳ ⵏ ⵜⵎⴻⵞⵞⴰ."
       },
       "dis_ear_necrosis": {
-        "name": "Ear Necrosis",
+        "name": "Nekrosis ⵏ ⵓⵎⴻⵥⵥⵓⵖ",
         "scientificName": "Ear Necrosis",
-        "description": "Often caused by stress, overcrowding, or infection.",
-        "prevention": "Reduce density and treat secondary infection."
+        "description": "ⵙ ⵡⴰⵟⴰⵙ ⵙ ⵙⵙⴻⴱⴱⴰ ⵏ ⵍⵃⵉⵔ, ⵏ ⵜⵎⴻⵖⵔⴰ, ⵏⴻⵖ ⵏ ⵓⵏⴼⴰⴼⴰⴷ.",
+        "prevention": "ⵙⵏⴻⵇⵙ ⵍⵃⵉⵔⴼⴰ ⴷ ⵓⵙⵙⴻⵃⴱⵉⴱⴻⵔ ⵖⴻⴼ ⵓⵏⴼⴰⴼⴰⴷ ⵡⵉⵙ ⵙⵉⵏ."
       },
       "dis_sunburn": {
-        "name": "Sunburn",
+        "name": "ⴰⵙⴻⵔⵙⵉ ⵏ ⵢⵉⵟⵉⵊ",
         "scientificName": "Solar dermatitis",
-        "description": "Affects white-skinned pigs outdoors.",
-        "prevention": "Provide shade."
+        "description": "ⵢⴻⵜⵜⵃⴰⵣ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵙ ⵜⴼⴻⴽⴽⴰ ⵜⴰⵎⴻⵍⵍⴰⵍⵜ ⴷⴻⴳ ⴱⴻⵔⵔⴰ.",
+        "prevention": "ⴻⴼⴽⴷ ⵜⵉⵍⵉ."
       },
       "dis_tail_biting": {
-        "name": "Tail Biting",
+        "name": "ⵜⴰⵖⴻⵛⵜ ⵏ ⵓⵇⴻⵛⵍⴰⵡ",
         "scientificName": "Behavioral stress",
-        "description": "Behavioral issue due to stress/boredom.",
-        "prevention": "Reduce stress and enrich environment."
+        "description": "ⵜⴰⵍⵓⴼⵜ ⵏ ⵜⵉⴽⵍⵉ ⵙ ⵙⵙⴻⴱⴰ ⵏ ⵍⵃⵉⵔ/ⵍⵃⵉⵔ.",
+        "prevention": "ⵙⵏⴻⵇⵙ ⵍⵃⵉⵔ ⵢⴻⵔⵏⴰ ⵙⵙⴻⵎⵖⴻⵔ ⵜⴰⵡⴻⵏⵏⴰⴹⵜ."
       },
       "dis_navel_ill": {
-        "name": "Navel Ill",
+        "name": "ⴰⴹⴹⴰⵏ ⵏ ⵓⵄⴻⴱⴱⵓⴹ",
         "scientificName": "Navel Infection",
-        "description": "Infection of the umbilical cord at birth.",
-        "prevention": "Iodine dip at birth and sanitation."
+        "description": "ⵉⵏⴼⴻⴽⵙⵉ ⵏ ⵜⵎⴻⵟⵟⵓⵜ ⴷⴻⴳ ⵜⵍⴰⵍⵉⵜ.",
+        "prevention": "Yod dip ⴷⴻⴳ ⵜⵍⴰⵍⵉⵜ ⴷ ⵜⴷⴰⵡⵙⴰ."
       },
       "dis_iron_toxicity": {
-        "name": "Iron Toxicity",
+        "name": "ⵜⵉⵙⵎⵉⵏ ⵏ ⵡⵓⵣⵣⴰⵍ",
         "scientificName": "Ferrous excess",
-        "description": "Excess iron administration leading to sudden death.",
-        "prevention": "Inject accurate dosage."
+        "description": "ⵢⴻⵣⵎⴻⵔ ⴰⴷ ⴷⵢⴻⴹⵔⵓ ⵎⴰ ⵢⴻⵍⵍⴰ ⵢⴻⵜⵜⵡⴰⵙⵇⴻⴷⵛⴻⵎ ⵡⵓⵣⵣⴰⵍ ⴷⴻⴳ ⵢⵉⴳⴻⵔⴷⴰⵏ ⵏ ⵢⵉⵍⴻⴼ ⵉⵅⵓⵚⵚⴻⵏ ⴷⴻⴳ Vit E.",
+        "prevention": "ⵃⴻⵇⵇⴻⵔ ⴱⴻⵍⵍⵉ ⵍⵇⵓⵜ ⵏ ⵜⵥⴻⴳⵡⴰ ⴷ ⵡⵉⵏ ⵢⴻⵜⵜⵡⴰⵙⴽⴻⵍⵙⴻⵏ."
       },
       "dis_aflatoxicosis": {
-        "name": "Aflatoxicosis",
+        "name": "ⴰⴼⵍⴰⵜⵓⴽⵙⵉⴽⵓⵙ",
         "scientificName": "Aspergillus flavus toxin",
-        "description": "Fungal toxin poisoning.",
-        "prevention": "Avoid moldy feed and use toxin binders."
+        "description": "ⵙⵙⴻⵎ ⵏ ⵜⵎⴻⵙ ⵙⴻⴳ ⵢⵉⵣⴻⵎⵔⴻⵏ ⵏ ⵜⵎⴻⵥⵥⵓⵖⵜ ⵏⴻⵖ ⵙⴻⴳ ⵍⵇⵓⵜ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵍⴻⵅⵚⴰⵚ ⵏ ⵜⴰⵙⴰ ⴷ ⵜⵎⴻⵥⵥⵓⵖⵜ.",
+        "prevention": "ⵃⴰⴷⵔⴻⵜ ⵉⵎⴰⵏⵏⵡⴻⵏ ⵙⴻⴳ ⵓⵞⵞⵉ ⵏ ⵡⵓⵞⵞⵉ ⵢⴻⵙⵄⴰⵏ ⵍⵇⵓⵜ, ⵃⵔⴻⵣ ⵉⵎⴻⵏⴷⵉ ⴷⴻⴳ ⵜⴻⴳⵏⵉⵡⵉⵏ ⵜⵉⵇⵓⵔⴰⵏⵉⵏ, ⵓ ⵙⵇⴻⴷⵛⴻⵜ ⵉⴼⴰⵔⵉⵙⴻⵏ ⵏ ⵓⵙⴷⵓⴽⴽⴻⵍ ⵏ ⵜⵎⴻⵙ."
       },
       "dis_parakeratosis": {
-        "name": "Parakeratosis",
+        "name": "Parakeratoz (ⵍⴻⵅⵚⴰⵚ ⵏ ⵣⵉⵏⴽ)",
         "scientificName": "Zinc deficiency",
-        "description": "Zinc deficiency in swine.",
-        "prevention": "Ensure adequate zinc levels in diet."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ ⵜⵓⵞⵞⵉⵜ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵍⵇⴻⵛⵛ ⵏ ⵜⴼⴻⴽⴽⴰ ⵙ ⵡⴰⵟⴰⵙ, ⵙ ⵜⴼⴻⴽⴽⴰ ⵏ ⵜⴼⴻⴽⴽⴰ.",
+        "prevention": "ⴹⴻⵎⵏⴻⴹ ⵍⵎⵉⵣⴰⵏ ⵏ ⵍⴽⴰⵍⵙⵉⵢⵓⵎ ⵖⴻⵔ ⵍⵣⵉⵏⴽ ⴷⴻⴳ ⵜⴼⴻⵍⵍⴰⵃⵜ ⵢⴻⵔⵏⴰ ⴻⴼⴽⴷ ⵍⵎⵉⵣⴰⵏ ⵏ ⵍⵣⵉⵏⴽ."
       },
       "dis_biotin_deficiency": {
-        "name": "Biotin Deficiency",
+        "name": "ⵍⴻⵅⵚⴰⵚ ⵏ Biyutin",
         "scientificName": "Vitamin H deficiency",
-        "description": "Biotin deficiency in swine.",
-        "prevention": "Provide biotin supplements."
+        "description": "ⵍⴻⵅⵚⴰⵚ ⵏ ⵜⵓⵞⵞⵉⵜ ⵢⴻⵙⵙⴻⴽⵛⴰⵎⴷ ⵉⵖⴻⵙ ⵉⵛⴻⵔⴽⴻⵏ, ⵉⵖⴻⴱⵍⴰⵏ ⵏ ⵓⴳⵍⵉⵎ, ⴷ ⵜⵎⴻⵥⵥⵓⵖⵜ.",
+        "prevention": "ⵔⵏⵓ ⵍⵇⵓⵜ ⵙ biyutin ⵓ ⵃⴰⴷⵔⴻⵜ ⵍⵇⴰⵄ ⵏ ⴱⴻⵟⵓⵏ ⵉⵇⴻⵙⵃⴻⵏ, ⵉⴱⴻⵣⵢⴻⵏ."
       },
       "dis_gossypol_toxicity": {
-        "name": "Gossypol Toxicity",
+        "name": "ⵜⵉⵙⵎⵉⵏ ⵏ Gossipul",
         "scientificName": "Gossypol poisoning",
-        "description": "Cottonseed meal poisoning.",
-        "prevention": "Limit raw cottonseed meal in feed."
+        "description": "ⵙⵙⴻⵎ ⵙⴻⴳ ⵓⵞⵞⵉ ⵏ ⵍⵇⵓⵜ ⵏ ⵍⵇⵓⵜ ⵏ ⵜⵎⴻⵥⵢⴰⵏⵜ ⵏⴻⵖ ⵏ ⵜⵎⴻⵥⵢⴰⵏⵜ, ⴷ ⵙⴻⴱⴱⴰ ⵏ ⵡⵓⴳⵓⵔⴻⵏ ⵏ ⵓⵙⵏⵓⴼⴼⴻⵙ.",
+        "prevention": "ⵙⵙⴻⵅⴷⴻⵎ ⵜⵉⵔⴻⵎⵜ ⵏ ⵍⵇⵓⵜ ⴷⴻⴳ ⵜⵎⴻⵏⴷⴰⵡⵜ ⵢⴻⵔⵏⴰ ⵙⵙⴻⵇⴷⴻⵛ ⴰⵙⵓⵍⴼⴰⵜ ⵏ ⵡⵓⵣⵣⴰⵍ ⴰⴽⴽⴻⵏ ⴰⴷ ⵜⴻⵙⵏⴻⵇⵙⴻⴹ gossypol."
       },
       "dis_cassava_poisoning": {
-        "name": "Cassava Poisoning",
+        "name": "ⴰⵙⴻⵎⵎⵉⴹ ⵏ ⵜⴽⴻⵕⵕⵓⵙⵜ",
         "scientificName": "Cyanogenic glycosides",
-        "description": "Cyanide poisoning from raw cassava.",
-        "prevention": "Cook or ferment cassava before feeding."
+        "description": "ⴰⵙⴻⵎⵎⵉⴹ ⵏ ⵛⵢⴰⵏⵉⴷⴻ ⵙⴻⴳ ⵢⵉⵥⵓⵔⴰⵏ ⵏⴻⵖ ⵙⴻⴳ ⵢⵉⵇⵛⴻⵕ ⵏ ⵜⵎⴻⵥⵢⴰⵏⵜ ⵏ ⵜⵎⴻⵥⵢⴰⵏⵜ ⵏⴻⵖ ⵓⵔ ⵢⴻⵜⵜⵡⴰⵙⵇⴻⴷⵛⴻⵏ ⴰⵔⴰ ⴰⴽⴽⴻⵏ ⵉⵍⴰⵇ.",
+        "prevention": "ⵙⵇⴻⵔⴹ, ⵙⴱⵓⵄ, ⵙⵇⴻⵔⴷⴻⵛ ⴷⴻⴳ ⵢⵉⵟⵉⵊ, ⵏⴻⵖ ⵙⴼⴻⵔⵎⴻⵏⵜ ⵍⴱⴰⵟⴰⵟⴰ ⵙⴻⵏⴷ ⴰⴷ ⵜⵜⴻⵞⵞⴻⴹ."
       },
       "dis_sweet_potato_toxicity": {
-        "name": "Sweet Potato Toxicity",
+        "name": "ⵙⵙⴻⵎ ⵏ ⵍⴱⴰⵟⴰⵟⴰ ⵜⴰⵥⵉⴹⴰⵏⵜ",
         "scientificName": "Ipomeamarone toxicity",
-        "description": "Ipomeamarone poisoning.",
-        "prevention": "Do not feed moldy or damaged sweet potatoes."
+        "description": "ⴰⵙⴻⵎⵎⵉⴹ ⵙⴻⴳ ⵍⴱⴰⵟⴰⵟⴰ ⵜⴰⵥⵉⴹⴰⵏⵜ ⵏ ⵜⵎⴻⵥⵥⵓⵖⵜ, ⴷ ⵙⴻⴱⴱⴰ ⵏ ⵍⵃⵉⴼ ⴰⵎⴻⵇⵔⴰⵏ ⵏ ⵓⵙⵏⵓⴼⴼⴻⵙ.",
+        "prevention": "ⴹⴻⴳⴳⴻⵔ ⵍⴱⴰⵟⴰⵟⴰ ⵜⴰⵥⵉⴹⴰⵏⵜ ⵉⵅⵓⵚⵚⴻⵏ ⵏⴻⵖ ⵉ ⴷⵢⴻⵖⵍⵉⵏ; ⵙⵙⴻⵞⵞⴰⵢⴻⵏ ⴽⴰⵏ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵉⵙⴻⵃⵃⴰⵏ."
       },
       "dis_mma": {
-        "name": "MMA Syndrome",
+        "name": "ⴷⵉⵙⴳⴰⵍⴰⴽⵜⵢⴰ ⵏ ⴷⴻⴼⴼⵉⵔ ⵏ ⵜⵍⴰⵍⵉⵜ (MMA)",
         "scientificName": "Mastitis-Metritis-Agalactia",
-        "description": "Post-farrowing infection in sows.",
-        "prevention": "Clean farrowing pens and proper nutrition."
+        "description": "ⵎⴰⵙⵜⵉⵜⵉⵙ, ⵎⴻⵜⵔⵉⵜⵉⵙ, ⴷ ⴰⴳⴰⵍⴰⵛⵜⵉⴰ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵜⴰⵡⵍⴰ ⴷ ⵍⴻⵅⵚⴰⵚ ⵏ ⵓⵖⵔⵓⵎ ⴷⴻⴳ ⵜⵎⴻⵥⵢⴰⵏⵉⵏ ⴷⴻⴼⴼⵉⵔ ⵎⴰ ⵙⵙⴰⵡⴹⴻⵏⵜ ⴰⴷ ⴼⴼⵖⴻⵏⵜ.",
+        "prevention": "ⵃⵔⴻⵣ ⵜⴻⵣⴷⴻⴳ ⵏ ⵍⵇⴰⵍⴻⴱ ⵏ ⵜⴼⴻⵍⵍⴰⵃⵜ ⵙ ⵍⴵⴻⵀⴷ ⵓ ⴹⴻⵎⵏⴻⴹ ⴰⵞⵞⵉ ⵉⵍⴰⵇⴻⵏ ⵏ ⵜⴼⴻⵍⵍⴰⵃⵜ."
       },
       "dis_pwd": {
-        "name": "Post-Weaning Diarrhea",
+        "name": "ⵜⴰⵄⴻⴱⴱⵓⴹⵜ ⵏ ⵙⴻⵏⴷ ⴰⵙⴻⴽⵛⴻⵎ ⵏ ⵓⵄⴻⴱⴱⵓⴹ (PWD)",
         "scientificName": "Escherichia coli (F4/F18)",
-        "description": "Colibacillosis in weaned pigs.",
-        "prevention": "Sanitation and diet adjustment."
+        "description": "ⵜⴰⵣⵎⴻⵔⵜ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵜ ⴷⴻⴳ ⵢⵉⴳⴻⵔⴷⴰⵏ ⵏ ⵢⵉⵍⴻⴼ ⴽⵔⴰ ⵏ ⵡⴰⴽⵓⴷ ⴷⴻⴼⴼⵉⵔ ⵎⴰ ⵜⵜⵡⴰⴼⴻⴹⴹⴻⵏ, ⴷ ⵙⴻⴱⴱⴰ ⵏ ⵜⵎⴻⵥⵥⵓⵖⵜ.",
+        "prevention": "ⵙⵏⴻⵇⵙ ⵍⵃⵉⵔ ⵏ ⵜⵎⴻⵟⵟⵓⵜ, ⵃⵔⴻⵣ ⵜⴰⵣⴻⴷⴳⴰⵏⵜ ⵏ ⵜⵎⴻⵟⵟⵓⵜ, ⵢⴻⵔⵏⴰ ⴻⴼⴽⴷ ⴰⵎⴰⵏ ⵏ ⵜⵉⵙⵙⵉⵜ ⵣⴻⴷⴷⵉⴳⴻⵏ."
       },
       "dis_trichinellosis": {
-        "name": "Trichinellosis",
+        "name": "ⵜⵔⵉⴽⵉⵏⵉⵍⵓⵍⵓⵙ",
         "scientificName": "Trichinella spiralis",
-        "description": "Zoonotic parasitic infection.",
-        "prevention": "Do not feed raw garbage; pest control."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ ⵜⵎⴻⵥⵥⵓⵖⵜ ⵏ Zoonotic ⵙⴻⴳ ⵓⵞⵞⵉ ⵏ ⵓⴽⵙⵓⵎ ⵏ ⵜⵎⴻⵥⵥⵓⵖⵜ, ⴷ ⵙⴻⴱⴱⴰ ⵏ ⵜⵎⴻⵥⵥⵓⵖⵜ ⵏ ⵜⴼⴻⴽⴽⴰ.",
+        "prevention": "ⵓⵔ ⵜⵜⴻⵙⵙⴻⵞⵞⴰ ⴰⵔⴰ ⵙⵡⵉⵍⵍ ⴰⵃⴻⵔⴼⵉ, ⵓⵔ ⵜⵜⴻⵙⵙⴻⵡⵡⴰⵢⴻⴹ ⴰⵔⴰ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵏ ⵜⵓⵞⵞⵉⵜ 30 ⵏ ⵜⴻⴷⵇⵉⵇⵉⵏ, ⵢⴻⵔⵏⴰ ⵃⴻⴽⵎⴻⴹ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ."
       },
       "dis_hydatid_disease": {
-        "name": "Hydatid Disease",
+        "name": "ⵀⵉⴷⴰⵜⵉⴷⵓⵙ",
         "scientificName": "Echinococcus granulosus",
-        "description": "Larval tapeworm infection.",
-        "prevention": "Deworm farm dogs; prevent access to offal."
+        "description": "ⵉⵏⴼⴻⴽⵙⵉ ⵏ larve parasite ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵍⵇⵓⵜ ⵢⴻⵞⵞⵓⵔⴻⵏ ⴷ ⵍⴳⴰⵣ ⴷⴻⴳ ⵢⵉⴼⴻⵔⴷⵉⵙⴻⵏ.",
+        "prevention": "Deworm ⵉⵇⵊⴰⵏ ⵏ ⵜⴼⴻⵍⵍⴰⵃⵜ ⵙ ⵍⵇⴰⵏⵓⵏ ⵢⴻⵔⵏⴰ ⵃⴻⴱⵙⴻⵜⵜⴻⵏ ⴰⴷ ⵞⵞⴻⵏ ⵉⵖⴻⵙ ⵏ ⵢⵉⵍⴻⴼ ⵉⵃⴻⵎⵎⵍⴻⵏ."
       },
       "dis_phe": {
-        "name": "Proliferative Hemorrhagic Enteropathy",
+        "name": "Enteropati ⵏ ⵉⴷⴰⵎⴻⵏ ⵏ ⵢⵉⵍⴻⴼ",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Acute intestinal bleeding in young adult pigs.",
-        "prevention": "Vaccination and hygiene."
+        "description": "ⵜⴰⵣⵎⴻⵔⵜ ⵏ ⵉⴷⴰⵎⵎⴻⵏ ⵏ ⵜⴼⴻⴽⴽⴰ ⴷ ⵍⵎⵓⵜ ⵙ ⵜⵖⴰⵡⵍⴰ ⴷⴻⴳ ⵢⵉⵍⴻⴼ ⵏ ⵜⴼⴻⵍⵍⴰⵃⵜ/ⵏ ⵜⴽⴻⵎⵎⴻⵍⵜ.",
+        "prevention": "ⵃⴰⴷⵔⴻⵜ ⵜⵉⵣⴷⴻⴳ ⵢⴻⵍⵀⴰⵏ ⵢⴻⵔⵏⴰ ⵙⵙⴻⵇⴷⴻⵛⴻⵜ l’antibiotique ⵉⵡⴰⵜⴰⵏ ⴷⴷⴰⵡ ⵏ ⵜⵎⵓⵖⵍⵉ ⵏ ⵓⵎⴻⵊⵊⴰⵢ ⵏ ⵍⵎⴰⵍ."
       },
       "dis_mycoplasma_arthritis": {
-        "name": "Mycoplasma Arthritis",
+        "name": "ⴰⵔⵜⵔⵉⵜ ⵏ Mikuplazma",
         "scientificName": "Mycoplasma hyosynoviae",
-        "description": "Bacterial joint disease.",
-        "prevention": "Sanitation and quarantine."
+        "description": "ⴰⵏⴼⴰⴼⴰⴷ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵜ ⵢⴻⵜⵜⴰⵡⵉⴷ ⵉⵖⴻⵙ ⵏ ⵜⴼⴻⴽⴽⴰ, ⴰⵄⴻⴱⴱⵓⴹ, ⴷ ⵍⴻⵄⵢⴰⴼ ⵏ ⵢⵉⴹⴰⵔⵔⴻⵏ.",
+        "prevention": "ⵙⵙⴻⵍⵀⵓ ⵜⵉⴳⵏⴰⵜⵉⵏ ⵏ ⵜⵏⴻⵣⴷⵓⵖⵜ, ⵙⵏⴻⵇⵙ ⵜⴰⵖⴻⵛⵜ ⵏ ⵓⵃⴻⵣⵣⴻⴱ, ⵓ ⵙⵙⴻⵃⴱⵉⴱⴻⵔ ⵣⵉⴽ."
       },
       "dis_foot_rot": {
-        "name": "Foot Rot",
+        "name": "ⴰⵖⴻⴷⴷⵓ ⵏ ⵓⴹⴰⵔ (Nekrubasiluz)",
         "scientificName": "Fusobacterium necrophorum",
-        "description": "Infection of the foot causing lameness.",
-        "prevention": "Keep pens dry; treat hooves."
+        "description": "ⵉⵏⴼⴻⴽⵙⵉ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵢⵉⵏ ⵉⴽⴻⵞⵞⵎⴻⵏ ⴷⴻⴳ ⵢⵉⵎⴻⵊⵔⴰⵃ ⵏ ⵢⵉⴹⴰⵔⵔⴻⵏ, ⴷ ⵙⴻⴱⴱⴰ ⵏ ⵜⵎⴻⵥⵥⵓⵖⵜ ⴷ ⵜⵎⴻⵥⵥⵓⵖⵜ.",
+        "prevention": "ⵙⵙⴻⵡⵊⴻⴷ ⴱⴻⵟⵓⵏ ⵉⵅⵓⵚⵚⴻⵏ, ⵃⵔⴻⵣ ⵍⵇⴰⵄⴰ, ⵙⵙⴻⵇⴷⴻⵛ ⵍⴱⴰⵟⴰⵟⴰ ⵏ ⵢⵉⴹⴰⵔⵔⴻⵏ ⵎⴰ ⵢⴻⵍⵍⴰ ⵉⵍⴰⵇ."
       },
       "dis_babesiosis": {
-        "name": "Babesiosis",
+        "name": "ⴱⴰⴱⵉⵣⵢⵓⵙ ⵢⴻⵜⵜⵡⴰⵟⵟⴼⴻⵏ ⵙ ⵜⴽⴻⵕⵕⵓⵙⵉⵏ",
         "scientificName": "Babesia trautmanni",
-        "description": "Tick-borne protozoan infection.",
-        "prevention": "Acaricide spray for tick control."
+        "description": "ⴰⴼⴻⵔⴷⵉⵙ ⵏ ⵢⵉⴷⴰⵎⵎⴻⵏ ⵢⴻⵜⵜⵡⴰⵙⵇⴻⴷⵛⴻⵏ ⵙ ⵜⴽⴻⵔⴽⴰⵙ ⵢⴻⵜⵜⴰⵡⵉⵏ ⵜⴰⵡⵍⴰ ⵖⵍⴰⵢⴻⵏ, ⴰⵏⴻⵎⵉⴰ, ⴷ ⵜⵎⴻⵥⵥⵓⵖⵜ ⵜⴰⵣⴻⴳⵣⴰⵡⵜ.",
+        "prevention": "ⵃⴰⴷⵔⴻⵜ ⵜⵉⴽⴻⵔⴽⴰⵙ ⵙ ⵓⵙⴻⵇⴷⴻⵛ ⵏ ⵢⵉⴼⴰⵔⵉⵙⴻⵏ ⵏ ⵜⵎⴻⵥⴷⵉⵢⵉⵏ (ⴰⵛⴰⵔⵉⵛⵉⴷⴻⵙ) ⵢⴻⵔⵏⴰ ⵃⴰⴷⵔⴻⵜ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵡⴰⵔ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ."
       },
       "dis_anaplasmosis": {
-        "name": "Anaplasmosis",
+        "name": "Anaplazmuz",
         "scientificName": "Anaplasma marginale",
-        "description": "Blood infection in swine.",
-        "prevention": "Vector control."
+        "description": "ⴰⴹⴹⴰⵏ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵜ ⵢⴻⵜⵜⵡⴰⵟⵟⴼⴻⵏ ⵙ ⵜⴽⴻⵕⵕⵓⵙⵉⵏ ⵢⴻⵜⵜⴰⵡⵉⴷ ⴰⵏⴻⵎⵉⴰ, ⵜⴰⵡⵍⴰ, ⴷ ⵜⵎⴻⵥⵥⵓⵖⵜ.",
+        "prevention": "ⵙⵙⴻⴹⵔⵓ ⴰⵀⵉⵍⴻⵏ ⵏ ⵓⵃⴻⵣⵣⴻⴱ ⵏ vecteur ⴷ ⵜⵉⵛⴽ."
       },
       "dis_sow_hysteria": {
-        "name": "Sow Hysteria",
+        "name": "ⵥⵥⵓ Isterya",
         "scientificName": "Puerperal psychosis",
-        "description": "Aggression or panic in sows after farrowing.",
-        "prevention": "Provide quiet farrowing area."
+        "description": "ⴰⵖⴱⴻⵍ ⵏ ⵜⵉⴽⵍⵉ ⴰⵏⴷⴰ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵏ ⵜⵎⴻⵟⵟⵓⵜ ⵜⵜⵖⵉⵎⵉⵏ ⴷ ⵉⵄⴻⵡⵡⵉⵇⴻⵏ ⵢⴻⵔⵏⴰ ⵜⵜⵇⴻⵔⵔⵉⴱⴻⵏ ⵉⴳⴻⵔⴷⴰⵏ ⵏ ⵢⵉⵍⴻⴼ.",
+        "prevention": "ⵃⴻⴹⵔⴷ ⵜⴰⵡⴻⵏⵏⴰⴹⵜ ⵏ ⵜⵎⴻⵥⵥⵓⵖⵜ ⵉⵃⴻⵎⵎⵍⴻⵏ, ⴹⴻⴼⴼⴻⵔ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ, ⵙⵙⴻⵇⴷⴻⵛ ⵉⴼⴰⵔⵉⵙⴻⵏ ⵏ ⵓⵙⴳⵓⵏⴼⵓ ​​ⵎⴰ ⵢⴻⵍⵍⴰ ⵉⵍⴰⵇ."
       },
       "dis_thorny_headed_worm": {
-        "name": "Thorny-Headed Worm",
+        "name": "ⴰⵖⴻⵔⵙⵉⵡ ⵢⴻⵙⵄⴰⵏ ⴰⵇⴻⵔⵔⵓⵢ ⵉⵙⴻⵏⵏⴰⵏⴻⵏ",
         "scientificName": "Macracanthorhynchus hirudinaceus",
-        "description": "Intestinal parasite.",
-        "prevention": "Prevent access to June beetle grubs."
+        "description": "ⴰⵖⴻⵔⵙⵉⵡ ⵏ ⵜⵎⴻⵥⵥⵓⵖⵜ ⵢⴻⵜⵜⵡⴰⵟⵟⴼⴻⵏ ⵙ ⵓⵞⵞⵉ ⵏ ⵢⵉⵖⴻⵔⵙⵉⵡⴻⵏ, ⴷ ⵙⴻⴱⴱⴰ ⵏ ⵜⵎⴻⵥⵥⵓⵖⵜ ⵏ ⵢⵉⵖⴻⵙ.",
+        "prevention": "ⵃⴰⴷⵔⴻⵜ ⵉⵎⴰⵏⵏⵡⴻⵏ ⵙⴻⴳ ⵓⵙⵏⴻⵔⵏⵉ ⵏ ⵜⵍⴻⵍⵍⵉ ⴷⴻⴳ ⵡⴰⴽⴰⵍ ⴰⵢⴷⴻⴳ ⵍⵍⴰⵏⵜ ⵜⵎⴻⵥⵢⴰⵏⵉⵏ ⵢⴻⵔⵏⴰ ⵙⵙⴻⵇⴷⴻⵛⴻⵜ ⵉⴼⴰⵔⵉⵙⴻⵏ ⵏ ⵓⵙⴼⴻⴹ ⵏ ⵢⵉⵖⴻⵔⵙⵉⵡⴻⵏ."
       },
       "dis_strongyloidiasis": {
-        "name": "Strongyloidiasis",
+        "name": "Strungiluyaz (ⴰⵖⴻⵔⵙⵉⵡ ⵏ ⵍⵅⵉⴹ)",
         "scientificName": "Strongyloides ransomi",
-        "description": "Threadworm infection.",
-        "prevention": "Keep pens dry; deworming."
+        "description": "ⴰⵖⴻⵔⵙⵉⵡ ⵏ ⵍⵅⵉⴹ ⵏ ⵢⵉⵥⵓⵔⴰⵏ ⵢⴻⵜⵜⴰⵡⵉⵏ ⵜⴰⵣⵍⴰ ⵏ ⵜⴼⴻⴽⴽⴰ ⴷ ⵍⵎⵓⵜ ⴷⴻⴳ ⵢⵉⴳⴻⵔⴷⴰⵏ ⵏ ⵢⵉⵍⴻⴼ.",
+        "prevention": "ⵃⵔⴻⵣ ⵜⵉⵇⴱⵓⵛⵉⵏ ⵏ ⵜⵎⴻⵟⵟⵓⵜ ⴰⴷ ⵇⵇⵉⵎⴻⵏⵜ ⴷ ⵜⵉⵣⴻⴳⵣⴰⵡⵉⵏ ⵢⴻⵔⵏⴰ ⵣⴻⴷⴷⵉⴳⴻⵜ, ⵢⴻⵔⵏⴰ ⵙⴼⴻⴹ ⵜⵉⵥⴻⴳⵡⴰ ⵓⵇⴱⴻⵍ ⴰⴷ ⵜⵜⴻⵙⵙⵓⴼⵖⴻⵎ."
       },
       "dis_hyostrongylosis": {
-        "name": "Red Stomach Worm",
+        "name": "ⴰⵖⴻⵔⵙⵉⵡ ⴰⵣⴻⴳⴳⴰⵖ ⵏ ⵓⵄⴻⴱⴱⵓⴹ",
         "scientificName": "Hyostrongylus rubidus",
-        "description": "Intestinal worm in grazing pigs.",
-        "prevention": "Clean pasture management; deworming."
+        "description": "ⴰⴹⴹⴰⵏ ⵏ ⵡⵓⵛⵛⴻⵏ ⵏ ⵓⵄⴻⴱⴱⵓⴹ ⵢⴻⵜⵜⴰⵡⵉⵏ ⵙ ⵜⵎⴻⵥⵥⵓⵖⵜ, ⴰⵏⴻⵎⵉⴰ, ⴷ ⵜⵎⴻⵥⵥⵓⵖⵜ.",
+        "prevention": "ⵙⵙⴻⵡⵊⴻⴷ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ, ⵃⵔⴻⵣ ⵉⵅⵅⴰⵎⴻⵏ ⴷ ⵉⵇⵓⵔⴰⵏⴻⵏ, ⵓ ⵙⵙⴻⴹⵔⵓ ⴰⵀⵉⵍ ⵏ ⵓⵙⴼⴻⴹ ⵏ ⵢⵉⵖⴻⵔⵙⵉⵡⴻⵏ."
       },
       "dis_oesophagostomiasis": {
-        "name": "Nodular Worm",
+        "name": "ⴰⵏⴼⴰⴼⴰⴷ ⵏ ⵓⵖⴻⵔⵙⵉⵡ ⵏ ⵓⵖⴻⵔⵙⵉⵡ",
         "scientificName": "Oesophagostomum spp.",
-        "description": "Intestinal worm in swine.",
-        "prevention": "Deworming and sanitation."
+        "description": "Parasite ⵏ ⵢⵉⵥⵓⵔⴰⵏ ⵢⴻⵜⵜⴰⵡⵉⵏ ⵜⵉⵖⴱⵓⵍⴰ ⴷⴻⴳ ⵍⵃⵉⴹ ⵏ ⵢⵉⵥⵓⵔⴰⵏ, ⴷⵖⴰ ⴷ ⴰⵢⴰ ⴰⵢ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵖⴻⵔ ⵜⵎⴻⵥⵢⴰⵏⵉⵏ ⵏ ⵜⵎⴻⵥⵢⴰⵏⵉⵏ.",
+        "prevention": "ⴰⵙⴻⵣⴷⴻⴳ ⵏ ⵍⵇⴰⵍⴻⴱ ⵙ ⵍⵇⴰⵏⵓⵏ ⴷ ⵓⵙⴻⵇⴷⴻⵛ ⵏ ⵢⴰⵍ ⴰⵙⵙ ⵏ ⵢⵉⴼⴰⵔⵉⵙⴻⵏ ⵏ ⵜⵎⴻⵥⴷⵉⵢⵉⵏ ⵏ ⵜⵎⴻⵥⴷⵉⵢⵉⵏ ⵏ ⵜⵎⴻⵥⴷⵉⵢⵉⵏ."
       },
       "dis_fascioliasis": {
-        "name": "Fascioliasis",
+        "name": "ⴼⴰⵙⴽⵢⵓⵍⵉⴰⵙⵉⵙ (ⴰⴹⴹⴰⵏ ⵏ ⵜⴰⵙⴰ)",
         "scientificName": "Fasciola gigantica",
-        "description": "Liver fluke infection.",
-        "prevention": "Snail control; keep away from wet pastures."
+        "description": "ⴼⵍⵓⴽⴻ parasite ⵉⵃⵓⵣⴰⵏ ⵜⴰⵙⴰ, ⵢⴻⵜⵜⵡⴰⵙⵙⴻⵏ ⴷⴻⴳ ⵜⵎⴻⵇⴱⴻⵔⵜ ⵏ ⵜⵎⴻⵇⴱⴻⵔⵜ ⵏⴻⵖ ⵏ ⵜⵎⴻⵇⴱⴻⵔⵜ.",
+        "prevention": "ⵃⴻⴱⴱⴻⵙ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⴰⴷ ⵔⵥⴻⵏ ⴷⴻⴳ ⵜⴻⵎⵏⴰⴹⵉⵏ ⵏ ⵜⵥⴻⴳⵡⴰ ⵓ ⵃⴰⴷⵔⴻⵜ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵏ ⵡⴰⴹⵓ."
       },
       "dis_emcv": {
-        "name": "EMCV",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵓⵇⴻⵔⵔⵓⵢ (EMCV)",
         "scientificName": "Cardiovirus",
-        "description": "Viral myocarditis and reproductive failure.",
-        "prevention": "Rodent control (rodents spread EMCV)."
+        "description": "ⴰⵏⴼⴰⴼⴰⴷ ⵏ ⵓⵏⴼⴰⴼⴰⴷ ⵢⴻⵜⵜⵡⴰⵟⵟⴼⴻⵏ ⵙⵖⵓⵔ ⵉⵖⴻⵔⴷⴰⵢⴻⵏ ⵢⴻⵜⵜⴰⵡⵉⴷ ⴰⵖⴻⵍⵍⵓⵢ ⵏ ⵡⵓⵍ ⵙ ⵜⵖⴰⵡⵍⴰ ⴷ ⵓⵖⴻⵍⵍⵓⵢ ⵏ ⵜⵎⴻⵟⵟⵓⵜ.",
+        "prevention": "ⵙⵙⴻⴹⵔⵓ ⴰⵃⴰⵔⴻⴱ ⵙ ⵍⴵⴻⵀⴷ ⵖⴻⴼ ⵢⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵓ ⵃⴰⵔⴻⴱ ⵖⴻⴼ ⵡⵓⵞⵞⵉ ⵙⴻⴳ ⵓⵙⴻⵎⵎⵉⴹ."
       },
       "dis_demodectic_mange": {
-        "name": "Demodectic Mange",
+        "name": "ⴷⴻⵎⵓⴷⴻⴽⵙ Mange",
         "scientificName": "Demodex phylloides",
-        "description": "Skin mite infection.",
-        "prevention": "Acaricide treatment."
+        "description": "ⵎⵉⴽⵔⵓⵙⴽⵓⴱⵉ ⵏ ⵜⴼⴻⴽⴽⴰ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵜⵉⴼⴻⴽⴽⵉⵡⵉⵏ ⵏ ⵜⴼⴻⴽⴽⴰ ⴷ ⵜⴼⴻⴽⴽⴰ ⵜⴰⵎⴻⵛⵟⵓⵃⵜ.",
+        "prevention": "ⵙⵙⴻⵍⵀⵓ ⴰⵞⵞⵉ ⵏ ⵜⵇⴻⴹⵄⵉⵜ, ⵄⴻⵣⵣⴻⵍ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵢⴻⵜⵜⵡⴰⵃⵓⵣⴰⵏ, ⵓ ⵙⵙⴻⵇⴷⴻⵛ ⴰⵛⴰⵔⵉⵛⵉⴷⴻⵙ."
       },
       "dis_pityriasis_rosea": {
-        "name": "Pityriasis Rosea",
+        "name": "Pitiryasis Ruza",
         "scientificName": "Pseudo-ringworm",
-        "description": "Non-contagious skin condition.",
-        "prevention": "Spontaneous recovery; keep environment clean."
+        "description": "ⵜⴰⴳⵏⵉⵜ ⵏ ⵓⴳⵍⵉⵎ ⵓⵔ ⵢⴻⵜⵜⵡⴰⵟⵟⴼⴻⵏ ⴰⵔⴰ ⴷⴻⴳ ⵢⵉⵍⴻⴼ ⵉⵎⴻⵥⵢⴰⵏⴻⵏ ⵢⴻⵜⵜⴳⴻⵏ ⵜⵉⵖⴱⵓⵍⴰ ⵢⴻⵛⴱⴰⵏ ⵜⵉⵖⴻⵔⵖⴻⵔⵜ.",
+        "prevention": "ⵙ ⵓⵎⴰⵜⴰ ⵢⴻⵜⵜⴼⴻⵔⵔⵓ ⵉⵎⴰⵏⵉⵙ; ⵃⵔⴻⵣ ⵍⵇⴻⵛⵛ ⵏ ⵡⵓⵙⵓ ⵣⴻⴷⴷⵉⴳⴻⵏ, ⴰⵇⴻⵔⵃⴰⵏ ⵢⴻⵔⵏⴰ ⵙⵏⴻⵇⵙ ⵍⵃⵉⵔ."
       },
       "dis_photosensitization": {
-        "name": "Photosensitization",
+        "name": "ⵜⴰⵃⴻⵔⵛⵉ ⵏ ⵜⵓⴼⵓⵜ",
         "scientificName": "Solar dermatitis",
-        "description": "Skin hypersensitivity to sunlight.",
-        "prevention": "Keep out of direct sunlight; check pasture plants."
+        "description": "ⵜⴰⴷⵔⵉⵎⵜ ⵏ ⵜⵎⴻⵙ ⵏ ⵢⵉⵟⵉⵊ ⵙ ⵡⴰⵟⴰⵙ ⴷⴻⴳ ⵢⵉⵍⴻⴼ ⵙ ⵜⴼⴻⴽⴽⴰ ⵜⴰⴼⴻⵍⵍⴰⵃⵜ ⴷⴻⴼⴼⵉⵔ ⵎⴰ ⵞⵞⴰⵏ ⵉⵎⵖⴰⵏ ⵉⵎⴰⵢⵏⵓⵜⴻⵏ.",
+        "prevention": "ⴻⴼⴼⴽⴷ ⵜⵉⵍⵉ, ⴽⴽⵙⴻⵜ ⵍⴻⵃⵛⵉⵛ ⵢⴻⵜⵜⵃⴰⵣⴻⵏ, ⵓ ⵃⵔⴻⵣ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⴷⴻⴳ ⵓⵅⵅⴰⵎ."
       },
       "dis_shoulder_ulcers": {
-        "name": "Shoulder Ulcers",
+        "name": "ⵥⵥⴻⵔ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵏ ⵜⵓⵢⴰⵜ",
         "scientificName": "Decubitus ulcers",
-        "description": "Sores in thin sows on hard floors.",
-        "prevention": "Provide soft bedding; increase feed."
+        "description": "ⵉⴹⴰⵔⵔⴻⵏ ⵏ ⵜⵥⴻⴳⵡⴰ ⵖⴻⴼ ⵢⵉⴹⴰⵔⵔⴻⵏ ⵏ ⵜⵎⴻⵥⵢⴰⵏⵉⵏ ⵏ ⵜⵎⴻⵥⵢⴰⵏⵉⵏ ⵢⴻⵜⵜⵡⴰⵙⴱⴻⴷⴷⴻⵏ ⵖⴻⴼ ⴱⴻⵟⵓⵏ ⵉⵇⴻⵙⵃⴻⵏ.",
+        "prevention": "ⴻⴼⴼⴽⴷ ⵍⵇⴻⵛⵛ ⵏ ⵡⵓⵙⵓ ⵉⵃⴻⵎⵎⵍⴻⵏ, ⵃⵔⴻⵣ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⴷⴻⴳ ⵜⴻⴳⵏⵉⵜ ⵢⴻⵍⵀⴰⵏ ⵏ ⵜⴼⴻⴽⴽⴰ, ⵢⴻⵔⵏⴰ ⵙⵙⴻⵇⴷⴻⵛ ⵜⵉⴼⴻⵍⵡⵉⵢⵉⵏ ⵏ ⵍⴽⴰⵖⴻⴹ."
       },
       "dis_ear_biting": {
-        "name": "Ear Biting",
+        "name": "ⵜⴰⵎⴻⵟⵟⵓⵜ ⵏ ⵓⵎⴻⵥⵥⵓⵖ",
         "scientificName": "Stress response behavior",
-        "description": "Behavioral stress response.",
-        "prevention": "Reduce stocking density; enrich environment."
+        "description": "ⵜⵉⴽⵍⵉ ⵓⵔ ⵏⴻⵍⵍⵉ ⴰⵔⴰ ⴷ ⵜⴰⵏⴰⵚⵍⵉⵜ ⴰⵏⴷⴰ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵜⵜⵇⴻⵔⵔⵉⴱⴻⵏ ⵉⵎⴻⵥⵥⵓⵖⴻⵏ ⵏ ⵢⵉⵎⴻⴷⴷⵓⴽⴰⵍ ⵏ ⵍⵇⴰⵍⴻⴱ, ⴷⵖⴰ ⴷ ⴰⵢⴰ ⴰⵢ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵏⴻⴽⵔⵓⵙⵉⵙ.",
+        "prevention": "ⵙⵏⴻⵇⵙ ⴰⵖⴻⵔⵙⵉⵡ, ⵙⵙⴻⵍⵀⵓ ⴰⵃⴻⴱⴱⵓⵙ ⵏ ⵡⴰⴹⵓ, ⵓ ⴼⴽⴷ ⴰⵙⴻⴳⴳⴻⵎ ⴰⵎ ⵙⵏⴰⵙⴻⵍ."
       },
       "dis_gastric_torsion": {
-        "name": "Gastric Torsion",
+        "name": "ⴰⵖⴻⵔⵔⴰⴱⵓ ⵏ ⵓⵄⴻⴱⴱⵓⴹ (Afsu)",
         "scientificName": "Gastric dilation-volvulus",
-        "description": "Twisted stomach.",
-        "prevention": "Avoid overfeeding in single meals."
+        "description": "ⴰⴹⴹⴰⵏ ⵏ ⵜⴼⴻⴽⴽⴰ ⴷ ⵜⵎⴻⵥⵥⵓⵖⵜ ⵏ ⵜⴼⴻⴽⴽⴰ ⵙ ⵜⵖⴰⵡⵍⴰ, ⴷⵖⴰ ⴷ ⴰⵢⴰ ⴰⵢ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵍⵎⵓⵜ ⵙ ⵜⵖⴰⵡⵍⴰ.",
+        "prevention": "ⵃⴰⴷⵔⴻⵜ ⵉⵎⴰⵏⵏⵡⴻⵏ ⵙⴻⴳ ⵓⵞⵞⵉ ⵏ ⵍⵇⵓⵜ ⴰⵎⴻⵇⵔⴰⵏ ⴷⴻⴼⴼⵉⵔ ⵏ ⵜⵥⵓⵎⵎⵉ ⵖⴻⵣⵣⵉⴼⴻⵏ ⵢⴻⵔⵏⴰ ⴱⴹⵓⵜ ⵍⵇⵓⵜ ⵏ ⵢⴰⵍ ⴰⵙⵙ ⵖⴻⴼ ⵢⵉⵃⵔⵉⵛⴻⵏ."
       },
       "dis_c_difficile": {
-        "name": "C. difficile Infection",
+        "name": "ⴽⵍⵓⵙⵜⵔⵉⴷⵢⵓⵎ ⴷⵉⴼⵉⵙⵉⵍ (CDI)",
         "scientificName": "Clostridioides difficile",
-        "description": "Bacterial diarrhea in piglets.",
-        "prevention": "Clean environment and proper ventilation."
+        "description": "ⴰⴹⴹⴰⵏ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵜ ⴷⴻⴳ ⵢⵉⴳⴻⵔⴷⴰⵏ ⵏ ⵢⵉⵍⴻⴼ ⵉ ⴷⵉⵍⵓⵍⵢⴻⵏ ⵙⴻⴳ ⵎⴻⵍⵎⵉ ⴽⴰⵏ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵜⴰⵣⵍⴰ ⵏ ⵡⴰⵎⴰⵏ ⴷ ⵜⵎⴻⵥⵥⵓⵖⵜ.",
+        "prevention": "ⵙⵙⵉⵣⴷⴻⴳ ⵢⴻⵔⵏⴰ ⵙⴼⴻⴹ ⵍⵇⴻⴹⵢⴰⵏ ⵏ ⵜⵎⴻⵟⵟⵓⵜ ⵙ ⵍⵅⵉⵔ ⵢⴻⵔⵏⴰ ⴹⴻⵎⵏⴻⴹ colostrum ⵏ ⵣⵉⴽ."
       },
       "dis_cold_stress": {
-        "name": "Cold Stress",
+        "name": "ⴰⵃⴻⴱⴱⵓⵙ ⴰⵙⴻⵎⵎⵉⴹ (Hipotermia)",
         "scientificName": "Hypothermia susceptibility",
-        "description": "Chilling in young piglets.",
-        "prevention": "Provide heat lamps and dry bedding."
+        "description": "ⴰⵙⴻⵎⵎⵉⴹ ⵏ ⵜⴼⴻⴽⴽⴰ ⵙ ⵡⴰⵟⴰⵙ ⴷⴻⴳ ⵢⵉⴳⴻⵔⴷⴰⵏ ⵏ ⵢⵉⵍⴻⴼ, ⴷ ⵙⴻⴱⴱⴰ ⵏ ⵜⵎⴻⵥⵥⵓⵖⵜ ⴷ ⵜⵎⴻⵜⵜⴰⵏⵜ ⵏ ⵜⵎⴻⵟⵟⵓⵜ.",
+        "prevention": "ⴻⴼⴼⴽⴷ ⵍⴼⴻⵟⵟⴰ ⵏ ⵍⵃⵓⵎⴰⵏ, ⵜⵉⵇⴱⵓⵛⵉⵏ ⵏ ⵜⴽⴻⵔⵔⵓⵙⵜ, ⵓ ⵃⵔⴻⵣ ⴰⵎⴽⴰⵏ ⵏ ⵜⵎⴻⵥⵥⵓⵖⵜ ⴷ ⴰⵇⴻⵔⵃⴰⵏ ⵢⴻⵔⵏⴰ ⵡⴰⵔ ⵍⵃⴻⵎⵍⴰ ⵏ ⵜⵎⴻⵥⵥⵓⵖⵜ."
       },
       "dis_necrotic_enteritis": {
-        "name": "Necrotic Enteritis",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵓⵄⴻⴱⴱⵓⴹ",
         "scientificName": "Clostridium perfringens Type C",
-        "description": "Clostridial gut infection.",
-        "prevention": "Sow vaccination and pen sanitation."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ ⵜⵎⴻⵙ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵢⵉⵏ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵙ ⵡⴰⵟⴰⵙ ⵏ ⵜⴼⴻⴽⴽⴰ ⵙ ⵉⴷⴰⵎⴻⵏ ⴷ ⵜⵎⴻⵜⵜⴰⵏⵜ ⵏ ⵢⵉⴳⴻⵔⴷⴰⵏ ⵏ ⵢⵉⵍⴻⴼ.",
+        "prevention": "ⵛⴻⴳⴳⴻⵄ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵓⵇⴱⴻⵍ ⴰⴷ ⴷⵜⴻⴼⴼⴻⵖ ⵢⴻⵔⵏⴰ ⵃⵔⴻⵣ ⵜⴻⵣⴷⴻⴳ ⵏ ⵍⵇⴰⵍⴻⴱ ⵙ ⵍⴻⴽⵎⴰⵍⵉⵙ."
       },
       "dis_navel_bleeding": {
-        "name": "Navel Bleeding",
+        "name": "ⵉⴷⴰⵎⵎⴻⵏ ⵏ ⵓⵄⴻⴱⴱⵓⴹ",
         "scientificName": "Umbilical hemorrhage",
-        "description": "Hemorrhage from umbilical cord.",
-        "prevention": "Tie off bleeding navels; check feed vitamin K."
+        "description": "ⵉⴷⴰⵎⵎⴻⵏ ⵏ ⵜⵎⴻⵟⵟⵓⵜ ⵙ ⵡⴰⵟⴰⵙ ⵙⴻⴳ ⵜⵎⴻⵥⵥⵓⵖⵜ ⴷⴻⴳ ⵢⵉⴳⴻⵔⴷⴰⵏ ⵉ ⴷⵉⵍⵓⵍⵢⴻⵏ ⵙ ⵜⵎⴻⵟⵟⵓⵜ.",
+        "prevention": "ⵛⵛⴹⴻⴹ ⵉⵥⵓⵔⴰⵏ ⵏ ⵜⵎⴻⵟⵟⵓⵜ ⴷⴻⴳ ⵜⵍⴰⵍⵉⵜ ⵢⴻⵔⵏⴰ ⵃⴰⴷⵔⴻⵜ ⵉⵎⴰⵏⵏⵡⴻⵏ ⵙⴻⴳ ⵓⵞⵞⵉ ⵏ ⵍⵇⵓⵜ ⵉ ⴷⵢⴻⵜⵜⵡⴰⵙⵇⴻⴷⵛⴻⵏ ⵙ mycotoxin ⵉ ⵜⵎⴻⵥⵢⴰⵏⵉⵏ."
       },
       "dis_spirochetal_colitis": {
-        "name": "Spirochetal Colitis",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵓⵄⴻⴱⴱⵓⴹ ⵏ ⵢⵉⵍⴻⴼ",
         "scientificName": "Brachyspira pilosicoli",
-        "description": "Bacterial large intestine infection.",
-        "prevention": "Medication and pen sanitation."
+        "description": "ⴰⵟⵟⴰⵏ ⵏ ⵜⴰⵄⴻⴱⴱⵓⴹⵜ ⵏ ⵜⴼⴻⴽⴽⴰ ⴷⴻⴳ ⵢⵉⵍⴻⴼ ⵢⴻⵜⵜⵏⴻⵔⵏⵉⵏ, ⴷ ⵙⴻⴱⴱⴰ ⵏ ⵜⵎⴻⵔⵏⵉⵡⵜ ⵏ ⵍⵇⵉⵙ ⵏ ⵍⵅⵉⵔ.",
+        "prevention": "ⵙⵙⴻⵣⴷⴻⴳ ⵉⵖⴻⵔⵔⵓⴱⴰ ⵏ ⵜⵓⵞⵞⵉⵜ ⵓ ⵙⵙⴻⵃⴱⵉⴱⴻⵔ ⵖⴻⴼ ⵢⵉⵍⴻⴼ ⵢⴻⵜⵜⵡⴰⵃⵓⵣⴰⵏ ⵙ ⵢⵉⵎⵓⴹⴰⵏ ⵏ ⵜⴼⴻⴽⴽⴰ."
       },
       "dis_salmonella_septicemia": {
-        "name": "Salmonella Septicemia",
+        "name": "ⵙⴰⵍⵎⵓⵏⵉⵍⴰ ⵙⴻⴱⵜⵉⵙⵉⵎⵢⴰ",
         "scientificName": "Salmonella choleraesuis",
-        "description": "Blood infection from Salmonella.",
-        "prevention": "Clean water; biosecurity."
+        "description": "ⵉⵏⴼⴻⴽⵙⵉ ⵏ salmonella ⵙ ⵡⴰⵟⴰⵙ ⴷⴻⴳ ⵉⴷⴰⵎⴻⵏ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵍⵇⴻⵛⵛ ⴷ ⵍⵎⵓⵜ ⵙ ⵜⵖⴰⵡⵍⴰ.",
+        "prevention": "ⴰⵄⵣⴻⵍ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵢⵓⴹⵏⴻⵏ, ⵙⵙⴻⵃⴱⵉⴱⴻⵔ ⵖⴻⴼ ⵡⴰⵎⴰⵏ, ⵓ ⵃⵔⴻⵣ ⵜⴰⵖⴻⵍⵍⵉⵙⵜ ⵜⴰⵖⴻⵍⵏⴰⵡⵜ ⵙ ⵍⴵⴻⵀⴷ."
       },
       "dis_prdc": {
-        "name": "PRDC",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵓⵙⵏⵓⴼⴼⴻⵙ ⵏ ⵢⵉⵍⴻⴼ",
         "scientificName": "Porcine Respiratory Disease Complex",
-        "description": "Respiratory complex in grower pigs.",
-        "prevention": "Ventilation, vaccination, and density control."
+        "description": "ⴰⴹⴹⴰⵏ ⵏ ⵓⵙⵏⵓⴼⴼⴻⵙ ⵏ ⵓⵏⴼⴰⴼⴰⴷ ⴷ ⵜⴱⴰⴽⵜⵉⵔⵉⵜ ⵉⵅⵓⵍⴼⴻⵏ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵙ ⵜⴽⴻⵃⵃⴻⵍⵜ ⴷ ⵜⵏⴻⴼⵍⵉⵜ ⵏ ⵍⵅⵉⵔ.",
+        "prevention": "ⵙⵙⴻⵍⵃⵓ ⴰⵃⴻⴱⴱⵓⵙ ⵏ ⵡⴰⴹⵓ, ⵃⴻⴱⴱⴻⵙ ⴰⵟⴰⵙ ⵏ ⵍⵖⴰⵛⵉ, ⵓ ⵃⴰⴷⵔⴻⵜ ⵉⴼⵉⵔⵓⵙⴻⵏ ⵉⵎⴻⵣⵡⵓⵔⴰ."
       },
       "dis_ergotism": {
-        "name": "Ergotism",
+        "name": "ⴰⵙⴻⵎⵎⵉⴹ ⵏ Ergot (Argotism)",
         "scientificName": "Claviceps purpurea",
-        "description": "Poisoning from moldy rye/grains.",
-        "prevention": "Inspect feed grains for black ergot bodies."
+        "description": "ⴰⵙⴻⵎⵎⵉⴹ ⵏ ⵢⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵙⴻⴳ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵏ ⵉⵎⴻⵏⴷⵉ ⵢⴻⵜⵜⵡⴰⵟⵟⴼⴻⵏ ⵙ ergot, ⴷ ⵙⴻⴱⴱⴰ ⵏ ⵏⴻⴽⵔⵓⵙⵉⵙ ⵏ ⵢⵉⵖⴻⵙ.",
+        "prevention": "ⵙⴽⵔⵉⵏ ⵏ ⵜⵎⴻⵞⵞⴰ ⵏ ⵢⵉⵣⴻⵎⵔⴻⵏ ⵉ ⵜⴼⴻⴽⴽⴰ ⵏ ergot ⴰⵇⴻⵙⵃⴰⵏ ⴷ ⵓⴱⴻⴷⴷⴻⵍ ⵏ ⵜⵎⴻⵞⵞⴰ ⵢⴻⵜⵜⵡⴰⵙⵅⴻⴷⵎⴻⵏ."
       },
       "dis_bvdv_pig": {
-        "name": "BVDV in Pigs",
+        "name": "ⴰⵏⴼⴰⴼⴰⴷ BVDV ⴷⴻⴳ ⵢⵉⵍⴻⴼ",
         "scientificName": "Pestivirus",
-        "description": "Bovine Viral Diarrhea virus in swine.",
-        "prevention": "Isolate pigs from cattle."
+        "description": "Bovine Viral ⴰⴹⴹⴰⵏ ⵏ ⵓⵏⴼⴰⴼⴰⴷ ⵏ ⵜⴼⴻⴽⴽⴰ ⵏ ⵍⵎⴰⵍ ⵙⴻⴳ ⵓⵙⴷⵓⴽⴽⴻⵍ ⵏ ⵍⵎⴰⵍ, ⴷ ⵙⴻⴱⴱⴰ ⵏ ⵓⵙⵇⴻⵔⴷⴻⵛ ⵏ ⵜⵎⴻⵟⵟⵓⵜ.",
+        "prevention": "ⵃⵔⴻⵣ ⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵎⵅⴰⵍⵍⴰⴼⴻⵏ ⵖⴻⴼ ⵍⵎⴰⵍ ⴷ ⵍⵎⴰⵍ, ⵓ ⵃⴻⴱⴱⴻⵙ ⴰⵙⵙⴰⵖⴻⵏ ⴳⴰⵔ ⵍⴵⴻⵏⵙ."
       },
       "dis_endocarditis": {
-        "name": "Endocarditis",
+        "name": "ⴰⵟⵟⴰⵏ ⵏ ⵡⵓⵍ ⵏ ⵜⴱⴰⴽⵜⵉⵔⵉⵜ",
         "scientificName": "Streptococcal endocarditis",
-        "description": "Heart valve infection.",
-        "prevention": "Treat primary infections early."
+        "description": "ⵉⵏⴼⴻⴽⵙⵉ ⵏ ⵜⵎⴻⵥⴷⵉⵢⵉⵏ ⵏ ⵡⵓⵍ ⵉ ⴷⵢⴻⵜⵜⴰⵡⵉⵏ ⵍⵇⴻⵍⵍⴰ ⵏ ⵡⵓⵍ ⴷ ⵍⵎⵓⵜ ⵙ ⵜⵖⴰⵡⵍⴰ ⴷⴻⴳ ⵜⴰⵍⵍⵉⵜ ⵏ ⵓⵙⵃⵓⵍⴼⵓ.",
+        "prevention": "ⵙⵙⵓⵇⴻⵍ ⵙ ⵜⵖⴰⵡⵍⴰ ⴰⵟⵟⴰⵏ ⵏ ⵜⴼⴻⴽⴽⴰ ⴷ ⵍⴵⴻⵔⵃ, ⵓ ⴼⵔⴻⵏ ⵎⴳⴰⵍ ⵜⴰⴳⴻⵏⵙⵉⵜ ⵏ ⵜⴼⴻⴽⴽⴰ."
       },
       "dis_polyserositis": {
-        "name": "Polyserositis",
+        "name": "Mikoplazma Poliserositis",
         "scientificName": "Mycoplasma hyorhinis",
-        "description": "Infection of body cavity linings.",
-        "prevention": "Antibiotic treatment; minimize stress."
+        "description": "ⴰⵔⵀⴰⵚ ⵏ ⵜⴼⴻⴽⴽⴰ, ⵏ ⵡⵓⵍ, ⴷ ⵜⴼⴻⴽⴽⴰ ⵏ ⵜⴼⴻⴽⴽⴰ ⴷⴻⴳ ⵢⵉⴳⴻⵔⴷⴰⵏ ⵢⴻⵜⵜⵡⴰⵙⴼⴻⴹⴻⵏ.",
+        "prevention": "ⵙⵏⴻⵇⵙ ⵍⵃⵉⵔ ⵏ ⵜⵎⴻⵟⵟⵓⵜ, ⵃⴰⴷⵔⴻⵜ ⵉⵎⴰⵏⵏⵡⴻⵏ ⵙⴻⴳ ⵓⵅⴻⴷⴷⵉⵎ ⵏ ⵜⵎⴻⵟⵟⵓⵜ, ⵢⴻⵔⵏⴰ ⵙⵙⵓⴼⵖⴻⵜⴷ ⴰⴹⵓ ⴰⴽⴽⴻⵏ ⵉⵡⴰⵜⴰ."
       },
       "dis_congenital_tremor": {
-        "name": "Congenital Tremor",
+        "name": "ⴰⵔⴳⴰⵣ ⵏ ⵜⵍⴰⵍⵉⵜ",
         "scientificName": "Atypical Porcine Pestivirus",
-        "description": "Shaky pig disease.",
-        "prevention": "Acclimatize gilts to farm before breeding."
+        "description": "ⵜⴰⴳⵏⵉⵜ ⵏ ⵜⴼⴻⴽⴽⴰ ⴷⴻⴳ ⵢⵉⴳⴻⵔⴷⴰⵏ ⵉ ⴷⵉⵍⵓⵍⵢⴻⵏ ⵙ ⵍⴵⴻⵀⴷ.",
+        "prevention": "ⵃⴰⴷⵔⴻⵜ ⵉⵎⴰⵏⵏⵡⴻⵏ ⵙⴻⴳ ⵓⵙⴻⵇⴷⴻⵛ ⵏ ⵍⵃⴻⵎⵍⴰ ⵏ ⵢⵉⵖⴻⵔⵙⵉⵡⴻⵏ ⵢⴻⵜⵜⵡⴰⵃⵓⵣⴰⵏ ⵢⴻⵔⵏⴰ ⵙⵏⴻⵇⵙⴻⵜ ⵍⵃⵉⵔ ⵏ ⵜⵣⴻⵎⵔⵉⵏ ⴷⴻⴳ ⵜⴰⵍⵍⵉⵜ ⵏ ⵜⵎⴻⵟⵟⵓⵜ."
       }
     },
     "diagnosisMatches": "Clinical Diagnosis Matches",
@@ -1535,7 +1541,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 EMERGENCY BIOSECURITY PROTOCOL:",
     "clinicalDiagnosisMatches": "Timlilit n usnujji asnajyan",
     "hallmarkBadge": "ⵜⴰⵎⴰⵜⴰⵔⵜ ⵜⴰⴷⵙⵍⴰⵏⵜ",
-    "hallmarkSignPresent": "ⴰⵣⴰⵎⵓⵍ ⵏ ⵓⵙⵎⴻⴽⵜⵉ ⵢⴻⵍⵍⴰ: %1$s",
+    "hallmarkSignPresent": "ⴰⵣⴰⵎⵓⵍ ⵏ ⵓⵙⵎⴻⴽⵜⵉ ⵢⴻⵍⵍⴰ: {sign}",
     "otherSignsWatch": "ⵜⵉⵙⴽⴰⵏⵉⵏ ⵏⵏⵉⴹⴻⵏ ⵉⵖⴻⴼ ⵉⵍⴰⵇ ⴰⴷ ⵜⵃⴰⴷⵔⴻⵎ:",
     "preventionTreatmentLabel": "ⴰⵃⴻⵣⵣⴻⴱ / Tiddi: {treatment}",
     "bio_proto_asf": "IMMEDIATE EMERGENCY QUARANTINE: African Swine Fever is a lethal, legally notifiable virus. 1) Lock down farm gates immediately. 2) Stop all movement of pigs, vehicles, feed, and manure. 3) Disinfect all boot baths and tyres with Virkon S or 2% caustic soda. 4) Contact your District/National Veterinary Officer immediately.",
@@ -1547,8 +1553,8 @@
     "bio_proto_vesicular_stomatitis": "REPORTABLE VESICULAR LESION ALERT: Vesicular Stomatitis is clinically indistinguishable from Foot and Mouth Disease. 1) Isolate infected pigs immediately. 2) Wear protective gloves. 3) Report to state veterinarian for lab differential diagnosis.",
     "bio_proto_senecavirus": "REPORTABLE VESICULAR DISEASE: Senecavirus A lesions are clinically indistinguishable from Foot and Mouth Disease (FMD). 1) Quarantine pen immediately. 2) Restrict off-farm movement. 3) Notify livestock veterinary authorities for mandatory differential PCR testing.",
     "bio_proto_svd": "REPORTABLE VESICULAR DISEASE: Swine Vesicular Disease (SVD). 1) Strict isolation of infected animals. 2) Restrict all vehicle and visitor movements. 3) Report to state animal health department immediately.",
-    "clinicalMatchPercent": "%1$d%% Timlilit Tasnajyant",
-    "matchedSignsCount": "{matched}$d ⵏ {total}$d ⵉⵣⵎⵓⵍⴻⵏ",
+    "clinicalMatchPercent": "{percent}% Timlilit Tasnajyant",
+    "matchedSignsCount": "{matched} ⵏ {total} ⵉⵣⵎⵓⵍⴻⵏ",
     "matchPercentSuffix": "({percent}% match)"
   },
   "HR": {
@@ -1983,7 +1989,7 @@
     "snooze1Month": "1 ⴰⵢⵢⵓⵔ",
     "deleteNotificationQuestion": "ⴽⴽⴻⵙ ⴰⵖⵜⴰⵙ?",
     "deleteNotificationConfirm": "ⵜⵃⴻⵇⵇⴻⴹ ⴱⴻⵍⵍⵉ ⵜⴻⴱⵖⵉⴹ ⴰⴷ ⵜⴻⴽⴽⵙⴻⴹ ⴰⵖⵜⴰⵙⴰ?",
-    "lastWeighedDaysAgo": "ⵉⵍⴻⴼ #%1$s: Weznen ⴰⵏⴻⴳⴳⴰⵔⵓ %2$s ⵓⵙⵙⴰⵏ ⴰⵢⴰ",
+    "lastWeighedDaysAgo": "ⵉⵍⴻⴼ #{tag}: Weznen ⴰⵏⴻⴳⴳⴰⵔⵓ {days} ⵓⵙⵙⴰⵏ ⴰⵢⴰ",
     "stockLeftMinFormat": "{current}: {unit} ⴽⴳ ⵉ ⴷⵢⴻⵇⵇⵉⵎⴻⵏ (Azal: {min} ⴽⴳ)",
     "pigs": "Iḥellufen",
     "pig": "Aḥelluf",

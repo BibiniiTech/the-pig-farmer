@@ -28,6 +28,7 @@ export default function InlineHRSection({
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingStaff, setEditingStaff] = useState<StaffMember | null>(null);
   const [staffToViewProfile, setStaffToViewProfile] = useState<StaffMember | null>(null);
+  const [staffForFullDetails, setStaffForFullDetails] = useState<StaffMember | null>(null);
   const [staffToPaySalary, setStaffToPaySalary] = useState<StaffMember | null>(null);
 
   useEffect(() => {
@@ -754,13 +755,148 @@ export default function InlineHRSection({
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={() => setStaffToViewProfile(null)}
-              className="w-full py-2.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold transition shadow-sm"
-            >
-              Close
-            </button>
+            <div className="flex items-center gap-2 pt-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setStaffForFullDetails(staffToViewProfile);
+                  setStaffToViewProfile(null);
+                }}
+                className="flex-1 py-2 px-3 rounded-xl border border-purple-600 text-purple-700 hover:bg-purple-50 text-xs font-bold transition flex items-center justify-center gap-1.5"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <span>View Details</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setStaffToViewProfile(null)}
+                className="flex-1 py-2 px-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold transition shadow-sm"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Staff Full Details Modal */}
+      {staffForFullDetails && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
+          <div className="bg-white rounded-2xl w-full max-w-lg p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+            {/* Header */}
+            <div className="flex items-center justify-between pb-3 border-b border-zinc-150">
+              <div className="flex items-center gap-3">
+                <div className="h-14 w-14 rounded-full bg-purple-100 border border-purple-200 flex items-center justify-center text-xl font-bold text-purple-700 overflow-hidden shrink-0">
+                  {staffForFullDetails.photoUrl ? (
+                    <img src={staffForFullDetails.photoUrl} alt={staffForFullDetails.name} className="h-full w-full object-cover" />
+                  ) : (
+                    staffForFullDetails.name.charAt(0).toUpperCase()
+                  )}
+                </div>
+                <div>
+                  <h3 className="text-base font-black text-zinc-900">{staffForFullDetails.name}</h3>
+                  <p className="text-xs font-semibold text-purple-700">{staffForFullDetails.role}</p>
+                  <span className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mt-1 ${
+                    staffForFullDetails.status === "Active" ? "bg-emerald-50 text-emerald-800 border border-emerald-200" : "bg-amber-50 text-amber-800 border border-amber-200"
+                  }`}>
+                    {staffForFullDetails.status}
+                  </span>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setStaffForFullDetails(null)}
+                className="text-zinc-400 hover:text-zinc-600 font-bold p-1"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Content Sections */}
+            <div className="space-y-3.5 text-xs">
+              {/* Personal Information */}
+              <div className="bg-purple-50/40 p-3.5 rounded-xl border border-purple-100 space-y-2">
+                <h4 className="font-bold text-purple-900 uppercase text-[11px] tracking-wider">Personal Information</h4>
+                <div className="grid grid-cols-2 gap-2 text-zinc-700">
+                  <div>
+                    <span className="text-zinc-400 block text-[10px]">Gender</span>
+                    <span className="font-semibold">{staffForFullDetails.gender || "—"}</span>
+                  </div>
+                  <div>
+                    <span className="text-zinc-400 block text-[10px]">Date of Birth</span>
+                    <span className="font-semibold">{staffForFullDetails.dateOfBirth || "—"}</span>
+                  </div>
+                  <div>
+                    <span className="text-zinc-400 block text-[10px]">Phone</span>
+                    <span className="font-semibold">{staffForFullDetails.phone || "—"}</span>
+                  </div>
+                  <div>
+                    <span className="text-zinc-400 block text-[10px]">Email</span>
+                    <span className="font-semibold">{staffForFullDetails.email || "—"}</span>
+                  </div>
+                  <div className="col-span-2">
+                    <span className="text-zinc-400 block text-[10px]">Residential Address</span>
+                    <span className="font-semibold">{staffForFullDetails.residentialAddress || "—"}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Employment & Compensation */}
+              <div className="bg-zinc-50 p-3.5 rounded-xl border border-zinc-200 space-y-2">
+                <h4 className="font-bold text-zinc-900 uppercase text-[11px] tracking-wider">Employment & Compensation</h4>
+                <div className="grid grid-cols-2 gap-2 text-zinc-700">
+                  <div>
+                    <span className="text-zinc-400 block text-[10px]">Date Joined</span>
+                    <span className="font-semibold">{staffForFullDetails.joinDate || "—"}</span>
+                  </div>
+                  <div>
+                    <span className="text-zinc-400 block text-[10px]">Base Monthly Salary</span>
+                    <span className="font-black text-purple-800">{currencySymbol}{staffForFullDetails.salary?.toFixed(2)}</span>
+                  </div>
+                  <div className="col-span-2">
+                    <span className="text-zinc-400 block text-[10px]">Mobile App Access</span>
+                    <span className="font-semibold">{staffForFullDetails.allowAppAccess ? "Enabled (Worker Account)" : "Disabled"}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Emergency Contact */}
+              <div className="bg-rose-50/40 p-3.5 rounded-xl border border-rose-100 space-y-2">
+                <h4 className="font-bold text-rose-900 uppercase text-[11px] tracking-wider">Emergency Contact</h4>
+                <div className="grid grid-cols-2 gap-2 text-zinc-700">
+                  <div>
+                    <span className="text-zinc-400 block text-[10px]">Contact Person</span>
+                    <span className="font-semibold">{staffForFullDetails.emergencyContactName || "—"}</span>
+                  </div>
+                  <div>
+                    <span className="text-zinc-400 block text-[10px]">Relationship</span>
+                    <span className="font-semibold">{staffForFullDetails.emergencyContactRelation || "—"}</span>
+                  </div>
+                  <div>
+                    <span className="text-zinc-400 block text-[10px]">Emergency Phone</span>
+                    <span className="font-semibold">{staffForFullDetails.emergencyContactPhone || "—"}</span>
+                  </div>
+                  <div>
+                    <span className="text-zinc-400 block text-[10px]">Emergency Address</span>
+                    <span className="font-semibold">{staffForFullDetails.emergencyContactAddress || "—"}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-end pt-2">
+              <button
+                type="button"
+                onClick={() => setStaffForFullDetails(null)}
+                className="py-2 px-5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold transition shadow-sm"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}

@@ -134,13 +134,9 @@ function HerdActivitiesContent() {
       );
       if (found) {
         setSelectedActivity(found);
-      } else {
-        router.push("/dashboard");
       }
-    } else {
-      router.push("/dashboard");
     }
-  }, [initialActivityParam, router]);
+  }, [initialActivityParam]);
 
   // Reset inputs when activity changes
   useEffect(() => {
@@ -763,7 +759,7 @@ function HerdActivitiesContent() {
   };
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
+    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-x-hidden">
       {/* Watermark Logo Background */}
       {!isMobile && (
         <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
@@ -778,11 +774,63 @@ function HerdActivitiesContent() {
       <div className="relative z-10 flex flex-col min-h-screen">
         {!isMobile && <DesktopHeader />}
 
-        {!selectedActivity && (
-          <div className="flex-1 flex items-center justify-center">
-            <div className="h-10 w-10 animate-spin rounded-full border-4 border-cyan-600 border-t-transparent"></div>
+        <main className="flex-1 max-w-5xl w-full mx-auto p-4 sm:p-6 space-y-6">
+          {/* Top Bar with Back Button */}
+          <div className="flex items-center justify-between gap-4">
+            <button
+              type="button"
+              onClick={() => router.push("/dashboard")}
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-50 hover:text-zinc-900 transition font-bold text-xs shadow-xs"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              <span>Back</span>
+            </button>
+            <h1 className="text-xl sm:text-2xl font-black text-cyan-900 text-center flex-1">
+              Herd Activities
+            </h1>
+            <div className="w-16" />
           </div>
-        )}
+
+          <div className="space-y-4">
+            <h2 className="text-sm font-bold text-zinc-700">
+              Choose activity to execute:
+            </h2>
+
+            {dataLoading ? (
+              <div className="flex py-12 items-center justify-center">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-cyan-600 border-t-transparent"></div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                {activityCategories.map((act) => {
+                  const Icon = act.icon;
+                  return (
+                    <button
+                      key={act.key}
+                      type="button"
+                      onClick={() => setSelectedActivity(act)}
+                      className="p-4 rounded-xl bg-white/90 border border-zinc-200/90 hover:border-cyan-500 hover:shadow-md transition text-left flex items-start gap-3.5 group cursor-pointer"
+                    >
+                      <div className="h-10 w-10 rounded-xl bg-cyan-50 border border-cyan-200 text-cyan-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="text-sm font-bold text-zinc-900 group-hover:text-cyan-800 transition">
+                          {act.type}
+                        </h3>
+                        <p className="text-[11px] text-zinc-500 line-clamp-2 mt-0.5">
+                          {act.desc}
+                        </p>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </main>
       </div>
 
       {/* Log Activity Modal */}
@@ -791,7 +839,10 @@ function HerdActivitiesContent() {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
-              router.push("/dashboard");
+              setSelectedActivity(null);
+              if (initialActivityParam) {
+                router.push("/dashboard");
+              }
             }
           }}
         >
@@ -1223,7 +1274,12 @@ function HerdActivitiesContent() {
               <div className="flex justify-end gap-3 pt-4 border-t border-cyan-200/80">
                 <button
                   type="button"
-                  onClick={() => router.push("/dashboard")}
+                  onClick={() => {
+                    setSelectedActivity(null);
+                    if (initialActivityParam) {
+                      router.push("/dashboard");
+                    }
+                  }}
                   className="rounded-lg border border-cyan-300 bg-white/80 px-4 py-2 text-xs font-semibold text-cyan-800 hover:bg-cyan-100 transition"
                 >
                   {t("cancel")}

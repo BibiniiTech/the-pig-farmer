@@ -266,7 +266,7 @@ export default function MobileShell({
   };
 
   return (
-    <div className="relative flex flex-col h-[100dvh] bg-white text-zinc-900 font-sans overflow-hidden">
+    <div className="relative flex flex-col h-[100dvh] bg-white text-zinc-900 font-sans overflow-x-hidden">
       {/* ── Top App Bar ── */}
       <header className="sticky top-0 z-50 flex items-center justify-between h-14 px-4 bg-white/90 backdrop-blur-md border-b border-zinc-100 shadow-sm">
         {/* Upper Left: Farm Logo + Farm Name (Clickable to open Settings/Profile) */}
@@ -698,7 +698,7 @@ export default function MobileShell({
       </aside>
 
       {/* ── Page Content ── */}
-      <main className="flex-1 flex flex-col overflow-y-auto overscroll-contain pb-20">
+      <main className="flex-1 flex flex-col overflow-y-auto overflow-x-hidden pb-24 touch-pan-y">
         {children}
       </main>
 

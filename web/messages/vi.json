@@ -106,7 +106,13 @@
     "noActivities": "Không có hoạt động sắp tới",
     "allTasksCompleted": "Tất cả công việc đã hoàn thành!",
     "generalTask": "Công việc chung",
-    "language": "Ngôn ngữ"
+    "language": "Ngôn ngữ",
+    "feed": "Thức ăn",
+    "inventory": "Kho thức ăn",
+    "calculator": "Tính toán khẩu phần ăn",
+    "mixFeed": "Phối trộn thức ăn",
+    "analyzeFeed": "Phân tích giá trị dinh dưỡng",
+    "marketHub": "Trung tâm Thị trường"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -835,271 +841,271 @@
       "dis_asf": {
         "name": "Dịch tả heo Châu Phi (ASF)",
         "scientificName": "Asfivirus",
-        "description": "Bệnh truyền nhiễm do virus cực kỳ nguy hiểm và gây chết cao. Chưa có vắc xin hữu hiệu.",
-        "prevention": "An toàn sinh học nghiêm ngặt và hạn chế người vào trại."
+        "description": "Một bệnh truyền nhiễm do virus cực kỳ nguy hiểm và gây tử vong cao, phổ biến ở Tây Phi. Hiện chưa có vắc xin.",
+        "prevention": "Thực hiện nghiêm ngặt an toàn sinh học và hạn chế người ra vào trang trại."
       },
       "dis_fmd": {
-        "name": "Lở mồm long móng (FMD)",
+        "name": "Bệnh lở mồm long móng (FMD)",
         "scientificName": "Aphthovirus",
-        "description": "Bệnh do virus gây ra mụn nước ở miệng và chân.",
-        "prevention": "Tiêm phòng vắc xin và kiểm soát vận chuyển."
+        "description": "Bệnh do virus gây ra các mụn nước ở miệng và chân.",
+        "prevention": "Tiêm phòng vắc xin và kiểm soát việc vận chuyển heo."
       },
       "dis_prrs": {
-        "name": "Tai xanh (PRRS)",
+        "name": "Hội chứng rối loạn hô hấp và sinh sản (Tai xanh)",
         "scientificName": "Arterivirus",
-        "description": "Gây hội chứng rối loạn hô hấp và sinh sản.",
-        "prevention": "An toàn sinh học và tiêm phòng vắc xin cho đàn."
+        "description": "Gây suy hô hấp và các vấn đề về sinh sản.",
+        "prevention": "An toàn sinh học và tiêm phòng vắc xin cho toàn đàn."
       },
       "dis_erysipelas": {
-        "name": "Đóng dấu heo",
+        "name": "Bệnh đóng dấu heo",
         "scientificName": "Erysipelothrix rhusiopathiae",
-        "description": "Nhiễm khuẩn gây ra các vết loét da hình kim cương và viêm khớp.",
-        "prevention": "Tiêm phòng định kỳ và vệ sinh chuồng trại."
+        "description": "Nhiễm khuẩn gây ra các dấu hình kim cương đặc trưng trên da và viêm khớp.",
+        "prevention": "Tiêm phòng định kỳ và vệ sinh chuồng trại sạch sẽ."
       },
       "dis_csf": {
         "name": "Dịch tả heo cổ điển",
         "scientificName": "Pestivirus",
-        "description": "Bệnh truyền nhiễm do virus có triệu chứng tương tự ASF.",
-        "prevention": "Tiêm phòng vắc xin và an toàn sinh học."
+        "description": "Bệnh truyền nhiễm do virus có tính chất tương tự như ASF.",
+        "prevention": "Tiêm phòng vắc xin và an toàn sinh học nghiêm ngặt."
       },
       "dis_anthrax": {
-        "name": "Bệnh Nhiệt thán",
+        "name": "Bệnh nhiệt than",
         "scientificName": "Bacillus anthracis",
-        "description": "Bệnh vi khuẩn nghiêm trọng có thể lây sang người.",
-        "prevention": "Tiêm phòng và tuyệt đối không mổ xác heo chết."
+        "description": "Bệnh nhiễm khuẩn nghiêm trọng có thể lây sang người.",
+        "prevention": "Tiêm phòng vắc xin và tuyệt đối không mổ thịt heo chết."
       },
       "dis_brucellosis": {
-        "name": "Sảy thai truyền nhiễm",
+        "name": "Bệnh sảy thai truyền nhiễm",
         "scientificName": "Brucella suis",
-        "description": "Bệnh vi khuẩn gây rối loạn sinh sản.",
-        "prevention": "Xét nghiệm, loại thải và vệ sinh."
+        "description": "Bệnh do vi khuẩn gây sảy thai và rối loạn sinh sản.",
+        "prevention": "Kiểm tra xét nghiệm, loại thải heo bệnh và vệ sinh."
       },
       "dis_coccidiosis": {
-        "name": "Bệnh Cầu trùng",
+        "name": "Bệnh cầu trùng",
         "scientificName": "Isospora suis",
         "description": "Bệnh ký sinh trùng chủ yếu ảnh hưởng đến heo con.",
-        "prevention": "Vệ sinh chuồng đẻ."
+        "prevention": "Vệ sinh kỹ lưỡng chuồng nái đẻ."
       },
       "dis_pneumonia": {
-        "name": "Suyễn heo (Viêm phổi do Mycoplasma)",
+        "name": "Viêm phổi do Mycoplasma",
         "scientificName": "Mycoplasma hyopneumoniae",
-        "description": "Bệnh hô hấp mãn tính dẫn đến tăng trưởng kém.",
-        "prevention": "Tiêm phòng và cải thiện thông gió."
+        "description": "Bệnh hô hấp mãn tính dẫn đến heo tăng trưởng kém.",
+        "prevention": "Tiêm phòng vắc xin và cải thiện thông thoáng chuồng trại."
       },
       "dis_salmonellosis": {
-        "name": "Bệnh Phó thương hàn",
+        "name": "Bệnh phó thương hàn",
         "scientificName": "Salmonella typhimurium",
-        "description": "Nhiễm khuẩn gây ra các vấn đề đường ruột nghiêm trọng.",
-        "prevention": "Nước sạch và vệ sinh."
+        "description": "Nhiễm khuẩn gây ra các vấn đề nghiêm trọng về đường ruột.",
+        "prevention": "Đảm bảo nguồn nước sạch và vệ sinh."
       },
       "dis_ppv": {
-        "name": "Thai gỗ (Porcine Parvovirus)",
+        "name": "Virus gây sảy thai ở heo (PPV)",
         "scientificName": "Porcine Parvovirus",
-        "description": "Nguyên nhân phổ biến gây hỏng thai ở heo hậu bị.",
-        "prevention": "Tiêm phòng trước khi phối giống."
+        "description": "Nguyên nhân phổ biến gây rối loạn sinh sản ở heo hậu bị.",
+        "prevention": "Tiêm phòng vắc xin trước khi phối giống."
       },
       "dis_rhinitis": {
-        "name": "Viêm teo mũi truyền nhiễm",
+        "name": "Viêm mũi teo truyền nhiễm",
         "scientificName": "Bordetella bronchiseptica",
-        "description": "Gây biến dạng mõm và các vấn đề hô hấp.",
-        "prevention": "Tiêm phòng và đảm bảo chất lượng không khí."
+        "description": "Gây biến dạng mũi và các vấn đề về hô hấp.",
+        "prevention": "Tiêm phòng vắc xin và cải thiện chất lượng không khí."
       },
       "dis_leptospirosis": {
-        "name": "Bệnh do xoắn khuẩn Leptospira",
+        "name": "Bệnh xoắn khuẩn",
         "scientificName": "Leptospira spp.",
-        "description": "Bệnh vi khuẩn từ động vật sang người ảnh hưởng đến thận.",
-        "prevention": "Diệt chuột và tiêm phòng."
+        "description": "Bệnh truyền nhiễm từ động vật sang người, ảnh hưởng đến thận.",
+        "prevention": "Diệt chuột và tiêm phòng vắc xin."
       },
       "dis_influenza": {
         "name": "Cúm heo",
         "scientificName": "Influenza A virus",
-        "description": "Nhiễm trùng hô hấp lây lan nhanh chóng.",
-        "prevention": "Thông gió và an toàn sinh học."
+        "description": "Nhiễm trùng đường hô hấp lây lan nhanh chóng.",
+        "prevention": "Thông gió tốt và an toàn sinh học."
       },
       "dis_edema": {
-        "name": "Bệnh Phù đầu",
+        "name": "Bệnh phù đầu",
         "scientificName": "Escherichia coli",
-        "description": "Do độc tố E. coli gây ra ở heo con sau cai sữa.",
-        "prevention": "Cải thiện vệ sinh và chế độ ăn."
+        "description": "Do độc tố vi khuẩn E. coli gây ra ở heo con sau cai sữa.",
+        "prevention": "Cải thiện vệ sinh và điều chỉnh chế độ ăn."
       },
       "dis_dysentery": {
         "name": "Hồng lỵ",
         "scientificName": "Brachyspira hyodysenteriae",
-        "description": "Tiêu chảy có máu và chất nhầy nghiêm trọng.",
-        "prevention": "Dùng thuốc pha nước uống và sát trùng."
+        "description": "Tiêu chảy nặng có nhầy và máu.",
+        "prevention": "Pha thuốc vào nước uống và sát trùng chuồng trại."
       },
       "dis_mange": {
-        "name": "Bệnh Ghẻ",
+        "name": "Bệnh ghẻ",
         "scientificName": "Sarcoptes scabiei",
-        "description": "Bệnh ký sinh trùng ngoài da gây ngứa ngáy dữ dội.",
+        "description": "Bệnh ngoài da do ký sinh trùng gây khó chịu cực độ.",
         "prevention": "Điều trị bằng thuốc diệt ký sinh trùng."
       },
       "dis_anemia": {
         "name": "Thiếu máu do thiếu sắt",
         "scientificName": "Iron Deficiency",
-        "description": "Phổ biến ở heo con nuôi nhốt không được bổ sung sắt.",
-        "prevention": "Tiêm sắt sau khi sinh."
+        "description": "Thường gặp ở heo con nuôi nhốt hoàn toàn không được bổ sung sắt.",
+        "prevention": "Tiêm sắt cho heo con sau khi sinh."
       },
       "dis_ulcers": {
         "name": "Viêm loét dạ dày",
         "scientificName": "Gastric Ulcers",
-        "description": "Do thức ăn quá mịn hoặc do stress.",
-        "prevention": "Điều chỉnh kích cỡ hạt thức ăn."
+        "description": "Do thức ăn quá mịn hoặc do heo bị stress.",
+        "prevention": "Điều chỉnh kích thước hạt thức ăn."
       },
       "dis_pss": {
         "name": "Hội chứng stress ở heo",
         "scientificName": "Genetic stress susceptibility",
-        "description": "Tình trạng di truyền bị kích hoạt bởi stress.",
-        "prevention": "Chọn lọc di truyền và xử lý nhẹ nhàng."
+        "description": "Tình trạng di truyền bị kích hoạt do stress.",
+        "prevention": "Chọn lọc giống và xử lý heo nhẹ nhàng."
       },
       "dis_tge": {
         "name": "Viêm dạ dày ruột truyền nhiễm (TGE)",
         "scientificName": "Coronavirus",
-        "description": "Bệnh virus gây tỷ lệ chết cao ở heo con.",
+        "description": "Bệnh virus gây tỷ lệ tử vong cao ở heo con nhỏ tuổi.",
         "prevention": "An toàn sinh học."
       },
       "dis_pasteurellosis": {
-        "name": "Bệnh Tụ huyết trùng",
+        "name": "Bệnh tụ huyết trùng",
         "scientificName": "Pasteurella multocida",
         "description": "Viêm phổi do vi khuẩn.",
-        "prevention": "Kháng sinh và thông gió."
+        "prevention": "Dùng kháng sinh và cải thiện thông gió."
       },
       "dis_strep": {
         "name": "Liên cầu khuẩn (Streptococcus suis)",
         "scientificName": "S. suis",
         "description": "Nhiễm khuẩn gây viêm màng não.",
-        "prevention": "Kháng sinh và giảm stress."
+        "prevention": "Dùng kháng sinh và giảm thiểu stress."
       },
       "dis_mycotoxicosis": {
-        "name": "Ngộ độc nấm mốc",
+        "name": "Nhiễm độc tố nấm mốc",
         "scientificName": "Mycotoxicosis",
         "description": "Do thức ăn bị nhiễm nấm mốc.",
-        "prevention": "Dùng chất hấp phụ độc tố và bảo quản khô ráo."
+        "prevention": "Dùng chất hấp phụ độc tố và bảo quản thức ăn khô ráo."
       },
       "dis_greasy_pig": {
-        "name": "Bệnh Viêm da tiết dịch (Heo rỉ nhựa)",
+        "name": "Bệnh rỉ dịch trên da (Heo nhờn)",
         "scientificName": "Staphylococcus hyicus",
-        "description": "Nhiễm khuẩn gây các vết loét da nhờn.",
-        "prevention": "Vệ sinh và kháng sinh."
+        "description": "Nhiễm khuẩn gây ra các tổn thương da bóng nhờn.",
+        "prevention": "Vệ sinh chuồng trại và dùng kháng sinh."
       },
       "dis_pseudorabies": {
-        "name": "Bệnh Giả dại (Aujeszky's)",
+        "name": "Bệnh giả dại (Aujeszky)",
         "scientificName": "Suid herpesvirus 1",
         "description": "Bệnh virus ảnh hưởng đến hệ thần kinh và hô hấp.",
-        "prevention": "Tiêm phòng và chương trình diệt trừ."
+        "prevention": "Tiêm phòng và chương trình tiêu diệt bệnh."
       },
       "dis_pcv2": {
-        "name": "Hội chứng còi cọc (PCV2)",
+        "name": "Virus Circov ở heo (PCV2)",
         "scientificName": "Circovirus",
-        "description": "Gây còi cọc và các vấn đề hô hấp ở heo lứa.",
+        "description": "Gây còi cọc và các vấn đề hô hấp ở heo choai.",
         "prevention": "Tiêm phòng vắc xin."
       },
       "dis_ped": {
         "name": "Dịch tiêu chảy cấp (PED)",
         "scientificName": "Coronavirus",
-        "description": "Tương tự TGE, gây chết cao ở heo sơ sinh.",
+        "description": "Tương tự như TGE, gây tử vong rất cao cho heo sơ sinh.",
         "prevention": "An toàn sinh học nghiêm ngặt."
       },
       "dis_je": {
         "name": "Viêm não Nhật Bản",
         "scientificName": "Flavivirus",
         "description": "Bệnh virus do muỗi truyền.",
-        "prevention": "Diệt muỗi và tiêm phòng."
+        "prevention": "Kiểm soát muỗi và tiêm phòng vắc xin."
       },
       "dis_rabies": {
-        "name": "Bệnh Dại",
+        "name": "Bệnh dại",
         "scientificName": "Lyssavirus",
-        "description": "Bệnh virus gây chết người thường lây qua vết cắn.",
+        "description": "Bệnh virus gây tử vong, thường lây qua vết cắn.",
         "prevention": "Tiêm phòng cho vật nuôi và kiểm soát động vật hoang dã."
       },
       "dis_pox": {
-        "name": "Đậu heo",
+        "name": "Bệnh đậu heo",
         "scientificName": "Suipoxvirus",
-        "description": "Bệnh đậu trên da, thường do chấy rận lây lan.",
-        "prevention": "Diệt chấy rận."
+        "description": "Bệnh ngoài da do virus, thường lây lan qua chấy rận.",
+        "prevention": "Kiểm soát chấy rận."
       },
       "dis_vs": {
         "name": "Viêm miệng mụn nước",
         "scientificName": "Rhabdovirus",
-        "description": "Gây mụn nước; trông giống Lở mồm long móng.",
+        "description": "Gây mụn nước; trông giống như FMD.",
         "prevention": "Kiểm soát côn trùng và cách ly."
       },
       "dis_clostridial": {
-        "name": "Viêm ruột hoại tử (do Clostridium)",
+        "name": "Viêm ruột do Clostridium",
         "scientificName": "Clostridium perfringens",
         "description": "Nhiễm khuẩn gây tổn thương ruột nghiêm trọng.",
-        "prevention": "Tiêm phòng nái mẹ và vệ sinh."
+        "prevention": "Tiêm phòng cho nái và vệ sinh."
       },
       "dis_glassers": {
         "name": "Bệnh Glässer",
         "scientificName": "Haemophilus parasuis",
-        "description": "Gây viêm đa màng (tim, phổi, khớp).",
-        "prevention": "Kháng sinh và quản lý stress."
+        "description": "Gây viêm màng quanh tim, phổi và các khớp.",
+        "prevention": "Dùng kháng sinh và quản lý stress."
       },
       "dis_app": {
-        "name": "Viêm phổi dính sườn (APP)",
+        "name": "Viêm phổi màng phổi (APP)",
         "scientificName": "A. pleuropneumoniae",
-        "description": "Viêm phổi cấp tính nặng do vi khuẩn.",
-        "prevention": "Kháng sinh và cải thiện môi trường."
+        "description": "Viêm phổi nặng do vi khuẩn.",
+        "prevention": "Dùng kháng sinh và cải thiện môi trường nuôi."
       },
       "dis_ileitis": {
-        "name": "Viêm hồi tràng (Lawsonia)",
+        "name": "Viêm hồi tràng",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Nhiễm khuẩn ở ruột non.",
-        "prevention": "Tiêm phòng và kháng sinh."
+        "description": "Nhiễm khuẩn ruột non.",
+        "prevention": "Tiêm phòng và dùng kháng sinh."
       },
       "dis_tb": {
-        "name": "Bệnh Lao",
+        "name": "Bệnh lao",
         "scientificName": "Mycobacterium avium",
-        "description": "Bệnh vi khuẩn mãn tính.",
-        "prevention": "Ngăn chặn chim hoang dã và vệ sinh."
+        "description": "Bệnh nhiễm khuẩn mãn tính.",
+        "prevention": "Ngăn chặn chim hoang và vệ sinh chuồng trại."
       },
       "dis_tetanus": {
-        "name": "Bệnh Uốn ván",
+        "name": "Bệnh uốn ván",
         "scientificName": "Clostridium tetani",
         "description": "Độc tố vi khuẩn ảnh hưởng đến hệ thần kinh.",
-        "prevention": "Vệ sinh trong quá trình thiến/phẫu thuật."
+        "prevention": "Vệ sinh sát trùng khi phẫu thuật/thiến."
       },
       "dis_eperythrozoonosis": {
-        "name": "Bệnh Ký sinh trùng đường máu",
+        "name": "Bệnh ký sinh trùng đường máu (Eperythrozoon)",
         "scientificName": "Mycoplasma suis",
-        "description": "Ký sinh trùng máu gây thiếu máu.",
+        "description": "Ký sinh trùng trong máu gây thiếu máu.",
         "prevention": "Kiểm soát côn trùng và dùng kim tiêm sạch."
       },
       "dis_ascaris": {
-        "name": "Giun đũa heo",
+        "name": "Giun đũa heo (Ascaris suum)",
         "scientificName": "Large Roundworm",
-        "description": "Ký sinh trùng nội sinh gây hại phổi và gan.",
+        "description": "Ký sinh trùng bên trong gây hại cho phổi và gan.",
         "prevention": "Tẩy giun định kỳ."
       },
       "dis_whipworms": {
         "name": "Giun tóc",
         "scientificName": "Trichuris suis",
-        "description": "Ký sinh trùng trong ruột già.",
+        "description": "Ký sinh trùng bên trong ở ruột già.",
         "prevention": "Tẩy giun và vệ sinh."
       },
       "dis_lungworms": {
         "name": "Giun phổi",
         "scientificName": "Metastrongylus spp.",
-        "description": "Ký sinh trùng ở phổi.",
+        "description": "Ký sinh trùng bên trong phổi.",
         "prevention": "Kiểm soát giun đất và tẩy giun."
       },
       "dis_kidney_worms": {
         "name": "Giun thận",
         "scientificName": "Stephanurus dentatus",
-        "description": "Ký sinh trùng ảnh hưởng đến thận và gan.",
+        "description": "Ký sinh trùng bên trong ảnh hưởng đến thận và gan.",
         "prevention": "Quản lý và vệ sinh."
       },
       "dis_lice": {
         "name": "Chấy rận heo",
         "scientificName": "Haematopinus suis",
-        "description": "Ký sinh trùng ngoài da hút máu.",
-        "prevention": "Dùng thuốc diệt côn trùng."
+        "description": "Ký sinh trùng bên ngoài hút máu.",
+        "prevention": "Xử lý bằng thuốc diệt côn trùng."
       },
       "dis_ringworm": {
-        "name": "Bệnh nấm da",
+        "name": "Bệnh nấm da (Lác đồng tiền)",
         "scientificName": "Dermatophytosis",
-        "description": "Nhiễm nấm trên da.",
+        "description": "Nhiễm nấm ngoài da.",
         "prevention": "Vệ sinh và điều trị tại chỗ."
       },
       "dis_mulberry_heart": {
@@ -1109,67 +1115,67 @@
         "prevention": "Bổ sung Vitamin E/Selen."
       },
       "dis_vit_a": {
-        "name": "Thiếu Vitamin A",
+        "name": "Thiếu hụt Vitamin A",
         "scientificName": "Vitamin A Deficiency",
-        "description": "Thiếu hụt dinh dưỡng.",
+        "description": "Tình trạng thiếu hụt dinh dưỡng.",
         "prevention": "Điều chỉnh khẩu phần ăn."
       },
       "dis_rickets": {
         "name": "Bệnh còi xương",
         "scientificName": "Vit D/Ca/P Deficiency",
-        "description": "Thiếu hụt dinh dưỡng ảnh hưởng đến xương.",
-        "prevention": "Cân bằng khoáng chất và ánh nắng."
+        "description": "Thiếu hụt dinh dưỡng ảnh hưởng đến sự phát triển của xương.",
+        "prevention": "Cân bằng khoáng chất và ánh sáng mặt trời."
       },
       "dis_salt_poisoning": {
-        "name": "Ngộ độc muối (Mất nước)",
+        "name": "Ngộ độc muối",
         "scientificName": "Water Deprivation",
-        "description": "Do thiếu nước sau đó uống quá nhiều.",
-        "prevention": "Cung cấp nước sạch liên tục."
+        "description": "Do thiếu nước sau đó uống quá nhiều nước.",
+        "prevention": "Đảm bảo luôn có nước sạch."
       },
       "dis_heat_stroke": {
-        "name": "Say nắng/Sốc nhiệt",
+        "name": "Sốc nhiệt",
         "scientificName": "Heat Stroke",
         "description": "Quá nóng do thông gió kém hoặc thiếu bóng mát.",
-        "prevention": "Thông gió, làm mát và bóng râm."
+        "prevention": "Thông gió, làm mát và cung cấp bóng râm."
       },
       "dis_rectal_prolapse": {
-        "name": "Sa trực tràng (Lòi dom)",
+        "name": "Sa trực tràng",
         "scientificName": "Rectal Prolapse",
-        "description": "Thường sau khi ho, tiêu chảy hoặc stress lạnh.",
+        "description": "Thường xảy ra sau khi ho, tiêu chảy hoặc lạnh.",
         "prevention": "Giải quyết nguyên nhân gốc và phẫu thuật."
       },
       "dis_umbilical_hernia": {
         "name": "Thoát vị rốn",
         "scientificName": "Umbilical Hernia",
-        "description": "Khuyết tật bẩm sinh hoặc nhiễm trùng rốn.",
+        "description": "Khiếm khuyết phát triển hoặc nhiễm trùng rốn.",
         "prevention": "Vệ sinh và chọn lọc giống."
       },
       "dis_scrotal_hernia": {
-        "name": "Thoát vị bìu",
+        "name": "Thoát vị bẹn",
         "scientificName": "Scrotal Hernia",
-        "description": "Khuyết tật di truyền bẩm sinh.",
-        "prevention": "Chọn giống và phẫu thuật sửa chữa."
+        "description": "Khiếm khuyết phát triển do di truyền.",
+        "prevention": "Chọn lọc giống và phẫu thuật chỉnh sửa."
       },
       "dis_splayleg": {
-        "name": "Hội chứng choãi chân",
+        "name": "Bệnh chân choãi",
         "scientificName": "Myofibrillar hypoplasia",
         "description": "Heo con sinh ra không thể đứng bằng chân sau.",
-        "prevention": "Băng chân và tăng độ bám sàn."
+        "prevention": "Băng chân và sàn chuồng có độ bám tốt."
       },
       "dis_vulvovaginitis": {
-        "name": "Viêm âm đạo - âm hộ",
+        "name": "Viêm âm đạo",
         "scientificName": "Zearalenone Toxicity",
-        "description": "Do độc tố nấm mốc trong thức ăn.",
+        "description": "Do độc tố nấm trong thức ăn gây ra.",
         "prevention": "Thay đổi nguồn thức ăn."
       },
       "dis_seneca": {
         "name": "Virus Seneca Valley (SVV)",
         "scientificName": "Senecavirus A",
-        "description": "Gây mụn nước tương tự Lở mồm long móng.",
+        "description": "Gây mụn nước tương tự như FMD.",
         "prevention": "An toàn sinh học và chẩn đoán."
       },
       "dis_deltacoronavirus": {
-        "name": "Deltacoronavirus trên heo",
+        "name": "Deltacoronavirus ở heo",
         "scientificName": "PDCoV",
         "description": "Tiêu chảy do virus ở mọi lứa tuổi.",
         "prevention": "An toàn sinh học."
@@ -1183,314 +1189,314 @@
       "dis_teschen": {
         "name": "Bệnh Teschen/Talfan",
         "scientificName": "Sapelovirus/Teschovirus",
-        "description": "Nhiễm trùng virus hệ thần kinh.",
+        "description": "Nhiễm virus ở hệ thần kinh.",
         "prevention": "An toàn sinh học."
       },
       "dis_vesicular": {
-        "name": "Bệnh mụn nước trên heo",
+        "name": "Bệnh mụn nước ở heo",
         "scientificName": "Enterovirus",
-        "description": "Bệnh virus giống như Lở mồm long móng.",
+        "description": "Bệnh virus có biểu hiện giống FMD.",
         "prevention": "Cách ly nghiêm ngặt."
       },
       "dis_melioidosis": {
-        "name": "Bệnh Whitmore (Melioidosis)",
+        "name": "Bệnh Melioidosis",
         "scientificName": "Burkholderia pseudomallei",
         "description": "Bệnh vi khuẩn từ đất/nước.",
         "prevention": "Nước sạch và vệ sinh."
       },
       "dis_trypanosomiasis": {
-        "name": "Bệnh Tiêm mao trùng",
+        "name": "Bệnh tiêm mao trùng",
         "scientificName": "Trypanosoma spp.",
-        "description": "Bệnh do nguyên sinh động vật lây qua ruồi.",
-        "prevention": "Diệt ruồi và dùng thuốc."
+        "description": "Bệnh do nguyên sinh động vật lây lan bởi ruồi tsetse.",
+        "prevention": "Kiểm soát ruồi và dùng thuốc."
       },
       "dis_cysticercosis": {
-        "name": "Bệnh Sán dải heo (Heo gạo)",
+        "name": "Bệnh lợn gạo (Sán dây)",
         "scientificName": "Taenia solium larvae",
         "description": "Giai đoạn ấu trùng của sán dây người trong cơ heo.",
-        "prevention": "Ngăn chặn tiếp xúc với chất thải người."
+        "prevention": "Ngăn chặn heo tiếp xúc với chất thải của người."
       },
       "dis_toxoplasmosis": {
         "name": "Bệnh Toxoplasma",
         "scientificName": "Toxoplasma gondii",
-        "description": "Nhiễm trùng động vật nguyên sinh lây từ mèo.",
+        "description": "Nhiễm trùng do nguyên sinh động vật.",
         "prevention": "Kiểm soát mèo và an toàn sinh học."
       },
       "dis_listeriosis": {
         "name": "Bệnh Listeria",
         "scientificName": "Listeria monocytogenes",
         "description": "Nhiễm khuẩn hệ thần kinh.",
-        "prevention": "Vệ sinh chuồng trại và thức ăn."
+        "prevention": "Vệ sinh môi trường và thức ăn."
       },
       "dis_ear_necrosis": {
         "name": "Hoại tử tai",
         "scientificName": "Ear Necrosis",
         "description": "Thường do stress, nuôi quá dày hoặc nhiễm trùng.",
-        "prevention": "Giảm mật độ nuôi và điều trị nhiễm trùng kế phát."
+        "prevention": "Giảm mật độ nuôi và điều trị nhiễm trùng thứ phát."
       },
       "dis_sunburn": {
         "name": "Cháy nắng",
         "scientificName": "Solar dermatitis",
-        "description": "Ảnh hưởng đến heo da trắng nuôi ngoài trời.",
+        "description": "Ảnh hưởng đến heo trắng nuôi ngoài trời.",
         "prevention": "Cung cấp bóng mát."
       },
       "dis_tail_biting": {
         "name": "Cắn đuôi",
         "scientificName": "Behavioral stress",
-        "description": "Vấn đề hành vi do stress/buồn chán.",
+        "description": "Vấn đề hành vi do stress hoặc buồn chán.",
         "prevention": "Giảm stress và làm phong phú môi trường."
       },
       "dis_navel_ill": {
-        "name": "Nhiễm trùng rốn",
+        "name": "Viêm rốn (Navel Ill)",
         "scientificName": "Navel Infection",
-        "description": "Nhiễm trùng dây rốn lúc mới sinh.",
-        "prevention": "Sát trùng rốn bằng i-ốt lúc sinh và vệ sinh."
+        "description": "Nhiễm trùng dây rốn khi sinh.",
+        "prevention": "Sát trùng rốn bằng cồn i-ốt khi sinh và giữ vệ sinh."
       },
       "dis_iron_toxicity": {
         "name": "Ngộ độc sắt",
         "scientificName": "Ferrous excess",
-        "description": "Dùng quá liều sắt dẫn đến chết đột ngột.",
-        "prevention": "Tiêm đúng liều lượng."
+        "description": "Có thể xảy ra nếu tiêm sắt cho heo con thiếu Vitamin E.",
+        "prevention": "Đảm bảo khẩu phần ăn của nái cân bằng."
       },
       "dis_aflatoxicosis": {
-        "name": "Ngộ độc Aflatoxin",
+        "name": "Ngộ độc độc tố Aflatoxin",
         "scientificName": "Aspergillus flavus toxin",
-        "description": "Ngộ độc độc tố nấm mốc.",
-        "prevention": "Tránh thức ăn mốc và dùng chất khử độc."
+        "description": "Ngộ độc do độc tố từ hạt hoặc thức ăn ẩm mốc gây tổn thương gan và vàng da.",
+        "prevention": "Tránh cho ăn cám mốc, bảo quản hạt khô ráo và sử dụng chất hấp phụ độc tố nấm mốc."
       },
       "dis_parakeratosis": {
-        "name": "Bệnh sừng hóa da (Thiếu kẽm)",
+        "name": "Bệnh sừng hóa da (Thiếu Kẽm)",
         "scientificName": "Zinc deficiency",
-        "description": "Thiếu hụt kẽm trên heo.",
-        "prevention": "Đảm bảo đủ mức kẽm trong khẩu phần."
+        "description": "Bệnh dinh dưỡng gây ra các vết thương dày sừng, đóng vảy nghiêm trọng trên da.",
+        "prevention": "Đảm bảo tỷ lệ Canxi - Kẽm cân bằng trong khẩu phần và bổ sung Kẽm."
       },
       "dis_biotin_deficiency": {
-        "name": "Thiếu Biotin",
+        "name": "Thiếu hụt Biotin",
         "scientificName": "Vitamin H deficiency",
-        "description": "Thiếu hụt Biotin trên heo.",
-        "prevention": "Bổ sung Biotin."
+        "description": "Thiếu hụt dinh dưỡng gây nứt móng, tổn thương da và què quặt.",
+        "prevention": "Bổ sung biotin vào khẩu phần ăn và tránh sàn bê tông thô ráp, ẩm ướt."
       },
       "dis_gossypol_toxicity": {
-        "name": "Ngộ độc Gossypol",
+        "name": "Ngộ độc độc tố Gossypol",
         "scientificName": "Gossypol poisoning",
-        "description": "Ngộ độc từ khô dầu bông vải.",
-        "prevention": "Hạn chế dùng khô dầu bông vải chưa xử lý."
+        "description": "Ngộ độc do ăn bã hạt bông sống hoặc quá mức, gây suy hô hấp nặng.",
+        "prevention": "Hạn chế tỷ lệ khô dầu hạt bông chưa khử độc trong khẩu phần; bổ sung sắt sunfat (FeSO4) để kết tủa và vô hiệu hóa độc tố gossypol tự do."
       },
       "dis_cassava_poisoning": {
         "name": "Ngộ độc sắn (khoai mì)",
         "scientificName": "Cyanogenic glycosides",
-        "description": "Ngộ độc xyanua từ sắn tươi.",
-        "prevention": "Nấu chín hoặc ngâm sắn trước khi cho ăn."
+        "description": "Ngộ độc xyanua do cho ăn củ hoặc vỏ sắn sống hoặc chế biến không đúng cách.",
+        "prevention": "Gọt vỏ, luộc chín, phơi khô hoặc ủ chua sắn trước khi cho ăn."
       },
       "dis_sweet_potato_toxicity": {
         "name": "Ngộ độc khoai lang mốc",
         "scientificName": "Ipomeamarone toxicity",
-        "description": "Ngộ độc độc tố Ipomeamarone.",
-        "prevention": "Không cho ăn khoai lang bị mốc hoặc hỏng."
+        "description": "Ngộ độc do khoai lang bị mốc gây suy hô hấp nặng ở heo.",
+        "prevention": "Loại bỏ khoai lang bị hỏng, mốc; chỉ cho ăn củ khoẻ mạnh."
       },
       "dis_mma": {
-        "name": "Hội chứng MMA",
+        "name": "Hội chứng viêm vú, viêm tử cung, mất sữa (MMA)",
         "scientificName": "Mastitis-Metritis-Agalactia",
-        "description": "Nhiễm trùng sau khi đẻ (Viêm vú - Viêm tử cung - Mất sữa).",
-        "prevention": "Vệ sinh chuồng đẻ và dinh dưỡng hợp lý."
+        "description": "Viêm vú, tử cung và mất sữa gây sốt, heo nái không có sữa sau sinh.",
+        "prevention": "Giữ vệ sinh chuồng đẻ nghiêm ngặt và đảm bảo nái ăn uống đầy đủ dinh dưỡng."
       },
       "dis_pwd": {
-        "name": "Tiêu chảy sau cai sữa",
+        "name": "Tiêu chảy sau cai sữa (PWD)",
         "scientificName": "Escherichia coli (F4/F18)",
-        "description": "Bệnh do E. coli ở heo mới cai sữa.",
-        "prevention": "Vệ sinh và điều chỉnh khẩu phần."
+        "description": "Tiêu chảy do vi khuẩn ở heo con ngay sau khi cai sữa, dẫn đến mất nước nhanh.",
+        "prevention": "Giảm căng thẳng lúc cai sữa, giữ vệ sinh cao độ và cung cấp nước uống sạch."
       },
       "dis_trichinellosis": {
-        "name": "Bệnh Giun xoắn",
+        "name": "Bệnh giun xoắn (Trichinellosis)",
         "scientificName": "Trichinella spiralis",
-        "description": "Nhiễm ký sinh trùng lây sang người.",
-        "prevention": "Không cho ăn rác thải tươi; diệt chuột."
+        "description": "Bệnh giun xoắn truyền lây nguy hiểm do Trichinella spiralis gây ra khi heo ăn phải thịt sống hoặc chuột nhiễm ấu trùng, kén giun định vị trong cơ bắp.",
+        "prevention": "Không cho ăn thức ăn thừa chưa nấu chín, đun sôi thức ăn thừa trong 30 phút."
       },
       "dis_hydatid_disease": {
-        "name": "Bệnh nang sán",
+        "name": "Bệnh ấu trùng sán dây (Echinococcosis)",
         "scientificName": "Echinococcus granulosus",
-        "description": "Nhiễm ấu trùng sán dây.",
-        "prevention": "Tẩy giun cho chó trong trại; không cho ăn nội tạng sống."
+        "description": "Bệnh truyền lây giữa người và động vật do ấu trùng sán dây Echinococcus gây ra, hình thành bọc nước ở gan và phổi heo khi ăn phải thức ăn nhiễm phân chó.",
+        "prevention": "Tẩy giun định kỳ cho chó trong trại và không để chó ăn nội tạng heo sống."
       },
       "dis_phe": {
-        "name": "Viêm hồi tràng xuất huyết (PHE)",
+        "name": "Bệnh viêm ruột xuất huyết heo",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Chảy máu đường ruột cấp tính ở heo tơ.",
-        "prevention": "Tiêm phòng và vệ sinh."
+        "description": "Tiêu chảy ra máu cấp tính và gây chết đột ngột ở heo thịt.",
+        "prevention": "Giữ vệ sinh tốt và sử dụng kháng sinh phù hợp dưới sự hướng dẫn của thú y."
       },
       "dis_mycoplasma_arthritis": {
         "name": "Viêm khớp do Mycoplasma",
         "scientificName": "Mycoplasma hyosynoviae",
-        "description": "Bệnh khớp do vi khuẩn.",
-        "prevention": "Vệ sinh và cách ly."
+        "description": "Nhiễm khuẩn gây sưng các khớp, đi khập khiễng và yếu chân.",
+        "prevention": "Cải thiện điều kiện chuồng trại, giảm mật độ nuôi và điều trị sớm."
       },
       "dis_foot_rot": {
-        "name": "Thối móng",
+        "name": "Bệnh thối móng (Necrobacillosis)",
         "scientificName": "Fusobacterium necrophorum",
-        "description": "Nhiễm trùng chân gây què.",
-        "prevention": "Giữ chuồng khô ráo; chăm sóc móng."
+        "description": "Vi khuẩn xâm nhập qua vết thương ở móng gây thối rửa móng và đi lại khó khăn.",
+        "prevention": "Sửa chữa sàn bê tông nhám, giữ sàn khô ráo và sát trùng chân."
       },
       "dis_babesiosis": {
-        "name": "Bệnh ký sinh trùng máu (Babesia)",
+        "name": "Bệnh ký sinh trùng đường máu Babesia",
         "scientificName": "Babesia trautmanni",
-        "description": "Nhiễm nguyên sinh động vật do ve truyền.",
-        "prevention": "Dùng thuốc diệt ve."
+        "description": "Ký sinh trùng đường máu do ve truyền gây sốt cao, thiếu máu và nước tiểu sẫm màu.",
+        "prevention": "Diệt ve bằng thuốc sát trùng/thuốc xịt ve và làm sạch cỏ xung quanh chuồng."
       },
       "dis_anaplasmosis": {
         "name": "Bệnh Anaplasmosis",
         "scientificName": "Anaplasma marginale",
-        "description": "Nhiễm trùng máu trên heo.",
-        "prevention": "Kiểm soát vật trung gian truyền bệnh."
+        "description": "Nhiễm khuẩn do ve truyền gây thiếu máu nặng, sốt và vàng da.",
+        "prevention": "Thực hiện các biện pháp kiểm soát ve và côn trùng trung gian truyền bệnh."
       },
       "dis_sow_hysteria": {
-        "name": "Chứng cuồng loạn ở nái",
+        "name": "Hội chứng cuồng loạn ở nái",
         "scientificName": "Puerperal psychosis",
-        "description": "Hung dữ hoặc hoảng loạn ở nái sau khi đẻ.",
-        "prevention": "Cung cấp khu vực đẻ yên tĩnh."
+        "description": "Rối loạn hành vi làm heo nái mới đẻ trở nên hung dữ và cắn heo con.",
+        "prevention": "Tạo môi trường yên tĩnh khi nái đẻ, giám sát nái tơ đẻ lần đầu và dùng thuốc an thần nếu cần."
       },
       "dis_thorny_headed_worm": {
-        "name": "Giun đầu gai",
+        "name": "Bệnh sán đầu gai",
         "scientificName": "Macracanthorhynchus hirudinaceus",
-        "description": "Ký sinh trùng đường ruột.",
-        "prevention": "Ngăn chặn ăn ấu trùng bọ cánh cứng."
+        "description": "Giun ký sinh do heo ăn phải bọ hung/côn trùng, gây thủng ruột.",
+        "prevention": "Tránh nuôi thả rông nơi đất có nhiều ấu trùng bọ hung và tẩy giun định kỳ."
       },
       "dis_strongyloidiasis": {
-        "name": "Bệnh giun lươn",
+        "name": "Bệnh giun lươn (Strongyloidiasis)",
         "scientificName": "Strongyloides ransomi",
-        "description": "Nhiễm giun lươn.",
-        "prevention": "Giữ chuồng khô ráo; tẩy giun."
+        "description": "Giun lươn ký sinh ở ruột gây tiêu chảy dữ dội và chết nhiều ở heo con.",
+        "prevention": "Giữ chuồng đẻ khô ráo, sạch sẽ và tẩy giun cho nái trước khi đẻ."
       },
       "dis_hyostrongylosis": {
-        "name": "Giun đỏ dạ dày",
+        "name": "Bệnh giun đỏ dạ dày (Hyostrongylosis)",
         "scientificName": "Hyostrongylus rubidus",
-        "description": "Giun đường ruột ở heo chăn thả.",
-        "prevention": "Quản lý đồng cỏ sạch; tẩy giun."
+        "description": "Nhiễm giun dạ dày gây viêm loét dạ dày, thiếu máu và giảm cân.",
+        "prevention": "Luân chuyển đồng cỏ, giữ chuồng trại khô ráo và tẩy giun định kỳ."
       },
       "dis_oesophagostomiasis": {
-        "name": "Giun kết nút",
+        "name": "Bệnh giun kết hạt (Oesophagostomiasis)",
         "scientificName": "Oesophagostomum spp.",
-        "description": "Giun đường ruột trên heo.",
-        "prevention": "Tẩy giun và vệ sinh."
+        "description": "Ký sinh trùng tạo ra các hạt xơ ở vách ruột, làm heo nái còi cọc, gầy yếu.",
+        "prevention": "Vệ sinh chuồng trại thường xuyên và sử dụng thuốc tẩy giun phổ rộng."
       },
       "dis_fascioliasis": {
-        "name": "Bệnh sán lá gan",
+        "name": "Bệnh sán lá gan (Fascioliasis)",
         "scientificName": "Fasciola gigantica",
-        "description": "Nhiễm sán lá gan.",
-        "prevention": "Kiểm soát ốc sên; tránh xa bãi cỏ ẩm ướt."
+        "description": "Sán lá ký sinh ở gan, thường gặp khi chăn thả heo ở vùng đầm lầy, ẩm ướt.",
+        "prevention": "Không thả heo ở vùng đầm lầy và kiểm soát ốc nước ngọt (vật chủ trung gian)."
       },
       "dis_emcv": {
-        "name": "Bệnh viêm cơ tim do virus (EMCV)",
+        "name": "Bệnh viêm não cơ tim (EMCV)",
         "scientificName": "Cardiovirus",
-        "description": "Viêm cơ tim và rối loạn sinh sản.",
-        "prevention": "Diệt chuột (chuột truyền bệnh này)."
+        "description": "Virus do chuột truyền gây suy tim cấp tính đột ngột ở heo con và sẩy thai ở nái.",
+        "prevention": "Diệt chuột thường xuyên trong trại và che đậy thức ăn cẩn thận."
       },
       "dis_demodectic_mange": {
-        "name": "Bệnh ghẻ bao lông (Demodex)",
+        "name": "Gẻ bao lông (Demodex)",
         "scientificName": "Demodex phylloides",
-        "description": "Nhiễm mạt trên da.",
-        "prevention": "Điều trị bằng thuốc diệt ký sinh trùng."
+        "description": "Ký sinh trùng Demodex gây rụng lông, đóng vảy và mụn mủ quanh mắt, mõm.",
+        "prevention": "Nâng cao dinh dưỡng đàn, cách ly heo bệnh và bôi thuốc ghẻ thích hợp."
       },
       "dis_pityriasis_rosea": {
-        "name": "Bệnh vảy phấn hồng",
+        "name": "Bệnh vảy phấn hồng (Pityriasis Rosea)",
         "scientificName": "Pseudo-ringworm",
-        "description": "Tình trạng da không lây nhiễm.",
-        "prevention": "Tự khỏi; giữ môi trường sạch."
+        "description": "Bệnh ngoài da không truyền nhiễm ở heo con tạo ra các vòng vảy đỏ tròn.",
+        "prevention": "Thường tự khỏi; giữ đệm lót chuồng khô ráo và giảm căng thẳng."
       },
       "dis_photosensitization": {
-        "name": "Bệnh nhạy cảm ánh sáng",
+        "name": "Bệnh mẫn cảm ánh sáng",
         "scientificName": "Solar dermatitis",
-        "description": "Da quá nhạy cảm với ánh nắng.",
-        "prevention": "Tránh ánh nắng trực tiếp; kiểm tra cây cỏ đồng cỏ."
+        "description": "Phản ứng viêm da nặng do ánh nắng mặt trời ở heo da trắng sau khi ăn một số loại cây.",
+        "prevention": "Cung cấp bóng râm, phát quang cỏ dại gây mẫn cảm và nuôi heo trong chuồng."
       },
       "dis_shoulder_ulcers": {
-        "name": "Loét bả vai",
+        "name": "Loét bả vai nái",
         "scientificName": "Decubitus ulcers",
-        "description": "Vết loét ở nái gầy nuôi trên sàn cứng.",
-        "prevention": "Cung cấp lót sàn mềm; tăng thức ăn."
+        "description": "Vết loét do tỳ đè ở vai của heo nái gầy khi nằm trên sàn bê tông cứng.",
+        "prevention": "Lót đệm mềm, cải thiện thể trạng nái và sử dụng tấm lót cao su."
       },
       "dis_ear_biting": {
-        "name": "Cắn tai",
+        "name": "Hội chứng cắn tai ở heo",
         "scientificName": "Stress response behavior",
-        "description": "Hành vi do phản ứng với stress.",
-        "prevention": "Giảm mật độ nuôi; làm phong phú môi trường."
+        "description": "Hành vi bất thường do heo cắn tai lẫn nhau do chật chội, ngột ngạt hoặc thiếu muối.",
+        "prevention": "Giảm mật độ nuôi, tăng thông thoáng chuồng và treo xích sắt cho heo chơi."
       },
       "dis_gastric_torsion": {
-        "name": "Xoắn dạ dày",
+        "name": "Bệnh xoắn dạ dày (Chướng hơi dạ dày)",
         "scientificName": "Gastric dilation-volvulus",
-        "description": "Dạ dày bị xoắn.",
-        "prevention": "Tránh cho ăn quá nhiều trong một bữa."
+        "description": "Dạ dày chướng hơi đột ngột và bị xoắn lại gây chết rất nhanh.",
+        "prevention": "Tránh cho ăn quá nhiều sau khi heo bị đói lâu và chia nhỏ khẩu phần ăn."
       },
       "dis_c_difficile": {
-        "name": "Nhiễm C. difficile",
+        "name": "Tiêu chảy do Clostridium difficile (CDI)",
         "scientificName": "Clostridioides difficile",
-        "description": "Tiêu chảy vi khuẩn ở heo con.",
-        "prevention": "Môi trường sạch và thông gió tốt."
+        "description": "Nhiễm khuẩn ở heo con sơ sinh gây tiêu chảy phân lỏng nhiều nước và chướng bụng.",
+        "prevention": "Vệ sinh sát trùng chuồng đẻ kỹ lưỡng và đảm bảo heo con bú sữa đầu sớm."
       },
       "dis_cold_stress": {
-        "name": "Stress lạnh",
+        "name": "Stress do lạnh (Hạ thân nhiệt)",
         "scientificName": "Hypothermia susceptibility",
-        "description": "Bị lạnh ở heo con.",
-        "prevention": "Cung cấp đèn sưởi và lót chuồng khô."
+        "description": "Cơ thể heo con bị nhiễm lạnh sâu gây run rẩy và tỷ lệ chết cao.",
+        "prevention": "Bật đèn sưởi, lót sàn ấm, tránh gió lùa vào chuồng đẻ."
       },
       "dis_necrotic_enteritis": {
-        "name": "Viêm ruột hoại tử",
+        "name": "Bệnh viêm ruột hoại tử",
         "scientificName": "Clostridium perfringens Type C",
-        "description": "Nhiễm trùng ruột do Clostridium.",
-        "prevention": "Tiêm phòng nái mẹ và vệ sinh chuồng trại."
+        "description": "Độc tố vi khuẩn gây tiêu chảy ra máu nặng và chết nhanh ở heo con sơ sinh.",
+        "prevention": "Tiêm vắc xin cho nái trước khi sinh và giữ vệ sinh chuồng đẻ tối đa."
       },
       "dis_navel_bleeding": {
-        "name": "Chảy máu rốn",
+        "name": "Xuất huyết rốn heo con",
         "scientificName": "Umbilical hemorrhage",
-        "description": "Xuất huyết từ dây rốn.",
-        "prevention": "Buộc chặt rốn bị chảy máu; kiểm tra Vitamin K."
+        "description": "Máu chảy không ngừng từ dây rốn ở heo con mới sinh.",
+        "prevention": "Buộc dây rốn ngay sau sinh, tránh cho nái ăn thức ăn bị nhiễm độc tố nấm mốc."
       },
       "dis_spirochetal_colitis": {
-        "name": "Viêm kết tràng do xoắn khuẩn",
+        "name": "Viêm đại tràng do xoắn khuẩn",
         "scientificName": "Brachyspira pilosicoli",
-        "description": "Nhiễm khuẩn ruột già.",
-        "prevention": "Dùng thuốc và vệ sinh chuồng trại."
+        "description": "Viêm ruột nhẹ ở heo thịt gây tiêu chảy phân xám bẩn, làm giảm tăng trọng.",
+        "prevention": "Vệ sinh máng ăn sạch sẽ và điều trị heo bệnh bằng kháng sinh nhạy cảm."
       },
       "dis_salmonella_septicemia": {
         "name": "Nhiễm trùng huyết do Salmonella",
         "scientificName": "Salmonella choleraesuis",
-        "description": "Nhiễm trùng máu do Salmonella.",
-        "prevention": "Nước sạch; an toàn sinh học."
+        "description": "Vi khuẩn Salmonella vào máu gây nhiễm trùng huyết, tai và da tím tái, chết nhanh.",
+        "prevention": "Cách ly heo bệnh, pha kháng sinh vào nước uống và thực hiện an toàn sinh học."
       },
       "dis_prdc": {
-        "name": "Phức hợp bệnh hô hấp (PRDC)",
+        "name": "Hội chứng hô hấp phức hợp ở heo (PRDC)",
         "scientificName": "Porcine Respiratory Disease Complex",
-        "description": "Phức hợp hô hấp trên heo lứa.",
-        "prevention": "Thông gió, tiêm phòng và kiểm soát mật độ."
+        "description": "Nhiễm trùng hô hấp hỗn hợp do nhiều virus và vi khuẩn gây ho và còi cọc.",
+        "prevention": "Tăng cường thông gió chuồng, tránh nuôi quá chật và kiểm soát các bệnh virus chính."
       },
       "dis_ergotism": {
-        "name": "Ngộ độc nấm cựa gà",
+        "name": "Ngộ độc nấm cựa gà (Ergotism)",
         "scientificName": "Claviceps purpurea",
-        "description": "Ngộ độc từ ngũ cốc bị nhiễm nấm.",
-        "prevention": "Kiểm tra hạt ngũ cốc."
+        "description": "Ngộ độc do ăn phải nấm cựa gà lẫn trong ngũ cốc làm hoại tử tai, đuôi, chân.",
+        "prevention": "Sàng lọc loại bỏ các hạt đen chứa nấm và thay thế thức ăn bị nhiễm."
       },
       "dis_bvdv_pig": {
-        "name": "BVDV trên heo",
+        "name": "Nhiễm virus dịch tả trâu bò (BVDV) trên heo",
         "scientificName": "Pestivirus",
-        "description": "Virus tiêu chảy truyền nhiễm bò lây sang heo.",
-        "prevention": "Cách ly heo khỏi bò."
+        "description": "Heo nhiễm virus BVDV từ trâu bò nuôi chung gây sẩy thai hoặc đẻ heo con yếu.",
+        "prevention": "Nuôi heo cách ly xa trâu bò, hạn chế tiếp xúc giữa các loài."
       },
       "dis_endocarditis": {
-        "name": "Viêm nội tâm mạc",
+        "name": "Bệnh viêm nội tâm mạc",
         "scientificName": "Streptococcal endocarditis",
-        "description": "Nhiễm trùng van tim.",
-        "prevention": "Điều trị sớm các nhiễm trùng ban đầu."
+        "description": "Viêm màng trong tim và van tim làm heo khó thở và đột tử khi bị kích động.",
+        "prevention": "Điều trị triệt để các vết thương và viêm khớp ở heo con, loại bỏ heo mang gen nhạy cảm."
       },
       "dis_polyserositis": {
-        "name": "Viêm đa màng",
+        "name": "Bệnh đa màng do Mycoplasma hyorhinis",
         "scientificName": "Mycoplasma hyorhinis",
-        "description": "Nhiễm trùng màng bao bọc các cơ quan.",
-        "prevention": "Điều trị kháng sinh; giảm thiểu stress."
+        "description": "Viêm có màng giả fibrin ở phổi, màng tim và màng bụng ở heo sau cai sữa.",
+        "prevention": "Minimizar estresse de desmame, evitar misturar leitegadas e ventilar adequadamente."
       },
       "dis_congenital_tremor": {
-        "name": "Bệnh heo con run bẩm sinh",
+        "name": "Bệnh run bẩm sinh ở heo con",
         "scientificName": "Atypical Porcine Pestivirus",
-        "description": "Heo con bị run rẩy khi mới sinh.",
-        "prevention": "Cho nái hậu bị thích nghi trước khi phối."
+        "description": "Rối loạn thần kinh ở heo con sơ sinh làm toàn thân run rẩy dữ dội.",
+        "prevention": "Không dùng đực giống có tiền sử đẻ con bị run và giảm stress cho nái mang thai."
       }
     },
     "diagnosisMatches": "Kết quả chẩn đoán lâm sàng phù hợp",
@@ -1502,7 +1508,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 QUY TRÌNH AN TOÀN SINH HỌC KHẨN CẤP:",
     "clinicalDiagnosisMatches": "Kết quả chẩn đoán lâm sàng phù hợp",
     "hallmarkBadge": "Triệu chứng đặc trưng",
-    "hallmarkSignPresent": "Có dấu hiệu đánh dấu: %1$s",
+    "hallmarkSignPresent": "Có dấu hiệu đánh dấu: {sign}",
     "otherSignsWatch": "Các dấu hiệu khác cần chú ý:",
     "preventionTreatmentLabel": "Phòng ngừa/Điều trị: {treatment}",
     "bio_proto_asf": "CÁCH LY KHẨN CẤP NGAY LẬP TỨC: Dịch tả heo Châu Phi là virus tử vong cao và bắt buộc báo cáo. 1) Đóng cổng trại ngay lập tức. 2) Dừng vận chuyển heo, xe cộ, cám và phân. 3) Khử trùng bánh xe và ủng bằng Virkon S hoặc xút 2%. 4) Báo cơ quan thú y ngay.",
@@ -1514,8 +1520,8 @@
     "bio_proto_vesicular_stomatitis": "VIÊM MỤN NƯỚC BẮT BUỘC BÁO CÁO: Triệu chứng giống lở mồm long móng. 1) Cách ly heo bệnh. 2) Đeo găng bảo hộ. 3) Báo thú y lấy mẫu xét nghiệm.",
     "bio_proto_senecavirus": "BỆNH MỤN NƯỚC SENECAVIRUS A: Triệu chứng tương tự FMD. 1) Cách ly chuồng nuôi. 2) Cấm vận chuyển khỏi trại. 3) Báo thú y làm xét nghiệm PCR phân biệt.",
     "bio_proto_svd": "BỆNH MỤN NƯỚC Ở HEO (SVD): 1) Cách ly nghiêm ngặt heo bệnh. 2) Hạn chế xe và khách ra vào. 3) Báo ngay cho trạm thú y.",
-    "clinicalMatchPercent": "%1$d%% Phù hợp lâm sàng",
-    "matchedSignsCount": "{matched}$d trong số {total}$d biển báo",
+    "clinicalMatchPercent": "{percent}% Phù hợp lâm sàng",
+    "matchedSignsCount": "{matched} trong số {total} biển báo",
     "matchPercentSuffix": "(phù hợp {percent}%)"
   },
   "HR": {
@@ -1932,7 +1938,7 @@
     "snooze1Month": "1 tháng",
     "deleteNotificationQuestion": "Xóa thông báo?",
     "deleteNotificationConfirm": "Bạn có chắc chắn muốn xóa thông báo này không?",
-    "lastWeighedDaysAgo": "Lợn #%1$s: Cân lần cuối %2$s ngày trước",
+    "lastWeighedDaysAgo": "Lợn #{tag}: Cân lần cuối {days} ngày trước",
     "stockLeftMinFormat": "{current}: {unit} kg còn lại (Tối thiểu: {min} kg)",
     "pigs": "Đàn heo",
     "pig": "Heo",

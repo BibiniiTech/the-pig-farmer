@@ -106,7 +106,13 @@
     "noActivities": "Pa gen aktivite k ap vini yo",
     "allTasksCompleted": "Tout travay yo fini!",
     "generalTask": "Travay Jeneral",
-    "language": "Lang"
+    "language": "Lang",
+    "feed": "Manje",
+    "inventory": "Envantè manje",
+    "calculator": "Kalkile Manje Kochon",
+    "mixFeed": "Melanje Manje Kochon",
+    "analyzeFeed": "Analize Valè Nitrisyonèl Manje a",
+    "marketHub": "Sant Komèsyal Kochon"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -833,664 +839,664 @@
     },
     "diseases": {
       "dis_asf": {
-        "name": "Pès Kochon Afrikèn (ASF)",
+        "name": "Lafyèv pòsin Afriken (ASF)",
         "scientificName": "Asfivirus",
-        "description": "Yon maladi viris ki trè kontajye e ki touye anpil kochon. Pa gen vaksen pou li.",
-        "prevention": "Sekirite fèm strik epi limite aksè nan fèm nan."
+        "description": "Yon maladi viral trè kontajye ak ki ka touye moun ki gen anpil moun nan Afrik Lwès. Pa gen vaksen ki egziste.",
+        "prevention": "Biosekirite strik ak mete restriksyon sou aksè nan fèm."
       },
       "dis_fmd": {
-        "name": "Maladi Lang ak Sabo (FMD)",
+        "name": "Maladi pye ak bouch (FMD)",
         "scientificName": "Aphthovirus",
-        "description": "Maladi viris ki bay maleng nan bouch ak nan pye.",
-        "prevention": "Vaksen ak kontrol mouvman kochon yo."
+        "description": "Maladi viral ki lakòz ti anpoul sou bouch ak pye yo.",
+        "prevention": "Vaksen ak kontwòl mouvman."
       },
       "dis_prrs": {
         "name": "PRRS (Zòrèy Ble)",
         "scientificName": "Arterivirus",
-        "description": "Lakòz difikilte pou respire ak pwoblèm repwodiksyon.",
-        "prevention": "Sekirite fèm ak vaksen."
+        "description": "Kòz echèk respiratwa ak pwoblèm repwodiktif.",
+        "prevention": "Biosekirite ak vaksen bèt yo."
       },
       "dis_erysipelas": {
-        "name": "Erisipèl Kochon",
+        "name": "Erisipel kochon",
         "scientificName": "Erysipelothrix rhusiopathiae",
-        "description": "Enfeksyon bakteri ki bay blesi sou po ki gen fòm dyaman ak doulè nan jwenti.",
-        "prevention": "Vaksen regilye ak pwòpte pak yo."
+        "description": "Enfeksyon bakteri ki lakòz blesi po diferan ak atrit.",
+        "prevention": "Vaksen regilye ak ijyèn plim."
       },
       "dis_csf": {
-        "name": "Pès Kochon Klasik",
+        "name": "Lafyèv pòsin klasik",
         "scientificName": "Pestivirus",
-        "description": "Maladi viris trè kontajye ki sanble ak ASF.",
-        "prevention": "Vaksen ak sekirite fèm strik."
+        "description": "Maladi viral ki trè kontajye ki sanble ak ASF.",
+        "prevention": "Vaksinasyon ak biosekirite strik."
       },
       "dis_anthrax": {
-        "name": "Antraks",
+        "name": "Anthrax",
         "scientificName": "Bacillus anthracis",
-        "description": "Maladi bakteri serye ki ka afekte moun tou.",
-        "prevention": "Vaksen epi evite louvri kadav bèt ki mouri yo."
+        "description": "Maladi bakteri grav ki ka afekte moun.",
+        "prevention": "Vaksinasyon epi evite louvri kadav yo."
       },
       "dis_brucellosis": {
-        "name": "Briseloz",
+        "name": "Bruseloz",
         "scientificName": "Brucella suis",
-        "description": "Maladi bakteri ki lakòz kochon pa ka fè pitit.",
-        "prevention": "Tès, retire bèt malad, ak sanitasyon."
+        "description": "Maladi bakteri ki lakòz echèk repwodiktif.",
+        "prevention": "Tès, koupe, ak sanitasyon."
       },
       "dis_coccidiosis": {
-        "name": "Koksidiyoz",
+        "name": "Koksidyoz",
         "scientificName": "Isospora suis",
-        "description": "Maladi parazit ki afekte ti kochon yo sitou.",
-        "prevention": "Pwòpte pak akouchman an."
+        "description": "Maladi parazit prensipalman afekte porsele yo.",
+        "prevention": "Farrowing plim ijyèn."
       },
       "dis_pneumonia": {
-        "name": "Nimoni Mikoplasmal",
+        "name": "Nemoni mikoplasmal",
         "scientificName": "Mycoplasma hyopneumoniae",
-        "description": "Maladi respiratwa kwonik ki anpeche kochon grandi byen.",
-        "prevention": "Vaksen ak bon vantilasyon."
+        "description": "Maladi respiratwa kwonik ki mennen nan kwasans pòv.",
+        "prevention": "Vaksinasyon ak vantilasyon amelyore."
       },
       "dis_salmonellosis": {
         "name": "Salmoneloz",
         "scientificName": "Salmonella typhimurium",
-        "description": "Enfeksyon bakteri ki bay pwoblèm trip grav.",
+        "description": "Enfeksyon bakteri ki lakòz gwo pwoblèm nan zantray.",
         "prevention": "Dlo pwòp ak ijyèn."
       },
       "dis_ppv": {
-        "name": "Porcine Parvovirus (PPV)",
+        "name": "Parvoviris porsin (PPV)",
         "scientificName": "Porcine Parvovirus",
-        "description": "Lakòz gilt yo pèdi pitit.",
-        "prevention": "Vaksen anvan kwazman."
+        "description": "Kòz komen nan echèk repwodiktif nan gilts.",
+        "prevention": "Vaksinasyon anvan elvaj."
       },
       "dis_rhinitis": {
-        "name": "Rinit Atwofik",
+        "name": "Rinit atwofik",
         "scientificName": "Bordetella bronchiseptica",
-        "description": "Lakòz pwent nen kochon an kwochi ak pwoblèm respiratwa.",
-        "prevention": "Vaksen ak bon kalite lè."
+        "description": "Kòz deformation nan djòl la ak pwoblèm respiratwa.",
+        "prevention": "Vaksinasyon ak kalite lè a."
       },
       "dis_leptospirosis": {
-        "name": "Leptospiwoz",
+        "name": "Leptospiroz",
         "scientificName": "Leptospira spp.",
-        "description": "Maladi bakteri ki soti nan pipi rat ki afekte ren.",
-        "prevention": "Kontwole rat ak vaksen."
+        "description": "Zoonotik maladi bakteri ki afekte ren.",
+        "prevention": "Kontwòl wonjè ak vaksinasyon."
       },
       "dis_influenza": {
-        "name": "Grip Kochon",
+        "name": "Grip pòsin",
         "scientificName": "Influenza A virus",
-        "description": "Enfeksyon respiratwa ki gaye trè vit.",
-        "prevention": "Vantilasyon ak sekirite fèm."
+        "description": "Enfeksyon respiratwa ki gaye rapidman.",
+        "prevention": "Vantilasyon ak biosekirite."
       },
       "dis_edema": {
-        "name": "Maladi Edèm",
+        "name": "Maladi Edem",
         "scientificName": "Escherichia coli",
-        "description": "Lakòz pa toksin E. coli nan ti kochon ki fèk sevre.",
-        "prevention": "Ijyèn ak bon kalite manje."
+        "description": "Ki te koze pa E. coli toksin nan porsele sevre.",
+        "prevention": "Amelyore sanitasyon ak rejim alimantè."
       },
       "dis_dysentery": {
-        "name": "Dizantri Kochon",
+        "name": "Disanteri kochon",
         "scientificName": "Brachyspira hyodysenteriae",
-        "description": "Dyare san ak kamasi ki grav anpil.",
-        "prevention": "Medikaman nan dlo ak dezenfeksyon."
+        "description": "Gwo dyare mukoemorajik.",
+        "prevention": "Dlo medikaman ak dezenfeksyon."
       },
       "dis_mange": {
-        "name": "Gal (Mange)",
+        "name": "Sarkoptik gal",
         "scientificName": "Sarcoptes scabiei",
-        "description": "Maladi parazit sou po ki fè kochon an grate anpil.",
-        "prevention": "Tretman ak akarisid."
+        "description": "Maladi po parazit ki lakòz gwo malèz.",
+        "prevention": "Tretman akarisid."
       },
       "dis_anemia": {
-        "name": "Anemi (Mank Fè)",
+        "name": "Anemi Iron Deficiency",
         "scientificName": "Iron Deficiency",
-        "description": "Komen nan ti kochon ki anndan pak ki pa jwenn piki fè.",
-        "prevention": "Piki fè lè yo fèk fèt."
+        "description": "Komen nan porsele andedan kay la san sipleman fè.",
+        "prevention": "Piki fè nan nesans."
       },
       "dis_ulcers": {
-        "name": "Ilsè nan Lestomak",
+        "name": "Ilsè gastric",
         "scientificName": "Gastric Ulcers",
-        "description": "Lakòz pa manje ki twò fen oswa estrès.",
-        "prevention": "Rekebitasyon gwosè grenn manje a."
+        "description": "Ki te koze pa bon manje oswa estrès.",
+        "prevention": "Ajiste gwosè patikil manje."
       },
       "dis_pss": {
-        "name": "Sendwòm Estrès Kochon",
+        "name": "Sendwòm estrès kochon",
         "scientificName": "Genetic stress susceptibility",
-        "description": "Kondisyon jenetik ki deklanche pa estrès.",
-        "prevention": "Seleksyon jenetik ak manyen kochon yo dousman."
+        "description": "Kondisyon jenetik deklanche pa estrès.",
+        "prevention": "Seleksyon jenetik ak manyen kalm."
       },
       "dis_tge": {
-        "name": "Transmissible Gastroenteritis (TGE)",
+        "name": "Gastroanterit Transmisib (TGE)",
         "scientificName": "Coronavirus",
-        "description": "Maladi viris ki touye anpil ti kochon.",
-        "prevention": "Sekirite fèm."
+        "description": "Maladi viral ak gwo mòtalite nan jèn porsele yo.",
+        "prevention": "Biosekirite."
       },
       "dis_pasteurellosis": {
-        "name": "Pastewelloz",
+        "name": "Pasteureloz",
         "scientificName": "Pasteurella multocida",
-        "description": "Nimoni bakteri.",
+        "description": "Nemoni bakteri.",
         "prevention": "Antibyotik ak vantilasyon."
       },
       "dis_strep": {
-        "name": "Streptococcus suis",
+        "name": "Streptococcus mwen",
         "scientificName": "S. suis",
-        "description": "Enfeksyon bakteri ki bay menenjit.",
-        "prevention": "Antibyotik ak diminye estrès."
+        "description": "Enfeksyon bakteri ki lakòz menenjit.",
+        "prevention": "Antibyotik ak rediksyon estrès."
       },
       "dis_mycotoxicosis": {
         "name": "Mikotoksikoz",
         "scientificName": "Mycotoxicosis",
-        "description": "Lakòz pa manje ki gen mwazi.",
-        "prevention": "Dawa pou mare toksin ak hifadhi manje nan kote ki sèk."
+        "description": "Ki te koze pa mwazi ki kontamine manje.",
+        "prevention": "Lyan toksin ak depo sèk."
       },
       "dis_greasy_pig": {
-        "name": "Maladi Kochon Gra",
+        "name": "Maladi kochon gra",
         "scientificName": "Staphylococcus hyicus",
-        "description": "Enfeksyon bakteri ki bay blesi gra sou po a.",
-        "prevention": "Ijyèn ak antibyotik."
+        "description": "Enfeksyon bakteri ki lakòz blesi po gra.",
+        "prevention": "Sanitasyon ak antibyotik."
       },
       "dis_pseudorabies": {
-        "name": "Psedoraj (Aujeszky's)",
+        "name": "Pseudorabies (Aujeszky a)",
         "scientificName": "Suid herpesvirus 1",
-        "description": "Maladi viris ki afekte sistèm nève ak respiratwa.",
-        "prevention": "Vaksen ak pwogram eradikasyon."
+        "description": "Maladi viral ki afekte sistèm nève ak respiratwa.",
+        "prevention": "Pwogram vaksinasyon ak eradikasyon."
       },
       "dis_pcv2": {
-        "name": "Porcine Circovirus (PCV2)",
+        "name": "Sikoviris porsin (PCV2)",
         "scientificName": "Circovirus",
-        "description": "Lakòz kochon yo megri ak pwoblèm respiratwa.",
-        "prevention": "Vaksen."
+        "description": "Kòz gaspiye ak pwoblèm respiratwa nan kiltivatè yo.",
+        "prevention": "Vaksinasyon."
       },
       "dis_ped": {
-        "name": "Dyare Epidemik Kochon (PED)",
+        "name": "Dyare Epidemi Porsin (PED)",
         "scientificName": "Coronavirus",
-        "description": "Sanble ak TGE, touye anpil ti kochon ki fèk fèt.",
-        "prevention": "Sekirite fèm strik."
+        "description": "Menm jan ak TGE, trè fatal pou tibebe ki fenk fèt.",
+        "prevention": "Biosekirite strik."
       },
       "dis_je": {
         "name": "Ansefalit Japonè",
         "scientificName": "Flavivirus",
-        "description": "Maladi viris moustik bay.",
-        "prevention": "Kontwole moustik ak vaksen."
+        "description": "Maladi viral ki bay moustik.",
+        "prevention": "Kontwòl moustik ak vaksinasyon."
       },
       "dis_rabies": {
-        "name": "Raj",
+        "name": "Laraj",
         "scientificName": "Lyssavirus",
-        "description": "Maladi viris ki touye kochon, soti nan mòde chen oswa lòt bèt.",
-        "prevention": "Vaksen bèt nan fèm nan ak kontwole chen mawon."
+        "description": "Maladi viral fatal anjeneral soti nan mòde.",
+        "prevention": "Vaksinasyon bèt kay ak kontwòl bèt sovaj."
       },
       "dis_pox": {
-        "name": "Varyòl Kochon",
+        "name": "Pox kochon",
         "scientificName": "Suipoxvirus",
-        "description": "Maladi viris sou po, souvan gaye pa chawa.",
-        "prevention": "Kontwole chawa."
+        "description": "Maladi po viral, souvan gaye pa pou.",
+        "prevention": "Kontwòl pou pou."
       },
       "dis_vs": {
-        "name": "Stomatit Vesikilè",
+        "name": "Stomatit vesikulèr",
         "scientificName": "Rhabdovirus",
-        "description": "Bay maleng nan bouch; sanble ak FMD.",
-        "prevention": "Kontwole ensèk ak karantèn."
+        "description": "Kòz ti anpoul; sanble ak FMD.",
+        "prevention": "Kontwòl ensèk ak karantèn."
       },
       "dis_clostridial": {
-        "name": "Antarit Klostridyal",
+        "name": "Enterit klostridyal",
         "scientificName": "Clostridium perfringens",
-        "description": "Enfeksyon bakteri ki detwi trip kochon yo.",
-        "prevention": "Vaksen truie yo ak ijyèn."
+        "description": "Enfeksyon bakteri ki lakòz gwo domaj nan zantray.",
+        "prevention": "Vaksinasyon pou simen ak ijyèn."
       },
       "dis_glassers": {
-        "name": "Maladi Glasser",
+        "name": "Maladi Glasser a",
         "scientificName": "Haemophilus parasuis",
-        "description": "Lakòz enflamasyon nan kè, poumon, ak jwenti.",
+        "description": "Kòz enflamasyon nan manbràn alantou kè, poumon, jwenti.",
         "prevention": "Antibyotik ak jesyon estrès."
       },
       "dis_app": {
-        "name": "Actinobacillus Pleuropneumonia (APP)",
+        "name": "Aktinobacillus Pleuropneumonia (APP)",
         "scientificName": "A. pleuropneumoniae",
-        "description": "Nimoni bakteri ki grav anpil.",
-        "prevention": "Antibyotik ak bon mjedira."
+        "description": "Nemoni bakteri grav.",
+        "prevention": "Antibyotik ak anviwònman amelyore."
       },
       "dis_ileitis": {
-        "name": "Ileyit (Lawsonia)",
+        "name": "Ileit (Lawsonia)",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Enfeksyon bakteri nan trip fen an.",
+        "description": "Enfeksyon bakteri nan ti trip la.",
         "prevention": "Vaksen ak antibyotik."
       },
       "dis_tb": {
-        "name": "Tidbekiloz",
+        "name": "Tibèkiloz",
         "scientificName": "Mycobacterium avium",
         "description": "Maladi bakteri kwonik.",
-        "prevention": "Evite ndege antre nan pak yo ak ijyèn."
+        "prevention": "Prèv zwazo ak sanitasyon."
       },
       "dis_tetanus": {
-        "name": "Tetannos",
+        "name": "Tetanòs",
         "scientificName": "Clostridium tetani",
         "description": "Toksin bakteri ki afekte sistèm nève a.",
-        "prevention": "Ijyèn pandan operasyon/kastrasyon."
+        "prevention": "Sanitasyon pandan operasyon/kastrasyon."
       },
       "dis_eperythrozoonosis": {
-        "name": "Eperythrozoonosis",
+        "name": "Eperitrozoonoz",
         "scientificName": "Mycoplasma suis",
-        "description": "Parazit nan san ki bay anemi.",
-        "prevention": "Kontwole ensèk ak zegwi pwòp."
+        "description": "Parazit san ki lakòz anemi.",
+        "prevention": "Kontwòl ensèk ak zegwi pwòp."
       },
       "dis_ascaris": {
-        "name": "Gwo Vè nan Vant (Ascaris)",
+        "name": "Ascaris suum",
         "scientificName": "Large Roundworm",
-        "description": "Parazit ki detwi fwa ak poumon.",
-        "prevention": "Deveminasyon regilye."
+        "description": "Parazit entèn ki lakòz domaj nan poumon ak fwa.",
+        "prevention": "Deworming regilye."
       },
       "dis_whipworms": {
-        "name": "Vè nan Trip (Whipworms)",
+        "name": "Whipworms",
         "scientificName": "Trichuris suis",
-        "description": "Parazit nan trip fen an.",
-        "prevention": "Deveminasyon ak ijyèn."
+        "description": "Parazit entèn nan gwo trip la.",
+        "prevention": "Deworming ak sanitasyon."
       },
       "dis_lungworms": {
-        "name": "Vè nan Poumon",
+        "name": "Vè poumon",
         "scientificName": "Metastrongylus spp.",
-        "description": "Parazit nan poumon yo.",
-        "prevention": "Kontwole vè tè ak deveminasyon."
+        "description": "Parazit entèn nan poumon yo.",
+        "prevention": "Kontwòl vè tè ak deworming."
       },
       "dis_kidney_worms": {
-        "name": "Vè nan Ren",
+        "name": "Vè ren",
         "scientificName": "Stephanurus dentatus",
-        "description": "Parazit ki afekte ren ak fwa.",
+        "description": "Parazit entèn ki afekte ren ak fwa.",
         "prevention": "Jesyon ak ijyèn."
       },
       "dis_lice": {
-        "name": "Chawa Kochon",
+        "name": "Pou kochon",
         "scientificName": "Haematopinus suis",
-        "description": "Parazit deyò k ap souse san.",
-        "prevention": "Tretman ak ensèktisid."
+        "description": "Parazit ekstèn souse san.",
+        "prevention": "Tretman ensektisid."
       },
       "dis_ringworm": {
-        "name": "Chank (Ringworm)",
+        "name": "Tèy",
         "scientificName": "Dermatophytosis",
-        "description": "Enfeksyon chanpiyon sou po.",
-        "prevention": "Ijyèn ak tretman lokal."
+        "description": "Enfeksyon po chanpiyon.",
+        "prevention": "Sanitasyon ak tretman aktualite."
       },
       "dis_mulberry_heart": {
-        "name": "Maladi Kè Mulberry",
+        "name": "Maladi kè Mulberry",
         "scientificName": "Vit E/Se Deficiency",
-        "description": "Mank vitamin E/Selenium ki afekte kè a.",
-        "prevention": "Sipleman nan manje."
+        "description": "Defisi nitrisyonèl ki afekte kè a.",
+        "prevention": "Sipleman."
       },
       "dis_vit_a": {
-        "name": "Mank Vitamin A",
+        "name": "Defisi vitamin A",
         "scientificName": "Vitamin A Deficiency",
-        "description": "Pwodiksyon duli duli ak mank vitamin.",
-        "prevention": "Ajuste rejim alimantè a."
+        "description": "Defisi nitrisyonèl.",
+        "prevention": "Ajisteman dyetetik."
       },
       "dis_rickets": {
         "name": "Rachitism",
         "scientificName": "Vit D/Ca/P Deficiency",
-        "description": "Mank mineral ki afekte zo yo.",
-        "prevention": "Mineral balanse ak solèy."
+        "description": "Defisi nitrisyonèl ki afekte kwasans zo.",
+        "prevention": "Ekilibre mineral ak limyè solèy la."
       },
       "dis_salt_poisoning": {
-        "name": "Anpwazònman ak Sèl",
+        "name": "Anpwazonnman ak Sèl",
         "scientificName": "Water Deprivation",
-        "description": "Rive lè kochon an manke dlo epi l bwè twòp dlo yon sèl kou.",
-        "prevention": "Dlo pwòp disponib tout tan."
+        "description": "Ki te koze pa mank de dlo ki te swiv pa twòp konsomasyon.",
+        "prevention": "Aksè dlo fre konstan."
       },
       "dis_heat_stroke": {
-        "name": "Konjesyon Solèy",
+        "name": "Konjesyon Serebral Chalè",
         "scientificName": "Heat Stroke",
-        "description": "Lè kochon an fè cho twòp akòz mank lonbraj oswa lè.",
-        "prevention": "Vantilasyon, dlo fre, ak lonbraj."
+        "description": "Surchof akòz vantilasyon pòv oswa lonbraj.",
+        "prevention": "Vantilasyon, refwadisman, ak lonbraj."
       },
       "dis_rectal_prolapse": {
-        "name": "Vantba (Anis ki soti deyò)",
+        "name": "Rektal Prolaps",
         "scientificName": "Rectal Prolapse",
-        "description": "Souvan rive apre tous, dyare, oswa gwo frèt.",
-        "prevention": "Tretman kòz la ak operasyon."
+        "description": "Souvan apre touse, dyare, oswa estrès frèt.",
+        "prevention": "Adrese kòz prensipal ak operasyon."
       },
       "dis_umbilical_hernia": {
-        "name": "Emòrchi nan Lonbrit",
+        "name": "Èrni lonbrit",
         "scientificName": "Umbilical Hernia",
-        "description": "Defo depi l fèt oswa enfeksyon lonbrit.",
-        "prevention": "Ijyèn ak seleksyon jenetik."
+        "description": "Defo nan devlopman oswa enfeksyon lonbrit.",
+        "prevention": "Sanitasyon ak jenetik."
       },
       "dis_scrotal_hernia": {
-        "name": "Emòrchi nan Grenn",
+        "name": "Èrni Scrotal",
         "scientificName": "Scrotal Hernia",
-        "description": "Defo jenetik.",
-        "prevention": "Jenetik ak operasyon."
+        "description": "Defo nan devlopman jenetik.",
+        "prevention": "Jenetik ak reparasyon chirijikal."
       },
       "dis_splayleg": {
-        "name": "Pye Louvri (Splayleg)",
+        "name": "Splayleg",
         "scientificName": "Myofibrillar hypoplasia",
-        "description": "Ti kochon ki fèt ki pa ka kanpe sou pye dèyè yo.",
-        "prevention": "Mare pye yo ansanm ak planche ki pa glise."
+        "description": "Porsele ki fèt pa kapab kanpe ak janm dèyè.",
+        "prevention": "Taping janm yo ak traction etaj."
       },
       "dis_vulvovaginitis": {
-        "name": "Vinvovajinit",
+        "name": "Vulvovajinit",
         "scientificName": "Zearalenone Toxicity",
-        "description": "Lakòz pa toksin nan manje ki gen mwazi.",
-        "prevention": "Chanje sous manje a."
+        "description": "Ki te koze pa estwojèn toksin chanpiyon nan manje.",
+        "prevention": "Chanje sous manje."
       },
       "dis_seneca": {
         "name": "Viris Seneca Valley (SVV)",
         "scientificName": "Senecavirus A",
-        "description": "Bay maleng ki sanble ak FMD.",
-        "prevention": "Sekirite fèm ak dyagnostik."
+        "description": "Kòz ti anpoul ki sanble ak FMD.",
+        "prevention": "Biosekirite ak dyagnostik."
       },
       "dis_deltacoronavirus": {
-        "name": "Deltacowonaviris Kochon",
+        "name": "Deltacoronavirus porsin",
         "scientificName": "PDCoV",
-        "description": "Dyare viris nan tout laj.",
-        "prevention": "Sekirite fèm."
+        "description": "Dyare viral nan tout laj.",
+        "prevention": "Biosekirite."
       },
       "dis_rotavirus": {
-        "name": "Dyare Rotaviris",
+        "name": "Dyare rotaviris",
         "scientificName": "Rotavirus",
-        "description": "Kòz komen dyare apre sevraj.",
-        "prevention": "Vaksen ak ijyèn."
+        "description": "Kòz komen nan dyare sevraj.",
+        "prevention": "Vaksinasyon ak ijyèn."
       },
       "dis_teschen": {
         "name": "Maladi Teschen/Talfan",
         "scientificName": "Sapelovirus/Teschovirus",
-        "description": "Enfeksyon viris nan sistèm nève a.",
-        "prevention": "Sekirite fèm."
+        "description": "Enfeksyon viral nan sistèm nève a.",
+        "prevention": "Biosekirite."
       },
       "dis_vesicular": {
-        "name": "Maladi Vesikilè Kochon",
+        "name": "Maladi vesikulè kochon",
         "scientificName": "Enterovirus",
-        "description": "Maladi viris ki sanble ak FMD.",
-        "prevention": "Karantèn strik."
+        "description": "Maladi viral ki imite FMD.",
+        "prevention": "Karantin strik."
       },
       "dis_melioidosis": {
-        "name": "Melyoyidoz",
+        "name": "Melyoidoz",
         "scientificName": "Burkholderia pseudomallei",
         "description": "Maladi bakteri ki soti nan tè/dlo.",
         "prevention": "Dlo pwòp ak ijyèn."
       },
       "dis_trypanosomiasis": {
-        "name": "Tripanozomyaz",
+        "name": "Tripanosomyaz",
         "scientificName": "Trypanosoma spp.",
-        "description": "Maladi parazit mouch chaché bay.",
-        "prevention": "Kontwole mouch yo ak medikaman."
+        "description": "Maladi pwotozo yo gaye pa mouch tse.",
+        "prevention": "Kontwòl vole ak medikaman."
       },
       "dis_cysticercosis": {
-        "name": "Lad (Cysticercosis)",
+        "name": "Sisticerkoz",
         "scientificName": "Taenia solium larvae",
-        "description": "Larv vè solitè moun nan vyann kochon.",
-        "prevention": "Anpeche kochon manje poupou moun."
+        "description": "Etap lav nan tenya imen nan misk kochon.",
+        "prevention": "Anpeche aksè nan fatra moun."
       },
       "dis_toxoplasmosis": {
-        "name": "Toksoplazmoz",
+        "name": "Toxoplasmoz",
         "scientificName": "Toxoplasma gondii",
-        "description": "Enfeksyon parazit ki soti nan chat.",
-        "prevention": "Kontwole chat nan fèm nan ak sekirite."
+        "description": "Enfeksyon protozoan zoonotik.",
+        "prevention": "Kontwòl chat ak biosekirite."
       },
       "dis_listeriosis": {
         "name": "Listeryoz",
         "scientificName": "Listeria monocytogenes",
         "description": "Enfeksyon bakteri nan sistèm nève a.",
-        "prevention": "Ijyèn ak bon kalite manje."
+        "prevention": "Sanitasyon ak ijyèn manje."
       },
       "dis_ear_necrosis": {
-        "name": "Zòrèy k ap pouri",
+        "name": "Necrosis nan zòrèy",
         "scientificName": "Ear Necrosis",
-        "description": "Souvan lakòz pa estrès, twòp kochon nan yon pak, oswa enfeksyon.",
-        "prevention": "Diminye kantite kochon ak trete enfeksyon."
+        "description": "Souvan koze pa estrès, twòp moun, oswa enfeksyon.",
+        "prevention": "Diminye dansite ak trete enfeksyon segondè."
       },
       "dis_sunburn": {
-        "name": "Boule ak Solèy",
+        "name": "Sunburn",
         "scientificName": "Solar dermatitis",
-        "description": "Afekte kochon blan yo lè yo deyò.",
+        "description": "Afekte kochon po blan deyò.",
         "prevention": "Bay lonbraj."
       },
       "dis_tail_biting": {
-        "name": "Mòde Ke",
+        "name": "Ke mòde",
         "scientificName": "Behavioral stress",
-        "description": "Pwoblèm konpòtman akòz estrès/annui.",
-        "prevention": "Diminye estrès epi ba yo okipe yo."
+        "description": "Pwoblèm konpòtman akòz estrès / annwi.",
+        "prevention": "Diminye estrès ak anrichi anviwònman an."
       },
       "dis_navel_ill": {
-        "name": "Enfeksyon Lonbrit (Navel Ill)",
+        "name": "Lonbrit malad",
         "scientificName": "Navel Infection",
-        "description": "Enfeksyon nan kòd lonbrit la lè yo fèk fèt.",
-        "prevention": "Tranpe lonbrit la nan yòd lè yo fèk fèt ak ijyèn."
+        "description": "Enfeksyon nan kòd lonbrit la nan nesans.",
+        "prevention": "Yòd plonje nan nesans ak sanitasyon."
       },
       "dis_iron_toxicity": {
-        "name": "Toksisite Fè",
+        "name": "Toksisite Iron",
         "scientificName": "Ferrous excess",
-        "description": "Lè kochon an pran twòp fè sa ka touye l sibit.",
-        "prevention": "Bay dòz egzak la."
+        "description": "Kapab rive si yo enjekte fè nan porsele ki pa gen Vit E.",
+        "prevention": "Asire ke rejim simen an ekilibre."
       },
       "dis_aflatoxicosis": {
-        "name": "Anpwazònman ak Aflatoksin",
+        "name": "Aflatoksikoz",
         "scientificName": "Aspergillus flavus toxin",
-        "description": "Anpwazònman pa toksin mwazi.",
-        "prevention": "Evite manje ki gen mwazi epi sèvi ak lyan pou toksin."
+        "description": "Anpwazonnman ak pwazon toksin ki soti nan grenn mwazi oswa manje ki lakòz domaj nan fwa ak lajònis.",
+        "prevention": "Evite manje manje ki gen mwazi, estoke grenn nan kondisyon sèk, epi sèvi ak atach toksin."
       },
       "dis_parakeratosis": {
-        "name": "Parakeratoz",
+        "name": "Parakeratoz (Defisi Zenk)",
         "scientificName": "Zinc deficiency",
-        "description": "Mank Zenk nan kochon.",
-        "prevention": "Asire gen ase Zenk nan manje a."
+        "description": "Maladi nitrisyonèl ki lakòz gwo blesi po kwout, epè.",
+        "prevention": "Asire balanse rapò kalsyòm-zenk nan manje epi bay sipleman zenk."
       },
       "dis_biotin_deficiency": {
-        "name": "Mank Biotin",
+        "name": "Defisi Biotin",
         "scientificName": "Vitamin H deficiency",
-        "description": "Mank Biotin nan kochon.",
-        "prevention": "Bay sipleman Biotin."
+        "description": "Defisyans nitrisyonèl ki lakòz zago fann, blesi po, ak bwete.",
+        "prevention": "Sipleman rejim alimantè ak biotin epi evite ki graj, planche konkrè mouye."
       },
       "dis_gossypol_toxicity": {
-        "name": "Toksisite Gosipòl",
+        "name": "Gossypol Toksisite",
         "scientificName": "Gossypol poisoning",
-        "description": "Anpwazònman ak rès grenn koton.",
-        "prevention": "Limite rès grenn koton nan manje a."
+        "description": "Anpwazònman nan manje kri oswa depase repa koton, sa ki lakòz detrès respiratwa.",
+        "prevention": "Limite kantite grenn koton nan manje a epi mete silfat fè (FeSO4) nan manje a pou bloke pwazon gosipòl la."
       },
       "dis_cassava_poisoning": {
-        "name": "Anpwazònman ak Manyòk",
+        "name": "Anpwazonnman Manyòk",
         "scientificName": "Cyanogenic glycosides",
-        "description": "Anpwazònman ak syani nan manyòk kri.",
-        "prevention": "Bouyi oswa fèmante manyòk la anvan w bay kochon an li."
+        "description": "Anpwazonnman ak siyanid ki soti nan rasin oswa po kasav kri oswa mal trete.",
+        "prevention": "Kale, bouyi, seche solèy la oswa fèmante manyòk anvan ou manje."
       },
       "dis_sweet_potato_toxicity": {
-        "name": "Toksisite Patat",
+        "name": "Toksisite patat",
         "scientificName": "Ipomeamarone toxicity",
-        "description": "Anpwazònman ak patat ki gen mwazi.",
-        "prevention": "Pa bay kochon an patat ki gen mwazi oswa ki gate."
+        "description": "Anpwazonnman ak patat ki gen mwazi, sa ki lakòz gwo detrès respiratwa.",
+        "prevention": "Jete pòmdetè ki domaje oswa ki gen mwazi; manje sèlman tubèrkul ki an sante."
       },
       "dis_mma": {
-        "name": "Sendwòm MMA",
+        "name": "Dysgalactia apre akouchman (MMA)",
         "scientificName": "Mastitis-Metritis-Agalactia",
-        "description": "Enfeksyon apre akouchman nan truie yo.",
-        "prevention": "Pwòpte pak akouchman an ak bon nitrisyon."
+        "description": "Mastit, metrit, ak agalactia ki lakòz lafyèv ak mank lèt ​​nan simen apre akouchman.",
+        "prevention": "Kenbe ijyèn sevè plim farrowing epi asire bon jan nitrisyon simen."
       },
       "dis_pwd": {
-        "name": "Dyare Apre Sevraj",
+        "name": "Dyare apre sevraj (PWD)",
         "scientificName": "Escherichia coli (F4/F18)",
-        "description": "Kolibasiloz nan kochon ki fèk sevre.",
-        "prevention": "Ijyèn ak ajisteman manje."
+        "description": "Dyare bakteri nan porsele yon ti tan apre sevraj, sa ki lakòz dezidratasyon.",
+        "prevention": "Diminye estrès sevraj, kenbe asenisman segondè, epi bay dlo pwòp pou bwè."
       },
       "dis_trichinellosis": {
         "name": "Trikineloz",
         "scientificName": "Trichinella spiralis",
-        "description": "Enfeksyon parazit ki ka pase nan moun.",
-        "prevention": "Pa bay rès manje kri; kontwole rat."
+        "description": "Maladi vè Trikinèl ki transmèt lè kochon manje vyann kri oswa rasi/rat ki enfekte, parazit la fè kokon nan misk vyann lan.",
+        "prevention": "Pa manje dlo kri, bouyi bouyon manje pou 30 minit, epi kontwole rat."
       },
       "dis_hydatid_disease": {
-        "name": "Maladi Idatik",
+        "name": "Maladi Idatidòz (Echinococcosis)",
         "scientificName": "Echinococcus granulosus",
-        "description": "Enfeksyon parazit.",
-        "prevention": "Deveminen chen nan fèm nan; pa kite yo manje trip bèt."
+        "description": "Maladi parazit ki soti nan vè chen epi ki bay gwo boul dlo nan fwa ak nan poumon kochon lè yo bwè dlo oswa manje sal.",
+        "prevention": "Deworm chen fèm regilyèman epi anpeche yo manje ògàn kochon kri."
       },
       "dis_phe": {
-        "name": "Antarit Emorajik",
+        "name": "Enteropati emorajik kochon",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Senyen nan trip nan kochon jèn.",
-        "prevention": "Vaksen ak ijyèn."
+        "description": "Dyare san egi ak lanmò toudenkou nan kochon kiltivatè/finisè.",
+        "prevention": "Kenbe bon asenisman epi sèvi ak antibyotik apwopriye anba konsèy veterinè."
       },
       "dis_mycoplasma_arthritis": {
-        "name": "Atrit Mikoplasmal",
+        "name": "Atrit mikoplasmal",
         "scientificName": "Mycoplasma hyosynoviae",
-        "description": "Doulè nan jwenti bakteri bay.",
-        "prevention": "Ijyèn ak karantèn."
+        "description": "Enfeksyon bakteri ki lakòz jwenti anfle, bwete, ak feblès nan janm yo.",
+        "prevention": "Amelyore kondisyon lojman, diminye dansite stock, epi trete bonè."
       },
       "dis_foot_rot": {
-        "name": "Pouriti nan Pye",
+        "name": "Pye pouri (nekrobasiloz)",
         "scientificName": "Fusobacterium necrophorum",
-        "description": "Enfeksyon nan pye ki fè bèt la bwate.",
-        "prevention": "Kenbe pak yo sèk; trete sabo yo."
+        "description": "Enfeksyon bakteri k ap antre nan blesi sabo, sa ki lakòz pouri ak bwete.",
+        "prevention": "Repare beton ki graj, kenbe planche sèk, epi sèvi ak beny pye si sa nesesè."
       },
       "dis_babesiosis": {
-        "name": "Babesyoz",
+        "name": "Tik-fè Babezyoz",
         "scientificName": "Babesia trautmanni",
-        "description": "Enfeksyon parazit tique bay.",
-        "prevention": "Tretman ak akarisid pou kontwole tique."
+        "description": "Tik-transmèt parazit san ki lakòz gwo lafyèv, anemi, ak pipi nwa.",
+        "prevention": "Kontwole tik lè l sèvi avèk akarisid epi kenbe plim san vejetasyon."
       },
       "dis_anaplasmosis": {
-        "name": "Anaplazmoz",
+        "name": "Anaplasmoz",
         "scientificName": "Anaplasma marginale",
-        "description": "Enfeksyon nan san kochon.",
-        "prevention": "Kontwole ensèk."
+        "description": "Tik enfeksyon bakteri ki lakòz anemi, lafyèv, ak lajònis.",
+        "prevention": "Aplike pwogram kontwòl vektè ak tik."
       },
       "dis_sow_hysteria": {
-        "name": "Isteri Truie",
+        "name": "Simen isterik",
         "scientificName": "Puerperal psychosis",
-        "description": "Truie ki vin mechan oswa panike apre l fin akouche.",
-        "prevention": "Bay yon kote ki trankil pou l akouche."
+        "description": "Twoub konpòtman kote simen fè pitit vin agresif epi mòde porsele.",
+        "prevention": "Bay yon anviwònman trankil pou fè pitit, sipèvize gilts, epi sèvi ak sedatif si sa nesesè."
       },
       "dis_thorny_headed_worm": {
-        "name": "Vè Tèt Pine",
+        "name": "Vè pikan-tèt",
         "scientificName": "Macracanthorhynchus hirudinaceus",
-        "description": "Parazit nan trip.",
-        "prevention": "Anpeche kochon manje sèten kalite vè nan tè a."
+        "description": "Vè parazit akeri nan manje insect, sa ki lakòz twou zantray.",
+        "prevention": "Evite elvaj gratis sou tè ki enfekte ak skarabe epi sèvi ak dewormers."
       },
       "dis_strongyloidiasis": {
-        "name": "Strongiloyidòz",
+        "name": "Strongyloidiasis (Threadworm)",
         "scientificName": "Strongyloides ransomi",
-        "description": "Enfeksyon vè fil.",
-        "prevention": "Kenbe pak yo sèk; deveminasyon."
+        "description": "Worm entesten ki lakòz dyare grav ak mòtalite nan porsele yo.",
+        "prevention": "Kenbe kès pou fè pitit sèk ak pwòp, epi deworm simen anvan akouchman."
       },
       "dis_hyostrongylosis": {
-        "name": "Vè Lestomak Wouj",
+        "name": "Wouj Vè vant",
         "scientificName": "Hyostrongylus rubidus",
-        "description": "Vè nan lestomak kochon k ap manje deyò.",
-        "prevention": "Jesyon savann pwòp; deveminasyon."
+        "description": "Enfeksyon vè nan vant ki lakòz doulè, anemi, ak pèdi pwa.",
+        "prevention": "Wotasyon patiraj, kenbe kay sèk, epi aplike yon orè deworming."
       },
       "dis_oesophagostomiasis": {
-        "name": "Vè Nodulè",
+        "name": "Enfeksyon vè nodilè",
         "scientificName": "Oesophagostomum spp.",
-        "description": "Vè nan trip kochon.",
-        "prevention": "Deveminasyon ak ijyèn."
+        "description": "Parazit entesten ki lakòz nodil nan miray la zantray, ki mennen nan simen mens.",
+        "prevention": "Sanitasyon plim regilye ak itilizasyon woutin nan antihelmintik laj spectre."
       },
       "dis_fascioliasis": {
-        "name": "Fasyoloz (Vè nan Fwa)",
+        "name": "Fasyolyaz (Fwa Fluke)",
         "scientificName": "Fasciola gigantica",
-        "description": "Enfeksyon vè nan fwa.",
-        "prevention": "Kontwole kadò (escargots); mjedira lwen savann ki mouye."
+        "description": "Fluke parazit ki afekte fwa a, komen nan patiraj mouye oswa marekaj.",
+        "prevention": "Anpeche kochon patiraj nan zòn marekaj epi kontwole Molisk labou."
       },
       "dis_emcv": {
-        "name": "EMCV",
+        "name": "Ansefalomyokardit (EMCV)",
         "scientificName": "Cardiovirus",
-        "description": "Enfeksyon viris nan kè ak pwoblèm repwodiksyon.",
-        "prevention": "Kontwole rat (rat gaye viris sa a)."
+        "description": "Enfeksyon viral ki bay wonjè ki lakòz ensifizans kadyak toudenkou ak avòtman.",
+        "prevention": "Aplike strik kontwòl wonjè ak pwoteje manje kont kontaminasyon."
       },
       "dis_demodectic_mange": {
-        "name": "Gal Demodèktik",
+        "name": "Demodex Mange",
         "scientificName": "Demodex phylloides",
-        "description": "Enfeksyon parazit sou po.",
-        "prevention": "Tretman ak akarisid."
+        "description": "Mikwoskopik mite po ki lakòz tach kal ak ti pustul.",
+        "prevention": "Amelyore nitrisyon bann bèt yo, izole kochon ki afekte yo, epi aplike akarisid."
       },
       "dis_pityriasis_rosea": {
         "name": "Pityriasis Rosea",
         "scientificName": "Pseudo-ringworm",
-        "description": "Kondisyon po ki pa kontajye.",
-        "prevention": "Geri pou kont li; kenbe anviwònman an pwòp."
+        "description": "Kondisyon po ki pa kontajye nan jèn kochon ki fòme kwout bag ki sanble.",
+        "prevention": "Anjeneral oto-rezoud; kenbe kabann pwòp, sèk epi redwi estrès."
       },
       "dis_photosensitization": {
-        "name": "Fotosansibilizasyon",
+        "name": "Fotosensibilisation",
         "scientificName": "Solar dermatitis",
-        "description": "Sansibilite po ak solèy.",
-        "prevention": "Kenbe kochon an lwen solèy cho; tcheke plant nan savann lan."
+        "description": "Reyaksyon grav tankou sunburn nan kochon ki gen po limyè apre yo fin manje plant espesifik.",
+        "prevention": "Bay lonbraj, retire move zèb sansibilize yo, epi kenbe kochon andedan kay la."
       },
       "dis_shoulder_ulcers": {
-        "name": "Ilsè nan Zepòl",
+        "name": "Simen Ilsè zepòl",
         "scientificName": "Decubitus ulcers",
-        "description": "Maleng nan truie ki mèg ki kouche sou siman.",
-        "prevention": "Bay pay oswa tapi mou; ogmante manje."
+        "description": "Maleng presyon sou zepòl simen mens ki loje sou konkrè difisil.",
+        "prevention": "Bay kabann mou, kenbe simen nan bon kondisyon kò, epi sèvi ak tapi kawotchou."
       },
       "dis_ear_biting": {
-        "name": "Mòde Zòrèy",
+        "name": "Kanibal zòrèy",
         "scientificName": "Stress response behavior",
-        "description": "Konpòtman estrès.",
-        "prevention": "Diminye kantite kochon nan pak la; ba yo okipe yo."
+        "description": "Konpòtman nòmal kote kochon mòde zòrèy konpayon plim yo, sa ki lakòz nekwoz.",
+        "prevention": "Diminye foul moun, amelyore vantilasyon, epi bay anrichisman tankou chenn."
       },
       "dis_gastric_torsion": {
-        "name": "Lestomak Vire",
+        "name": "Torsion gastric (gonfle)",
         "scientificName": "Gastric dilation-volvulus",
-        "description": "Lestomak kochon an vire.",
-        "prevention": "Evite bay twòp manje yon sèl kou."
+        "description": "Toudenkou gonfleman ak tòde nan vant la, ki mennen nan lanmò rapid.",
+        "prevention": "Evite manje gwo manje apre jèn long epi divize manje chak jou an pòsyon."
       },
       "dis_c_difficile": {
-        "name": "Enfeksyon C. difficile",
+        "name": "Clostridium difficile (CDI)",
         "scientificName": "Clostridioides difficile",
-        "description": "Dyare bakteri nan ti kochon.",
-        "prevention": "Anviwònman pwòp ak bon vantilasyon."
+        "description": "Enfeksyon bakteri nan porsele ki fèk fèt ki lakòz dyare dlo ak gonfleman.",
+        "prevention": "Netwaye ak dezenfekte plim farrowing byen epi asire kolostrom bonè."
       },
       "dis_cold_stress": {
-        "name": "Estrès Fret",
+        "name": "Estrès frèt (ipotèmi)",
         "scientificName": "Hypothermia susceptibility",
-        "description": "Fret nan ti kochon ki fèk fèt.",
-        "prevention": "Bay lanp chofaj ak pay ki sèk."
+        "description": "Gwo refwadisman kò nan porsele, sa ki lakòz tranbleman ak gwo mòtalite.",
+        "prevention": "Bay lanp chalè, bwat ranpe, epi kenbe zòn nan fè pitit sèk epi san bouyon."
       },
       "dis_necrotic_enteritis": {
-        "name": "Antarit Nekrotik",
+        "name": "Enterit nekrotik",
         "scientificName": "Clostridium perfringens Type C",
-        "description": "Enfeksyon bakteri nan trip.",
-        "prevention": "Vaksen truie yo ak ijyèn pak yo."
+        "description": "Maladi toksin bakteri ki lakòz gwo dyare san ak gwo mòtalite nan porsele.",
+        "prevention": "Vaksen simen anvan akouchman epi kenbe ijyèn plim absoli."
       },
       "dis_navel_bleeding": {
-        "name": "Lonbrit k ap Senyen",
+        "name": "Lonbrit senyen",
         "scientificName": "Umbilical hemorrhage",
-        "description": "Senyen nan kòd lonbrit la.",
-        "prevention": "Mare lonbrit k ap senyen an; tcheke vitamin K nan manje a."
+        "description": "Twòp senyen nan kòd lonbrit la nan porsele ki fèk fèt.",
+        "prevention": "Mare kòd lonbrit yo nan nesans epi evite bay simen manje ki kontamine ak mikotoksin."
       },
       "dis_spirochetal_colitis": {
-        "name": "Kolit Espiwoketal",
+        "name": "Kolit Spirochetal kochon",
         "scientificName": "Brachyspira pilosicoli",
-        "description": "Enfeksyon bakteri nan trip gwo a.",
-        "prevention": "Medikaman ak ijyèn pak la."
+        "description": "Maladi dyare twò grav nan kochon k ap grandi, sa ki lakòz pòv pran pwa.",
+        "prevention": "Dezenfekte manje yo epi trete kochon ki afekte yo ak antibyotik."
       },
       "dis_salmonella_septicemia": {
-        "name": "Septisemi Salmonèl",
+        "name": "Septicemia Salmonèl",
         "scientificName": "Salmonella choleraesuis",
-        "description": "Enfeksyon nan san pa Salmonèl.",
-        "prevention": "Dlo pwòp; sekirite fèm."
+        "description": "Enfeksyon ki grav nan salmonèl san ki lakòz po koulè wouj violèt ak lanmò rapid.",
+        "prevention": "Izole kochon malad, medikaman dlo, epi kenbe sevè byosekirite."
       },
       "dis_prdc": {
-        "name": "PRDC",
+        "name": "Konplèks Maladi Respiratwa Porsin",
         "scientificName": "Porcine Respiratory Disease Complex",
-        "description": "Konplèks maladi respiratwa nan kochon k ap grandi.",
-        "prevention": "Vantilasyon, vaksen, ak kontwole kantite kochon."
+        "description": "Melanje enfeksyon viral ak bakteri respiratwa ki lakòz tous ak move kwasans.",
+        "prevention": "Amelyore vantilasyon, evite twòp moun, epi kontwole viris prensipal yo."
       },
       "dis_ergotism": {
-        "name": "Ergotis",
+        "name": "Anpwazònman Ergot (ergotism)",
         "scientificName": "Claviceps purpurea",
-        "description": "Anpwazònman ak mwazi nan grenn.",
-        "prevention": "Enspekte grenn manje yo pou mwazi nwa."
+        "description": "Anpwazònman chanpiyon ki soti nan grenn sereyal ki enfekte ak ergot, sa ki lakòz nekwoz tisi.",
+        "prevention": "Ekran manje grenn pou kò ergot nwa ak ranplase manje ki kontamine."
       },
       "dis_bvdv_pig": {
-        "name": "BVDV nan Kochon",
+        "name": "Enfeksyon BVDV nan kochon",
         "scientificName": "Pestivirus",
-        "description": "Viris dyare bèf nan kochon.",
-        "prevention": "Tcheke kochon yo lwen bèf."
+        "description": "Enfeksyon viris Dyare Viral Bovin ki soti nan kontak ak bèf, ki lakòz avòtman.",
+        "prevention": "Kenbe kochon separe ak bèf ak mouton, epi mete restriksyon sou kontak kwa-espès yo."
       },
       "dis_endocarditis": {
-        "name": "Endokadit",
+        "name": "Endokardit bakteri",
         "scientificName": "Streptococcal endocarditis",
-        "description": "Enfeksyon nan valv kè.",
-        "prevention": "Trete enfeksyon yo bonè."
+        "description": "Enfeksyon valv kè ki lakòz ensifizans kadyak ak lanmò toudenkou pandan estrès.",
+        "prevention": "San pèdi tan trete jwenti-malad ak blesi, epi chwazi kont jenetik sansib."
       },
       "dis_polyserositis": {
-        "name": "Poliserosit",
+        "name": "Mycoplasma poliserozit",
         "scientificName": "Mycoplasma hyorhinis",
-        "description": "Enfeksyon nan manbràn kò a.",
-        "prevention": "Tretman antibyotik; diminye estrès."
+        "description": "Fibrinous enflamasyon nan poumon, kè, ak sifas jwenti nan sevre.",
+        "prevention": "Minimize estrès sevraj, evite melanje fatra, epi vantile byen."
       },
       "dis_congenital_tremor": {
-        "name": "Tranbleman Konjenital",
+        "name": "Tranbleman konjenital",
         "scientificName": "Atypical Porcine Pestivirus",
-        "description": "Maladi kochon k ap tranble.",
-        "prevention": "Mete gilt yo nan fèm nan bonè pou yo abitye anvan kwazman."
+        "description": "Kondisyon newolojik nan porsele ki fèk fèt ki lakòz gwo tranbleman.",
+        "prevention": "Evite itilize espèm oswa dechaj ki soti nan kochon ki afekte yo epi minimize estrès simen pandan gwosès la."
       }
     },
     "diagnosisMatches": "Clinical Diagnosis Matches",
@@ -1502,7 +1508,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 EMERGENCY BIOSECURITY PROTOCOL:",
     "clinicalDiagnosisMatches": "Korespondans Dyagnostik Klinik",
     "hallmarkBadge": "Siy prensipal",
-    "hallmarkSignPresent": "Siy Hallmark prezan: %1$s",
+    "hallmarkSignPresent": "Siy Hallmark prezan: {sign}",
     "otherSignsWatch": "Lòt siy ou dwe gade:",
     "preventionTreatmentLabel": "Prevansyon / Tretman: {treatment}",
     "bio_proto_asf": "IMMEDIATE EMERGENCY QUARANTINE: African Swine Fever is a lethal, legally notifiable virus. 1) Lock down farm gates immediately. 2) Stop all movement of pigs, vehicles, feed, and manure. 3) Disinfect all boot baths and tyres with Virkon S or 2% caustic soda. 4) Contact your District/National Veterinary Officer immediately.",
@@ -1514,8 +1520,8 @@
     "bio_proto_vesicular_stomatitis": "REPORTABLE VESICULAR LESION ALERT: Vesicular Stomatitis is clinically indistinguishable from Foot and Mouth Disease. 1) Isolate infected pigs immediately. 2) Wear protective gloves. 3) Report to state veterinarian for lab differential diagnosis.",
     "bio_proto_senecavirus": "REPORTABLE VESICULAR DISEASE: Senecavirus A lesions are clinically indistinguishable from Foot and Mouth Disease (FMD). 1) Quarantine pen immediately. 2) Restrict off-farm movement. 3) Notify livestock veterinary authorities for mandatory differential PCR testing.",
     "bio_proto_svd": "REPORTABLE VESICULAR DISEASE: Swine Vesicular Disease (SVD). 1) Strict isolation of infected animals. 2) Restrict all vehicle and visitor movements. 3) Report to state animal health department immediately.",
-    "clinicalMatchPercent": "%1$d%% Match nan klinik",
-    "matchedSignsCount": "{matched}$d sou {total}$d siy",
+    "clinicalMatchPercent": "{percent}% Match nan klinik",
+    "matchedSignsCount": "{matched} sou {total} siy",
     "matchPercentSuffix": "({percent}% match)"
   },
   "HR": {
@@ -1932,7 +1938,7 @@
     "snooze1Month": "1 Mwa",
     "deleteNotificationQuestion": "Efase Notifikasyon?",
     "deleteNotificationConfirm": "Èske w sèten ou vle efase notifikasyon sa a?",
-    "lastWeighedDaysAgo": "Kochon #%1$s: Dènye peze %2$s jou de sa",
+    "lastWeighedDaysAgo": "Kochon #{tag}: Dènye peze {days} jou de sa",
     "stockLeftMinFormat": "{current}: {unit} kg ki rete (Min: {min} kg)",
     "pigs": "Kochon",
     "pig": "Kochon",

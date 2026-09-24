@@ -124,7 +124,13 @@
     "noActivities": "No upcoming activities",
     "allTasksCompleted": "All tasks are completed!",
     "generalTask": "General Task",
-    "language": "Language"
+    "language": "Language",
+    "feed": "Futter",
+    "inventory": "Futterinventar",
+    "calculator": "Futterration berechnen",
+    "mixFeed": "Futter mischen",
+    "analyzeFeed": "Futter analysieren",
+    "marketHub": "Schweine-Marktplatz"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -866,664 +872,664 @@
     },
     "diseases": {
       "dis_asf": {
-        "name": "African Swine Fever (ASF)",
+        "name": "Afrikanische Schweinepest (ASF)",
         "scientificName": "Asfivirus",
-        "description": "A highly contagious and deadly viral disease prevalent in West Africa. No vaccine exists.",
-        "prevention": "Strict biosecurity and restrict farm access."
+        "description": "Eine hochansteckende und tödliche Viruserkrankung, die in Westafrika weit verbreitet ist. Es gibt keinen Impfstoff.",
+        "prevention": "Strenge Biosicherheit und Beschränkung des Zugangs zum Bauernhof."
       },
       "dis_fmd": {
-        "name": "Foot and Mouth Disease (FMD)",
+        "name": "Maul- und Klauenseuche (MKS)",
         "scientificName": "Aphthovirus",
-        "description": "Viral disease causing blisters on the mouth and feet.",
-        "prevention": "Vaccination and movement control."
+        "description": "Eine Viruserkrankung, die Blasen an Mund und Füßen verursacht.",
+        "prevention": "Impfung und Bewegungskontrolle."
       },
       "dis_prrs": {
-        "name": "PRRS (Blue Ear)",
+        "name": "PRRS (Seuchenhaftes Spätaborten-Syndrom)",
         "scientificName": "Arterivirus",
-        "description": "Causes respiratory failure and reproductive issues.",
-        "prevention": "Biosecurity and herd vaccination."
+        "description": "Verursacht Atemstillstand und Fortpflanzungsprobleme.",
+        "prevention": "Biosicherheit und Herdenimpfung."
       },
       "dis_erysipelas": {
-        "name": "Swine Erysipelas",
+        "name": "Schweinerotlauf (Erysipel)",
         "scientificName": "Erysipelothrix rhusiopathiae",
-        "description": "Bacterial infection causing distinct skin lesions and arthritis.",
-        "prevention": "Regular vaccination and pen hygiene."
+        "description": "Bakterielle Infektion, die deutliche Hautläsionen und Arthritis verursacht.",
+        "prevention": "Regelmäßige Impfung und Stifthygiene."
       },
       "dis_csf": {
-        "name": "Classical Swine Fever",
+        "name": "Klassische Schweinepest",
         "scientificName": "Pestivirus",
-        "description": "Highly contagious viral disease similar to ASF.",
-        "prevention": "Vaccination and strict biosecurity."
+        "description": "Hochansteckende Viruserkrankung ähnlich der ASP.",
+        "prevention": "Impfung und strenge Biosicherheit."
       },
       "dis_anthrax": {
-        "name": "Anthrax",
+        "name": "Milzbrand",
         "scientificName": "Bacillus anthracis",
-        "description": "Serious bacterial disease that can affect humans.",
-        "prevention": "Vaccination and avoid opening carcasses."
+        "description": "Schwere bakterielle Erkrankung, die den Menschen befallen kann.",
+        "prevention": "Impfung und das Öffnen von Schlachtkörpern vermeiden."
       },
       "dis_brucellosis": {
-        "name": "Brucellosis",
+        "name": "Schweinebrucellose",
         "scientificName": "Brucella suis",
-        "description": "Bacterial disease causing reproductive failure.",
-        "prevention": "Testing, culling, and sanitation."
+        "description": "Bakterielle Erkrankung, die zu Fortpflanzungsstörungen führt.",
+        "prevention": "Tests, Keulung und Hygiene."
       },
       "dis_coccidiosis": {
-        "name": "Coccidiosis",
+        "name": "Saugferkel-Kokzidiose (Isospora suis)",
         "scientificName": "Isospora suis",
-        "description": "Parasitic disease primarily affecting piglets.",
-        "prevention": "Farrowing pen hygiene."
+        "description": "Parasitäre Erkrankung, die vor allem Ferkel befällt.",
+        "prevention": "Hygiene im Abferkelstall."
       },
       "dis_pneumonia": {
-        "name": "Mycoplasmal Pneumonia",
+        "name": "Mykoplasmale Pneumonie",
         "scientificName": "Mycoplasma hyopneumoniae",
-        "description": "Chronic respiratory disease leading to poor growth.",
-        "prevention": "Vaccination and improved ventilation."
+        "description": "Chronische Atemwegserkrankung, die zu Wachstumsstörungen führt.",
+        "prevention": "Impfung und verbesserte Belüftung."
       },
       "dis_salmonellosis": {
-        "name": "Salmonellosis",
+        "name": "Salmonellose",
         "scientificName": "Salmonella typhimurium",
-        "description": "Bacterial infection causing severe gut issues.",
-        "prevention": "Clean water and hygiene."
+        "description": "Bakterielle Infektion, die schwere Darmprobleme verursacht.",
+        "prevention": "Sauberes Wasser und Hygiene."
       },
       "dis_ppv": {
-        "name": "Porcine Parvovirus (PPV)",
+        "name": "Schweine-Parvovirus (PPV)",
         "scientificName": "Porcine Parvovirus",
-        "description": "Common cause of reproductive failure in gilts.",
-        "prevention": "Vaccination before breeding."
+        "description": "Häufige Ursache für Reproduktionsstörungen bei Jungsauen.",
+        "prevention": "Impfung vor der Zucht."
       },
       "dis_rhinitis": {
-        "name": "Atrophic Rhinitis",
+        "name": "Atrophische Rhinitis",
         "scientificName": "Bordetella bronchiseptica",
-        "description": "Causes distortion of the snout and respiratory issues.",
-        "prevention": "Vaccination and air quality."
+        "description": "Verursacht eine Verzerrung der Schnauze und Atemprobleme.",
+        "prevention": "Impfung und Luftqualität."
       },
       "dis_leptospirosis": {
-        "name": "Leptospirosis",
+        "name": "Leptospirose",
         "scientificName": "Leptospira spp.",
-        "description": "Zoonotic bacterial disease affecting kidneys.",
-        "prevention": "Rodent control and vaccination."
+        "description": "Zoonotische bakterielle Erkrankung, die die Nieren befällt.",
+        "prevention": "Nagetierbekämpfung und Impfung."
       },
       "dis_influenza": {
-        "name": "Swine Influenza",
+        "name": "Schweinegrippe",
         "scientificName": "Influenza A virus",
-        "description": "Rapidly spreading respiratory infection.",
-        "prevention": "Ventilation and biosecurity."
+        "description": "Sich schnell ausbreitende Atemwegsinfektion.",
+        "prevention": "Belüftung und Biosicherheit."
       },
       "dis_edema": {
-        "name": "Edema Disease",
+        "name": "Ödemkrankheit",
         "scientificName": "Escherichia coli",
-        "description": "Caused by E. coli toxins in weaned piglets.",
-        "prevention": "Improved sanitation and diet."
+        "description": "Verursacht durch E. coli-Toxine bei entwöhnten Ferkeln.",
+        "prevention": "Verbesserte Hygiene und Ernährung."
       },
       "dis_dysentery": {
-        "name": "Swine Dysentery",
+        "name": "Schweinedysenterie",
         "scientificName": "Brachyspira hyodysenteriae",
-        "description": "Severe mucohaemorrhagic diarrhea.",
-        "prevention": "Water medication and disinfection."
+        "description": "Schwerer mukohämorrhagischer Durchfall.",
+        "prevention": "Wassermedikation und Desinfektion."
       },
       "dis_mange": {
-        "name": "Sarcoptic Mange",
+        "name": "Räude (Sarcoptes-Milben)",
         "scientificName": "Sarcoptes scabiei",
-        "description": "Parasitic skin disease causing extreme discomfort.",
-        "prevention": "Acaricide treatment."
+        "description": "Parasitäre Hauterkrankung, die extreme Beschwerden verursacht.",
+        "prevention": "Akarizidbehandlung."
       },
       "dis_anemia": {
-        "name": "Iron Deficiency Anemia",
+        "name": "Eisenmangelanämie",
         "scientificName": "Iron Deficiency",
-        "description": "Common in indoor piglets without iron supplements.",
-        "prevention": "Iron injections at birth."
+        "description": "Kommt häufig bei Ferkeln im Stall vor, die keine Eisenpräparate erhalten.",
+        "prevention": "Eiseninjektionen bei der Geburt."
       },
       "dis_ulcers": {
-        "name": "Gastric Ulcers",
+        "name": "Magengeschwüre",
         "scientificName": "Gastric Ulcers",
-        "description": "Caused by fine feed or stress.",
-        "prevention": "Adjust feed particle size."
+        "description": "Verursacht durch Feinfutter oder Stress.",
+        "prevention": "Passen Sie die Partikelgröße des Futters an."
       },
       "dis_pss": {
-        "name": "Porcine Stress Syndrome",
+        "name": "Schweine-Stress-Syndrom",
         "scientificName": "Genetic stress susceptibility",
-        "description": "Genetic condition triggered by stress.",
-        "prevention": "Genetic selection and calm handling."
+        "description": "Durch Stress ausgelöster genetischer Zustand.",
+        "prevention": "Genetische Selektion und ruhiger Umgang."
       },
       "dis_tge": {
-        "name": "Transmissible Gastroenteritis (TGE)",
+        "name": "Übertragbare Gastroenteritis (TGE)",
         "scientificName": "Coronavirus",
-        "description": "Viral disease with high mortality in young piglets.",
-        "prevention": "Biosecurity."
+        "description": "Viruserkrankung mit hoher Mortalität bei jungen Ferkeln.",
+        "prevention": "Biosicherheit."
       },
       "dis_pasteurellosis": {
-        "name": "Pasteurellosis",
+        "name": "Pasteurellose (Lungenentzündung)",
         "scientificName": "Pasteurella multocida",
-        "description": "Bacterial pneumonia.",
-        "prevention": "Antibiotics and ventilation."
+        "description": "Bakterielle Lungenentzündung.",
+        "prevention": "Antibiotika und Belüftung."
       },
       "dis_strep": {
-        "name": "Streptococcus suis",
+        "name": "Streptokokken-Infektion (Streptococcus suis)",
         "scientificName": "S. suis",
-        "description": "Bacterial infection causing meningitis.",
-        "prevention": "Antibiotics and stress reduction."
+        "description": "Bakterielle Infektion, die Meningitis verursacht.",
+        "prevention": "Antibiotika und Stressreduktion."
       },
       "dis_mycotoxicosis": {
-        "name": "Mycotoxicosis",
+        "name": "Mykotoxikose (Schimmelpilzvergiftung)",
         "scientificName": "Mycotoxicosis",
-        "description": "Caused by mold-contaminated feed.",
-        "prevention": "Toxin binders and dry storage."
+        "description": "Verursacht durch schimmelverseuchtes Futter.",
+        "prevention": "Giftbinder und trockene Lagerung."
       },
       "dis_greasy_pig": {
-        "name": "Greasy Pig Disease",
+        "name": "Ferkelruß (Staphylococcus hyicus)",
         "scientificName": "Staphylococcus hyicus",
-        "description": "Bacterial infection causing greasy skin lesions.",
-        "prevention": "Sanitation and antibiotics."
+        "description": "Bakterielle Infektion, die fettige Hautläsionen verursacht.",
+        "prevention": "Hygiene und Antibiotika."
       },
       "dis_pseudorabies": {
-        "name": "Pseudorabies (Aujeszky's)",
+        "name": "Aujeszkysche Krankheit (Pseudowut)",
         "scientificName": "Suid herpesvirus 1",
-        "description": "Viral disease affecting nervous and respiratory systems.",
-        "prevention": "Vaccination and eradication programs."
+        "description": "Viruserkrankung, die das Nerven- und Atmungssystem betrifft.",
+        "prevention": "Impf- und Tilgungsprogramme."
       },
       "dis_pcv2": {
-        "name": "Porcine Circovirus (PCV2)",
+        "name": "Porzines Circovirus Typ 2 (PCV2 / PMWS)",
         "scientificName": "Circovirus",
-        "description": "Causes wasting and respiratory issues in growers.",
-        "prevention": "Vaccination."
+        "description": "Verursacht bei Züchtern Abmagerung und Atemprobleme.",
+        "prevention": "Impfung."
       },
       "dis_ped": {
-        "name": "Porcine Epidemic Diarrhea (PED)",
+        "name": "Porzine Epidemische Diarrhoe (PED)",
         "scientificName": "Coronavirus",
-        "description": "Similar to TGE, highly fatal to neonates.",
-        "prevention": "Strict biosecurity."
+        "description": "Ähnlich wie TGE, für Neugeborene sehr tödlich.",
+        "prevention": "Strenge Biosicherheit."
       },
       "dis_je": {
-        "name": "Japanese Encephalitis",
+        "name": "Japanische Enzephalitis",
         "scientificName": "Flavivirus",
-        "description": "Mosquito-borne viral disease.",
-        "prevention": "Mosquito control and vaccination."
+        "description": "Durch Mücken übertragene Viruserkrankung.",
+        "prevention": "Mückenbekämpfung und Impfung."
       },
       "dis_rabies": {
-        "name": "Rabies",
+        "name": "Tollwut",
         "scientificName": "Lyssavirus",
-        "description": "Fatal viral disease usually from bites.",
-        "prevention": "Vaccination of pets and wildlife control."
+        "description": "Tödliche Viruserkrankung, meist durch Bisse.",
+        "prevention": "Impfung von Haustieren und Wildtierkontrolle."
       },
       "dis_pox": {
-        "name": "Swine Pox",
+        "name": "Schweinepocken",
         "scientificName": "Suipoxvirus",
-        "description": "Viral skin disease, often spread by lice.",
-        "prevention": "Louse control."
+        "description": "Virale Hauterkrankung, die häufig durch Läuse übertragen wird.",
+        "prevention": "Lausbekämpfung."
       },
       "dis_vs": {
-        "name": "Vesicular Stomatitis",
+        "name": "Vesikuläre Stomatitis",
         "scientificName": "Rhabdovirus",
-        "description": "Causes blisters; looks like FMD.",
-        "prevention": "Insect control and quarantine."
+        "description": "Verursacht Blasen; sieht aus wie MKS.",
+        "prevention": "Insektenbekämpfung und Quarantäne."
       },
       "dis_clostridial": {
-        "name": "Clostridial Enteritis",
+        "name": "Clostridienenteritis",
         "scientificName": "Clostridium perfringens",
-        "description": "Bacterial infection causing severe gut damage.",
-        "prevention": "Vaccination of sows and hygiene."
+        "description": "Bakterielle Infektion, die schwere Darmschäden verursacht.",
+        "prevention": "Impfung von Sauen und Hygiene."
       },
       "dis_glassers": {
-        "name": "Glasser's Disease",
+        "name": "Glasser-Krankheit",
         "scientificName": "Haemophilus parasuis",
-        "description": "Causes inflammation of membranes around heart, lungs, joints.",
-        "prevention": "Antibiotics and stress management."
+        "description": "Verursacht Entzündungen der Membranen um Herz, Lunge und Gelenke.",
+        "prevention": "Antibiotika und Stressmanagement."
       },
       "dis_app": {
         "name": "Actinobacillus Pleuropneumonia (APP)",
         "scientificName": "A. pleuropneumoniae",
-        "description": "Severe bacterial pneumonia.",
-        "prevention": "Antibiotics and improved environment."
+        "description": "Schwere bakterielle Lungenentzündung.",
+        "prevention": "Antibiotika und eine verbesserte Umwelt."
       },
       "dis_ileitis": {
-        "name": "Ileitis (Lawsonia)",
+        "name": "Ileitis (Porzine Intestinale Adenomatose / PIA)",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Bacterial infection of the small intestine.",
-        "prevention": "Vaccination and antibiotics."
+        "description": "Bakterielle Infektion des Dünndarms.",
+        "prevention": "Impfung und Antibiotika."
       },
       "dis_tb": {
-        "name": "Tuberculosis",
+        "name": "Tuberkulose",
         "scientificName": "Mycobacterium avium",
-        "description": "Chronic bacterial disease.",
-        "prevention": "Bird proofing and sanitation."
+        "description": "Chronische bakterielle Erkrankung.",
+        "prevention": "Vogelschutz und Hygiene."
       },
       "dis_tetanus": {
         "name": "Tetanus",
         "scientificName": "Clostridium tetani",
-        "description": "Bacterial toxin affecting the nervous system.",
-        "prevention": "Sanitation during surgery/castration."
+        "description": "Bakterientoxin, das das Nervensystem beeinträchtigt.",
+        "prevention": "Hygiene während der Operation/Kastration."
       },
       "dis_eperythrozoonosis": {
-        "name": "Eperythrozoonosis",
+        "name": "Eperythrozoonose",
         "scientificName": "Mycoplasma suis",
-        "description": "Blood parasite causing anemia.",
-        "prevention": "Insect control and clean needles."
+        "description": "Blutparasit, der Anämie verursacht.",
+        "prevention": "Insektenbekämpfung und saubere Nadeln."
       },
       "dis_ascaris": {
-        "name": "Ascaris suum",
+        "name": "Spulwürmer (Ascaris suum)",
         "scientificName": "Large Roundworm",
-        "description": "Internal parasite causing lung and liver damage.",
-        "prevention": "Regular deworming."
+        "description": "Innerer Parasit, der Lungen- und Leberschäden verursacht.",
+        "prevention": "Regelmäßige Entwurmung."
       },
       "dis_whipworms": {
-        "name": "Whipworms",
+        "name": "Peitschenwürmer",
         "scientificName": "Trichuris suis",
-        "description": "Internal parasite in the large intestine.",
-        "prevention": "Deworming and sanitation."
+        "description": "Innerer Parasit im Dickdarm.",
+        "prevention": "Entwurmung und Hygiene."
       },
       "dis_lungworms": {
-        "name": "Lungworms",
+        "name": "Lungenwürmer",
         "scientificName": "Metastrongylus spp.",
-        "description": "Internal parasite of the lungs.",
-        "prevention": "Earthworm control and deworming."
+        "description": "Innerer Parasit der Lunge.",
+        "prevention": "Regenwurmbekämpfung und Entwurmung."
       },
       "dis_kidney_worms": {
-        "name": "Kidney Worms",
+        "name": "Nierenwürmer",
         "scientificName": "Stephanurus dentatus",
-        "description": "Internal parasite affecting kidneys and liver.",
-        "prevention": "Management and hygiene."
+        "description": "Innerer Parasit, der Nieren und Leber befällt.",
+        "prevention": "Management und Hygiene."
       },
       "dis_lice": {
-        "name": "Swine Lice",
+        "name": "Schweineläuse",
         "scientificName": "Haematopinus suis",
-        "description": "External parasite sucking blood.",
-        "prevention": "Insecticide treatment."
+        "description": "Äußerer Parasit, der Blut saugt.",
+        "prevention": "Behandlung mit Insektiziden."
       },
       "dis_ringworm": {
-        "name": "Ringworm",
+        "name": "Ringwurm",
         "scientificName": "Dermatophytosis",
-        "description": "Fungal skin infection.",
-        "prevention": "Sanitation and topical treatment."
+        "description": "Pilzinfektion der Haut.",
+        "prevention": "Hygiene und topische Behandlung."
       },
       "dis_mulberry_heart": {
-        "name": "Mulberry Heart Disease",
+        "name": "Maulbeerherzkrankheit (Selen-/Vit. E-Mangel)",
         "scientificName": "Vit E/Se Deficiency",
-        "description": "Nutritional deficiency affecting the heart.",
-        "prevention": "Supplementation."
+        "description": "Nährstoffmangel, der sich auf das Herz auswirkt.",
+        "prevention": "Ergänzung."
       },
       "dis_vit_a": {
-        "name": "Vitamin A Deficiency",
+        "name": "Vitamin-A-Mangel",
         "scientificName": "Vitamin A Deficiency",
-        "description": "Nutritional deficiency.",
-        "prevention": "Dietary adjustment."
+        "description": "Nährstoffmangel.",
+        "prevention": "Ernährungsumstellung."
       },
       "dis_rickets": {
-        "name": "Rickets",
+        "name": "Rachitis (Calcium-/Phosphormangel)",
         "scientificName": "Vit D/Ca/P Deficiency",
-        "description": "Nutritional deficiency affecting bone growth.",
-        "prevention": "Balanced minerals and sunlight."
+        "description": "Nährstoffmangel beeinträchtigt das Knochenwachstum.",
+        "prevention": "Ausgewogene Mineralien und Sonnenlicht."
       },
       "dis_salt_poisoning": {
-        "name": "Salt Poisoning",
+        "name": "Kochsalzvergiftung (Wassermangelsyndrom)",
         "scientificName": "Water Deprivation",
-        "description": "Caused by lack of water followed by over-consumption.",
-        "prevention": "Constant fresh water access."
+        "description": "Verursacht durch Wassermangel, gefolgt von übermäßigem Wasserverbrauch.",
+        "prevention": "Ständiger Zugang zu Frischwasser."
       },
       "dis_heat_stroke": {
-        "name": "Heat Stroke",
+        "name": "Hitzschlag",
         "scientificName": "Heat Stroke",
-        "description": "Overheating due to poor ventilation or shade.",
-        "prevention": "Ventilation, cooling, and shade."
+        "description": "Überhitzung aufgrund schlechter Belüftung oder Beschattung.",
+        "prevention": "Belüftung, Kühlung und Schatten."
       },
       "dis_rectal_prolapse": {
-        "name": "Rectal Prolapse",
+        "name": "Mastdarmvorfall (Rektumprolaps)",
         "scientificName": "Rectal Prolapse",
-        "description": "Often follows coughing, diarrhea, or cold stress.",
-        "prevention": "Address primary cause and surgery."
+        "description": "Häufig folgt Husten, Durchfall oder Kältestress.",
+        "prevention": "Behandeln Sie die Hauptursache und führen Sie eine Operation durch."
       },
       "dis_umbilical_hernia": {
-        "name": "Umbilical Hernia",
+        "name": "Nabelbruch",
         "scientificName": "Umbilical Hernia",
-        "description": "Developmental defect or navel infection.",
-        "prevention": "Sanitation and genetics."
+        "description": "Entwicklungsstörung oder Nabelinfektion.",
+        "prevention": "Hygiene und Genetik."
       },
       "dis_scrotal_hernia": {
-        "name": "Scrotal Hernia",
+        "name": "Skrotalhernie",
         "scientificName": "Scrotal Hernia",
-        "description": "Genetic developmental defect.",
-        "prevention": "Genetics and surgical repair."
+        "description": "Genetischer Entwicklungsfehler.",
+        "prevention": "Genetik und chirurgische Reparatur."
       },
       "dis_splayleg": {
-        "name": "Splayleg",
+        "name": "Grätschstellung der Ferkel (Splayleg)",
         "scientificName": "Myofibrillar hypoplasia",
-        "description": "Piglets born unable to stand with hind legs.",
-        "prevention": "Taping legs and floor traction."
+        "description": "Bei der Geburt sind Ferkel nicht in der Lage, auf den Hinterbeinen zu stehen.",
+        "prevention": "Taping-Beine und Bodentraktion."
       },
       "dis_vulvovaginitis": {
         "name": "Vulvovaginitis",
         "scientificName": "Zearalenone Toxicity",
-        "description": "Caused by estrogenic fungal toxins in feed.",
-        "prevention": "Change feed source."
+        "description": "Verursacht durch östrogene Pilztoxine im Futter.",
+        "prevention": "Feedquelle ändern."
       },
       "dis_seneca": {
-        "name": "Seneca Valley Virus (SVV)",
+        "name": "Seneca-Valley-Virus (SVV)",
         "scientificName": "Senecavirus A",
-        "description": "Causes blisters similar to FMD.",
-        "prevention": "Biosecurity and diagnosis."
+        "description": "Verursacht Blasen ähnlich wie bei MKS.",
+        "prevention": "Biosicherheit und Diagnose."
       },
       "dis_deltacoronavirus": {
-        "name": "Porcine Deltacoronavirus",
+        "name": "Schweine-Deltacoronavirus",
         "scientificName": "PDCoV",
-        "description": "Viral diarrhea in all ages.",
-        "prevention": "Biosecurity."
+        "description": "Viraler Durchfall in jedem Alter.",
+        "prevention": "Biosicherheit."
       },
       "dis_rotavirus": {
-        "name": "Rotavirus Diarrhea",
+        "name": "Rotavirus-Durchfall",
         "scientificName": "Rotavirus",
-        "description": "Common cause of weaning diarrhea.",
-        "prevention": "Vaccination and hygiene."
+        "description": "Häufige Ursache für Entwöhnungsdurchfall.",
+        "prevention": "Impfung und Hygiene."
       },
       "dis_teschen": {
-        "name": "Teschen/Talfan Disease",
+        "name": "Teschen/Talfan-Krankheit",
         "scientificName": "Sapelovirus/Teschovirus",
-        "description": "Viral infection of the nervous system.",
-        "prevention": "Biosecurity."
+        "description": "Virusinfektion des Nervensystems.",
+        "prevention": "Biosicherheit."
       },
       "dis_vesicular": {
-        "name": "Swine Vesicular Disease",
+        "name": "Vesikuläre Schweinekrankheit",
         "scientificName": "Enterovirus",
-        "description": "Viral disease mimicking FMD.",
-        "prevention": "Strict quarantine."
+        "description": "Viruserkrankung, die MKS nachahmt.",
+        "prevention": "Strenge Quarantäne."
       },
       "dis_melioidosis": {
-        "name": "Melioidosis",
+        "name": "Melioidose",
         "scientificName": "Burkholderia pseudomallei",
-        "description": "Bacterial disease from soil/water.",
-        "prevention": "Clean water and hygiene."
+        "description": "Bakterielle Erkrankung durch Boden/Wasser.",
+        "prevention": "Sauberes Wasser und Hygiene."
       },
       "dis_trypanosomiasis": {
         "name": "Trypanosomiasis",
         "scientificName": "Trypanosoma spp.",
-        "description": "Protozoan disease spread by tsetse flies.",
-        "prevention": "Fly control and medication."
+        "description": "Durch Tsetsefliegen übertragene Protozoenkrankheit.",
+        "prevention": "Fliegenbekämpfung und Medikamente."
       },
       "dis_cysticercosis": {
-        "name": "Cysticercosis",
+        "name": "Finnenkrankheit (Zystizerkose)",
         "scientificName": "Taenia solium larvae",
-        "description": "Larval stage of human tapeworm in pig muscle.",
-        "prevention": "Prevent access to human waste."
+        "description": "Larvenstadium des menschlichen Bandwurms im Schweinemuskel.",
+        "prevention": "Verhindern Sie den Zugang zu menschlichem Abfall."
       },
       "dis_toxoplasmosis": {
-        "name": "Toxoplasmosis",
+        "name": "Toxoplasmose",
         "scientificName": "Toxoplasma gondii",
-        "description": "Zoonotic protozoan infection.",
-        "prevention": "Cat control and biosecurity."
+        "description": "Zoonotische Protozoeninfektion.",
+        "prevention": "Katzenkontrolle und Biosicherheit."
       },
       "dis_listeriosis": {
-        "name": "Listeriosis",
+        "name": "Listeriose",
         "scientificName": "Listeria monocytogenes",
-        "description": "Bacterial infection of nervous system.",
-        "prevention": "Sanitation and feed hygiene."
+        "description": "Bakterielle Infektion des Nervensystems.",
+        "prevention": "Hygiene und Futterhygiene."
       },
       "dis_ear_necrosis": {
-        "name": "Ear Necrosis",
+        "name": "Ohrnekrose",
         "scientificName": "Ear Necrosis",
-        "description": "Often caused by stress, overcrowding, or infection.",
-        "prevention": "Reduce density and treat secondary infection."
+        "description": "Wird oft durch Stress, Überfüllung oder Infektionen verursacht.",
+        "prevention": "Reduzieren Sie die Dichte und behandeln Sie Sekundärinfektionen."
       },
       "dis_sunburn": {
-        "name": "Sunburn",
+        "name": "Sonnenbrand",
         "scientificName": "Solar dermatitis",
-        "description": "Affects white-skinned pigs outdoors.",
-        "prevention": "Provide shade."
+        "description": "Betrifft weißhäutige Schweine im Freien.",
+        "prevention": "Sorgen Sie für Schatten."
       },
       "dis_tail_biting": {
-        "name": "Tail Biting",
+        "name": "Schwanzbeißen (Kannibalismus)",
         "scientificName": "Behavioral stress",
-        "description": "Behavioral issue due to stress/boredom.",
-        "prevention": "Reduce stress and enrich environment."
+        "description": "Verhaltensproblem aufgrund von Stress/Langeweile.",
+        "prevention": "Reduzieren Sie Stress und bereichern Sie die Umwelt."
       },
       "dis_navel_ill": {
-        "name": "Navel Ill",
+        "name": "Nabel krank",
         "scientificName": "Navel Infection",
-        "description": "Infection of the umbilical cord at birth.",
-        "prevention": "Iodine dip at birth and sanitation."
+        "description": "Infektion der Nabelschnur bei der Geburt.",
+        "prevention": "Joddip bei der Geburt und Hygiene."
       },
       "dis_iron_toxicity": {
-        "name": "Iron Toxicity",
+        "name": "Eisentoxizität",
         "scientificName": "Ferrous excess",
-        "description": "Excess iron administration leading to sudden death.",
-        "prevention": "Inject accurate dosage."
+        "description": "Kann auftreten, wenn Ferkeln mit Vitamin E-Mangel Eisen injiziert wird.",
+        "prevention": "Stellen Sie sicher, dass die Ernährung der Sauen ausgewogen ist."
       },
       "dis_aflatoxicosis": {
-        "name": "Aflatoxicosis",
+        "name": "Aflatoxikose",
         "scientificName": "Aspergillus flavus toxin",
-        "description": "Fungal toxin poisoning.",
-        "prevention": "Avoid moldy feed and use toxin binders."
+        "description": "Giftvergiftung durch schimmeliges Getreide oder Futter, was zu Leberschäden und Gelbsucht führt.",
+        "prevention": "Vermeiden Sie die Fütterung von schimmeligem Futter, lagern Sie Getreide trocken und verwenden Sie Giftbinder."
       },
       "dis_parakeratosis": {
-        "name": "Parakeratosis",
+        "name": "Parakeratose (Zinkmangel)",
         "scientificName": "Zinc deficiency",
-        "description": "Zinc deficiency in swine.",
-        "prevention": "Ensure adequate zinc levels in diet."
+        "description": "Ernährungsbedingte Erkrankung, die schwere verkrustete, verdickte Hautläsionen verursacht.",
+        "prevention": "Sorgen Sie für ein ausgewogenes Kalzium-Zink-Verhältnis im Futter und stellen Sie Zinkzusätze bereit."
       },
       "dis_biotin_deficiency": {
-        "name": "Biotin Deficiency",
+        "name": "Biotinmangel",
         "scientificName": "Vitamin H deficiency",
-        "description": "Biotin deficiency in swine.",
-        "prevention": "Provide biotin supplements."
+        "description": "Nährstoffmangel führt zu rissigen Hufen, Hautläsionen und Lahmheit.",
+        "prevention": "Ergänzen Sie die Ernährung mit Biotin und vermeiden Sie raue, nasse Betonböden."
       },
       "dis_gossypol_toxicity": {
-        "name": "Gossypol Toxicity",
+        "name": "Gossypolvergiftung",
         "scientificName": "Gossypol poisoning",
-        "description": "Cottonseed meal poisoning.",
-        "prevention": "Limit raw cottonseed meal in feed."
+        "description": "Vergiftung durch rohes oder überschüssiges Baumwollsamenmehl, was zu Atembeschwerden führt.",
+        "prevention": "Begrenzen Sie den Anteil von Baumwollsamenmehl in der Ernährung und verwenden Sie Eisensulfat, um Gossypol zu neutralisieren."
       },
       "dis_cassava_poisoning": {
-        "name": "Cassava Poisoning",
+        "name": "Maniokvergiftung",
         "scientificName": "Cyanogenic glycosides",
-        "description": "Cyanide poisoning from raw cassava.",
-        "prevention": "Cook or ferment cassava before feeding."
+        "description": "Zyanidvergiftung durch rohe oder unsachgemäß verarbeitete Maniokwurzeln oder -schalen.",
+        "prevention": "Maniok vor dem Füttern schälen, kochen, an der Sonne trocknen oder fermentieren."
       },
       "dis_sweet_potato_toxicity": {
-        "name": "Sweet Potato Toxicity",
+        "name": "Toxizität von Süßkartoffeln",
         "scientificName": "Ipomeamarone toxicity",
-        "description": "Ipomeamarone poisoning.",
-        "prevention": "Do not feed moldy or damaged sweet potatoes."
+        "description": "Vergiftung durch schimmelige Süßkartoffeln, die schwere Atembeschwerden verursacht.",
+        "prevention": "Entsorgen Sie beschädigte oder schimmelige Süßkartoffeln; Füttern Sie nur gesunde Knollen."
       },
       "dis_mma": {
-        "name": "MMA Syndrome",
+        "name": "Postpartale Dysgalaktie (MMA)",
         "scientificName": "Mastitis-Metritis-Agalactia",
-        "description": "Post-farrowing infection in sows.",
-        "prevention": "Clean farrowing pens and proper nutrition."
+        "description": "Mastitis, Metritis und Agalaktie verursachen bei Sauen nach dem Abferkeln Fieber und Milchmangel.",
+        "prevention": "Halten Sie eine strenge Hygiene in der Abferkelbucht ein und sorgen Sie für eine ausreichende Sauenernährung."
       },
       "dis_pwd": {
-        "name": "Post-Weaning Diarrhea",
+        "name": "Durchfall nach dem Absetzen (PWD)",
         "scientificName": "Escherichia coli (F4/F18)",
-        "description": "Colibacillosis in weaned pigs.",
-        "prevention": "Sanitation and diet adjustment."
+        "description": "Bakterieller Durchfall bei Ferkeln kurz nach dem Absetzen, der zu Dehydrierung führt.",
+        "prevention": "Reduzieren Sie den Entwöhnungsstress, sorgen Sie für eine hohe Hygiene und sorgen Sie für sauberes Trinkwasser."
       },
       "dis_trichinellosis": {
-        "name": "Trichinellosis",
+        "name": "Trichinellose (Trichinen)",
         "scientificName": "Trichinella spiralis",
-        "description": "Zoonotic parasitic infection.",
-        "prevention": "Do not feed raw garbage; pest control."
+        "description": "Zoonotische parasitäre Erkrankung durch den Verzehr von rohen Fleischresten, die zu Muskelsteifheit führt.",
+        "prevention": "Füttern Sie keinen rohen Speisebrei, kochen Sie Essensreste nicht 30 Minuten lang und bekämpfen Sie Nagetiere."
       },
       "dis_hydatid_disease": {
-        "name": "Hydatid Disease",
+        "name": "Echinokokkose (Hydatidenkrankheit)",
         "scientificName": "Echinococcus granulosus",
-        "description": "Larval tapeworm infection.",
-        "prevention": "Deworm farm dogs; prevent access to offal."
+        "description": "Parasitäre Larveninfektion, die mit Flüssigkeit gefüllte Zysten in Organen verursacht.",
+        "prevention": "Entwurmen Sie Hofhunde regelmäßig und verhindern Sie, dass sie rohe Schweineorgane fressen."
       },
       "dis_phe": {
-        "name": "Proliferative Hemorrhagic Enteropathy",
+        "name": "Schweinehämorrhagische Enteropathie",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Acute intestinal bleeding in young adult pigs.",
-        "prevention": "Vaccination and hygiene."
+        "description": "Akuter blutiger Durchfall und plötzlicher Tod bei Mastschweinen.",
+        "prevention": "Sorgen Sie für gute Hygiene und verwenden Sie unter tierärztlicher Anleitung geeignete Antibiotika."
       },
       "dis_mycoplasma_arthritis": {
-        "name": "Mycoplasma Arthritis",
+        "name": "Mykoplasmale Arthritis",
         "scientificName": "Mycoplasma hyosynoviae",
-        "description": "Bacterial joint disease.",
-        "prevention": "Sanitation and quarantine."
+        "description": "Bakterielle Infektion, die geschwollene Gelenke, Lahmheit und Beinschwäche verursacht.",
+        "prevention": "Verbessern Sie die Haltungsbedingungen, reduzieren Sie die Besatzdichte und führen Sie eine frühzeitige Behandlung durch."
       },
       "dis_foot_rot": {
-        "name": "Foot Rot",
+        "name": "Fußfäule (Nekrobazillose)",
         "scientificName": "Fusobacterium necrophorum",
-        "description": "Infection of the foot causing lameness.",
-        "prevention": "Keep pens dry; treat hooves."
+        "description": "Bakterielle Infektion dringt in Hufverletzungen ein und führt zu Fäulnis und Lahmheit.",
+        "prevention": "Reparieren Sie rauen Beton, halten Sie die Böden trocken und nutzen Sie bei Bedarf Fußbäder."
       },
       "dis_babesiosis": {
-        "name": "Babesiosis",
+        "name": "Durch Zecken übertragene Babesiose",
         "scientificName": "Babesia trautmanni",
-        "description": "Tick-borne protozoan infection.",
-        "prevention": "Acaricide spray for tick control."
+        "description": "Durch Zecken übertragener Blutparasit, der hohes Fieber, Anämie und dunklen Urin verursacht.",
+        "prevention": "Bekämpfen Sie Zecken mit Akariziden und halten Sie die Gehege frei von Vegetation."
       },
       "dis_anaplasmosis": {
-        "name": "Anaplasmosis",
+        "name": "Anaplasmose",
         "scientificName": "Anaplasma marginale",
-        "description": "Blood infection in swine.",
-        "prevention": "Vector control."
+        "description": "Durch Zecken übertragene bakterielle Infektion, die Anämie, Fieber und Gelbsucht verursacht.",
+        "prevention": "Implementieren Sie Vektor- und Tick-Kontrollprogramme."
       },
       "dis_sow_hysteria": {
-        "name": "Sow Hysteria",
+        "name": "Hysterie säen",
         "scientificName": "Puerperal psychosis",
-        "description": "Aggression or panic in sows after farrowing.",
-        "prevention": "Provide quiet farrowing area."
+        "description": "Verhaltensstörung, bei der abferkelnde Sauen aggressiv werden und Ferkel beißen.",
+        "prevention": "Sorgen Sie für eine ruhige Umgebung beim Abferkeln, beaufsichtigen Sie die Jungsauen und verwenden Sie bei Bedarf Beruhigungsmittel."
       },
       "dis_thorny_headed_worm": {
-        "name": "Thorny-Headed Worm",
+        "name": "Dornköpfiger Wurm",
         "scientificName": "Macracanthorhynchus hirudinaceus",
-        "description": "Intestinal parasite.",
-        "prevention": "Prevent access to June beetle grubs."
+        "description": "Parasitärer Wurm, der durch das Fressen von Käfern erworben wird und eine Darmperforation verursacht.",
+        "prevention": "Vermeiden Sie Freilandhaltung auf käferbefallenen Böden und verwenden Sie Entwurmungsmittel."
       },
       "dis_strongyloidiasis": {
-        "name": "Strongyloidiasis",
+        "name": "Strongyloidiasis (Fadenwurm)",
         "scientificName": "Strongyloides ransomi",
-        "description": "Threadworm infection.",
-        "prevention": "Keep pens dry; deworming."
+        "description": "Darmfadenwurm, der bei Ferkeln schwere Durchfälle und Todesfälle verursacht.",
+        "prevention": "Halten Sie die Abferkelbuchten trocken und sauber und entwurmen Sie die Sauen vor dem Abferkeln."
       },
       "dis_hyostrongylosis": {
-        "name": "Red Stomach Worm",
+        "name": "Roter Magenwurm",
         "scientificName": "Hyostrongylus rubidus",
-        "description": "Intestinal worm in grazing pigs.",
-        "prevention": "Clean pasture management; deworming."
+        "description": "Magenwurminfektion, die zu Gastritis, Anämie und Gewichtsverlust führt.",
+        "prevention": "Wechseln Sie die Weiden, halten Sie die Ställe trocken und führen Sie einen Entwurmungsplan ein."
       },
       "dis_oesophagostomiasis": {
-        "name": "Nodular Worm",
+        "name": "Knotenwurminfektion",
         "scientificName": "Oesophagostomum spp.",
-        "description": "Intestinal worm in swine.",
-        "prevention": "Deworming and sanitation."
+        "description": "Darmparasit, der Knötchen in der Darmwand verursacht und zu dünnen Sauen führt.",
+        "prevention": "Regelmäßige Stallhygiene und routinemäßige Anwendung von Breitband-Anthelminthika."
       },
       "dis_fascioliasis": {
-        "name": "Fascioliasis",
+        "name": "Faszioliasis (Leberegel)",
         "scientificName": "Fasciola gigantica",
-        "description": "Liver fluke infection.",
-        "prevention": "Snail control; keep away from wet pastures."
+        "description": "Parasitärer Egel, der die Leber befällt und häufig in feuchten oder sumpfigen Weiden vorkommt.",
+        "prevention": "Verhindern Sie, dass Schweine in sumpfigen Gebieten grasen, und bekämpfen Sie Schlammschnecken."
       },
       "dis_emcv": {
-        "name": "EMCV",
+        "name": "Enzephalomyokarditis (EMCV)",
         "scientificName": "Cardiovirus",
-        "description": "Viral myocarditis and reproductive failure.",
-        "prevention": "Rodent control (rodents spread EMCV)."
+        "description": "Durch Nagetiere übertragene Virusinfektion, die zu plötzlichem Herzversagen und Abort führt.",
+        "prevention": "Führen Sie eine strenge Nagetierbekämpfung durch und schützen Sie das Futter vor Kontamination."
       },
       "dis_demodectic_mange": {
-        "name": "Demodectic Mange",
+        "name": "Demodex Mange",
         "scientificName": "Demodex phylloides",
-        "description": "Skin mite infection.",
-        "prevention": "Acaricide treatment."
+        "description": "Mikroskopisch kleine Hautmilbe, die schuppige Stellen und kleine Pusteln verursacht.",
+        "prevention": "Verbessern Sie die Ernährung der Herde, isolieren Sie betroffene Schweine und wenden Sie Akarizide an."
       },
       "dis_pityriasis_rosea": {
-        "name": "Pityriasis Rosea",
+        "name": "Pityriasis rosea",
         "scientificName": "Pseudo-ringworm",
-        "description": "Non-contagious skin condition.",
-        "prevention": "Spontaneous recovery; keep environment clean."
+        "description": "Nicht ansteckende Hauterkrankung bei jungen Schweinen, die ringförmige Krusten bildet.",
+        "prevention": "Normalerweise selbstauflösend; Halten Sie die Bettwäsche sauber und trocken und reduzieren Sie Stress."
       },
       "dis_photosensitization": {
-        "name": "Photosensitization",
+        "name": "Photosensibilisierung",
         "scientificName": "Solar dermatitis",
-        "description": "Skin hypersensitivity to sunlight.",
-        "prevention": "Keep out of direct sunlight; check pasture plants."
+        "description": "Schwere sonnenbrandähnliche Reaktion bei hellhäutigen Schweinen nach dem Verzehr bestimmter Pflanzen.",
+        "prevention": "Sorgen Sie für Schatten, entfernen Sie sensibilisierende Unkräuter und halten Sie Schweine im Haus."
       },
       "dis_shoulder_ulcers": {
-        "name": "Shoulder Ulcers",
+        "name": "Schultergeschwüre säen",
         "scientificName": "Decubitus ulcers",
-        "description": "Sores in thin sows on hard floors.",
-        "prevention": "Provide soft bedding; increase feed."
+        "description": "Druckstellen an den Schultern dünner Sauen, die auf hartem Beton untergebracht sind.",
+        "prevention": "Sorgen Sie für weiche Einstreu, sorgen Sie für eine gute körperliche Verfassung der Sauen und verwenden Sie Gummimatten."
       },
       "dis_ear_biting": {
-        "name": "Ear Biting",
+        "name": "Ohrenkannibalismus",
         "scientificName": "Stress response behavior",
-        "description": "Behavioral stress response.",
-        "prevention": "Reduce stocking density; enrich environment."
+        "description": "Abnormales Verhalten, bei dem Schweine ihren Stallkameraden in die Ohren beißen, was zu Nekrose führt.",
+        "prevention": "Reduzieren Sie Gedränge, verbessern Sie die Belüftung und sorgen Sie für Abwechslung wie in Ketten."
       },
       "dis_gastric_torsion": {
-        "name": "Gastric Torsion",
+        "name": "Magendrehung (Aufblähung)",
         "scientificName": "Gastric dilation-volvulus",
-        "description": "Twisted stomach.",
-        "prevention": "Avoid overfeeding in single meals."
+        "description": "Plötzliche Blähungen und Magenverdrehungen, die zum schnellen Tod führen.",
+        "prevention": "Vermeiden Sie große Mahlzeiten nach langem Fasten und teilen Sie das tägliche Futter in Portionen auf."
       },
       "dis_c_difficile": {
-        "name": "C. difficile Infection",
+        "name": "Clostridium difficile (CDI)",
         "scientificName": "Clostridioides difficile",
-        "description": "Bacterial diarrhea in piglets.",
-        "prevention": "Clean environment and proper ventilation."
+        "description": "Bakterielle Infektion bei neugeborenen Ferkeln, die zu wässrigem Durchfall und Blähungen führt.",
+        "prevention": "Abferkelbuchten gründlich reinigen und desinfizieren und für frühes Kolostrum sorgen."
       },
       "dis_cold_stress": {
-        "name": "Cold Stress",
+        "name": "Kältestress (Hypothermie)",
         "scientificName": "Hypothermia susceptibility",
-        "description": "Chilling in young piglets.",
-        "prevention": "Provide heat lamps and dry bedding."
+        "description": "Starke Körperkühlung bei Ferkeln, die zu Frösteln und hoher Sterblichkeit führt.",
+        "prevention": "Stellen Sie Wärmelampen und Kriechkästen bereit und halten Sie den Abferkelbereich trocken und zugfrei."
       },
       "dis_necrotic_enteritis": {
-        "name": "Necrotic Enteritis",
+        "name": "Nekrotische Enteritis",
         "scientificName": "Clostridium perfringens Type C",
-        "description": "Clostridial gut infection.",
-        "prevention": "Sow vaccination and pen sanitation."
+        "description": "Bakterielle Toxinerkrankung, die bei Ferkeln zu schwerem blutigem Durchfall und hoher Sterblichkeit führt.",
+        "prevention": "Impfen Sie Sauen vor dem Abferkeln und achten Sie auf absolute Stallhygiene."
       },
       "dis_navel_bleeding": {
-        "name": "Navel Bleeding",
+        "name": "Nabelblutung",
         "scientificName": "Umbilical hemorrhage",
-        "description": "Hemorrhage from umbilical cord.",
-        "prevention": "Tie off bleeding navels; check feed vitamin K."
+        "description": "Übermäßige Blutung aus der Nabelschnur bei neugeborenen Ferkeln.",
+        "prevention": "Binden Sie die Nabelschnüre bei der Geburt ab und vermeiden Sie die Fütterung von mit Mykotoxinen kontaminiertem Futter an Sauen."
       },
       "dis_spirochetal_colitis": {
-        "name": "Spirochetal Colitis",
+        "name": "Schweine-spirochätische Kolitis",
         "scientificName": "Brachyspira pilosicoli",
-        "description": "Bacterial large intestine infection.",
-        "prevention": "Medication and pen sanitation."
+        "description": "Leichte Durchfallerkrankung bei heranwachsenden Schweinen, die zu einer geringen Gewichtszunahme führt.",
+        "prevention": "Desinfizieren Sie Futtertröge und behandeln Sie betroffene Schweine mit Antibiotika."
       },
       "dis_salmonella_septicemia": {
-        "name": "Salmonella Septicemia",
+        "name": "Salmonellen-Septikämie",
         "scientificName": "Salmonella choleraesuis",
-        "description": "Blood infection from Salmonella.",
-        "prevention": "Clean water; biosecurity."
+        "description": "Schwere Salmonelleninfektion im Blutkreislauf, die zu violetter Haut und schnellem Tod führt.",
+        "prevention": "Isolieren Sie kranke Schweine, versorgen Sie das Wasser mit Medikamenten und achten Sie auf strenge Biosicherheit."
       },
       "dis_prdc": {
-        "name": "PRDC",
+        "name": "Komplex für Atemwegserkrankungen bei Schweinen",
         "scientificName": "Porcine Respiratory Disease Complex",
-        "description": "Respiratory complex in grower pigs.",
-        "prevention": "Ventilation, vaccination, and density control."
+        "description": "Eine gemischte virale und bakterielle Atemwegsinfektion, die Husten und Wachstumsstörungen verursacht.",
+        "prevention": "Verbessern Sie die Belüftung, vermeiden Sie Überfüllung und kontrollieren Sie Primärviren."
       },
       "dis_ergotism": {
-        "name": "Ergotism",
+        "name": "Mutterkornvergiftung (Ergotismus)",
         "scientificName": "Claviceps purpurea",
-        "description": "Poisoning from moldy rye/grains.",
-        "prevention": "Inspect feed grains for black ergot bodies."
+        "description": "Pilzvergiftung durch mit Mutterkorn infizierte Getreidekörner, die zu Gewebenekrosen führt.",
+        "prevention": "Sieben Sie Futterkörner auf dunkle Mutterkornkörper und ersetzen Sie kontaminiertes Futter."
       },
       "dis_bvdv_pig": {
-        "name": "BVDV in Pigs",
+        "name": "BVDV-Infektion bei Schweinen",
         "scientificName": "Pestivirus",
-        "description": "Bovine Viral Diarrhea virus in swine.",
-        "prevention": "Isolate pigs from cattle."
+        "description": "Rinderdurchfallvirusinfektion durch Kontakt mit Rindern, die zu Fehlgeburten führt.",
+        "prevention": "Halten Sie Schweine von Rindern und Schafen getrennt und beschränken Sie den Kontakt zwischen Tierarten."
       },
       "dis_endocarditis": {
-        "name": "Endocarditis",
+        "name": "Bakterielle Endokarditis",
         "scientificName": "Streptococcal endocarditis",
-        "description": "Heart valve infection.",
-        "prevention": "Treat primary infections early."
+        "description": "Eine Herzklappeninfektion, die bei Stress zu Herzversagen und plötzlichem Tod führt.",
+        "prevention": "Behandeln Sie Gelenkerkrankungen und Wunden umgehend und selektieren Sie anfällige Gene."
       },
       "dis_polyserositis": {
-        "name": "Polyserositis",
+        "name": "Mykoplasmen-Polyserositis",
         "scientificName": "Mycoplasma hyorhinis",
-        "description": "Infection of body cavity linings.",
-        "prevention": "Antibiotic treatment; minimize stress."
+        "description": "Fibrinöse Entzündung der Lungen-, Herz- und Gelenkoberflächen bei Absetzern.",
+        "prevention": "Minimieren Sie den Entwöhnungsstress, vermeiden Sie die Vermischung der Würfe und sorgen Sie für eine gute Belüftung."
       },
       "dis_congenital_tremor": {
-        "name": "Congenital Tremor",
+        "name": "Angeborener Tremor",
         "scientificName": "Atypical Porcine Pestivirus",
-        "description": "Shaky pig disease.",
-        "prevention": "Acclimatize gilts to farm before breeding."
+        "description": "Neurologische Erkrankung bei neugeborenen Ferkeln, die zu starkem Zittern führt.",
+        "prevention": "Vermeiden Sie die Verwendung von Sperma von betroffenen Ebern und minimieren Sie den Stress der Sauen während der Trächtigkeit."
       }
     },
     "diagnosisMatches": "Klinische Diagnoseübereinstimmungen",
@@ -1535,7 +1541,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 NOTFALL-BIOSICHERHEITSPROTOKOLL:",
     "clinicalDiagnosisMatches": "Klinische Diagnoseübereinstimmungen",
     "hallmarkBadge": "Kardinalsymptom",
-    "hallmarkSignPresent": "Markenzeichen vorhanden: %1$s",
+    "hallmarkSignPresent": "Markenzeichen vorhanden: {sign}",
     "otherSignsWatch": "Weitere Anzeichen, auf die Sie achten sollten:",
     "preventionTreatmentLabel": "Prävention/Behandlung: {treatment}",
     "bio_proto_asf": "SOFORTIGE NOTFALL-QUARANTÄNE: Afrikanische Schweinepest ist eine tödliche, anzeigepflichtige Seuche. 1) Hoftore sofort schließen. 2) Jeden Transport von Schweinen, Fahrzeugen, Futter und Mist stoppen. 3) Stiefel- und Räderwannen mit Virkon S desinfizieren. 4) Amtstierarzt umgehend verständigen.",
@@ -1547,8 +1553,8 @@
     "bio_proto_vesicular_stomatitis": "VESIKULÄRE SEUCHENWARNUNG: Vesikuläre Stomatitis ist klinisch kaum von MKS unterscheidbar. 1) Kranke Schweine isolieren. 2) Schutzhandschuhe tragen. 3) Amtstierarzt zur Labor-Differenzialdiagnose heranziehen.",
     "bio_proto_senecavirus": "VESIKULÄRE KRANKHEIT: Senecavirus A ähnelt der Maul- und Klauenseuche. 1) Bucht sofort sperren. 2) Keinen Abtransport zulassen. 3) Amtstierarzt für PCR-Differenzierung verständigen.",
     "bio_proto_svd": "VESIKULÄRE SCHWEINEKRANKHEIT (SVD): 1) Kranke Schweine streng isolieren. 2) Fahrzeug- und Besucherverkehr sperren. 3) Tiergesundheitsamt sofort melden.",
-    "clinicalMatchPercent": "%1$d%% Klinische Übereinstimmung",
-    "matchedSignsCount": "{matched}$d von {total}$d Zeichen",
+    "clinicalMatchPercent": "{percent}% Klinische Übereinstimmung",
+    "matchedSignsCount": "{matched} von {total} Zeichen",
     "matchPercentSuffix": "({percent}% Übereinstimmung)"
   },
   "HR": {
@@ -1983,7 +1989,7 @@
     "snooze1Month": "1 Monat",
     "deleteNotificationQuestion": "Benachrichtigung löschen?",
     "deleteNotificationConfirm": "Sind Sie sicher, dass Sie diese Benachrichtigung löschen möchten?",
-    "lastWeighedDaysAgo": "Schwein #%1$s: Zuletzt gewogen vor %2$s Tagen",
+    "lastWeighedDaysAgo": "Schwein #{tag}: Zuletzt gewogen vor {days} Tagen",
     "stockLeftMinFormat": "{current}: {unit} kg verbleibend (Min.: {min} kg)",
     "pigs": "Schweine",
     "pig": "Schwein",

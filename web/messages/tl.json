@@ -106,7 +106,13 @@
     "noActivities": "Walang darating na aktibidad",
     "allTasksCompleted": "Tapos na ang lahat ng gawain!",
     "generalTask": "Pangkalahatang Gawain",
-    "language": "Wika"
+    "language": "Wika",
+    "feed": "Pagkain",
+    "inventory": "Imbentaryo ng Pagkain",
+    "calculator": "Kalkulahin ang Pagkain (Kanin/Pakain)",
+    "mixFeed": "Maghalo ng Pagkain",
+    "analyzeFeed": "Suriin ang Sustansya ng Pagkain",
+    "marketHub": "Sentro ng Pamilihan"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -835,662 +841,662 @@
       "dis_asf": {
         "name": "African Swine Fever (ASF)",
         "scientificName": "Asfivirus",
-        "description": "Napakadelikado at nakakahawang virus. Wala pang bakuna rito.",
-        "prevention": "Mahigpit na biosecurity; bawal ang basura (swill) na pakain."
+        "description": "Isang nakakahawa at nakamamatay na viral na sakit na laganap sa Kanlurang Africa. Walang bakuna para rito.",
+        "prevention": "Mahigpit na biosecurity at limitahan ang access sa farm."
       },
       "dis_fmd": {
-        "name": "Foot and Mouth Disease (FMD)",
+        "name": "Sakit sa Paa at Bibig (FMD)",
         "scientificName": "Aphthovirus",
-        "description": "Nagdudulot ng paltos sa bibig at kuko.",
-        "prevention": "Bakuna at paglilinis ng kulungan."
+        "description": "Sakit na dulot ng virus na nagiging sanhi ng mga paltos sa bibig at paa.",
+        "prevention": "Pagbabakuna at kontrol sa paggalaw ng mga hayop."
       },
       "dis_prrs": {
-        "name": "PRRS (Blue Ear)",
+        "name": "PRRS (Asul na Tainga)",
         "scientificName": "Arterivirus",
-        "description": "Nagdudulot ng hirap sa paghinga at problema sa panganganak.",
-        "prevention": "Bakuna at biosecurity."
+        "description": "Nagdudulot ng problema sa paghinga at sa pagpaparami.",
+        "prevention": "Biosecurity at pagbabakuna sa buong kawan."
       },
       "dis_erysipelas": {
-        "name": "Swine Erysipelas",
+        "name": "Erysipelas ng baboy",
         "scientificName": "Erysipelothrix rhusiopathiae",
-        "description": "Bakterya na nagdudulot ng diamond-shaped na marka sa balat.",
-        "prevention": "Regular na bakuna at kalinisan."
+        "description": "Bakteryal na impeksyon na nagdudulot ng kakaibang sugat sa balat at rayuma (arthritis).",
+        "prevention": "Regular na pagbabakuna at kalinisan ng kulungan."
       },
       "dis_csf": {
         "name": "Classical Swine Fever (Hog Cholera)",
         "scientificName": "Pestivirus",
-        "description": "Nakakahawang virus na katulad ng ASF.",
-        "prevention": "Bakuna (Anti-cholera) at biosecurity."
+        "description": "Nakakahawang viral na sakit na katulad ng ASF.",
+        "prevention": "Pagbabakuna at mahigpit na biosecurity."
       },
       "dis_anthrax": {
         "name": "Anthrax",
         "scientificName": "Bacillus anthracis",
-        "description": "Delikadong bakterya na pwedeng lumipat sa tao.",
-        "prevention": "Bakuna at huwag bubuksan ang namatay na baboy."
+        "description": "Seryosong bakteryal na sakit na maaaring makahawa sa tao.",
+        "prevention": "Pagbabakuna at iwasang buksan ang mga patay na hayop."
       },
       "dis_brucellosis": {
         "name": "Brucellosis",
         "scientificName": "Brucella suis",
-        "description": "Sakit na nagdudulot ng pagkalaglag ng anak (nakunan).",
-        "prevention": "Blood test at pagtanggal sa maysakit."
+        "description": "Bakteryal na sakit na nagdudulot ng pagkalaglag ng anak.",
+        "prevention": "Pagsusuri, pag-cull, at sanitasyon."
       },
       "dis_coccidiosis": {
         "name": "Coccidiosis",
         "scientificName": "Isospora suis",
-        "description": "Parasito na nagdudulot ng pagtatae sa mga biik.",
-        "prevention": "Kalinisan sa kulungan ng inahín."
+        "description": "Sakit na dulot ng parasito na pangunahing nakakaapekto sa mga biik.",
+        "prevention": "Kalinisan sa kulungan ng panganganak."
       },
       "dis_pneumonia": {
         "name": "Mycoplasmal Pneumonia",
         "scientificName": "Mycoplasma hyopneumoniae",
-        "description": "Matagal na ubo na nagreresulta sa hindi paglaki.",
-        "prevention": "Bakuna at maayos na daloy ng hangin."
+        "description": "Kronikong sakit sa paghinga na nagreresulta sa mabagal na paglaki.",
+        "prevention": "Pagbabakuna at maayos na bentilasyon."
       },
       "dis_salmonellosis": {
         "name": "Salmonellosis",
         "scientificName": "Salmonella typhimurium",
-        "description": "Bakterya na sanhi ng matinding pagtatae.",
-        "prevention": "Malinis na tubig at pagkain."
+        "description": "Bakteryal na impeksyon na nagdudulot ng malalang problema sa bituka.",
+        "prevention": "Malinis na tubig at sanitasyon."
       },
       "dis_ppv": {
         "name": "Porcine Parvovirus (PPV)",
         "scientificName": "Porcine Parvovirus",
-        "description": "Karaniwang sanhi ng mummified na biik.",
-        "prevention": "Bakuna bago ipakasta."
+        "description": "Karaniwang sanhi ng pagkalaglag ng anak sa mga dumalla.",
+        "prevention": "Pagbabakuna bago palahian."
       },
       "dis_rhinitis": {
         "name": "Atrophic Rhinitis",
         "scientificName": "Bordetella bronchiseptica",
-        "description": "Nagdudulot ng tabinging nguso.",
-        "prevention": "Bakuna at iwas sa alikabok."
+        "description": "Nagdudulot ng pagkabali ng nguso at problema sa paghinga.",
+        "prevention": "Pagbabakuna at kalidad ng hangin."
       },
       "dis_leptospirosis": {
         "name": "Leptospirosis",
         "scientificName": "Leptospira spp.",
-        "description": "Bakterya mula sa ihi ng daga.",
-        "prevention": "Pagpuksa sa mga daga sa farm."
+        "description": "Bakteryal na sakit na nakakahawa sa tao at nakakaapekto sa bato (kidneys).",
+        "prevention": "Pagkontrol sa daga at pagbabakuna."
       },
       "dis_influenza": {
-        "name": "Swine Influenza",
+        "name": "Influenza ng Baboy",
         "scientificName": "Influenza A virus",
-        "description": "Trangkaso ng baboy na mabilis kumalat.",
-        "prevention": "Bentilasyon at iwas sa stress."
+        "description": "Mabilis kumalat na impeksyon sa paghinga.",
+        "prevention": "Bentilasyon at biosecurity."
       },
       "dis_edema": {
-        "name": "Edema Disease",
+        "name": "Sakit sa Edema",
         "scientificName": "Escherichia coli",
-        "description": "Namamagang mukha o talukap ng mata sa mga bagong iwalay.",
-        "prevention": "Dahan-dahang pagbabago sa pagkain."
+        "description": "Dulot ng toxin mula sa E. coli sa mga bagong walay na biik.",
+        "prevention": "Maayos na sanitasyon at tamang pagkain."
       },
       "dis_dysentery": {
-        "name": "Swine Dysentery",
+        "name": "Disentery ng Baboy",
         "scientificName": "Brachyspira hyodysenteriae",
-        "description": "Pagtatae na may kasamang dugo at uhog.",
+        "description": "Malalang pagtatae na may kasamang dugo at uhog.",
         "prevention": "Gamot sa tubig at disinfection."
       },
       "dis_mange": {
-        "name": "Sarna (Mange)",
+        "name": "Sarcoptic Mange (Kuratong)",
         "scientificName": "Sarcoptes scabiei",
-        "description": "Kati-kati sa balat sanhi ng hanip.",
-        "prevention": "Turok ng Ivermectin."
+        "description": "Sakit sa balat dulot ng parasito na nagiging sanhi ng sobrang pangangati.",
+        "prevention": "Gamot laban sa kuto at galis (Acaricide)."
       },
       "dis_anemia": {
         "name": "Iron Deficiency Anemia",
         "scientificName": "Iron Deficiency",
-        "description": "Maputlang biik dahil sa kawalan ng iron.",
-        "prevention": "Turok ng bakal (Iron) sa ika-3 araw."
+        "description": "Karaniwan sa mga biik na nasa loob ng kulungan at walang iron supplement.",
+        "prevention": "Iniksyon ng iron sa pagsilang."
       },
       "dis_ulcers": {
-        "name": "Gastric Ulcers",
+        "name": "Mga Ulser sa tiyan",
         "scientificName": "Gastric Ulcers",
-        "description": "Sugat sa tiyan dahil sa masyadong pino na pagkain.",
-        "prevention": "Huwag gawing parang harina ang feeds."
+        "description": "Dulot ng masyadong pino na pagkain o stress.",
+        "prevention": "Ayusin ang laki ng butil ng pagkain."
       },
       "dis_pss": {
-        "name": "Porcine Stress Syndrome (PSS)",
+        "name": "Porcine Stress Syndrome",
         "scientificName": "Genetic stress",
-        "description": "Genetic na sakit na lumalabas pag na-stress ang baboy.",
-        "prevention": "Maayos na paghawak at lahi."
+        "description": "Kondisyon na namamana at nati-trigger ng stress.",
+        "prevention": "Pagpili ng magandang lahi at mahinahong paghawak sa hayop."
       },
       "dis_tge": {
-        "name": "Transmissible Gastroenteritis (TGE)",
+        "name": "Naililipat na Gastroenteritis (TGE)",
         "scientificName": "Coronavirus",
-        "description": "Sakit na may mataas na kamatayan sa mga biik.",
+        "description": "Viral na sakit na may mataas na rate ng pagkamatay sa mga batang biik.",
         "prevention": "Biosecurity."
       },
       "dis_pasteurellosis": {
         "name": "Pasteurellosis",
         "scientificName": "Pasteurella multocida",
-        "description": "Sakit sa baga o pneumonia.",
-        "prevention": "Antibiotics at sariwang hangin."
+        "description": "Bakteryal na pneumonia.",
+        "prevention": "Antibiotics at bentilasyon."
       },
       "dis_strep": {
         "name": "Streptococcus suis",
         "scientificName": "S. suis",
-        "description": "Bakterya na sanhi ng pangingisay.",
-        "prevention": "Antibiotics at iwas sa siksikan."
+        "description": "Bakteryal na impeksyon na nagdudulot ng meningitis.",
+        "prevention": "Antibiotics at pagbabawas ng stress."
       },
       "dis_mycotoxicosis": {
         "name": "Mycotoxicosis",
         "scientificName": "Mycotoxicosis",
-        "description": "Mula sa amag sa pagkain.",
-        "prevention": "Iwasan ang inaamag na feeds."
+        "description": "Dulot ng pagkaing may amag (mold).",
+        "prevention": "Toxin binders at tuyong imbakan ng pagkain."
       },
       "dis_greasy_pig": {
-        "name": "Greasy Pig Disease",
+        "name": "Sakit sa Mamantika na Baboy",
         "scientificName": "Staphylococcus hyicus",
-        "description": "Nangungulubot at nangingitim na balat ng biik.",
-        "prevention": "Kalinisan at gamutan."
+        "description": "Bakteryal na impeksyon na nagdudulot ng malangis na sugat sa balat.",
+        "prevention": "Sanitasyon at antibiotics."
       },
       "dis_pseudorabies": {
         "name": "Pseudorabies (Aujeszky's)",
         "scientificName": "Suid herpesvirus 1",
-        "description": "Sakit sa utak at baga.",
-        "prevention": "Bakuna."
+        "description": "Viral na sakit na nakakaapekto sa nerbyos at paghinga.",
+        "prevention": "Pagbabakuna at eradication programs."
       },
       "dis_pcv2": {
         "name": "Porcine Circovirus (PCV2)",
         "scientificName": "Circovirus",
-        "description": "Bansot o hindi lumalaking baboy.",
-        "prevention": "Bakuna (Circovax)."
+        "description": "Nagdudulot ng pangangayayat at problema sa paghinga.",
+        "prevention": "Pagbabakuna."
       },
       "dis_ped": {
         "name": "Porcine Epidemic Diarrhea (PED)",
         "scientificName": "Coronavirus",
-        "description": "Matinding pagtatae ng mga biik.",
-        "prevention": "Kalinisan at biosecurity."
+        "description": "Katulad ng TGE, napakamamatay sa mga bagong silang na biik.",
+        "prevention": "Mahigpit na biosecurity."
       },
       "dis_je": {
         "name": "Japanese Encephalitis",
         "scientificName": "Flavivirus",
-        "description": "Sakit mula sa lamok na sanhi ng abnormal na biik.",
-        "prevention": "Pagpuksa sa lamok."
+        "description": "Sakit na dulot ng virus na dala ng lamok.",
+        "prevention": "Pagkontrol sa lamok at pagbabakuna."
       },
       "dis_rabies": {
         "name": "Rabies",
         "scientificName": "Lyssavirus",
-        "description": "Nakakamatay na virus mula sa kagat ng aso/pusa.",
-        "prevention": "Bakuna sa mga alagang hayop sa farm."
+        "description": "Nakamamatay na sakit na dulot ng kagat ng hayop.",
+        "prevention": "Pagbabakuna ng mga alaga at kontrol sa mga ligaw na hayop."
       },
       "dis_pox": {
         "name": "Swine Pox",
         "scientificName": "Suipoxvirus",
-        "description": "Bulutong ng baboy, kadalasang dala ng kuto.",
-        "prevention": "Pagpuksa sa kuto."
+        "description": "Viral na sakit sa balat, madalas na dala ng kuto.",
+        "prevention": "Pagkontrol sa kuto."
       },
       "dis_vs": {
         "name": "Vesicular Stomatitis",
         "scientificName": "Rhabdovirus",
-        "description": "Paltos na mukhang FMD.",
-        "prevention": "Kontrol sa insekto."
+        "description": "Nagdudulot ng mga paltos; kamukha ng FMD.",
+        "prevention": "Pagkontrol sa insekto at quarantine."
       },
       "dis_clostridial": {
         "name": "Clostridial Enteritis",
         "scientificName": "Clostridium perfringens",
-        "description": "Bakterya sa bituka na nakakamatay sa biik.",
-        "prevention": "Bakuna sa inahín."
+        "description": "Bakteryal na impeksyon na nagdudulot ng malalang sira sa bituka.",
+        "prevention": "Pagbabakuna ng inahin at sanitasyon."
       },
       "dis_glassers": {
-        "name": "Glasser's Disease",
+        "name": "Sakit ng Glasser",
         "scientificName": "Haemophilus parasuis",
-        "description": "Namamagang kasukasuan at hirap huminga.",
-        "prevention": "Iwas sa stress sa paglilipat."
+        "description": "Nagdudulot ng pamamaga ng mga lamad sa puso, baga, at kasukasuan.",
+        "prevention": "Antibiotics at pag-manage ng stress."
       },
       "dis_app": {
-        "name": "APP (Pleuropneumonia)",
+        "name": "Actinobacillus Pleuropneumonia (APP)",
         "scientificName": "A. pleuropneumoniae",
-        "description": "Matinding pneumonia; minsan may lumalabas na dugo sa ilong.",
-        "prevention": "Maayos na kulungan."
+        "description": "Malalang bakteryal na pneumonia.",
+        "prevention": "Antibiotics at maayos na kulungan."
       },
       "dis_ileitis": {
         "name": "Ileitis (Lawsonia)",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Sakit sa maliit na bituka; maitim na dumi.",
-        "prevention": "Bakuna at antibiotics."
+        "description": "Bakteryal na impeksyon sa maliit na bituka.",
+        "prevention": "Pagbabakuna at antibiotics."
       },
       "dis_tb": {
-        "name": "Tuberculosis",
+        "name": "Tuberkulosis",
         "scientificName": "Mycobacterium avium",
-        "description": "Mabagal na panghihina ng baboy.",
-        "prevention": "Kalinisan."
+        "description": "Kronikong bakteryal na sakit.",
+        "prevention": "Pag-iwas sa mga ibon at sanitasyon."
       },
       "dis_tetanus": {
         "name": "Tetanus",
         "scientificName": "Clostridium tetani",
-        "description": "Paninigas ng katawan pagkatapos makapon.",
-        "prevention": "Malinis na kagamitan sa pagkapon."
+        "description": "Toxin mula sa bakterya na nakakaapekto sa nerbyos.",
+        "prevention": "Kalinisan habang nag-oopera o nagkakapon."
       },
       "dis_eperythrozoonosis": {
         "name": "Eperythrozoonosis",
         "scientificName": "Mycoplasma suis",
-        "description": "Sakit sa dugo na sanhi ng paninilaw.",
-        "prevention": "Kontrol sa insekto."
+        "description": "Parasito sa dugo na nagdudulot ng anemia.",
+        "prevention": "Pagkontrol sa insekto at malinis na karayom."
       },
       "dis_ascaris": {
-        "name": "Bulate (Large Roundworm)",
+        "name": "Ascaris suum (Bulate sa Bituka)",
         "scientificName": "Ascaris suum",
-        "description": "Karaniwang bulate sa bituka.",
+        "description": "Internal na parasito na sumisira sa baga at atay.",
         "prevention": "Regular na pagpupurga."
       },
       "dis_whipworms": {
-        "name": "Whipworms",
+        "name": "Mga whipworm",
         "scientificName": "Trichuris suis",
-        "description": "Bulate sa malaking bituka.",
-        "prevention": "Purga at kalinisan."
+        "description": "Internal na parasito sa malaking bituka.",
+        "prevention": "Pagpupurga at sanitasyon."
       },
       "dis_lungworms": {
-        "name": "Bulate sa Baga",
+        "name": "Mga bulate sa baga",
         "scientificName": "Metastrongylus spp.",
-        "description": "Nagdudulot ng ubo.",
-        "prevention": "Iwasan ang lupang may bulate."
+        "description": "Internal na parasito sa baga.",
+        "prevention": "Pagkontrol sa bulate sa lupa at pagpupurga."
       },
       "dis_kidney_worms": {
-        "name": "Bulate sa Bato (Kidney)",
+        "name": "Mga uod sa bato",
         "scientificName": "Stephanurus dentatus",
-        "description": "Dumi o ihing may bulate.",
-        "prevention": "Maayos na sahig."
+        "description": "Internal na parasito sa bato at atay.",
+        "prevention": "Maayos na pamamahala at sanitasyon."
       },
       "dis_lice": {
-        "name": "Kuto ng Baboy",
+        "name": "Swine Lice (Kuto ng Baboy)",
         "scientificName": "Haematopinus suis",
-        "description": "Hanip o kuto na sumisipsip ng dugo.",
-        "prevention": "Pang-spray sa hanip."
+        "description": "External na parasito na sumisipsip ng dugo.",
+        "prevention": "Gamot sa insekto."
       },
       "dis_ringworm": {
-        "name": "Buni o Alipunga",
+        "name": "Ringworm (Buni)",
         "scientificName": "Dermatophytosis",
-        "description": "Impeksyon ng balat.",
-        "prevention": "Kalinisan."
+        "description": "Impeksyon sa balat dulot ng fungus.",
+        "prevention": "Sanitasyon at topical na gamot."
       },
       "dis_mulberry_heart": {
-        "name": "Mulberry Heart Disease",
+        "name": "Sakit sa Puso ng Mulberry",
         "scientificName": "Vit E/Se Deficiency",
-        "description": "Kulang sa Vitamin E o Selenium.",
-        "prevention": "Maayos na halo ng feeds."
+        "description": "Kulang sa sustansya na nakakaapekto sa puso.",
+        "prevention": "Pagbibigay ng bitamina (supplementation)."
       },
       "dis_vit_a": {
-        "name": "Kulang sa Vitamin A",
+        "name": "Kakulangan sa Bitamina A",
         "scientificName": "Vitamin A Deficiency",
-        "description": "Nagdudulot ng pagkabulag.",
-        "prevention": "Dagdag bitamina."
+        "description": "Kulang sa sustansya (Vitamin A).",
+        "prevention": "Pag-aayos ng tamang pagkain."
       },
       "dis_rickets": {
         "name": "Rickets",
         "scientificName": "Vit D/Ca/P Deficiency",
-        "description": "Malambot na buto.",
-        "prevention": "Sapat na calcium sa feeds."
+        "description": "Kulang sa sustansya na nakakaapekto sa paglaki ng buto.",
+        "prevention": "Balanseng mineral at sapat na sikat ng araw."
       },
       "dis_salt_poisoning": {
-        "name": "Salt Poisoning",
+        "name": "Pagkalason sa Asin",
         "scientificName": "Water Deprivation",
-        "description": "Sanhi ng kawalan ng tubig.",
-        "prevention": "Dapat laging may tubig."
+        "description": "Dulot ng kawalan ng tubig na sinundan ng sobrang pag-inom.",
+        "prevention": "Palaging may malinis na tubig."
       },
       "dis_heat_stroke": {
         "name": "Heat Stroke",
         "scientificName": "Heat Stroke",
-        "description": "Sobrang init sa kulungan.",
-        "prevention": "Bentilador o bubong na presko."
+        "description": "Sobrang init dahil sa mahinang bentilasyon o kawalan ng silong.",
+        "prevention": "Bentilasyon, pagpalamig, at silong."
       },
       "dis_rectal_prolapse": {
-        "name": "Paglabas ng Puwit",
+        "name": "Rectal Prolapse",
         "scientificName": "Rectal Prolapse",
-        "description": "Lumalabas ang bituka sa puwit.",
-        "prevention": "Iwas sa ubo o pagtatae."
+        "description": "Madalas kasunod ng pag-ubo, pagtatae, o sobrang lamig.",
+        "prevention": "Gamutin ang sanhi at operasyon."
       },
       "dis_umbilical_hernia": {
-        "name": "Bukol sa Pusod (Hernia)",
+        "name": "Umbilical Hernia (Luslos sa Pusod)",
         "scientificName": "Umbilical Hernia",
-        "description": "Pagluwa ng laman sa pusod.",
-        "prevention": "Lahi o maayos na pagkakatali ng pusod."
+        "description": "Depekto sa paglaki o impeksyon sa pusod.",
+        "prevention": "Sanitasyon at pagpili ng magandang lahi."
       },
       "dis_scrotal_hernia": {
-        "name": "Hernia sa Itlog",
+        "name": "Scrotal Hernia (Luslos sa Bayag)",
         "scientificName": "Scrotal Hernia",
-        "description": "Laman ng tiyan na nasa itlog.",
-        "prevention": "Lahi."
+        "description": "Depekto sa paglaki na namamana.",
+        "prevention": "Pagpili ng magandang lahi at operasyon."
       },
       "dis_splayleg": {
-        "name": "八字腿 (Splayleg)",
+        "name": "Splayleg",
         "scientificName": "Myofibrillar hypoplasia",
-        "description": "Biik na hindi makatayo ang mga paa.",
-        "prevention": "Tapakan na hindi madulas."
+        "description": "Biik na ipinanganak na hindi makatayo ang mga paa sa likod.",
+        "prevention": "Taping ng mga paa at maayos na sahig."
       },
       "dis_vulvovaginitis": {
-        "name": "Namamagang Ari",
+        "name": "Vulvovaginitis",
         "scientificName": "Zearalenone Toxicity",
-        "description": "Mula sa amag sa mais o feeds.",
-        "prevention": "Iwas sa bulok na mais."
+        "description": "Dulot ng amag (fungal toxins) sa pagkain.",
+        "prevention": "Palitan ang source ng pagkain."
       },
       "dis_seneca": {
-        "name": "Seneca Valley Virus",
+        "name": "Seneca Valley Virus (SVV)",
         "scientificName": "Senecavirus A",
-        "description": "Paltos na katulad ng FMD.",
-        "prevention": "Biosecurity."
+        "description": "Nagdudulot ng mga paltos na katulad ng FMD.",
+        "prevention": "Biosecurity at pagsusuri."
       },
       "dis_deltacoronavirus": {
-        "name": "Deltacoronavirus",
+        "name": "Porcine Deltacoronavirus",
         "scientificName": "PDCoV",
-        "description": "Pagtatae.",
-        "prevention": "Kalinisan."
+        "description": "Viral na pagtatae sa lahat ng edad.",
+        "prevention": "Biosecurity."
       },
       "dis_rotavirus": {
-        "name": "Rotavirus",
+        "name": "Rotavirus Diarrhea",
         "scientificName": "Rotavirus",
-        "description": "Karaniwang pagtatae sa pagwawalay.",
-        "prevention": "Bakuna."
+        "description": "Karaniwang sanhi ng pagtatae ng bagong walay na biik.",
+        "prevention": "Pagbabakuna at sanitasyon."
       },
       "dis_teschen": {
-        "name": "Teschen Disease",
+        "name": "Sakit sa Teschen/Talfan",
         "scientificName": "Sapelovirus",
-        "description": "Sakit sa utak.",
+        "description": "Viral na impeksyon sa nerbyos.",
         "prevention": "Biosecurity."
       },
       "dis_vesicular": {
-        "name": "Vesicular Disease",
+        "name": "Sakit na Vesicular ng Baboy",
         "scientificName": "Enterovirus",
-        "description": "Kamukha ng FMD.",
-        "prevention": "Quarantine."
+        "description": "Viral na sakit na kamukha ng FMD.",
+        "prevention": "Mahigpit na quarantine."
       },
       "dis_melioidosis": {
         "name": "Melioidosis",
         "scientificName": "Burkholderia",
-        "description": "Sakit mula sa lupa.",
-        "prevention": "Malinis na tubig."
+        "description": "Bakteryal na sakit mula sa lupa o tubig.",
+        "prevention": "Malinis na tubig at sanitasyon."
       },
       "dis_trypanosomiasis": {
-        "name": "Trypanosomiasis",
+        "name": "Trypanosomiase",
         "scientificName": "Trypanosoma",
-        "description": "Sakit mula sa langaw.",
-        "prevention": "Kontrol sa langaw."
+        "description": "Sakit mula sa protozoa na dala ng mga langaw.",
+        "prevention": "Pagkontrol sa langaw at gamutan."
       },
       "dis_cysticercosis": {
-        "name": "Cysticercosis",
+        "name": "Cysticercosis (Katiuri)",
         "scientificName": "Taenia solium",
-        "description": "Mula sa dumi ng tao.",
-        "prevention": "Huwag hahayaang makakain ng dumi ng tao."
+        "description": "Larva ng bulate ng tao sa loob ng laman ng baboy.",
+        "prevention": "Iwasang makakain ng dumi ng tao ang baboy."
       },
       "dis_toxoplasmosis": {
         "name": "Toxoplasmosis",
         "scientificName": "Toxoplasma",
-        "description": "Mula sa dumi ng pusa.",
-        "prevention": "Iwas sa pusa sa farm."
+        "description": "Impeksyon mula sa protozoa na nakukuha sa pusa.",
+        "prevention": "Pagkontrol sa pusa at biosecurity."
       },
       "dis_listeriosis": {
         "name": "Listeriosis",
         "scientificName": "Listeria",
-        "description": "Sakit sa utak.",
-        "prevention": "Malinis na feeds."
+        "description": "Bakteryal na impeksyon sa nerbyos.",
+        "prevention": "Sanitasyon at kalinisan ng pagkain."
       },
       "dis_ear_necrosis": {
-        "name": "Bulok na Tainga",
+        "name": "Necrosis sa tainga",
         "scientificName": "Ear Necrosis",
-        "description": "Sugat sa dulo ng tainga.",
-        "prevention": "Iwas sa siksikan."
+        "description": "Madalas dulot ng stress, siksikan, o impeksyon.",
+        "prevention": "Bawasan ang siksikan at gamutin ang impeksyon."
       },
       "dis_sunburn": {
         "name": "Sunburn",
         "scientificName": "Solar dermatitis",
-        "description": "Pula ng balat sa init ng araw.",
-        "prevention": "Sapat na lilim."
+        "description": "Nakakaapekto sa mga puting baboy na nasa labas.",
+        "prevention": "Maglagay ng silong."
       },
       "dis_tail_biting": {
-        "name": "Kagat sa Buntot",
+        "name": "Nakagat ng Buntot",
         "scientificName": "Behavioral stress",
-        "description": "Dahil sa stress o bagot.",
-        "prevention": "Bawasan ang siksikan."
+        "description": "Problema sa ugali dahil sa stress o pagkabagot.",
+        "prevention": "Bawasan ang stress at ayusin ang kulungan."
       },
       "dis_navel_ill": {
-        "name": "Nana sa Pusod",
+        "name": "Sakit sa pusod",
         "scientificName": "Navel Infection",
-        "description": "Impeksyon sa pusod.",
-        "prevention": "Iodine sa pusod."
+        "description": "Impeksyon sa pusod pagkapanganak.",
+        "prevention": "Paglagay ng iodine sa pusod at sanitasyon."
       },
       "dis_iron_toxicity": {
-        "name": "Sobrang Bakal (Iron)",
+        "name": "Pagkalason sa Bakal",
         "scientificName": "Iron toxicity",
-        "description": "Maling dose ng iron.",
-        "prevention": "Tamang turok lang."
+        "description": "Maaaring mangyari kung iniksyunan ng iron ang biik na kulang sa Vit E.",
+        "prevention": "Siguruhing balanse ang pagkain ng inahin."
       },
       "dis_aflatoxicosis": {
-        "name": "Amag sa Feeds",
+        "name": "Aflatoxicosis",
         "scientificName": "Aspergillus toxin",
-        "description": "Lason mula sa amag.",
-        "prevention": "Toxin binder."
+        "description": "Lason mula sa inaamag na pakain na nagiging sanhi ng pinsala sa atay at paninilaw.",
+        "prevention": "Iwasang magpakain ng inaamag, itago ang mga butil sa tuyong lugar, at gumamit ng toxin binders."
       },
       "dis_parakeratosis": {
-        "name": "Kulang sa Zinc",
+        "name": "Parakeratosis (Kakulangan sa Zinc)",
         "scientificName": "Zinc deficiency",
-        "description": "Magaspang na balat.",
-        "prevention": "Maayos na feeds."
+        "description": "Sakit sa nutrisyon na nagdudulot ng makapal at magaspang na sugat sa balat.",
+        "prevention": "Siguraduhing balanse ang calcium at zinc sa pakain at magbigay ng zinc supplement."
       },
       "dis_biotin_deficiency": {
-        "name": "Kulang sa Biotin",
+        "name": "Kakulangan sa Biotin",
         "scientificName": "Vitamin H deficiency",
-        "description": "Biyak na kuko.",
-        "prevention": "Biotin supplement."
+        "description": "Kakulangan sa nutrisyon na nagiging sanhi ng bitak sa kuko, sugat sa balat, at pagkapilay.",
+        "prevention": "Magdagdag ng biotin sa pagkain at iwasan ang magaspang at basang sementadong sahig."
       },
       "dis_gossypol_toxicity": {
-        "name": "Gossypol Toxicity",
+        "name": "Toxicity mula sa Gossypol",
         "scientificName": "Gossypol poisoning",
-        "description": "Mula sa maling pakain ng cotton seed.",
-        "prevention": "Limitahan ang cotton seed."
+        "description": "Lason dahil sa pagpapakain ng hilaw o labis na cottonseed meal, nagdudulot ng hirap sa paghinga.",
+        "prevention": "Limitahan ang cottonseed meal sa pagkain at gumamit ng iron sulfate para ma-neutralize."
       },
       "dis_cassava_poisoning": {
-        "name": "Lason sa Kamoteng Kahoy",
+        "name": "Lason mula sa Kamoteng Kahoy",
         "scientificName": "Cyanogenic glycosides",
-        "description": "Mula sa hilaw na kamoteng kahoy.",
-        "prevention": "Lutuin muna ang kamoteng kahoy."
+        "description": "Lason mula sa cyanide dahil sa hilaw o hindi maayos na pagproseso ng kamoteng kahoy.",
+        "prevention": "Balatan, pakuluan, patuyuin sa araw, o i-ferment ang kamoteng kahoy bago ipakain."
       },
       "dis_sweet_potato_toxicity": {
-        "name": "Lason sa Kamote",
+        "name": "Lason sa Inaamag na Kamote",
         "scientificName": "Ipomeamarone",
-        "description": "Mula sa inaamag na kamote.",
-        "prevention": "Iwas sa bulok na kamote."
+        "description": "Lason dahil sa inaamag na kamote, nagiging sanhi ng matinding hirap sa paghinga.",
+        "prevention": "Itapon ang sirang kamote at pakainin lamang ng mga malulusog na ugat."
       },
       "dis_mma": {
-        "name": "MMA Syndrome",
+        "name": "Postpartum Dysgalactia (MMA)",
         "scientificName": "Mastitis-Metritis",
-        "description": "Sakit ng inahín pagkapanganak.",
-        "prevention": "Malinis na kulungan."
+        "description": "Kombinasyon ng mastitis, metritis, at kakulangan sa gatas sa mga inahing baboy pagkapanganak.",
+        "prevention": "Panatilihing malinis ang kulungan at tiyaking sapat ang nutrisyon ng inahin."
       },
       "dis_pwd": {
-        "name": "Pagtatae sa Pagwawalay",
+        "name": "Post-Weaning Diarrhea (PWD)",
         "scientificName": "E. coli",
-        "description": "Karaniwan sa mga bagong iwalay.",
-        "prevention": "Dahan-dahang pagpapakain."
+        "description": "Pagtatae dahil sa bakterya sa mga biik pagkatapos mahiwalay sa suso, nagiging sanhi ng dehydration.",
+        "prevention": "Bawasan ang stress sa pagwawalay, panatilihing malinis ang paligid, at magbigay ng malinis na tubig."
       },
       "dis_trichinellosis": {
         "name": "Trichinellosis",
         "scientificName": "Trichinella",
-        "description": "Parasito sa laman.",
-        "prevention": "Huwag magpakain ng hilaw na tira-tira."
+        "description": "Sakit mula sa parasitiko dahil sa pagkain ng hilaw na karne, nagdudulot ng paninigas ng kalamnan.",
+        "prevention": "Huwag magpakain ng hilaw na kaning-baboy at pakuluan ito ng 30 minuto."
       },
       "dis_hydatid_disease": {
-        "name": "Hydatid Disease",
+        "name": "Hydatidosis",
         "scientificName": "Echinococcus",
-        "description": "Bulate mula sa aso.",
-        "prevention": "Purga sa mga aso sa farm."
+        "description": "Impeksyon mula sa larvae ng tapeworm na nagdudulot ng cyst sa mga organo ng baboy.",
+        "prevention": "Purgahin ang mga aso sa farm at huwag silang pakainin ng hilaw na organo ng baboy."
       },
       "dis_phe": {
-        "name": "Bloody Gut",
+        "name": "Porcine Hemorrhagic Enteropathy",
         "scientificName": "Lawsonia",
-        "description": "Dugong dumi sa lumalaking baboy.",
-        "prevention": "Bakuna."
+        "description": "Biglaang pagtatae ng dugo at pagkamatay sa mga lumalaking baboy.",
+        "prevention": "Panatilihin ang kalinisan at gumamit ng tamang antibiotiko sa payo ng vet."
       },
       "dis_mycoplasma_arthritis": {
-        "name": "Pamamaga ng Tuhod",
+        "name": "Mycoplasmal Arthritis",
         "scientificName": "Mycoplasma",
-        "description": "Sakit sa tuhod.",
-        "prevention": "Kalinisan."
+        "description": "Impeksyon mula sa bakterya na nagdudulot ng maga sa khớp, pilay, at kahinaan sa paa.",
+        "prevention": "Pagbutihin ang kulungan, bawasan ang siksikan, at gamutin agad."
       },
       "dis_foot_rot": {
-        "name": "Nabulok na Kuko",
+        "name": "Kuko Rot (Foot Rot)",
         "scientificName": "Fusobacterium",
-        "description": "Sugat sa kuko.",
-        "prevention": "Tuyong sahig."
+        "description": "Impeksyon na pumapasok sa sugat sa kuko, sanhi ng pagkabulok at pagkapilay.",
+        "prevention": "Ayusin ang magaspang na semento, panatilihing tuyo ang sahig, at gumamit ng foot bath."
       },
       "dis_babesiosis": {
-        "name": "Babesiosis",
+        "name": "Babesiosis mula sa Garapata",
         "scientificName": "Babesia",
-        "description": "Sakit mula sa garapata.",
-        "prevention": "Pang-spray sa garapata."
+        "description": "Parasitiko sa dugo mula sa kagat ng garapata, sanhi ng lagnat at madilim na ihi.",
+        "prevention": "Puksain ang mga garapata gamit ang acaricide at linisin ang mga damo sa paligid."
       },
       "dis_anaplasmosis": {
         "name": "Anaplasmosis",
         "scientificName": "Anaplasma",
-        "description": "Sakit sa dugo.",
-        "prevention": "Kontrol sa insekto."
+        "description": "Sakit mula sa bakterya na dala ng garapata, sanhi ng anemia at paninilaw.",
+        "prevention": "Magsagawa ng mga programa para sa pagkontrol ng mga insekto at garapata."
       },
       "dis_sow_hysteria": {
-        "name": "Nanggigigil na Inahín",
+        "name": "Hysteria ng Inahin",
         "scientificName": "Sow hysteria",
-        "description": "Pinapatay ang sariling anak.",
-        "prevention": "Tahimik na lugar sa panganakan."
+        "description": "Kakaibang ugali kung saan nagiging agresibo ang inahin at kinakagat ang sariling mga biik.",
+        "prevention": "Siguraduhing tahimik ang kulungan, bantayan ang mga bagong inahin, at gumamit ng pampakalma kung kailangan."
       },
       "dis_thorny_headed_worm": {
-        "name": "Thorny-Headed Worm",
+        "name": "Uod na matinik ang ulo",
         "scientificName": "Macracanthorhynchus",
-        "description": "Bulate sa bituka.",
-        "prevention": "Iwas sa pagpapakain ng salagubang."
+        "description": "Bulate na nakukuha sa pagkain ng mga salagubang, sanhi ng pagkabutas ng bituka.",
+        "prevention": "Iwasang magpakawala ng baboy sa mga lugar na may salagubang at magpurga nang regular."
       },
       "dis_strongyloidiasis": {
         "name": "Strongyloidiasis",
         "scientificName": "Strongyloides",
-        "description": "Bulate sa bituka.",
-        "prevention": "Tuyong kulungan."
+        "description": "Impeksyon sa bituka ng mga biik na sanhi ng malalang pagtatae at kamatayan.",
+        "prevention": "Panatilihing tuyo ang kulungan at purgahin ang inahin bago manganak."
       },
       "dis_hyostrongylosis": {
-        "name": "Red Stomach Worm",
+        "name": "Uod sa Pulang Tiyan",
         "scientificName": "Hyostrongylus",
-        "description": "Bulate sa tiyan.",
-        "prevention": "Purga."
+        "description": "Impeksyon ng bulate sa tiyan na nagdudulot ng pamamaga, anemia, at pagbaba ng timbang.",
+        "prevention": "Ibahagi ang pastulan, panatilihing tuyo ang kulungan, at magpurga nang regular."
       },
       "dis_oesophagostomiasis": {
         "name": "Nodular Worm",
         "scientificName": "Oesophagostomum",
-        "description": "Bulate sa bituka.",
-        "prevention": "Purga."
+        "description": "Parasitiko sa bituka na nagiging sanhi ng nodules, dahilan para manghina at pumayat ang inahin.",
+        "prevention": "Linisin ang kulungan at gumamit ng broad-spectrum dewormer nang regular."
       },
       "dis_fascioliasis": {
-        "name": "Fascioliasis",
+        "name": "Fascioliasis (Bulate sa Atay)",
         "scientificName": "Fasciola",
-        "description": "Bulate sa atay mula sa suso.",
-        "prevention": "Iwas sa basang damo."
+        "description": "Bulate na sumisira sa atay, karaniwan sa mga basang pastulan.",
+        "prevention": "Ilayo ang mga baboy sa mabaputik at basang lugar at kontrolin ang mga suso."
       },
       "dis_emcv": {
-        "name": "EMCV",
+        "name": "Encephalomyocarditis (EMCV)",
         "scientificName": "Cardiovirus",
-        "description": "Sakit sa puso mula sa daga.",
-        "prevention": "Puksa sa daga."
+        "description": "Sakit mula sa daga na nagdudulot ng biglaang atake sa puso sa mga biik at pagkalaglag ng inahin.",
+        "prevention": "Puksain ang mga daga sa farm at protektahan ang pagkain mula sa dumi."
       },
       "dis_demodectic_mange": {
-        "name": "Sarna (Mite)",
+        "name": "Demodectic Mange",
         "scientificName": "Demodex",
-        "description": "Hanip sa balat.",
-        "prevention": "Ivermectin."
+        "description": "Mikroskopikong garapata sa balat na nagdudulot ng pangangaliskis at maliliit na butlig.",
+        "prevention": "Pagbutihin ang pagkain ng baboy, ihiwalay ang apektado, at maglagay ng acaricide."
       },
       "dis_pityriasis_rosea": {
         "name": "Pityriasis Rosea",
         "scientificName": "Pseudo-ringworm",
-        "description": "Marka sa balat ng biik.",
-        "prevention": "Kusa itong nawawala."
+        "description": "Hindi nakakahawang kondisyon sa balat ng mga batang baboy na nagdudulot ng pabilog na langib.",
+        "prevention": "Kusang nawawala; panatilihing malinis ang higaan at bawasan ang stress."
       },
       "dis_photosensitization": {
         "name": "Photosensitization",
         "scientificName": "Solar dermatitis",
-        "description": "Sobrang sensitibo sa araw.",
-        "prevention": "Lilim."
+        "description": "Matinding reaksyon sa araw ng mga mapuputing baboy pagkatapos kumain ng ilang halaman.",
+        "prevention": "Magbigay ng lilim, tanggalin ang mga masasamang damo, at panatilihin sila sa loob ng kulungan."
       },
       "dis_shoulder_ulcers": {
-        "name": "Sugat sa Balikat",
+        "name": "Sugat sa Balikat ng Inahin",
         "scientificName": "Shoulder Ulcers",
-        "description": "Sugat ng inahín dahil sa payat.",
-        "prevention": "Pakainin nang maayos."
+        "description": "Sugat dahil sa matagal na pagkakahiga ng mga payat na inahin sa sementadong sahig.",
+        "prevention": "Maglagay ng malambot na higaan at panatilihing malusog ang timbang ng inahin."
       },
       "dis_ear_biting": {
-        "name": "Kagat sa Tainga",
+        "name": "Pangangagat ng Tainga",
         "scientificName": "Stress behavior",
-        "description": "Dahil sa stress.",
-        "prevention": "Bawasan ang siksikan."
+        "description": "Masamang ugali kung saan kinakagat ng baboy ang tainga ng kasama, sanhi ng pagkabulok nito.",
+        "prevention": "Bawasan ang siksikan, ayusin ang singaw ng hangin, at magbigay ng laruan tulad ng kadena."
       },
       "dis_gastric_torsion": {
-        "name": "Baliktad na Tiyan",
+        "name": "Gastric Torsion (Bloat)",
         "scientificName": "Gastric torsion",
-        "description": "Namilipit na tiyan.",
-        "prevention": "Huwag pakainin nang biglaan."
+        "description": "Biglaang paglaki at pagkabuhol ng tiyan na nagdudulot ng mabilis na pagkamatay.",
+        "prevention": "Iwasang magpakain ng marami pagkatapos ng mahabang gutom at hatiin ang rasyon."
       },
       "dis_c_difficile": {
-        "name": "C. difficile",
+        "name": "Impeksyon ng Clostridium difficile",
         "scientificName": "Clostridium",
-        "description": "Pagtatae ng biik.",
-        "prevention": "Kalinisan."
+        "description": "Impeksyon sa mga bagong silang na biik na nagdudulot ng pagtatae at kabag.",
+        "prevention": "Linisin at i-disinfect ang kulungan ng inahin at tiyaking makasuso agad ng colostrum."
       },
       "dis_cold_stress": {
-        "name": "Ginasau (Cold Stress)",
+        "name": "Stress sa Lamig (Hypothermia)",
         "scientificName": "Hypothermia",
-        "description": "Nangangatog sa ginaw.",
-        "prevention": "Lamps o kurtina."
+        "description": "Matinding panlalamig ng katawan ng mga biik na sanhi ng panginginig at kamatayan.",
+        "prevention": "Gumamit ng heat lamp, maglagay ng sapin, at iwasan ang draft o ihip ng hangin."
       },
       "dis_necrotic_enteritis": {
         "name": "Necrotic Enteritis",
         "scientificName": "Clostridium",
-        "description": "Bulok na bituka.",
-        "prevention": "Bakuna."
+        "description": "Sakit na dulot ng lason ng bakterya na sanhi ng pagtatae ng dugo at mataas na kamatayan sa mga biik.",
+        "prevention": "Bakunahan ang inahin bago manganak at panatilihing napakalinis ng kulungan."
       },
       "dis_navel_bleeding": {
-        "name": "Dugo sa Pusod",
+        "name": "Pagdurugo ng Pusod",
         "scientificName": "Umbilical hemorrhage",
-        "description": "Hindi tumitigil ang dugo sa pusod.",
-        "prevention": "Talian ang pusod."
+        "description": "Labis na pagdurugo mula sa pusod ng bagong silang na biik.",
+        "prevention": "Talian ang pusod pagkapanganak at iwasang pakainin ang inahin ng may mycotoxin."
       },
       "dis_spirochetal_colitis": {
-        "name": "Spirochetal Colitis",
+        "name": "Porcine Spirochetal Colitis",
         "scientificName": "Brachyspira",
-        "description": "Pagtatae.",
-        "prevention": "Kalinisan."
+        "description": "Katamtamang pagtatae sa mga lumalaking baboy na nagpapabagal sa paglaki.",
+        "prevention": "Linisin ang mga pakainan at gamutin ang mga apektadong baboy ng antibiotiko."
       },
       "dis_salmonella_septicemia": {
         "name": "Salmonella Septicemia",
         "scientificName": "Salmonella",
-        "description": "Sakit sa dugo.",
-        "prevention": "Biosecurity."
+        "description": "Malalang impeksyon sa dugo dahil sa Salmonella, sanhi ng pangingitim ng balat at mabilis na kamatayan.",
+        "prevention": "Ihiwalay ang may sakit, lagyan ng gamot ang tubig, at panatilihin ang biosecurity."
       },
       "dis_prdc": {
-        "name": "PRDC",
+        "name": "Porcine Respiratory Disease Complex",
         "scientificName": "Respiratory complex",
-        "description": "Sakit sa baga.",
-        "prevention": "Bentilasyon."
+        "description": "Magkasamang impeksyon ng virus at bakterya na sanhi ng pag-ubo at mabagal na paglaki.",
+        "prevention": "Ayusin ang bentilasyon, iwasan ang labis na siksikan, at kontrolin ang mga virus."
       },
       "dis_ergotism": {
-        "name": "Lason sa Trigo",
+        "name": "Ergotism",
         "scientificName": "Claviceps",
-        "description": "Mula sa bulok na butil.",
-        "prevention": "Suriin ang feeds."
+        "description": "Lason mula sa amag sa mga butil na nagdudulot ng pagkabulok ng dulo ng mga tissue ng baboy.",
+        "prevention": "Suriin ang mga butil at itapon ang mga may itim na amag."
       },
       "dis_bvdv_pig": {
         "name": "BVDV sa Baboy",
         "scientificName": "Pestivirus",
-        "description": "Mula sa baka.",
-        "prevention": "Ihiwalay sa baka."
+        "description": "Impeksyon ng Bovine Viral Diarrhea mula sa pakikihalubilo sa baka, sanhi ng pagkalaglag.",
+        "prevention": "Ihiwalay ang baboy sa mga baka at tupa upang maiwasan ang hawahan."
       },
       "dis_endocarditis": {
-        "name": "Sakit sa Puso",
+        "name": "Bacterial Endocarditis",
         "scientificName": "Endocarditis",
-        "description": "Impeksyon sa puso.",
-        "prevention": "Gamutin agad ang sugat."
+        "description": "Impeksyon sa balbula ng puso na sanhi ng pagpalya ng puso kapag na-stress.",
+        "prevention": "Gamutin agad ang mga sugat at impeksyon sa khớp at iwasan ang mahihinang lahi."
       },
       "dis_polyserositis": {
-        "name": "Polyserositis",
+        "name": "Mycoplasma Polyserositis",
         "scientificName": "Mycoplasma",
-        "description": "Impeksyon sa loob ng katawan.",
-        "prevention": "Iwas stress."
+        "description": "Pamamaga ng baga, puso, at mga khớp sa mga bagong walay na biik.",
+        "prevention": "Bawasan ang stress sa pagwawalay at huwag paghaluin ang iba't ibang batch ng biik."
       },
       "dis_congenital_tremor": {
-        "name": "Nangangatog na Biik",
+        "name": "Congenital Tremor (Shaky Pig)",
         "scientificName": "Pestivirus",
-        "description": "Panginginig simula nung pinanganak.",
-        "prevention": "Maayos na breeders."
+        "description": "Sakit sa utak/nerbiyos ng bagong silang na biik na nagdudulot ng panginginig ng buong katawan.",
+        "prevention": "Iwasang gumamit ng semilya mula sa apektadong barako at bawasan ang stress ng inahin."
       }
     },
     "diagnosisMatches": "Mga Tugma ng Klinikal na Diagnosis",
@@ -1502,7 +1508,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 PANG-EMERGENCY NA BIOSECURITY PROTOCOL:",
     "clinicalDiagnosisMatches": "Mga Tugma ng Klinikal na Diagnosis",
     "hallmarkBadge": "Pangunahing Palatandaan",
-    "hallmarkSignPresent": "Hallmark sign na naroroon: %1$s",
+    "hallmarkSignPresent": "Hallmark sign na naroroon: {sign}",
     "otherSignsWatch": "Iba pang mga palatandaan na dapat bantayan:",
     "preventionTreatmentLabel": "Pag-iwas / Paggamot: {treatment}",
     "bio_proto_asf": "AGARANG EMERGENCY QUARANTINE: Ang African Swine Fever ay nakamamatay at notifiable virus. 1) I-lock ang gate ng farm agad. 2) Itigil ang paggalaw ng baboy, sasakyan, pakain, at dumi. 3) Mag-disinfect gamit ang Virkon S o 2% caustic soda. 4) Kontakin agad ang Provincial/City Veterinarian.",
@@ -1514,8 +1520,8 @@
     "bio_proto_vesicular_stomatitis": "ALERTO SA VESICULAR LESION: Kahawig ito ng Foot and Mouth Disease. 1) Ihiwalay agad ang may impeksyon. 2) Magsuot ng guwantes. 3) Magsumite ng sample sa laboratoryo.",
     "bio_proto_senecavirus": "REPORTABLE NA SAKIT NA VESICULAR: Ang Senecavirus A ay katulad ng FMD. 1) I-quarantine ang kulungan. 2) Limitahan ang paglabas ng farm. 3) Humiling ng differential PCR testing.",
     "bio_proto_svd": "REPORTABLE NA SAKIT NA VESICULAR: Swine Vesicular Disease (SVD). 1) Mahigpit na paghihiwalay ng maysakit. 2) Pagbawalan ang bisita at sasakyan. 3) Iulat agad sa animal health department.",
-    "clinicalMatchPercent": "%1$d%% Clinical Match",
-    "matchedSignsCount": "{matched}$d ng {total}$d na mga palatandaan",
+    "clinicalMatchPercent": "{percent}% Clinical Match",
+    "matchedSignsCount": "{matched} ng {total} na mga palatandaan",
     "matchPercentSuffix": "({percent}% tugma)"
   },
   "HR": {
@@ -1932,7 +1938,7 @@
     "snooze1Month": "1 Buwan",
     "deleteNotificationQuestion": "Tanggalin ang Notification?",
     "deleteNotificationConfirm": "Sigurado ka bang gusto mong tanggalin ang notification na ito?",
-    "lastWeighedDaysAgo": "Baboy #%1$s: Huling tinimbang %2$s araw ang nakalipas",
+    "lastWeighedDaysAgo": "Baboy #{tag}: Huling tinimbang {days} araw ang nakalipas",
     "stockLeftMinFormat": "{current}: {unit} kg ang natitira (Min: {min} kg)",
     "pigs": "Mga Baboy",
     "pig": "Baboy",

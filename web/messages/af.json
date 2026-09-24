@@ -124,7 +124,13 @@
     "noActivities": "No upcoming activities",
     "allTasksCompleted": "All tasks are completed!",
     "generalTask": "General Task",
-    "language": "Language"
+    "language": "Language",
+    "feed": "Voer",
+    "inventory": "Voervoorraad",
+    "calculator": "Bereken Voerrantsoen",
+    "mixFeed": "Meng Varkvoer",
+    "analyzeFeed": "Ontleed Voedingstowwe",
+    "marketHub": "Varkbedryf Marksentrum"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -866,664 +872,664 @@
     },
     "diseases": {
       "dis_asf": {
-        "name": "African Swine Fever (ASF)",
+        "name": "Afrika-varkpes (ASF)",
         "scientificName": "Asfivirus",
-        "description": "A highly contagious and deadly viral disease prevalent in West Africa. No vaccine exists.",
-        "prevention": "Strict biosecurity and restrict farm access."
+        "description": "'n Hoogs aansteeklike en dodelike virussiekte wat in Wes-Afrika voorkom. Geen entstof bestaan ​​nie.",
+        "prevention": "Streng biosekuriteit en beperk plaastoegang."
       },
       "dis_fmd": {
-        "name": "Foot and Mouth Disease (FMD)",
+        "name": "Bek-en-klouseer (MKZ)",
         "scientificName": "Aphthovirus",
-        "description": "Viral disease causing blisters on the mouth and feet.",
-        "prevention": "Vaccination and movement control."
+        "description": "Virussiekte wat blase op die mond en voete veroorsaak.",
+        "prevention": "Inenting en bewegingsbeheer."
       },
       "dis_prrs": {
-        "name": "PRRS (Blue Ear)",
+        "name": "PRRS (Blouoorsiekte)",
         "scientificName": "Arterivirus",
-        "description": "Causes respiratory failure and reproductive issues.",
-        "prevention": "Biosecurity and herd vaccination."
+        "description": "Veroorsaak asemhalingsversaking en voortplantingsprobleme.",
+        "prevention": "Biosekuriteit en kudde-inenting."
       },
       "dis_erysipelas": {
-        "name": "Swine Erysipelas",
+        "name": "Varkrooiroos (Erisipelas)",
         "scientificName": "Erysipelothrix rhusiopathiae",
-        "description": "Bacterial infection causing distinct skin lesions and arthritis.",
-        "prevention": "Regular vaccination and pen hygiene."
+        "description": "Bakteriese infeksie wat duidelike velletsels en artritis veroorsaak.",
+        "prevention": "Gereelde inenting en penhigiëne."
       },
       "dis_csf": {
-        "name": "Classical Swine Fever",
+        "name": "Klassieke varkpes",
         "scientificName": "Pestivirus",
-        "description": "Highly contagious viral disease similar to ASF.",
-        "prevention": "Vaccination and strict biosecurity."
+        "description": "Hoogs aansteeklike virussiekte soortgelyk aan ASF.",
+        "prevention": "Inenting en streng biosekuriteit."
       },
       "dis_anthrax": {
-        "name": "Anthrax",
+        "name": "Miltsiekte",
         "scientificName": "Bacillus anthracis",
-        "description": "Serious bacterial disease that can affect humans.",
-        "prevention": "Vaccination and avoid opening carcasses."
+        "description": "Ernstige bakteriële siekte wat mense kan affekteer.",
+        "prevention": "Inenting en vermy die oopmaak van karkasse."
       },
       "dis_brucellosis": {
-        "name": "Brucellosis",
+        "name": "Brusellose",
         "scientificName": "Brucella suis",
-        "description": "Bacterial disease causing reproductive failure.",
-        "prevention": "Testing, culling, and sanitation."
+        "description": "Bakteriese siekte wat voortplantingsversaking veroorsaak.",
+        "prevention": "Toets, uitskot en sanitasie."
       },
       "dis_coccidiosis": {
-        "name": "Coccidiosis",
+        "name": "Koksidiose by suipvarkies",
         "scientificName": "Isospora suis",
-        "description": "Parasitic disease primarily affecting piglets.",
-        "prevention": "Farrowing pen hygiene."
+        "description": "Parasitiese siekte wat hoofsaaklik varkies affekteer.",
+        "prevention": "Kraamhok higiëne."
       },
       "dis_pneumonia": {
-        "name": "Mycoplasmal Pneumonia",
+        "name": "Mikoplasmale longontsteking",
         "scientificName": "Mycoplasma hyopneumoniae",
-        "description": "Chronic respiratory disease leading to poor growth.",
-        "prevention": "Vaccination and improved ventilation."
+        "description": "Chroniese respiratoriese siekte wat lei tot swak groei.",
+        "prevention": "Inenting en verbeterde ventilasie."
       },
       "dis_salmonellosis": {
-        "name": "Salmonellosis",
+        "name": "Salmonellose",
         "scientificName": "Salmonella typhimurium",
-        "description": "Bacterial infection causing severe gut issues.",
-        "prevention": "Clean water and hygiene."
+        "description": "Bakteriese infeksie wat ernstige dermprobleme veroorsaak.",
+        "prevention": "Skoon water en higiëne."
       },
       "dis_ppv": {
-        "name": "Porcine Parvovirus (PPV)",
+        "name": "Varksparvovirus (PPV)",
         "scientificName": "Porcine Parvovirus",
-        "description": "Common cause of reproductive failure in gilts.",
-        "prevention": "Vaccination before breeding."
+        "description": "Algemene oorsaak van voortplantingsversaking by gilts.",
+        "prevention": "Inenting voor teling."
       },
       "dis_rhinitis": {
-        "name": "Atrophic Rhinitis",
+        "name": "Atrofiese rinitis",
         "scientificName": "Bordetella bronchiseptica",
-        "description": "Causes distortion of the snout and respiratory issues.",
-        "prevention": "Vaccination and air quality."
+        "description": "Veroorsaak vervorming van die snoet en respiratoriese probleme.",
+        "prevention": "Inenting en luggehalte."
       },
       "dis_leptospirosis": {
-        "name": "Leptospirosis",
+        "name": "Leptospirose",
         "scientificName": "Leptospira spp.",
-        "description": "Zoonotic bacterial disease affecting kidneys.",
-        "prevention": "Rodent control and vaccination."
+        "description": "Soönotiese bakteriële siekte wat niere aantas.",
+        "prevention": "Knaagdierbeheer en inenting."
       },
       "dis_influenza": {
-        "name": "Swine Influenza",
+        "name": "Varkgriep",
         "scientificName": "Influenza A virus",
-        "description": "Rapidly spreading respiratory infection.",
-        "prevention": "Ventilation and biosecurity."
+        "description": "Vinnig verspreide respiratoriese infeksie.",
+        "prevention": "Ventilasie en biosekuriteit."
       },
       "dis_edema": {
-        "name": "Edema Disease",
+        "name": "Oedeem siekte",
         "scientificName": "Escherichia coli",
-        "description": "Caused by E. coli toxins in weaned piglets.",
-        "prevention": "Improved sanitation and diet."
+        "description": "Veroorsaak deur E. coli-toksiene in gespeende varkies.",
+        "prevention": "Verbeterde sanitasie en dieet."
       },
       "dis_dysentery": {
-        "name": "Swine Dysentery",
+        "name": "Varkdisenterie",
         "scientificName": "Brachyspira hyodysenteriae",
-        "description": "Severe mucohaemorrhagic diarrhea.",
-        "prevention": "Water medication and disinfection."
+        "description": "Erge mukohemorragiese diarree.",
+        "prevention": "Watermedikasie en ontsmetting."
       },
       "dis_mange": {
-        "name": "Sarcoptic Mange",
+        "name": "Varkskaafmyt (Brandsiekte)",
         "scientificName": "Sarcoptes scabiei",
-        "description": "Parasitic skin disease causing extreme discomfort.",
-        "prevention": "Acaricide treatment."
+        "description": "Parasitiese velsiekte wat uiterste ongemak veroorsaak.",
+        "prevention": "Akaricide behandeling."
       },
       "dis_anemia": {
-        "name": "Iron Deficiency Anemia",
+        "name": "Ystertekort-anemie",
         "scientificName": "Iron Deficiency",
-        "description": "Common in indoor piglets without iron supplements.",
-        "prevention": "Iron injections at birth."
+        "description": "Algemeen in binnenshuise varkies sonder ysteraanvullings.",
+        "prevention": "Ysterinspuitings by geboorte."
       },
       "dis_ulcers": {
-        "name": "Gastric Ulcers",
+        "name": "Maagsere",
         "scientificName": "Gastric Ulcers",
-        "description": "Caused by fine feed or stress.",
-        "prevention": "Adjust feed particle size."
+        "description": "Veroorsaak deur fyn voer of stres.",
+        "prevention": "Pas voerdeeltjiegrootte aan."
       },
       "dis_pss": {
-        "name": "Porcine Stress Syndrome",
+        "name": "Varkstres-sindroom",
         "scientificName": "Genetic stress susceptibility",
-        "description": "Genetic condition triggered by stress.",
-        "prevention": "Genetic selection and calm handling."
+        "description": "Genetiese toestand veroorsaak deur stres.",
+        "prevention": "Genetiese seleksie en rustige hantering."
       },
       "dis_tge": {
-        "name": "Transmissible Gastroenteritis (TGE)",
+        "name": "Oordraagbare gastro-enteritis (TGE)",
         "scientificName": "Coronavirus",
-        "description": "Viral disease with high mortality in young piglets.",
-        "prevention": "Biosecurity."
+        "description": "Virussiekte met hoë mortaliteit by jong varkies.",
+        "prevention": "Biosekuriteit."
       },
       "dis_pasteurellosis": {
-        "name": "Pasteurellosis",
+        "name": "Pasteurellose",
         "scientificName": "Pasteurella multocida",
-        "description": "Bacterial pneumonia.",
-        "prevention": "Antibiotics and ventilation."
+        "description": "Bakteriese longontsteking.",
+        "prevention": "Antibiotika en ventilasie."
       },
       "dis_strep": {
-        "name": "Streptococcus suis",
+        "name": "Streptokok-breinvliesontsteking",
         "scientificName": "S. suis",
-        "description": "Bacterial infection causing meningitis.",
-        "prevention": "Antibiotics and stress reduction."
+        "description": "Bakteriese infeksie wat meningitis veroorsaak.",
+        "prevention": "Antibiotika en stresvermindering."
       },
       "dis_mycotoxicosis": {
-        "name": "Mycotoxicosis",
+        "name": "Mikotoksikose",
         "scientificName": "Mycotoxicosis",
-        "description": "Caused by mold-contaminated feed.",
-        "prevention": "Toxin binders and dry storage."
+        "description": "Veroorsaak deur vorm-besmette voer.",
+        "prevention": "Gifstofbinders en droë berging."
       },
       "dis_greasy_pig": {
-        "name": "Greasy Pig Disease",
+        "name": "Smeerboudsiekte (Staphylococcus hyicus)",
         "scientificName": "Staphylococcus hyicus",
-        "description": "Bacterial infection causing greasy skin lesions.",
+        "description": "Bakteriese infeksie wat vetterige velletsels veroorsaak.",
         "prevention": "Sanitation and antibiotics."
       },
       "dis_pseudorabies": {
         "name": "Pseudorabies (Aujeszky's)",
         "scientificName": "Suid herpesvirus 1",
-        "description": "Viral disease affecting nervous and respiratory systems.",
-        "prevention": "Vaccination and eradication programs."
+        "description": "Virale siekte wat senuwee- en respiratoriese stelsels aantas.",
+        "prevention": "Programme vir inenting en uitwissing."
       },
       "dis_pcv2": {
-        "name": "Porcine Circovirus (PCV2)",
+        "name": "Varksirkovirus Tipe 2 (PCV2)",
         "scientificName": "Circovirus",
-        "description": "Causes wasting and respiratory issues in growers.",
-        "prevention": "Vaccination."
+        "description": "Veroorsaak vermorsing en respiratoriese probleme by produsente.",
+        "prevention": "Inenting."
       },
       "dis_ped": {
-        "name": "Porcine Epidemic Diarrhea (PED)",
+        "name": "Vark epidemiese diarree (PED)",
         "scientificName": "Coronavirus",
-        "description": "Similar to TGE, highly fatal to neonates.",
-        "prevention": "Strict biosecurity."
+        "description": "Soortgelyk aan TGE, hoogs dodelik vir neonate.",
+        "prevention": "Streng biosekuriteit."
       },
       "dis_je": {
-        "name": "Japanese Encephalitis",
+        "name": "Japannese Enkefalitis",
         "scientificName": "Flavivirus",
-        "description": "Mosquito-borne viral disease.",
-        "prevention": "Mosquito control and vaccination."
+        "description": "Muskiet-oordraagbare virussiekte.",
+        "prevention": "Muskietbeheer en inenting."
       },
       "dis_rabies": {
-        "name": "Rabies",
+        "name": "Hondsdolheid",
         "scientificName": "Lyssavirus",
-        "description": "Fatal viral disease usually from bites.",
-        "prevention": "Vaccination of pets and wildlife control."
+        "description": "Dodelike virussiekte gewoonlik van byte.",
+        "prevention": "Inenting van troeteldiere en wildbeheer."
       },
       "dis_pox": {
-        "name": "Swine Pox",
+        "name": "Varkpokkies",
         "scientificName": "Suipoxvirus",
-        "description": "Viral skin disease, often spread by lice.",
-        "prevention": "Louse control."
+        "description": "Virale velsiekte, dikwels versprei deur luise.",
+        "prevention": "Luis beheer."
       },
       "dis_vs": {
-        "name": "Vesicular Stomatitis",
+        "name": "Vesikulêre Stomatitis",
         "scientificName": "Rhabdovirus",
-        "description": "Causes blisters; looks like FMD.",
-        "prevention": "Insect control and quarantine."
+        "description": "Veroorsaak blase; lyk soos bek-en-klouseer.",
+        "prevention": "Insekbeheer en kwarantyn."
       },
       "dis_clostridial": {
-        "name": "Clostridial Enteritis",
+        "name": "Clostridiale enteritis",
         "scientificName": "Clostridium perfringens",
-        "description": "Bacterial infection causing severe gut damage.",
-        "prevention": "Vaccination of sows and hygiene."
+        "description": "Bakteriese infeksie wat ernstige dermskade veroorsaak.",
+        "prevention": "Inenting van sôe en higiëne."
       },
       "dis_glassers": {
-        "name": "Glasser's Disease",
+        "name": "Glasser se siekte",
         "scientificName": "Haemophilus parasuis",
-        "description": "Causes inflammation of membranes around heart, lungs, joints.",
-        "prevention": "Antibiotics and stress management."
+        "description": "Veroorsaak inflammasie van membrane rondom hart, longe, gewrigte.",
+        "prevention": "Antibiotika en streshantering."
       },
       "dis_app": {
         "name": "Actinobacillus Pleuropneumonia (APP)",
         "scientificName": "A. pleuropneumoniae",
-        "description": "Severe bacterial pneumonia.",
-        "prevention": "Antibiotics and improved environment."
+        "description": "Erge bakteriële longontsteking.",
+        "prevention": "Antibiotika en verbeterde omgewing."
       },
       "dis_ileitis": {
-        "name": "Ileitis (Lawsonia)",
+        "name": "Ileïtis (Porsiene Derm-adenomatose)",
         "scientificName": "Lawsonia intracellularis",
         "description": "Bacterial infection of the small intestine.",
-        "prevention": "Vaccination and antibiotics."
+        "prevention": "Inenting en antibiotika."
       },
       "dis_tb": {
-        "name": "Tuberculosis",
+        "name": "Tuberkulose",
         "scientificName": "Mycobacterium avium",
-        "description": "Chronic bacterial disease.",
-        "prevention": "Bird proofing and sanitation."
+        "description": "Chroniese bakteriële siekte.",
+        "prevention": "Voëlwering en sanitasie."
       },
       "dis_tetanus": {
         "name": "Tetanus",
         "scientificName": "Clostridium tetani",
-        "description": "Bacterial toxin affecting the nervous system.",
-        "prevention": "Sanitation during surgery/castration."
+        "description": "Bakteriese toksien wat die senuweestelsel aantas.",
+        "prevention": "Sanitasie tydens operasie/kastrasie."
       },
       "dis_eperythrozoonosis": {
-        "name": "Eperythrozoonosis",
+        "name": "Eperytrosoönose",
         "scientificName": "Mycoplasma suis",
-        "description": "Blood parasite causing anemia.",
-        "prevention": "Insect control and clean needles."
+        "description": "Bloedparasiet wat bloedarmoede veroorsaak.",
+        "prevention": "Insekbeheer en skoon naalde."
       },
       "dis_ascaris": {
-        "name": "Ascaris suum",
+        "name": "Spoelwurms (Ascaris suum)",
         "scientificName": "Large Roundworm",
-        "description": "Internal parasite causing lung and liver damage.",
-        "prevention": "Regular deworming."
+        "description": "Inwendige parasiet wat long- en lewerskade veroorsaak.",
+        "prevention": "Gereelde ontwurming."
       },
       "dis_whipworms": {
-        "name": "Whipworms",
+        "name": "Sweepwurms",
         "scientificName": "Trichuris suis",
-        "description": "Internal parasite in the large intestine.",
-        "prevention": "Deworming and sanitation."
+        "description": "Inwendige parasiet in die dikderm.",
+        "prevention": "Ontwurming en sanitasie."
       },
       "dis_lungworms": {
-        "name": "Lungworms",
+        "name": "Longwurms",
         "scientificName": "Metastrongylus spp.",
-        "description": "Internal parasite of the lungs.",
-        "prevention": "Earthworm control and deworming."
+        "description": "Inwendige parasiet van die longe.",
+        "prevention": "Erdwurmbeheer en ontwurming."
       },
       "dis_kidney_worms": {
-        "name": "Kidney Worms",
+        "name": "Nierwurms",
         "scientificName": "Stephanurus dentatus",
-        "description": "Internal parasite affecting kidneys and liver.",
-        "prevention": "Management and hygiene."
+        "description": "Inwendige parasiet wat niere en lewer aantas.",
+        "prevention": "Bestuur en higiëne."
       },
       "dis_lice": {
-        "name": "Swine Lice",
+        "name": "Varkluise",
         "scientificName": "Haematopinus suis",
-        "description": "External parasite sucking blood.",
-        "prevention": "Insecticide treatment."
+        "description": "Uitwendige parasiet suig bloed.",
+        "prevention": "Insekdoder behandeling."
       },
       "dis_ringworm": {
-        "name": "Ringworm",
+        "name": "Ringwurm",
         "scientificName": "Dermatophytosis",
-        "description": "Fungal skin infection.",
-        "prevention": "Sanitation and topical treatment."
+        "description": "Swam velinfeksie.",
+        "prevention": "Sanitasie en aktuele behandeling."
       },
       "dis_mulberry_heart": {
-        "name": "Mulberry Heart Disease",
+        "name": "Moerbeihartsiekte (Vitamien E/Selenium-tekort)",
         "scientificName": "Vit E/Se Deficiency",
-        "description": "Nutritional deficiency affecting the heart.",
-        "prevention": "Supplementation."
+        "description": "Voedingstekort wat die hart beïnvloed.",
+        "prevention": "Aanvulling."
       },
       "dis_vit_a": {
-        "name": "Vitamin A Deficiency",
+        "name": "Vitamien A-tekort",
         "scientificName": "Vitamin A Deficiency",
-        "description": "Nutritional deficiency.",
-        "prevention": "Dietary adjustment."
+        "description": "Voedingstekort.",
+        "prevention": "Dieetaanpassing."
       },
       "dis_rickets": {
-        "name": "Rickets",
+        "name": "Engelse siekte / Ragitis",
         "scientificName": "Vit D/Ca/P Deficiency",
-        "description": "Nutritional deficiency affecting bone growth.",
-        "prevention": "Balanced minerals and sunlight."
+        "description": "Voedingstekort wat beengroei beïnvloed.",
+        "prevention": "Gebalanseerde minerale en sonlig."
       },
       "dis_salt_poisoning": {
-        "name": "Salt Poisoning",
+        "name": "Soutvergiftiging (Waterontneming)",
         "scientificName": "Water Deprivation",
-        "description": "Caused by lack of water followed by over-consumption.",
-        "prevention": "Constant fresh water access."
+        "description": "Veroorsaak deur gebrek aan water gevolg deur oorverbruik.",
+        "prevention": "Konstante toegang tot vars water."
       },
       "dis_heat_stroke": {
-        "name": "Heat Stroke",
+        "name": "Hitte beroerte",
         "scientificName": "Heat Stroke",
-        "description": "Overheating due to poor ventilation or shade.",
+        "description": "Oorverhitting as gevolg van swak ventilasie of skaduwee.",
         "prevention": "Ventilation, cooling, and shade."
       },
       "dis_rectal_prolapse": {
-        "name": "Rectal Prolapse",
+        "name": "Rektale prolaps (Uitsakking)",
         "scientificName": "Rectal Prolapse",
-        "description": "Often follows coughing, diarrhea, or cold stress.",
-        "prevention": "Address primary cause and surgery."
+        "description": "Volg dikwels op hoes, diarree of koue stres.",
+        "prevention": "Pak primêre oorsaak en chirurgie aan."
       },
       "dis_umbilical_hernia": {
-        "name": "Umbilical Hernia",
+        "name": "Naelstring breuk",
         "scientificName": "Umbilical Hernia",
-        "description": "Developmental defect or navel infection.",
-        "prevention": "Sanitation and genetics."
+        "description": "Ontwikkelingsdefek of naeltjieinfeksie.",
+        "prevention": "Sanitasie en genetika."
       },
       "dis_scrotal_hernia": {
-        "name": "Scrotal Hernia",
+        "name": "Skrotum Hernia",
         "scientificName": "Scrotal Hernia",
-        "description": "Genetic developmental defect.",
-        "prevention": "Genetics and surgical repair."
+        "description": "Genetiese ontwikkelingsdefek.",
+        "prevention": "Genetika en chirurgiese herstel."
       },
       "dis_splayleg": {
-        "name": "Splayleg",
+        "name": "Splayleg (Slapbeensiekte by pasgebore varkies)",
         "scientificName": "Myofibrillar hypoplasia",
-        "description": "Piglets born unable to stand with hind legs.",
-        "prevention": "Taping legs and floor traction."
+        "description": "Varkies gebore wat nie met agterpote kan staan nie.",
+        "prevention": "Taping bene en vloer traksie."
       },
       "dis_vulvovaginitis": {
         "name": "Vulvovaginitis",
         "scientificName": "Zearalenone Toxicity",
-        "description": "Caused by estrogenic fungal toxins in feed.",
-        "prevention": "Change feed source."
+        "description": "Veroorsaak deur estrogeniese swam gifstowwe in voer.",
+        "prevention": "Verander voerbron."
       },
       "dis_seneca": {
         "name": "Seneca Valley Virus (SVV)",
         "scientificName": "Senecavirus A",
-        "description": "Causes blisters similar to FMD.",
-        "prevention": "Biosecurity and diagnosis."
+        "description": "Veroorsaak blase soortgelyk aan bek-en-klouseer.",
+        "prevention": "Biosekuriteit en diagnose."
       },
       "dis_deltacoronavirus": {
-        "name": "Porcine Deltacoronavirus",
+        "name": "Vark Deltacoronavirus",
         "scientificName": "PDCoV",
-        "description": "Viral diarrhea in all ages.",
-        "prevention": "Biosecurity."
+        "description": "Virale diarree in alle ouderdomme.",
+        "prevention": "Biosekuriteit."
       },
       "dis_rotavirus": {
-        "name": "Rotavirus Diarrhea",
+        "name": "Rotavirus diarree",
         "scientificName": "Rotavirus",
-        "description": "Common cause of weaning diarrhea.",
-        "prevention": "Vaccination and hygiene."
+        "description": "Algemene oorsaak van speendiarree.",
+        "prevention": "Inenting en higiëne."
       },
       "dis_teschen": {
-        "name": "Teschen/Talfan Disease",
+        "name": "Teschen/Talfan-siekte",
         "scientificName": "Sapelovirus/Teschovirus",
-        "description": "Viral infection of the nervous system.",
-        "prevention": "Biosecurity."
+        "description": "Virale infeksie van die senuweestelsel.",
+        "prevention": "Biosekuriteit."
       },
       "dis_vesicular": {
-        "name": "Swine Vesicular Disease",
+        "name": "Vesikulêre varksiekte",
         "scientificName": "Enterovirus",
-        "description": "Viral disease mimicking FMD.",
-        "prevention": "Strict quarantine."
+        "description": "Virale siekte wat bek-en-klouseer naboots.",
+        "prevention": "Streng kwarantyn."
       },
       "dis_melioidosis": {
-        "name": "Melioidosis",
+        "name": "Melioïdose",
         "scientificName": "Burkholderia pseudomallei",
-        "description": "Bacterial disease from soil/water.",
-        "prevention": "Clean water and hygiene."
+        "description": "Bakteriese siekte van grond/water.",
+        "prevention": "Skoon water en higiëne."
       },
       "dis_trypanosomiasis": {
         "name": "Trypanosomiasis",
         "scientificName": "Trypanosoma spp.",
-        "description": "Protozoan disease spread by tsetse flies.",
-        "prevention": "Fly control and medication."
+        "description": "Protosoësiekte versprei deur tsetsevlieë.",
+        "prevention": "Vliegbeheer en medikasie."
       },
       "dis_cysticercosis": {
         "name": "Cysticercosis",
         "scientificName": "Taenia solium larvae",
-        "description": "Larval stage of human tapeworm in pig muscle.",
-        "prevention": "Prevent access to human waste."
+        "description": "Larwale stadium van menslike lintwurm in varkspier.",
+        "prevention": "Voorkom toegang tot menslike afval."
       },
       "dis_toxoplasmosis": {
-        "name": "Toxoplasmosis",
+        "name": "Toksoplasmose",
         "scientificName": "Toxoplasma gondii",
-        "description": "Zoonotic protozoan infection.",
-        "prevention": "Cat control and biosecurity."
+        "description": "Soönotiese protosoë infeksie.",
+        "prevention": "Katbeheer en biosekuriteit."
       },
       "dis_listeriosis": {
-        "name": "Listeriosis",
+        "name": "Listeriose",
         "scientificName": "Listeria monocytogenes",
-        "description": "Bacterial infection of nervous system.",
-        "prevention": "Sanitation and feed hygiene."
+        "description": "Bakteriese infeksie van die senuweestelsel.",
+        "prevention": "Sanitasie en voerhigiëne."
       },
       "dis_ear_necrosis": {
-        "name": "Ear Necrosis",
+        "name": "Oornekrose",
         "scientificName": "Ear Necrosis",
-        "description": "Often caused by stress, overcrowding, or infection.",
-        "prevention": "Reduce density and treat secondary infection."
+        "description": "Dikwels veroorsaak deur stres, oorbevolking of infeksie.",
+        "prevention": "Verminder digtheid en behandel sekondêre infeksie."
       },
       "dis_sunburn": {
-        "name": "Sunburn",
+        "name": "Sonbrand",
         "scientificName": "Solar dermatitis",
-        "description": "Affects white-skinned pigs outdoors.",
-        "prevention": "Provide shade."
+        "description": "Beïnvloed witvelvarke buite.",
+        "prevention": "Verskaf skadu."
       },
       "dis_tail_biting": {
-        "name": "Tail Biting",
+        "name": "Stertbyt (Kannibalisme)",
         "scientificName": "Behavioral stress",
-        "description": "Behavioral issue due to stress/boredom.",
-        "prevention": "Reduce stress and enrich environment."
+        "description": "Gedragskwessie as gevolg van stres/verveling.",
+        "prevention": "Verminder stres en verryk omgewing."
       },
       "dis_navel_ill": {
-        "name": "Navel Ill",
+        "name": "Naeltjie Siek",
         "scientificName": "Navel Infection",
-        "description": "Infection of the umbilical cord at birth.",
-        "prevention": "Iodine dip at birth and sanitation."
+        "description": "Infeksie van die naelstring by geboorte.",
+        "prevention": "Jodiumdip by geboorte en sanitasie."
       },
       "dis_iron_toxicity": {
-        "name": "Iron Toxicity",
+        "name": "Yster toksisiteit",
         "scientificName": "Ferrous excess",
-        "description": "Excess iron administration leading to sudden death.",
-        "prevention": "Inject accurate dosage."
+        "description": "Kan voorkom as yster in Vit E-tekort varkies ingespuit word.",
+        "prevention": "Maak seker sog dieet is gebalanseerd."
       },
       "dis_aflatoxicosis": {
-        "name": "Aflatoxicosis",
+        "name": "Aflatoksikose",
         "scientificName": "Aspergillus flavus toxin",
-        "description": "Fungal toxin poisoning.",
-        "prevention": "Avoid moldy feed and use toxin binders."
+        "description": "Toksienvergiftiging van muf korrels of voer wat lewerskade en geelsug veroorsaak.",
+        "prevention": "Vermy die voer van muf voer, berg korrels in droë toestande en gebruik gifstofbinders."
       },
       "dis_parakeratosis": {
-        "name": "Parakeratosis",
+        "name": "Parakeratose (sinktekort)",
         "scientificName": "Zinc deficiency",
-        "description": "Zinc deficiency in swine.",
-        "prevention": "Ensure adequate zinc levels in diet."
+        "description": "Voedingsiekte wat ernstige korsagtige, verdikte velletsels veroorsaak.",
+        "prevention": "Verseker gebalanseerde kalsium-tot-sink-verhouding in voer en verskaf sinkaanvullings."
       },
       "dis_biotin_deficiency": {
-        "name": "Biotin Deficiency",
+        "name": "Biotientekort",
         "scientificName": "Vitamin H deficiency",
-        "description": "Biotin deficiency in swine.",
-        "prevention": "Provide biotin supplements."
+        "description": "Voedingstekort wat gebarste hoewe, velletsels en mankheid veroorsaak.",
+        "prevention": "Vul dieet aan met biotien en vermy growwe, nat betonvloere."
       },
       "dis_gossypol_toxicity": {
-        "name": "Gossypol Toxicity",
+        "name": "Gossypol toksisiteit",
         "scientificName": "Gossypol poisoning",
-        "description": "Cottonseed meal poisoning.",
-        "prevention": "Limit raw cottonseed meal in feed."
+        "description": "Vergiftiging deur die voeding van rou of oortollige katoensaadmeel, wat asemhalingsnood veroorsaak.",
+        "prevention": "Beperk katoensaadmeel in dieet en gebruik ystersulfaat om gossipol te neutraliseer."
       },
       "dis_cassava_poisoning": {
-        "name": "Cassava Poisoning",
+        "name": "Maniok Vergiftiging",
         "scientificName": "Cyanogenic glycosides",
-        "description": "Cyanide poisoning from raw cassava.",
-        "prevention": "Cook or ferment cassava before feeding."
+        "description": "Sianiedvergiftiging van rou of onbehoorlik verwerkte maniokwortels of skille.",
+        "prevention": "Skil, kook, sondroog of fermenteer maniok voor voeding."
       },
       "dis_sweet_potato_toxicity": {
-        "name": "Sweet Potato Toxicity",
+        "name": "Patat toksisiteit",
         "scientificName": "Ipomeamarone toxicity",
-        "description": "Ipomeamarone poisoning.",
-        "prevention": "Do not feed moldy or damaged sweet potatoes."
+        "description": "Vergiftiging van muf patats, wat ernstige asemhalingsprobleme veroorsaak.",
+        "prevention": "Gooi beskadigde of muf patats weg; voer slegs gesonde knolle."
       },
       "dis_mma": {
-        "name": "MMA Syndrome",
+        "name": "Postpartum disgalaktie (MMA)",
         "scientificName": "Mastitis-Metritis-Agalactia",
-        "description": "Post-farrowing infection in sows.",
-        "prevention": "Clean farrowing pens and proper nutrition."
+        "description": "Mastitis, metritis en agalaktie veroorsaak koors en gebrek aan melk by sôe na vrug.",
+        "prevention": "Handhaaf streng kraamhokhigiëne en verseker voldoende sogvoeding."
       },
       "dis_pwd": {
-        "name": "Post-Weaning Diarrhea",
+        "name": "Naspeense diarree (PWD)",
         "scientificName": "Escherichia coli (F4/F18)",
-        "description": "Colibacillosis in weaned pigs.",
-        "prevention": "Sanitation and diet adjustment."
+        "description": "Bakteriese diarree by varkies kort na speen, wat dehidrasie veroorsaak.",
+        "prevention": "Verminder speenstres, handhaaf hoë sanitasie en voorsien skoon drinkwater."
       },
       "dis_trichinellosis": {
-        "name": "Trichinellosis",
+        "name": "Trichinellose",
         "scientificName": "Trichinella spiralis",
-        "description": "Zoonotic parasitic infection.",
-        "prevention": "Do not feed raw garbage; pest control."
+        "description": "Soönotiese parasitiese siekte deur die eet van rou vleisreste, wat spierstyfheid veroorsaak.",
+        "prevention": "Moenie rou afval voer, kosreste vir 30 minute kook en knaagdiere beheer nie."
       },
       "dis_hydatid_disease": {
-        "name": "Hydatid Disease",
+        "name": "Hidatidose",
         "scientificName": "Echinococcus granulosus",
-        "description": "Larval tapeworm infection.",
-        "prevention": "Deworm farm dogs; prevent access to offal."
+        "description": "Parasitiese larwes infeksie wat vloeistofgevulde siste in organe veroorsaak.",
+        "prevention": "Ontwurm plaashonde gereeld en keer dat hulle rou varkorgane eet."
       },
       "dis_phe": {
-        "name": "Proliferative Hemorrhagic Enteropathy",
+        "name": "Varkhemorragiese enteropatie",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Acute intestinal bleeding in young adult pigs.",
-        "prevention": "Vaccination and hygiene."
+        "description": "Akute bloederige diarree en skielike dood by kweker/afwerkvarke.",
+        "prevention": "Handhaaf goeie sanitasie en gebruik toepaslike antibiotika onder veearts se leiding."
       },
       "dis_mycoplasma_arthritis": {
-        "name": "Mycoplasma Arthritis",
+        "name": "Mikoplasmale artritis",
         "scientificName": "Mycoplasma hyosynoviae",
-        "description": "Bacterial joint disease.",
-        "prevention": "Sanitation and quarantine."
+        "description": "Bakteriese infeksie wat geswelde gewrigte, mankheid en beenswakheid veroorsaak.",
+        "prevention": "Verbeter behuisingstoestande, verminder veedigtheid en behandel vroeg."
       },
       "dis_foot_rot": {
-        "name": "Foot Rot",
+        "name": "Voetvrot (nekrobacillose)",
         "scientificName": "Fusobacterium necrophorum",
-        "description": "Infection of the foot causing lameness.",
-        "prevention": "Keep pens dry; treat hooves."
+        "description": "Bakteriese infeksie wat hoefbeserings binnedring, wat verrotting en mankheid veroorsaak.",
+        "prevention": "Herstel growwe beton, hou vloere droog en gebruik voetbaddens indien nodig."
       },
       "dis_babesiosis": {
-        "name": "Babesiosis",
+        "name": "Bosluisgedraagde Babesiose",
         "scientificName": "Babesia trautmanni",
-        "description": "Tick-borne protozoan infection.",
-        "prevention": "Acaricide spray for tick control."
+        "description": "Bloedparasiet wat deur bosluis oorgedra word wat hoë koors, bloedarmoede en donker urine veroorsaak.",
+        "prevention": "Beheer bosluise met mytdoders en hou krale vry van plantegroei."
       },
       "dis_anaplasmosis": {
-        "name": "Anaplasmosis",
+        "name": "Anaplasmose",
         "scientificName": "Anaplasma marginale",
-        "description": "Blood infection in swine.",
-        "prevention": "Vector control."
+        "description": "Bosluisgedraagde bakteriële infeksie wat bloedarmoede, koors en geelsug veroorsaak.",
+        "prevention": "Implementeer vektor- en bosluisbeheerprogramme."
       },
       "dis_sow_hysteria": {
-        "name": "Sow Hysteria",
+        "name": "Saai Histerie",
         "scientificName": "Puerperal psychosis",
-        "description": "Aggression or panic in sows after farrowing.",
-        "prevention": "Provide quiet farrowing area."
+        "description": "Gedragsversteuring waar kraamsôe aggressief raak en varkies byt.",
+        "prevention": "Verskaf 'n stil kraamomgewing, hou toesig oor gelte en gebruik kalmeermiddels indien nodig."
       },
       "dis_thorny_headed_worm": {
-        "name": "Thorny-Headed Worm",
+        "name": "Doringkopwurm",
         "scientificName": "Macracanthorhynchus hirudinaceus",
-        "description": "Intestinal parasite.",
-        "prevention": "Prevent access to June beetle grubs."
+        "description": "Parasitiese wurm wat verkry word deur kewers te eet, wat dermperforasie veroorsaak.",
+        "prevention": "Vermy vrylopende grootmaak op kewer-besmette gronde en gebruik ontwurmingsmiddels."
       },
       "dis_strongyloidiasis": {
-        "name": "Strongyloidiasis",
+        "name": "Strongyloidiasis (Draadwurm)",
         "scientificName": "Strongyloides ransomi",
-        "description": "Threadworm infection.",
-        "prevention": "Keep pens dry; deworming."
+        "description": "Dermdraadwurm wat ernstige diarree en mortaliteit by varkies veroorsaak.",
+        "prevention": "Hou kratte droog en skoon, en ontwurm sôe voor kraam."
       },
       "dis_hyostrongylosis": {
-        "name": "Red Stomach Worm",
+        "name": "Rooi Maagwurm",
         "scientificName": "Hyostrongylus rubidus",
-        "description": "Intestinal worm in grazing pigs.",
-        "prevention": "Clean pasture management; deworming."
+        "description": "Maagwurminfeksie wat gastritis, bloedarmoede en gewigsverlies veroorsaak.",
+        "prevention": "Roteer weidings, hou behuising droog en implementeer 'n ontwurmingskedule."
       },
       "dis_oesophagostomiasis": {
-        "name": "Nodular Worm",
+        "name": "Knobbelwurminfeksie",
         "scientificName": "Oesophagostomum spp.",
-        "description": "Intestinal worm in swine.",
-        "prevention": "Deworming and sanitation."
+        "description": "Intestinale parasiet wat knoppe in die dermwand veroorsaak, wat lei tot dun sôe.",
+        "prevention": "Gereelde pensanitasie en roetinegebruik van breëspektrum wurmmiddels."
       },
       "dis_fascioliasis": {
-        "name": "Fascioliasis",
+        "name": "Fascioliase (Lewerslak)",
         "scientificName": "Fasciola gigantica",
-        "description": "Liver fluke infection.",
-        "prevention": "Snail control; keep away from wet pastures."
+        "description": "Parasitiese slak wat die lewer aantas, algemeen in nat of moerasagtige weivelde.",
+        "prevention": "Verhoed dat varke in moerasagtige gebiede wei en beheer modderslakke."
       },
       "dis_emcv": {
-        "name": "EMCV",
+        "name": "Enkefalomiokarditis (EMCV)",
         "scientificName": "Cardiovirus",
-        "description": "Viral myocarditis and reproductive failure.",
-        "prevention": "Rodent control (rodents spread EMCV)."
+        "description": "Knaagdier-gedraagde virale infeksie wat skielike hartversaking en aborsie veroorsaak.",
+        "prevention": "Implementeer streng knaagdierbeheer en beskerm voer teen kontaminasie."
       },
       "dis_demodectic_mange": {
-        "name": "Demodectic Mange",
+        "name": "Demodex Mange",
         "scientificName": "Demodex phylloides",
-        "description": "Skin mite infection.",
-        "prevention": "Acaricide treatment."
+        "description": "Mikroskopiese velmyt wat skubberige kolle en klein pustules veroorsaak.",
+        "prevention": "Verbeter kuddevoeding, isoleer aangetaste varke en dien mytdoders toe."
       },
       "dis_pityriasis_rosea": {
         "name": "Pityriasis Rosea",
         "scientificName": "Pseudo-ringworm",
-        "description": "Non-contagious skin condition.",
-        "prevention": "Spontaneous recovery; keep environment clean."
+        "description": "Nie-aansteeklike veltoestand by jong varke wat ringagtige korse vorm.",
+        "prevention": "Gewoonlik selfoplossend; handhaaf skoon, droë beddegoed en verminder stres."
       },
       "dis_photosensitization": {
-        "name": "Photosensitization",
+        "name": "Fotosensibilisering",
         "scientificName": "Solar dermatitis",
-        "description": "Skin hypersensitivity to sunlight.",
-        "prevention": "Keep out of direct sunlight; check pasture plants."
+        "description": "Erge sonbrandagtige reaksie by varke met ligte vel nadat hulle spesifieke plante geëet het.",
+        "prevention": "Verskaf skadu, verwyder sensibiliserende onkruid en hou varke binnenshuis."
       },
       "dis_shoulder_ulcers": {
-        "name": "Shoulder Ulcers",
+        "name": "Saai Skouersere",
         "scientificName": "Decubitus ulcers",
-        "description": "Sores in thin sows on hard floors.",
-        "prevention": "Provide soft bedding; increase feed."
+        "description": "Druksere op die skouers van dun sôe wat op harde beton gehuisves word.",
+        "prevention": "Verskaf sagte beddegoed, hou sôe in goeie liggaamskondisie en gebruik rubbermatte."
       },
       "dis_ear_biting": {
-        "name": "Ear Biting",
+        "name": "Oor Kannibalisme",
         "scientificName": "Stress response behavior",
-        "description": "Behavioral stress response.",
-        "prevention": "Reduce stocking density; enrich environment."
+        "description": "Abnormale gedrag waar varke die ore van penmaats byt, wat nekrose veroorsaak.",
+        "prevention": "Verminder druk, verbeter ventilasie en verskaf verryking soos kettings."
       },
       "dis_gastric_torsion": {
-        "name": "Gastric Torsion",
+        "name": "Maagtorsie (opblaas)",
         "scientificName": "Gastric dilation-volvulus",
-        "description": "Twisted stomach.",
-        "prevention": "Avoid overfeeding in single meals."
+        "description": "Skielike opgeblasenheid en draai van die maag, wat lei tot vinnige dood.",
+        "prevention": "Vermy die voer van groot maaltye na lang vas en verdeel daaglikse voer in porsies."
       },
       "dis_c_difficile": {
-        "name": "C. difficile Infection",
+        "name": "Clostridium difficile (CDI)",
         "scientificName": "Clostridioides difficile",
-        "description": "Bacterial diarrhea in piglets.",
-        "prevention": "Clean environment and proper ventilation."
+        "description": "Bakteriese infeksie by pasgebore varkies wat waterige diarree en opgeblasenheid veroorsaak.",
+        "prevention": "Maak kraamhokke deeglik skoon en ontsmet en verseker vroeë biesmelk."
       },
       "dis_cold_stress": {
-        "name": "Cold Stress",
+        "name": "Koue stres (hipotermie)",
         "scientificName": "Hypothermia susceptibility",
-        "description": "Chilling in young piglets.",
-        "prevention": "Provide heat lamps and dry bedding."
+        "description": "Erge liggaamsverkoeling by varkies, wat rillings en hoë mortaliteit veroorsaak.",
+        "prevention": "Voorsien hittelampe, kruipbokse en hou kraamarea droog en trekvry."
       },
       "dis_necrotic_enteritis": {
-        "name": "Necrotic Enteritis",
+        "name": "Nekrotiese enteritis",
         "scientificName": "Clostridium perfringens Type C",
-        "description": "Clostridial gut infection.",
-        "prevention": "Sow vaccination and pen sanitation."
+        "description": "Bakteriese toksiensiekte wat ernstige bloedige diarree en hoë mortaliteit by varkies veroorsaak.",
+        "prevention": "Ent sôe voor kraam en handhaaf absolute hokhigiëne."
       },
       "dis_navel_bleeding": {
-        "name": "Navel Bleeding",
+        "name": "Naeltjiebloeding",
         "scientificName": "Umbilical hemorrhage",
-        "description": "Hemorrhage from umbilical cord.",
-        "prevention": "Tie off bleeding navels; check feed vitamin K."
+        "description": "Oormatige bloeding vanaf die naelstring by pasgebore varkies.",
+        "prevention": "Bind naelstringe by geboorte en vermy die voer van mikotoksien-besmette voer aan sôe."
       },
       "dis_spirochetal_colitis": {
-        "name": "Spirochetal Colitis",
+        "name": "Vark spirogetale kolitis",
         "scientificName": "Brachyspira pilosicoli",
-        "description": "Bacterial large intestine infection.",
-        "prevention": "Medication and pen sanitation."
+        "description": "Ligte diarreesiekte by groeiende varke, wat swak gewigstoename veroorsaak.",
+        "prevention": "Ontsmet voerbakke en behandel aangetaste varke met antibiotika."
       },
       "dis_salmonella_septicemia": {
-        "name": "Salmonella Septicemia",
+        "name": "Salmonella septisemie",
         "scientificName": "Salmonella choleraesuis",
-        "description": "Blood infection from Salmonella.",
-        "prevention": "Clean water; biosecurity."
+        "description": "Erge bloedstroom salmonella infeksie wat pers vel en vinnige dood veroorsaak.",
+        "prevention": "Isoleer siek varke, medisineer water en handhaaf streng biosekuriteit."
       },
       "dis_prdc": {
-        "name": "PRDC",
+        "name": "Vark Respiratoriese Siekte Kompleks",
         "scientificName": "Porcine Respiratory Disease Complex",
-        "description": "Respiratory complex in grower pigs.",
-        "prevention": "Ventilation, vaccination, and density control."
+        "description": "Gemengde virale en bakteriële respiratoriese infeksie wat hoes en swak groei veroorsaak.",
+        "prevention": "Verbeter ventilasie, vermy oorbevolking en beheer primêre virusse."
       },
       "dis_ergotism": {
-        "name": "Ergotism",
+        "name": "Ergotisme (Ergotisme)",
         "scientificName": "Claviceps purpurea",
-        "description": "Poisoning from moldy rye/grains.",
-        "prevention": "Inspect feed grains for black ergot bodies."
+        "description": "Swamvergiftiging van ergot-besmette graankorrels, wat weefselnekrose veroorsaak.",
+        "prevention": "Sif voerkorrels vir donker ergot-lywe en vervang besmette voer."
       },
       "dis_bvdv_pig": {
-        "name": "BVDV in Pigs",
+        "name": "BVV-infeksie by varke",
         "scientificName": "Pestivirus",
-        "description": "Bovine Viral Diarrhea virus in swine.",
-        "prevention": "Isolate pigs from cattle."
+        "description": "Bees Virale Diarree virus infeksie van kontak met beeste, wat aborsie veroorsaak.",
+        "prevention": "Hou varke apart van beeste en skape, en beperk kruis-spesie kontakte."
       },
       "dis_endocarditis": {
-        "name": "Endocarditis",
+        "name": "Bakteriële endokarditis",
         "scientificName": "Streptococcal endocarditis",
-        "description": "Heart valve infection.",
-        "prevention": "Treat primary infections early."
+        "description": "Hartklepinfeksie wat hartversaking en skielike dood tydens stres veroorsaak.",
+        "prevention": "Behandel gewrigsiektes en wonde dadelik, en kies teen vatbare genetika."
       },
       "dis_polyserositis": {
-        "name": "Polyserositis",
+        "name": "Mycoplasma Polyserositis",
         "scientificName": "Mycoplasma hyorhinis",
-        "description": "Infection of body cavity linings.",
-        "prevention": "Antibiotic treatment; minimize stress."
+        "description": "Veselagtige ontsteking van long-, hart- en gewrigsoppervlaktes by speenkalwers.",
+        "prevention": "Verminder speenstres, vermy die meng van werpsels en ventileer behoorlik."
       },
       "dis_congenital_tremor": {
-        "name": "Congenital Tremor",
+        "name": "Kongenitale bewing",
         "scientificName": "Atypical Porcine Pestivirus",
-        "description": "Shaky pig disease.",
-        "prevention": "Acclimatize gilts to farm before breeding."
+        "description": "Neurologiese toestand by pasgebore varkies wat erge bewing veroorsaak.",
+        "prevention": "Vermy die gebruik van semen van aangetaste varke en verminder sogstres tydens dragtigheid."
       }
     },
     "diagnosisMatches": "Clinical Diagnosis Matches",
@@ -1535,7 +1541,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 EMERGENCY BIOSECURITY PROTOCOL:",
     "clinicalDiagnosisMatches": "Kliniese Diagnose Pasmaats",
     "hallmarkBadge": "Kenmerkend",
-    "hallmarkSignPresent": "Kenmerkteken teenwoordig: %1$s",
+    "hallmarkSignPresent": "Kenmerkteken teenwoordig: {sign}",
     "otherSignsWatch": "Ander tekens om voor op te let:",
     "preventionTreatmentLabel": "Voorkoming / Behandeling: {treatment}",
     "bio_proto_asf": "IMMEDIATE EMERGENCY QUARANTINE: African Swine Fever is a lethal, legally notifiable virus. 1) Lock down farm gates immediately. 2) Stop all movement of pigs, vehicles, feed, and manure. 3) Disinfect all boot baths and tyres with Virkon S or 2% caustic soda. 4) Contact your District/National Veterinary Officer immediately.",
@@ -1547,8 +1553,8 @@
     "bio_proto_vesicular_stomatitis": "REPORTABLE VESICULAR LESION ALERT: Vesicular Stomatitis is clinically indistinguishable from Foot and Mouth Disease. 1) Isolate infected pigs immediately. 2) Wear protective gloves. 3) Report to state veterinarian for lab differential diagnosis.",
     "bio_proto_senecavirus": "REPORTABLE VESICULAR DISEASE: Senecavirus A lesions are clinically indistinguishable from Foot and Mouth Disease (FMD). 1) Quarantine pen immediately. 2) Restrict off-farm movement. 3) Notify livestock veterinary authorities for mandatory differential PCR testing.",
     "bio_proto_svd": "REPORTABLE VESICULAR DISEASE: Swine Vesicular Disease (SVD). 1) Strict isolation of infected animals. 2) Restrict all vehicle and visitor movements. 3) Report to state animal health department immediately.",
-    "clinicalMatchPercent": "%1$d%% Kliniese passing",
-    "matchedSignsCount": "{matched}$d van {total}$d tekens",
+    "clinicalMatchPercent": "{percent}% Kliniese passing",
+    "matchedSignsCount": "{matched} van {total} tekens",
     "matchPercentSuffix": "({percent}% match)"
   },
   "HR": {
@@ -1983,7 +1989,7 @@
     "snooze1Month": "1 maand",
     "deleteNotificationQuestion": "Vee kennisgewing uit?",
     "deleteNotificationConfirm": "Is jy seker jy wil hierdie kennisgewing uitvee?",
-    "lastWeighedDaysAgo": "Vark #%1$s: Laas geweeg %2$s dae gelede",
+    "lastWeighedDaysAgo": "Vark #{tag}: Laas geweeg {days} dae gelede",
     "stockLeftMinFormat": "{current}: {unit} kg oor (Min: {min} kg)",
     "pigs": "Varke",
     "pig": "Vark",

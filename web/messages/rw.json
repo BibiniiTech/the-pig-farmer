@@ -124,7 +124,13 @@
     "noActivities": "No upcoming activities",
     "allTasksCompleted": "All tasks are completed!",
     "generalTask": "General Task",
-    "language": "Language"
+    "language": "Language",
+    "feed": "Kugaburira",
+    "inventory": "Kugaburira Ibarura",
+    "calculator": "Kubara ibiryo by'ingurube",
+    "mixFeed": "Gupima no kuvanga ibiryo",
+    "analyzeFeed": "Gusuzuma intungamubiri z'ibiryo",
+    "marketHub": "Ihuzanzira ry'Isoko ry'Ingurube"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -866,664 +872,664 @@
     },
     "diseases": {
       "dis_asf": {
-        "name": "African Swine Fever (ASF)",
+        "name": "Indwara y'ingurube nyafurika (ASF)",
         "scientificName": "Asfivirus",
-        "description": "A highly contagious and deadly viral disease prevalent in West Africa. No vaccine exists.",
-        "prevention": "Strict biosecurity and restrict farm access."
+        "description": "Indwara yanduye cyane kandi yica yiganje muri Afrika yuburengerazuba. Nta rukingo rubaho.",
+        "prevention": "Gukumira umutekano muke no kugabanya uburyo bwo guhinga."
       },
       "dis_fmd": {
-        "name": "Foot and Mouth Disease (FMD)",
+        "name": "Indwara Yamaguru n umunwa (FMD)",
         "scientificName": "Aphthovirus",
-        "description": "Viral disease causing blisters on the mouth and feet.",
-        "prevention": "Vaccination and movement control."
+        "description": "Indwara ya virusi itera ibisebe ku munwa no ku birenge.",
+        "prevention": "Gukingiza no kugenzura ibikorwa."
       },
       "dis_prrs": {
-        "name": "PRRS (Blue Ear)",
+        "name": "PRRS (ugutwi k'ubururu)",
         "scientificName": "Arterivirus",
-        "description": "Causes respiratory failure and reproductive issues.",
-        "prevention": "Biosecurity and herd vaccination."
+        "description": "Bitera kunanirwa guhumeka nibibazo byimyororokere.",
+        "prevention": "Gukingira ibinyabuzima no gukingira ubushyo."
       },
       "dis_erysipelas": {
-        "name": "Swine Erysipelas",
+        "name": "Ingurube Erysipelas",
         "scientificName": "Erysipelothrix rhusiopathiae",
-        "description": "Bacterial infection causing distinct skin lesions and arthritis.",
-        "prevention": "Regular vaccination and pen hygiene."
+        "description": "Indwara ya bagiteri itera ibikomere bitandukanye byuruhu na artrite.",
+        "prevention": "Urukingo rusanzwe hamwe nisuku yikaramu."
       },
       "dis_csf": {
-        "name": "Classical Swine Fever",
+        "name": "Indwara y'ingurube ya kera",
         "scientificName": "Pestivirus",
-        "description": "Highly contagious viral disease similar to ASF.",
-        "prevention": "Vaccination and strict biosecurity."
+        "description": "Indwara zandura cyane virusi isa na ASF.",
+        "prevention": "Inkingo hamwe no kubungabunga umutekano muke."
       },
       "dis_anthrax": {
         "name": "Anthrax",
         "scientificName": "Bacillus anthracis",
-        "description": "Serious bacterial disease that can affect humans.",
-        "prevention": "Vaccination and avoid opening carcasses."
+        "description": "Indwara ikomeye ya bagiteri ishobora gufata abantu.",
+        "prevention": "Inkingo kandi wirinde gufungura imirambo."
       },
       "dis_brucellosis": {
-        "name": "Brucellosis",
+        "name": "Brucellose",
         "scientificName": "Brucella suis",
-        "description": "Bacterial disease causing reproductive failure.",
-        "prevention": "Testing, culling, and sanitation."
+        "description": "Indwara ya bagiteri itera kunanirwa kubyara.",
+        "prevention": "Kwipimisha, kwica, hamwe nisuku."
       },
       "dis_coccidiosis": {
-        "name": "Coccidiosis",
+        "name": "Coccidiose",
         "scientificName": "Isospora suis",
-        "description": "Parasitic disease primarily affecting piglets.",
-        "prevention": "Farrowing pen hygiene."
+        "description": "Indwara ya parasitike yibasira cyane cyane ingurube.",
+        "prevention": "Isuku y'ikaramu."
       },
       "dis_pneumonia": {
-        "name": "Mycoplasmal Pneumonia",
+        "name": "Umusonga wa Mycoplasmal",
         "scientificName": "Mycoplasma hyopneumoniae",
-        "description": "Chronic respiratory disease leading to poor growth.",
-        "prevention": "Vaccination and improved ventilation."
+        "description": "Indwara zubuhumekero zidakira zitera gukura nabi.",
+        "prevention": "Urukingo no guhumeka neza."
       },
       "dis_salmonellosis": {
-        "name": "Salmonellosis",
+        "name": "Salmonellose",
         "scientificName": "Salmonella typhimurium",
-        "description": "Bacterial infection causing severe gut issues.",
-        "prevention": "Clean water and hygiene."
+        "description": "Indwara ya bagiteri itera ibibazo bikomeye byo munda.",
+        "prevention": "Amazi meza nisuku."
       },
       "dis_ppv": {
         "name": "Porcine Parvovirus (PPV)",
         "scientificName": "Porcine Parvovirus",
-        "description": "Common cause of reproductive failure in gilts.",
-        "prevention": "Vaccination before breeding."
+        "description": "Impamvu zisanzwe zitera kunanirwa kwimyororokere muri gilts.",
+        "prevention": "Inkingo mbere yo kororoka."
       },
       "dis_rhinitis": {
-        "name": "Atrophic Rhinitis",
+        "name": "Indwara ya Atrophike",
         "scientificName": "Bordetella bronchiseptica",
-        "description": "Causes distortion of the snout and respiratory issues.",
-        "prevention": "Vaccination and air quality."
+        "description": "Bitera kugoreka ibibazo byigituba nubuhumekero.",
+        "prevention": "Inkingo n'ubwiza bw'ikirere."
       },
       "dis_leptospirosis": {
-        "name": "Leptospirosis",
+        "name": "Leptospirose",
         "scientificName": "Leptospira spp.",
-        "description": "Zoonotic bacterial disease affecting kidneys.",
-        "prevention": "Rodent control and vaccination."
+        "description": "Indwara ya bagiteri ya Zoonotic yibasira impyiko.",
+        "prevention": "Kurwanya inzoka no gukingira."
       },
       "dis_influenza": {
-        "name": "Swine Influenza",
+        "name": "Ibicurane by'ingurube",
         "scientificName": "Influenza A virus",
-        "description": "Rapidly spreading respiratory infection.",
-        "prevention": "Ventilation and biosecurity."
+        "description": "Gukwirakwiza vuba indwara zubuhumekero.",
+        "prevention": "Guhumeka no kubungabunga umutekano."
       },
       "dis_edema": {
-        "name": "Edema Disease",
+        "name": "Indwara",
         "scientificName": "Escherichia coli",
-        "description": "Caused by E. coli toxins in weaned piglets.",
-        "prevention": "Improved sanitation and diet."
+        "description": "Biterwa n'uburozi bwa E. coli mu ngurube zonsa.",
+        "prevention": "Kunoza isuku nimirire."
       },
       "dis_dysentery": {
-        "name": "Swine Dysentery",
+        "name": "Ingurube",
         "scientificName": "Brachyspira hyodysenteriae",
-        "description": "Severe mucohaemorrhagic diarrhea.",
-        "prevention": "Water medication and disinfection."
+        "description": "Impiswi ikabije ya mucohaemorrhagic.",
+        "prevention": "Imiti y'amazi no kuyanduza."
       },
       "dis_mange": {
         "name": "Sarcoptic Mange",
         "scientificName": "Sarcoptes scabiei",
-        "description": "Parasitic skin disease causing extreme discomfort.",
-        "prevention": "Acaricide treatment."
+        "description": "Indwara y'uruhu rwa parasitike itera kubura amahwemo bikabije.",
+        "prevention": "Kuvura Acaricide."
       },
       "dis_anemia": {
-        "name": "Iron Deficiency Anemia",
+        "name": "Kubura fer",
         "scientificName": "Iron Deficiency",
-        "description": "Common in indoor piglets without iron supplements.",
-        "prevention": "Iron injections at birth."
+        "description": "Bikunze kugaragara mu ngurube zo mu nzu nta byongeweho ibyuma.",
+        "prevention": "Gutera ibyuma mugihe cyo kuvuka."
       },
       "dis_ulcers": {
-        "name": "Gastric Ulcers",
+        "name": "Indwara yo mu gifu",
         "scientificName": "Gastric Ulcers",
-        "description": "Caused by fine feed or stress.",
-        "prevention": "Adjust feed particle size."
+        "description": "Biterwa no kugaburira neza cyangwa guhangayika.",
+        "prevention": "Guhindura ingano y'ibiryo."
       },
       "dis_pss": {
-        "name": "Porcine Stress Syndrome",
+        "name": "Indwara ya Porcine",
         "scientificName": "Genetic stress susceptibility",
-        "description": "Genetic condition triggered by stress.",
-        "prevention": "Genetic selection and calm handling."
+        "description": "Imiterere ya genetike iterwa no guhangayika.",
+        "prevention": "Guhitamo ubwoko no gufata neza."
       },
       "dis_tge": {
-        "name": "Transmissible Gastroenteritis (TGE)",
+        "name": "Indwara ya Gastroenteritis (TGE)",
         "scientificName": "Coronavirus",
-        "description": "Viral disease with high mortality in young piglets.",
-        "prevention": "Biosecurity."
+        "description": "Indwara ya virusi hamwe nimpfu nyinshi mu ngurube zikiri nto.",
+        "prevention": "Umutekano muke."
       },
       "dis_pasteurellosis": {
-        "name": "Pasteurellosis",
+        "name": "Pasteurellose",
         "scientificName": "Pasteurella multocida",
-        "description": "Bacterial pneumonia.",
-        "prevention": "Antibiotics and ventilation."
+        "description": "Umusonga wa bagiteri.",
+        "prevention": "Antibiyotike no guhumeka."
       },
       "dis_strep": {
         "name": "Streptococcus suis",
         "scientificName": "S. suis",
-        "description": "Bacterial infection causing meningitis.",
-        "prevention": "Antibiotics and stress reduction."
+        "description": "Indwara ya bagiteri itera meningite.",
+        "prevention": "Antibiyotike no kugabanya imihangayiko."
       },
       "dis_mycotoxicosis": {
-        "name": "Mycotoxicosis",
+        "name": "Mycotoxicose",
         "scientificName": "Mycotoxicosis",
-        "description": "Caused by mold-contaminated feed.",
-        "prevention": "Toxin binders and dry storage."
+        "description": "Biterwa nibiryo byanduye.",
+        "prevention": "Uburozi bwuburozi hamwe nububiko bwumye."
       },
       "dis_greasy_pig": {
-        "name": "Greasy Pig Disease",
+        "name": "Indwara y'ingurube",
         "scientificName": "Staphylococcus hyicus",
-        "description": "Bacterial infection causing greasy skin lesions.",
-        "prevention": "Sanitation and antibiotics."
+        "description": "Indwara ya bagiteri itera uruhu rwamavuta.",
+        "prevention": "Isuku na antibiotike."
       },
       "dis_pseudorabies": {
         "name": "Pseudorabies (Aujeszky's)",
         "scientificName": "Suid herpesvirus 1",
-        "description": "Viral disease affecting nervous and respiratory systems.",
-        "prevention": "Vaccination and eradication programs."
+        "description": "Indwara ya virusi yibasira sisitemu y'imitsi n'ubuhumekero.",
+        "prevention": "Gahunda yo gukingira no kurandura burundu."
       },
       "dis_pcv2": {
         "name": "Porcine Circovirus (PCV2)",
         "scientificName": "Circovirus",
-        "description": "Causes wasting and respiratory issues in growers.",
-        "prevention": "Vaccination."
+        "description": "Bitera guta no guhumeka mubahinzi.",
+        "prevention": "Urukingo."
       },
       "dis_ped": {
-        "name": "Porcine Epidemic Diarrhea (PED)",
+        "name": "Indwara y'impiswi y'icyorezo (PED)",
         "scientificName": "Coronavirus",
-        "description": "Similar to TGE, highly fatal to neonates.",
-        "prevention": "Strict biosecurity."
+        "description": "Bisa na TGE, byica cyane kuri neonates.",
+        "prevention": "Umutekano muke."
       },
       "dis_je": {
-        "name": "Japanese Encephalitis",
+        "name": "Ikiyapani Encephalitis",
         "scientificName": "Flavivirus",
-        "description": "Mosquito-borne viral disease.",
-        "prevention": "Mosquito control and vaccination."
+        "description": "Indwara ziterwa na virusi.",
+        "prevention": "Kurwanya imibu no gukingira."
       },
       "dis_rabies": {
-        "name": "Rabies",
+        "name": "Indwara",
         "scientificName": "Lyssavirus",
-        "description": "Fatal viral disease usually from bites.",
-        "prevention": "Vaccination of pets and wildlife control."
+        "description": "Indwara yica virusi mubisanzwe ituruka kurumwa.",
+        "prevention": "Gukingiza amatungo no kurwanya inyamaswa."
       },
       "dis_pox": {
-        "name": "Swine Pox",
+        "name": "Ingurube",
         "scientificName": "Suipoxvirus",
-        "description": "Viral skin disease, often spread by lice.",
-        "prevention": "Louse control."
+        "description": "Indwara y'uruhu rwa virusi, ikwirakwizwa n'indwara.",
+        "prevention": "Kugenzura inzoka."
       },
       "dis_vs": {
         "name": "Vesicular Stomatitis",
         "scientificName": "Rhabdovirus",
-        "description": "Causes blisters; looks like FMD.",
-        "prevention": "Insect control and quarantine."
+        "description": "Bitera ibisebe; bisa na FMD.",
+        "prevention": "Kurwanya udukoko no gushyira mu kato."
       },
       "dis_clostridial": {
-        "name": "Clostridial Enteritis",
+        "name": "Indwara ya Clostridial Enteritis",
         "scientificName": "Clostridium perfringens",
-        "description": "Bacterial infection causing severe gut damage.",
-        "prevention": "Vaccination of sows and hygiene."
+        "description": "Indwara ya bagiteri itera kwangirika gukabije.",
+        "prevention": "Urukingo rw'imbuto n'isuku."
       },
       "dis_glassers": {
-        "name": "Glasser's Disease",
+        "name": "Indwara y'Ibirahure",
         "scientificName": "Haemophilus parasuis",
-        "description": "Causes inflammation of membranes around heart, lungs, joints.",
-        "prevention": "Antibiotics and stress management."
+        "description": "Bitera gutwika ibibyimba bikikije umutima, ibihaha, ingingo.",
+        "prevention": "Antibiyotike no gucunga ibibazo."
       },
       "dis_app": {
         "name": "Actinobacillus Pleuropneumonia (APP)",
         "scientificName": "A. pleuropneumoniae",
-        "description": "Severe bacterial pneumonia.",
-        "prevention": "Antibiotics and improved environment."
+        "description": "Umusonga ukabije wa bagiteri.",
+        "prevention": "Antibiyotike n'ibidukikije byiza."
       },
       "dis_ileitis": {
         "name": "Ileitis (Lawsonia)",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Bacterial infection of the small intestine.",
-        "prevention": "Vaccination and antibiotics."
+        "description": "Indwara ya bagiteri yo mu mara mato.",
+        "prevention": "Inkingo na antibiotike."
       },
       "dis_tb": {
-        "name": "Tuberculosis",
+        "name": "Igituntu",
         "scientificName": "Mycobacterium avium",
-        "description": "Chronic bacterial disease.",
-        "prevention": "Bird proofing and sanitation."
+        "description": "Indwara ya bagiteri idakira.",
+        "prevention": "Kwerekana inyoni nisuku."
       },
       "dis_tetanus": {
-        "name": "Tetanus",
+        "name": "Tetanusi",
         "scientificName": "Clostridium tetani",
-        "description": "Bacterial toxin affecting the nervous system.",
-        "prevention": "Sanitation during surgery/castration."
+        "description": "Uburozi bwa bagiteri bugira ingaruka kuri sisitemu y'imitsi.",
+        "prevention": "Isuku mugihe cyo kubaga / guta."
       },
       "dis_eperythrozoonosis": {
-        "name": "Eperythrozoonosis",
+        "name": "Eperythrozoonose",
         "scientificName": "Mycoplasma suis",
-        "description": "Blood parasite causing anemia.",
-        "prevention": "Insect control and clean needles."
+        "description": "Amaraso parasite itera kubura amaraso.",
+        "prevention": "Kurwanya udukoko hamwe ninshinge zisukuye."
       },
       "dis_ascaris": {
         "name": "Ascaris suum",
         "scientificName": "Large Roundworm",
-        "description": "Internal parasite causing lung and liver damage.",
-        "prevention": "Regular deworming."
+        "description": "Parasite y'imbere itera ibihaha n'umwijima.",
+        "prevention": "Kurandura bisanzwe."
       },
       "dis_whipworms": {
-        "name": "Whipworms",
+        "name": "Ibiboko",
         "scientificName": "Trichuris suis",
-        "description": "Internal parasite in the large intestine.",
-        "prevention": "Deworming and sanitation."
+        "description": "Parasite y'imbere mu mara manini.",
+        "prevention": "Kwangiza no kugira isuku."
       },
       "dis_lungworms": {
-        "name": "Lungworms",
+        "name": "Ibihaha",
         "scientificName": "Metastrongylus spp.",
-        "description": "Internal parasite of the lungs.",
-        "prevention": "Earthworm control and deworming."
+        "description": "Parasite y'imbere y'ibihaha.",
+        "prevention": "Kurwanya inzoka no kwangiza."
       },
       "dis_kidney_worms": {
-        "name": "Kidney Worms",
+        "name": "Impyiko",
         "scientificName": "Stephanurus dentatus",
-        "description": "Internal parasite affecting kidneys and liver.",
-        "prevention": "Management and hygiene."
+        "description": "Parasite y'imbere ifata impyiko n'umwijima.",
+        "prevention": "Ubuyobozi nisuku."
       },
       "dis_lice": {
-        "name": "Swine Lice",
+        "name": "Ingurube",
         "scientificName": "Haematopinus suis",
-        "description": "External parasite sucking blood.",
-        "prevention": "Insecticide treatment."
+        "description": "Parasite yo hanze yonsa amaraso.",
+        "prevention": "Kuvura udukoko."
       },
       "dis_ringworm": {
-        "name": "Ringworm",
+        "name": "Inzoka",
         "scientificName": "Dermatophytosis",
-        "description": "Fungal skin infection.",
-        "prevention": "Sanitation and topical treatment."
+        "description": "Indwara y'uruhu.",
+        "prevention": "Isuku no kuvura indwara."
       },
       "dis_mulberry_heart": {
-        "name": "Mulberry Heart Disease",
+        "name": "Indwara Yumutima",
         "scientificName": "Vit E/Se Deficiency",
-        "description": "Nutritional deficiency affecting the heart.",
-        "prevention": "Supplementation."
+        "description": "Kubura imirire bigira ingaruka kumutima.",
+        "prevention": "Inyongera."
       },
       "dis_vit_a": {
-        "name": "Vitamin A Deficiency",
+        "name": "Kubura Vitamine A.",
         "scientificName": "Vitamin A Deficiency",
-        "description": "Nutritional deficiency.",
-        "prevention": "Dietary adjustment."
+        "description": "Kubura imirire.",
+        "prevention": "Guhindura imirire."
       },
       "dis_rickets": {
-        "name": "Rickets",
+        "name": "Riketi",
         "scientificName": "Vit D/Ca/P Deficiency",
-        "description": "Nutritional deficiency affecting bone growth.",
-        "prevention": "Balanced minerals and sunlight."
+        "description": "Kubura imirire bigira ingaruka kumikurire yamagufwa.",
+        "prevention": "Kuringaniza amabuye y'agaciro n'izuba."
       },
       "dis_salt_poisoning": {
-        "name": "Salt Poisoning",
+        "name": "Uburozi bwumunyu",
         "scientificName": "Water Deprivation",
-        "description": "Caused by lack of water followed by over-consumption.",
-        "prevention": "Constant fresh water access."
+        "description": "Biterwa no kubura amazi bikurikirwa no kunywa cyane.",
+        "prevention": "Guhora amazi meza."
       },
       "dis_heat_stroke": {
-        "name": "Heat Stroke",
+        "name": "Ubushuhe",
         "scientificName": "Heat Stroke",
-        "description": "Overheating due to poor ventilation or shade.",
-        "prevention": "Ventilation, cooling, and shade."
+        "description": "Ubushyuhe bukabije kubera guhumeka nabi cyangwa igicucu.",
+        "prevention": "Guhumeka, gukonjesha, no kugicucu."
       },
       "dis_rectal_prolapse": {
-        "name": "Rectal Prolapse",
+        "name": "Kurimbuka",
         "scientificName": "Rectal Prolapse",
-        "description": "Often follows coughing, diarrhea, or cold stress.",
-        "prevention": "Address primary cause and surgery."
+        "description": "Akenshi ikurikira inkorora, impiswi, cyangwa imihangayiko ikonje.",
+        "prevention": "Gukemura impamvu yibanze no kubaga."
       },
       "dis_umbilical_hernia": {
         "name": "Umbilical Hernia",
         "scientificName": "Umbilical Hernia",
-        "description": "Developmental defect or navel infection.",
-        "prevention": "Sanitation and genetics."
+        "description": "Inenge yiterambere cyangwa kwandura.",
+        "prevention": "Isuku na genetiki."
       },
       "dis_scrotal_hernia": {
         "name": "Scrotal Hernia",
         "scientificName": "Scrotal Hernia",
-        "description": "Genetic developmental defect.",
-        "prevention": "Genetics and surgical repair."
+        "description": "Inenge ikura.",
+        "prevention": "Irondakoko no gusana."
       },
       "dis_splayleg": {
         "name": "Splayleg",
         "scientificName": "Myofibrillar hypoplasia",
-        "description": "Piglets born unable to stand with hind legs.",
-        "prevention": "Taping legs and floor traction."
+        "description": "Ingurube zavutse zidashobora kwihagararaho n'amaguru y'inyuma.",
+        "prevention": "Gukubita amaguru no gukurura hasi."
       },
       "dis_vulvovaginitis": {
         "name": "Vulvovaginitis",
         "scientificName": "Zearalenone Toxicity",
-        "description": "Caused by estrogenic fungal toxins in feed.",
-        "prevention": "Change feed source."
+        "description": "Biterwa n'uburozi bwa estrogeneque fungal mu biryo.",
+        "prevention": "Hindura isoko y'ibiryo."
       },
       "dis_seneca": {
-        "name": "Seneca Valley Virus (SVV)",
+        "name": "Virusi ya Seneca (SVV)",
         "scientificName": "Senecavirus A",
-        "description": "Causes blisters similar to FMD.",
-        "prevention": "Biosecurity and diagnosis."
+        "description": "Bitera ibisebe bisa na FMD.",
+        "prevention": "Umutekano muke no gusuzuma."
       },
       "dis_deltacoronavirus": {
         "name": "Porcine Deltacoronavirus",
         "scientificName": "PDCoV",
-        "description": "Viral diarrhea in all ages.",
-        "prevention": "Biosecurity."
+        "description": "Impiswi ya virusi mumyaka yose.",
+        "prevention": "Umutekano muke."
       },
       "dis_rotavirus": {
-        "name": "Rotavirus Diarrhea",
+        "name": "Indwara ya Rotavirus",
         "scientificName": "Rotavirus",
-        "description": "Common cause of weaning diarrhea.",
-        "prevention": "Vaccination and hygiene."
+        "description": "Impamvu zisanzwe zo gucutsa impiswi.",
+        "prevention": "Inkingo n'isuku."
       },
       "dis_teschen": {
-        "name": "Teschen/Talfan Disease",
+        "name": "Indwara ya Teschen / Talfan",
         "scientificName": "Sapelovirus/Teschovirus",
-        "description": "Viral infection of the nervous system.",
-        "prevention": "Biosecurity."
+        "description": "Kwandura virusi ya sisitemu y'imitsi.",
+        "prevention": "Umutekano muke."
       },
       "dis_vesicular": {
-        "name": "Swine Vesicular Disease",
+        "name": "Indwara y'ingurube",
         "scientificName": "Enterovirus",
-        "description": "Viral disease mimicking FMD.",
-        "prevention": "Strict quarantine."
+        "description": "Indwara ya virusi yigana FMD.",
+        "prevention": "Akato gakabije."
       },
       "dis_melioidosis": {
-        "name": "Melioidosis",
+        "name": "Melioidose",
         "scientificName": "Burkholderia pseudomallei",
-        "description": "Bacterial disease from soil/water.",
-        "prevention": "Clean water and hygiene."
+        "description": "Indwara ya bagiteri ituruka ku butaka / amazi.",
+        "prevention": "Amazi meza nisuku."
       },
       "dis_trypanosomiasis": {
         "name": "Trypanosomiasis",
         "scientificName": "Trypanosoma spp.",
-        "description": "Protozoan disease spread by tsetse flies.",
-        "prevention": "Fly control and medication."
+        "description": "Indwara ya Protozoan ikwirakwizwa nisazi ya tsetse.",
+        "prevention": "Kuguruka no gufata imiti."
       },
       "dis_cysticercosis": {
-        "name": "Cysticercosis",
+        "name": "Cysticercose",
         "scientificName": "Taenia solium larvae",
-        "description": "Larval stage of human tapeworm in pig muscle.",
-        "prevention": "Prevent access to human waste."
+        "description": "Intambwe nini ya tapeworm yabantu mumitsi yingurube.",
+        "prevention": "Irinde kubona imyanda yabantu."
       },
       "dis_toxoplasmosis": {
-        "name": "Toxoplasmosis",
+        "name": "Toxoplasmose",
         "scientificName": "Toxoplasma gondii",
-        "description": "Zoonotic protozoan infection.",
-        "prevention": "Cat control and biosecurity."
+        "description": "Indwara ya Zoonotic protozoan.",
+        "prevention": "Kugenzura injangwe no kubungabunga umutekano."
       },
       "dis_listeriosis": {
-        "name": "Listeriosis",
+        "name": "Urutonde",
         "scientificName": "Listeria monocytogenes",
-        "description": "Bacterial infection of nervous system.",
-        "prevention": "Sanitation and feed hygiene."
+        "description": "Indwara ya bagiteri ya sisitemu y'imitsi.",
+        "prevention": "Isuku no kugaburira isuku."
       },
       "dis_ear_necrosis": {
-        "name": "Ear Necrosis",
+        "name": "Amatwi ya Necrosis",
         "scientificName": "Ear Necrosis",
-        "description": "Often caused by stress, overcrowding, or infection.",
-        "prevention": "Reduce density and treat secondary infection."
+        "description": "Akenshi biterwa no guhangayika, ubucucike bwinshi, cyangwa kwandura.",
+        "prevention": "Mugabanye ubucucike no kuvura ubwandu bwa kabiri."
       },
       "dis_sunburn": {
-        "name": "Sunburn",
+        "name": "Izuba Rirashe",
         "scientificName": "Solar dermatitis",
-        "description": "Affects white-skinned pigs outdoors.",
-        "prevention": "Provide shade."
+        "description": "Ifata ingurube zifite uruhu rwera hanze.",
+        "prevention": "Tanga igicucu."
       },
       "dis_tail_biting": {
-        "name": "Tail Biting",
+        "name": "Kuruma umurizo",
         "scientificName": "Behavioral stress",
-        "description": "Behavioral issue due to stress/boredom.",
-        "prevention": "Reduce stress and enrich environment."
+        "description": "Ikibazo cyimyitwarire kubera guhangayika / kurambirwa.",
+        "prevention": "Mugabanye imihangayiko no gutunganya ibidukikije."
       },
       "dis_navel_ill": {
-        "name": "Navel Ill",
+        "name": "Indwara",
         "scientificName": "Navel Infection",
-        "description": "Infection of the umbilical cord at birth.",
-        "prevention": "Iodine dip at birth and sanitation."
+        "description": "Kwanduza umugongo ukivuka.",
+        "prevention": "Iyode yibiza mugihe cyo kuvuka no kugira isuku."
       },
       "dis_iron_toxicity": {
-        "name": "Iron Toxicity",
+        "name": "Uburozi bw'icyuma",
         "scientificName": "Ferrous excess",
-        "description": "Excess iron administration leading to sudden death.",
-        "prevention": "Inject accurate dosage."
+        "description": "Irashobora kubaho mugihe icyuma cyatewe muri Vit E ibuze ingurube.",
+        "prevention": "Menya neza ko imirire yo kubiba iringaniye."
       },
       "dis_aflatoxicosis": {
-        "name": "Aflatoxicosis",
+        "name": "Aflatoxicose",
         "scientificName": "Aspergillus flavus toxin",
-        "description": "Fungal toxin poisoning.",
-        "prevention": "Avoid moldy feed and use toxin binders."
+        "description": "Uburozi bwuburozi buturuka ku ngano zumye cyangwa ibiryo bitera umwijima na jaundice.",
+        "prevention": "Irinde kugaburira ibiryo byoroshye, kubika ibinyampeke mugihe cyumye, kandi ukoreshe uburozi."
       },
       "dis_parakeratosis": {
-        "name": "Parakeratosis",
+        "name": "Parakeratose (Kubura Zinc)",
         "scientificName": "Zinc deficiency",
-        "description": "Zinc deficiency in swine.",
-        "prevention": "Ensure adequate zinc levels in diet."
+        "description": "Indwara yintungamubiri itera igikomere gikabije, igikomere cyuruhu.",
+        "prevention": "Menya neza igipimo cya calcium-kuri-zinc mu biryo kandi utange inyongera ya zinc."
       },
       "dis_biotin_deficiency": {
-        "name": "Biotin Deficiency",
+        "name": "Kubura Biotine",
         "scientificName": "Vitamin H deficiency",
-        "description": "Biotin deficiency in swine.",
-        "prevention": "Provide biotin supplements."
+        "description": "Kubura imirire bitera ibinono byacitse, ibikomere byuruhu, no gucumbagira.",
+        "prevention": "Ongeraho indyo hamwe na biotine kandi wirinde hasi ya beto itose."
       },
       "dis_gossypol_toxicity": {
-        "name": "Gossypol Toxicity",
+        "name": "Uburozi bwa Gossypol",
         "scientificName": "Gossypol poisoning",
-        "description": "Cottonseed meal poisoning.",
-        "prevention": "Limit raw cottonseed meal in feed."
+        "description": "Uburozi bwo kugaburira ibiryo bibisi cyangwa birenze urugero, bitera ibibazo byubuhumekero.",
+        "prevention": "Mugabanye ifunguro ryimbuto mumirire kandi ukoreshe sulfate yicyuma kugirango ubuze gossypol."
       },
       "dis_cassava_poisoning": {
-        "name": "Cassava Poisoning",
+        "name": "Uburozi bw'imyumbati",
         "scientificName": "Cyanogenic glycosides",
-        "description": "Cyanide poisoning from raw cassava.",
-        "prevention": "Cook or ferment cassava before feeding."
+        "description": "Uburozi bwa Cyanide buturuka kumizi cyangwa imyumbati yatunganijwe neza.",
+        "prevention": "Kuramo, guteka, izuba-ryumye, cyangwa imyumbati ya ferment mbere yo kugaburira."
       },
       "dis_sweet_potato_toxicity": {
-        "name": "Sweet Potato Toxicity",
+        "name": "Uburozi bw'Ibijumba",
         "scientificName": "Ipomeamarone toxicity",
-        "description": "Ipomeamarone poisoning.",
-        "prevention": "Do not feed moldy or damaged sweet potatoes."
+        "description": "Uburozi buturuka ku birayi biryoshye, bitera uburwayi bukomeye bwo guhumeka.",
+        "prevention": "Kureka ibirayi byangiritse cyangwa byumye; kugaburira ibirayi gusa."
       },
       "dis_mma": {
-        "name": "MMA Syndrome",
+        "name": "Nyuma yo kubyara Dysgalactia (MMA)",
         "scientificName": "Mastitis-Metritis-Agalactia",
-        "description": "Post-farrowing infection in sows.",
-        "prevention": "Clean farrowing pens and proper nutrition."
+        "description": "Mastitis, metritis, na agalactia itera umuriro no kubura amata mu mbuto nyuma yo guhinga.",
+        "prevention": "Komeza kugira isuku yikaramu ikarishye kandi urebe neza imirire ihagije."
       },
       "dis_pwd": {
-        "name": "Post-Weaning Diarrhea",
+        "name": "Indwara y'impiswi nyuma yo konka (PWD)",
         "scientificName": "Escherichia coli (F4/F18)",
-        "description": "Colibacillosis in weaned pigs.",
-        "prevention": "Sanitation and diet adjustment."
+        "description": "Impiswi ya bagiteri mu ngurube nyuma gato yo konka, itera umwuma.",
+        "prevention": "Mugabanye guhagarika umutima, kubungabunga isuku nyinshi, no gutanga amazi meza yo kunywa."
       },
       "dis_trichinellosis": {
-        "name": "Trichinellosis",
+        "name": "Trichinellose",
         "scientificName": "Trichinella spiralis",
-        "description": "Zoonotic parasitic infection.",
-        "prevention": "Do not feed raw garbage; pest control."
+        "description": "Indwara ya parasitike ya Zoonotic ituruka ku kurya inyama mbisi, bigatuma imitsi ikomera.",
+        "prevention": "Ntugaburire ibishishwa bibisi, guteka ibiryo by'iminota 30, no kugenzura imbeba."
       },
       "dis_hydatid_disease": {
-        "name": "Hydatid Disease",
+        "name": "Hydatidose",
         "scientificName": "Echinococcus granulosus",
-        "description": "Larval tapeworm infection.",
-        "prevention": "Deworm farm dogs; prevent access to offal."
+        "description": "Indwara ya parasitike itera sisitemu yuzuye amazi mu ngingo.",
+        "prevention": "Kwangiza imbwa zihinga kandi zikababuza kurya ingingo zingurube."
       },
       "dis_phe": {
-        "name": "Proliferative Hemorrhagic Enteropathy",
+        "name": "Porcine Hemorrhagic Enteropathie",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Acute intestinal bleeding in young adult pigs.",
-        "prevention": "Vaccination and hygiene."
+        "description": "Impiswi ikabije yamaraso nimpfu zitunguranye mubuhinzi / barangiza ingurube.",
+        "prevention": "Komeza kugira isuku nziza kandi ukoreshe antibiyotike ikwiye iyobowe nubuvuzi."
       },
       "dis_mycoplasma_arthritis": {
-        "name": "Mycoplasma Arthritis",
+        "name": "Indwara ya Mycoplasmal",
         "scientificName": "Mycoplasma hyosynoviae",
-        "description": "Bacterial joint disease.",
-        "prevention": "Sanitation and quarantine."
+        "description": "Indwara ya bagiteri itera ingingo kubyimba, gucumbagira, no gucika intege.",
+        "prevention": "Kunoza imiturire, kugabanya ubwinshi bwimigabane, no kuvura hakiri kare."
       },
       "dis_foot_rot": {
-        "name": "Foot Rot",
+        "name": "Kubora ibirenge (Necrobacillose)",
         "scientificName": "Fusobacterium necrophorum",
-        "description": "Infection of the foot causing lameness.",
-        "prevention": "Keep pens dry; treat hooves."
+        "description": "Indwara ya bagiteri yinjira mu gikomere, itera kubora no gucumbagira.",
+        "prevention": "Gusana beto ikaze, komeza hasi, kandi ukoreshe ubwogero bwamaguru nibikenewe."
       },
       "dis_babesiosis": {
-        "name": "Babesiosis",
+        "name": "Indwara iterwa na Babesiose",
         "scientificName": "Babesia trautmanni",
-        "description": "Tick-borne protozoan infection.",
-        "prevention": "Acaricide spray for tick control."
+        "description": "Amaraso yanduye parasite itera umuriro mwinshi, kubura amaraso, ninkari zijimye.",
+        "prevention": "Kugenzura amatiku ukoresheje acariside kandi ukomeze amakaramu adafite ibimera."
       },
       "dis_anaplasmosis": {
-        "name": "Anaplasmosis",
+        "name": "Anaplasmose",
         "scientificName": "Anaplasma marginale",
-        "description": "Blood infection in swine.",
-        "prevention": "Vector control."
+        "description": "Indwara ya bagiteri yanduye itera amaraso make, umuriro, na jaundice.",
+        "prevention": "Shyira mubikorwa gahunda yo kugenzura no kugenzura amatiku."
       },
       "dis_sow_hysteria": {
-        "name": "Sow Hysteria",
+        "name": "Kubiba Hysteria",
         "scientificName": "Puerperal psychosis",
-        "description": "Aggression or panic in sows after farrowing.",
-        "prevention": "Provide quiet farrowing area."
+        "description": "Imyitwarire idahwitse aho kubiba bigatera ubukana no kuruma ingurube.",
+        "prevention": "Tanga ahantu hatuje hatuje, ugenzure gilts, kandi ukoreshe imiti igabanya ubukana."
       },
       "dis_thorny_headed_worm": {
-        "name": "Thorny-Headed Worm",
+        "name": "Inzoka ifite imitwe",
         "scientificName": "Macracanthorhynchus hirudinaceus",
-        "description": "Intestinal parasite.",
-        "prevention": "Prevent access to June beetle grubs."
+        "description": "Inyo ya parasitike yabonetse mukurya inyenzi, bigatera gutobora amara.",
+        "prevention": "Irinde kurera kubuntu kubutaka bwatewe ninyenzi kandi ukoreshe ibyatsi."
       },
       "dis_strongyloidiasis": {
-        "name": "Strongyloidiasis",
+        "name": "Strongyloidiasis (Urudodo)",
         "scientificName": "Strongyloides ransomi",
-        "description": "Threadworm infection.",
-        "prevention": "Keep pens dry; deworming."
+        "description": "Inzoka zo munda zitera impiswi zikomeye nimpfu zingurube.",
+        "prevention": "Komeza ibisanduku byumye byumye kandi bisukuye, kandi imbuto zinzoka mbere yo guhinga."
       },
       "dis_hyostrongylosis": {
-        "name": "Red Stomach Worm",
+        "name": "Inzoka itukura",
         "scientificName": "Hyostrongylus rubidus",
-        "description": "Intestinal worm in grazing pigs.",
-        "prevention": "Clean pasture management; deworming."
+        "description": "Indwara yo mu gifu itera gastrite, kubura amaraso, no kugabanya ibiro.",
+        "prevention": "Kuzenguruka urwuri, komeza amazu yumutse, kandi ushyire mubikorwa gahunda yo kwangiza."
       },
       "dis_oesophagostomiasis": {
-        "name": "Nodular Worm",
+        "name": "Indwara ya Nodular",
         "scientificName": "Oesophagostomum spp.",
-        "description": "Intestinal worm in swine.",
-        "prevention": "Deworming and sanitation."
+        "description": "Parasite yo munda itera nodules mu rukuta rw'inda, biganisha ku mbuto zoroshye.",
+        "prevention": "Isuku yamakaramu isanzwe no gukoresha bisanzwe anthemmintics."
       },
       "dis_fascioliasis": {
-        "name": "Fascioliasis",
+        "name": "Fascioliasis (Fluke y'umwijima)",
         "scientificName": "Fasciola gigantica",
-        "description": "Liver fluke infection.",
-        "prevention": "Snail control; keep away from wet pastures."
+        "description": "Indwara ya parasitike ifata umwijima, ikunze kugaragara mu rwuri rutose cyangwa ibishanga.",
+        "prevention": "Irinde ingurube kurisha ahantu h'ibishanga no kugenzura ibyondo."
       },
       "dis_emcv": {
-        "name": "EMCV",
+        "name": "Encephalomyocarditis (EMCV)",
         "scientificName": "Cardiovirus",
-        "description": "Viral myocarditis and reproductive failure.",
-        "prevention": "Rodent control (rodents spread EMCV)."
+        "description": "Indwara iterwa na virusi itera kunanirwa k'umutima no gukuramo inda.",
+        "prevention": "Shyira mu bikorwa igenzura rikomeye kandi urinde ibiryo kwanduza."
       },
       "dis_demodectic_mange": {
-        "name": "Demodectic Mange",
+        "name": "Demodex Mange",
         "scientificName": "Demodex phylloides",
-        "description": "Skin mite infection.",
-        "prevention": "Acaricide treatment."
+        "description": "Uruhu rwa microscopique mite itera ibibara binini na pustules.",
+        "prevention": "Kunoza imirire yubushyo, gutandukanya ingurube zanduye, no gukoresha acariside."
       },
       "dis_pityriasis_rosea": {
         "name": "Pityriasis Rosea",
         "scientificName": "Pseudo-ringworm",
-        "description": "Non-contagious skin condition.",
-        "prevention": "Spontaneous recovery; keep environment clean."
+        "description": "Imiterere yuruhu itanduye mu ngurube zikiri nto zikora impeta.",
+        "prevention": "Mubisanzwe kwikemurira ibibazo; komeza ibitanda bisukuye, byumye kandi bigabanye imihangayiko."
       },
       "dis_photosensitization": {
-        "name": "Photosensitization",
+        "name": "Kwifotora",
         "scientificName": "Solar dermatitis",
-        "description": "Skin hypersensitivity to sunlight.",
-        "prevention": "Keep out of direct sunlight; check pasture plants."
+        "description": "Gukomera kwizuba nkingurube zifite uruhu rworoshye nyuma yo kurya ibimera byihariye.",
+        "prevention": "Tanga igicucu, ukureho ibyatsi bibi, kandi ugumane ingurube mu nzu."
       },
       "dis_shoulder_ulcers": {
-        "name": "Shoulder Ulcers",
+        "name": "Kubiba Ibisebe Byigitugu",
         "scientificName": "Decubitus ulcers",
-        "description": "Sores in thin sows on hard floors.",
-        "prevention": "Provide soft bedding; increase feed."
+        "description": "Ibisebe byumuvuduko ku bitugu byimbuto zoroshye zubatswe kuri beto ikomeye.",
+        "prevention": "Tanga uburiri bworoshye, komeza kubiba mumubiri mwiza, kandi ukoreshe materi."
       },
       "dis_ear_biting": {
-        "name": "Ear Biting",
+        "name": "Amatwi yo kurya abantu",
         "scientificName": "Stress response behavior",
-        "description": "Behavioral stress response.",
-        "prevention": "Reduce stocking density; enrich environment."
+        "description": "Imyitwarire idasanzwe aho ingurube ziruma ugutwi kwa bagenzi bawe, bigatera necrosis.",
+        "prevention": "Mugabanye imbaga, utezimbere umwuka, kandi utange ubutunzi nkumunyururu."
       },
       "dis_gastric_torsion": {
-        "name": "Gastric Torsion",
+        "name": "Gastric Torsion (Bloat)",
         "scientificName": "Gastric dilation-volvulus",
-        "description": "Twisted stomach.",
-        "prevention": "Avoid overfeeding in single meals."
+        "description": "Kubyimba gutunguranye no kugoreka igifu, biganisha ku rupfu rwihuse.",
+        "prevention": "Irinde kugaburira amafunguro manini nyuma yo kwiyiriza ubusa no kugabanya ibiryo bya buri munsi mo ibice."
       },
       "dis_c_difficile": {
-        "name": "C. difficile Infection",
+        "name": "Clostridium diffile (CDI)",
         "scientificName": "Clostridioides difficile",
-        "description": "Bacterial diarrhea in piglets.",
-        "prevention": "Clean environment and proper ventilation."
+        "description": "Indwara ya bagiteri mu ngurube zikivuka itera impiswi y'amazi no kubyimba.",
+        "prevention": "Sukura kandi wanduze amakaramu ya farrowing neza kandi urebe neza ko hakiri kare."
       },
       "dis_cold_stress": {
-        "name": "Cold Stress",
+        "name": "Ubukonje bukabije (Hypothermia)",
         "scientificName": "Hypothermia susceptibility",
-        "description": "Chilling in young piglets.",
-        "prevention": "Provide heat lamps and dry bedding."
+        "description": "Gukonjesha umubiri cyane mu ngurube, bigatera guhinda umushyitsi no gupfa cyane.",
+        "prevention": "Tanga amatara yubushyuhe, udusanduku twikaraga, kandi ukomeze ahantu hakeye kandi hatarimo umushinga."
       },
       "dis_necrotic_enteritis": {
-        "name": "Necrotic Enteritis",
+        "name": "Indwara ya Necrotic",
         "scientificName": "Clostridium perfringens Type C",
-        "description": "Clostridial gut infection.",
-        "prevention": "Sow vaccination and pen sanitation."
+        "description": "Indwara yuburozi bwa bagiteri itera impiswi ikabije yamaraso nimpfu nyinshi zingurube.",
+        "prevention": "Gukingiza kubiba mbere yo guhunika no gukomeza isuku yikaramu yuzuye."
       },
       "dis_navel_bleeding": {
-        "name": "Navel Bleeding",
+        "name": "Kuva amaraso",
         "scientificName": "Umbilical hemorrhage",
-        "description": "Hemorrhage from umbilical cord.",
-        "prevention": "Tie off bleeding navels; check feed vitamin K."
+        "description": "Amaraso menshi ava mumatongo mu ngurube zikivuka.",
+        "prevention": "Ihambire umugozi ukivuka kandi wirinde kugaburira ibiryo byanduye mycotoxine kubiba."
       },
       "dis_spirochetal_colitis": {
-        "name": "Spirochetal Colitis",
+        "name": "Porcine Spirochetal Colitis",
         "scientificName": "Brachyspira pilosicoli",
-        "description": "Bacterial large intestine infection.",
-        "prevention": "Medication and pen sanitation."
+        "description": "Indwara y'impiswi yoroheje mu gukura ingurube, itera kwiyongera nabi.",
+        "prevention": "Sukura inkono zigaburira kandi uvure ingurube zanduye hamwe na antibiotike."
       },
       "dis_salmonella_septicemia": {
         "name": "Salmonella Septicemia",
         "scientificName": "Salmonella choleraesuis",
-        "description": "Blood infection from Salmonella.",
-        "prevention": "Clean water; biosecurity."
+        "description": "Indwara ikabije yamaraso salmonella itera uruhu rwumutuku nurupfu rwihuse.",
+        "prevention": "Gutandukanya ingurube zirwaye, kuvura amazi, no kubungabunga umutekano muke."
       },
       "dis_prdc": {
-        "name": "PRDC",
+        "name": "Indwara y'ubuhumekero",
         "scientificName": "Porcine Respiratory Disease Complex",
-        "description": "Respiratory complex in grower pigs.",
-        "prevention": "Ventilation, vaccination, and density control."
+        "description": "Indwara zifata imyanya y'ubuhumekero ya virusi na bagiteri itera inkorora no gukura nabi.",
+        "prevention": "Kunoza umwuka, irinde ubucucike, kandi ugenzure virusi yibanze."
       },
       "dis_ergotism": {
-        "name": "Ergotism",
+        "name": "Uburozi bwa Ergot (Ergotism)",
         "scientificName": "Claviceps purpurea",
-        "description": "Poisoning from moldy rye/grains.",
-        "prevention": "Inspect feed grains for black ergot bodies."
+        "description": "Uburozi bwibihumyo biva mu binyampeke byanduye ergot, bigatera tissue necrosis.",
+        "prevention": "Mugaburira ibiryo byumubiri kumubiri wijimye kandi usimbuze ibiryo byanduye."
       },
       "dis_bvdv_pig": {
-        "name": "BVDV in Pigs",
+        "name": "Indwara ya BVDV mu ngurube",
         "scientificName": "Pestivirus",
-        "description": "Bovine Viral Diarrhea virus in swine.",
-        "prevention": "Isolate pigs from cattle."
+        "description": "Indwara ya Bovine Virus Diarrhea kwandura kwandura inka, bigatera gukuramo inda.",
+        "prevention": "Komeza ingurube zitandukanye ninka nintama, kandi ugabanye guhuza amoko."
       },
       "dis_endocarditis": {
-        "name": "Endocarditis",
+        "name": "Indwara ya bagiteri",
         "scientificName": "Streptococcal endocarditis",
-        "description": "Heart valve infection.",
-        "prevention": "Treat primary infections early."
+        "description": "Indwara y'umutima itera kunanirwa k'umutima n'urupfu rutunguranye mugihe cy'amaganya.",
+        "prevention": "Wihutire kuvura ingingo-zirwaye n'ibikomere, hanyuma uhitemo kurwanya genetiki yanduye."
       },
       "dis_polyserositis": {
-        "name": "Polyserositis",
+        "name": "Mycoplasma Polyserositis",
         "scientificName": "Mycoplasma hyorhinis",
-        "description": "Infection of body cavity linings.",
-        "prevention": "Antibiotic treatment; minimize stress."
+        "description": "Fibrinous inflammation yibihaha, umutima, hamwe nubuso bufatanye mubonsa.",
+        "prevention": "Mugabanye guhangayika, wirinde kuvanga imyanda, kandi uhumeke neza."
       },
       "dis_congenital_tremor": {
-        "name": "Congenital Tremor",
+        "name": "Kuvuka",
         "scientificName": "Atypical Porcine Pestivirus",
-        "description": "Shaky pig disease.",
-        "prevention": "Acclimatize gilts to farm before breeding."
+        "description": "Imiterere ya Neurologiya mu ngurube zikivuka zitera guhinda umushyitsi.",
+        "prevention": "Irinde gukoresha amasohoro ava mu ngurube zanduye kandi ugabanye imbaraga zo kubiba mugihe cyo gutwita."
       }
     },
     "diagnosisMatches": "Clinical Diagnosis Matches",
@@ -1535,7 +1541,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 EMERGENCY BIOSECURITY PROTOCOL:",
     "clinicalDiagnosisMatches": "Ibisubizo by'isuzuma bihuye",
     "hallmarkBadge": "Ikimenyetso nyamukuru",
-    "hallmarkSignPresent": "Ikimenyetso cyerekana ibimenyetso: %1$s",
+    "hallmarkSignPresent": "Ikimenyetso cyerekana ibimenyetso: {sign}",
     "otherSignsWatch": "Ibindi bimenyetso ugomba kwitondera:",
     "preventionTreatmentLabel": "Kwirinda / Kuvura: {treatment}",
     "bio_proto_asf": "IMMEDIATE EMERGENCY QUARANTINE: African Swine Fever is a lethal, legally notifiable virus. 1) Lock down farm gates immediately. 2) Stop all movement of pigs, vehicles, feed, and manure. 3) Disinfect all boot baths and tyres with Virkon S or 2% caustic soda. 4) Contact your District/National Veterinary Officer immediately.",
@@ -1548,7 +1554,7 @@
     "bio_proto_senecavirus": "REPORTABLE VESICULAR DISEASE: Senecavirus A lesions are clinically indistinguishable from Foot and Mouth Disease (FMD). 1) Quarantine pen immediately. 2) Restrict off-farm movement. 3) Notify livestock veterinary authorities for mandatory differential PCR testing.",
     "bio_proto_svd": "REPORTABLE VESICULAR DISEASE: Swine Vesicular Disease (SVD). 1) Strict isolation of infected animals. 2) Restrict all vehicle and visitor movements. 3) Report to state animal health department immediately.",
     "clinicalMatchPercent": "%1$d %% Umukino wa Clinical",
-    "matchedSignsCount": "{matched}$d ya {total}$d ibimenyetso",
+    "matchedSignsCount": "{matched} ya {total} ibimenyetso",
     "matchPercentSuffix": "({percent}% match)"
   },
   "HR": {
@@ -1983,7 +1989,7 @@
     "snooze1Month": "Ukwezi",
     "deleteNotificationQuestion": "Gusiba Kumenyesha?",
     "deleteNotificationConfirm": "Uzi neza ko ushaka gusiba iri tangazo?",
-    "lastWeighedDaysAgo": "Ingurube #%1$s: Ipima rya nyuma %2$s hashize",
+    "lastWeighedDaysAgo": "Ingurube #{tag}: Ipima rya nyuma {days} hashize",
     "stockLeftMinFormat": "{current}: {unit} kg isigaye (Min: {min} kg)",
     "pigs": "Ingurube",
     "pig": "Ingurube",

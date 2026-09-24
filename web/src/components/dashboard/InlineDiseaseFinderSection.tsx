@@ -921,10 +921,7 @@ export default function InlineDiseaseFinderSection() {
                                 {(() => {
                                   const signs = matchedPathognomonic.map(renderSymptomName).join(", ");
                                   try {
-                                    const template = t("hallmarkSignPresent");
-                                    return template.includes("%1$s")
-                                      ? template.replace("%1$s", signs)
-                                      : template.replace("{sign}", signs);
+                                    return t("hallmarkSignPresent", { sign: signs });
                                   } catch {
                                     return `Hallmark sign detected: ${signs}`;
                                   }

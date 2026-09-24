@@ -106,7 +106,13 @@
     "noActivities": "Hakuna shughuli zijazo",
     "allTasksCompleted": "Majukumu yote yamekamilika!",
     "generalTask": "Jukumu la Jumla",
-    "language": "Lugha"
+    "language": "Lugha",
+    "feed": "Kulisha",
+    "inventory": "Malisho ya Malipo",
+    "calculator": "Piga Hesabu ya Chakula",
+    "mixFeed": "Changanya Chakula cha Nguruwe",
+    "analyzeFeed": "Chunguza Virutubisho vya Chakula",
+    "marketHub": "Kituo Kikuu cha Soko la Nguruwe"
   },
   "Login": {
     "title": "SmartSwine Wavuti",
@@ -833,256 +839,256 @@
     },
     "diseases": {
       "dis_asf": {
-        "name": "Homa ya Nguruwe ya Afrika (ASF)",
+        "name": "Homa ya Nguruwe ya Kiafrika (ASF)",
         "scientificName": "Asfivirus",
-        "description": "Ugonjwa wa virusi unaoambukiza sana na hatari ulioenea Afrika Magharibi. Hakuna chanjo.",
-        "prevention": "Ulinzi mkali wa shamba na kuzuia kuingia kwa watu."
+        "description": "Ugonjwa wa virusi unaoambukiza sana na hatari ambao umeenea Afrika Magharibi. Hakuna chanjo iliyopo.",
+        "prevention": "Ulinzi mkali wa kibayolojia na zuia ufikiaji wa shamba."
       },
       "dis_fmd": {
         "name": "Ugonjwa wa Miguu na Midomo (FMD)",
         "scientificName": "Aphthovirus",
-        "description": "Ugonjwa wa virusi unaosababisha malengelenge mdomoni na miguuni.",
-        "prevention": "Chanjo na kudhibiti mienendo."
+        "description": "Ugonjwa wa virusi unaosababisha malengelenge kwenye mdomo na miguu.",
+        "prevention": "Udhibiti wa chanjo na harakati."
       },
       "dis_prrs": {
-        "name": "PRRS (Masikio ya Bluu)",
+        "name": "PRRS (Sikio la Bluu)",
         "scientificName": "Arterivirus",
-        "description": "Husababisha shida ya kupumua na uzalishaji.",
-        "prevention": "Ulinzi wa shamba na chanjo."
+        "description": "Husababisha kushindwa kupumua na matatizo ya uzazi.",
+        "prevention": "Biosecurity na chanjo ya mifugo."
       },
       "dis_erysipelas": {
-        "name": "Swine Erysipelas",
+        "name": "Erisipela ya nguruwe",
         "scientificName": "Erysipelothrix rhusiopathiae",
-        "description": "Maambukizi ya bakteria yanayosababisha vidonda vya ngozi na baridi yabisi.",
-        "prevention": "Chanjo ya mara kwa mara na usafi wa mabanda."
+        "description": "Maambukizi ya bakteria na kusababisha vidonda tofauti vya ngozi na arthritis.",
+        "prevention": "Chanjo ya mara kwa mara na usafi wa kalamu."
       },
       "dis_csf": {
         "name": "Homa ya Nguruwe ya Kawaida",
         "scientificName": "Pestivirus",
         "description": "Ugonjwa wa virusi unaoambukiza sana sawa na ASF.",
-        "prevention": "Chanjo na ulinzi mkali wa shamba."
+        "prevention": "Chanjo na usalama mkali wa viumbe hai."
       },
       "dis_anthrax": {
-        "name": "Anthrax",
+        "name": "Kimeta",
         "scientificName": "Bacillus anthracis",
-        "description": "Ugonjwa hatari wa bakteria unaoweza kuathiri binadamu.",
-        "prevention": "Chanjo na kuepuka kufungua mizoga."
+        "description": "Ugonjwa mbaya wa bakteria ambao unaweza kuathiri wanadamu.",
+        "prevention": "Chanjo na epuka kufungua mizoga."
       },
       "dis_brucellosis": {
         "name": "Brucellosis",
         "scientificName": "Brucella suis",
-        "description": "Ugonjwa wa bakteria unaosababisha hitilafu katika uzalishaji.",
-        "prevention": "Kupima, kuondoa, na usafi."
+        "description": "Ugonjwa wa bakteria unaosababisha kushindwa kwa uzazi.",
+        "prevention": "Upimaji, uondoaji, na usafi wa mazingira."
       },
       "dis_coccidiosis": {
-        "name": "Coccidiosis",
+        "name": "Ugonjwa wa Coccidiosis",
         "scientificName": "Isospora suis",
-        "description": "Ugonjwa wa vimelea unaoathiri watoto wa nguruwe zaidi.",
-        "prevention": "Usafi wa banda la kuzaa."
+        "description": "Ugonjwa wa vimelea huathiri hasa watoto wa nguruwe.",
+        "prevention": "Usafi wa kalamu ya farrowing."
       },
       "dis_pneumonia": {
         "name": "Nimonia ya Mycoplasmal",
         "scientificName": "Mycoplasma hyopneumoniae",
-        "description": "Ugonjwa sugu wa kupumua unaopelekea ukuaji duni.",
-        "prevention": "Chanjo na kuboresha uingizaji hewa."
+        "description": "Ugonjwa sugu wa kupumua unaosababisha ukuaji duni.",
+        "prevention": "Chanjo na uingizaji hewa bora."
       },
       "dis_salmonellosis": {
         "name": "Salmonellosis",
         "scientificName": "Salmonella typhimurium",
-        "description": "Maambukizi ya bakteria yanayosababisha shida kali za tumbo.",
+        "description": "Maambukizi ya bakteria ambayo husababisha shida kali za utumbo.",
         "prevention": "Maji safi na usafi."
       },
       "dis_ppv": {
         "name": "Porcine Parvovirus (PPV)",
         "scientificName": "Porcine Parvovirus",
-        "description": "Chanzo cha kawaida cha hitilafu katika uzalishaji kwa matamba.",
-        "prevention": "Chanjo kabla ya kupandisha."
+        "description": "Sababu ya kawaida ya kushindwa kwa uzazi katika gilts.",
+        "prevention": "Chanjo kabla ya kuzaliana."
       },
       "dis_rhinitis": {
-        "name": "Atrophic Rhinitis",
+        "name": "Rhinitis ya Atrophic",
         "scientificName": "Bordetella bronchiseptica",
-        "description": "Husababisha mabadiliko ya pua na shida za kupumua.",
+        "description": "Husababisha kuvuruga kwa pua na maswala ya kupumua.",
         "prevention": "Chanjo na ubora wa hewa."
       },
       "dis_leptospirosis": {
         "name": "Leptospirosis",
         "scientificName": "Leptospira spp.",
-        "description": "Ugonjwa wa bakteria unaoathiri figo.",
-        "prevention": "Kudhibiti panya na chanjo."
+        "description": "Ugonjwa wa bakteria wa zoonotic unaoathiri figo.",
+        "prevention": "Udhibiti wa panya na chanjo."
       },
       "dis_influenza": {
         "name": "Mafua ya Nguruwe",
         "scientificName": "Influenza A virus",
-        "description": "Maambukizi ya kupumua yanayoenea haraka.",
-        "prevention": "Uingizaji hewa na ulinzi wa shamba."
+        "description": "Kuenea kwa kasi kwa maambukizi ya kupumua.",
+        "prevention": "Uingizaji hewa na usalama wa viumbe hai."
       },
       "dis_edema": {
         "name": "Ugonjwa wa Edema",
         "scientificName": "Escherichia coli",
-        "description": "Inasababishwa na sumu za E. coli kwa watoto walioachishwa kunyonya.",
-        "prevention": "Kuboresha usafi na lishe."
+        "description": "Husababishwa na sumu ya E. koli katika nguruwe walioachishwa kunyonya.",
+        "prevention": "Uboreshaji wa usafi wa mazingira na lishe."
       },
       "dis_dysentery": {
-        "name": "Homa ya Matumbo",
+        "name": "Ugonjwa wa Kuhara ya Nguruwe",
         "scientificName": "Brachyspira hyodysenteriae",
-        "description": "Kuhara kwa damu na kamasi.",
-        "prevention": "Dawa kwenye maji na kusafisha mabanda."
+        "description": "Kuhara kali kwa mucohemorrhagic.",
+        "prevention": "Dawa ya maji na disinfection."
       },
       "dis_mange": {
-        "name": "Sarcoptic Mange",
+        "name": "Mange ya Sarcoptic",
         "scientificName": "Sarcoptes scabiei",
-        "description": "Ugonjwa wa vimelea wa ngozi unaosababisha usumbufu mkubwa.",
-        "prevention": "Matibabu ya kuua vimelea."
+        "description": "Ugonjwa wa ngozi wa vimelea unaosababisha usumbufu mkubwa.",
+        "prevention": "Matibabu ya Acaricide."
       },
       "dis_anemia": {
-        "name": "Upungufu wa Chuma (Anemia)",
+        "name": "Anemia ya Upungufu wa Madini",
         "scientificName": "Iron Deficiency",
-        "description": "Kawaida kwa watoto wa ndani wasio na nyongeza ya chuma.",
+        "description": "Kawaida katika nguruwe za ndani bila virutubisho vya chuma.",
         "prevention": "Sindano za chuma wakati wa kuzaliwa."
       },
       "dis_ulcers": {
         "name": "Vidonda vya Tumbo",
         "scientificName": "Gastric Ulcers",
-        "description": "Inasababishwa na chakula laini sana au msongo.",
-        "prevention": "Rekebisha ukubwa wa punje za chakula."
+        "description": "Husababishwa na kulisha faini au dhiki.",
+        "prevention": "Rekebisha ukubwa wa chembe ya mlisho."
       },
       "dis_pss": {
-        "name": "Porcine Stress Syndrome",
+        "name": "Ugonjwa wa Mfadhaiko wa Nguruwe",
         "scientificName": "Genetic stress susceptibility",
-        "description": "Hali ya kijenetiki inayochochewa na msongo.",
-        "prevention": "Uchaguzi wa kijenetiki na kushughulikia kwa utulivu."
+        "description": "Hali ya maumbile inayosababishwa na mafadhaiko.",
+        "prevention": "Uchaguzi wa maumbile na utunzaji wa utulivu."
       },
       "dis_tge": {
-        "name": "Transmissible Gastroenteritis (TGE)",
+        "name": "Ugonjwa wa Kuambukiza wa Gastroenteritis (TGE)",
         "scientificName": "Coronavirus",
-        "description": "Ugonjwa wa virusi wenye vifo vingi kwa watoto wadogo.",
-        "prevention": "Ulinzi wa shamba."
+        "description": "Ugonjwa wa virusi wenye vifo vingi vya nguruwe wachanga.",
+        "prevention": "Usalama wa viumbe."
       },
       "dis_pasteurellosis": {
         "name": "Pasteurellosis",
         "scientificName": "Pasteurella multocida",
-        "description": "Nimonia ya bakteria.",
-        "prevention": "Dawa na uingizaji hewa."
+        "description": "Pneumonia ya bakteria.",
+        "prevention": "Antibiotics na uingizaji hewa."
       },
       "dis_strep": {
-        "name": "Streptococcus suis",
+        "name": "Ugonjwa wa Streptococcus",
         "scientificName": "S. suis",
-        "description": "Maambukizi ya bakteria yanayosababisha homa ya uti wa mgongo.",
-        "prevention": "Dawa na kupunguza msongo."
+        "description": "Maambukizi ya bakteria yanayosababisha ugonjwa wa meningitis.",
+        "prevention": "Antibiotics na kupunguza stress."
       },
       "dis_mycotoxicosis": {
         "name": "Mycotoxicosis",
         "scientificName": "Mycotoxicosis",
-        "description": "Inasababishwa na chakula chenye fangasi.",
-        "prevention": "Dawa za kufunga sumu na hifadhi kavu."
+        "description": "Husababishwa na malisho yaliyochafuliwa na ukungu.",
+        "prevention": "Vifunga vya sumu na hifadhi kavu."
       },
       "dis_greasy_pig": {
-        "name": "Ugonjwa wa Nguruwe wa Mafuta",
+        "name": "Ugonjwa wa Nguruwe wenye Grisi",
         "scientificName": "Staphylococcus hyicus",
-        "description": "Maambukizi ya bakteria yanayosababisha vidonda vya ngozi vyenye mafuta.",
-        "prevention": "Usafi na dawa."
+        "description": "Maambukizi ya bakteria ambayo husababisha vidonda vya ngozi vya greasi.",
+        "prevention": "Usafi wa mazingira na antibiotics."
       },
       "dis_pseudorabies": {
-        "name": "Pseudorabies (Aujeszky's)",
+        "name": "Pseudorabies (ya Aujeszky)",
         "scientificName": "Suid herpesvirus 1",
-        "description": "Ugonjwa wa virusi unaoathiri mfumo wa neva na kupumua.",
-        "prevention": "Chanjo na programu za kutokomeza."
+        "description": "Ugonjwa wa virusi unaoathiri mifumo ya neva na ya kupumua.",
+        "prevention": "Mipango ya chanjo na kutokomeza."
       },
       "dis_pcv2": {
         "name": "Porcine Circovirus (PCV2)",
         "scientificName": "Circovirus",
-        "description": "Husababisha kudhoofika na shida za kupumua kwa wakuao.",
+        "description": "Husababisha matatizo ya kupoteza na kupumua kwa wakulima.",
         "prevention": "Chanjo."
       },
       "dis_ped": {
-        "name": "Porcine Epidemic Diarrhea (PED)",
+        "name": "Kuhara kwa Janga la Nguruwe (PED)",
         "scientificName": "Coronavirus",
-        "description": "Sawa na TGE, hatari sana kwa watoto wachanga.",
-        "prevention": "Ulinzi mkali wa shamba."
+        "description": "Sawa na TGE, ni hatari sana kwa watoto wachanga.",
+        "prevention": "Usalama mkali wa viumbe hai."
       },
       "dis_je": {
-        "name": "Homa ya Manjano ya Kijapani",
+        "name": "Encephalitis ya Kijapani",
         "scientificName": "Flavivirus",
         "description": "Ugonjwa wa virusi unaoenezwa na mbu.",
-        "prevention": "Kudhibiti mbu na chanjo."
+        "prevention": "Udhibiti wa mbu na chanjo."
       },
       "dis_rabies": {
-        "name": "Kichaa cha Mbwa",
+        "name": "Kichaa cha mbwa",
         "scientificName": "Lyssavirus",
-        "description": "Ugonjwa wa virusi hatari kawaida kutoka kwa kuumwa.",
-        "prevention": "Chanjo ya wanyama wa nyumbani na kudhibiti wanyama pori."
+        "description": "Ugonjwa mbaya wa virusi kawaida kutoka kwa kuumwa.",
+        "prevention": "Chanjo ya wanyama kipenzi na udhibiti wa wanyamapori."
       },
       "dis_pox": {
-        "name": "Ndui ya Nguruwe",
+        "name": "Nguruwe",
         "scientificName": "Suipoxvirus",
-        "description": "Ugonjwa wa virusi wa ngozi, mara nyingi huenezwa na chawa.",
-        "prevention": "Kudhibiti chawa."
+        "description": "Ugonjwa wa ngozi wa virusi, mara nyingi huenezwa na chawa.",
+        "prevention": "Udhibiti wa chawa."
       },
       "dis_vs": {
-        "name": "Vesicular Stomatitis",
+        "name": "Stomatitis ya vesicular",
         "scientificName": "Rhabdovirus",
         "description": "Husababisha malengelenge; inaonekana kama FMD.",
-        "prevention": "Kudhibiti wadudu na karantini."
+        "prevention": "Udhibiti wa wadudu na karantini."
       },
       "dis_clostridial": {
-        "name": "Clostridial Enteritis",
+        "name": "Enteritis ya Clostridial",
         "scientificName": "Clostridium perfringens",
-        "description": "Maambukizi ya bakteria yanayosababisha uharibifu mkubwa wa utumbo.",
-        "prevention": "Chanjo ya majike na usafi."
+        "description": "Maambukizi ya bakteria na kusababisha uharibifu mkubwa wa matumbo.",
+        "prevention": "Chanjo ya nguruwe na usafi."
       },
       "dis_glassers": {
         "name": "Ugonjwa wa Glasser",
         "scientificName": "Haemophilus parasuis",
-        "description": "Husababisha uvimbe wa utando wa moyo, mapafu, viungo.",
-        "prevention": "Dawa na usimamizi wa msongo."
+        "description": "Husababisha kuvimba kwa utando karibu na moyo, mapafu, viungo.",
+        "prevention": "Antibiotics na usimamizi wa dhiki."
       },
       "dis_app": {
         "name": "Actinobacillus Pleuropneumonia (APP)",
         "scientificName": "A. pleuropneumoniae",
-        "description": "Nimonia kali ya bakteria.",
-        "prevention": "Dawa na mazingira bora."
+        "description": "Pneumonia ya bakteria kali.",
+        "prevention": "Antibiotics na kuboresha mazingira."
       },
       "dis_ileitis": {
         "name": "Ileitis (Lawsonia)",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Maambukizi ya bakteria kwenye utumbo mdogo.",
-        "prevention": "Chanjo na dawa."
+        "description": "Maambukizi ya bakteria ya utumbo mdogo.",
+        "prevention": "Chanjo na antibiotics."
       },
       "dis_tb": {
-        "name": "Kifua Kikuu (TB)",
+        "name": "Kifua kikuu",
         "scientificName": "Mycobacterium avium",
         "description": "Ugonjwa sugu wa bakteria.",
-        "prevention": "Kuzuia ndege na usafi."
+        "prevention": "Uthibitisho wa ndege na usafi wa mazingira."
       },
       "dis_tetanus": {
         "name": "Pepopunda",
         "scientificName": "Clostridium tetani",
-        "description": "Sumu ya bakteria inayothiri mfumo wa neva.",
-        "prevention": "Usafi wakati wa upasuaji/hasi."
+        "description": "Sumu ya bakteria inayoathiri mfumo wa neva.",
+        "prevention": "Usafi wa mazingira wakati wa upasuaji/kuhasiwa."
       },
       "dis_eperythrozoonosis": {
         "name": "Eperythrozoonosis",
         "scientificName": "Mycoplasma suis",
         "description": "Vimelea vya damu vinavyosababisha upungufu wa damu.",
-        "prevention": "Kudhibiti wadudu na sindano safi."
+        "prevention": "Udhibiti wa wadudu na sindano safi."
       },
       "dis_ascaris": {
         "name": "Ascaris suum",
         "scientificName": "Minyoo Wakubwa",
         "description": "Vimelea vya ndani vinavyosababisha uharibifu wa mapafu na ini.",
-        "prevention": "Dawa ya minyoo ya mara kwa mara."
+        "prevention": "Dawa ya minyoo mara kwa mara."
       },
       "dis_whipworms": {
-        "name": "Minyoo ya Mkia",
+        "name": "Viboko",
         "scientificName": "Trichuris suis",
         "description": "Vimelea vya ndani kwenye utumbo mpana.",
-        "prevention": "Dawa ya minyoo na usafi."
+        "prevention": "Dawa ya minyoo na usafi wa mazingira."
       },
       "dis_lungworms": {
-        "name": "Minyoo ya Mapafu",
+        "name": "Minyoo ya mapafu",
         "scientificName": "Metastrongylus spp.",
-        "description": "Vimelea vya ndani kwenye mapafu.",
-        "prevention": "Kudhibiti minyoo ya ardhi na dawa ya minyoo."
+        "description": "Vimelea vya ndani vya mapafu.",
+        "prevention": "Udhibiti wa minyoo na dawa ya minyoo."
       },
       "dis_kidney_worms": {
         "name": "Minyoo ya Figo",
@@ -1094,19 +1100,19 @@
         "name": "Chawa wa Nguruwe",
         "scientificName": "Haematopinus suis",
         "description": "Vimelea vya nje vinavyofyonza damu.",
-        "prevention": "Matibabu ya kuua wadudu."
+        "prevention": "Matibabu ya wadudu."
       },
       "dis_ringworm": {
-        "name": "Pumu ya Ngozi (Ringworm)",
+        "name": "Mdudu",
         "scientificName": "Dermatophytosis",
-        "description": "Maambukizi ya fangasi ya ngozi.",
-        "prevention": "Usafi na matibabu ya kupaka."
+        "description": "Maambukizi ya ngozi ya kuvu.",
+        "prevention": "Usafi wa mazingira na matibabu ya juu."
       },
       "dis_mulberry_heart": {
         "name": "Ugonjwa wa Moyo wa Mulberry",
         "scientificName": "Vit E/Se Deficiency",
         "description": "Upungufu wa lishe unaoathiri moyo.",
-        "prevention": "Nyongeza ya lishe."
+        "prevention": "Nyongeza."
       },
       "dis_vit_a": {
         "name": "Upungufu wa Vitamini A",
@@ -1115,382 +1121,382 @@
         "prevention": "Marekebisho ya lishe."
       },
       "dis_rickets": {
-        "name": "Rickets",
+        "name": "Riketi",
         "scientificName": "Vit D/Ca/P Deficiency",
-        "description": "Upungufu wa lishe unaoathiri ukuaji wa mifupa.",
-        "prevention": "Madini ya kutosha na mwanga wa jua."
+        "description": "Upungufu wa lishe unaoathiri ukuaji wa mfupa.",
+        "prevention": "Madini yenye usawa na mwanga wa jua."
       },
       "dis_salt_poisoning": {
-        "name": "Sumu ya Chumvi",
+        "name": "Chumvi Sumu",
         "scientificName": "Water Deprivation",
-        "description": "Inasababishwa na ukosefu wa maji ikifuatiwa na kunywa kupita kiasi.",
-        "prevention": "Upatikanaji wa maji safi kila wakati."
+        "description": "Husababishwa na ukosefu wa maji ikifuatiwa na unywaji wa kupita kiasi.",
+        "prevention": "Ufikiaji wa maji safi mara kwa mara."
       },
       "dis_heat_stroke": {
-        "name": "Kupatwa na Joto (Heat Stroke)",
+        "name": "Kiharusi cha joto",
         "scientificName": "Heat Stroke",
-        "description": "Kuzidi kwa joto kutokana na uingizaji hewa duni au kivuli.",
-        "prevention": "Uingizaji hewa, kupoza, na kivuli."
+        "description": "Overheating kutokana na uingizaji hewa mbaya au kivuli.",
+        "prevention": "Uingizaji hewa, baridi, na kivuli."
       },
       "dis_rectal_prolapse": {
-        "name": "Kutoka kwa Sehemu ya Nyuma",
+        "name": "Prolapse ya Rectal",
         "scientificName": "Rectal Prolapse",
-        "description": "Mara nyingi hufuata kukohoa, kuhara, au msongo wa baridi.",
-        "prevention": "Shughulikia chanzo kikuu na upasuaji."
+        "description": "Mara nyingi hufuata kikohozi, kuhara, au mkazo wa baridi.",
+        "prevention": "Kushughulikia sababu kuu na upasuaji."
       },
       "dis_umbilical_hernia": {
-        "name": "Mshipa wa Kitovuni",
+        "name": "Hernia ya Umbilical",
         "scientificName": "Umbilical Hernia",
         "description": "Kasoro ya ukuaji au maambukizi ya kitovu.",
-        "prevention": "Usafi na jenetikia."
+        "prevention": "Usafi wa mazingira na maumbile."
       },
       "dis_scrotal_hernia": {
-        "name": "Mshipa wa Mapumbuni",
+        "name": "Hernia ya Scrotal",
         "scientificName": "Scrotal Hernia",
-        "description": "Kasoro ya kijenetiki ya ukuaji.",
-        "prevention": "Jenetikia na upasuaji."
+        "description": "Kasoro ya maendeleo ya maumbile.",
+        "prevention": "Jenetiki na ukarabati wa upasuaji."
       },
       "dis_splayleg": {
         "name": "Splayleg",
         "scientificName": "Myofibrillar hypoplasia",
-        "description": "Watoto wanaozaliwa hawawezi kusimama kwa miguu ya nyuma.",
-        "prevention": "Kufunga miguu na sakafu isiyoteleza."
+        "description": "Watoto wa nguruwe waliozaliwa hawawezi kusimama na miguu ya nyuma.",
+        "prevention": "Kugonga miguu na traction ya sakafu."
       },
       "dis_vulvovaginitis": {
         "name": "Vulvovaginitis",
         "scientificName": "Zearalenone Toxicity",
-        "description": "Inasababishwa na sumu ya fangasi kwenye chakula.",
-        "prevention": "Badilisha chanzo cha chakula."
+        "description": "Husababishwa na sumu ya kuvu ya estrojeni kwenye malisho.",
+        "prevention": "Badilisha chanzo cha mipasho."
       },
       "dis_seneca": {
         "name": "Virusi vya Seneca Valley (SVV)",
         "scientificName": "Senecavirus A",
         "description": "Husababisha malengelenge sawa na FMD.",
-        "prevention": "Ulinzi wa shamba na utambuzi."
+        "prevention": "Usalama wa kibaolojia na utambuzi."
       },
       "dis_deltacoronavirus": {
         "name": "Porcine Deltacoronavirus",
         "scientificName": "PDCoV",
-        "description": "Kuhara kwa virusi katika umri wowote.",
-        "prevention": "Ulinzi wa shamba."
+        "description": "Kuhara kwa virusi katika umri wote.",
+        "prevention": "Usalama wa viumbe."
       },
       "dis_rotavirus": {
         "name": "Kuhara kwa Rotavirus",
         "scientificName": "Rotavirus",
-        "description": "Chanzo cha kawaida cha kuhara baada ya kuachisha kunyonya.",
+        "description": "Sababu ya kawaida ya kuhara ya kunyonyesha.",
         "prevention": "Chanjo na usafi."
       },
       "dis_teschen": {
         "name": "Ugonjwa wa Teschen/Talfan",
         "scientificName": "Sapelovirus/Teschovirus",
-        "description": "Maambukizi ya virusi kwenye mfumo wa neva.",
-        "prevention": "Ulinzi wa shamba."
+        "description": "Maambukizi ya virusi ya mfumo wa neva.",
+        "prevention": "Usalama wa viumbe."
       },
       "dis_vesicular": {
-        "name": "Ugonjwa wa Malengelenge ya Nguruwe",
+        "name": "Ugonjwa wa Vesicular ya Nguruwe",
         "scientificName": "Enterovirus",
-        "description": "Ugonjwa wa virusi unaofanana na FMD.",
+        "description": "Ugonjwa wa virusi unaoiga FMD.",
         "prevention": "Karantini kali."
       },
       "dis_melioidosis": {
         "name": "Melioidosis",
         "scientificName": "Burkholderia pseudomallei",
-        "description": "Ugonjwa wa bakteria kutoka kwenye udongo/maji.",
+        "description": "Ugonjwa wa bakteria kutoka kwa udongo/maji.",
         "prevention": "Maji safi na usafi."
       },
       "dis_trypanosomiasis": {
-        "name": "Nagana (Trypanosomiasis)",
+        "name": "Trypanosomiasis",
         "scientificName": "Trypanosoma spp.",
-        "description": "Ugonjwa wa protozoa unaoenezwa na mbung'o.",
-        "prevention": "Kudhibiti mbung'o na dawa."
+        "description": "Ugonjwa wa protozoa unaoenezwa na nzi tsetse.",
+        "prevention": "Udhibiti wa kuruka na dawa."
       },
       "dis_cysticercosis": {
         "name": "Cysticercosis",
         "scientificName": "Taenia solium larvae",
-        "description": "Hatua ya watoto wa minyoo ya mkanda ya binadamu kwenye nyama ya nguruwe.",
+        "description": "Hatua ya mabuu ya minyoo ya binadamu katika misuli ya nguruwe.",
         "prevention": "Kuzuia upatikanaji wa taka za binadamu."
       },
       "dis_toxoplasmosis": {
         "name": "Toxoplasmosis",
         "scientificName": "Toxoplasma gondii",
-        "description": "Maambukizi ya protozoa yanayoathiri binadamu na wanyama.",
-        "prevention": "Kudhibiti paka na ulinzi wa shamba."
+        "description": "Maambukizi ya protozoa ya zoonotic.",
+        "prevention": "Udhibiti wa paka na usalama wa viumbe hai."
       },
       "dis_listeriosis": {
         "name": "Listeriosis",
         "scientificName": "Listeria monocytogenes",
-        "description": "Maambukizi ya bakteria kwenye mfumo wa neva.",
-        "prevention": "Usafi na ubora wa chakula."
+        "description": "Maambukizi ya bakteria ya mfumo wa neva.",
+        "prevention": "Usafi wa mazingira na usafi wa malisho."
       },
       "dis_ear_necrosis": {
-        "name": "Kuoza kwa Masikio",
+        "name": "Necrosis ya sikio",
         "scientificName": "Ear Necrosis",
-        "description": "Mara nyingi husababishwa na msongo, msongamano, au maambukizi.",
-        "prevention": "Punguza idadi ya wanyama na kutibu maambukizi."
+        "description": "Mara nyingi husababishwa na dhiki, msongamano, au maambukizi.",
+        "prevention": "Kupunguza wiani na kutibu maambukizi ya sekondari."
       },
       "dis_sunburn": {
-        "name": "Kuungua kwa Jua",
+        "name": "Kuchomwa na jua",
         "scientificName": "Solar dermatitis",
-        "description": "Huathiri nguruwe wenye ngozi nyeupe wakiwa nje.",
-        "prevention": "Weka kivuli."
+        "description": "Huathiri nguruwe wenye ngozi nyeupe nje.",
+        "prevention": "Kutoa kivuli."
       },
       "dis_tail_biting": {
-        "name": "Kuumana Mikia",
+        "name": "Kuuma Mkia",
         "scientificName": "Behavioral stress",
-        "description": "Shida ya tabia kutokana na msongo/uchovu.",
-        "prevention": "Punguza msongo na boresha mazingira."
+        "description": "Suala la kitabia kutokana na msongo wa mawazo/kuchoshwa.",
+        "prevention": "Kupunguza shinikizo na kuboresha mazingira."
       },
       "dis_navel_ill": {
         "name": "Ugonjwa wa Kitovu",
         "scientificName": "Navel Infection",
-        "description": "Maambukizi ya kitovu wakati wa kuzaliwa.",
-        "prevention": "Paka iodini wakati wa kuzaliwa na usafi."
+        "description": "Kuambukizwa kwa kitovu wakati wa kuzaliwa.",
+        "prevention": "Iodini dip wakati wa kuzaliwa na usafi wa mazingira."
       },
       "dis_iron_toxicity": {
         "name": "Sumu ya Chuma",
         "scientificName": "Ferrous excess",
-        "description": "Utoaji wa chuma uliopitiliza unaopelekea kifo cha ghafla.",
-        "prevention": "Toa kipimo sahihi."
+        "description": "Inaweza kutokea ikiwa madini ya chuma yatadungwa ndani ya nguruwe wenye upungufu wa Vit E.",
+        "prevention": "Hakikisha lishe ya nguruwe ina usawa."
       },
       "dis_aflatoxicosis": {
-        "name": "Sumu ya Aflatoxini",
+        "name": "Aflatoxicosis",
         "scientificName": "Aspergillus flavus toxin",
-        "description": "Sumu ya fangasi.",
-        "prevention": "Epuka chakula chenye ukungu na tumia dawa za kufunga sumu."
+        "description": "Sumu ya sumu kutoka kwa nafaka za ukungu au malisho na kusababisha uharibifu wa ini na homa ya manjano.",
+        "prevention": "Epuka kulisha malisho yenye ukungu, hifadhi nafaka katika hali kavu, na tumia viunganishi vya sumu."
       },
       "dis_parakeratosis": {
-        "name": "Parakeratosis",
+        "name": "Parakeratosis (Upungufu wa Zinki)",
         "scientificName": "Zinc deficiency",
-        "description": "Upungufu wa zinki kwa nguruwe.",
-        "prevention": "Hakikisha viwango vya kutosha vya zinki kwenye lishe."
+        "description": "Ugonjwa wa lishe unaosababisha ukoko mkali, vidonda vya ngozi vilivyoenea.",
+        "prevention": "Hakikisha uwiano wa kalsiamu-kwa-zinki katika malisho na kutoa virutubisho vya zinki."
       },
       "dis_biotin_deficiency": {
         "name": "Upungufu wa Biotini",
         "scientificName": "Vitamin H deficiency",
-        "description": "Upungufu wa biotini kwa nguruwe.",
-        "prevention": "Toa nyongeza ya biotini."
+        "description": "Upungufu wa lishe unaosababisha kwato zilizopasuka, vidonda vya ngozi, na ulemavu.",
+        "prevention": "Ongeza chakula kwa biotini na epuka sakafu mbaya na mvua ya zege."
       },
       "dis_gossypol_toxicity": {
-        "name": "Sumu ya Gossypol",
+        "name": "Gossypol sumu",
         "scientificName": "Gossypol poisoning",
-        "description": "Sumu kutoka kwa unga wa mbegu za pamba.",
-        "prevention": "Punguza unga mbichi wa mbegu za pamba kwenye chakula."
+        "description": "Sumu kutokana na kulisha unga mbichi au wa ziada wa pamba, na kusababisha shida ya kupumua.",
+        "prevention": "Punguza mashudu ya pamba yasiyosafishwa na ongeza madini ya chuma (FeSO4) kwenye chakula ili kupunguza sumu ya gossypol."
       },
       "dis_cassava_poisoning": {
         "name": "Sumu ya Muhogo",
         "scientificName": "Cyanogenic glycosides",
-        "description": "Sumu ya sayanidi kutoka kwenye muhogo mbichi.",
-        "prevention": "Pika au chachusha muhogo kabla ya kulisha."
+        "description": "Sumu ya cyanide kutoka kwa mizizi ya mihogo mibichi au iliyosindikwa vibaya au maganda.",
+        "prevention": "Menya mihogo, chemsha, kavu kwenye jua au chachu kabla ya kulisha."
       },
       "dis_sweet_potato_toxicity": {
-        "name": "Sumu ya Viazi Vitamu",
+        "name": "Sumu ya Viazi vitamu",
         "scientificName": "Ipomeamarone toxicity",
-        "description": "Sumu ya Ipomeamarone.",
-        "prevention": "Usilishe viazi vitamu vyenye ukungu au vilivyoharibika."
+        "description": "Sumu kutoka kwa viazi vitamu vya ukungu, na kusababisha shida kali ya kupumua.",
+        "prevention": "Tupa viazi vitamu vilivyoharibika au ukungu; kulisha tu mizizi yenye afya."
       },
       "dis_mma": {
-        "name": "MMA Syndrome",
+        "name": "Dysgalactia baada ya kujifungua (MMA)",
         "scientificName": "Mastitis-Metritis-Agalactia",
-        "description": "Maambukizi baada ya kuzaa kwa majike.",
-        "prevention": "Usafi wa mabanda ya kuzaa na lishe bora."
+        "description": "Mastitisi, metritis, na agalactia husababisha homa na ukosefu wa maziwa kwa nguruwe baada ya kuzaa.",
+        "prevention": "Dumisha usafi wa kalamu ya kuzalishia na hakikisha lishe ya kutosha ya nguruwe."
       },
       "dis_pwd": {
-        "name": "Kuhara Baada ya Kuachisha",
+        "name": "Kuhara baada ya Kuachishwa kunyonya (PWD)",
         "scientificName": "Escherichia coli (F4/F18)",
-        "description": "Colibacillosis kwa nguruwe walioachishwa.",
-        "prevention": "Usafi na marekebisho ya lishe."
+        "description": "Kuhara kwa bakteria kwa nguruwe muda mfupi baada ya kuachishwa, na kusababisha upungufu wa maji mwilini.",
+        "prevention": "Punguza mafadhaiko ya kunyonya, kudumisha usafi wa hali ya juu, na kutoa maji safi ya kunywa."
       },
       "dis_trichinellosis": {
         "name": "Trichinellosis",
         "scientificName": "Trichinella spiralis",
-        "description": "Maambukizi ya vimelea yanayoathiri binadamu.",
-        "prevention": "Usilishe mabaki mabichi; kudhibiti wadudu."
+        "description": "Ugonjwa wa minyoo ya Trichinella unaotokana na nguruwe kula nyama mbichi au panya walioambukizwa, na kusababisha vivimbe kwenye misuli.",
+        "prevention": "Usilishe swill mbichi, chemsha mabaki ya chakula kwa dakika 30, na udhibiti panya."
       },
       "dis_hydatid_disease": {
-        "name": "Ugonjwa wa Hydatid",
+        "name": "Ugonjwa wa Hydatid (Echinococcosis)",
         "scientificName": "Echinococcus granulosus",
-        "description": "Maambukizi ya watoto wa minyoo ya mkanda.",
-        "prevention": "Punguza minyoo kwa mbwa wa shamba."
+        "description": "Ugonjwa hatari wa minyoo ya utepe kutoka kwa kinyesi cha mbwa unaosababisha vivimbe vyenye maji kwenye ini na mapafu ya nguruwe.",
+        "prevention": "Mbwa wanaofuga minyoo mara kwa mara na kuwazuia kula viungo vya nguruwe mbichi."
       },
       "dis_phe": {
-        "name": "Proliferative Hemorrhagic Enteropathy",
+        "name": "Enteropathy ya Hemorrhagic ya Nguruwe",
         "scientificName": "Lawsonia intracellularis",
-        "description": "Kuvuja damu kwa ghafla kwenye utumbo kwa nguruwe wakubwa.",
-        "prevention": "Chanjo na usafi."
+        "description": "Kuharisha kwa umwagaji damu kwa papo hapo na kifo cha ghafla kwa nguruwe mkulima/mmalizaji.",
+        "prevention": "Dumisha usafi wa mazingira mzuri na utumie dawa zinazofaa chini ya uelekezi wa daktari wa mifugo."
       },
       "dis_mycoplasma_arthritis": {
-        "name": "Baridi Yabisi ya Mycoplasma",
+        "name": "Arthritis ya Mycoplasmal",
         "scientificName": "Mycoplasma hyosynoviae",
-        "description": "Ugonjwa wa viungo wa bakteria.",
-        "prevention": "Usafi na karantini."
+        "description": "Maambukizi ya bakteria na kusababisha kuvimba kwa viungo, ulemavu na udhaifu wa mguu.",
+        "prevention": "Kuboresha hali ya makazi, kupunguza msongamano wa hifadhi, na kutibu mapema."
       },
       "dis_foot_rot": {
-        "name": "Kuoza kwa Miguu",
+        "name": "Kuoza kwa miguu (Necrobacillosis)",
         "scientificName": "Fusobacterium necrophorum",
-        "description": "Maambukizi ya mguu yanayosababisha kuchechemea.",
-        "prevention": "Weka mabanda kavu; treat kwato."
+        "description": "Maambukizi ya bakteria yanayoingia kwenye majeraha ya kwato, na kusababisha kuoza na ulemavu.",
+        "prevention": "Rekebisha saruji mbaya, weka sakafu kavu, na tumia bafu za miguu ikiwa inahitajika."
       },
       "dis_babesiosis": {
-        "name": "Babesiosis",
+        "name": "Babesiosis inayoenezwa na Jibu",
         "scientificName": "Babesia trautmanni",
-        "description": "Maambukizi ya protozoa yanayoenezwa na kupe.",
-        "prevention": "Dawa ya kuua kupe."
+        "description": "Vimelea vya damu vinavyosambazwa na Jibu na kusababisha homa kali, upungufu wa damu, na mkojo mweusi.",
+        "prevention": "Dhibiti kupe kwa kutumia acaricides na weka kalamu bila mimea."
       },
       "dis_anaplasmosis": {
         "name": "Anaplasmosis",
         "scientificName": "Anaplasma marginale",
-        "description": "Maambukizi ya damu kwa nguruwe.",
-        "prevention": "Kudhibiti vekta."
+        "description": "Maambukizi ya bakteria yanayoenezwa na kupe na kusababisha upungufu wa damu, homa na homa ya manjano.",
+        "prevention": "Tekeleza programu za kudhibiti vekta na tiki."
       },
       "dis_sow_hysteria": {
-        "name": "Sow Hysteria",
+        "name": "Panda Hysteria",
         "scientificName": "Puerperal psychosis",
-        "description": "Uchokozi au hofu kwa majike baada ya kuzaa.",
-        "prevention": "Toa eneo tulivu la kuzaa."
+        "description": "Matatizo ya tabia ambapo nguruwe wanaozaa huwa wakali na kuuma nguruwe.",
+        "prevention": "Weka mazingira tulivu ya kuzalishia, simamia gilts, na tumia sedative ikihitajika."
       },
       "dis_thorny_headed_worm": {
-        "name": "Minyoo ya Kichwa cha Miiba",
+        "name": "Mnyoo mwenye kichwa chenye miiba",
         "scientificName": "Macracanthorhynchus hirudinaceus",
-        "description": "Kimelea cha utumbo.",
-        "prevention": "Kuzuia kula mabuu ya wadudu."
+        "description": "Mdudu wa vimelea aliyepatikana kwa kula mende, na kusababisha utoboaji wa utumbo.",
+        "prevention": "Epuka ufugaji huria kwenye udongo wenye mende na tumia dawa za minyoo."
       },
       "dis_strongyloidiasis": {
-        "name": "Strongyloidiasis",
+        "name": "Strongyloidiasis (Minyoo)",
         "scientificName": "Strongyloides ransomi",
-        "description": "Maambukizi ya minyoo ya uzi.",
-        "prevention": "Weka mabanda kavu; dawa ya minyoo."
+        "description": "Minyoo ya matumbo inayosababisha kuhara kali na vifo vya watoto wa nguruwe.",
+        "prevention": "Weka masanduku ya kuzalia yakiwa makavu na safi, na minyoo hupanda kabla ya kuzaa."
       },
       "dis_hyostrongylosis": {
-        "name": "Minyoo Mwekundu wa Tumbo",
+        "name": "Mnyoo wa Tumbo Jekundu",
         "scientificName": "Hyostrongylus rubidus",
-        "description": "Minyoo ya utumbo kwa nguruwe wanaolishwa nje.",
-        "prevention": "Usimamizi wa malisho; dawa ya minyoo."
+        "description": "Maambukizi ya minyoo ya tumbo na kusababisha gastritis, anemia, na kupunguza uzito.",
+        "prevention": "Zungusha malisho, weka makazi kavu, na tekeleza ratiba ya dawa ya minyoo."
       },
       "dis_oesophagostomiasis": {
-        "name": "Minyoo ya Vijiwe (Nodular)",
+        "name": "Maambukizi ya Nodular minyoo",
         "scientificName": "Oesophagostomum spp.",
-        "description": "Minyoo ya utumbo kwa nguruwe.",
-        "prevention": "Dawa ya minyoo na usafi."
+        "description": "Vimelea vya matumbo kusababisha vinundu kwenye ukuta wa utumbo, na kusababisha nguruwe wembamba.",
+        "prevention": "Usafi wa mazingira wa kalamu mara kwa mara na matumizi ya kawaida ya anthelmintics ya wigo mpana."
       },
       "dis_fascioliasis": {
-        "name": "Minyoo ya Ini (Fascioliasis)",
+        "name": "Fascioliasis (Fluke ya Ini)",
         "scientificName": "Fasciola gigantica",
-        "description": "Maambukizi ya minyoo ya ini.",
-        "prevention": "Kudhibiti konokono; mbali na malisho ya majimaji."
+        "description": "Fluji ya vimelea inayoathiri ini, ya kawaida katika malisho yenye mvua au chepechepe.",
+        "prevention": "Zuia nguruwe kuchungia kwenye maeneo yenye kinamasi na dhibiti konokono wa udongo."
       },
       "dis_emcv": {
-        "name": "EMCV",
+        "name": "Encephalomyocarditis (EMCV)",
         "scientificName": "Cardiovirus",
-        "description": "Ugonjwa wa virusi wa moyo na hitilafu za uzalishaji.",
-        "prevention": "Kudhibiti panya (panya hueneza EMCV)."
+        "description": "Maambukizi ya virusi yanayoenezwa na panya na kusababisha kushindwa kwa moyo ghafla na kutoa mimba.",
+        "prevention": "Tekeleza udhibiti mkali wa panya na linda malisho dhidi ya uchafuzi."
       },
       "dis_demodectic_mange": {
-        "name": "Demodectic Mange",
+        "name": "Demodex Mange",
         "scientificName": "Demodex phylloides",
-        "description": "Maambukizi ya utitiri wa ngozi.",
-        "prevention": "Matibabu ya kuua vimelea."
+        "description": "Utitiri wa ngozi hadubini unaosababisha madoa magamba na pustules ndogo.",
+        "prevention": "Boresha lishe ya mifugo, tenga nguruwe walioathirika, na weka viuatilifu."
       },
       "dis_pityriasis_rosea": {
-        "name": "Pityriasis Rosea",
+        "name": "Pityriasis rosea",
         "scientificName": "Pseudo-ringworm",
-        "description": "Hali ya ngozi isiyoambukiza.",
-        "prevention": "Kuona kwa kawaida; weka mazingira safi."
+        "description": "Hali ya ngozi isiyoambukiza katika nguruwe wachanga kutengeneza ganda la pete.",
+        "prevention": "Kawaida kujitatua; tunza matandiko safi, makavu na kupunguza msongo wa mawazo."
       },
       "dis_photosensitization": {
-        "name": "Photosensitization",
+        "name": "Uhamasishaji wa picha",
         "scientificName": "Solar dermatitis",
-        "description": "Ngozi kuwa na hisia kali kwa mwanga wa jua.",
-        "prevention": "Weka mbali na jua kali; kagua mimea ya malisho."
+        "description": "Mmenyuko mkali wa kuchomwa na jua kwa nguruwe wenye ngozi nyepesi baada ya kula mimea maalum.",
+        "prevention": "Weka kivuli, ondoa magugu yanayohamasisha, na weka nguruwe ndani ya nyumba."
       },
       "dis_shoulder_ulcers": {
-        "name": "Vidonda vya Bega",
+        "name": "Panda Vidonda vya Mabega",
         "scientificName": "Decubitus ulcers",
-        "description": "Vidonda kwa majike wembamba kwenye sakafu ngumu.",
-        "prevention": "Toa matandiko laini; ongeza chakula."
+        "description": "Vidonda vya shinikizo kwenye mabega ya nguruwe nyembamba zilizowekwa kwenye saruji ngumu.",
+        "prevention": "Toa matandiko laini, weka nguruwe katika hali nzuri ya mwili, na tumia mikeka ya mpira."
       },
       "dis_ear_biting": {
-        "name": "Kuumana Masikio",
+        "name": "Ulaji wa Masikio",
         "scientificName": "Stress response behavior",
-        "description": "Tabia ya msongo.",
-        "prevention": "Punguza msongamano; boresha mazingira."
+        "description": "Tabia isiyo ya kawaida ambapo nguruwe huuma masikio ya wenzao, na kusababisha necrosis.",
+        "prevention": "Punguza msongamano, boresha uingizaji hewa, na toa uboreshaji kama minyororo."
       },
       "dis_gastric_torsion": {
-        "name": "Gastric Torsion",
+        "name": "Kuvimba kwa tumbo (Bloat)",
         "scientificName": "Gastric dilation-volvulus",
-        "description": "Tumbo kujinyonga.",
-        "prevention": "Epuka kulisha kupita kiasi kwa mlo mmoja."
+        "description": "Kuvimba kwa ghafla na kupotosha kwa tumbo, na kusababisha kifo cha haraka.",
+        "prevention": "Epuka kulisha milo mikubwa baada ya kufunga kwa muda mrefu na ugawanye chakula cha kila siku katika sehemu."
       },
       "dis_c_difficile": {
-        "name": "Maambukizi ya C. difficile",
+        "name": "Clostridia difficile (CDI)",
         "scientificName": "Clostridioides difficile",
-        "description": "Kuhara kwa bakteria kwa watoto wa nguruwe.",
-        "prevention": "Mazingira safi na uingizaji hewa mzuri."
+        "description": "Maambukizi ya bakteria kwa nguruwe wanaozaliwa na kusababisha kuhara kwa maji na kuvimbiwa.",
+        "prevention": "Safisha na kuua viini vya kukulia vizuri na hakikisha kolostramu mapema."
       },
       "dis_cold_stress": {
-        "name": "Msongo wa Baridi",
+        "name": "Mkazo wa Baridi (Hypothermia)",
         "scientificName": "Hypothermia susceptibility",
-        "description": "Baridi kwa watoto wachanga.",
-        "prevention": "Toa taa za joto na matandiko makavu."
+        "description": "Kupoa kwa mwili kwa watoto wa nguruwe, na kusababisha kutetemeka na vifo vingi.",
+        "prevention": "Kutoa taa za joto, masanduku ya kutambaa, na kuweka mahali pa kuzalia kikavu na bila rasimu."
       },
       "dis_necrotic_enteritis": {
         "name": "Necrotic Enteritis",
         "scientificName": "Clostridium perfringens Type C",
-        "description": "Maambukizi ya clostridial ya utumbo.",
-        "prevention": "Chanjo ya majike na usafi wa mabanda."
+        "description": "Ugonjwa wa sumu ya bakteria unaosababisha kuhara kwa damu nyingi na vifo vingi vya nguruwe.",
+        "prevention": "Chanja nguruwe kabla ya kuzaa na udumishe usafi kamili wa kalamu."
       },
       "dis_navel_bleeding": {
-        "name": "Kuvuja Damu Kitovuni",
+        "name": "Kutokwa na damu kwa kitovu",
         "scientificName": "Umbilical hemorrhage",
-        "description": "Kuvuja damu kutoka kwenye kitovu.",
-        "prevention": "Funga vitovu vinavyovuja damu; kagua vitamini K kwenye chakula."
+        "description": "Kutokwa na damu nyingi kutoka kwa kitovu kwa watoto wachanga wa nguruwe.",
+        "prevention": "Funga kitovu wakati wa kuzaliwa na epuka kuwalisha nguruwe chakula kilichochafuliwa na mycotoxin."
       },
       "dis_spirochetal_colitis": {
-        "name": "Spirochetal Colitis",
+        "name": "Nguruwe Spirochetal Colitis",
         "scientificName": "Brachyspira pilosicoli",
-        "description": "Maambukizi ya bakteria kwenye utumbo mpana.",
-        "prevention": "Dawa na usafi wa mabanda."
+        "description": "Ugonjwa wa kuhara kidogo katika nguruwe wanaokua, na kusababisha kupata uzito duni.",
+        "prevention": "Safisha vyombo vya kulishia na watibu nguruwe walioathirika kwa kutumia viuavijasumu."
       },
       "dis_salmonella_septicemia": {
         "name": "Salmonella Septicemia",
         "scientificName": "Salmonella choleraesuis",
-        "description": "Maambukizi ya damu kutoka kwa Salmonella.",
-        "prevention": "Maji safi; ulinzi wa shamba."
+        "description": "Maambukizi makali ya damu ya salmonella na kusababisha ngozi ya zambarau na kifo cha haraka.",
+        "prevention": "Tenga nguruwe wagonjwa, maji ya dawa, na udumishe ulinzi mkali wa viumbe hai."
       },
       "dis_prdc": {
-        "name": "PRDC",
+        "name": "Kitanzi cha Ugonjwa wa Kupumua kwa Nguruwe",
         "scientificName": "Porcine Respiratory Disease Complex",
-        "description": "Shida ya kupumua kwa nguruwe wakuao.",
-        "prevention": "Uingizaji hewa, chanjo, na kudhibiti msongamano."
+        "description": "Maambukizi mchanganyiko ya virusi na bakteria na kusababisha kukohoa na ukuaji duni.",
+        "prevention": "Boresha uingizaji hewa, epuka msongamano, na udhibiti virusi vya msingi."
       },
       "dis_ergotism": {
-        "name": "Ergotism",
+        "name": "Sumu ya Ergot (Ergotism)",
         "scientificName": "Claviceps purpurea",
-        "description": "Sumu kutoka kwa nafaka zenye fangasi.",
-        "prevention": "Kagua nafaka kwa ajili ya fangasi weusi wa ergot."
+        "description": "Sumu ya kuvu kutoka kwa nafaka zilizoambukizwa na ergot, na kusababisha necrosis ya tishu.",
+        "prevention": "Mlisho wa skrini wa chembe chembe chembe za giza na ubadilishe mlisho uliochafuliwa."
       },
       "dis_bvdv_pig": {
-        "name": "BVDV kwa Nguruwe",
+        "name": "Maambukizi ya BVDV katika Nguruwe",
         "scientificName": "Pestivirus",
-        "description": "Virusi vya Kuhara kwa Ng'ombe kwa nguruwe.",
-        "prevention": "Tenga nguruwe kutoka kwa ng'ombe."
+        "description": "Maambukizi ya virusi vya Kuhara ya Bovine kutokana na kuwasiliana na ng'ombe, na kusababisha utoaji mimba.",
+        "prevention": "Weka nguruwe tofauti na ng'ombe na kondoo, na zuia mawasiliano ya spishi tofauti."
       },
       "dis_endocarditis": {
-        "name": "Endocarditis",
+        "name": "Endocarditis ya bakteria",
         "scientificName": "Streptococcal endocarditis",
-        "description": "Maambukizi ya vali za moyo.",
-        "prevention": "Tibu maambukizi ya awali mapema."
+        "description": "Maambukizi ya valves ya moyo na kusababisha kushindwa kwa moyo na kifo cha ghafla wakati wa dhiki.",
+        "prevention": "Tibu mara moja magonjwa ya viungo na majeraha, na uchague dhidi ya vinasaba vinavyohusika."
       },
       "dis_polyserositis": {
-        "name": "Polyserositis",
+        "name": "Mycoplasma Polyserositis",
         "scientificName": "Mycoplasma hyorhinis",
-        "description": "Maambukizi ya utando wa matundu ya mwili.",
-        "prevention": "Matibabu ya dawa; punguza msongo."
+        "description": "Kuvimba kwa uvimbe wa mapafu, moyo, na viungo katika watu wanaonyonyesha.",
+        "prevention": "Punguza mkazo wa kumwachisha ziwa, epuka kuchanganya takataka, na upe hewa hewa ipasavyo."
       },
       "dis_congenital_tremor": {
-        "name": "Kutetemeka kwa Kuzaliwa",
+        "name": "Kutetemeka kwa kuzaliwa",
         "scientificName": "Atypical Porcine Pestivirus",
-        "description": "Ugonjwa wa nguruwe wanaotetemeka.",
-        "prevention": "Wazoeshe matamba shambani kabla ya kupandisha."
+        "description": "Hali ya neurological katika nguruwe wachanga na kusababisha kutetemeka kali.",
+        "prevention": "Epuka kutumia shahawa kutoka kwa nguruwe walioathirika na punguza mkazo wakati wa ujauzito."
       }
     },
     "diagnosisMatches": "Clinical Diagnosis Matches",
@@ -1502,7 +1508,7 @@
     "emergencyBiosecurityProtocolHeader": "🚨 EMERGENCY BIOSECURITY PROTOCOL:",
     "clinicalDiagnosisMatches": "Mechi za Utambuzi wa Kliniki",
     "hallmarkBadge": "Dalili Kuu",
-    "hallmarkSignPresent": "Alama ya alama ipo: %1$s",
+    "hallmarkSignPresent": "Alama ya alama ipo: {sign}",
     "otherSignsWatch": "Ishara zingine za tahadhari:",
     "preventionTreatmentLabel": "Kinga / Matibabu: {treatment}",
     "bio_proto_asf": "IMMEDIATE EMERGENCY QUARANTINE: African Swine Fever is a lethal, legally notifiable virus. 1) Lock down farm gates immediately. 2) Stop all movement of pigs, vehicles, feed, and manure. 3) Disinfect all boot baths and tyres with Virkon S or 2% caustic soda. 4) Contact your District/National Veterinary Officer immediately.",
@@ -1514,8 +1520,8 @@
     "bio_proto_vesicular_stomatitis": "REPORTABLE VESICULAR LESION ALERT: Vesicular Stomatitis is clinically indistinguishable from Foot and Mouth Disease. 1) Isolate infected pigs immediately. 2) Wear protective gloves. 3) Report to state veterinarian for lab differential diagnosis.",
     "bio_proto_senecavirus": "REPORTABLE VESICULAR DISEASE: Senecavirus A lesions are clinically indistinguishable from Foot and Mouth Disease (FMD). 1) Quarantine pen immediately. 2) Restrict off-farm movement. 3) Notify livestock veterinary authorities for mandatory differential PCR testing.",
     "bio_proto_svd": "REPORTABLE VESICULAR DISEASE: Swine Vesicular Disease (SVD). 1) Strict isolation of infected animals. 2) Restrict all vehicle and visitor movements. 3) Report to state animal health department immediately.",
-    "clinicalMatchPercent": "%1$d%% Mechi ya Kliniki",
-    "matchedSignsCount": "{matched}$d kati ya ishara {total}$d",
+    "clinicalMatchPercent": "{percent}% Mechi ya Kliniki",
+    "matchedSignsCount": "{matched} kati ya ishara {total}",
     "matchPercentSuffix": "({percent}% match)"
   },
   "HR": {
@@ -1932,7 +1938,7 @@
     "snooze1Month": "Mwezi 1",
     "deleteNotificationQuestion": "Ungependa kufuta Arifa?",
     "deleteNotificationConfirm": "Je, una uhakika unataka kufuta arifa hii?",
-    "lastWeighedDaysAgo": "Nguruwe #%1$s: Alikuwa na uzito wa mwisho siku %2$s zilizopita",
+    "lastWeighedDaysAgo": "Nguruwe #{tag}: Alikuwa na uzito wa mwisho siku {days} zilizopita",
     "stockLeftMinFormat": "{current}: {unit} kg iliyosalia (Dak: {min} kg)",
     "pigs": "Nguruwe",
     "pig": "Nguruwe",
