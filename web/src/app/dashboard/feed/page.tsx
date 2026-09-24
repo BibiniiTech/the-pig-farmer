@@ -10,19 +10,24 @@ import { useDevice } from "@/context/DeviceContext";
 import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
+import NativeAdBanner from "@/components/ads/NativeAdBanner";
+import RewardedPassModal from "@/components/ads/RewardedPassModal";
 import { useTranslations } from "next-intl";
 import {
   InventoryIcon,
   ScienceIcon,
   CalculateIcon,
+  AnalyticsIcon,
+  ExportPdfIcon,
 } from "@/components/icons/DashboardIcons";
 import {
   formulateFeed,
-  FormulationResult
+  FormulationResult,
+  analyzeFeedMix,
+  FeedNutrientProfile,
 } from "@/lib/feedCalculator";
 import { FeedIngredient, NutritionalRequirement, FeedInventoryItem, FeedInventoryTransaction } from "@/lib/types";
 import PremiumWrapper from "@/components/PremiumWrapper";
-import { ExportPdfIcon } from '@/components/icons/DashboardIcons';
 
 // SVG Icons matching Android Material Icons
 const PrintIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -34,6 +39,35 @@ const PrintIcon = (props: React.SVGProps<SVGSVGElement>) => (
 const WarningIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+  </svg>
+);
+
+const ArrowLeftIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <line x1="19" y1="12" x2="5" y2="12" />
+    <polyline points="12 19 5 12 12 5" />
+  </svg>
+);
+
+const PlusIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <line x1="12" y1="5" x2="12" y2="19" />
+    <line x1="5" y1="12" x2="19" y2="12" />
+  </svg>
+);
+
+const ChevronDownIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <polyline points="6 9 12 15 18 9" />
   </svg>
 );
 
@@ -90,12 +124,14 @@ export default function FeedPage() {
   const [items, setItems] = useState<FeedInventoryItem[]>([]);
   const [transactions, setTransactions] = useState<FeedInventoryTransaction[]>([]);
   const [dataLoading, setDataLoading] = useState(true);
+  const [isTxHistoryOpen, setIsTxHistoryOpen] = useState(false);
 
   // Form modals
   const [showAddModal, setShowAddModal] = useState(false);
   const [showRestockModal, setShowRestockModal] = useState(false);
   const [showUsageModal, setShowUsageModal] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+  const [showRewardedPassModal, setShowRewardedPassModal] = useState(false);
 
   // Add Item inputs
   const [newName, setNewName] = useState("");
@@ -124,10 +160,19 @@ export default function FeedPage() {
   const [formulation, setFormulation] = useState<FormulationResult | null>(null);
   const [formulatorError, setFormulatorError] = useState<string | null>(null);
 
-  // Collapses
-  const [energyCollapsed, setEnergyCollapsed] = useState(true);
-  const [proteinCollapsed, setProteinCollapsed] = useState(true);
-  const [mineralsCollapsed, setMineralsCollapsed] = useState(true);
+  // Single accordion open at a time for available ingredients
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+
+  const toggleCategory = (cat: string) => {
+    setExpandedCategory(prev => prev === cat ? null : cat);
+  };
+
+  // ==================== ANALYZE FEED STATES ====================
+  const [analyzePercentageMode, setAnalyzePercentageMode] = useState(false);
+  const [analyzeItems, setAnalyzeItems] = useState<{ ingredient: FeedIngredient; quantityStr: string }[]>([]);
+  const [analyzeTargetStage, setAnalyzeTargetStage] = useState("Grower");
+  const [showAddIngredientModal, setShowAddIngredientModal] = useState(false);
+  const [analyzeSearchQuery, setAnalyzeSearchQuery] = useState("");
 
   // ==================== CALCULATOR STATES ====================
   const [sowsCount, setSowsCount] = useState(0);
@@ -263,9 +308,18 @@ export default function FeedPage() {
     const unsubscribeIngredients = onSnapshot(ingredientsQuery, (snapshot) => {
       const rawList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as FeedIngredient));
       
+      // Auto-prune and filter out duplicate/redundant ingredients (parity with Android)
+      const REDUNDANT_NAMES = ["barleyb", "dried brewers grain", "full fat soybean"];
+      rawList.forEach(ing => {
+        if (REDUNDANT_NAMES.includes(ing.name.trim().toLowerCase())) {
+          deleteDoc(doc(db, "users", activeFarmUid, "feed_ingredients", ing.id)).catch(console.error);
+        }
+      });
+      const validRaw = rawList.filter(ing => !REDUNDANT_NAMES.includes(ing.name.trim().toLowerCase()));
+
       // Deduplicate by name, preferring "Vitamins, Minerals & Salt" or "Energy" over "Protein" if name is duplicated
       const uniqueMap = new Map<string, FeedIngredient>();
-      rawList.forEach(ing => {
+      validRaw.forEach(ing => {
         const key = ing.name.trim().toLowerCase();
         const existing = uniqueMap.get(key);
         if (!existing) {
@@ -525,23 +579,42 @@ export default function FeedPage() {
     });
   };
 
-  // Helper render for collapsible category lists in Formulator
-  const renderGroupList = (category: string, collapsed: boolean, setCollapsed: (val: boolean) => void) => {
+  // ==================== ANALYZE FEED CALCULATIONS ====================
+  const analyzeParsedItems = React.useMemo(() => {
+    return analyzeItems.map(item => {
+      const q = parseFloat(item.quantityStr) || 0;
+      return { ingredient: item.ingredient, quantity: q };
+    }).filter(i => i.quantity > 0);
+  }, [analyzeItems]);
+
+  const analyzeProfile = React.useMemo(() => {
+    return analyzeFeedMix(analyzeParsedItems, analyzePercentageMode);
+  }, [analyzeParsedItems, analyzePercentageMode]);
+
+  const analyzeTotalEntered = React.useMemo(() => {
+    return analyzeItems.reduce((acc, item) => acc + (parseFloat(item.quantityStr) || 0), 0);
+  }, [analyzeItems]);
+
+  const benchmarkReq = requirements.find(r => r.stage.toLowerCase() === analyzeTargetStage.toLowerCase()) || defaultRequirements[1];
+
+  // Helper render for collapsible category lists in Formulator (single open category at a time)
+  const renderGroupList = (category: string) => {
     const list = ingredients.filter(ing => ing.mainCategory === category);
+    const isExpanded = expandedCategory === category;
 
     return (
       <div className="bg-zinc-50/75 backdrop-blur-md border border-zinc-200 rounded-xl overflow-hidden shadow-sm">
         <button
           type="button"
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={() => toggleCategory(category)}
           className="w-full bg-zinc-100/60 px-4 py-3 flex items-center justify-between border-b border-zinc-200/50 hover:bg-zinc-200/60 transition-colors"
         >
           <div className="flex items-center gap-2 font-bold text-zinc-800 text-xs">
-            <span>{collapsed ? "▶" : "▼"}</span>
+            <span className="text-amber-600">{isExpanded ? "▼" : "▶"}</span>
             <span>{translateCategoryGroup(category)} ({list.length})</span>
           </div>
         </button>
-        {!collapsed && (
+        {isExpanded && (
           <div className="p-3 space-y-2 divide-y divide-zinc-100">
             {list.length === 0 ? (
               <p className="text-[11px] text-zinc-400 italic">No ingredients in this group.</p>
@@ -553,7 +626,7 @@ export default function FeedPage() {
                       type="checkbox"
                       checked={selectedIds.includes(ing.id)}
                       onChange={() => handleToggleSelect(ing.id)}
-                      className="h-4 w-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500"
+                      className="h-4 w-4 rounded border-zinc-300 text-amber-600 focus:ring-amber-500"
                     />
                     <span>{translateIngredientName(ing.name)}</span>
                   </label>
@@ -593,7 +666,49 @@ export default function FeedPage() {
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-12 print:p-0">
 
-          {/* ==================== SECTION 1: INVENTORY ==================== */}
+          {/* Header Bar */}
+          <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 pb-4">
+            <div className="flex items-center gap-3">
+              <Link
+                href="/dashboard?section=feed"
+                className="p-2 rounded-xl border border-zinc-200 text-zinc-600 hover:bg-zinc-100 transition"
+              >
+                <ArrowLeftIcon className="h-5 w-5" />
+              </Link>
+              <div className="h-10 w-10 rounded-xl bg-amber-50 border border-amber-200/60 flex items-center justify-center flex-shrink-0">
+                <InventoryIcon className="h-5 w-5 text-amber-600" />
+              </div>
+              <div>
+                <h1 className="text-xl sm:text-2xl font-black text-amber-600">
+                  {t("inventory") || "Feed Inventory"}
+                </h1>
+                <p className="text-xs text-zinc-500">{t("inventoryDesc") || "Manage feed stock, restock bags, and log usage"}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Link
+                href="/dashboard/feed/calculator"
+                className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 transition"
+              >
+                Calculator
+              </Link>
+              <Link
+                href="/dashboard/feed/mix"
+                className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 transition"
+              >
+                Mix Feed
+              </Link>
+              <Link
+                href="/dashboard/feed/analyze"
+                className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 transition"
+              >
+                Analyze Feed
+              </Link>
+            </div>
+          </div>
+
+          {/* ==================== 4. FEED INVENTORY ==================== */}
           <div className="space-y-6">
             {items.some(item => item.quantity < item.minThreshold) && (
               <div className="rounded-xl border border-amber-200 bg-amber-50/60 p-4 text-xs text-amber-800 flex items-center gap-3 print:hidden shadow-sm">
@@ -605,12 +720,11 @@ export default function FeedPage() {
               </div>
             )}
 
-            <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm overflow-hidden print:border-none print:p-0">
-              {/* Section header — Android style */}
+            <div id="inventory" className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm overflow-hidden print:border-none print:p-0 scroll-mt-24">
               <div className="flex items-center justify-between mb-5 flex-wrap gap-4">
                 <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-xl bg-emerald-50 flex items-center justify-center flex-shrink-0">
-                    <InventoryIcon className="h-5 w-5 text-emerald-600" />
+                  <div className="h-10 w-10 rounded-xl bg-amber-50 border border-amber-200/60 flex items-center justify-center flex-shrink-0">
+                    <InventoryIcon className="h-5 w-5 text-amber-600" />
                   </div>
                   <div>
                     <h2 className="text-sm font-black text-zinc-900 print:text-black">{t("inventory")}</h2>
@@ -620,13 +734,13 @@ export default function FeedPage() {
 
                 <div className="flex items-center gap-2">
                   <PremiumWrapper fallback={
-                    <Link
-                      href="/dashboard/billing"
+                    <button
+                      onClick={() => setShowRewardedPassModal(true)}
                       className="rounded-lg border border-amber-200 bg-amber-50/50 px-4 py-2 text-xs font-semibold text-amber-650 hover:bg-amber-100 transition shadow-sm flex items-center gap-1.5"
                     >
                       <ExportPdfIcon className="h-3.5 w-3.5 text-amber-500" />
                       <span>{t("exportPdfPremium")}</span>
-                    </Link>
+                    </button>
                   }>
                     <button
                       onClick={() => setShowExportModal(true)}
@@ -638,7 +752,7 @@ export default function FeedPage() {
                   </PremiumWrapper>
                   <button
                     onClick={() => setShowAddModal(true)}
-                    className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white shadow shadow-emerald-600/10 transition active:scale-95"
+                    className="rounded-lg bg-amber-600 hover:bg-amber-700 px-4 py-2 text-xs font-bold text-white shadow shadow-amber-600/10 transition active:scale-95"
                   >
                     {t("addFeedItem")}
                   </button>
@@ -652,417 +766,144 @@ export default function FeedPage() {
                   ))}
                 </div>
               ) : items.length === 0 ? (
-                <p className="text-sm text-zinc-500 text-center py-8">{t("noItems")}</p>
+                <div className="h-64 flex flex-col items-center justify-center border border-dashed border-zinc-200 rounded-2xl text-center p-6 bg-zinc-50/40 backdrop-blur-sm shadow-inner">
+                  <InventoryIcon className="h-10 w-10 text-zinc-400 mb-3" />
+                  <p className="font-semibold text-zinc-500 text-sm">{t("noFeedInventoryItems")}</p>
+                  <p className="text-xs text-zinc-400 mt-1">{t("addFirstFeedItem")}</p>
+                  <button
+                    onClick={() => setShowAddModal(true)}
+                    className="mt-4 rounded-lg bg-amber-600 hover:bg-amber-700 px-4 py-2 text-xs font-bold text-white shadow shadow-amber-600/10 transition active:scale-95"
+                  >
+                    {t("addFirstItem")}
+                  </button>
+                </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                   {items.map((item) => {
                     const isLow = item.quantity < item.minThreshold;
-                    const stockPct = item.minThreshold > 0
-                      ? Math.min(100, (item.quantity / (item.minThreshold * 3)) * 100)
-                      : 100;
                     return (
-                      <div key={item.id} className={`bg-white/80 border rounded-2xl p-5 shadow-sm flex flex-col gap-3 transition ${isLow ? "border-amber-300 shadow-amber-100" : "border-zinc-200"}`}>
-                        {/* Card Header */}
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="flex-1 min-w-0">
-                            <p className="font-bold text-zinc-900 text-sm truncate">{item.name}</p>
-                            <span className="mt-1 inline-block px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-bold border border-emerald-100">{item.feedType}</span>
-                          </div>
-                          <div className="flex items-center gap-1.5 flex-shrink-0">
-                            {isLow && (
-                              <span className="px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[9px] font-black uppercase tracking-wide">{t("low")}</span>
-                            )}
-                            <button
-                              onClick={() => handleDeleteItem(item.id)}
-                              className="text-zinc-300 hover:text-rose-500 transition p-1 rounded-lg hover:bg-rose-50"
-                              title="Delete item"
-                            >
-                              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                              </svg>
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Quantity */}
+                      <div
+                        key={item.id}
+                        className={`bg-white border rounded-2xl p-5 shadow-xs flex flex-col justify-between transition-all hover:shadow-md ${
+                          isLow ? "border-amber-300 ring-1 ring-amber-300/40" : "border-zinc-200/80"
+                        }`}
+                      >
                         <div>
-                          <div className="flex items-baseline justify-between mb-1.5">
-                            <span className={`text-3xl font-black tracking-tight ${isLow ? "text-amber-600" : "text-zinc-900"}`}>
-                              {item.quantity.toFixed(1)}
+                          <div className="flex justify-between items-start mb-2">
+                            <div className="min-w-0 pr-2">
+                              <h3 className="font-black text-zinc-900 text-base truncate">{item.name}</h3>
+                              <span className="inline-block mt-0.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200/50">
+                                {item.feedType}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <button
+                                onClick={() => handleDeleteItem(item.id)}
+                                className="p-1 text-zinc-400 hover:text-rose-600 transition"
+                                title="Delete item"
+                              >
+                                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="mt-4 flex items-baseline gap-2">
+                            <span className={`text-3xl font-black ${isLow ? "text-amber-600" : "text-zinc-900"}`}>
+                              {item.quantity}
                             </span>
-                            <span className="text-xs text-zinc-500 font-semibold">{t(item.unit as any)}</span>
+                            <span className="text-xs font-bold text-zinc-500 uppercase">{t(item.unit as any)}</span>
+                            <span className="text-xs text-zinc-400">({(item.quantity * item.unitWeight).toLocaleString()} kg)</span>
                           </div>
-                          <div className="h-1.5 rounded-full bg-zinc-100 overflow-hidden">
-                            <div
-                              className={`h-full rounded-full transition-all duration-500 ${isLow ? "bg-amber-400" : "bg-emerald-500"}`}
-                              style={{ width: `${stockPct}%` }}
-                            />
-                          </div>
-                          <p className="text-[10px] text-zinc-400 mt-1">{t("minThreshold", { count: item.minThreshold, unit: t(item.unit as any) })}</p>
+
+                          {isLow && (
+                            <p className="mt-1 text-[11px] font-bold text-amber-600">
+                              Low stock! Below {item.minThreshold} {t(item.unit as any)} threshold
+                            </p>
+                          )}
                         </div>
 
-                        {/* Actions */}
-                        <div className="flex gap-2 mt-auto pt-1">
+                        <div className="mt-5 pt-4 border-t border-zinc-100 flex items-center gap-2">
                           <button
-                            onClick={() => { setSelectedItemId(item.id); setUsageUnit(item.unit); setShowUsageModal(true); }}
-                            className="flex-1 py-2 text-xs font-bold text-violet-700 border border-violet-200 rounded-xl hover:bg-violet-50 transition active:scale-95"
-                          >
-                            {t("logUsage")}
-                          </button>
-                          <button
-                            onClick={() => { setSelectedItemId(item.id); setRestockUnit(item.unit); setShowRestockModal(true); }}
-                            className="flex-1 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition active:scale-95"
+                            onClick={() => {
+                              setSelectedItemId(item.id);
+                              setShowRestockModal(true);
+                            }}
+                            className="flex-1 rounded-xl border border-zinc-200 bg-zinc-50/60 hover:bg-zinc-100 py-2 text-xs font-bold text-zinc-700 transition active:scale-95 text-center"
                           >
                             {t("restock")}
                           </button>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-
-            <div className="bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-              {/* Section header — Android style */}
-              <div className="flex items-center gap-3 mb-5">
-                <div className="h-10 w-10 rounded-xl bg-zinc-100 flex items-center justify-center flex-shrink-0">
-                  <svg className="h-5 w-5 text-zinc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-sm font-black text-zinc-900">{t("transactionHistory")}</h3>
-                  <p className="text-xs text-zinc-500 mt-0.5">{t("recentMovements")}</p>
-                </div>
-              </div>
-
-              {dataLoading ? (
-                <div className="h-10 bg-zinc-150 animate-pulse rounded-lg" />
-              ) : transactions.length === 0 ? (
-                <p className="text-sm text-zinc-550 text-center py-6">{t("noTransactions")}</p>
-              ) : (
-                <div className="space-y-3">
-                  {transactions.slice(0, 10).map(tx => {
-                    const isRestock = tx.type === "Restock";
-                    return (
-                      <div key={tx.id} className="flex items-start gap-3 bg-white/80 border border-zinc-100 rounded-xl p-4 shadow-sm">
-                        {/* Icon */}
-                        <div className={`flex-shrink-0 h-9 w-9 rounded-full flex items-center justify-center ${isRestock ? "bg-emerald-50" : "bg-violet-50"}`}>
-                          {isRestock ? (
-                            <svg className="h-4 w-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                            </svg>
-                          ) : (
-                            <svg className="h-4 w-4 text-violet-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                            </svg>
-                          )}
-                        </div>
-                        {/* Content */}
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <p className="font-bold text-zinc-800 text-sm">{tx.itemName}</p>
-                            <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-full ${isRestock ? "bg-emerald-100 text-emerald-700" : "bg-violet-100 text-violet-700"}`}>
-                              {tx.type}
-                            </span>
-                          </div>
-                          {tx.notes && <p className="text-xs text-zinc-500 mt-0.5 truncate">{tx.notes}</p>}
-                          <p className="text-[10px] text-zinc-400 mt-1">{new Date(tx.date).toLocaleString()}</p>
-                        </div>
-                        {/* Right */}
-                        <div className="text-right flex-shrink-0">
-                          <p className={`font-bold text-sm ${isRestock ? "text-emerald-600" : "text-violet-600"}`}>
-                            {isRestock ? "+" : "-"}{tx.quantity} {t(tx.unit as any)}
-                          </p>
-                          {tx.cost > 0 && <p className="text-[10px] text-zinc-400 mt-0.5">${tx.cost.toFixed(2)}</p>}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <hr className="border-zinc-200" />
-
-          {/* ==================== SECTION 2: FORMULATOR ==================== */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl bg-purple-50 flex items-center justify-center flex-shrink-0">
-                <ScienceIcon className="h-5 w-5 text-purple-600" />
-              </div>
-              <div>
-                <h2 className="text-sm font-black text-zinc-900">{t("formulator")}</h2>
-                <p className="text-xs text-zinc-500 mt-0.5">{t("formulatorDesc")}</p>
-              </div>
-            </div>
-
-            <PremiumWrapper>
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <div className="lg:col-span-5 space-y-6">
-                  <div className="bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 space-y-3 shadow-sm">
-                    <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">{t("targetGrowthStage")}</h3>
-                    <select
-                      value={selectedStage}
-                      onChange={(e) => setSelectedStage(e.target.value)}
-                      className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2.5 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-sm"
-                    >
-                      {requirements
-                        .filter((req) => ["Starter", "Grower", "Finisher"].includes(req.stage))
-                        .map((req) => (
-                          <option key={req.stage} value={req.stage}>
-                            {t(req.stage.toLowerCase())} (CP target: {req.digestibleProtein}%)
-                          </option>
-                        ))}
-                    </select>
-                  </div>
-
-                  <div className="space-y-4">
-                    <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider px-2">{t("selectIngredients")}</h3>
-                    {renderGroupList("Energy", energyCollapsed, setEnergyCollapsed)}
-                    {renderGroupList("Protein", proteinCollapsed, setProteinCollapsed)}
-                    {renderGroupList("Vitamins, Minerals & Salt", mineralsCollapsed, setMineralsCollapsed)}
-                  </div>
-
-                  <button
-                    onClick={handleFormulate}
-                    className="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 py-3 text-xs font-bold text-white shadow shadow-emerald-600/10 transition active:scale-95"
-                  >
-                    {t("formulateRation")}
-                  </button>
-                </div>
-
-                <div className="lg:col-span-7 space-y-6">
-                  {formulatorError && (
-                    <div className="rounded-xl border border-rose-200 bg-rose-50/80 p-4 text-xs text-rose-800 font-medium shadow-sm">
-                      {formulatorError}
-                    </div>
-                  )}
-
-                  {!formulation ? (
-                    <div className="h-96 flex flex-col items-center justify-center border border-dashed border-zinc-200 rounded-2xl text-center p-6 bg-zinc-50/40 backdrop-blur-sm shadow-inner">
-                      <ScienceIcon className="h-10 w-10 text-zinc-400 mb-3" />
-                      <p className="font-semibold text-zinc-500 text-sm">{t("noActiveFormulation")}</p>
-                      <p className="text-xs text-zinc-400 mt-1">{t("formulatePrompt")}</p>
-                    </div>
-                  ) : (
-                    <div className="space-y-6">
-                      <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
-                          <h3 className="text-lg font-bold text-zinc-900">{t("feedFormulaMix", { stage: selectedStage })}</h3>
                           <button
-                            onClick={handleExportFormulationPdf}
-                            className="w-full sm:w-auto rounded-lg border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center justify-center gap-1.5"
+                            onClick={() => {
+                              setSelectedItemId(item.id);
+                              setShowUsageModal(true);
+                            }}
+                            className="flex-1 rounded-xl bg-amber-600 hover:bg-amber-700 py-2 text-xs font-bold text-white shadow shadow-amber-600/10 transition active:scale-95 text-center"
                           >
-                            <ExportPdfIcon className="h-3.5 w-3.5 text-zinc-500" />
-                            <span>{t("exportPdf")}</span>
+                            Log Usage
                           </button>
                         </div>
-                        <div className="space-y-3 divide-y divide-zinc-100">
-                          {Object.entries(formulation.ingredients).map(([id, percent]) => {
-                            const ing = ingredients.find(i => i.id === id || i.name === id);
-                            const name = ing ? translateIngredientName(ing.name) : translateIngredientName(id);
-                            return (
-                              <div key={id} className="pt-2.5 first:pt-0 flex justify-between items-center text-sm">
-                                <span className="text-zinc-700 font-medium">{name}</span>
-                                <div className="flex flex-col items-end">
-                                  <span className="font-mono font-bold text-zinc-900">{percent.toFixed(1)}%</span>
-                                  <span className="text-[10px] text-zinc-500 font-semibold">{t("perTonMix", { percent })}</span>
-                                </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {transactions.length > 0 && (
+                <div className="mt-8 pt-6 border-t border-zinc-200">
+                  <button
+                    type="button"
+                    onClick={() => setIsTxHistoryOpen((prev) => !prev)}
+                    className="w-full flex items-center justify-between py-2 text-left group hover:opacity-80 transition cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <h3 className="text-xs font-bold text-zinc-600 uppercase tracking-wider group-hover:text-zinc-900 transition-colors">
+                        {t("recentMovements") || "Recent Inventory Movements"}
+                      </h3>
+                      <span className="text-[11px] font-bold bg-zinc-100 text-zinc-700 px-2 py-0.5 rounded-full border border-zinc-200">
+                        {transactions.length}
+                      </span>
+                    </div>
+                    <ChevronDownIcon
+                      className={`h-4 w-4 text-zinc-400 transition-transform duration-200 ${
+                        isTxHistoryOpen ? "rotate-180 text-zinc-700" : ""
+                      }`}
+                    />
+                  </button>
+
+                  {isTxHistoryOpen && (
+                    <div className="mt-3 divide-y divide-zinc-100 max-h-80 overflow-y-auto pr-1 animate-in fade-in duration-200">
+                      {transactions.slice(0, 10).map((tx) => {
+                        const isRestock = tx.type === "Restock";
+                        return (
+                          <div key={tx.id} className="py-2.5 flex items-center justify-between gap-3 text-xs">
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <span className={`h-2 w-2 rounded-full ${isRestock ? "bg-emerald-500" : "bg-amber-500"}`} />
+                              <div className="truncate">
+                                <span className="font-bold text-zinc-900">{tx.itemName}</span>
+                                <span className="text-zinc-400 ml-1.5 text-[11px]">
+                                  {new Date(tx.date).toLocaleDateString()}
+                                </span>
                               </div>
-                            );
-                          })}
-                          <div className="pt-3 flex justify-between items-center font-bold text-sm text-zinc-900">
-                            <span>{t("totalMix")}</span>
-                            <div className="flex flex-col items-end">
-                              <span className="font-mono">{formulation.totalPercentage.toFixed(1)}%</span>
-                              <span className="text-[10px] text-zinc-500 font-semibold">1000 kg</span>
+                            </div>
+                            <div className="text-right font-mono font-bold flex-shrink-0">
+                              <span className={isRestock ? "text-emerald-600" : "text-amber-600"}>
+                                {isRestock ? "+" : "-"}{tx.quantity} {t(tx.unit as any)}
+                              </span>
                             </div>
                           </div>
-                        </div>
-                      </div>
-
-                      <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-                        <h3 className="text-lg font-bold text-zinc-900 mb-4">{t("nutritionalAnalysis")}</h3>
-                        <div className="overflow-x-auto -mx-6 sm:mx-0">
-                          <div className="inline-block min-w-full align-middle sm:px-0 px-6">
-                            <table className="min-w-full divide-y divide-zinc-200 text-sm">
-                              <thead>
-                                <tr className="text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-                                  <th className="pb-3">{t("nutrient")}</th>
-                                  <th className="pb-3 text-right">{t("target")}</th>
-                                  <th className="pb-3 text-right">{t("actual")}</th>
-                                  <th className="pb-3 text-right">{t("status")}</th>
-                                </tr>
-                              </thead>
-                              <tbody className="divide-y divide-zinc-150">
-                                {formulation.nutritionalComparison.map((nutrient) => (
-                                  <tr key={nutrient.label}>
-                                    <td className="py-3 font-semibold text-zinc-700 whitespace-nowrap pr-4">{translateNutrientLabel(nutrient.label)}</td>
-                                    <td className="py-3 text-right font-mono text-zinc-500">{nutrient.target.toFixed(2)}</td>
-                                    <td className="py-3 text-right font-mono">
-                                      <span className={nutrient.isDeficient ? "text-rose-600 font-bold" : "text-emerald-600 font-bold"}>
-                                        {nutrient.actual.toFixed(2)}
-                                      </span>
-                                    </td>
-                                    <td className="py-3 text-right font-semibold">
-                                      <span className={nutrient.isDeficient ? "text-rose-600" : "text-emerald-600"}>
-                                        {nutrient.isDeficient ? t("deficient") : t("ok")}
-                                      </span>
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
-              </div>
-            </PremiumWrapper>
-          </div>
-
-          <hr className="border-zinc-200" />
-
-          {/* ==================== SECTION 3: CALCULATOR ==================== */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
-                <CalculateIcon className="h-5 w-5 text-blue-600" />
-              </div>
-              <div>
-                <h2 className="text-sm font-black text-zinc-900">{t("calculator")}</h2>
-                <p className="text-xs text-zinc-500 mt-0.5">{t("calculatorDesc")}</p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-              <div className="lg:col-span-5 bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4">
-                <h3 className="text-lg font-bold text-zinc-900">{t("demandCalculator")}</h3>
-                <p className="text-xs text-zinc-500">{t("calculatorPrompt")}</p>
-
-                <div className="space-y-3">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1">{t("sowsCount")}</label>
-                      <input type="number" min="0" value={sowsCount} onChange={(e) => setSowsCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1">{t("boarsCount")}</label>
-                      <input type="number" min="0" value={boarsCount} onChange={(e) => setBoarsCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1">{t("giltsCount")}</label>
-                      <input type="number" min="0" value={giltsCount} onChange={(e) => setGiltsCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1">{t("pregnantSows")}</label>
-                      <input type="number" min="0" value={pregnantCount} onChange={(e) => setPregnantCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1">{t("lactatingSows")}</label>
-                      <input type="number" min="0" value={lactatingCount} onChange={(e) => setLactatingCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1">{t("starterPiglets")}</label>
-                      <input type="number" min="0" value={starterCount} onChange={(e) => setStarterCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1">{t("growers")}</label>
-                      <input type="number" min="0" value={growerCount} onChange={(e) => setGrowerCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1">{t("finishers")}</label>
-                      <input type="number" min="0" value={finisherCount} onChange={(e) => setFinisherCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-zinc-500 mb-1">{t("projectionPeriod")}</label>
-                    <input type="number" min="1" value={calcDays} onChange={(e) => setCalcDays(parseInt(e.target.value) || 1)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm" />
-                  </div>
-                </div>
-
-                <button
-                  onClick={handleCalculateFeedProjections}
-                  className="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 py-3 text-xs font-bold text-white shadow shadow-emerald-600/10 transition active:scale-95"
-                >
-                  {t("generateReport")}
-                </button>
-              </div>
-
-              <div className="lg:col-span-7">
-                {!calcResults ? (
-                  <div className="h-96 flex flex-col items-center justify-center border border-dashed border-zinc-200 rounded-2xl text-center p-6 bg-zinc-50/40 backdrop-blur-sm shadow-inner">
-                    <CalculateIcon className="h-10 w-10 text-zinc-400 mb-3" />
-                    <p className="font-semibold text-zinc-500 text-sm">{t("noActiveCalculation")}</p>
-                    <p className="text-xs text-zinc-400 mt-1">{t("calcPrompt")}</p>
-                  </div>
-                ) : (
-                  <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-6">
-                    <div className="flex justify-between items-center">
-                      <h3 className="text-lg font-bold text-zinc-900">{t("projectedResults")}</h3>
-                      <PremiumWrapper fallback={
-                        <Link
-                          href="/dashboard/billing"
-                          className="rounded-lg border border-amber-200 bg-amber-50/50 px-3 py-1.5 text-xs font-semibold text-amber-650 hover:bg-amber-100 transition shadow-sm flex items-center gap-1.5"
-                        >
-                          <ExportPdfIcon className="h-3.5 w-3.5 text-amber-500" />
-                          <span>{t("exportPdfPremium")}</span>
-                        </Link>
-                      }>
-                        <button
-                          onClick={handleExportCalculatorPdf}
-                          className="rounded-lg border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-semibold text-zinc-650 hover:bg-zinc-100 transition shadow-sm flex items-center gap-1.5"
-                        >
-                          <ExportPdfIcon className="h-3.5 w-3.5 text-zinc-500" />
-                          <span>{t("exportPdf")}</span>
-                        </button>
-                      </PremiumWrapper>
-                    </div>
-
-                    <div className="divide-y divide-zinc-100">
-                      {calcResults.breakdown.map((row: any, i: number) => (
-                        <div key={i} className="py-3 flex justify-between text-sm">
-                          <div>
-                            <p className="font-bold text-zinc-800">{t(row.category as any)}</p>
-                            <p className="text-xs text-zinc-400">
-                              {row.count} {t("heads")} × {row.rate} {t("kgHeadDay")}
-                            </p>
-                          </div>
-                          <div className="text-right font-mono font-bold text-zinc-900">
-                            <p>{row.dailyTotal.toFixed(1)} {t("kgDay")}</p>
-                            <p className="text-xs text-zinc-500">{t("periodTotal", { count: row.periodTotal.toFixed(1) })}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="pt-4 border-t border-zinc-200 flex justify-between font-extrabold text-sm text-zinc-900">
-                      <span>{t("grandTotal", { days: calcResults.days })}</span>
-                      <div className="text-right font-mono">
-                        <p>{calcResults.dailyTotal.toFixed(1)} {t("kgDay")}</p>
-                        <p className="text-xs text-emerald-700">{t("projectedTotal", { count: calcResults.periodTotal.toFixed(1) })}</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
+              )}
             </div>
           </div>
+
+          {/* Sponsored Ad Banner for Free Users */}
+          <NativeAdBanner />
         </main>
       </div>
 
@@ -1214,7 +1055,7 @@ export default function FeedPage() {
                 <button type="button" onClick={() => setShowRestockModal(false)} className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2 text-xs font-semibold text-zinc-500 hover:bg-zinc-100 transition">
                   {t("cancel")}
                 </button>
-                <button type="submit" className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white transition">
+                <button type="submit" className="rounded-lg bg-amber-600 hover:bg-amber-700 px-4 py-2 text-xs font-bold text-white transition">
                   {t("addStock")}
                 </button>
               </div>
@@ -1267,7 +1108,7 @@ export default function FeedPage() {
                 <button type="button" onClick={() => setShowUsageModal(false)} className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2 text-xs font-semibold text-zinc-500 hover:bg-zinc-100 transition">
                   {t("cancel")}
                 </button>
-                <button type="submit" className="rounded-lg bg-violet-600 hover:bg-violet-700 px-4 py-2 text-xs font-bold text-white transition">
+                <button type="submit" className="rounded-lg bg-amber-600 hover:bg-amber-700 px-4 py-2 text-xs font-bold text-white transition">
                   {t("logUsage")}
                 </button>
               </div>
@@ -1291,7 +1132,7 @@ export default function FeedPage() {
                       name="exportRange"
                       checked={exportRange === range}
                       onChange={() => setExportRange(range)}
-                      className="h-4 w-4 border-zinc-300 text-emerald-600 focus:ring-emerald-500"
+                      className="h-4 w-4 border-zinc-300 text-amber-600 focus:ring-amber-500"
                     />
                     <span>{range === "Current Month" ? t("currentMonth") : range === "Last 3 Months" ? t("last3Months") : t("custom")}</span>
                   </label>
@@ -1307,7 +1148,7 @@ export default function FeedPage() {
                       required
                       value={exportFromDate}
                       onChange={(e) => setExportFromDate(e.target.value)}
-                      className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-sm"
+                      className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-amber-500 shadow-sm"
                     />
                   </div>
                   <div>
@@ -1317,7 +1158,7 @@ export default function FeedPage() {
                       required
                       value={exportToDate}
                       onChange={(e) => setExportToDate(e.target.value)}
-                      className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-sm"
+                      className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-amber-500 shadow-sm"
                     />
                   </div>
                 </div>
@@ -1334,10 +1175,63 @@ export default function FeedPage() {
               </button>
               <button
                 onClick={handleExportFeedInventoryPdf}
-                className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white transition"
+                className="rounded-lg bg-amber-600 hover:bg-amber-700 px-4 py-2 text-xs font-bold text-white transition"
               >
                 {t("export")}
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 5. Add Ingredient Modal for Analyze Feed */}
+      {showAddIngredientModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-zinc-200 space-y-4 max-h-[85vh] flex flex-col">
+            <div className="flex justify-between items-center pb-2 border-b border-zinc-100">
+              <h3 className="text-base font-bold text-zinc-900">Select Ingredient to Add</h3>
+              <button
+                type="button"
+                onClick={() => setShowAddIngredientModal(false)}
+                className="text-zinc-400 hover:text-zinc-700 p-1 text-sm font-bold"
+              >
+                ✕
+              </button>
+            </div>
+            <input
+              type="text"
+              value={analyzeSearchQuery}
+              onChange={(e) => setAnalyzeSearchQuery(e.target.value)}
+              placeholder="Search available ingredients..."
+              className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-xs text-zinc-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+            />
+            <div className="flex-1 overflow-y-auto space-y-1.5 pr-1 divide-y divide-zinc-100">
+              {ingredients
+                .filter(ing => !analyzeItems.some(item => item.ingredient.id === ing.id))
+                .filter(ing => ing.name.toLowerCase().includes(analyzeSearchQuery.toLowerCase()))
+                .map(ing => (
+                  <button
+                    key={ing.id}
+                    type="button"
+                    onClick={() => {
+                      setAnalyzeItems(prev => [...prev, { ingredient: ing, quantityStr: "" }]);
+                      setShowAddIngredientModal(false);
+                      setAnalyzeSearchQuery("");
+                    }}
+                    className="w-full pt-2.5 first:pt-0 flex items-center justify-between text-left hover:bg-amber-50/70 p-2 rounded-xl transition"
+                  >
+                    <div>
+                      <p className="text-xs font-bold text-zinc-900">{translateIngredientName(ing.name)}</p>
+                      <p className="text-[10px] text-zinc-400">{ing.mainCategory}</p>
+                    </div>
+                    <span className="text-[10px] font-mono text-amber-600 font-bold">CP: {ing.crudeProtein}%</span>
+                  </button>
+                ))}
+              {ingredients
+                .filter(ing => !analyzeItems.some(item => item.ingredient.id === ing.id))
+                .filter(ing => ing.name.toLowerCase().includes(analyzeSearchQuery.toLowerCase())).length === 0 && (
+                <p className="text-xs text-zinc-400 italic text-center py-6">No matching ingredients found.</p>
+              )}
             </div>
           </div>
         </div>
@@ -1591,6 +1485,12 @@ export default function FeedPage() {
           </div>
         );
       })()}
+
+      <RewardedPassModal
+        isOpen={showRewardedPassModal}
+        onClose={() => setShowRewardedPassModal(false)}
+        featureName="Feed Inventory & Export"
+      />
     </div>
   );
 }

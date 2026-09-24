@@ -103,30 +103,33 @@ export default function TaskCompletionModal({
     setPigWeights({});
     setPigSalePrices({});
 
-    // Resolve pig identifiers from task names
+    // Resolve pig identifiers from task names and pigIds
     const resolvedIds: string[] = [];
     tasksToEdit.forEach(task => {
-      const parts = (task.name || "").split(":");
-      if (parts.length > 1) {
-        const identifier = parts[1].replace(/pigs/i, "").replace(/pig/i, "").trim();
-        if (identifier) {
-          const splitTags = identifier.split(",").map(t => t.trim());
-          splitTags.forEach(tag => {
-            const pig = allPigs.find(p => p.id === tag || p.tagNumber === tag);
-            if (pig) {
-              resolvedIds.push(pig.id);
-            } else if (tag && tag !== "General") {
-              resolvedIds.push(tag);
-            }
-          });
-        }
-      }
       if (task.pigIds && task.pigIds.length > 0) {
         task.pigIds.forEach(id => {
           if (!resolvedIds.includes(id)) {
             resolvedIds.push(id);
           }
         });
+      }
+      const parts = (task.name || "").split(":");
+      if (parts.length > 1) {
+        const identifier = parts.slice(1).join(":")
+          .replace(/pigs?/gi, "")
+          .replace(/tags?:?/gi, "")
+          .trim();
+        if (identifier) {
+          const splitTags = identifier.split(",").map(t => t.replace(/^tag:?/i, "").trim());
+          splitTags.forEach(tag => {
+            const pig = allPigs.find(p => p.id === tag || p.tagNumber?.toLowerCase() === tag.toLowerCase());
+            if (pig && !resolvedIds.includes(pig.id)) {
+              resolvedIds.push(pig.id);
+            } else if (tag && tag.toLowerCase() !== "general" && !resolvedIds.includes(tag)) {
+              resolvedIds.push(tag);
+            }
+          });
+        }
       }
     });
 
@@ -421,7 +424,7 @@ export default function TaskCompletionModal({
         // Weaning
         if (isWeaning) {
           const targetLocation = pigWeaningLocations[pigId] || pig.location || "";
-          batch.update(pigRef, { status: pig.status === "Lactating" ? "Sow" : "Starter", weaned: true });
+          batch.update(pigRef, { status: pig.status === "Lactating" ? "Sow" : "Starter", weaned: true, isWeaned: true });
           if (targetLocation) {
             batch.update(pigRef, { location: targetLocation });
           }
@@ -454,17 +457,17 @@ export default function TaskCompletionModal({
 
         // Castration
         if (isCastration() && pig.gender === "Male") {
-          batch.update(pigRef, { castrated: true, castrationDate: logDate });
+          batch.update(pigRef, { castrated: true, isCastrated: true, castrationDate: logDate });
         }
 
         // Teeth Clipping
         if (isTeethClipping()) {
-          batch.update(pigRef, { teethClipped: true });
+          batch.update(pigRef, { teethClipped: true, isTeethClipped: true });
         }
 
         // Tail Docking
         if (isTailDocking()) {
-          batch.update(pigRef, { tailDocked: true });
+          batch.update(pigRef, { tailDocked: true, isTailDocked: true });
         }
 
         // Iron Injection / Medication

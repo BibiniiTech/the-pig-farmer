@@ -14,6 +14,31 @@ interface SettingsModalProps {
   onClose: () => void;
 }
 
+const LANGUAGES = [
+  { code: "en", displayName: "English", flag: "🇺🇸" },
+  { code: "fr", displayName: "Français", flag: "🇫🇷" },
+  { code: "zh", displayName: "中文", flag: "🇨🇳" },
+  { code: "es", displayName: "Español", flag: "🇲🇽" },
+  { code: "es-es", displayName: "Español (Castellano)", flag: "🇪🇸" },
+  { code: "es-do", displayName: "Español (Dominicano)", flag: "🇩🇴" },
+  { code: "de", displayName: "Deutsch", flag: "🇩🇪" },
+  { code: "ja", displayName: "日本語", flag: "🇯🇵" },
+  { code: "pt", displayName: "Português", flag: "🇵🇹" },
+  { code: "tl", displayName: "Filipino", flag: "🇵🇭" },
+  { code: "vi", displayName: "Tiếng Việt", flag: "🇻🇳" },
+  { code: "th", displayName: "ไทย", flag: "🇹🇭" },
+  { code: "id", displayName: "Bahasa Indonesia", flag: "🇮🇩" },
+  { code: "hi", displayName: "हिन्दी", flag: "🇮🇳" },
+  { code: "sw", displayName: "Kiswahili", flag: "🇰🇪" },
+  { code: "lg", displayName: "Oluganda", flag: "🇺🇬" },
+  { code: "rw", displayName: "Ikinyarwanda", flag: "🇷🇼" },
+  { code: "ht", displayName: "Kreyòl Ayisyen", flag: "🇭🇹" },
+  { code: "my", displayName: "မြန်မာ", flag: "🇲🇲" },
+  { code: "tpi", displayName: "Tok Pisin", flag: "🇵🇬" },
+  { code: "zgh", displayName: "Tamaziɣt", flag: "🇲🇦" },
+  { code: "af", displayName: "Afrikaans", flag: "🇿🇦" },
+];
+
 export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const t = useTranslations("Settings");
   const { user, userProfile, activeFarmUid } = useAuth();
@@ -21,9 +46,57 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const [activeTab, setActiveTab] = useState("profile");
   const [isSaving, setIsSaving] = useState(false);
 
+  // Theme & Language (Parity with Android Settings)
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [selectedLang, setSelectedLang] = useState("en");
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsDarkMode(
+        document.documentElement.classList.contains("dark") ||
+        localStorage.getItem("theme") === "dark"
+      );
+      const match = document.cookie.match(/(?:^|;\s*)NEXT_LOCALE=([^;]*)/);
+      if (match) {
+        setSelectedLang(match[1]);
+      } else if (userProfile?.appLanguage) {
+        setSelectedLang(userProfile.appLanguage);
+      }
+    }
+  }, [userProfile, isOpen]);
+
+  const toggleDarkMode = () => {
+    const nextDark = !isDarkMode;
+    setIsDarkMode(nextDark);
+    if (nextDark) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  };
+
+  const handleLanguageChange = async (langCode: string) => {
+    setSelectedLang(langCode);
+    setIsLangDropdownOpen(false);
+    document.cookie = `NEXT_LOCALE=${langCode}; path=/; max-age=31536000`;
+    if (user) {
+      try {
+        const userDocRef = doc(db, "users", user.uid);
+        await setDoc(userDocRef, { appLanguage: langCode }, { merge: true });
+      } catch (err) {
+        console.error("Failed to update language:", err);
+      }
+    }
+    window.location.reload();
+  };
+
   // Profile States
   const [farmName, setFarmName] = useState(userProfile?.farmName || "");
   const [country, setCountry] = useState(userProfile?.country || "");
+  const [farmLogo, setFarmLogo] = useState(userProfile?.farmLogo || "");
 
   // Cycle States
   const [weaningDays, setWeaningDays] = useState(userProfile?.settings?.weaningDays || "56");
@@ -44,6 +117,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
     if (userProfile) {
       setFarmName(userProfile.farmName || "");
       setCountry(userProfile.country || "");
+      setFarmLogo(userProfile.farmLogo || "");
       if (userProfile.settings) {
         setWeaningDays(userProfile.settings.weaningDays || "56");
         setFarrowingDays(userProfile.settings.farrowingDays || "114");
@@ -65,6 +139,53 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
     const currency = getCurrencyByCountry(selectedCountry);
     setSelectedCurrency(currency.code);
     setCurrencySymbol(currency.symbol);
+  };
+
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Image size must be less than 5MB");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const maxDim = 256;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > maxDim) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          }
+        } else {
+          if (height > maxDim) {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          const isPng = file.type === "image/png" || file.name.toLowerCase().endsWith(".png");
+          const compressedDataUrl = isPng
+            ? canvas.toDataURL("image/png")
+            : canvas.toDataURL("image/jpeg", 0.85);
+          setFarmLogo(compressedDataUrl);
+        }
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSaveSettings = async () => {
@@ -90,6 +211,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
       await updateDoc(userRef, {
         farmName,
         country,
+        farmLogo: farmLogo || "",
         settings: settingsMap,
       });
 
@@ -171,6 +293,54 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                          <p className="text-xs text-zinc-500">{user?.email}</p>
                        </div>
                     </div>
+
+                    {/* Farm Logo Upload Section */}
+                    <div className="p-4 bg-zinc-50 border border-zinc-200/80 rounded-2xl space-y-3">
+                      <div>
+                        <label className="block text-xs font-bold text-zinc-700 uppercase tracking-tight">
+                          {t("farmLogo")}
+                        </label>
+                        <p className="text-[11px] text-zinc-500 mt-0.5 font-medium">
+                          {t("farmLogoDesc")}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-4">
+                        <div className="relative h-20 w-20 rounded-2xl bg-white border-2 border-dashed border-emerald-500/40 p-1 flex items-center justify-center overflow-hidden shadow-sm flex-shrink-0 group">
+                          <img
+                            src={farmLogo || "/app_logo.png"}
+                            alt="Farm Logo Preview"
+                            className="h-full w-full object-cover rounded-xl"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src = "/app_logo.png";
+                            }}
+                          />
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                          <label className="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer transition shadow-sm hover:shadow active:scale-95 select-none">
+                            <span>{farmLogo ? t("changeLogo") : t("uploadLogo")}</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={handleLogoUpload}
+                            />
+                          </label>
+
+                          {farmLogo && (
+                            <button
+                              type="button"
+                              onClick={() => setFarmLogo("")}
+                              className="px-4 py-1.5 rounded-xl border border-rose-200 text-rose-600 hover:bg-rose-50 text-xs font-semibold transition active:scale-95"
+                            >
+                              {t("removeLogo")}
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
                     <div>
                       <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t("farmName")}</label>
                       <input
@@ -197,6 +367,87 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                         ))}
                         <option value="Other">Other</option>
                       </select>
+                    </div>
+
+                    {/* Theme & Language (Side-by-side pill matching Android Settings) */}
+                    <div className="pt-2">
+                      <label className="block text-[10px] font-black text-zinc-400 uppercase mb-2">
+                        Theme & Language
+                      </label>
+                      <div className="grid grid-cols-2 gap-3">
+                        {/* Dark theme toggle pill */}
+                        <button
+                          type="button"
+                          onClick={toggleDarkMode}
+                          className="flex items-center justify-between px-3.5 py-2.5 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 transition shadow-2xs"
+                        >
+                          <div className="flex items-center gap-2">
+                            {isDarkMode ? (
+                              <svg className="h-4 w-4 text-amber-500" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z" />
+                              </svg>
+                            ) : (
+                              <svg className="h-4 w-4 text-amber-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="5" />
+                                <path strokeLinecap="round" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                              </svg>
+                            )}
+                            <span className="font-bold text-xs text-zinc-800">
+                              {isDarkMode ? "Dark" : "Light"}
+                            </span>
+                          </div>
+                          <div className={`w-8 h-4.5 rounded-full transition-colors flex items-center p-0.5 ${isDarkMode ? "bg-emerald-500 justify-end" : "bg-zinc-300 justify-start"}`}>
+                            <div className="w-3.5 h-3.5 rounded-full bg-white shadow-sm" />
+                          </div>
+                        </button>
+
+                        {/* Language dropdown */}
+                        <div className="relative">
+                          <button
+                            type="button"
+                            onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+                            className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 transition shadow-2xs"
+                          >
+                            <div className="flex items-center gap-2 min-w-0">
+                              <span className="text-base leading-none">
+                                {LANGUAGES.find((l) => l.code === selectedLang)?.flag || "🇺🇸"}
+                              </span>
+                              <span className="font-bold text-xs text-zinc-800 uppercase truncate">
+                                {selectedLang}
+                              </span>
+                            </div>
+                            <svg className={`h-3.5 w-3.5 text-zinc-400 transition-transform ${isLangDropdownOpen ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+
+                          {isLangDropdownOpen && (
+                            <>
+                              <div className="fixed inset-0 z-30" onClick={() => setIsLangDropdownOpen(false)} />
+                              <div className="absolute right-0 mt-1 w-52 max-h-60 overflow-y-auto rounded-xl border border-zinc-200 bg-white shadow-xl z-40 py-1.5 divide-y divide-zinc-100 text-xs">
+                                {LANGUAGES.map((lang) => (
+                                  <button
+                                    key={lang.code}
+                                    type="button"
+                                    onClick={() => handleLanguageChange(lang.code)}
+                                    className={`w-full flex items-center justify-between px-3.5 py-2 hover:bg-emerald-50 text-left transition-colors ${
+                                      selectedLang === lang.code ? "bg-emerald-50 text-emerald-600 font-bold" : "text-zinc-700"
+                                    }`}
+                                  >
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-base">{lang.flag}</span>
+                                      <span>{lang.displayName}</span>
+                                    </div>
+                                    <span className="text-[10px] uppercase font-bold text-zinc-400">
+                                      {lang.code}
+                                    </span>
+                                  </button>
+                                ))}
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </div>
                     </div>
 
                     <div className="pt-4 space-y-4">

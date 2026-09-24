@@ -14,6 +14,10 @@ interface AuthContextType {
   activeFarmUid: string | null;
   isStaff: boolean;
   loading: boolean;
+  isPassActive: boolean;
+  passTimeRemaining: string;
+  isPaidPremium: boolean;
+  activate3HourPass: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -22,17 +26,61 @@ const AuthContext = createContext<AuthContextType>({
   activeFarmUid: null,
   isStaff: false,
   loading: true,
+  isPassActive: false,
+  passTimeRemaining: "",
+  isPaidPremium: false,
+  activate3HourPass: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [rawProfile, setRawProfile] = useState<UserProfile | null>(null);
   const [activeFarmUid, setActiveFarmUid] = useState<string | null>(null);
   const [isStaff, setIsStaff] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isPassActive, setIsPassActive] = useState<boolean>(false);
+  const [passTimeRemaining, setPassTimeRemaining] = useState<string>("");
 
   // Track last seen country to auto-update currency if it changes (matching Android logic)
   const lastCountryRef = useRef<string | null>(null);
+
+  // 1-second ticker to maintain 3-hour pass remaining time (strictly local to browser, matching Android SharedPreferences)
+  useEffect(() => {
+    const updateTicker = () => {
+      const localExpiry = typeof window !== "undefined"
+        ? Number(localStorage.getItem("smartswine_ad_pass_expires_at") || 0)
+        : 0;
+      const diff = localExpiry - Date.now();
+
+      if (diff > 0) {
+        setIsPassActive(true);
+        const totalSeconds = Math.floor(diff / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        setPassTimeRemaining(
+          `${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}m ${String(seconds).padStart(2, "0")}s`
+        );
+      } else {
+        setIsPassActive(false);
+        setPassTimeRemaining("");
+      }
+    };
+
+    updateTicker();
+    const interval = setInterval(updateTicker, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const activate3HourPass = async () => {
+    const durationMs = 3 * 60 * 60 * 1000;
+    const newExpiresAt = Date.now() + durationMs;
+    if (typeof window !== "undefined") {
+      localStorage.setItem("smartswine_ad_pass_expires_at", String(newExpiresAt));
+    }
+    setIsPassActive(true);
+    setPassTimeRemaining("03h 00m 00s");
+  };
 
   useEffect(() => {
     let profileUnsubscribe: (() => void) | null = null;
@@ -60,13 +108,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
               if (snapshot.exists()) {
                 const data = snapshot.data();
 
-                // Auto-update currency based on country changes (Android logic)
+                // Auto-update currency based on country changes (matching Android logic)
                 const currentCountry = data.country || "";
                 if (currentCountry && currentCountry !== lastCountryRef.current) {
+                  const isCountryChange = lastCountryRef.current !== null && lastCountryRef.current !== "";
                   lastCountryRef.current = currentCountry;
 
-                  // Only auto-update if currency isn't already set or if it's the first time seeing this country
-                  if (!data.settings?.selectedCurrency || !data.settings?.currencySymbol) {
+                  // Auto-update if user changed country OR if currency isn't set yet
+                  if (isCountryChange || !data.settings?.selectedCurrency || !data.settings?.currencySymbol) {
                     const currency = getCurrencyByCountry(currentCountry);
                     await updateDoc(userDocRef, {
                       "settings.selectedCurrency": currency.code,
@@ -78,7 +127,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 const isAdminUser =
                   data.admin === true ||
                   data.email === "bibiniitech@gmail.com";
-                setUserProfile({ ...data, isAdmin: isAdminUser } as UserProfile);
+                setRawProfile({ ...data, isAdmin: isAdminUser } as UserProfile);
               }
             });
 
@@ -123,7 +172,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                       const isAdminUser =
                         data.admin === true ||
                         data.email === "bibiniitech@gmail.com";
-                      setUserProfile({ ...data, isAdmin: isAdminUser } as UserProfile);
+                      setRawProfile({ ...data, isAdmin: isAdminUser } as UserProfile);
                     }
                   });
                 }
@@ -134,7 +183,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           console.error("Error fetching user session metadata:", error);
         }
       } else {
-        setUserProfile(null);
+        setRawProfile(null);
         setActiveFarmUid(null);
         setIsStaff(false);
       }
@@ -149,8 +198,35 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
+  const isPaidPremium =
+    rawProfile?.isPremium === true ||
+    (rawProfile as any)?.admin === true ||
+    rawProfile?.isAdmin === true ||
+    rawProfile?.email === "bibiniitech@gmail.com";
+
+  const effectiveIsPremium = isPaidPremium || isPassActive;
+
+  const userProfile: UserProfile | null = rawProfile
+    ? {
+        ...rawProfile,
+        isPremium: effectiveIsPremium,
+      }
+    : null;
+
   return (
-    <AuthContext.Provider value={{ user, userProfile, activeFarmUid, isStaff, loading }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        userProfile,
+        activeFarmUid,
+        isStaff,
+        loading,
+        isPassActive,
+        passTimeRemaining,
+        isPaidPremium,
+        activate3HourPass,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

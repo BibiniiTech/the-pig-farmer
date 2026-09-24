@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-import { doc, onSnapshot, updateDoc, collection, setDoc, deleteDoc } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc, collection, setDoc, deleteDoc, writeBatch } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 import { useDevice } from "@/context/DeviceContext";
@@ -11,10 +11,11 @@ import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import HerdReport from "@/components/reports/HerdReport";
-import { evaluatePerformance, calculateAgeMonths, calculateAgeDays } from "@/lib/swineGrowthDatabase";
+import { evaluatePerformance, calculateAgeMonths, calculateAgeDays, formatSwineAge } from "@/lib/swineGrowthDatabase";
 import { ExportPdfIcon } from "@/components/icons/DashboardIcons";
 import { useTranslations } from "next-intl";
 import { Pig, HealthRecord } from "@/lib/types";
+import RewardedPassModal from "@/components/ads/RewardedPassModal";
 
 export default function PigProfilePage() {
   const t = useTranslations("PigProfile");
@@ -75,12 +76,18 @@ export default function PigProfilePage() {
   const router = useRouter();
   const params = useParams();
   const pigId = params?.id as string;
+  const isPremium = Boolean(userProfile?.isPremium || userProfile?.isAdmin);
 
   const [pig, setPig] = useState<Pig | null>(null);
   const [healthRecords, setHealthRecords] = useState<HealthRecord[]>([]);
   const [dataLoading, setDataLoading] = useState(true);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showRecordModal, setShowRecordModal] = useState(false);
+  const [showArchiveModal, setShowArchiveModal] = useState(false);
+  const [archiveReason, setArchiveReason] = useState("Culled");
+  const [customArchiveReason, setCustomArchiveReason] = useState("");
+  const [showRewardedPassModal, setShowRewardedPassModal] = useState(false);
+  const [isHistoryExpanded, setIsHistoryExpanded] = useState(false);
 
   // Edit fields
   const [breed, setBreed] = useState("");
@@ -125,6 +132,8 @@ export default function PigProfilePage() {
     return false;
   })();
 
+  const [isArchived, setIsArchived] = useState(false);
+
   useEffect(() => {
     if (!loading && !user) {
       router.push("/login");
@@ -135,6 +144,8 @@ export default function PigProfilePage() {
     if (!activeFarmUid || !pigId) return;
 
     setDataLoading(true);
+    let unsubArchPig: (() => void) | null = null;
+    let unsubArchRecords: (() => void) | null = null;
 
     // 1. Listen to Pig Document
     const pigDocRef = doc(db, "users", activeFarmUid, "pigs", pigId);
@@ -148,8 +159,25 @@ export default function PigProfilePage() {
         setStatus(data.status);
         setWeight(data.weight || 0);
         setNotes(data.notes || "");
+        setIsArchived(false);
       } else {
-        setPig(null);
+        // Fallback to archived_pigs
+        const archDocRef = doc(db, "users", activeFarmUid, "archived_pigs", pigId);
+        unsubArchPig = onSnapshot(archDocRef, (archSnap) => {
+          if (archSnap.exists()) {
+            const data = { id: archSnap.id, ...archSnap.data() } as Pig;
+            setPig(data);
+            setBreed(data.breed);
+            setPurpose(data.purpose);
+            setLocation(data.location || "");
+            setStatus(data.status);
+            setWeight(data.weight || 0);
+            setNotes(data.notes || "");
+            setIsArchived(true);
+          } else {
+            setPig(null);
+          }
+        });
       }
     }, (error) => console.error("Error fetching pig details:", error));
 
@@ -157,8 +185,18 @@ export default function PigProfilePage() {
     const recordsRef = collection(db, "users", activeFarmUid, "pigs", pigId, "health_records");
     const unsubscribeRecords = onSnapshot(recordsRef, (snapshot) => {
       const list = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as HealthRecord));
-      setHealthRecords(list.sort((a, b) => b.date.localeCompare(a.date)));
-      setDataLoading(false);
+      if (list.length > 0) {
+        setHealthRecords(list.sort((a, b) => b.date.localeCompare(a.date)));
+        setDataLoading(false);
+      } else {
+        // Fallback to archived_pigs health records
+        const archRecordsRef = collection(db, "users", activeFarmUid, "archived_pigs", pigId, "health_records");
+        unsubArchRecords = onSnapshot(archRecordsRef, (archSnap) => {
+          const archList = archSnap.docs.map(doc => ({ id: doc.id, ...doc.data() } as HealthRecord));
+          setHealthRecords(archList.sort((a, b) => b.date.localeCompare(a.date)));
+          setDataLoading(false);
+        }, () => setDataLoading(false));
+      }
     }, (error) => {
       console.error("Error fetching health records:", error);
       setDataLoading(false);
@@ -167,6 +205,8 @@ export default function PigProfilePage() {
     return () => {
       unsubscribePig();
       unsubscribeRecords();
+      if (unsubArchPig) unsubArchPig();
+      if (unsubArchRecords) unsubArchRecords();
     };
   }, [activeFarmUid, pigId]);
 
@@ -175,7 +215,8 @@ export default function PigProfilePage() {
     if (!activeFarmUid || !pigId || !pig) return;
 
     try {
-      const pigDocRef = doc(db, "users", activeFarmUid, "pigs", pigId);
+      const targetColl = isArchived ? "archived_pigs" : "pigs";
+      const pigDocRef = doc(db, "users", activeFarmUid, targetColl, pigId);
       const oldWeight = pig.weight || 0;
 
       await updateDoc(pigDocRef, {
@@ -189,7 +230,7 @@ export default function PigProfilePage() {
 
       // If weight was updated manually, add a history record for it to clear warnings
       if (weight !== oldWeight && weight > 0) {
-        const recordsRef = collection(db, "users", activeFarmUid, "pigs", pigId, "health_records");
+        const recordsRef = collection(db, "users", activeFarmUid, targetColl, pigId, "health_records");
         const newRef = doc(recordsRef);
         await setDoc(newRef, {
           id: newRef.id,
@@ -210,7 +251,8 @@ export default function PigProfilePage() {
     if (!activeFarmUid || !pigId) return;
 
     try {
-      const recordsRef = collection(db, "users", activeFarmUid, "pigs", pigId, "health_records");
+      const targetColl = isArchived ? "archived_pigs" : "pigs";
+      const recordsRef = collection(db, "users", activeFarmUid, targetColl, pigId, "health_records");
       const newRef = doc(recordsRef);
 
       let finalDesc = recordDesc;
@@ -226,7 +268,7 @@ export default function PigProfilePage() {
       }, { merge: true });
 
       if (recordType === "Weight Check" && recordWeight) {
-        const pigDocRef = doc(db, "users", activeFarmUid, "pigs", pigId);
+        const pigDocRef = doc(db, "users", activeFarmUid, targetColl, pigId);
         await updateDoc(pigDocRef, {
           weight: parseFloat(recordWeight) || 0
         });
@@ -240,10 +282,60 @@ export default function PigProfilePage() {
     }
   };
 
+  const handleArchivePig = async () => {
+    if (!activeFarmUid || !pigId || !pig) return;
+    try {
+      const finalReason = archiveReason === "Other" ? (customArchiveReason.trim() || "Other") : archiveReason;
+      const todayStr = new Date().toISOString().split("T")[0];
+      const archivedPig: Pig = {
+        ...pig,
+        status: `Archived (${finalReason})`,
+        location: "Archived",
+        notes: (pig.notes ? pig.notes + "\n" : "") + `Archived on: ${todayStr} Reason: ${finalReason}`
+      };
+
+      const batch = writeBatch(db);
+      batch.set(doc(db, "users", activeFarmUid, "archived_pigs", pigId), archivedPig);
+      batch.delete(doc(db, "users", activeFarmUid, "pigs", pigId));
+      await batch.commit();
+
+      setShowArchiveModal(false);
+      router.push("/dashboard/herd");
+    } catch (err) {
+      console.error("Failed to archive pig:", err);
+    }
+  };
+
+  const handleRestorePig = async () => {
+    if (!activeFarmUid || !pigId || !pig) return;
+    try {
+      const todayStr = new Date().toISOString().split("T")[0];
+      const restoredStatus = pig.purpose === "Breeder" 
+        ? (pig.gender === "Male" ? "Boar" : "Sow")
+        : "Grower";
+      const restoredPig: Pig = {
+        ...pig,
+        status: restoredStatus,
+        location: pig.location === "Archived" ? "" : pig.location,
+        notes: (pig.notes ? pig.notes + "\n" : "") + `Restored to active herd on: ${todayStr}`
+      };
+
+      const batch = writeBatch(db);
+      batch.set(doc(db, "users", activeFarmUid, "pigs", pigId), restoredPig);
+      batch.delete(doc(db, "users", activeFarmUid, "archived_pigs", pigId));
+      await batch.commit();
+
+      router.push("/dashboard/herd");
+    } catch (err) {
+      console.error("Failed to restore pig:", err);
+    }
+  };
+
   const handleDeletePig = async () => {
     if (!activeFarmUid || !pigId || !confirm(t("confirmDelete"))) return;
     try {
-      const pigDocRef = doc(db, "users", activeFarmUid, "pigs", pigId);
+      const targetColl = isArchived ? "archived_pigs" : "pigs";
+      const pigDocRef = doc(db, "users", activeFarmUid, targetColl, pigId);
       await deleteDoc(pigDocRef);
       router.push("/dashboard/herd");
     } catch (err) {
@@ -286,171 +378,269 @@ export default function PigProfilePage() {
       <div className="relative z-10 flex flex-col min-h-screen print:hidden">
         {!isMobile && <DesktopHeader showBack backPath="/dashboard/herd" />}
 
-        <main className="flex-1 max-w-4xl w-full mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-12 gap-8">
-          {/* Left Side: Summary Card */}
-          <div className="md:col-span-5 space-y-6">
-            {showWeightUpdateWarning && (
-              <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3 animate-pulse shadow-sm">
-                <svg className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                <div className="space-y-1">
-                  <p className="text-xs font-bold text-amber-800">{t("weightUpdateRequired")}</p>
-                  <p className="text-[11px] text-amber-700 leading-relaxed">
-                    {t("weightUpdateDesc")}
-                  </p>
-                </div>
-              </div>
-            )}
+        <main className="flex-1 max-w-3xl w-full mx-auto px-4 py-8 space-y-6">
+          {/* 1. Bio Section Header */}
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-black text-zinc-900 tracking-tight">Bio</h1>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setShowEditModal(true)}
+                className="rounded-xl border border-zinc-200 bg-white px-3.5 py-1.5 text-xs font-bold text-zinc-700 hover:bg-zinc-50 transition-all shadow-sm"
+              >
+                {t("editDetails")}
+              </button>
 
-            <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4 relative overflow-hidden">
-              <div className="absolute top-0 right-0 h-16 w-16 rounded-full bg-emerald-500/5 blur-lg pointer-events-none" />
-              <div className="flex justify-between items-start gap-4 relative z-10">
-                <div className="min-w-0">
-                  <div className="flex items-center gap-2">
-                    <p className="text-xs font-semibold text-zinc-400 font-mono uppercase">{t("statusLocation")}</p>
-                    {performance !== "Blank" && (
-                      <span className={`text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider shadow-sm border border-black/5 ${performanceBadgeColor}`}>
-                        {th(performance.toLowerCase())}
-                      </span>
-                    )}
-                  </div>
-                  <h2 className="text-xl font-bold text-zinc-900 mt-1 truncate">{pig.tagNumber}</h2>
-                  <p className="text-sm text-zinc-500 mt-0.5 truncate">{pig.breed}</p>
-                </div>
+              {!isArchived ? (
                 <button
-                  onClick={() => {
-                    const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
-                    if (!isPremium) {
-                      alert(tHr("premiumFeatureExport"));
-                      router.push("/dashboard/billing");
-                      return;
-                    }
-                    window.print();
-                  }}
-                  className={`flex-shrink-0 p-2 rounded-lg border transition shadow-sm ${
-                    userProfile?.isPremium || userProfile?.isAdmin
-                      ? "border-zinc-200 bg-zinc-50/50 text-zinc-500 hover:bg-zinc-100"
-                      : "border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100"
-                  }`}
-                  title={userProfile?.isPremium || userProfile?.isAdmin ? th("exportPdf") : th("exportPdfPremium")}
+                  onClick={() => setShowArchiveModal(true)}
+                  className="rounded-xl border border-amber-300 bg-amber-50 px-3.5 py-1.5 text-xs font-bold text-amber-800 hover:bg-amber-100 transition-all shadow-sm flex items-center gap-1.5"
+                  title="Archive Pig"
                 >
-                  <ExportPdfIcon className="h-4 w-4" />
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                  </svg>
+                  <span>Archive</span>
                 </button>
-              </div>
-
-              <div className="divide-y divide-zinc-100 text-sm relative z-10">
-                <div className="py-1.5 flex justify-between">
-                  <span className="text-zinc-500">{t("gender")}</span>
-                  <span className="font-semibold">{translateGender(pig.gender)}</span>
-                </div>
-                <div className="py-1.5 flex justify-between">
-                  <span className="text-zinc-500">{t("purpose")}</span>
-                  <span className="font-semibold">{translatePurpose(pig.purpose)}</span>
-                </div>
-                <div className="py-1.5 flex justify-between">
-                  <span className="text-zinc-500">{t("currentStatus")}</span>
-                  <span className="font-semibold text-emerald-700">{translateStatus(pig.status)}</span>
-                </div>
-                <div className="py-1.5 flex justify-between">
-                  <span className="text-zinc-500">{t("weight")}</span>
-                  <span className="font-semibold">{pig.weight} kg</span>
-                </div>
-                <div className="py-1.5 flex justify-between">
-                  <span className="text-zinc-500">{t("location")}</span>
-                  <span className="font-semibold">{pig.location || t("unassigned")}</span>
-                </div>
-                <div className="py-1.5 flex justify-between">
-                  <span className="text-zinc-500">{t("birthDate")}</span>
-                  <span className="font-semibold">{pig.birthDate}</span>
-                </div>
-                <div className="py-1.5 flex justify-between">
-                  <span className="text-zinc-500">{th("age")}</span>
-                  <span className="font-semibold">
-                    {ageMonths === 0
-                      ? th("lessThanMonth")
-                      : ageMonths === 1
-                      ? th("month", { count: 1 })
-                      : th("months", { count: ageMonths })}
-                  </span>
-                </div>
-                <div className="py-1.5 flex justify-between">
-                  <span className="text-zinc-500">{t("sowTag")}</span>
-                  <span className="font-semibold font-mono">{pig.sowTag || "N/A"}</span>
-                </div>
-                <div className="py-1.5 flex justify-between">
-                  <span className="text-zinc-500">{t("boarTag")}</span>
-                  <span className="font-semibold font-mono">{pig.boarTag || "N/A"}</span>
-                </div>
-              </div>
-
-              {pig.notes && (
-                <div className="bg-zinc-50/70 p-3 rounded-lg border border-zinc-150 text-xs text-zinc-600">
-                  <p className="font-bold text-zinc-500 uppercase text-[9px] mb-1">{t("notes")}</p>
-                  {pig.notes}
-                </div>
+              ) : (
+                <button
+                  onClick={handleRestorePig}
+                  className="rounded-xl border border-emerald-300 bg-emerald-50 px-3.5 py-1.5 text-xs font-bold text-emerald-800 hover:bg-emerald-100 transition-all shadow-sm flex items-center gap-1.5"
+                  title="Restore to Active Herd"
+                >
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  <span>Restore</span>
+                </button>
               )}
 
               <button
-                onClick={handleDeletePig}
-                className="w-full text-center text-xs font-semibold text-rose-600 hover:text-rose-700 pt-2 border-t border-zinc-100 hover:underline relative z-10"
+                onClick={() => {
+                  const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
+                  if (!isPremium) {
+                    setShowRewardedPassModal(true);
+                    return;
+                  }
+                  window.print();
+                }}
+                className={`p-2 rounded-xl border transition shadow-sm ${
+                  userProfile?.isPremium || userProfile?.isAdmin
+                    ? "border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50"
+                    : "border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100"
+                }`}
+                title={userProfile?.isPremium || userProfile?.isAdmin ? th("exportPdf") : th("exportPdfPremium")}
               >
-                {t("deleteProfile")}
-              </button>
-
-              <button
-                onClick={() => setShowEditModal(true)}
-                className="w-full mt-2 rounded-lg border border-zinc-200 bg-zinc-50/50 px-4 py-2.5 text-xs font-bold text-zinc-650 hover:bg-zinc-100 hover:text-zinc-950 transition-all active:scale-95 relative z-10"
-              >
-                {t("editDetails")}
+                <ExportPdfIcon className="h-4 w-4" />
               </button>
             </div>
           </div>
 
-          {/* Right Side: Health Timeline */}
-          <div className="md:col-span-7 space-y-6">
-            <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold text-zinc-900">{t("healthHistory")}</h3>
+          {showWeightUpdateWarning && (
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3 animate-pulse shadow-sm">
+              <svg className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <div className="space-y-1">
+                <p className="text-xs font-bold text-amber-800">{t("weightUpdateRequired")}</p>
+                <p className="text-[11px] text-amber-700 leading-relaxed">
+                  {t("weightUpdateDesc")}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {pig.activeWithdrawalUntil && pig.activeWithdrawalUntil >= new Date().toISOString().split("T")[0] && (
+            <div className="bg-rose-50 border-2 border-rose-300 rounded-xl p-4 flex items-start gap-3 shadow-sm">
+              <span className="text-2xl">⚠️</span>
+              <div className="space-y-1">
+                <p className="text-xs font-black text-rose-800 uppercase tracking-wide">Withdrawal Active: Safe After {pig.activeWithdrawalUntil}</p>
+                <p className="text-[11px] text-rose-700 leading-relaxed">
+                  This animal received {pig.withdrawalMedication || "treatment"} and cannot be culled, slaughtered, or sold for meat until <strong>{pig.activeWithdrawalUntil}</strong> ({pig.withdrawalPeriodDays || 0} days withdrawal).
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Bio Details Card */}
+          <div className="bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4 relative overflow-hidden">
+            <div className="absolute top-0 right-0 h-24 w-24 rounded-full bg-emerald-500/5 blur-xl pointer-events-none" />
+            <div className="flex justify-between items-start gap-4 relative z-10">
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <p className="text-xs font-semibold text-zinc-400 font-mono uppercase">{t("statusLocation")}</p>
+                  {performance !== "Blank" && (
+                    <span className={`text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider shadow-sm border border-black/5 ${performanceBadgeColor}`}>
+                      {th(performance.toLowerCase())}
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center gap-2 flex-wrap mt-1">
+                  <h2 className="text-2xl font-black text-zinc-900 truncate">Tag: {pig.tagNumber}</h2>
+                  {pig.parity !== undefined && pig.parity > 0 && (
+                    <span className="text-xs font-black px-2 py-0.5 rounded-full uppercase tracking-wider bg-purple-100 text-purple-700 border border-purple-200">
+                      Parity {pig.parity} (P{pig.parity})
+                    </span>
+                  )}
+                </div>
+                <p className="text-sm font-medium text-zinc-500 mt-0.5 truncate">{pig.breed}</p>
+              </div>
+            </div>
+
+            <div className="divide-y divide-zinc-100 text-sm relative z-10">
+              <div className="py-2 flex justify-between">
+                <span className="text-zinc-500">{t("gender")}</span>
+                <span className="font-semibold text-zinc-800">{translateGender(pig.gender)}</span>
+              </div>
+              <div className="py-2 flex justify-between">
+                <span className="text-zinc-500">{t("purpose")}</span>
+                <span className="font-semibold text-zinc-800">{translatePurpose(pig.purpose)}</span>
+              </div>
+              <div className="py-2 flex justify-between">
+                <span className="text-zinc-500">{t("currentStatus")}</span>
+                <span className="font-semibold text-emerald-700">{translateStatus(pig.status)}</span>
+              </div>
+              {pig.parity !== undefined && pig.parity > 0 && (
+                <div className="py-2 flex justify-between">
+                  <span className="text-zinc-500">Parity</span>
+                  <span className="font-semibold text-purple-700 font-mono">P{pig.parity} ({pig.parity} {pig.parity === 1 ? "litter" : "litters"})</span>
+                </div>
+              )}
+              {pig.activeWithdrawalUntil && (
+                <div className="py-2 flex justify-between">
+                  <span className="text-zinc-500">Withdrawal Safe Date</span>
+                  <span className={`font-semibold font-mono ${pig.activeWithdrawalUntil >= new Date().toISOString().split("T")[0] ? "text-rose-600 font-bold" : "text-zinc-500 line-through"}`}>
+                    {pig.activeWithdrawalUntil} {pig.activeWithdrawalUntil >= new Date().toISOString().split("T")[0] ? "(ACTIVE)" : "(EXPIRED)"}
+                  </span>
+                </div>
+              )}
+              <div className="py-2 flex justify-between">
+                <span className="text-zinc-500">{t("weight")}</span>
+                <span className="font-semibold text-zinc-800">{pig.weight} kg</span>
+              </div>
+              <div className="py-2 flex justify-between">
+                <span className="text-zinc-500">{t("location")}</span>
+                <span className="font-semibold text-zinc-800">{pig.location || t("unassigned")}</span>
+              </div>
+              <div className="py-2 flex justify-between">
+                <span className="text-zinc-500">{t("birthDate")}</span>
+                <span className="font-semibold text-zinc-800">{pig.birthDate}</span>
+              </div>
+              <div className="py-2 flex justify-between">
+                <span className="text-zinc-500">{th("age")}</span>
+                <span className="font-semibold text-zinc-800">
+                  {formatSwineAge(pig.birthDate)}
+                </span>
+              </div>
+              <div className="py-2 flex justify-between">
+                <span className="text-zinc-500">{t("sowTag")}</span>
+                <span className="font-semibold font-mono text-zinc-800">{pig.sowTag || "N/A"}</span>
+              </div>
+              <div className="py-2 flex justify-between">
+                <span className="text-zinc-500">{t("boarTag")}</span>
+                <span className="font-semibold font-mono text-zinc-800">{pig.boarTag || "N/A"}</span>
+              </div>
+            </div>
+
+            {pig.notes && (
+              <div className="bg-zinc-50/80 p-3.5 rounded-xl border border-zinc-150 text-xs text-zinc-600">
+                <p className="font-bold text-zinc-500 uppercase text-[9px] mb-1">{t("notes")}</p>
+                {pig.notes}
+              </div>
+            )}
+
+            <button
+              onClick={handleDeletePig}
+              className="w-full text-center text-xs font-semibold text-rose-600 hover:text-rose-700 pt-3 border-t border-zinc-100 hover:underline relative z-10"
+            >
+              {t("deleteProfile")}
+            </button>
+          </div>
+
+          {/* 2. Collapsible History Section (Closed by default) */}
+          <div className="bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
+            <div
+              onClick={() => setIsHistoryExpanded(!isHistoryExpanded)}
+              className="w-full flex items-center justify-between p-5 text-left hover:bg-zinc-50/70 transition-colors cursor-pointer select-none"
+            >
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200/60 flex items-center justify-center flex-shrink-0">
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-base font-bold text-zinc-900">{t("healthHistory")}</h3>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-zinc-100 text-zinc-700">
+                      {healthRecords.length}
+                    </span>
+                  </div>
+                  <p className="text-xs text-zinc-500 mt-0.5">Click to view health logs & medical history</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
                 <button
-                  onClick={() => setShowRecordModal(true)}
-                  className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white shadow-lg shadow-emerald-600/10 transition-all active:scale-95"
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowRecordModal(true);
+                  }}
+                  className="rounded-xl bg-emerald-600 hover:bg-emerald-700 px-3.5 py-1.5 text-xs font-bold text-white shadow-sm transition-all active:scale-95"
                 >
                   {t("logHealth")}
                 </button>
-              </div>
-
-              {healthRecords.length === 0 ? (
-                <p className="text-sm text-zinc-500 text-center py-12">{t("noHealthRecords")}</p>
-              ) : (
-                <div className="relative border-l border-zinc-200 pl-4 ml-2 space-y-6">
-                  {healthRecords.map((record) => (
-                    <div key={record.id} className="relative">
-                      {/* Timeline dot */}
-                      <span className="absolute -left-[21px] top-1.5 h-3.5 w-3.5 rounded-full border-2 border-emerald-500 bg-white" />
-                      <div>
-                        <div className="flex justify-between items-start">
-                          <p className="text-sm font-bold text-zinc-800">{translateActivityType(record.type)}</p>
-                          <span className="text-xs text-zinc-400 font-mono">{record.date}</span>
-                        </div>
-                        {record.description && (
-                          <p className="text-xs text-zinc-500 mt-1 whitespace-pre-line">{record.description}</p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                <div className="text-zinc-400">
+                  <svg
+                    className={`h-5 w-5 transform transition-transform duration-300 ${
+                      isHistoryExpanded ? "rotate-180 text-emerald-600" : ""
+                    }`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+                  </svg>
                 </div>
-              )}
+              </div>
             </div>
+
+            {isHistoryExpanded && (
+              <div className="border-t border-zinc-150 p-6 bg-zinc-50/40 space-y-4 animate-fadeIn">
+                {healthRecords.length === 0 ? (
+                  <p className="text-sm text-zinc-500 text-center py-8">{t("noHealthRecords")}</p>
+                ) : (
+                  <div className="relative border-l border-zinc-200 pl-4 ml-2 space-y-6">
+                    {healthRecords.map((record) => (
+                      <div key={record.id} className="relative">
+                        {/* Timeline dot */}
+                        <span className="absolute -left-[21px] top-1.5 h-3.5 w-3.5 rounded-full border-2 border-emerald-500 bg-white" />
+                        <div>
+                          <div className="flex justify-between items-start">
+                            <p className="text-sm font-bold text-zinc-800">{translateActivityType(record.type)}</p>
+                            <span className="text-xs text-zinc-400 font-mono">{record.date}</span>
+                          </div>
+                          {record.description && (
+                            <p className="text-xs text-zinc-500 mt-1 whitespace-pre-line">{record.description}</p>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </main>
       </div>
 
-      <HerdReport
-        pigs={[pig]}
-        title={t("reportTitle", { tag: pig.tagNumber })}
-        includeSummary={false}
-      />
+      {isPremium && (
+        <HerdReport
+          pigs={[pig]}
+          title={t("reportTitle", { tag: pig.tagNumber })}
+          includeSummary={false}
+        />
+      )}
 
       {/* Edit Details Modal */}
       {showEditModal && (
@@ -627,6 +817,79 @@ export default function PigProfilePage() {
           </div>
         </div>
       )}
+
+      {/* Archive Pig Modal (Matching Android PigProfileScreen showArchiveDialog) */}
+      {showArchiveModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-white border border-zinc-200 rounded-2xl w-full max-w-md p-6 space-y-5 shadow-2xl">
+            <div className="space-y-1">
+              <h3 className="text-lg font-bold text-zinc-900">Archive Pig #{pig.tagNumber}</h3>
+              <p className="text-xs text-zinc-500">
+                Select the reason for archiving this animal. Historical logs and ancestry links are preserved.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-semibold text-zinc-600 mb-1.5">Reason for Archiving</label>
+                <select
+                  value={archiveReason}
+                  onChange={(e) => setArchiveReason(e.target.value)}
+                  className="w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-amber-500 shadow-sm"
+                >
+                  <option value="Culled">Culled</option>
+                  <option value="Sold">Sold</option>
+                  <option value="Died">Died</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              {archiveReason === "Other" && (
+                <div>
+                  <label className="block text-xs font-semibold text-zinc-600 mb-1.5">Specify Reason</label>
+                  <input
+                    type="text"
+                    value={customArchiveReason}
+                    onChange={(e) => setCustomArchiveReason(e.target.value)}
+                    placeholder="e.g. Transferred to secondary farm"
+                    className="w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-amber-500 shadow-sm"
+                  />
+                </div>
+              )}
+            </div>
+
+            <div className="flex justify-end gap-3 pt-3 border-t border-zinc-150">
+              <button
+                type="button"
+                onClick={() => setShowArchiveModal(false)}
+                className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2 text-xs font-semibold text-zinc-600 hover:bg-zinc-100 transition"
+              >
+                {t("cancel")}
+              </button>
+              <button
+                type="button"
+                onClick={handleArchivePig}
+                className="rounded-lg bg-amber-600 hover:bg-amber-700 px-4 py-2 text-xs font-bold text-white transition shadow-sm"
+              >
+                Archive Pig
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Rewarded Pass Modal for Non-Premium PDF Export */}
+      <RewardedPassModal
+        isOpen={showRewardedPassModal}
+        onClose={() => setShowRewardedPassModal(false)}
+        title={`Unlock ${pig.tagNumber} PDF Report`}
+        description="Watch a short video ad to unlock comprehensive pig profile PDF reports and all premium herd tools for 3 hours!"
+        onSuccess={() => {
+          setTimeout(() => {
+            window.print();
+          }, 500);
+        }}
+      />
     </div>
   );
 }

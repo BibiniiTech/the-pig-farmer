@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState, useMemo, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { collection, onSnapshot, doc, setDoc, deleteDoc } from "firebase/firestore";
+import { collection, onSnapshot, doc, setDoc, deleteDoc, writeBatch } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 import { useDevice } from "@/context/DeviceContext";
@@ -14,10 +14,15 @@ import FinancialReport from "@/components/reports/FinancialReport";
 import { ExportPdfIcon } from "@/components/icons/DashboardIcons";
 import { useTranslations } from "next-intl";
 import { FinancialRecord, Pig } from "@/lib/types";
+import { TierLimiter } from "@/lib/tierLimiter";
+import NativeAdBanner from "@/components/ads/NativeAdBanner";
+import RewardedPassModal from "@/components/ads/RewardedPassModal";
 
-export default function FinancialsPage() {
+function FinancialsContent() {
   const t = useTranslations("Financials");
   const tHr = useTranslations("HR");
+  const searchParams = useSearchParams();
+  const shouldAdd = searchParams.get("add") === "true";
 
   const translateCategory = (cat: string, type: string) => {
     if (!cat) return "";
@@ -52,7 +57,14 @@ export default function FinancialsPage() {
   const [records, setRecords] = useState<FinancialRecord[]>([]);
   const [pigs, setPigs] = useState<Pig[]>([]);
   const [dataLoading, setDataLoading] = useState(true);
-  const [showAddModal, setShowAddModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(shouldAdd);
+  const [showRewardedPassModal, setShowRewardedPassModal] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get("add") === "true") {
+      setShowAddModal(true);
+    }
+  }, [searchParams]);
 
   // Form states
   const [type, setType] = useState("Expense");
@@ -61,6 +73,9 @@ export default function FinancialsPage() {
   const [amount, setAmount] = useState(0);
   const [description, setDescription] = useState("");
   const [selectedPigId, setSelectedPigId] = useState("");
+
+  const isPremium = Boolean(userProfile?.isPremium || userProfile?.isAdmin);
+  const recordLimitReached = !isPremium && records.length >= TierLimiter.FREE_MAX_FINANCIAL_RECORDS;
 
   const categories = {
     Income: [
@@ -107,8 +122,8 @@ export default function FinancialsPage() {
     // 2. Listen to Pigs for linking transactions
     const pigsRef = collection(db, "users", activeFarmUid, "pigs");
     const unsubscribePigs = onSnapshot(pigsRef, (snapshot) => {
-      const list = snapshot.docs.map(doc => ({ id: doc.id, tagNumber: doc.data().tagNumber || doc.id } as Pig));
-      setPigs(list.sort((a, b) => a.tagNumber.localeCompare(b.tagNumber)));
+      const list = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Pig));
+      setPigs(list.sort((a, b) => (a.tagNumber || a.id).localeCompare(b.tagNumber || b.id)));
     });
 
     return () => {
@@ -120,6 +135,13 @@ export default function FinancialsPage() {
   const handleAddTransaction = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!activeFarmUid || amount <= 0) return;
+
+    if (recordLimitReached) {
+      alert(`Financial record limit of ${TierLimiter.FREE_MAX_FINANCIAL_RECORDS} reached for free tier. Please upgrade to add more.`);
+      router.push("/dashboard/billing");
+      setShowAddModal(false);
+      return;
+    }
 
     try {
       const finCollection = collection(db, "users", activeFarmUid, "financials");
@@ -133,11 +155,36 @@ export default function FinancialsPage() {
         amount,
         description
       };
-      if (type === "Income" && category === t("incomeCategories.pigSale") && selectedPigId) {
+      const isPigSale = type === "Income" && (category === "Pig Sale" || category === t("incomeCategories.pigSale")) && !!selectedPigId;
+      if (isPigSale) {
         record.pigId = selectedPigId;
       }
 
-      await setDoc(newRef, record);
+      if (isPigSale) {
+        const soldPig = pigs.find((p) => p.id === selectedPigId);
+        if (soldPig) {
+          const batch = writeBatch(db);
+          batch.set(newRef, record);
+
+          const pigRef = doc(db, "users", activeFarmUid, "pigs", selectedPigId);
+          const archiveRef = doc(db, "users", activeFarmUid, "archived_pigs", selectedPigId);
+
+          const archivedPig: Pig = {
+            ...soldPig,
+            status: "Archived (Sold)",
+            location: "Archived",
+            notes: (soldPig.notes ? soldPig.notes + "\n" : "") + `Archived on: ${date || new Date().toISOString().split("T")[0]} Reason: Sold`,
+          };
+
+          batch.set(archiveRef, archivedPig);
+          batch.delete(pigRef);
+          await batch.commit();
+        } else {
+          await setDoc(newRef, record);
+        }
+      } else {
+        await setDoc(newRef, record);
+      }
 
       // Reset
       setAmount(0);
@@ -162,6 +209,44 @@ export default function FinancialsPage() {
   const totalIncome = records.filter(r => r.type === "Income").reduce((sum, r) => sum + r.amount, 0);
   const totalExpense = records.filter(r => r.type === "Expense").reduce((sum, r) => sum + r.amount, 0);
   const netBalance = totalIncome - totalExpense;
+
+  // Unit Economics & Break-even Calculations (Commercial 180-day grow-out cycle scoping)
+  const activePigs = useMemo(() => {
+    return pigs.filter(
+      (p) => p.location !== "Archived" && !p.status?.toLowerCase().startsWith("archived")
+    );
+  }, [pigs]);
+
+  const totalLiveHerdWeightKg = useMemo(() => {
+    return activePigs.reduce((sum, p) => sum + (p.weight || 0), 0);
+  }, [activePigs]);
+
+  const { cycleExpenses, isScopedToCycle } = useMemo(() => {
+    const cycleCutoff = new Date();
+    cycleCutoff.setDate(cycleCutoff.getDate() - 180);
+
+    const expenseRecords = records.filter((r) => r.type === "Expense");
+    const recentExpenses = expenseRecords.filter((r) => {
+      const d = new Date(r.date);
+      return !isNaN(d.getTime()) && d >= cycleCutoff;
+    });
+
+    if (recentExpenses.length > 0) {
+      return {
+        cycleExpenses: recentExpenses.reduce((sum, r) => sum + (r.amount || 0), 0),
+        isScopedToCycle: true,
+      };
+    }
+    return {
+      cycleExpenses: expenseRecords.reduce((sum, r) => sum + (r.amount || 0), 0),
+      isScopedToCycle: false,
+    };
+  }, [records]);
+
+  const costOfProductionPerKg = totalLiveHerdWeightKg > 0 ? cycleExpenses / totalLiveHerdWeightKg : 0;
+  const breakEvenPerFinisher = costOfProductionPerKg * 90.0;
+  const targetSellingPrice20Margin = costOfProductionPerKg * 1.2;
+  const targetSellingPriceFinisher = breakEvenPerFinisher * 1.2;
 
   if (loading || !user) {
     return (
@@ -202,35 +287,97 @@ export default function FinancialsPage() {
             ))}
           </div>
 
+          {/* Unit Economics & Breakeven Card */}
+          <div className="bg-emerald-50/60 border border-teal-200/80 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <div className="flex items-center gap-2 text-teal-800">
+                <span className="p-1.5 rounded-lg bg-teal-100 text-teal-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-1c-1.66 0-3-1.34-3-3h2c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-2c0-.55-.45-1-1-1h-2c-1.66 0-3-1.34-3-3s1.34-3 3-3V3h2v1c1.66 0 3 1.34 3 3h-2c0-.55-.45-1-1-1h-2c-.55 0-1 .45-1 1v2c0 .55.45 1 1 1h2c1.66 0 3 1.34 3 3v2c0 .55-.45 1-1 1z" />
+                  </svg>
+                </span>
+                <h3 className="text-base font-bold text-teal-950">Unit Economics & Breakeven</h3>
+              </div>
+              <div className="px-2.5 py-1 rounded-lg bg-teal-100/80 border border-teal-200 text-teal-900 text-xs font-bold">
+                {isScopedToCycle ? (
+                  <span>
+                    {activePigs.length} {tHr("pigs") || "pigs"} ({totalLiveHerdWeightKg.toFixed(0)} kg) • 180d cycle
+                  </span>
+                ) : (
+                  <span>
+                    {activePigs.length} {tHr("pigs") || "pigs"} ({totalLiveHerdWeightKg.toFixed(0)} kg)
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div className="border-t border-teal-200/50 pt-3 grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="space-y-1">
+                <p className="text-xs text-zinc-500 font-medium">Cost of Production / kg</p>
+                <p className="text-xl font-black text-zinc-900">
+                  {currencySymbol}{costOfProductionPerKg.toFixed(2)} / kg
+                </p>
+              </div>
+
+              <div className="space-y-1">
+                <p className="text-xs text-zinc-500 font-medium">Finisher Breakeven Price (90kg)</p>
+                <p className="text-xl font-black text-rose-700">
+                  {currencySymbol}{breakEvenPerFinisher.toFixed(2)}
+                </p>
+              </div>
+
+              <div className="space-y-1">
+                <p className="text-xs text-zinc-500 font-medium">Target Selling Price (+20% Margin)</p>
+                <p className="text-xl font-black text-emerald-700">
+                  {currencySymbol}{targetSellingPriceFinisher.toFixed(2)}{" "}
+                  <span className="text-xs font-bold text-emerald-800">
+                    ({currencySymbol}{targetSellingPrice20Margin.toFixed(2)}/kg)
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* Ledger Table */}
           <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4 flex-wrap gap-4">
-              <h2 className="text-lg font-bold text-zinc-900">{t("farmCashflowLedger")}</h2>
+              <h2 className="text-lg font-bold text-zinc-900">{t("transactionsCount", { count: records.length })}</h2>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => {
-                    const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
                     if (!isPremium) {
-                      alert(tHr("premiumFeatureExport"));
-                      router.push("/dashboard/billing");
+                      setShowRewardedPassModal(true);
                       return;
                     }
                     window.print();
                   }}
                   className={`rounded-lg border px-3 py-2 text-xs font-semibold transition shadow-sm flex items-center gap-1.5 ${
-                    userProfile?.isPremium || userProfile?.isAdmin
+                    isPremium
                       ? "border-zinc-200 bg-zinc-50/50 text-zinc-650 hover:bg-zinc-100"
                       : "border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100"
                   }`}
                 >
                   <ExportPdfIcon className="h-3.5 w-3.5 opacity-80" />
-                  <span>{userProfile?.isPremium || userProfile?.isAdmin ? t("exportPdf") : t("exportPdfPremium")}</span>
+                  <span>{isPremium ? t("exportPdf") : t("exportPdfPremium")}</span>
                 </button>
                 <button
-                  onClick={() => setShowAddModal(true)}
-                  className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white shadow shadow-emerald-600/10 transition active:scale-95"
+                  onClick={() => {
+                    if (recordLimitReached) {
+                      alert(`Financial record limit of ${TierLimiter.FREE_MAX_FINANCIAL_RECORDS} reached for free tier. Please upgrade to add more.`);
+                      router.push("/dashboard/billing");
+                      return;
+                    }
+                    setShowAddModal(true);
+                  }}
+                  className={`rounded-lg px-4 py-2 text-xs font-bold text-white shadow transition active:scale-95 ${
+                    recordLimitReached
+                      ? "bg-amber-600 hover:bg-amber-700 shadow-amber-600/10"
+                      : "bg-teal-600 hover:bg-teal-700 shadow-teal-600/10"
+                  }`}
                 >
-                  + {t("logTransaction")}
+                  {recordLimitReached
+                    ? `Limit Reached (${TierLimiter.FREE_MAX_FINANCIAL_RECORDS}) - Upgrade`
+                    : `+ ${t("logTransaction")}`}
                 </button>
               </div>
             </div>
@@ -342,33 +489,50 @@ export default function FinancialsPage() {
               </>
             )}
           </div>
+
+          {/* Sponsored Ad Banner for Free Users */}
+          <NativeAdBanner />
         </main>
       </div>
 
-      <FinancialReport
-        records={records}
-        pigs={pigs}
-        currencySymbol={currencySymbol}
+      <RewardedPassModal
+        isOpen={showRewardedPassModal}
+        onClose={() => setShowRewardedPassModal(false)}
+        title="Unlock Financial Ledger PDF Report"
+        description="Watch a short video ad to unlock executive cashflow reports, ledger exports, and all premium financial tools for 3 hours!"
+        onSuccess={() => {
+          setTimeout(() => {
+            window.print();
+          }, 500);
+        }}
       />
+
+      {isPremium && (
+        <FinancialReport
+          records={records}
+          pigs={pigs}
+          currencySymbol={currencySymbol}
+        />
+      )}
 
       {/* Log Transaction Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="bg-white border border-zinc-200 rounded-2xl w-full max-w-md p-6 space-y-6 shadow-2xl">
-            <h3 className="text-lg font-bold text-zinc-900">{t("logTransaction")}</h3>
+          <div className="bg-teal-50/95 border border-teal-200 rounded-2xl w-full max-w-md p-6 space-y-6 shadow-2xl text-teal-950">
+            <h3 className="text-lg font-bold text-teal-950 border-b border-teal-200/80 pb-3">{t("logTransaction")}</h3>
             <form onSubmit={handleAddTransaction} className="space-y-4">
-              <div className="flex gap-2 p-1 bg-zinc-100 rounded-lg">
+              <div className="flex gap-2 p-1 bg-teal-100/70 border border-teal-200 rounded-lg">
                 <button
                   type="button"
                   onClick={() => { setType("Expense"); setCategory(t("expenseCategories.feed")); }}
-                  className={`flex-1 py-1.5 text-xs font-bold rounded-md transition ${type === "Expense" ? "bg-white text-zinc-800 shadow" : "text-zinc-500"}`}
+                  className={`flex-1 py-1.5 text-xs font-bold rounded-md transition ${type === "Expense" ? "bg-white text-teal-900 shadow" : "text-teal-700"}`}
                 >
                   {t("expense")}
                 </button>
                 <button
                   type="button"
                   onClick={() => { setType("Income"); setCategory(t("incomeCategories.pigSale")); }}
-                  className={`flex-1 py-1.5 text-xs font-bold rounded-md transition ${type === "Income" ? "bg-white text-zinc-800 shadow" : "text-zinc-500"}`}
+                  className={`flex-1 py-1.5 text-xs font-bold rounded-md transition ${type === "Income" ? "bg-white text-teal-900 shadow" : "text-teal-700"}`}
                 >
                   {t("income")}
                 </button>
@@ -440,15 +604,15 @@ export default function FinancialsPage() {
                 />
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-zinc-150">
+              <div className="flex justify-end gap-3 pt-4 border-t border-teal-200/80">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2 text-xs font-semibold text-zinc-500 hover:bg-zinc-100 transition"
+                  className="rounded-lg border border-teal-300 bg-white/80 px-4 py-2 text-xs font-semibold text-teal-800 hover:bg-teal-100 transition"
                 >
                   {t("cancel")}
                 </button>
-                <button type="submit" className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white transition">
+                <button type="submit" className="rounded-lg bg-teal-600 hover:bg-teal-700 px-4 py-2 text-xs font-bold text-white transition shadow-sm">
                   {t("save")}
                 </button>
               </div>
@@ -457,5 +621,13 @@ export default function FinancialsPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function FinancialsPage() {
+  return (
+    <Suspense fallback={<div className="p-6">Loading...</div>}>
+      <FinancialsContent />
+    </Suspense>
   );
 }

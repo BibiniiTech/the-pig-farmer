@@ -229,25 +229,62 @@ export function evaluatePerformance(breed: string, ageDays: number, actualWeight
 export function parseSwineDate(dateStr?: string): Date | null {
   if (!dateStr) return null;
   const trimmed = dateStr.trim();
+  if (!trimmed) return null;
 
-  // 1. Check if format is yyyy-mm-dd (e.g. 2026-05-10)
-  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
-    const parts = trimmed.split("-").map(Number);
-    const d = new Date(parts[0], parts[1] - 1, parts[2]);
-    if (!isNaN(d.getTime())) return d;
+  // 1. Year-first: yyyy-mm-dd or yyyy/mm/dd (e.g. 2026-05-10 or 2026/5/10)
+  if (/^\d{4}[-/]\d{1,2}[-/]\d{1,2}/.test(trimmed)) {
+    const datePart = trimmed.split("T")[0].split(" ")[0];
+    const separator = datePart.includes("-") ? "-" : "/";
+    const parts = datePart.split(separator).map(Number);
+    if (parts.length >= 3) {
+      const year = parts[0];
+      const month = parts[1];
+      const day = parts[2];
+      if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+        const d = new Date(year, month - 1, day);
+        if (!isNaN(d.getTime())) return d;
+      }
+    }
   }
 
-  // 2. Check if format is dd/mm/yyyy (e.g. 10/05/2026 or 10-05-2026)
-  if (/^\d{2}[/-]\d{2}[/-]\d{4}$/.test(trimmed)) {
+  // 2. Day-first: dd/mm/yyyy or dd-mm-yyyy (e.g. 10/05/2026 or 5-3-2026)
+  if (/^\d{1,2}[-/]\d{1,2}[-/]\d{4}$/.test(trimmed)) {
     const separator = trimmed.includes("/") ? "/" : "-";
     const parts = trimmed.split(separator).map(Number);
-    const d = new Date(parts[2], parts[1] - 1, parts[0]);
+    if (parts.length === 3) {
+      const p0 = parts[0];
+      const p1 = parts[1];
+      const year = parts[2];
+      let day = p0;
+      let month = p1;
+      if (p0 > 12 && p1 <= 12) {
+        day = p0;
+        month = p1;
+      } else if (p1 > 12 && p0 <= 12) {
+        month = p0;
+        day = p1;
+      }
+      if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+        const d = new Date(year, month - 1, day);
+        if (!isNaN(d.getTime())) return d;
+      }
+    }
+  }
+
+  // 3. Epoch milliseconds
+  const millis = Number(trimmed);
+  if (!isNaN(millis) && millis > 1000000000) {
+    const d = new Date(millis);
     if (!isNaN(d.getTime())) return d;
   }
 
-  // 3. Fallback to standard new Date()
+  // 4. Fallback to standard Date with year sanity check
   const d = new Date(trimmed);
-  return isNaN(d.getTime()) ? null : d;
+  if (!isNaN(d.getTime())) {
+    const y = d.getFullYear();
+    if (y >= 1990 && y <= 2100) return d;
+  }
+  return null;
 }
 
 export function calculateAgeDays(birthDateStr?: string): number {
@@ -260,7 +297,7 @@ export function calculateAgeDays(birthDateStr?: string): number {
     const birthMidnight = new Date(birth);
     birthMidnight.setHours(0, 0, 0, 0);
     const diffTime = today.getTime() - birthMidnight.getTime();
-    return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    return Math.round(diffTime / (1000 * 60 * 60 * 24));
   } catch (e) {
     return 0;
   }
@@ -276,11 +313,47 @@ export function calculateAgeMonths(birthDateStr?: string): number {
     let months = (today.getFullYear() - birth.getFullYear()) * 12;
     months += today.getMonth() - birth.getMonth();
 
-    if (today.getDate() < birth.getDate()) {
+    const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+    const effectiveBirthDay = Math.min(birth.getDate(), lastDayOfMonth);
+    if (today.getDate() < effectiveBirthDay) {
       months--;
     }
     return Math.max(0, months);
   } catch (e) {
     return 0;
   }
+}
+
+export function formatSwineAge(birthDateStr?: string, compact: boolean = false): string {
+  if (!birthDateStr) return "N/A";
+  const days = calculateAgeDays(birthDateStr);
+  if (days < 0) return "Future birth";
+  if (days === 0) return "Today";
+  if (days === 1) return compact ? "1 d" : "1 day";
+  if (days < 7) return compact ? `${days} d` : `${days} days`;
+
+  if (days < 30) {
+    const weeks = Math.floor(days / 7);
+    const remDays = days % 7;
+    if (remDays === 0) {
+      return compact ? `${weeks} wk${weeks > 1 ? "s" : ""}` : `${weeks} week${weeks > 1 ? "s" : ""}`;
+    }
+    return compact
+      ? `${weeks} wk${weeks > 1 ? "s" : ""}, ${remDays} d`
+      : `${weeks} wk${weeks > 1 ? "s" : ""}, ${remDays} day${remDays > 1 ? "s" : ""}`;
+  }
+
+  const months = calculateAgeMonths(birthDateStr);
+  if (months < 12) {
+    return compact ? `${months} mo` : `${months} month${months > 1 ? "s" : ""}`;
+  }
+
+  const years = Math.floor(months / 12);
+  const remMonths = months % 12;
+  if (remMonths === 0) {
+    return compact ? `${years} yr${years > 1 ? "s" : ""}` : `${years} year${years > 1 ? "s" : ""}`;
+  }
+  return compact
+    ? `${years} yr, ${remMonths} mo`
+    : `${years} yr${years > 1 ? "s" : ""}, ${remMonths} mo`;
 }

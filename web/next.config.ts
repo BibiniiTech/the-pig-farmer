@@ -23,6 +23,20 @@ const withPWA = withPWAInit({
 const nextConfig: NextConfig = {
   // Silence Turbopack vs webpack warning from next-pwa
   turbopack: {},
+  async redirects() {
+    return [
+      { source: '/dashboard/hr', destination: '/dashboard?section=hr', permanent: false },
+      { source: '/dashboard/human-resources', destination: '/dashboard?section=hr', permanent: false },
+      { source: '/dashboard/hub', destination: '/dashboard?section=hub', permanent: false },
+      { source: '/dashboard/market', destination: '/dashboard?section=hub', permanent: false },
+      { source: '/dashboard/symptoms', destination: '/dashboard?section=symptoms', permanent: false },
+      { source: '/dashboard/disease-finder', destination: '/dashboard?section=symptoms', permanent: false },
+      { source: '/dashboard/symptoms-analyzer', destination: '/dashboard?section=symptoms', permanent: false },
+      { source: '/dashboard/weight', destination: '/dashboard?section=weight', permanent: false },
+      { source: '/dashboard/weight-checker', destination: '/dashboard?section=weight', permanent: false },
+      { source: '/dashboard/training', destination: '/dashboard?section=training', permanent: false },
+    ];
+  },
 };
 
 export default withNextIntl(withPWA(nextConfig));

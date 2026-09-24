@@ -34,7 +34,20 @@ export interface UserProfile {
   isAdmin: boolean;
   isKofisPerson: boolean;
   subscriptionSource?: string;
+  lemonSqueezyCustomerId?: string;
+  lemonSqueezySubscriptionId?: string;
+  lemonSqueezyVariantId?: string;
+  lemonSqueezyCustomerPortalUrl?: string;
+  lemonSqueezyRenewsAt?: string;
+  lemonSqueezyEndsAt?: string;
+  paystackCustomerCode?: string;
+  paystackSubscriptionCode?: string;
+  paystackPlanCode?: string;
+  subscriptionPlan?: string;
+  subscriptionUpdatedAt?: string;
   appLanguage?: string;
+  farmLogo?: string;
+  photoURL?: string;
   settings: UserSettings;
 }
 
@@ -67,6 +80,12 @@ export interface Pig {
   lastBreedingDate?: string;
   lastBoarTag?: string;
   hasFarrowed?: boolean;
+  archived?: boolean;
+  activeWithdrawalUntil?: string;
+  withdrawalMedication?: string;
+  withdrawalPeriodDays?: number;
+  safeSlaughterDate?: string;
+  parity?: number;
   healthRecords?: HealthRecord[];
 }
 
@@ -78,6 +97,13 @@ export interface HealthRecord {
   medication?: string;
   cost?: number;
   taskId?: string;
+  activeWithdrawalUntil?: string;
+  withdrawalMedication?: string;
+  withdrawalPeriodDays?: number;
+  safeSlaughterDate?: string;
+  stillbornCount?: number;
+  mummiesCount?: number;
+  litterBirthWeightKg?: number;
 }
 
 export interface TaskItem {
@@ -88,6 +114,7 @@ export interface TaskItem {
   pigIds: string[];
   completed?: boolean;
   healthRecordIds?: string[];
+  snoozeUntil?: number;
 }
 
 export interface FeedIngredient {
@@ -159,6 +186,16 @@ export interface StaffMember {
   allowAppAccess: boolean;
   email: string;
   inviteStatus?: string; // "none", "pending", "sent", "failed"
+  gender?: string;
+  residentialAddress?: string;
+  dateOfBirth?: string;
+  emergencyContactName?: string;
+  emergencyContactPhone?: string;
+  emergencyContactAddress?: string;
+  emergencyContactRelation?: string;
+  photoUrl?: string;
+  createdAt?: number | string;
+  updatedAt?: number | string;
 }
 
 export interface FeedInventoryItem {

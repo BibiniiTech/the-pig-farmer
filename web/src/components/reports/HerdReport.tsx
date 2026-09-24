@@ -3,7 +3,7 @@
 import React from "react";
 import ReportLayout from "./ReportLayout";
 import { useTranslations } from "next-intl";
-import { calculateAgeMonths } from "@/lib/swineGrowthDatabase";
+import { calculateAgeMonths, formatSwineAge } from "@/lib/swineGrowthDatabase";
 import { Pig, HealthRecord } from "@/lib/types";
 
 interface HerdReportProps {
@@ -60,9 +60,7 @@ const HerdReport: React.FC<HerdReportProps> = ({ pigs, allPigs = [], title, incl
   };
 
   const getAgeText = (dob: string) => {
-    const ageMonths = calculateAgeMonths(dob);
-    if (ageMonths < 12) return `${ageMonths} mo`;
-    return `${Math.floor(ageMonths / 12)}yr ${ageMonths % 12}mo`;
+    return formatSwineAge(dob, true);
   };
 
   const breeders = pigs.filter(p => p.purpose === "Breeder");

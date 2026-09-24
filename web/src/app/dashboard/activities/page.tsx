@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { collection, onSnapshot, doc, setDoc, writeBatch, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -36,11 +36,14 @@ const addDays = (dateStr: string, days: number) => {
   result.setDate(result.getDate() + days);
   return result.toISOString().split("T")[0];
 };
-export default function HerdActivitiesPage() {
+
+function HerdActivitiesContent() {
   const t = useTranslations("Activities");
   const { user, userProfile, activeFarmUid, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialActivityParam = searchParams.get("activity");
 
   const activityCategories = [
     { type: t("categories.heat.type"), key: "Heat Detection", desc: t("categories.heat.desc"), icon: HeatIcon },
@@ -94,6 +97,13 @@ export default function HerdActivitiesPage() {
   const [medicationDosage, setMedicationDosage] = useState("");
   const [scheduleSecondIron, setScheduleSecondIron] = useState(false);
   const [showAllPigsForIron, setShowAllPigsForIron] = useState(false);
+  const [withdrawalDays, setWithdrawalDays] = useState("0");
+  const [withdrawalWarningPig, setWithdrawalWarningPig] = useState<Pig | null>(null);
+
+  // Farrowing quality inputs
+  const [stillbornCount, setStillbornCount] = useState("0");
+  const [mummiesCount, setMummiesCount] = useState("0");
+  const [litterBirthWeight, setLitterBirthWeight] = useState("");
 
   useEffect(() => {
     if (!loading && !user) {
@@ -113,6 +123,24 @@ export default function HerdActivitiesPage() {
 
     return () => unsubscribe();
   }, [activeFarmUid]);
+
+  useEffect(() => {
+    if (initialActivityParam) {
+      const decoded = decodeURIComponent(initialActivityParam);
+      const found = activityCategories.find(
+        (c) =>
+          c.key.toLowerCase() === decoded.toLowerCase() ||
+          c.type.toLowerCase() === decoded.toLowerCase()
+      );
+      if (found) {
+        setSelectedActivity(found);
+      } else {
+        router.push("/dashboard");
+      }
+    } else {
+      router.push("/dashboard");
+    }
+  }, [initialActivityParam, router]);
 
   // Reset inputs when activity changes
   useEffect(() => {
@@ -318,6 +346,19 @@ export default function HerdActivitiesPage() {
     e.preventDefault();
     if (!activeFarmUid || selectedPigIds.length === 0) return;
 
+    // Food Safety Check: Prevent culling/sale of pigs under active withdrawal
+    if (selectedActivity.key === "Culling") {
+      const nowStr = new Date().toISOString().split("T")[0];
+      const blockedPig = selectedPigIds
+        .map(id => pigs.find(p => p.id === id))
+        .find(p => p && p.activeWithdrawalUntil && p.activeWithdrawalUntil >= nowStr);
+
+      if (blockedPig) {
+        setWithdrawalWarningPig(blockedPig);
+        return;
+      }
+    }
+
     try {
       const batch = writeBatch(db);
       const activityType = selectedActivity.key;
@@ -329,7 +370,6 @@ export default function HerdActivitiesPage() {
 
         const isFuture = isFutureDate(logDate);
         const pigRef = doc(db, "users", activeFarmUid, "pigs", pigId);
-        const healthRecordsRef = doc(collection(db, "users", activeFarmUid, "pigs", pigId, "health_records"));
         let finalDescription = notes;
         let taskId: string | null = null;
 
@@ -351,7 +391,7 @@ export default function HerdActivitiesPage() {
 
         // Logic for specialized activities (mostly for non-future logs)
         if (!isFuture) {
-          // Breeding/Mating
+          // Breeding/Mating (3-Stage Milestone Calibration)
           if (activityType === "Breeding/Mating") {
             finalDescription = `${notes}\nMated Sow ${pig.tagNumber} with Boar ${boarTag}\nOutcome: ${matingOutcome}`.trim();
             if (pig.gender === "Female") {
@@ -361,12 +401,43 @@ export default function HerdActivitiesPage() {
                 purpose: "Breeder"
               });
               if (matingOutcome === "Successful") {
-                const taskRef = doc(collection(db, "users", activeFarmUid, "tasks"));
-                batch.set(taskRef, {
-                  id: taskRef.id,
-                  name: `Confirm Pregnancy: Pig ${pig.tagNumber}`,
+                const day110 = addDays(logDate, 110);
+                const day114 = addDays(logDate, 114);
+                batch.update(pigRef, {
+                  status: "Pregnant",
+                  expectedFarrowingDate: day114,
+                  farrowingPenMoveDate: day110
+                });
+
+                // 1. Day 21 Return-to-Heat Check
+                const tHeat = doc(collection(db, "users", activeFarmUid, "tasks"));
+                batch.set(tHeat, {
+                  id: tHeat.id,
+                  name: `Check Return-to-Heat / Estrus: Pig ${pig.tagNumber}`,
                   date: addDays(logDate, 21),
-                  notes: `Scheduled 21 days after mating on ${logDate}`,
+                  notes: `Check if sow returns to heat 18-24 days post-mating on ${logDate}`,
+                  pigIds: [pigId],
+                  completed: false
+                });
+
+                // 2. Day 110 Move to Farrowing Crate
+                const tCrate = doc(collection(db, "users", activeFarmUid, "tasks"));
+                batch.set(tCrate, {
+                  id: tCrate.id,
+                  name: `Move to Farrowing Crate: Pig ${pig.tagNumber}`,
+                  date: day110,
+                  notes: `Move sow to sanitized farrowing pen & wash/deworm 4-5 days before due date`,
+                  pigIds: [pigId],
+                  completed: false
+                });
+
+                // 3. Day 114 Expected Farrowing Due Date
+                const tFarrow = doc(collection(db, "users", activeFarmUid, "tasks"));
+                batch.set(tFarrow, {
+                  id: tFarrow.id,
+                  name: `Farrowing Due: Pig ${pig.tagNumber}`,
+                  date: day114,
+                  notes: `Scheduled 114 days after mating on ${logDate}`,
                   pigIds: [pigId],
                   completed: false
                 });
@@ -410,12 +481,41 @@ export default function HerdActivitiesPage() {
             }
           }
 
-          // Farrowing
+          // Farrowing (Quality Metrics & Parity Auto-Increment)
           if (activityType === "Farrowing") {
             const malesCount = parseInt(numMales) || 0;
             const femalesCount = parseInt(numFemales) || 0;
-            finalDescription = `${notes}\nFarrowed: ${malesCount} Males, ${femalesCount} Females`.trim();
-            batch.update(pigRef, { status: "Lactating", hasFarrowed: true, weaned: false, purpose: "Breeder" });
+            const stillborn = parseInt(stillbornCount) || 0;
+            const mummies = parseInt(mummiesCount) || 0;
+            const litterWt = parseFloat(litterBirthWeight) || 0;
+
+            finalDescription = `${notes}\nFarrowed: ${malesCount} Males, ${femalesCount} Females` +
+              (stillborn > 0 ? `, ${stillborn} Stillborn` : "") +
+              (mummies > 0 ? `, ${mummies} Mummies` : "") +
+              (litterWt > 0 ? `, Litter Wt: ${litterWt} kg` : "");
+
+            const currentParity = pig.parity || 0;
+            batch.update(pigRef, {
+              status: "Lactating",
+              hasFarrowed: true,
+              weaned: false,
+              isWeaned: false,
+              purpose: "Breeder",
+              parity: currentParity + 1,
+              expectedFarrowingDate: "",
+              farrowingPenMoveDate: ""
+            });
+
+            // Auto-schedule Weaning 28 days post-farrowing
+            const weanTask = doc(collection(db, "users", activeFarmUid, "tasks"));
+            batch.set(weanTask, {
+              id: weanTask.id,
+              name: `Weaning: Pig ${pig.tagNumber}`,
+              date: addDays(logDate, 28),
+              notes: `Weaning due 28 days after farrowing on ${logDate}`,
+              pigIds: [pigId],
+              completed: false
+            });
 
             const maleTagsArr = maleTags.split(",").map(t => t.trim()).filter(t => t.length > 0);
             for (let i = 0; i < malesCount; i++) {
@@ -456,17 +556,26 @@ export default function HerdActivitiesPage() {
             }
           }
 
-          // Weaning
+          // Weaning (Post-Weaning Estrus WSI Surveillance)
           if (activityType === "Weaning") {
             const targetLocation = pigWeaningLocations[pigId] || pig.location || "";
-            batch.update(pigRef, { status: pig.status === "Lactating" ? "Sow" : "Starter", weaned: true });
+            batch.update(pigRef, { status: pig.status === "Lactating" ? "Sow" : "Starter", weaned: true, isWeaned: true });
             if (targetLocation) {
               batch.update(pigRef, { location: targetLocation });
             }
             finalDescription = `${notes}\nWeaned and moved to location: ${targetLocation}`.trim();
 
-            if (pig.status === "Lactating" || pig.status === "Nursing") {
+            if (pig.status === "Lactating" || pig.status === "Nursing" || pig.status === "Sow") {
               batch.update(pigRef, { status: "Sow" });
+              const heatTask = doc(collection(db, "users", activeFarmUid, "tasks"));
+              batch.set(heatTask, {
+                id: heatTask.id,
+                name: `Post-Weaning Heat Check: Pig ${pig.tagNumber}`,
+                date: addDays(logDate, 5),
+                notes: `Wean-to-Service Interval surveillance (4-7 days expected post-weaning)`,
+                pigIds: [pigId],
+                completed: false
+              });
             } else {
               const sowTagVal = pig.sowTag || "";
               if (sowTagVal) {
@@ -492,22 +601,36 @@ export default function HerdActivitiesPage() {
 
           // Castration
           if (activityType === "Castration" && pig.gender === "Male") {
-            batch.update(pigRef, { castrated: true, castrationDate: logDate });
+            batch.update(pigRef, { castrated: true, isCastrated: true, castrationDate: logDate });
           }
 
           // Teeth Clipping
           if (activityType === "Teeth Clipping") {
-            batch.update(pigRef, { teethClipped: true });
+            batch.update(pigRef, { teethClipped: true, isTeethClipped: true });
           }
 
           // Tail Docking
           if (activityType === "Tail Docking") {
-            batch.update(pigRef, { tailDocked: true });
+            batch.update(pigRef, { tailDocked: true, isTailDocked: true });
           }
 
-          // Iron Injection / Medication
+          // Iron Injection / Medication / Deworming / Vaccination (Withdrawal Tracking)
           if (["Iron Injection", "Deworming", "Vaccination", "Medication"].includes(activityType)) {
-            finalDescription = `${notes}\nMedication/Vaccine: ${medicationName || activityType}, Dosage: ${medicationDosage || "N/A"}`.trim();
+            const wDays = parseInt(withdrawalDays) || 0;
+            let safeDate = "";
+            if (wDays > 0) {
+              safeDate = addDays(logDate, wDays);
+              batch.update(pigRef, {
+                activeWithdrawalUntil: safeDate,
+                withdrawalMedication: medicationName || activityType,
+                withdrawalPeriodDays: wDays,
+                safeSlaughterDate: safeDate
+              });
+            }
+
+            finalDescription = `${notes}\nMedication/Vaccine: ${medicationName || activityType}, Dosage: ${medicationDosage || "N/A"}` +
+              (wDays > 0 ? `\nWithdrawal: ${wDays} days (Safe after ${safeDate})` : "");
+
             if (activityType === "Iron Injection") {
               const currentCount = pig.ironInjections || 0;
               batch.update(pigRef, { ironInjections: currentCount + 1 });
@@ -569,8 +692,6 @@ export default function HerdActivitiesPage() {
         // Save health record (For both immediate and future activities)
         const actName = activityType === "Custom" ? customName || "Custom" : activityType;
 
-        // If it's a future task, or not a culling, it goes into the active pig's records.
-        // Immediate culling is the only case where it goes to archived_pigs.
         const hrRef = (activityType === "Culling" && !isFuture)
           ? doc(collection(db, "users", activeFarmUid, "archived_pigs", pigId, "health_records"))
           : doc(collection(db, "users", activeFarmUid, "pigs", pigId, "health_records"));
@@ -585,6 +706,21 @@ export default function HerdActivitiesPage() {
           hrData.taskId = taskId;
         }
 
+        if (activityType === "Farrowing") {
+          hrData.stillbornCount = parseInt(stillbornCount) || 0;
+          hrData.mummiesCount = parseInt(mummiesCount) || 0;
+          hrData.litterBirthWeightKg = parseFloat(litterBirthWeight) || 0;
+        }
+
+        const wDays = parseInt(withdrawalDays) || 0;
+        if (["Iron Injection", "Deworming", "Vaccination", "Medication"].includes(activityType) && wDays > 0) {
+          const safeDate = addDays(logDate, wDays);
+          hrData.activeWithdrawalUntil = safeDate;
+          hrData.withdrawalMedication = medicationName || activityType;
+          hrData.withdrawalPeriodDays = wDays;
+          hrData.safeSlaughterDate = safeDate;
+        }
+
         batch.set(hrRef, hrData);
       }
 
@@ -596,8 +732,9 @@ export default function HerdActivitiesPage() {
       setSelectedPigIds([]);
       setNotes("");
       setSelectedActivity(null);
+      router.push("/dashboard");
     } catch (err) {
-      console.error("Failed to batch log activity:", err);
+      console.error("Error logging activity:", err);
     }
   };
 
@@ -608,7 +745,7 @@ export default function HerdActivitiesPage() {
   if (loading || !user) {
     return (
       <div className="flex h-screen items-center justify-center bg-white text-zinc-900">
-        <div className="h-10 w-10 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-cyan-600 border-t-transparent"></div>
       </div>
     );
   }
@@ -619,7 +756,7 @@ export default function HerdActivitiesPage() {
     if (!pig || !pig.lastBreedingDate) return null;
     const expected = addDays(pig.lastBreedingDate, 114);
     return (
-      <div className="p-3 bg-emerald-50 border border-emerald-250 rounded-lg text-xs font-semibold text-emerald-800">
+      <div className="p-3 bg-cyan-100/80 border border-cyan-300 rounded-lg text-xs font-semibold text-cyan-900">
         {t("expectedFarrowing", { date: expected })}
       </div>
     );
@@ -641,40 +778,26 @@ export default function HerdActivitiesPage() {
       <div className="relative z-10 flex flex-col min-h-screen">
         {!isMobile && <DesktopHeader />}
 
-        <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
-          <div className="space-y-1">
-            <h2 className="text-2xl font-bold text-zinc-900">{t("title")}</h2>
-            <p className="text-sm text-zinc-500">{t("description")}</p>
+        {!selectedActivity && (
+          <div className="flex-1 flex items-center justify-center">
+            <div className="h-10 w-10 animate-spin rounded-full border-4 border-cyan-600 border-t-transparent"></div>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {activityCategories.map((act, i) => (
-              <button
-                key={i}
-                onClick={() => setSelectedActivity(act)}
-                className="bg-white/60 hover:bg-zinc-50/60 backdrop-blur-md border border-zinc-200 hover:border-emerald-500/40 rounded-xl p-5 text-left transition shadow-sm flex items-start gap-4 group"
-              >
-                <span className="p-3 bg-zinc-100 rounded-xl group-hover:scale-110 transition duration-300 text-emerald-600">
-                  <act.icon className="h-8 w-8" />
-                </span>
-                <div>
-                  <h4 className="font-bold text-zinc-900 text-sm group-hover:text-emerald-700 transition">
-                    {act.type}
-                  </h4>
-                  <p className="text-xs text-zinc-500 mt-1">{act.desc}</p>
-                </div>
-              </button>
-            ))}
-          </div>
-        </main>
+        )}
       </div>
 
       {/* Log Activity Modal */}
       {selectedActivity && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="bg-white border border-zinc-200 rounded-2xl w-full max-w-lg p-6 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto no-scrollbar">
-            <h3 className="text-lg font-bold text-zinc-900 flex items-center gap-2 border-b border-zinc-100 pb-3">
-              <span className="text-emerald-600"><selectedActivity.icon className="h-6 w-6" /></span>
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              router.push("/dashboard");
+            }
+          }}
+        >
+          <div className="bg-cyan-50/95 border border-cyan-200 rounded-2xl w-full max-w-lg p-6 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto no-scrollbar text-cyan-950">
+            <h3 className="text-lg font-bold text-cyan-950 flex items-center gap-2 border-b border-cyan-200/80 pb-3">
+              <span className="text-cyan-700"><selectedActivity.icon className="h-6 w-6" /></span>
               <span>{t("logActivity", { type: selectedActivity.type })}</span>
             </h3>
 
@@ -808,6 +931,41 @@ export default function HerdActivitiesPage() {
                     </div>
                   </div>
 
+                  <div className="grid grid-cols-3 gap-3">
+                    <div>
+                      <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Stillborn</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={stillbornCount}
+                        onChange={(e) => setStillbornCount(e.target.value)}
+                        className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Mummified</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={mummiesCount}
+                        onChange={(e) => setMummiesCount(e.target.value)}
+                        className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Litter Wt (kg)</label>
+                      <input
+                        type="number"
+                        step="0.1"
+                        min="0"
+                        value={litterBirthWeight}
+                        onChange={(e) => setLitterBirthWeight(e.target.value)}
+                        placeholder="e.g. 14.5"
+                        className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
+                      />
+                    </div>
+                  </div>
+
                   {(parseInt(numMales) || 0) > 0 && (
                     <div>
                       <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("maleTags")}</label>
@@ -860,6 +1018,19 @@ export default function HerdActivitiesPage() {
                       placeholder="e.g. 2 ml"
                       className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                     />
+                  </div>
+
+                  <div className="col-span-2">
+                    <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Withdrawal Period (Days)</label>
+                    <input
+                      type="number"
+                      min="0"
+                      value={withdrawalDays}
+                      onChange={(e) => setWithdrawalDays(e.target.value)}
+                      placeholder="0"
+                      className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
+                    />
+                    <p className="text-[11px] text-zinc-500 mt-1">Days before pig can be slaughtered or sold for meat (food safety)</p>
                   </div>
 
                   {selectedActivity.key === "Iron Injection" && (
@@ -1049,18 +1220,18 @@ export default function HerdActivitiesPage() {
               </div>
 
               {/* Actions */}
-              <div className="flex justify-end gap-3 pt-4 border-t border-zinc-150">
+              <div className="flex justify-end gap-3 pt-4 border-t border-cyan-200/80">
                 <button
                   type="button"
-                  onClick={() => setSelectedActivity(null)}
-                  className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2 text-xs font-semibold text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 transition"
+                  onClick={() => router.push("/dashboard")}
+                  className="rounded-lg border border-cyan-300 bg-white/80 px-4 py-2 text-xs font-semibold text-cyan-800 hover:bg-cyan-100 transition"
                 >
                   {t("cancel")}
                 </button>
                 <button
                   type="submit"
                   disabled={selectedPigIds.length === 0}
-                  className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white transition disabled:opacity-50"
+                  className="rounded-lg bg-cyan-600 hover:bg-cyan-700 px-4 py-2 text-xs font-bold text-white transition disabled:opacity-50 shadow-sm"
                 >
                   {t("logAction")}
                 </button>
@@ -1069,6 +1240,42 @@ export default function HerdActivitiesPage() {
           </div>
         </div>
       )}
+
+      {/* Food Safety Withdrawal Warning Modal */}
+      {withdrawalWarningPig && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-white border border-rose-200 rounded-2xl w-full max-w-md p-6 space-y-4 shadow-2xl text-zinc-900">
+            <div className="flex items-center gap-3 text-rose-600">
+              <span className="text-2xl">⚠️</span>
+              <h3 className="text-lg font-bold">Food Safety Warning</h3>
+            </div>
+            <p className="text-sm text-zinc-700">
+              Pig <strong>{withdrawalWarningPig.tagNumber}</strong> is currently under an active medication withdrawal period until <strong>{withdrawalWarningPig.activeWithdrawalUntil}</strong>
+              {withdrawalWarningPig.withdrawalMedication ? ` (${withdrawalWarningPig.withdrawalMedication})` : ""}.
+            </p>
+            <p className="text-xs text-rose-600 font-medium">
+              Selling or culling this animal for slaughter before this date violates food safety protocols due to potential drug residues in meat.
+            </p>
+            <div className="flex justify-end pt-2">
+              <button
+                type="button"
+                onClick={() => setWithdrawalWarningPig(null)}
+                className="rounded-lg bg-rose-600 hover:bg-rose-700 px-4 py-2 text-xs font-bold text-white transition shadow-sm"
+              >
+                Acknowledge & Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
+  );
+}
+
+export default function HerdActivitiesPage() {
+  return (
+    <Suspense fallback={<div className="p-6">Loading...</div>}>
+      <HerdActivitiesContent />
+    </Suspense>
   );
 }

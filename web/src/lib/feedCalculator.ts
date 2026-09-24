@@ -2,6 +2,7 @@ import { FeedIngredient, NutritionalRequirement } from "./types";
 
 export interface FormulationResult {
   ingredients: { [id: string]: number }; // Maps ingredient ID -> percent
+  proportions?: { [id: string]: number };
   targetRequirement: NutritionalRequirement;
   nutritionalComparison: Array<{
     label: string;
@@ -36,37 +37,16 @@ export function formulateFeed(
     };
   }
 
-  const mandatoryNames = ["Mycotoxin Binder", "Common salt", "Vitamin Premix"];
-  const mandatoryInclusions: { [name: string]: number } = {
-    "Mycotoxin Binder": 1.0,
-    "Common salt": 0.5,
-    "Vitamin Premix": 1.0,
-  };
-
   const currentUsed: { [id: string]: number } = {};
   let availablePercent = 100.0;
 
-  // Add mandatory items first
-  mandatoryNames.forEach(name => {
-    const ingredient = allIngredients.find(ing => ing.name.toLowerCase().includes(name.toLowerCase()));
-    const percent = mandatoryInclusions[name];
-    if (ingredient) {
-      currentUsed[ingredient.id] = percent;
-    } else {
-      currentUsed[name] = percent; // fallback using name if matching ID is not in user list
-    }
-    availablePercent -= percent;
-  });
-
   const supplementalCategory = "Vitamins, Minerals & Salt";
   const supplementalIngredients = selectedIngredients.filter(
-    ing => ing.mainCategory === supplementalCategory && 
-    !mandatoryNames.some(name => ing.name.toLowerCase().includes(name.toLowerCase()))
+    ing => ing.mainCategory === supplementalCategory
   );
   
   const mainIngredients = selectedIngredients.filter(
-    ing => ing.mainCategory !== supplementalCategory ||
-    mandatoryNames.some(name => ing.name.toLowerCase().includes(name.toLowerCase()))
+    ing => ing.mainCategory !== supplementalCategory
   );
 
   // Veterinary limits based on target stage
@@ -95,9 +75,8 @@ export function formulateFeed(
     limits[ing.id] = limit;
   });
 
-  // Initial pass: Diversity for Main Ingredients (excluding mandatories)
+  // Initial pass: Diversity for Main Ingredients
   mainIngredients.forEach(ing => {
-    if (mandatoryNames.some(name => ing.name.toLowerCase().includes(name.toLowerCase()))) return;
     const name = ing.name.toLowerCase();
     const minInclusion = name.includes("bran") ? 8.0 : 4.0;
     const limit = limits[ing.id] ?? 50.0;
@@ -113,12 +92,10 @@ export function formulateFeed(
 
   // Pearson Square Pools for Main Ingredients
   let poolLow = mainIngredients.filter(
-    ing => ing.crudeProtein < targetProtein && 
-    !mandatoryNames.some(name => ing.name.toLowerCase().includes(name.toLowerCase()))
+    ing => ing.crudeProtein < targetProtein
   );
   let poolHigh = mainIngredients.filter(
-    ing => ing.crudeProtein >= targetProtein && 
-    !mandatoryNames.some(name => ing.name.toLowerCase().includes(name.toLowerCase()))
+    ing => ing.crudeProtein >= targetProtein
   );
 
   if (shuffle) {
@@ -164,7 +141,7 @@ export function formulateFeed(
 
   // Spillover pass if remaining total exists
   if (remainingTotal > 0.01) {
-    let remainingPool = poolHigh.length > 0 
+    const remainingPool = poolHigh.length > 0 
       ? [...poolHigh].sort((a, b) => (shuffle ? Math.random() - 0.5 : (b.metabolizableEnergy / (b.crudeProtein + 1)) - (a.metabolizableEnergy / (a.crudeProtein + 1))))
       : [...poolLow].sort((a, b) => (shuffle ? Math.random() - 0.5 : b.metabolizableEnergy - a.metabolizableEnergy));
 
@@ -178,8 +155,8 @@ export function formulateFeed(
   }
 
   // SECONDARY PASS: Supplemental Deficits
-  const getCaPercent = (ing: FeedIngredient) => ing.calcium > 10.0 ? ing.calcium / 10.0 : ing.calcium;
-  const getPPercent = (ing: FeedIngredient) => ing.phosphorus > 10.0 ? ing.phosphorus / 10.0 : ing.phosphorus;
+  const getCaPercent = (ing: FeedIngredient) => ing.calcium > 50.0 ? ing.calcium / 10.0 : ing.calcium;
+  const getPPercent = (ing: FeedIngredient) => ing.phosphorus > 50.0 ? ing.phosphorus / 10.0 : ing.phosphorus;
 
   const calculateCurrentNutrients = () => {
     let ca = 0.0, p = 0.0, lys = 0.0, met = 0.0;
@@ -231,17 +208,11 @@ export function formulateFeed(
 
   // Adjust main ingredients down to make room for supplemental additions
   if (totalAddedSupplements > 0) {
-    const mandatoryTotal = Object.values(mandatoryInclusions).reduce((sum, v) => sum + v, 0);
-    const mainTotal = 100.0 - mandatoryTotal - totalAddedSupplements;
-    const previousMainTotal = 100.0 - mandatoryTotal;
+    const mainTotal = 100.0 - totalAddedSupplements;
+    const previousMainTotal = 100.0;
     const scaleFactor = mainTotal / previousMainTotal;
 
-    const mainIds = mainIngredients
-      .map(ing => ing.id)
-      .filter(id => {
-        const ing = allIngredients.find(i => i.id === id);
-        return ing && !mandatoryNames.some(name => ing.name.toLowerCase().includes(name.toLowerCase()));
-      });
+    const mainIds = mainIngredients.map(ing => ing.id);
 
     mainIds.forEach(id => {
       if (currentUsed[id] !== undefined) {
@@ -285,7 +256,7 @@ export function formulateFeed(
       label: "Crude Fiber (%)",
       target: targetRequirement.crudeFiber,
       actual: finalNutrients.fiber,
-      isDeficient: finalNutrients.fiber > targetRequirement.crudeFiber + 0.5
+      isDeficient: finalNutrients.fiber < targetRequirement.crudeFiber - 0.05
     },
     {
       label: "Metabolizable Energy (kcal/kg)",
@@ -367,4 +338,72 @@ export function calculateRequirements(stats: { [key: string]: number }, days: nu
   }
 
   return results;
+}
+
+export interface FeedNutrientProfile {
+  crudeProtein: number;
+  metabolizableEnergy: number;
+  digestibleProtein: number;
+  crudeFiber: number;
+  calcium: number;
+  phosphorus: number;
+  lysine: number;
+  methionine: number;
+  totalWeight: number;
+}
+
+export function analyzeFeedMix(
+  items: { ingredient: FeedIngredient; quantity: number }[],
+  isPercentageMode: boolean = false
+): FeedNutrientProfile {
+  if (items.length === 0) {
+    return {
+      crudeProtein: 0,
+      metabolizableEnergy: 0,
+      digestibleProtein: 0,
+      crudeFiber: 0,
+      calcium: 0,
+      phosphorus: 0,
+      lysine: 0,
+      methionine: 0,
+      totalWeight: 0,
+    };
+  }
+
+  const totalQty = Math.max(0.0001, items.reduce((sum, item) => sum + item.quantity, 0));
+
+  let cp = 0;
+  let me = 0;
+  let cf = 0;
+  let ca = 0;
+  let p = 0;
+  let lys = 0;
+  let met = 0;
+
+  items.forEach(({ ingredient: ing, quantity: qty }) => {
+    const fraction = qty / totalQty;
+    cp += ing.crudeProtein * fraction;
+    me += ing.metabolizableEnergy * fraction;
+    cf += ing.crudeFiber * fraction;
+    const caPct = ing.calcium > 50.0 ? ing.calcium / 10.0 : ing.calcium;
+    const pPct = ing.phosphorus > 50.0 ? ing.phosphorus / 10.0 : ing.phosphorus;
+    ca += caPct * fraction;
+    p += pPct * fraction;
+    lys += ing.lysine * fraction;
+    met += (ing.methionine + ing.cystine) * fraction;
+  });
+
+  const dp = cp * 0.85;
+
+  return {
+    crudeProtein: cp,
+    metabolizableEnergy: me,
+    digestibleProtein: dp,
+    crudeFiber: cf,
+    calcium: ca,
+    phosphorus: p,
+    lysine: lys,
+    methionine: met,
+    totalWeight: isPercentageMode ? 100 : items.reduce((sum, item) => sum + item.quantity, 0),
+  };
 }

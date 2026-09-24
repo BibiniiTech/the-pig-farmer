@@ -11,10 +11,13 @@ import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import HerdReport from "@/components/reports/HerdReport";
-import { evaluatePerformance, calculateAgeMonths, calculateAgeDays } from "@/lib/swineGrowthDatabase";
+import { evaluatePerformance, calculateAgeMonths, calculateAgeDays, formatSwineAge } from "@/lib/swineGrowthDatabase";
 import { ExportPdfIcon } from "@/components/icons/DashboardIcons";
 import { useTranslations } from "next-intl";
 import { Pig } from "@/lib/types";
+import { TierLimiter } from "@/lib/tierLimiter";
+import NativeAdBanner from "@/components/ads/NativeAdBanner";
+import RewardedPassModal from "@/components/ads/RewardedPassModal";
 
 const STANDARD_BREEDS = [
   "Large White",
@@ -31,6 +34,21 @@ const STANDARD_BREEDS = [
   "Local / Heritage",
   "Other"
 ];
+
+const ALL_STATUSES = [
+  "Piglet",
+  "Starter",
+  "Grower",
+  "Finisher",
+  "Boar",
+  "Gilt",
+  "Sow",
+  "Barrow",
+  "Pregnant",
+  "Lactating"
+];
+
+const PURPOSES = ["Breeder", "Porker"];
 
 const ArchiveIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -56,15 +74,17 @@ export default function HerdPage() {
   const { user, userProfile, activeFarmUid, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
+  const isPremium = Boolean(userProfile?.isPremium || userProfile?.isAdmin);
 
   const [pigs, setPigs] = useState<Pig[]>([]);
   const [archivedPigs, setArchivedPigs] = useState<Pig[]>([]);
   const [viewingArchived, setViewingArchived] = useState(false);
   const [dataLoading, setDataLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
-
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const timerRef = React.useRef<NodeJS.Timeout | null>(null);
+  const [showRewardedPassModal, setShowRewardedPassModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [purposeFilter, setPurposeFilter] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<string | null>(null);
 
   const [herdStats, setHerdStats] = useState({
     total: 0,
@@ -144,41 +164,20 @@ export default function HerdPage() {
     });
   };
 
-  const resetTimer = React.useCallback(() => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
-    timerRef.current = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % 4);
-    }, 5000);
-  }, []);
-
-  useEffect(() => {
-    resetTimer();
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [resetTimer]);
-
-  const handleSlideChange = (index: number) => {
-    setCurrentSlide(index);
-    resetTimer();
-    if (index === 3) {
-      setViewingArchived(true);
-    } else {
-      setViewingArchived(false);
-    }
-  };
-
-  const handleCardClick = () => {
-    handleSlideChange((currentSlide + 1) % 4);
-  };
-
   useEffect(() => {
     if (!loading && !user) {
       router.push("/login");
     }
   }, [user, loading, router]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("action") === "add" || params.get("add") === "true") {
+        setShowAddModal(true);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (!activeFarmUid) return;
@@ -238,7 +237,7 @@ export default function HerdPage() {
     const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
     const additionalPigs = isMultiple ? malePigs.filter(p => p.tagNumber.trim() !== "").length + femalePigs.filter(p => p.tagNumber.trim() !== "").length : 1;
 
-    if (!isPremium && herdStats.total + additionalPigs > 20) {
+    if (!isPremium && herdStats.total + additionalPigs > TierLimiter.FREE_MAX_PIGS) {
       alert(t("limitReached"));
       router.push("/dashboard/billing");
       setShowAddModal(false);
@@ -383,210 +382,265 @@ export default function HerdPage() {
       <div className="relative z-10 flex flex-col min-h-screen print:hidden">
         {!isMobile && <DesktopHeader />}
 
-        <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-8">
-          {/* Herd Summary Stats Card (StatsRibbon) */}
-          <div
-            onClick={handleCardClick}
-            className="cursor-pointer bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300 shadow-sm min-h-[148px] flex flex-col justify-between"
-          >
-            {/* Background design elements */}
-            <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-emerald-500/5 blur-2xl group-hover:bg-emerald-500/10 transition-all duration-300 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 h-24 w-24 rounded-full bg-teal-500/5 blur-xl pointer-events-none" />
-
-            <div className="flex-1 flex flex-col items-center justify-center text-center px-4">
-              {dataLoading ? (
-                <div className="space-y-2 flex flex-col items-center">
-                  <div className="h-6 w-48 bg-zinc-200 animate-pulse rounded" />
-                  <div className="h-4 w-64 bg-zinc-100 animate-pulse rounded" />
-                </div>
-              ) : (
-                <div
-                  key={currentSlide}
-                  className="animate-slide-in flex flex-col items-center text-center space-y-2 select-none"
-                >
-                  {currentSlide === 0 && (
-                    <>
-                      <h3 className="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight">
-                        {td("totalPigs", { count: herdStats.total })}
-                      </h3>
-                      <p className="text-xs sm:text-sm font-medium text-zinc-500">
-                        {td("breedersPorkers", { breeders: herdStats.breeders_count, porkers: herdStats.porkers_count })}
-                      </p>
-                    </>
-                  )}
-
-                  {currentSlide === 1 && (
-                    <>
-                      <h3 className="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight">
-                        {td("totalBreeders", { count: herdStats.breeders_count })}
-                      </h3>
-                      <p className="text-[11px] sm:text-xs font-medium text-zinc-500 leading-relaxed max-w-2xl">
-                        {td("piglet")}: <span className="font-semibold text-zinc-700">{herdStats.breeders_piglets}</span> | {td("starter")}: <span className="font-semibold text-zinc-700">{herdStats.breeders_starter}</span> | {td("grower")}: <span className="font-semibold text-zinc-700">{herdStats.breeders_grower}</span> | {td("boar")}: <span className="font-semibold text-zinc-700">{herdStats.boars}</span> | {td("gilt")}: <span className="font-semibold text-zinc-700">{herdStats.gilts}</span>
-                        <span className="block mt-0.5">
-                          {td("pregnant")}: <span className="font-semibold text-zinc-700">{herdStats.Pregnant}</span> | {td("lactating")}: <span className="font-semibold text-zinc-700">{herdStats.Lactating}</span> | {td("sow")}: <span className="font-semibold text-zinc-700">{herdStats.sows}</span>
-                        </span>
-                      </p>
-                    </>
-                  )}
-
-                  {currentSlide === 2 && (
-                    <>
-                      <h3 className="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight">
-                        {td("totalPorkers", { count: herdStats.porkers_count })}
-                      </h3>
-                      <p className="text-xs sm:text-sm font-medium text-zinc-500 leading-relaxed">
-                        {td("starter")}: <span className="font-semibold text-zinc-700">{herdStats.Starter}</span> | {td("grower")}: <span className="font-semibold text-zinc-700">{herdStats.Grower}</span> | {td("finisher")}: <span className="font-semibold text-zinc-700">{herdStats.Finisher}</span>
-                      </p>
-                    </>
-                  )}
-
-                  {currentSlide === 3 && (
-                    <>
-                      <div className="flex items-center gap-2 text-emerald-700">
-                        <ArchiveIcon className="h-5 w-5" />
-                        <h3 className="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight">
-                          {td("archivedPigs")}
-                        </h3>
-                      </div>
-                      <p className="text-xs sm:text-sm font-medium text-zinc-500">
-                        {td("viewCulled")}
-                      </p>
-                    </>
-                  )}
-                </div>
-              )}
+        <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
+          {/* Top Actions & Toggle Bar */}
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setViewingArchived(false)}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-sm ${
+                  !viewingArchived
+                    ? "bg-emerald-600 text-white"
+                    : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
+                }`}
+              >
+                Active Herd ({pigs.length})
+              </button>
+              <button
+                onClick={() => setViewingArchived(true)}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm ${
+                  viewingArchived
+                    ? "bg-emerald-600 text-white"
+                    : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
+                }`}
+              >
+                <ArchiveIcon className="h-4 w-4" />
+                Archived ({archivedPigs.length})
+              </button>
             </div>
 
-            {/* Slide Pagination Indicator Dots */}
-            <div className="flex justify-center gap-2 mt-2 z-20">
-              {[0, 1, 2, 3].map((index) => (
-                <button
-                  key={index}
-                  onClick={(e) => {
-                    e.stopPropagation(); // prevent card click handler from firing
-                    handleSlideChange(index);
-                  }}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    currentSlide === index ? "w-5 bg-emerald-500" : "w-1.5 bg-zinc-300 hover:bg-zinc-400"
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="flex justify-end">
             <button
               onClick={() => {
                 const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
-                if (!isPremium && herdStats.total >= 20) {
+                if (!isPremium && herdStats.total >= TierLimiter.FREE_MAX_PIGS) {
                   alert(t("limitReached"));
                   router.push("/dashboard/billing");
                 } else {
                   setShowAddModal(true);
                 }
               }}
-              className="rounded-lg bg-emerald-600 hover:bg-emerald-700 px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
+              className="rounded-xl bg-emerald-600 hover:bg-emerald-700 px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
             >
               {t("addPigs")}
             </button>
           </div>
 
-          {/* Herd List Grid */}
-          <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-4 gap-4 flex-wrap">
-              <h2 className="text-lg font-bold text-zinc-900">
-                {viewingArchived ? t("titleArchived") : t("title")}
-              </h2>
+          {/* Herd List Grid Card with Compact Search */}
+          <div className="bg-white/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-5">
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              {/* Compact Search Bar with reduced size */}
+              <div className="relative flex-1 min-w-[220px] max-w-sm">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-400">
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Tag / Location / Breed"
+                  className="w-full pl-9 pr-4 py-1.5 bg-white border border-zinc-200 rounded-xl text-xs sm:text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-sm"
+                />
+              </div>
+
               <button
                 onClick={() => {
-                  const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
                   if (!isPremium) {
-                    alert(tHr("premiumFeatureExport"));
-                    router.push("/dashboard/billing");
+                    setShowRewardedPassModal(true);
                     return;
                   }
                   window.print();
                 }}
                 className={`rounded-lg border px-3 py-1.5 text-xs font-semibold transition shadow-sm flex items-center gap-1.5 ${
-                  userProfile?.isPremium || userProfile?.isAdmin
+                  isPremium
                     ? "border-zinc-200 bg-zinc-50/50 text-zinc-650 hover:bg-zinc-100"
                     : "border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100"
                 }`}
               >
                 <ExportPdfIcon className="h-3.5 w-3.5 opacity-80" />
-                <span>{userProfile?.isPremium || userProfile?.isAdmin ? t("exportPdf") : t("exportPdfPremium")}</span>
+                <span>{isPremium ? t("exportPdf") : t("exportPdfPremium")}</span>
               </button>
             </div>
+
+            {/* Filter Chips Bar (Matching Android HerdDataScreen) */}
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+              <button
+                type="button"
+                onClick={() => {
+                  setPurposeFilter(null);
+                  setStatusFilter(null);
+                }}
+                className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
+                  purposeFilter === null && statusFilter === null
+                    ? "bg-emerald-600 text-white shadow-xs"
+                    : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
+                }`}
+              >
+                All
+              </button>
+
+              {PURPOSES.map((p) => {
+                const isSelected = purposeFilter === p;
+                return (
+                  <button
+                    key={p}
+                    type="button"
+                    onClick={() => setPurposeFilter(isSelected ? null : p)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
+                      isSelected
+                        ? "bg-emerald-600 text-white shadow-xs"
+                        : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
+                    }`}
+                  >
+                    {p}
+                  </button>
+                );
+              })}
+
+              <div className="h-4 w-px bg-zinc-200 shrink-0 mx-1" />
+
+              {ALL_STATUSES.map((st) => {
+                const isSelected = statusFilter === st;
+                return (
+                  <button
+                    key={st}
+                    type="button"
+                    onClick={() => setStatusFilter(isSelected ? null : st)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
+                      isSelected
+                        ? "bg-emerald-600 text-white shadow-xs"
+                        : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
+                    }`}
+                  >
+                    {st}
+                  </button>
+                );
+              })}
+            </div>
+
             {dataLoading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {[...Array(6)].map((_, i) => (
                   <div key={i} className="h-28 bg-zinc-100 animate-pulse rounded-xl" />
                 ))}
               </div>
-            ) : (viewingArchived ? archivedPigs : pigs).length === 0 ? (
-              <p className="text-sm text-zinc-500 text-center py-12">
-                {viewingArchived ? t("noArchived") : t("noPigs")}
-              </p>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {(viewingArchived ? archivedPigs : pigs).map((pig) => {
-                  const ageDays = calculateAgeDays(pig.birthDate);
-                  const performance = evaluatePerformance(pig.breed, ageDays, pig.weight);
-                  const ageMonths = calculateAgeMonths(pig.birthDate);
+            ) : (() => {
+              const sourcePigs = viewingArchived ? archivedPigs : pigs;
+              const filteredPigs = sourcePigs.filter((pig) => {
+                if (purposeFilter && pig.purpose !== purposeFilter) return false;
+                if (statusFilter && pig.status !== statusFilter) return false;
+                if (!searchQuery.trim()) return true;
+                const q = searchQuery.toLowerCase().trim();
+                return (
+                  (pig.tagNumber && pig.tagNumber.toLowerCase().includes(q)) ||
+                  (pig.location && pig.location.toLowerCase().includes(q)) ||
+                  (pig.breed && pig.breed.toLowerCase().includes(q))
+                );
+              });
 
-                  let performanceBadgeColor = "bg-zinc-200 text-zinc-600";
-                  if (performance === "Excellent") performanceBadgeColor = "bg-amber-100 text-amber-700";
-                  else if (performance === "Good") performanceBadgeColor = "bg-green-100 text-green-800";
-                  else if (performance === "Caution") performanceBadgeColor = "bg-yellow-100 text-yellow-800";
-                  else if (performance === "Poor") performanceBadgeColor = "bg-red-100 text-red-800";
+              if (filteredPigs.length === 0) {
+                return (
+                  <p className="text-sm text-zinc-500 text-center py-12">
+                    {searchQuery.trim()
+                      ? `No pigs found matching "${searchQuery}".`
+                      : viewingArchived
+                      ? t("noArchived")
+                      : t("noPigs")}
+                  </p>
+                );
+              }
 
-                  return (
-                    <Link
-                      href={`/dashboard/herd/${pig.id}`}
-                      key={pig.id}
-                      className="bg-white/90 hover:bg-zinc-50/90 border border-zinc-200 hover:border-emerald-500/40 rounded-xl p-4 transition-all shadow-sm block group relative overflow-hidden"
-                    >
-                      <div className="absolute top-0 right-0 h-16 w-16 rounded-full bg-emerald-500/5 blur-lg group-hover:bg-emerald-500/10 transition-all pointer-events-none" />
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <p className="text-xs font-semibold text-zinc-400 font-mono">{t("tagNumber")}</p>
-                          <p className="text-lg font-bold text-zinc-900 group-hover:text-emerald-700 transition">
-                            {pig.tagNumber}
-                          </p>
-                        </div>
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${performanceBadgeColor}`}>
-                          {performance ? t(performance.toLowerCase()) : ""}
-                        </span>
-                      </div>
+              return (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {filteredPigs.map((pig) => {
+                    const ageDays = calculateAgeDays(pig.birthDate);
+                    const performance = evaluatePerformance(pig.breed, ageDays, pig.weight);
+                    const ageMonths = calculateAgeMonths(pig.birthDate);
 
-                      <div className="grid grid-cols-2 gap-2 mt-4 text-xs text-zinc-500">
-                        <div>
-                          <span className="font-semibold">{t("age")}:</span> {ageMonths === 0 ? t("lessThanMonth") : (ageMonths === 1 ? t("month", { count: 1 }) : t("months", { count: ageMonths }))}
+                    let performanceBadgeColor = "bg-zinc-200 text-zinc-600";
+                    if (performance === "Excellent") performanceBadgeColor = "bg-amber-100 text-amber-700";
+                    else if (performance === "Good") performanceBadgeColor = "bg-green-100 text-green-800";
+                    else if (performance === "Caution") performanceBadgeColor = "bg-yellow-100 text-yellow-800";
+                    else if (performance === "Poor") performanceBadgeColor = "bg-red-100 text-red-800";
+
+                    return (
+                      <Link
+                        href={`/dashboard/herd/${pig.id}`}
+                        key={pig.id}
+                        className="bg-white/90 hover:bg-zinc-50/90 border border-zinc-200 hover:border-emerald-500/40 rounded-xl p-4 transition-all shadow-sm block group relative overflow-hidden"
+                      >
+                        <div className="absolute top-0 right-0 h-16 w-16 rounded-full bg-emerald-500/5 blur-lg group-hover:bg-emerald-500/10 transition-all pointer-events-none" />
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <p className="text-xs font-semibold text-zinc-400 font-mono">{t("tagNumber")}</p>
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              <p className="text-lg font-bold text-zinc-900 group-hover:text-emerald-700 transition">
+                                {pig.tagNumber}
+                              </p>
+                              {pig.parity !== undefined && pig.parity > 0 && (
+                                <span className="text-[10px] font-black px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 border border-purple-200">
+                                  P{pig.parity}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${performanceBadgeColor}`}>
+                            {performance ? t(performance.toLowerCase()) : ""}
+                          </span>
                         </div>
-                        <div>
-                          <span className="font-semibold">{t("gender")}:</span> {pig.gender ? t(pig.gender.toLowerCase()) : ""}
+
+                        {pig.activeWithdrawalUntil && pig.activeWithdrawalUntil >= new Date().toISOString().split("T")[0] && (
+                          <div className="mt-2 text-[10px] font-bold text-rose-700 bg-rose-50 border border-rose-200 rounded px-2 py-1 flex items-center gap-1">
+                            <span>⚠️ WITHDRAWAL: UNTIL {pig.activeWithdrawalUntil}</span>
+                          </div>
+                        )}
+
+                        <div className="grid grid-cols-2 gap-2 mt-4 text-xs text-zinc-500">
+                          <div>
+                            <span className="font-semibold">{t("age")}:</span> {formatSwineAge(pig.birthDate, true)}
+                          </div>
+                          <div>
+                            <span className="font-semibold">{t("gender")}:</span> {pig.gender ? t(pig.gender.toLowerCase()) : ""}
+                          </div>
+                          <div>
+                            <span className="font-semibold">{t("weight")}:</span> {pig.weight} kg
+                          </div>
+                          <div>
+                            <span className="font-semibold">{t("location")}:</span> {pig.location || "N/A"}
+                          </div>
                         </div>
-                        <div>
-                          <span className="font-semibold">{t("weight")}:</span> {pig.weight} kg
-                        </div>
-                        <div>
-                          <span className="font-semibold">{t("location")}:</span> {pig.location || "N/A"}
-                        </div>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
-            )}
+                      </Link>
+                    );
+                  })}
+                </div>
+              );
+            })()}
           </div>
+
+          {/* Sponsored Ad Banner for Free Users */}
+          <NativeAdBanner />
         </main>
       </div>
 
-      <HerdReport
-        pigs={viewingArchived ? archivedPigs : pigs}
-        title={viewingArchived ? t("titleArchived") : t("title")}
+      <RewardedPassModal
+        isOpen={showRewardedPassModal}
+        onClose={() => setShowRewardedPassModal(false)}
+        title="Unlock Herd PDF Report"
+        description="Watch a short video ad to unlock executive PDF reports and all premium herd tools for 3 hours!"
+        onSuccess={() => {
+          setTimeout(() => {
+            window.print();
+          }, 500);
+        }}
       />
+
+      {isPremium && (
+        <HerdReport
+          pigs={viewingArchived ? archivedPigs : pigs}
+          title={viewingArchived ? t("titleArchived") : t("title")}
+        />
+      )}
 
       {/* Add Pigs Modal */}
       {showAddModal && (

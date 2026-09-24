@@ -20,7 +20,10 @@ export function proxy(request: NextRequest) {
   if (!request.cookies.has("NEXT_LOCALE")) {
     const acceptLanguage = request.headers.get("accept-language") || "";
     // Supported locales in the app
-    const locales = ['en', 'es', 'fr', 'hi', 'pt', 'th', 'tl', 'vi', 'zh', 'sw', 'id', 'ht', 'my'];
+    const locales = [
+      'en', 'es', 'es-es', 'es-do', 'fr', 'hi', 'pt', 'th', 'tl', 'vi', 'zh', 'sw', 'id', 'ht', 'my',
+      'de', 'ja', 'lg', 'rw', 'tpi', 'zgh', 'af'
+    ];
     let detectedLocale = 'en';
 
     for (const lang of locales) {

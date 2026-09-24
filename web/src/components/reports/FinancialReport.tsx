@@ -53,7 +53,15 @@ const FinancialReport: React.FC<FinancialReportProps> = ({
 
   const sortedRecords = [...records].sort((a, b) => a.date.localeCompare(b.date));
 
-  let runningBalance = 0;
+  let currentBalance = 0;
+  const recordsWithBalance = sortedRecords.map((record) => {
+    const isIncome = record.type === "Income";
+    currentBalance += isIncome ? record.amount : -record.amount;
+    return {
+      ...record,
+      balanceAfter: currentBalance
+    };
+  });
 
   return (
     <ReportLayout title={title || defaultTitle}>
@@ -91,10 +99,9 @@ const FinancialReport: React.FC<FinancialReportProps> = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-200">
-            {sortedRecords.map((record) => {
+            {recordsWithBalance.map((record) => {
               const isIncome = record.type === "Income";
               const amount = record.amount;
-              runningBalance += isIncome ? amount : -amount;
 
               const linkedPig = pigs.find(p => p.id === record.pigId);
               const displayDescription = linkedPig
@@ -112,8 +119,8 @@ const FinancialReport: React.FC<FinancialReportProps> = ({
                   <td className="p-3 border-r border-zinc-100 text-right font-bold text-rose-700">
                     {!isIncome ? amount.toFixed(2) : ""}
                   </td>
-                  <td className={`p-3 text-right font-black ${runningBalance >= 0 ? "text-emerald-900" : "text-rose-900"}`}>
-                    {currencySymbol}{runningBalance.toFixed(2)}
+                  <td className={`p-3 text-right font-black ${record.balanceAfter >= 0 ? "text-emerald-900" : "text-rose-900"}`}>
+                    {currencySymbol}{record.balanceAfter.toFixed(2)}
                   </td>
                 </tr>
               );

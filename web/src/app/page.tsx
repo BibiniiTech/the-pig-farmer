@@ -51,18 +51,27 @@ export default function Home() {
 
   const languages = [
     { code: "en", name: "English", flag: "🇺🇸" },
-    { code: "es", name: "Español", flag: "🇪🇸" },
     { code: "fr", name: "Français", flag: "🇫🇷" },
-    { code: "hi", name: "हिन्दी", flag: "🇮🇳" },
+    { code: "zh", name: "中文", flag: "🇨🇳" },
+    { code: "es", name: "Español", flag: "🇲🇽" },
+    { code: "es-es", name: "Español (Castellano)", flag: "🇪🇸" },
+    { code: "es-do", name: "Español (Dominicano)", flag: "🇩🇴" },
+    { code: "de", name: "Deutsch", flag: "🇩🇪" },
+    { code: "ja", name: "日本語", flag: "🇯🇵" },
     { code: "pt", name: "Português", flag: "🇵🇹" },
-    { code: "th", name: "ไทย", flag: "🇹🇭" },
     { code: "tl", name: "Filipino", flag: "🇵🇭" },
     { code: "vi", name: "Tiếng Việt", flag: "🇻🇳" },
-    { code: "zh", name: "中文", flag: "🇨🇳" },
-    { code: "sw", name: "Kiswahili", flag: "🇰🇪" },
+    { code: "th", name: "ไทย", flag: "🇹🇭" },
     { code: "id", name: "Bahasa Indonesia", flag: "🇮🇩" },
+    { code: "hi", name: "हिन्दी", flag: "🇮🇳" },
+    { code: "sw", name: "Kiswahili", flag: "🇰🇪" },
+    { code: "lg", name: "Oluganda", flag: "🇺🇬" },
+    { code: "rw", name: "Ikinyarwanda", flag: "🇷🇼" },
     { code: "ht", name: "Kreyòl Ayisyen", flag: "🇭🇹" },
     { code: "my", name: "မြန်မာ", flag: "🇲🇲" },
+    { code: "tpi", name: "Tok Pisin", flag: "🇵🇬" },
+    { code: "zgh", name: "Tamaziɣt", flag: "🇲🇦" },
+    { code: "af", name: "Afrikaans", flag: "🇿🇦" },
   ];
 
   const currentLang = languages.find((l) => l.code === selectedLang) || languages[0];

@@ -2,18 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import Script from "next/script";
 import { useAuth } from "@/context/AuthContext";
 import { useDevice } from "@/context/DeviceContext";
-import NavbarDropdown from "@/components/NavbarDropdown";
-import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
-import dynamic from "next/dynamic";
+import ManageSubscriptionModal from "@/components/ManageSubscriptionModal";
 import { useTranslations } from "next-intl";
-
-const PaystackBillingButton = dynamic(() => import("@/components/PaystackBillingButton"), {
-  ssr: false,
-});
 
 export default function BillingPage() {
   const t = useTranslations("Billing");
@@ -21,15 +15,42 @@ export default function BillingPage() {
   const { isMobile } = useDevice();
   const router = useRouter();
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
+  const [isManageModalOpen, setIsManageModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [verificationSuccess, setVerificationSuccess] = useState(false);
 
-  const MONTHLY_PLAN_CODE = process.env.NEXT_PUBLIC_PAYSTACK_MONTHLY_PLAN_CODE || "PLN_0fhg14kc86tn8qs";
-  const ANNUAL_PLAN_CODE = process.env.NEXT_PUBLIC_PAYSTACK_ANNUAL_PLAN_CODE || "PLN_sk44tcyegocprdu";
-  
-  // Safely fallback to default live key if environment key is not defined or is a test key
-  const rawKey = (process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "").trim().replace(/['"]/g, "");
-  const PUBLIC_KEY = rawKey.startsWith("pk_live_")
-    ? rawKey
-    : "pk_live_80c6263d2d5499da137d63269d25aa45959b33e3";
+  // User billing details state (editable before payment)
+  const [billingEmail, setBillingEmail] = useState("");
+  const [billingPhone, setBillingPhone] = useState("");
+  const [billingFirstName, setBillingFirstName] = useState("");
+  const [billingLastName, setBillingLastName] = useState("");
+  const [emailTouched, setEmailTouched] = useState(false);
+
+  // Sync initial user details when user/profile loads
+  useEffect(() => {
+    if (userProfile || user) {
+      setBillingEmail((prev) => prev || userProfile?.email || user?.email || "");
+      setBillingFirstName((prev) => prev || userProfile?.firstName || "");
+      setBillingLastName((prev) => prev || userProfile?.lastName || "");
+      setBillingPhone((prev) => prev || (user as any)?.phoneNumber || "");
+    }
+  }, [user, userProfile]);
+
+  // Check for successful checkout redirect
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("status") === "success") {
+        setVerificationSuccess(true);
+      }
+    }
+  }, []);
+
+  const MONTHLY_VARIANT_ID =
+    process.env.NEXT_PUBLIC_LEMONSQUEEZY_MONTHLY_VARIANT_ID || "1798169";
+  const ANNUAL_VARIANT_ID =
+    process.env.NEXT_PUBLIC_LEMONSQUEEZY_ANNUAL_VARIANT_ID || "1798219";
 
   useEffect(() => {
     if (!loading && !user) {
@@ -46,31 +67,48 @@ export default function BillingPage() {
   }
 
   const userUid = user.uid;
-  const userEmail = userProfile?.email || user.email || "user@smartswine.app";
+  const trimmedEmail = billingEmail.trim();
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail);
+  const isFormValid = isEmailValid && trimmedEmail.length > 0;
 
-  const paystackConfig = {
-    email: userEmail,
-    amount: billingCycle === "monthly" ? 500 : 4500,
-    currency: "USD",
-    publicKey: PUBLIC_KEY,
-    plan: billingCycle === "monthly" ? MONTHLY_PLAN_CODE : ANNUAL_PLAN_CODE,
-    metadata: {
-      custom_fields: [
-        {
-          display_name: "User ID",
-          variable_name: "user_id",
-          value: userUid
-        }
-      ]
+  const handleCheckout = async () => {
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      const selectedVariantId =
+        billingCycle === "monthly" ? MONTHLY_VARIANT_ID : ANNUAL_VARIANT_ID;
+
+      const res = await fetch("/api/billing/create-checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          variantId: selectedVariantId,
+          userId: userUid,
+          userEmail: trimmedEmail,
+          userName: `${billingFirstName.trim()} ${billingLastName.trim()}`.trim() || undefined,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.url) {
+        throw new Error(data.error || "Failed to create checkout session");
+      }
+
+      // Open in Lemon Squeezy overlay modal if Lemon.js is ready, else redirect
+      if ((window as any).LemonSqueezy) {
+        (window as any).LemonSqueezy.Url.Open(data.url);
+      } else {
+        window.location.href = data.url;
+      }
+    } catch (err: any) {
+      console.error("Checkout error:", err);
+      setErrorMessage(
+        err.message || "Failed to initiate checkout. Please try again or check your connection."
+      );
+    } finally {
+      setIsSubmitting(false);
     }
-  };
-
-  const onSuccess = (reference: any) => {
-    alert(t("paymentSuccess"));
-  };
-
-  const onClose = () => {
-    console.log(t("modalClosed"));
   };
 
   const features = [
@@ -84,6 +122,14 @@ export default function BillingPage() {
 
   return (
     <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
+      {/* Load Lemon.js for seamless overlay checkout */}
+      <Script
+        src="https://assets.lemonsqueezy.com/lemon.js"
+        strategy="lazyOnload"
+        onLoad={() => {
+          (window as any).createLemonSqueezy?.();
+        }}
+      />
 
       {/* Watermark Logo Background */}
       {!isMobile && (
@@ -119,10 +165,21 @@ export default function BillingPage() {
               <p className="text-sm text-zinc-600 max-w-md mx-auto">
                 {t("premiumBenefits")}
               </p>
-              <div className="pt-2 flex justify-center gap-3">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3.5 py-1 text-xs font-semibold text-emerald-800 border border-emerald-200">
-                  {t("billingSource", { source: userProfile?.subscriptionSource || "paystack" })}
+              <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3.5 py-1.5 text-xs font-semibold text-emerald-800 border border-emerald-200">
+                  {t("billingSource", { source: userProfile?.subscriptionSource || "lemonsqueezy" })}
                 </span>
+                <button
+                  type="button"
+                  onClick={() => setIsManageModalOpen(true)}
+                  className="inline-flex items-center gap-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-1.5 text-xs font-bold transition shadow-sm active:scale-95"
+                >
+                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="3" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                  </svg>
+                  <span>Manage Subscription</span>
+                </button>
               </div>
             </div>
           ) : (
@@ -187,23 +244,153 @@ export default function BillingPage() {
                     <h3 className="text-lg font-bold text-zinc-900 flex items-center gap-2">
                       💎 {t("smartSwinePremium")}
                     </h3>
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-4xl font-extrabold text-zinc-900">
-                        {billingCycle === "monthly" ? "$5.00" : "$45.00"}
-                      </span>
-                      <span className="text-zinc-500 text-sm">
-                        / {t("perMonth")} {billingCycle === "annual" && t("billedYearly")}
-                      </span>
+                    <div className="space-y-1">
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="text-4xl font-extrabold text-zinc-900">
+                          {billingCycle === "monthly" ? "US$2.00" : "US$10.00"}
+                        </span>
+                        <span className="text-zinc-500 text-sm">
+                          / {billingCycle === "monthly" ? t("perMonth") : "year"}
+                        </span>
+                      </div>
+                      <p className="text-xs font-semibold text-emerald-700">
+                        {billingCycle === "monthly"
+                          ? "Billed monthly via Lemon Squeezy (US$2.00/mo)"
+                          : "Save US$14.00 yearly (US$10.00/yr ~ US$0.83/mo)"}
+                      </p>
                     </div>
                     <p className="text-xs text-zinc-600">
                       {t("premiumDescription")}
                     </p>
                   </div>
-                  <PaystackBillingButton
-                    config={paystackConfig}
-                    onSuccess={onSuccess}
-                    onClose={onClose}
-                  />
+
+                  {/* Feedback Status */}
+                  {verificationSuccess && (
+                    <div className="rounded-xl bg-emerald-100 border border-emerald-300 p-3 text-center">
+                      <p className="text-xs font-bold text-emerald-800">
+                        🎉 Payment successful! Premium features are active.
+                      </p>
+                    </div>
+                  )}
+
+                  {errorMessage && (
+                    <div className="rounded-xl bg-red-50 border border-red-200 p-3 text-center space-y-1">
+                      <p className="text-xs font-bold text-red-800">Checkout Error</p>
+                      <p className="text-[11px] text-red-600">{errorMessage}</p>
+                    </div>
+                  )}
+
+                  {/* Billing Contact Form */}
+                  <div className="space-y-3 pt-3 border-t border-emerald-100">
+                    <div className="flex items-center justify-between">
+                      <label className="text-[11px] font-bold text-zinc-700 uppercase tracking-wider">
+                        {t("billingDetails")}
+                      </label>
+                      <span className="text-[10px] text-zinc-400">
+                        {t("billingDetailsSub")}
+                      </span>
+                    </div>
+
+                    <div className="space-y-2.5">
+                      <div>
+                        <label className="block text-[11px] font-semibold text-zinc-600 mb-1">
+                          {t("emailAddress")} <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          value={billingEmail}
+                          onChange={(e) => {
+                            setBillingEmail(e.target.value);
+                            setEmailTouched(true);
+                          }}
+                          onBlur={() => setEmailTouched(true)}
+                          placeholder="e.g. farmer@example.com"
+                          className={`w-full rounded-lg border px-3 py-2 text-xs text-zinc-900 bg-white placeholder-zinc-400 focus:outline-none transition ${
+                            emailTouched && !isEmailValid
+                              ? "border-red-400 focus:border-red-500 focus:ring-1 focus:ring-red-400"
+                              : "border-zinc-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                          }`}
+                        />
+                        {emailTouched && !isEmailValid && (
+                          <p className="text-[10px] text-red-500 mt-1">
+                            {trimmedEmail.length === 0 ? t("enterEmailPrompt") : t("invalidEmail")}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <label className="block text-[11px] font-semibold text-zinc-600 mb-1">
+                            {t("firstName")}
+                          </label>
+                          <input
+                            type="text"
+                            value={billingFirstName}
+                            onChange={(e) => setBillingFirstName(e.target.value)}
+                            placeholder="First name"
+                            className="w-full rounded-lg border border-zinc-300 px-3 py-2 text-xs text-zinc-900 bg-white placeholder-zinc-400 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-semibold text-zinc-600 mb-1">
+                            {t("lastName")}
+                          </label>
+                          <input
+                            type="text"
+                            value={billingLastName}
+                            onChange={(e) => setBillingLastName(e.target.value)}
+                            placeholder="Last name"
+                            className="w-full rounded-lg border border-zinc-300 px-3 py-2 text-xs text-zinc-900 bg-white placeholder-zinc-400 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-semibold text-zinc-600 mb-1">
+                          {t("phone")} (Optional)
+                        </label>
+                        <input
+                          type="tel"
+                          value={billingPhone}
+                          onChange={(e) => setBillingPhone(e.target.value)}
+                          placeholder="e.g. +1 555 123 4567"
+                          className="w-full rounded-lg border border-zinc-300 px-3 py-2 text-xs text-zinc-900 bg-white placeholder-zinc-400 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <button
+                      type="button"
+                      disabled={isSubmitting || !isFormValid}
+                      onClick={handleCheckout}
+                      className={`w-full rounded-xl py-3.5 text-xs font-bold text-white text-center shadow-lg transition duration-300 transform active:scale-95 flex items-center justify-center gap-2 ${
+                        isSubmitting || !isFormValid
+                          ? "bg-zinc-400 cursor-not-allowed opacity-60"
+                          : "bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-700 hover:to-green-600 shadow-emerald-600/10 cursor-pointer"
+                      }`}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                          <span>Preparing Secure Checkout...</span>
+                        </>
+                      ) : !trimmedEmail ? (
+                        t("enterEmailPrompt")
+                      ) : !isEmailValid ? (
+                        t("enterValidEmail")
+                      ) : billingCycle === "monthly" ? (
+                        "Upgrade to Premium — $2.00 / month"
+                      ) : (
+                        "Upgrade to Premium — $10.00 / year"
+                      )}
+                    </button>
+                    <p className="text-[11px] text-zinc-400 text-center leading-tight">
+                      Secured by Lemon Squeezy. Visa, Mastercard, Apple Pay, Google Pay, and PayPal accepted.
+                    </p>
+                  </div>
                 </div>
               </div>
             </>
@@ -235,6 +422,11 @@ export default function BillingPage() {
           </div>
         </main>
       </div>
+
+      <ManageSubscriptionModal
+        isOpen={isManageModalOpen}
+        onClose={() => setIsManageModalOpen(false)}
+      />
     </div>
   );
 }
