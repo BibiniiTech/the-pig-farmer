@@ -12,7 +12,7 @@ import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import HerdReport from "@/components/reports/HerdReport";
 import { evaluatePerformance, calculateAgeMonths, calculateAgeDays, formatSwineAge } from "@/lib/swineGrowthDatabase";
-import { ExportPdfIcon } from "@/components/icons/DashboardIcons";
+import { ExportPdfIcon, HerdDataIcon } from "@/components/icons/DashboardIcons";
 import { useTranslations } from "next-intl";
 import { Pig } from "@/lib/types";
 import { TierLimiter } from "@/lib/tierLimiter";
@@ -418,9 +418,9 @@ export default function HerdPage() {
         {!isMobile && <DesktopHeader />}
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
-          {/* Top Actions & Toggle Bar */}
+          {/* Top Actions & Heading Bar */}
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <button
                 type="button"
                 onClick={() => router.push("/dashboard")}
@@ -428,13 +428,27 @@ export default function HerdPage() {
                 aria-label="Back to dashboard"
                 title="Back to dashboard"
               >
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center flex-shrink-0">
+                  <HerdDataIcon className="h-5 w-5 text-emerald-600" />
+                </div>
+                <div>
+                  <h1 className="text-lg sm:text-2xl font-black text-emerald-600">
+                    {t("title") || "Herd Data"}
+                  </h1>
+                  <p className="text-[11px] sm:text-xs text-zinc-500">{t("desc") || "Manage individual pigs, track health, and view records"}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 flex-wrap">
               <button
                 onClick={() => setViewingArchived(false)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-sm ${
+                className={`px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-bold transition shadow-sm ${
                   !viewingArchived
                     ? "bg-emerald-600 text-white"
                     : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
@@ -444,7 +458,7 @@ export default function HerdPage() {
               </button>
               <button
                 onClick={() => setViewingArchived(true)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm ${
+                className={`px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm ${
                   viewingArchived
                     ? "bg-emerald-600 text-white"
                     : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
@@ -453,22 +467,21 @@ export default function HerdPage() {
                 <ArchiveIcon className="h-4 w-4" />
                 Archived ({archivedPigs.length})
               </button>
+              <button
+                onClick={() => {
+                  const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
+                  if (!isPremium && herdStats.total >= TierLimiter.FREE_MAX_PIGS) {
+                    alert(t("limitReached"));
+                    router.push("/dashboard/billing");
+                  } else {
+                    setShowAddModal(true);
+                  }
+                }}
+                className="rounded-xl bg-emerald-600 hover:bg-emerald-700 px-4 sm:px-6 py-2 sm:py-2.5 text-xs font-bold text-white shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
+              >
+                {t("addPigs")}
+              </button>
             </div>
-
-            <button
-              onClick={() => {
-                const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
-                if (!isPremium && herdStats.total >= TierLimiter.FREE_MAX_PIGS) {
-                  alert(t("limitReached"));
-                  router.push("/dashboard/billing");
-                } else {
-                  setShowAddModal(true);
-                }
-              }}
-              className="rounded-xl bg-emerald-600 hover:bg-emerald-700 px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
-            >
-              {t("addPigs")}
-            </button>
           </div>
 
           {/* Herd List Grid Card with Compact Search */}
@@ -598,64 +611,71 @@ export default function HerdPage() {
               }
 
               return (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                   {filteredPigs.map((pig) => {
                     const ageDays = calculateAgeDays(pig.birthDate);
                     const performance = evaluatePerformance(pig.breed, ageDays, pig.weight);
-                    const ageMonths = calculateAgeMonths(pig.birthDate);
 
-                    let performanceBadgeColor = "bg-zinc-200 text-zinc-600";
-                    if (performance === "Excellent") performanceBadgeColor = "bg-amber-100 text-amber-700";
-                    else if (performance === "Good") performanceBadgeColor = "bg-green-100 text-green-800";
-                    else if (performance === "Caution") performanceBadgeColor = "bg-yellow-100 text-yellow-800";
-                    else if (performance === "Poor") performanceBadgeColor = "bg-red-100 text-red-800";
+                    let performanceBg = "bg-[#E0E0E0] text-[#616161]";
+                    if (performance === "Excellent") performanceBg = "bg-[#FEF3C7] text-[#B45309]";
+                    else if (performance === "Good") performanceBg = "bg-[#C8E6C9] text-[#2E7D32]";
+                    else if (performance === "Caution") performanceBg = "bg-[#FFF9C4] text-[#F57F17]";
+                    else if (performance === "Poor") performanceBg = "bg-[#FFCDD2] text-[#C62828]";
+
+                    const genderDisplay = (pig.gender === "Male" ? (t("male") || "Male") : (t("female") || "Female")) +
+                      (pig.gender === "Male" && pig.castrated ? ` (${t("castrated_label") || "Castrated"})` : "") +
+                      (pig.gender === "Female" && pig.parity !== undefined && pig.parity > 0 ? ` P${pig.parity}` : "");
+
+                    const isWithdrawalActive = pig.activeWithdrawalUntil && pig.activeWithdrawalUntil >= new Date().toISOString().split("T")[0];
 
                     return (
                       <Link
                         href={`/dashboard/herd/${pig.id}`}
                         key={pig.id}
-                        className="bg-white/90 hover:bg-zinc-50/90 border border-zinc-200 hover:border-emerald-500/40 rounded-xl p-4 transition-all shadow-sm block group relative overflow-hidden"
+                        className="bg-[#E8F5E9] hover:bg-[#E0F2E9] border border-[#C8E6C9] rounded-2xl p-4 transition-all shadow-xs block group"
                       >
-                        <div className="absolute top-0 right-0 h-16 w-16 rounded-full bg-emerald-500/5 blur-lg group-hover:bg-emerald-500/10 transition-all pointer-events-none" />
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <p className="text-xs font-semibold text-zinc-400 font-mono">{t("tagNumber")}</p>
-                            <div className="flex items-center gap-1.5 flex-wrap">
-                              <p className="text-lg font-bold text-zinc-900 group-hover:text-emerald-700 transition">
-                                {pig.tagNumber}
-                              </p>
-                              {pig.parity !== undefined && pig.parity > 0 && (
-                                <span className="text-[10px] font-black px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 border border-purple-200">
-                                  P{pig.parity}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${performanceBadgeColor}`}>
-                            {performance ? t(performance.toLowerCase()) : ""}
+                        <div className="flex items-center justify-between gap-2">
+                          <h3 className="text-base sm:text-lg font-bold text-[#1B5E20] group-hover:underline truncate">
+                            {t("tag") || "Tag"}: {pig.tagNumber}
+                          </h3>
+                          <span className={`text-xs font-bold px-2.5 py-1 rounded-md shrink-0 ${performanceBg}`}>
+                            {performance ? (t(performance.toLowerCase()) || performance) : ""}
                           </span>
                         </div>
 
-                        {pig.activeWithdrawalUntil && pig.activeWithdrawalUntil >= new Date().toISOString().split("T")[0] && (
-                          <div className="mt-2 text-[10px] font-bold text-rose-700 bg-rose-50 border border-rose-200 rounded px-2 py-1 flex items-center gap-1">
-                            <span>⚠️ WITHDRAWAL: UNTIL {pig.activeWithdrawalUntil}</span>
+                        <div className="flex items-center gap-4 text-xs sm:text-sm mt-2">
+                          <div className="flex items-center gap-1 min-w-0">
+                            <span className="font-bold text-[#2E7D32]">{t("age") || "Age"}:</span>
+                            <span className="text-[#1B5E20] truncate">{formatSwineAge(pig.birthDate, true)}</span>
+                          </div>
+                          <div className="flex items-center gap-1 min-w-0">
+                            <span className="font-bold text-[#2E7D32]">{t("gender") || "Gender"}:</span>
+                            <span className="text-[#1B5E20] truncate">{genderDisplay}</span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-4 text-xs sm:text-sm mt-1">
+                          <div className="flex items-center gap-1 min-w-0">
+                            <span className="font-bold text-[#2E7D32]">{t("weight") || "Weight"}:</span>
+                            <span className="text-[#1B5E20] truncate">{pig.weight} kg</span>
+                          </div>
+                          <div className="flex items-center gap-1 min-w-0">
+                            <span className="font-bold text-[#2E7D32]">{t("location") || "Pen"}:</span>
+                            <span className="text-[#1B5E20] truncate">{pig.location || "N/A"}</span>
+                          </div>
+                        </div>
+
+                        {isWithdrawalActive && (
+                          <div className="mt-2.5 bg-[#FFCDD2] text-[#B71C1C] rounded-md px-2 py-1 text-[11px] font-bold flex items-center gap-1">
+                            <span>⚠️ WITHDRAWAL ACTIVE: UNTIL {pig.activeWithdrawalUntil}</span>
                           </div>
                         )}
 
-                        <div className="grid grid-cols-2 gap-2 mt-4 text-xs text-zinc-500">
-                          <div>
-                            <span className="font-semibold">{t("age")}:</span> {formatSwineAge(pig.birthDate, true)}
+                        {pig.status?.startsWith("Archived") && (
+                          <div className="mt-1.5 text-[11px] font-bold text-red-600">
+                            {pig.status}
                           </div>
-                          <div>
-                            <span className="font-semibold">{t("gender")}:</span> {pig.gender ? t(pig.gender.toLowerCase()) : ""}
-                          </div>
-                          <div>
-                            <span className="font-semibold">{t("weight")}:</span> {pig.weight} kg
-                          </div>
-                          <div>
-                            <span className="font-semibold">{t("location")}:</span> {pig.location || "N/A"}
-                          </div>
-                        </div>
+                        )}
                       </Link>
                     );
                   })}

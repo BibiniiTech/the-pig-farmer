@@ -685,27 +685,6 @@ export default function FeedPage() {
                 <p className="text-xs text-zinc-500">{t("inventoryDesc") || "Manage feed stock, restock bags, and log usage"}</p>
               </div>
             </div>
-
-            <div className="flex items-center gap-2">
-              <Link
-                href="/dashboard/feed/calculator"
-                className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 transition"
-              >
-                Calculator
-              </Link>
-              <Link
-                href="/dashboard/feed/mix"
-                className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 transition"
-              >
-                Mix Feed
-              </Link>
-              <Link
-                href="/dashboard/feed/analyze"
-                className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 transition"
-              >
-                Analyze Feed
-              </Link>
-            </div>
           </div>
 
           {/* ==================== 4. FEED INVENTORY ==================== */}

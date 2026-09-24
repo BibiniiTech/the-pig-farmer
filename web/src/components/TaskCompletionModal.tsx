@@ -495,7 +495,7 @@ export default function TaskCompletionModal({
           if (pigWeight > 0) {
             batch.update(pigRef, {
               weight: pigWeight,
-              lastWeightDate: new Date().toLocaleDateString('en-GB')
+              lastWeightDate: new Date().toISOString().split("T")[0]
             });
             finalDescription = t("weightUpdateLog", { notes, weight: pigWeight });
           }

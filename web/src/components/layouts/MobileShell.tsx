@@ -291,7 +291,7 @@ export default function MobileShell({
               {userProfile?.farmName || "SmartSwine"}
             </span>
             <span className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 truncate leading-none mt-0.5">
-              {userProfile?.firstName ? `Farmer ${userProfile.firstName}` : tNav("settings")}
+              {userProfile?.firstName ? `Welcome Farmer ${userProfile.firstName}` : "Welcome Farmer"}
             </span>
           </div>
         </button>

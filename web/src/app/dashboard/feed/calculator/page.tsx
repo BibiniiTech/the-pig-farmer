@@ -125,10 +125,10 @@ export default function FeedCalculatorPage() {
   }
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
+    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-x-hidden">
       {!isMobile && <DesktopHeader />}
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
         <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 pb-4">
           <div className="flex items-center gap-3">
             <Link
@@ -147,15 +147,17 @@ export default function FeedCalculatorPage() {
               <p className="text-xs text-zinc-500">{t("calculatorDesc") || "Calculate daily and periodic feed requirements"}</p>
             </div>
           </div>
+        </div>
 
-          <div className="flex items-center gap-2">
-            <Link
-              href="/dashboard/feed"
-              className="px-4 py-2 rounded-xl text-xs font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition"
-            >
-              Feed Inventory →
-            </Link>
+        {/* Mobile Quick Summary for Instant Visibility */}
+        <div className="lg:hidden bg-amber-600 text-white rounded-2xl p-4 shadow-sm flex items-center justify-between">
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-wider text-amber-100">Total Feed Needed ({calcDays} {calcDays === 1 ? "Day" : "Days"})</p>
+            <p className="text-2xl font-black">{calcDays > 1 ? `${totalPeriodReq.toFixed(1)} kg` : `${totalDailyReq.toFixed(1)} kg`}</p>
           </div>
+          <span className="text-xs bg-white/20 px-3 py-1.5 rounded-xl font-bold">
+            {totalDailyReq.toFixed(1)} kg/day
+          </span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">

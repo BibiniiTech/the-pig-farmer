@@ -759,14 +759,6 @@ export default function NotificationDrawer({
               </>
             )}
           </div>
-
-          {/* ─── FOOTER ────────────────────────────────────────────── */}
-          <div className="p-4 border-t border-zinc-150 bg-zinc-50 flex items-center justify-between text-xs text-zinc-500">
-            <span>SmartSwine Notification Engine</span>
-            <Link href="/dashboard/activities" onClick={onClose} className="font-bold text-emerald-700 hover:underline">
-              View All Activities →
-            </Link>
-          </div>
         </div>
       </div>
 

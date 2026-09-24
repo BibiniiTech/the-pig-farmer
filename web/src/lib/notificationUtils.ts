@@ -195,6 +195,26 @@ export function groupTasks(tasks: TaskItem[], allPigs: Pig[] = []): TaskGroupIte
   });
 }
 
+export function parseAnyDateToMs(dateStr?: string | null): number | null {
+  if (!dateStr || typeof dateStr !== "string") return null;
+  const trimmed = dateStr.trim();
+  if (!trimmed) return null;
+  if (/^\d{4}-\d{2}-\d{2}/.test(trimmed)) {
+    const d = new Date(trimmed);
+    return isNaN(d.getTime()) ? null : d.getTime();
+  }
+  if (/^\d{1,2}\/\d{1,2}\/\d{4}/.test(trimmed)) {
+    const parts = trimmed.split("/");
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1;
+    const year = parseInt(parts[2], 10);
+    const d = new Date(year, month, day);
+    return isNaN(d.getTime()) ? null : d.getTime();
+  }
+  const d = new Date(trimmed);
+  return isNaN(d.getTime()) ? null : d.getTime();
+}
+
 export function calculateWeightAlerts(
   pigs: Pig[],
   snoozedAlerts: Record<string, number> = {},
@@ -213,16 +233,9 @@ export function calculateWeightAlerts(
       : (pig.weight <= 0 ? pig.birthDate : null);
     if (!lastWeight) return false;
 
-    let lastDate: Date;
-    if (lastWeight.includes("/")) {
-      const parts = lastWeight.split("/");
-      lastDate = new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
-    } else {
-      lastDate = new Date(lastWeight);
-    }
-
-    if (isNaN(lastDate.getTime())) return false;
-    const diffDays = Math.floor((today.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
+    const ms = parseAnyDateToMs(lastWeight);
+    if (ms === null) return false;
+    const diffDays = Math.floor((today.getTime() - ms) / (1000 * 60 * 60 * 24));
     return diffDays >= 30;
   });
 }

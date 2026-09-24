@@ -84,7 +84,8 @@ export interface Pig {
   activeWithdrawalUntil?: string;
   withdrawalMedication?: string;
   withdrawalPeriodDays?: number;
-  safeSlaughterDate?: string;
+  expectedFarrowingDate?: string;
+  farrowingPenMoveDate?: string;
   parity?: number;
   healthRecords?: HealthRecord[];
 }

@@ -153,7 +153,7 @@ export default function MixFeedPage() {
   const supplementalList = ingredients.filter(i => i.mainCategory === "Vitamins, Minerals & Salt");
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
+    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-x-hidden">
       {!isMobile && <DesktopHeader />}
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-8">
@@ -174,15 +174,6 @@ export default function MixFeedPage() {
               </h1>
               <p className="text-xs text-zinc-500">{t("mixFeedDesc") || "Pearson square multi-nutrient balanced feed formulation"}</p>
             </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Link
-              href="/dashboard/feed"
-              className="px-4 py-2 rounded-xl text-xs font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition"
-            >
-              Feed Inventory →
-            </Link>
           </div>
         </div>
 

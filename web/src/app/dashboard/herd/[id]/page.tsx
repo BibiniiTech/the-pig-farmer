@@ -16,6 +16,7 @@ import { ExportPdfIcon } from "@/components/icons/DashboardIcons";
 import { useTranslations } from "next-intl";
 import { Pig, HealthRecord } from "@/lib/types";
 import RewardedPassModal from "@/components/ads/RewardedPassModal";
+import { parseAnyDateToMs } from "@/lib/notificationUtils";
 
 export default function PigProfilePage() {
   const t = useTranslations("PigProfile");
@@ -103,31 +104,42 @@ export default function PigProfilePage() {
   const [recordDesc, setRecordDesc] = useState("");
   const [recordWeight, setRecordWeight] = useState("");
 
-  // Weight Warning Logic
+  // Weight Warning Logic matching Android PigProfileScreen.kt and DashboardViewModel.kt
   const weightRecords = healthRecords.filter(r => r.type === "Weight Check");
-  const latestWeightUpdateMs = weightRecords.length > 0
-    ? Math.max(...weightRecords.map(r => new Date(r.date).getTime()))
+  const weightRecordDates = weightRecords
+    .map(r => parseAnyDateToMs(r.date))
+    .filter((ms): ms is number => ms !== null && !isNaN(ms));
+
+  const pigLastWeightMs = parseAnyDateToMs(pig?.lastWeightDate);
+  if (pigLastWeightMs !== null && !isNaN(pigLastWeightMs)) {
+    weightRecordDates.push(pigLastWeightMs);
+  }
+
+  const latestWeightUpdateMs = weightRecordDates.length > 0
+    ? Math.max(...weightRecordDates)
     : null;
 
   const ageDays = pig ? calculateAgeDays(pig.birthDate) : 0;
   const ageMonths = pig ? calculateAgeMonths(pig.birthDate) : 0;
   const performance = pig ? evaluatePerformance(pig.breed, ageDays, pig.weight) : "Blank";
 
-  let performanceBadgeColor = "bg-zinc-200 text-zinc-600";
-  if (performance === "Excellent") performanceBadgeColor = "bg-amber-100 text-amber-700";
-  else if (performance === "Good") performanceBadgeColor = "bg-green-100 text-green-800";
-  else if (performance === "Caution") performanceBadgeColor = "bg-yellow-100 text-yellow-800";
-  else if (performance === "Poor") performanceBadgeColor = "bg-red-100 text-red-800";
+  let performanceBadgeColor = "bg-[#E0E0E0] text-[#616161]";
+  if (performance === "Excellent") performanceBadgeColor = "bg-[#FEF3C7] text-[#B45309]";
+  else if (performance === "Good") performanceBadgeColor = "bg-[#C8E6C9] text-[#2E7D32]";
+  else if (performance === "Caution") performanceBadgeColor = "bg-[#FFF9C4] text-[#F57F17]";
+  else if (performance === "Poor") performanceBadgeColor = "bg-[#FFCDD2] text-[#C62828]";
 
   const showWeightUpdateWarning = (() => {
-    if (performance === "Blank") return true;
+    if (!pig || pig.status?.startsWith("Archived")) return false;
+    if (performance === "Blank" || (pig.weight <= 0 && ageDays > 25)) return true;
     if (ageDays > 25) {
-      if (latestWeightUpdateMs) {
+      if (latestWeightUpdateMs !== null) {
         const diffMs = Date.now() - latestWeightUpdateMs;
         const daysSinceUpdate = diffMs / (1000 * 60 * 60 * 24);
         return daysSinceUpdate > 25;
       }
-      return true;
+      // If pig already has a weight recorded (> 0) and no explicit date, do not falsely flag
+      return false;
     }
     return false;
   })();
@@ -219,14 +231,20 @@ export default function PigProfilePage() {
       const pigDocRef = doc(db, "users", activeFarmUid, targetColl, pigId);
       const oldWeight = pig.weight || 0;
 
-      await updateDoc(pigDocRef, {
+      const todayStr = new Date().toISOString().split("T")[0];
+      const updateData: any = {
         breed,
         purpose,
         location,
         status,
         weight,
         notes
-      });
+      };
+      if (weight !== oldWeight && weight > 0) {
+        updateData.lastWeightDate = todayStr;
+      }
+
+      await updateDoc(pigDocRef, updateData);
 
       // If weight was updated manually, add a history record for it to clear warnings
       if (weight !== oldWeight && weight > 0) {
@@ -234,7 +252,7 @@ export default function PigProfilePage() {
         const newRef = doc(recordsRef);
         await setDoc(newRef, {
           id: newRef.id,
-          date: new Date().toISOString().split("T")[0],
+          date: todayStr,
           type: "Weight Check",
           description: t("manualWeightLog")
         }, { merge: true });
@@ -270,7 +288,8 @@ export default function PigProfilePage() {
       if (recordType === "Weight Check" && recordWeight) {
         const pigDocRef = doc(db, "users", activeFarmUid, targetColl, pigId);
         await updateDoc(pigDocRef, {
-          weight: parseFloat(recordWeight) || 0
+          weight: parseFloat(recordWeight) || 0,
+          lastWeightDate: recordDate
         });
       }
 
@@ -363,7 +382,7 @@ export default function PigProfilePage() {
   }
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
+    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-x-hidden">
       {/* Watermark Logo Background */}
       {!isMobile && (
         <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
@@ -378,14 +397,29 @@ export default function PigProfilePage() {
       <div className="relative z-10 flex flex-col min-h-screen print:hidden">
         {!isMobile && <DesktopHeader showBack backPath="/dashboard/herd" />}
 
-        <main className="flex-1 max-w-3xl w-full mx-auto px-4 py-8 space-y-6">
-          {/* 1. Bio Section Header */}
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-black text-zinc-900 tracking-tight">Bio</h1>
+        <main className="flex-1 max-w-3xl w-full mx-auto px-4 py-8 space-y-5">
+          {/* Top Bar with Back Button & Actions */}
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            <div className="flex items-center gap-3">
+              <Link
+                href="/dashboard/herd"
+                className="p-2 hover:bg-zinc-100 rounded-xl transition-colors text-zinc-600 border border-zinc-200 bg-white shadow-xs flex items-center justify-center shrink-0"
+                aria-label="Back to herd list"
+                title="Back to herd list"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </Link>
+              <h1 className="text-xl sm:text-2xl font-black text-emerald-800 tracking-tight">
+                {pig.tagNumber}
+              </h1>
+            </div>
+
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setShowEditModal(true)}
-                className="rounded-xl border border-zinc-200 bg-white px-3.5 py-1.5 text-xs font-bold text-zinc-700 hover:bg-zinc-50 transition-all shadow-sm"
+                className="rounded-xl border border-zinc-200 bg-white px-3.5 py-1.5 text-xs font-bold text-zinc-700 hover:bg-zinc-50 transition-all shadow-xs"
               >
                 {t("editDetails")}
               </button>
@@ -393,7 +427,7 @@ export default function PigProfilePage() {
               {!isArchived ? (
                 <button
                   onClick={() => setShowArchiveModal(true)}
-                  className="rounded-xl border border-amber-300 bg-amber-50 px-3.5 py-1.5 text-xs font-bold text-amber-800 hover:bg-amber-100 transition-all shadow-sm flex items-center gap-1.5"
+                  className="rounded-xl border border-amber-300 bg-amber-50 px-3.5 py-1.5 text-xs font-bold text-amber-800 hover:bg-amber-100 transition-all shadow-xs flex items-center gap-1.5"
                   title="Archive Pig"
                 >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -404,7 +438,7 @@ export default function PigProfilePage() {
               ) : (
                 <button
                   onClick={handleRestorePig}
-                  className="rounded-xl border border-emerald-300 bg-emerald-50 px-3.5 py-1.5 text-xs font-bold text-emerald-800 hover:bg-emerald-100 transition-all shadow-sm flex items-center gap-1.5"
+                  className="rounded-xl border border-emerald-300 bg-emerald-50 px-3.5 py-1.5 text-xs font-bold text-emerald-800 hover:bg-emerald-100 transition-all shadow-xs flex items-center gap-1.5"
                   title="Restore to Active Herd"
                 >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -423,7 +457,7 @@ export default function PigProfilePage() {
                   }
                   window.print();
                 }}
-                className={`p-2 rounded-xl border transition shadow-sm ${
+                className={`p-2 rounded-xl border transition shadow-xs ${
                   userProfile?.isPremium || userProfile?.isAdmin
                     ? "border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50"
                     : "border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100"
@@ -436,13 +470,13 @@ export default function PigProfilePage() {
           </div>
 
           {showWeightUpdateWarning && (
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3 animate-pulse shadow-sm">
-              <svg className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            <div className="bg-[#FFF9C4] border border-[#FFF59D] rounded-xl p-3.5 sm:p-4 flex items-center gap-3 text-[#F57F17] shadow-xs">
+              <svg className="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
-              <div className="space-y-1">
-                <p className="text-xs font-bold text-amber-800">{t("weightUpdateRequired")}</p>
-                <p className="text-[11px] text-amber-700 leading-relaxed">
+              <div className="space-y-0.5">
+                <p className="text-xs sm:text-sm font-bold">{t("weightUpdateRequired")}</p>
+                <p className="text-[11px] sm:text-xs opacity-90 leading-relaxed">
                   {t("weightUpdateDesc")}
                 </p>
               </div>
@@ -450,7 +484,7 @@ export default function PigProfilePage() {
           )}
 
           {pig.activeWithdrawalUntil && pig.activeWithdrawalUntil >= new Date().toISOString().split("T")[0] && (
-            <div className="bg-rose-50 border-2 border-rose-300 rounded-xl p-4 flex items-start gap-3 shadow-sm">
+            <div className="bg-rose-50 border-2 border-rose-300 rounded-xl p-4 flex items-start gap-3 shadow-xs">
               <span className="text-2xl">⚠️</span>
               <div className="space-y-1">
                 <p className="text-xs font-black text-rose-800 uppercase tracking-wide">Withdrawal Active: Safe After {pig.activeWithdrawalUntil}</p>
@@ -461,132 +495,232 @@ export default function PigProfilePage() {
             </div>
           )}
 
-          {/* Bio Details Card */}
-          <div className="bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-4 relative overflow-hidden">
-            <div className="absolute top-0 right-0 h-24 w-24 rounded-full bg-emerald-500/5 blur-xl pointer-events-none" />
-            <div className="flex justify-between items-start gap-4 relative z-10">
-              <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <p className="text-xs font-semibold text-zinc-400 font-mono uppercase">{t("statusLocation")}</p>
-                  {performance !== "Blank" && (
-                    <span className={`text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider shadow-sm border border-black/5 ${performanceBadgeColor}`}>
-                      {th(performance.toLowerCase())}
-                    </span>
-                  )}
-                </div>
-                <div className="flex items-center gap-2 flex-wrap mt-1">
-                  <h2 className="text-2xl font-black text-zinc-900 truncate">Tag: {pig.tagNumber}</h2>
-                  {pig.parity !== undefined && pig.parity > 0 && (
-                    <span className="text-xs font-black px-2 py-0.5 rounded-full uppercase tracking-wider bg-purple-100 text-purple-700 border border-purple-200">
-                      Parity {pig.parity} (P{pig.parity})
-                    </span>
-                  )}
-                </div>
-                <p className="text-sm font-medium text-zinc-500 mt-0.5 truncate">{pig.breed}</p>
-              </div>
+          {/* Bio Details Card (Matching Android PigInfoCard) */}
+          <div className="bg-[#E8F5E9] border border-[#C8E6C9] rounded-2xl p-4 sm:p-5 shadow-xs space-y-3">
+            <div className="flex justify-between items-center gap-3">
+              <h2 className="text-base sm:text-lg font-bold text-[#1B5E20] truncate">
+                {t("tag") || "Tag"}: {pig.tagNumber}
+              </h2>
+              <span className={`text-xs font-bold px-2.5 py-1 rounded-md shrink-0 ${performanceBadgeColor}`}>
+                {performance ? (th(performance.toLowerCase()) || performance) : ""}
+              </span>
             </div>
 
-            <div className="divide-y divide-zinc-100 text-sm relative z-10">
-              <div className="py-2 flex justify-between">
-                <span className="text-zinc-500">{t("gender")}</span>
-                <span className="font-semibold text-zinc-800">{translateGender(pig.gender)}</span>
-              </div>
-              <div className="py-2 flex justify-between">
-                <span className="text-zinc-500">{t("purpose")}</span>
-                <span className="font-semibold text-zinc-800">{translatePurpose(pig.purpose)}</span>
-              </div>
-              <div className="py-2 flex justify-between">
-                <span className="text-zinc-500">{t("currentStatus")}</span>
-                <span className="font-semibold text-emerald-700">{translateStatus(pig.status)}</span>
-              </div>
-              {pig.parity !== undefined && pig.parity > 0 && (
-                <div className="py-2 flex justify-between">
-                  <span className="text-zinc-500">Parity</span>
-                  <span className="font-semibold text-purple-700 font-mono">P{pig.parity} ({pig.parity} {pig.parity === 1 ? "litter" : "litters"})</span>
+            <div className="border-t border-[#C8E6C9] pt-2 space-y-2">
+              {/* DOB */}
+              <div className="flex items-center justify-between text-xs sm:text-sm">
+                <div className="flex items-center gap-2 text-[#2E7D32] font-semibold">
+                  <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                  <span>{t("birthDate") || "Date of Birth"}</span>
                 </div>
-              )}
-              {pig.activeWithdrawalUntil && (
-                <div className="py-2 flex justify-between">
-                  <span className="text-zinc-500">Withdrawal Safe Date</span>
-                  <span className={`font-semibold font-mono ${pig.activeWithdrawalUntil >= new Date().toISOString().split("T")[0] ? "text-rose-600 font-bold" : "text-zinc-500 line-through"}`}>
-                    {pig.activeWithdrawalUntil} {pig.activeWithdrawalUntil >= new Date().toISOString().split("T")[0] ? "(ACTIVE)" : "(EXPIRED)"}
+                <span className="font-semibold text-[#1B5E20]">{pig.birthDate}</span>
+              </div>
+
+              {/* Age */}
+              <div className="flex items-center justify-between text-xs sm:text-sm">
+                <div className="flex items-center gap-2 text-[#2E7D32] font-semibold">
+                  <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  <span>{th("age") || "Age"}</span>
+                </div>
+                <span className="font-semibold text-[#1B5E20]">{formatSwineAge(pig.birthDate)}</span>
+              </div>
+
+              {/* Breed */}
+              <div className="flex items-center justify-between text-xs sm:text-sm">
+                <div className="flex items-center gap-2 text-[#2E7D32] font-semibold">
+                  <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/>
+                  </svg>
+                  <span>{t("breed") || "Breed"}</span>
+                </div>
+                <span className="font-semibold text-[#1B5E20]">{pig.breed || "Not specified"}</span>
+              </div>
+
+              {/* Status */}
+              <div className="flex items-center justify-between text-xs sm:text-sm">
+                <div className="flex items-center gap-2 text-[#2E7D32] font-semibold">
+                  <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="16" x2="12" y2="12"/>
+                    <line x1="12" y1="8" x2="12.01" y2="8"/>
+                  </svg>
+                  <span>{t("currentStatus") || "Status"}</span>
+                </div>
+                <span className="font-semibold text-[#1B5E20]">{translateStatus(pig.status)}</span>
+              </div>
+
+              {/* Gender */}
+              <div className="flex items-center justify-between text-xs sm:text-sm">
+                <div className="flex items-center gap-2 text-[#2E7D32] font-semibold">
+                  <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="4"/>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 2v6m0 8v6m-4-10H2m14 0h6"/>
+                  </svg>
+                  <span>{t("gender") || "Gender"}</span>
+                </div>
+                <span className="font-semibold text-[#1B5E20]">
+                  {translateGender(pig.gender)}
+                  {pig.gender === "Male" && pig.castrated ? ` (${t("castrated_label") || "Castrated"})` : ""}
+                </span>
+              </div>
+
+              {/* Sow Parity */}
+              {pig.gender === "Female" && pig.parity !== undefined && pig.parity > 0 && (
+                <div className="flex items-center justify-between text-xs sm:text-sm">
+                  <div className="flex items-center gap-2 text-[#2E7D32] font-semibold">
+                    <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                    </svg>
+                    <span>Parity</span>
+                  </div>
+                  <span className="font-semibold text-[#1B5E20]">
+                    P{pig.parity} ({pig.parity} {pig.parity === 1 ? "litter" : "litters"})
                   </span>
                 </div>
               )}
-              <div className="py-2 flex justify-between">
-                <span className="text-zinc-500">{t("weight")}</span>
-                <span className="font-semibold text-zinc-800">{pig.weight} kg</span>
+
+              {/* Due Date */}
+              {pig.expectedFarrowingDate && (
+                <div className="flex items-center justify-between text-xs sm:text-sm">
+                  <div className="flex items-center gap-2 text-[#2E7D32] font-semibold">
+                    <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                      <line x1="16" y1="2" x2="16" y2="6"/>
+                      <line x1="8" y1="2" x2="8" y2="6"/>
+                      <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    <span>Due Date</span>
+                  </div>
+                  <span className="font-semibold text-[#1B5E20]">{pig.expectedFarrowingDate}</span>
+                </div>
+              )}
+
+              {/* Farrowing Pen Move Date */}
+              {pig.farrowingPenMoveDate && (
+                <div className="flex items-center justify-between text-xs sm:text-sm">
+                  <div className="flex items-center gap-2 text-[#2E7D32] font-semibold">
+                    <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    <span>Farrowing Pen Move</span>
+                  </div>
+                  <span className="font-semibold text-[#1B5E20]">{pig.farrowingPenMoveDate}</span>
+                </div>
+              )}
+
+              {/* Weight */}
+              <div className="flex items-center justify-between text-xs sm:text-sm">
+                <div className="flex items-center gap-2 text-[#2E7D32] font-semibold">
+                  <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
+                  </svg>
+                  <span>{t("weight") || "Weight"}</span>
+                </div>
+                <span className="font-semibold text-[#1B5E20]">{pig.weight} kg</span>
               </div>
-              <div className="py-2 flex justify-between">
-                <span className="text-zinc-500">{t("location")}</span>
-                <span className="font-semibold text-zinc-800">{pig.location || t("unassigned")}</span>
+
+              {/* Location */}
+              <div className="flex items-center justify-between text-xs sm:text-sm">
+                <div className="flex items-center gap-2 text-[#2E7D32] font-semibold">
+                  <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  </svg>
+                  <span>{t("location") || "Pen / Location"}</span>
+                </div>
+                <span className="font-semibold text-[#1B5E20]">{pig.location || t("unassigned") || "Unassigned"}</span>
               </div>
-              <div className="py-2 flex justify-between">
-                <span className="text-zinc-500">{t("birthDate")}</span>
-                <span className="font-semibold text-zinc-800">{pig.birthDate}</span>
+
+              {/* Source */}
+              <div className="flex items-center justify-between text-xs sm:text-sm">
+                <div className="flex items-center gap-2 text-[#2E7D32] font-semibold">
+                  <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                  </svg>
+                  <span>{t("source") || "Source"}</span>
+                </div>
+                <span className="font-semibold text-[#1B5E20]">{pig.source || "Born on farm"}</span>
               </div>
-              <div className="py-2 flex justify-between">
-                <span className="text-zinc-500">{th("age")}</span>
-                <span className="font-semibold text-zinc-800">
-                  {formatSwineAge(pig.birthDate)}
+
+              {/* Purpose */}
+              <div className="flex items-center justify-between text-xs sm:text-sm">
+                <div className="flex items-center gap-2 text-[#2E7D32] font-semibold">
+                  <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+                  </svg>
+                  <span>{t("purpose") || "Purpose"}</span>
+                </div>
+                <span className={`text-xs font-bold px-2.5 py-0.5 rounded-md ${pig.purpose === "Breeder" ? "bg-[#C8E6C9] text-[#1B5E20]" : "bg-[#E8F5E9] text-[#2E7D32]"}`}>
+                  {translatePurpose(pig.purpose)}
                 </span>
               </div>
-              <div className="py-2 flex justify-between">
-                <span className="text-zinc-500">{t("sowTag")}</span>
-                <span className="font-semibold font-mono text-zinc-800">{pig.sowTag || "N/A"}</span>
-              </div>
-              <div className="py-2 flex justify-between">
-                <span className="text-zinc-500">{t("boarTag")}</span>
-                <span className="font-semibold font-mono text-zinc-800">{pig.boarTag || "N/A"}</span>
-              </div>
+
+              {/* Sow Tag & Boar Tag */}
+              {pig.sowTag && (
+                <div className="flex items-center justify-between text-xs sm:text-sm">
+                  <span className="text-[#2E7D32] font-semibold pl-6">{t("sowTag") || "Sow Tag"}</span>
+                  <span className="font-mono font-semibold text-[#1B5E20]">{pig.sowTag}</span>
+                </div>
+              )}
+              {pig.boarTag && (
+                <div className="flex items-center justify-between text-xs sm:text-sm">
+                  <span className="text-[#2E7D32] font-semibold pl-6">{t("boarTag") || "Boar Tag"}</span>
+                  <span className="font-mono font-semibold text-[#1B5E20]">{pig.boarTag}</span>
+                </div>
+              )}
             </div>
-
-            {pig.notes && (
-              <div className="bg-zinc-50/80 p-3.5 rounded-xl border border-zinc-150 text-xs text-zinc-600">
-                <p className="font-bold text-zinc-500 uppercase text-[9px] mb-1">{t("notes")}</p>
-                {pig.notes}
-              </div>
-            )}
-
-            <button
-              onClick={handleDeletePig}
-              className="w-full text-center text-xs font-semibold text-rose-600 hover:text-rose-700 pt-3 border-t border-zinc-100 hover:underline relative z-10"
-            >
-              {t("deleteProfile")}
-            </button>
           </div>
 
+          {/* Notes Card (Matching Android Notes Card) */}
+          {pig.notes && (
+            <div className="bg-[#E8F5E9] border border-[#C8E6C9] rounded-2xl p-4 shadow-xs space-y-1.5">
+              <h3 className="text-sm font-bold text-[#1B5E20]">{t("notes") || "Notes"}</h3>
+              <p className="text-xs sm:text-sm text-[#2E7D32] whitespace-pre-line leading-relaxed">{pig.notes}</p>
+            </div>
+          )}
+
           {/* 2. Collapsible History Section (Closed by default) */}
-          <div className="bg-white/70 backdrop-blur-md border border-zinc-200 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
+          <div className="bg-white border border-zinc-200/90 rounded-2xl shadow-xs overflow-hidden transition-all duration-300">
             <div
               onClick={() => setIsHistoryExpanded(!isHistoryExpanded)}
-              className="w-full flex items-center justify-between p-5 text-left hover:bg-zinc-50/70 transition-colors cursor-pointer select-none"
+              className="w-full flex items-center justify-between p-4 sm:p-5 text-left hover:bg-zinc-50/70 transition-colors cursor-pointer select-none"
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 min-w-0">
                 <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200/60 flex items-center justify-center flex-shrink-0">
                   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <div>
+                <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <h3 className="text-base font-bold text-zinc-900">{t("healthHistory")}</h3>
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-zinc-100 text-zinc-700">
+                    <h3 className="text-base font-bold text-zinc-900 truncate">{t("healthHistory")}</h3>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-zinc-100 text-zinc-700 shrink-0">
                       {healthRecords.length}
                     </span>
                   </div>
-                  <p className="text-xs text-zinc-500 mt-0.5">Click to view health logs & medical history</p>
+                  <p className="text-xs text-zinc-500 mt-0.5 truncate">
+                    {healthRecords.length} {healthRecords.length === 1 ? "record" : "records"}
+                  </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 shrink-0 ml-2">
                 <button
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
                     setShowRecordModal(true);
                   }}
-                  className="rounded-xl bg-emerald-600 hover:bg-emerald-700 px-3.5 py-1.5 text-xs font-bold text-white shadow-sm transition-all active:scale-95"
+                  className="rounded-xl bg-emerald-600 hover:bg-emerald-700 px-3.5 py-1.5 text-xs font-bold text-white shadow-xs transition-all active:scale-95"
                 >
                   {t("logHealth")}
                 </button>
@@ -606,22 +740,22 @@ export default function PigProfilePage() {
             </div>
 
             {isHistoryExpanded && (
-              <div className="border-t border-zinc-150 p-6 bg-zinc-50/40 space-y-4 animate-fadeIn">
+              <div className="border-t border-zinc-150 p-4 sm:p-6 bg-zinc-50/40 space-y-4 animate-fadeIn">
                 {healthRecords.length === 0 ? (
-                  <p className="text-sm text-zinc-500 text-center py-8">{t("noHealthRecords")}</p>
+                  <p className="text-sm text-zinc-500 text-center py-6">{t("noHealthRecords")}</p>
                 ) : (
-                  <div className="relative border-l border-zinc-200 pl-4 ml-2 space-y-6">
+                  <div className="relative border-l border-emerald-300 pl-4 ml-2 space-y-5">
                     {healthRecords.map((record) => (
                       <div key={record.id} className="relative">
                         {/* Timeline dot */}
-                        <span className="absolute -left-[21px] top-1.5 h-3.5 w-3.5 rounded-full border-2 border-emerald-500 bg-white" />
+                        <span className="absolute -left-[21px] top-1.5 h-3.5 w-3.5 rounded-full border-2 border-emerald-600 bg-white" />
                         <div>
-                          <div className="flex justify-between items-start">
-                            <p className="text-sm font-bold text-zinc-800">{translateActivityType(record.type)}</p>
-                            <span className="text-xs text-zinc-400 font-mono">{record.date}</span>
+                          <div className="flex justify-between items-start gap-2">
+                            <p className="text-xs sm:text-sm font-bold text-zinc-800">{translateActivityType(record.type)}</p>
+                            <span className="text-xs text-zinc-400 font-mono shrink-0">{record.date}</span>
                           </div>
                           {record.description && (
-                            <p className="text-xs text-zinc-500 mt-1 whitespace-pre-line">{record.description}</p>
+                            <p className="text-xs text-zinc-600 mt-1 whitespace-pre-line leading-relaxed">{record.description}</p>
                           )}
                         </div>
                       </div>
@@ -630,6 +764,16 @@ export default function PigProfilePage() {
                 )}
               </div>
             )}
+          </div>
+
+          {/* Delete Profile Action */}
+          <div className="pt-2 text-center">
+            <button
+              onClick={handleDeletePig}
+              className="text-xs font-semibold text-rose-600 hover:text-rose-700 hover:underline transition"
+            >
+              {t("deleteProfile")}
+            </button>
           </div>
         </main>
       </div>

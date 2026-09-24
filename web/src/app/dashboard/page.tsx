@@ -903,58 +903,70 @@ function DashboardContent() {
               </button>
 
               {expandedSection === "feed" && (
-                <div className="border-t border-zinc-150 p-4 sm:p-6 bg-zinc-50/40 space-y-4 animate-fadeIn">
-                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                <div className="border-t border-zinc-150 p-4 sm:p-6 bg-zinc-50/40 space-y-3 animate-fadeIn">
+                  <div className="flex flex-col gap-2.5">
                     {/* Option 1: Feed Inventory */}
                     <Link
                       href="/dashboard/feed"
-                      className="bg-white border border-zinc-200/90 rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-3 hover:border-orange-400 hover:bg-orange-50/40 hover:shadow-md transition-all duration-200 group"
+                      className="bg-white border border-orange-200/60 rounded-2xl p-4 flex items-center justify-between hover:bg-orange-50/50 hover:border-orange-400 transition-all duration-200 shadow-sm group"
                     >
-                      <div className="h-12 w-12 rounded-xl bg-orange-50 text-orange-600 border border-orange-200/60 flex items-center justify-center group-hover:scale-105 transition-transform">
-                        <InventoryIcon className="h-6 w-6" />
+                      <div className="flex items-center gap-3.5 min-w-0">
+                        <div className="h-11 w-11 rounded-xl bg-orange-50 text-orange-600 border border-orange-200/60 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                          <InventoryIcon className="h-6 w-6" />
+                        </div>
+                        <span className="font-bold text-base text-zinc-900 group-hover:text-orange-700 transition-colors truncate">
+                          {t("inventory") || "Feed Inventory"}
+                        </span>
                       </div>
-                      <h3 className="text-sm sm:text-base font-black text-zinc-900 group-hover:text-orange-700 transition-colors">
-                        {t("inventory") || "Feed Inventory"}
-                      </h3>
+                      <ArrowRightIcon className="h-5 w-5 text-orange-600 flex-shrink-0 ml-3 group-hover:translate-x-0.5 transition-transform" />
                     </Link>
 
                     {/* Option 2: Calculate Feed */}
                     <Link
                       href="/dashboard/feed/calculator"
-                      className="bg-white border border-zinc-200/90 rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-3 hover:border-orange-400 hover:bg-orange-50/40 hover:shadow-md transition-all duration-200 group"
+                      className="bg-white border border-orange-200/60 rounded-2xl p-4 flex items-center justify-between hover:bg-orange-50/50 hover:border-orange-400 transition-all duration-200 shadow-sm group"
                     >
-                      <div className="h-12 w-12 rounded-xl bg-orange-50 text-orange-600 border border-orange-200/60 flex items-center justify-center group-hover:scale-105 transition-transform">
-                        <CalculateIcon className="h-6 w-6" />
+                      <div className="flex items-center gap-3.5 min-w-0">
+                        <div className="h-11 w-11 rounded-xl bg-orange-50 text-orange-600 border border-orange-200/60 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                          <CalculateIcon className="h-6 w-6" />
+                        </div>
+                        <span className="font-bold text-base text-zinc-900 group-hover:text-orange-700 transition-colors truncate">
+                          {t("calculator") || "Calculate Feed"}
+                        </span>
                       </div>
-                      <h3 className="text-sm sm:text-base font-black text-zinc-900 group-hover:text-orange-700 transition-colors">
-                        {t("calculator") || "Calculate Feed"}
-                      </h3>
+                      <ArrowRightIcon className="h-5 w-5 text-orange-600 flex-shrink-0 ml-3 group-hover:translate-x-0.5 transition-transform" />
                     </Link>
 
                     {/* Option 3: Mix Feed */}
                     <Link
                       href="/dashboard/feed/mix"
-                      className="bg-white border border-zinc-200/90 rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-3 hover:border-orange-400 hover:bg-orange-50/40 hover:shadow-md transition-all duration-200 group"
+                      className="bg-white border border-orange-200/60 rounded-2xl p-4 flex items-center justify-between hover:bg-orange-50/50 hover:border-orange-400 transition-all duration-200 shadow-sm group"
                     >
-                      <div className="h-12 w-12 rounded-xl bg-orange-50 text-orange-600 border border-orange-200/60 flex items-center justify-center group-hover:scale-105 transition-transform">
-                        <ScienceIcon className="h-6 w-6" />
+                      <div className="flex items-center gap-3.5 min-w-0">
+                        <div className="h-11 w-11 rounded-xl bg-orange-50 text-orange-600 border border-orange-200/60 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                          <ScienceIcon className="h-6 w-6" />
+                        </div>
+                        <span className="font-bold text-base text-zinc-900 group-hover:text-orange-700 transition-colors truncate">
+                          {t("mixFeed") || "Mix Feed"}
+                        </span>
                       </div>
-                      <h3 className="text-sm sm:text-base font-black text-zinc-900 group-hover:text-orange-700 transition-colors">
-                        {t("mixFeed") || "Mix Feed"}
-                      </h3>
+                      <ArrowRightIcon className="h-5 w-5 text-orange-600 flex-shrink-0 ml-3 group-hover:translate-x-0.5 transition-transform" />
                     </Link>
 
                     {/* Option 4: Analyze Feed */}
                     <Link
                       href="/dashboard/feed/analyze"
-                      className="bg-white border border-zinc-200/90 rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-3 hover:border-orange-400 hover:bg-orange-50/40 hover:shadow-md transition-all duration-200 group"
+                      className="bg-white border border-orange-200/60 rounded-2xl p-4 flex items-center justify-between hover:bg-orange-50/50 hover:border-orange-400 transition-all duration-200 shadow-sm group"
                     >
-                      <div className="h-12 w-12 rounded-xl bg-orange-50 text-orange-600 border border-orange-200/60 flex items-center justify-center group-hover:scale-105 transition-transform">
-                        <AnalyticsIcon className="h-6 w-6" />
+                      <div className="flex items-center gap-3.5 min-w-0">
+                        <div className="h-11 w-11 rounded-xl bg-orange-50 text-orange-600 border border-orange-200/60 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                          <AnalyticsIcon className="h-6 w-6" />
+                        </div>
+                        <span className="font-bold text-base text-zinc-900 group-hover:text-orange-700 transition-colors truncate">
+                          {t("analyzeFeed") || "Analyze Feed"}
+                        </span>
                       </div>
-                      <h3 className="text-sm sm:text-base font-black text-zinc-900 group-hover:text-orange-700 transition-colors">
-                        {t("analyzeFeed") || "Analyze Feed"}
-                      </h3>
+                      <ArrowRightIcon className="h-5 w-5 text-orange-600 flex-shrink-0 ml-3 group-hover:translate-x-0.5 transition-transform" />
                     </Link>
                   </div>
                 </div>
