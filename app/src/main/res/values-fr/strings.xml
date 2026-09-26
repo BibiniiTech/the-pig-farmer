@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartSwine</string>
+    <string name="weight_checker_title">VÉRIFICATEUR DE POIDS</string>
+    <string name="back_button_content_description">Retour</string>
+    <string name="important_notes_title">Notes importantes</string>
+    <string name="weight_checker_notes">• Périmètre thoracique : Mesurez le thorax (juste derrière les pattes avant) en vous assurant que le ruban est bien ajusté le long du corps et se rejoint étroitement (Point B).\n• Longueur corporelle : Mesurez de la base des oreilles à la base de la queue en veillant à ce que le ruban soit bien tendu sur le dos (Point A).\n• Veillez à ce que le porc se tienne bien d\'aplomb sur un sol plat pour garantir un résultat précis.\n</string>
+    <string name="converter_title">Convertisseur</string>
+    <string name="unit_lbs">Lbs</string>
+    <string name="unit_kgs">Kg</string>
+    <string name="weigh_with_scale">Peser sur balance</string>
+    <string name="weigh_with_tape_title">Peser au ruban</string>
+    <string name="weigh_with_tape_subtitle">Estimer le poids au ruban barymétrique.</string>
+    <string name="label_length">Longueur (%1$s)</string>
+    <string name="label_girth">Périmètre thoracique (%1$s)</string>
+    <string name="unit_cm">cm</string>
+    <string name="unit_in">po</string>
+    <string name="placeholder_a">A</string>
+    <string name="placeholder_b">B</string>
+    <string name="label_estimated_live_weight">Poids vif estimé</string>
+    <string name="label_estimated_carcass_weight">Poids carcasse estimé</string>
+    <string name="msg_enter_measurements">Saisir les mesures sur le schéma pour calculer</string>
+    <string name="pig_diagram_content_description">Guide de mensuration du porc</string>
+    <string name="weight_format">%1$.1f Kg / %2$.1f Lbs</string>
+    <string name="estimated_results">Résultats estimés</string>
+
+    <string name="specify_breed">Préciser la race</string>
+</resources>

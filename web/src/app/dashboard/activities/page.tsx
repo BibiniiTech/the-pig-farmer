@@ -39,6 +39,8 @@ const addDays = (dateStr: string, days: number) => {
 
 function HerdActivitiesContent() {
   const t = useTranslations("Activities");
+  const tNav = useTranslations("Navigation");
+  const tCommon = useTranslations("Common");
   const { user, userProfile, activeFarmUid, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -460,20 +462,55 @@ function HerdActivitiesContent() {
           // Confirm Pregnancy
           if (activityType === "Confirm Pregnancy") {
             if (pregnancyOutcome === "Successful") {
-              batch.update(pigRef, { status: "Pregnant", purpose: "Breeder" });
               const sowBreedingDate = pig.lastBreedingDate || logDate;
+              const day110 = addDays(sowBreedingDate, 110);
+              const day114 = addDays(sowBreedingDate, 114);
+              batch.update(pigRef, {
+                status: "Pregnant",
+                purpose: "Breeder",
+                expectedFarrowingDate: day114,
+                farrowingPenMoveDate: day110
+              });
+
+              // Day 110 Move Sow to Farrowing Pen
+              const tCrate = doc(collection(db, "users", activeFarmUid, "tasks"));
+              batch.set(tCrate, {
+                id: tCrate.id,
+                name: `Move to Farrowing Crate: Pig ${pig.tagNumber}`,
+                date: day110,
+                notes: `Move sow to sanitized farrowing pen & wash/deworm 4-5 days before due date`,
+                pigIds: [pigId],
+                completed: false
+              });
+
               const taskRef = doc(collection(db, "users", activeFarmUid, "tasks"));
               batch.set(taskRef, {
                 id: taskRef.id,
                 name: `Farrowing: Pig ${pig.tagNumber}`,
-                date: addDays(sowBreedingDate, 114),
+                date: day114,
                 notes: `Scheduled 114 days after mating on ${sowBreedingDate}`,
                 pigIds: [pigId],
                 completed: false
               });
-              finalDescription = `${notes}\nPregnancy Confirmed. Farrowing scheduled.`.trim();
+              finalDescription = `${notes}\nPregnancy Confirmed. Due on ${day114}`.trim();
             } else {
-              finalDescription = `${notes}\nPregnancy check failed.`.trim();
+              batch.update(pigRef, {
+                status: "Sow",
+                lastBreedingDate: "",
+                expectedFarrowingDate: "",
+                farrowingPenMoveDate: ""
+              });
+              const tRemate = doc(collection(db, "users", activeFarmUid, "tasks"));
+              const remateDate = addDays(logDate, 3);
+              batch.set(tRemate, {
+                id: tRemate.id,
+                name: `Re-mate / Heat Check: Pig ${pig.tagNumber}`,
+                date: remateDate,
+                notes: `Conception check failed on ${logDate}. Monitor for next estrus cycle and re-mate.`,
+                pigIds: [pigId],
+                completed: false
+              });
+              finalDescription = `${notes}\nPregnancy check failed. Reset to open Sow.`.trim();
             }
           }
 
@@ -509,6 +546,28 @@ function HerdActivitiesContent() {
               name: `Weaning: Pig ${pig.tagNumber}`,
               date: addDays(logDate, 28),
               notes: `Weaning due 28 days after farrowing on ${logDate}`,
+              pigIds: [pigId],
+              completed: false
+            });
+
+            // Auto-schedule Iron Injection 3 days post-farrowing
+            const ironTask = doc(collection(db, "users", activeFarmUid, "tasks"));
+            batch.set(ironTask, {
+              id: ironTask.id,
+              name: `Iron Injection: Pig ${pig.tagNumber}`,
+              date: addDays(logDate, 3),
+              notes: `Administer 1st iron injection to newborn piglets (3 days post-farrowing)`,
+              pigIds: [pigId],
+              completed: false
+            });
+
+            // Auto-schedule Creep Feed 7 days post-farrowing
+            const creepTask = doc(collection(db, "users", activeFarmUid, "tasks"));
+            batch.set(creepTask, {
+              id: creepTask.id,
+              name: `Creep Feed Introduction: Pig ${pig.tagNumber}`,
+              date: addDays(logDate, 7),
+              notes: `Introduce high-protein creep feed to piglets at 7-10 days of age`,
               pigIds: [pigId],
               completed: false
             });
@@ -740,7 +799,7 @@ function HerdActivitiesContent() {
 
   if (loading || !user) {
     return (
-      <div className="flex h-screen items-center justify-center bg-white text-zinc-900">
+      <div className="flex h-screen items-center justify-center bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-cyan-600 border-t-transparent"></div>
       </div>
     );
@@ -759,7 +818,7 @@ function HerdActivitiesContent() {
   };
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans overflow-x-hidden">
       {/* Watermark Logo Background */}
       {!isMobile && (
         <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
@@ -772,7 +831,14 @@ function HerdActivitiesContent() {
       )}
 
       <div className="relative z-10 flex flex-col min-h-screen">
-        {!isMobile && <DesktopHeader />}
+        {!isMobile && (
+          <DesktopHeader
+            showBack
+            backPath="/dashboard"
+            label={tNav("activities") || "HERD ACTIVITIES"}
+            labelColor="text-[#00838F] dark:text-[#4DD0E1]"
+          />
+        )}
 
         <main className="flex-1 max-w-5xl w-full mx-auto p-4 sm:p-6 space-y-6">
           {/* Top Bar with Back Button */}
@@ -780,22 +846,22 @@ function HerdActivitiesContent() {
             <button
               type="button"
               onClick={() => router.push("/dashboard")}
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-50 hover:text-zinc-900 transition font-bold text-xs shadow-xs"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-700 hover:text-zinc-900 transition font-bold text-xs shadow-xs"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
-              <span>Back</span>
+              <span>{tCommon("back") || tNav("back") || "Back"}</span>
             </button>
-            <h1 className="text-xl sm:text-2xl font-black text-cyan-900 text-center flex-1">
-              Herd Activities
+            <h1 className="text-xl sm:text-2xl font-black text-[#00838F] dark:text-[#4DD0E1] text-center flex-1">
+              {tNav("activities") || "Herd Activities"}
             </h1>
             <div className="w-16" />
           </div>
 
           <div className="space-y-4">
             <h2 className="text-sm font-bold text-zinc-700">
-              Choose activity to execute:
+              {t("chooseActivityToExecute") || "Choose Activity to Execute/Schedule"}
             </h2>
 
             {dataLoading ? (
@@ -984,7 +1050,7 @@ function HerdActivitiesContent() {
 
                   <div className="grid grid-cols-3 gap-3">
                     <div>
-                      <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Stillborn</label>
+                      <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("stillborns") || "Stillborn"}</label>
                       <input
                         type="number"
                         min="0"
@@ -994,7 +1060,7 @@ function HerdActivitiesContent() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Mummified</label>
+                      <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("mummies") || "Mummified"}</label>
                       <input
                         type="number"
                         min="0"
@@ -1132,9 +1198,9 @@ function HerdActivitiesContent() {
                       onChange={(e) => setCullingReason(e.target.value)}
                       className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                     >
-                      <option value="Natural Causes">Natural Causes</option>
-                      <option value="Disease">Disease</option>
-                      <option value="Sold">Sold</option>
+                      <option value="Natural Causes">{t("reasonNatural") || "Natural Causes"}</option>
+                      <option value="Disease">{t("reasonDisease") || "Disease"}</option>
+                      <option value="Sold">{t("reasonSold") || "Sold"}</option>
                     </select>
                   </div>
                   {cullingReason === "Sold" && selectedPigIds.length > 0 && (
@@ -1303,7 +1369,7 @@ function HerdActivitiesContent() {
           <div className="bg-white border border-rose-200 rounded-2xl w-full max-w-md p-6 space-y-4 shadow-2xl text-zinc-900">
             <div className="flex items-center gap-3 text-rose-600">
               <span className="text-2xl">⚠️</span>
-              <h3 className="text-lg font-bold">Food Safety Warning</h3>
+              <h3 className="text-lg font-bold">{t("criticalFoodSafetyWarning") || "Critical Food Safety Warning"}</h3>
             </div>
             <p className="text-sm text-zinc-700">
               Pig <strong>{withdrawalWarningPig.tagNumber}</strong> is currently under an active medication withdrawal period until <strong>{withdrawalWarningPig.activeWithdrawalUntil}</strong>

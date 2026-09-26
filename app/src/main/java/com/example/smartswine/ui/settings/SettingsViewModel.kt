@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.Currency
 import java.util.Date
 import java.util.Locale
+import com.example.smartswine.utils.CountryCurrencyHelper
 
 class SettingsViewModel : ViewModel() {
     private val db: FirebaseFirestore by lazy {
@@ -91,15 +92,29 @@ class SettingsViewModel : ViewModel() {
                     if ((document != null) && document.exists()) {
                         val country = document.getString("country") ?: ""
                         val countryCode = document.getString("countryCode") ?: ""
-                        if (country != lastCountry) {
+                        val isFirstLoad = lastCountry == null
+                        val countryChanged = !isFirstLoad && (country != lastCountry) && country.isNotBlank()
+                        if (country.isNotBlank()) {
                             lastCountry = country
-                            updateCurrencyFromCountry(country, countryCode)
                         }
 
                         // Load settings from cloud
                         @Suppress("UNCHECKED_CAST")
                         val settings = document["settings"] as? Map<String, Any> ?: emptyMap()
                         loadSettingsFromMap(settings)
+
+                        if (countryChanged) {
+                            // Automatically update and persist currency when user changes their country in profile
+                            updateCurrencyFromCountry(country, countryCode, autoSave = true)
+                        } else if (country.isNotBlank()) {
+                            if (!settings.containsKey("selectedCurrency") || (settings["selectedCurrency"] as? String).isNullOrBlank() || currencySymbol.value == "$") {
+                                val info = CountryCurrencyHelper.getCurrencyForCountry(country, countryCode)
+                                if (info.symbol.isNotBlank() && info.symbol != "$") {
+                                    selectedCurrency.value = info.code
+                                    currencySymbol.value = info.symbol
+                                }
+                            }
+                        }
 
                         // Also sync to SharedPreferences
                         val context = com.google.firebase.FirebaseApp.getInstance().applicationContext
@@ -135,10 +150,10 @@ class SettingsViewModel : ViewModel() {
         (map["breederPigletWeight"] as? String)?.let { breederPigletWeight.value = it }
         (map["breederWeanerWeight"] as? String)?.let { breederWeanerWeight.value = it }
         (map["breederGrowerWeight"] as? String)?.let { breederGrowerWeight.value = it }
-        (map["autoClassifyBarrows"] as? Boolean)?.let { autoClassifyBarrows.value = it }
-        (map["autoClassifySows"] as? Boolean)?.let { autoClassifySows.value = it }
+        autoClassifyBarrows.value = true
+        autoClassifySows.value = true
         (map["notificationsEnabled"] as? Boolean)?.let { notificationsEnabled.value = it }
-        (map["giltAgeThresholdWeeks"] as? String)?.let { giltAgeThresholdWeeks.value = it }
+        giltAgeThresholdWeeks.value = "26"
         (map["selectedCurrency"] as? String)?.let { selectedCurrency.value = it }
         (map["currencySymbol"] as? String)?.let { currencySymbol.value = it }
     }
@@ -191,25 +206,13 @@ class SettingsViewModel : ViewModel() {
         }
     }
 
-    private fun updateCurrencyFromCountry(countryName: String, countryCode: String) {
-        val locale = if (countryCode.isNotEmpty()) {
-            try {
-                Locale.Builder().setRegion(countryCode).build()
-            } catch (e: Exception) {
-                Locale.getAvailableLocales().find { it.displayCountry.equals(countryName, ignoreCase = true) }
-            }
-        } else {
-            Locale.getAvailableLocales().find { it.displayCountry.equals(countryName, ignoreCase = true) }
-        }
-
-        if (locale != null) {
-            try {
-                val currency = Currency.getInstance(locale)
-                selectedCurrency.value = currency.currencyCode
-                currencySymbol.value = currency.getSymbol(Locale.US)
-            } catch (_: Exception) {
-                // Fallback to USD if currency not found for locale
-            }
+    fun updateCurrencyFromCountry(countryName: String, countryCode: String = "", autoSave: Boolean = false) {
+        if (countryName.isBlank() && countryCode.isBlank()) return
+        val currencyInfo = CountryCurrencyHelper.getCurrencyForCountry(countryName, countryCode)
+        selectedCurrency.value = currencyInfo.code
+        currencySymbol.value = currencyInfo.symbol
+        if (autoSave) {
+            saveSettings()
         }
     }
 
@@ -227,23 +230,22 @@ class SettingsViewModel : ViewModel() {
         val userId = auth.currentUser?.uid ?: return
         viewModelScope.launch {
             try {
-                val collectionRef = db.collection("users").document(userId).collection(collectionName)
-                val snapshot = collectionRef.get().await()
-                
-                val batch = db.batch()
-                for (doc in snapshot.documents) {
-                    batch.delete(doc.reference)
+                val targets = when (collectionName) {
+                    "pigs" -> listOf("pigs", "archived_pigs")
+                    "ingredients" -> listOf("feed_ingredients", "nutritional_requirements", "feed_inventory", "feed_transactions", "feed_inventory_transactions", "saved_feed_recipes")
+                    "staff" -> listOf("staff", "salaries")
+                    else -> listOf(collectionName)
                 }
-                
-                // If clearing pigs, also clear archived_pigs
-                if (collectionName == "pigs") {
-                    val archiveSnapshot = db.collection("users").document(userId).collection("archived_pigs").get().await()
-                    for (doc in archiveSnapshot.documents) {
+
+                for (target in targets) {
+                    val collectionRef = db.collection("users").document(userId).collection(target)
+                    val snapshot = collectionRef.get().await()
+                    val batch = db.batch()
+                    for (doc in snapshot.documents) {
                         batch.delete(doc.reference)
                     }
+                    batch.commit().await()
                 }
-                
-                batch.commit().await()
                 onComplete()
             } catch (_: Exception) {
                 // Handle error
@@ -252,7 +254,12 @@ class SettingsViewModel : ViewModel() {
     }
 
     fun factoryReset(onComplete: () -> Unit) {
-        val collections = listOf("pigs", "archived_pigs", "financials", "ingredients", "requirements", "staff", "salaries")
+        val collections = listOf(
+            "pigs", "archived_pigs", "financials", "feed_ingredients", 
+            "nutritional_requirements", "tasks", "feed_inventory", 
+            "feed_transactions", "feed_inventory_transactions", 
+            "saved_feed_recipes", "farm_alerts", "staff", "salaries"
+        )
         val userId = auth.currentUser?.uid ?: return
         
         viewModelScope.launch {

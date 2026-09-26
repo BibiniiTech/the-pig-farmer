@@ -125,7 +125,7 @@ export default function MobileShell({
 
   const pathname = usePathname();
   const router = useRouter();
-  const { user, userProfile, activeFarmUid, isStaff } = useAuth();
+  const { user, userProfile, activeFarmUid, isStaff, isFinancialsRestricted } = useAuth();
 
   const isHome = pathname === "/dashboard";
 
@@ -141,7 +141,7 @@ export default function MobileShell({
     { key: "weight", label: tNav("weight"), path: "/dashboard?section=weight", icon: WeightCheckerIcon },
     { key: "training", label: tNav("training"), path: "/dashboard?section=training", icon: TrainingTipsIcon },
     { key: "billing", label: tNav("billing"), path: "/dashboard/billing", icon: PremiumIcon },
-  ];
+  ].filter((o) => !isFinancialsRestricted || (o.key !== "financials" && o.key !== "hr"));
 
   const ADMIN_NAV_OPTION: NavOption = {
     key: "admin",
@@ -266,9 +266,9 @@ export default function MobileShell({
   };
 
   return (
-    <div className="relative flex flex-col h-[100dvh] bg-white text-zinc-900 font-sans overflow-x-hidden">
+    <div className="relative flex flex-col h-[100dvh] bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100 font-sans overflow-x-hidden">
       {/* ── Top App Bar ── */}
-      <header className="sticky top-0 z-50 flex items-center justify-between h-14 px-4 bg-white/90 backdrop-blur-md border-b border-zinc-100 shadow-sm">
+      <header className="sticky top-0 z-50 flex items-center justify-between h-14 px-4 bg-white/90 dark:bg-[#1E1E1E]/90 backdrop-blur-md border-b border-zinc-100 dark:border-zinc-800 shadow-sm">
         {/* Upper Left: Farm Logo + Farm Name (Clickable to open Settings/Profile) */}
         <button
           id="mobile-farm-header-button"
@@ -636,7 +636,7 @@ export default function MobileShell({
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3m.08 4h.01" />
               </svg>
             </div>
-            <span>How-To Guide</span>
+            <span>{tNav("howToGuide") || "How-To Guide"}</span>
           </Link>
 
           {/* 5. Settings */}

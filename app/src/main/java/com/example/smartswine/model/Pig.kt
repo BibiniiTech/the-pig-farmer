@@ -43,6 +43,12 @@ data class Pig(
     @set:Exclude
     var weaned: Boolean = false,
     
+    val parity: Int = 0, // Sow parity (number of litters farrowed)
+    val activeWithdrawalUntil: String = "", // Food safety: active drug withdrawal date
+    val withdrawalMedication: String = "", // Name of medication under withdrawal
+    val expectedFarrowingDate: String = "", // Gestation milestone (Day 114)
+    val farrowingPenMoveDate: String = "", // Crate move milestone (Day 110)
+    
     val notes: String = ""
 ) {
     @get:Exclude

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartSwine</string>
+    <string name="weight_checker_title">IGERERANYA RY\'IBIRO BY\'INGURUBE</string>
+    <string name="back_button_content_description">Subira inyuma</string>
+    <string name="important_notes_title">Iby\'ingenzi byo kuzirikana</string>
+    <string name="weight_checker_notes">• Ubugari bw\'igituza: Pima inyuma gato y\'amaguru y\'imbere, umukandara ufashe neza ku mubiri (Akadomo B).\n• Uburebure bw\'umubiri: Pima kuva hagati y\'amatwi ukurikira umugongo kugeza ku gitsina cy\'umurizo (Akadomo A).\n• Reba ko ingurube ihagaze neza ku butaka buringaniye kugira ngo ubone ibipimo by\'ukuri.\n</string>
+    <string name="converter_title">Guhindura Ibipimo</string>
+    <string name="unit_lbs">Lbs</string>
+    <string name="unit_kgs">Kg</string>
+    <string name="weigh_with_scale">Gupima ku munzani</string>
+    <string name="weigh_with_tape_title">Gupimisha metero y\'umukandara</string>
+    <string name="weigh_with_tape_subtitle">Gukora igereranya ry\'ibiro ukoresheje metero.</string>
+    <string name="label_length">Uburebure (%1$s)</string>
+    <string name="label_girth">Ubugari bw\'igituza (%1$s)</string>
+    <string name="unit_cm">cm</string>
+    <string name="unit_in">in</string>
+    <string name="placeholder_a">A</string>
+    <string name="placeholder_b">B</string>
+    <string name="label_estimated_live_weight">Ibiro ikiri nzima</string>
+    <string name="label_estimated_carcass_weight">Ibiro by\'inyama byiteganyijwe</string>
+    <string name="msg_enter_measurements">Shyiramo ibipimo ku gishushanyo ubare</string>
+    <string name="pig_diagram_content_description">Igishushanyo cy\'ingurube n\'uburyo bwo kuyipima</string>
+    <string name="weight_format">%1$.1f Kg / %2$.1f Lbs</string>
+    <string name="estimated_results">Ibisubizo by\'igereranya</string>
+    <string name="specify_breed">Hitamo ubwoko bw\'ingurube</string>
+</resources>

@@ -1,21 +1,24 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { doc, updateDoc, collection, addDoc, deleteDoc, setDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { StaffMember } from "@/lib/types";
+import { doc, updateDoc, collection, deleteDoc, setDoc, addDoc } from "firebase/firestore";
+import { db, auth } from "@/lib/firebase";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { StaffMember, FinancialRecord } from "@/lib/types";
 import { useTranslations } from "next-intl";
 import { ExportPdfIcon } from "@/components/icons/DashboardIcons";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { TierLimiter } from "@/lib/tierLimiter";
 import HRReport from "@/components/reports/HRReport";
+import StaffDetailReport from "@/components/reports/StaffDetailReport";
 
 interface InlineHRSectionProps {
   staff: StaffMember[];
   currencySymbol: string;
   activeFarmUid: string;
   initialShowAdd?: boolean;
+  financialRecords?: FinancialRecord[];
 }
 
 export default function InlineHRSection({
@@ -23,13 +26,34 @@ export default function InlineHRSection({
   currencySymbol,
   activeFarmUid,
   initialShowAdd = false,
+  financialRecords = [],
 }: InlineHRSectionProps) {
   const t = useTranslations("HR");
+  const th = useTranslations("Herd");
+  const tCommon = useTranslations("Common");
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingStaff, setEditingStaff] = useState<StaffMember | null>(null);
   const [staffToViewProfile, setStaffToViewProfile] = useState<StaffMember | null>(null);
   const [staffForFullDetails, setStaffForFullDetails] = useState<StaffMember | null>(null);
   const [staffToPaySalary, setStaffToPaySalary] = useState<StaffMember | null>(null);
+  const [resendingStaffId, setResendingStaffId] = useState<string | null>(null);
+  const [selectedStaffForReport, setSelectedStaffForReport] = useState<StaffMember | null>(null);
+
+  const handleResendInvite = async (member: StaffMember) => {
+    if (!activeFarmUid || !member.email) return;
+    setResendingStaffId(member.id);
+    try {
+      await sendPasswordResetEmail(auth, member.email.trim().toLowerCase());
+      const staffRef = doc(db, "users", activeFarmUid, "staff", member.id);
+      await updateDoc(staffRef, { inviteStatus: "sent" });
+      alert(`Invitation password setup email sent to ${member.email}`);
+    } catch (err: any) {
+      console.error("Error sending invitation email:", err);
+      alert(`Could not send invitation email: ${err?.message || "Please check email address."}`);
+    } finally {
+      setResendingStaffId(null);
+    }
+  };
 
   useEffect(() => {
     if (initialShowAdd) {
@@ -199,18 +223,46 @@ export default function InlineHRSection({
 
       if (editingStaff) {
         const staffRef = doc(db, "users", activeFarmUid, "staff", editingStaff.id);
-        await updateDoc(staffRef, payload);
+        const shouldSendInvite = effectiveAppAccess && staffEmail && (!editingStaff.allowAppAccess || editingStaff.email !== staffEmail);
+        const updatedPayload: any = {
+          ...payload,
+          id: editingStaff.id,
+        };
+        if (shouldSendInvite) {
+          updatedPayload.inviteStatus = "sent";
+        }
+        await updateDoc(staffRef, updatedPayload);
 
         // If email changed or app access revoked, delete old registry entry
         if (editingStaff.email && (editingStaff.email.trim().toLowerCase() !== staffEmail || !effectiveAppAccess)) {
           await deleteDoc(doc(db, "staff_registry", editingStaff.email.trim().toLowerCase()));
         }
+
+        if (shouldSendInvite) {
+          try {
+            await sendPasswordResetEmail(auth, staffEmail);
+          } catch (e) {
+            console.warn("Could not send invite email directly:", e);
+          }
+        }
       } else {
         const staffCol = collection(db, "users", activeFarmUid, "staff");
-        await addDoc(staffCol, {
+        const staffRef = doc(staffCol);
+        const newStaffId = staffRef.id;
+        await setDoc(staffRef, {
+          id: newStaffId,
           ...payload,
+          inviteStatus: effectiveAppAccess && staffEmail ? "sent" : undefined,
           createdAt: Date.now(),
         });
+
+        if (effectiveAppAccess && staffEmail) {
+          try {
+            await sendPasswordResetEmail(auth, staffEmail);
+          } catch (e) {
+            console.warn("Could not send invite email directly:", e);
+          }
+        }
       }
 
       // If app access is enabled and email is present, register in staff_registry
@@ -291,8 +343,25 @@ export default function InlineHRSection({
       router.push("/dashboard/billing");
       return;
     }
+    setSelectedStaffForReport(null);
     if (typeof window !== "undefined") {
-      window.print();
+      setTimeout(() => {
+        window.print();
+      }, 100);
+    }
+  };
+
+  const handlePrintStaffDetail = (member: StaffMember) => {
+    if (!isPremium) {
+      alert("Individual Staff Profile PDF export is a SmartSwine Premium feature. Please upgrade to export staff reports.");
+      router.push("/dashboard/billing");
+      return;
+    }
+    setSelectedStaffForReport(member);
+    if (typeof window !== "undefined") {
+      setTimeout(() => {
+        window.print();
+      }, 150);
     }
   };
 
@@ -591,18 +660,18 @@ export default function InlineHRSection({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-600 mb-1">Gender</label>
+                  <label className="block text-xs font-semibold text-zinc-600 mb-1">{th("gender") || "Gender"}</label>
                   <select
                     value={gender}
                     onChange={(e) => setGender(e.target.value)}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs sm:text-sm text-zinc-900 focus:outline-none"
                   >
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
+                    <option value="Male">{th("male") || "Male"}</option>
+                    <option value="Female">{th("female") || "Female"}</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-600 mb-1">Date of Birth</label>
+                  <label className="block text-xs font-semibold text-zinc-600 mb-1">{th("birthDate") || "Date of Birth"}</label>
                   <input
                     type="date"
                     value={dateOfBirth}
@@ -768,7 +837,7 @@ export default function InlineHRSection({
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
-                <span>View Details</span>
+                <span>{t("staffDetails") || "View Details"}</span>
               </button>
 
               <button
@@ -776,7 +845,7 @@ export default function InlineHRSection({
                 onClick={() => setStaffToViewProfile(null)}
                 className="flex-1 py-2 px-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold transition shadow-sm"
               >
-                Close
+                {tCommon("close") || "Close"}
               </button>
             </div>
           </div>
@@ -820,26 +889,26 @@ export default function InlineHRSection({
             <div className="space-y-3.5 text-xs">
               {/* Personal Information */}
               <div className="bg-purple-50/40 p-3.5 rounded-xl border border-purple-100 space-y-2">
-                <h4 className="font-bold text-purple-900 uppercase text-[11px] tracking-wider">Personal Information</h4>
+                <h4 className="font-bold text-purple-900 uppercase text-[11px] tracking-wider">{t("staffProfile") || "Personal Information"}</h4>
                 <div className="grid grid-cols-2 gap-2 text-zinc-700">
                   <div>
-                    <span className="text-zinc-400 block text-[10px]">Gender</span>
+                    <span className="text-zinc-400 block text-[10px]">{t("gender") || th("gender") || "Gender"}</span>
                     <span className="font-semibold">{staffForFullDetails.gender || "—"}</span>
                   </div>
                   <div>
-                    <span className="text-zinc-400 block text-[10px]">Date of Birth</span>
+                    <span className="text-zinc-400 block text-[10px]">{t("dateOfBirth") || th("dateOfBirth") || "Date of Birth"}</span>
                     <span className="font-semibold">{staffForFullDetails.dateOfBirth || "—"}</span>
                   </div>
                   <div>
-                    <span className="text-zinc-400 block text-[10px]">Phone</span>
+                    <span className="text-zinc-400 block text-[10px]">{t("phone") || "Phone"}</span>
                     <span className="font-semibold">{staffForFullDetails.phone || "—"}</span>
                   </div>
                   <div>
-                    <span className="text-zinc-400 block text-[10px]">Email</span>
+                    <span className="text-zinc-400 block text-[10px]">{t("email") || "Email"}</span>
                     <span className="font-semibold">{staffForFullDetails.email || "—"}</span>
                   </div>
                   <div className="col-span-2">
-                    <span className="text-zinc-400 block text-[10px]">Residential Address</span>
+                    <span className="text-zinc-400 block text-[10px]">{t("residentialAddress") || "Residential Address"}</span>
                     <span className="font-semibold">{staffForFullDetails.residentialAddress || "—"}</span>
                   </div>
                 </div>
@@ -847,18 +916,18 @@ export default function InlineHRSection({
 
               {/* Employment & Compensation */}
               <div className="bg-zinc-50 p-3.5 rounded-xl border border-zinc-200 space-y-2">
-                <h4 className="font-bold text-zinc-900 uppercase text-[11px] tracking-wider">Employment & Compensation</h4>
+                <h4 className="font-bold text-zinc-900 uppercase text-[11px] tracking-wider">{t("salary") || "Employment & Compensation"}</h4>
                 <div className="grid grid-cols-2 gap-2 text-zinc-700">
                   <div>
-                    <span className="text-zinc-400 block text-[10px]">Date Joined</span>
+                    <span className="text-zinc-400 block text-[10px]">{t("joined") || "Date Joined"}</span>
                     <span className="font-semibold">{staffForFullDetails.joinDate || "—"}</span>
                   </div>
                   <div>
-                    <span className="text-zinc-400 block text-[10px]">Base Monthly Salary</span>
+                    <span className="text-zinc-400 block text-[10px]">{t("monthlySalary") || "Base Monthly Salary"}</span>
                     <span className="font-black text-purple-800">{currencySymbol}{staffForFullDetails.salary?.toFixed(2)}</span>
                   </div>
                   <div className="col-span-2">
-                    <span className="text-zinc-400 block text-[10px]">Mobile App Access</span>
+                    <span className="text-zinc-400 block text-[10px]">{t("appAccess") || "Mobile App Access"}</span>
                     <span className="font-semibold">{staffForFullDetails.allowAppAccess ? "Enabled (Worker Account)" : "Disabled"}</span>
                   </div>
                 </div>
@@ -866,35 +935,43 @@ export default function InlineHRSection({
 
               {/* Emergency Contact */}
               <div className="bg-rose-50/40 p-3.5 rounded-xl border border-rose-100 space-y-2">
-                <h4 className="font-bold text-rose-900 uppercase text-[11px] tracking-wider">Emergency Contact</h4>
+                <h4 className="font-bold text-rose-900 uppercase text-[11px] tracking-wider">{t("emergencyContactDetails") || "Emergency Contact"}</h4>
                 <div className="grid grid-cols-2 gap-2 text-zinc-700">
                   <div>
-                    <span className="text-zinc-400 block text-[10px]">Contact Person</span>
+                    <span className="text-zinc-400 block text-[10px]">{t("emergencyContactName") || "Contact Person"}</span>
                     <span className="font-semibold">{staffForFullDetails.emergencyContactName || "—"}</span>
                   </div>
                   <div>
-                    <span className="text-zinc-400 block text-[10px]">Relationship</span>
+                    <span className="text-zinc-400 block text-[10px]">{t("emergencyContactRelation") || "Relationship"}</span>
                     <span className="font-semibold">{staffForFullDetails.emergencyContactRelation || "—"}</span>
                   </div>
                   <div>
-                    <span className="text-zinc-400 block text-[10px]">Emergency Phone</span>
+                    <span className="text-zinc-400 block text-[10px]">{t("emergencyContactPhone") || "Emergency Phone"}</span>
                     <span className="font-semibold">{staffForFullDetails.emergencyContactPhone || "—"}</span>
                   </div>
                   <div>
-                    <span className="text-zinc-400 block text-[10px]">Emergency Address</span>
+                    <span className="text-zinc-400 block text-[10px]">{t("emergencyContactAddress") || "Emergency Address"}</span>
                     <span className="font-semibold">{staffForFullDetails.emergencyContactAddress || "—"}</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="flex justify-end pt-2">
+            <div className="flex justify-between items-center pt-2 border-t border-zinc-150">
+              <button
+                type="button"
+                onClick={() => handlePrintStaffDetail(staffForFullDetails)}
+                className="py-2 px-3.5 rounded-xl border border-purple-200 bg-purple-50 hover:bg-purple-100 text-purple-700 text-xs font-bold transition flex items-center gap-1.5"
+              >
+                <ExportPdfIcon className="h-4 w-4" />
+                <span>{t("fullStaffReport") || "Print Profile Report"}</span>
+              </button>
               <button
                 type="button"
                 onClick={() => setStaffForFullDetails(null)}
                 className="py-2 px-5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold transition shadow-sm"
               >
-                Close
+                {tCommon("close") || "Close"}
               </button>
             </div>
           </div>
@@ -907,7 +984,7 @@ export default function InlineHRSection({
           <div className="bg-white rounded-2xl w-full max-w-md p-5 space-y-4 shadow-2xl">
             <div className="flex items-center justify-between pb-3 border-b border-zinc-150">
               <div>
-                <h3 className="text-base font-bold text-zinc-900">Log Salary Payment</h3>
+                <h3 className="text-base font-bold text-zinc-900">{t("logSalaryPayment") || "Log Salary Payment"}</h3>
                 <p className="text-xs text-purple-700">{staffToPaySalary.name} ({staffToPaySalary.role})</p>
               </div>
               <button
@@ -1013,11 +1090,19 @@ export default function InlineHRSection({
       )}
 
       {isPremium && (
-        <HRReport
-          staff={activeStaff}
-          financialRecords={[]}
-          currencySymbol={currencySymbol}
-        />
+        selectedStaffForReport ? (
+          <StaffDetailReport
+            member={selectedStaffForReport}
+            financialRecords={financialRecords}
+            currencySymbol={currencySymbol}
+          />
+        ) : (
+          <HRReport
+            staff={activeStaff}
+            financialRecords={financialRecords}
+            currencySymbol={currencySymbol}
+          />
+        )
       )}
     </div>
   );

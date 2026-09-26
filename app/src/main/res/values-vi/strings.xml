@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartSwine</string>
+    <string name="weight_checker_title">ƯỚC TÍNH THỂ TRỌNG</string>
+    <string name="back_button_content_description">Quay lại</string>
+    <string name="important_notes_title">Lưu ý quan trọng</string>
+    <string name="weight_checker_notes">• Vòng ngực: Đo quanh lồng ngực ngay sau hai chân trước, đảm bảo thước dây áp sát da không chùng (Điểm B).\n• Chiều dài thân: Đo từ điểm giữa gốc hai tai dọc theo sống lưng đến gốc đuôi (Điểm A).\n• Đảm bảo heo đứng thẳng 4 chân cân đối trên mặt sàn phẳng để kết quả chính xác nhất.\n</string>
+    <string name="converter_title">Chuyển đổi đơn vị</string>
+    <string name="unit_lbs">Lbs</string>
+    <string name="unit_kgs">Kg</string>
+    <string name="weigh_with_scale">Cân bằng bàn cân điện tử</string>
+    <string name="weigh_with_tape_title">Ước tính bằng thước dây</string>
+    <string name="weigh_with_tape_subtitle">Ước tính thể trọng qua số đo vòng ngực và dài thân.</string>
+    <string name="label_length">Chiều dài thân (%1$s)</string>
+    <string name="label_girth">Vòng ngực (%1$s)</string>
+    <string name="unit_cm">cm</string>
+    <string name="unit_in">in</string>
+    <string name="placeholder_a">A</string>
+    <string name="placeholder_b">B</string>
+    <string name="label_estimated_live_weight">Thể trọng hơi ước tính</string>
+    <string name="label_estimated_carcass_weight">Khối lượng thịt xẻ ước tính</string>
+    <string name="msg_enter_measurements">Nhập các số đo trên sơ đồ để tính toán</string>
+    <string name="pig_diagram_content_description">Sơ đồ hướng dẫn đo thể trọng heo</string>
+    <string name="weight_format">%1$.1f Kg / %2$.1f Lbs</string>
+    <string name="estimated_results">Kết quả ước tính</string>
+    <string name="specify_breed">Chọn giống heo</string>
+</resources>

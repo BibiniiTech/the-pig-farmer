@@ -48,6 +48,7 @@ export interface UserProfile {
   appLanguage?: string;
   farmLogo?: string;
   photoURL?: string;
+  isFinancialsRestricted?: boolean;
   settings: UserSettings;
 }
 
@@ -95,9 +96,12 @@ export interface HealthRecord {
   date: string;
   type: string;
   description: string;
+  treatment?: string;
   medication?: string;
+  dosage?: string;
   cost?: number;
   taskId?: string;
+  weight?: number;
   activeWithdrawalUntil?: string;
   withdrawalMedication?: string;
   withdrawalPeriodDays?: number;
@@ -114,6 +118,7 @@ export interface TaskItem {
   notes: string;
   pigIds: string[];
   completed?: boolean;
+  isArchived?: boolean;
   healthRecordIds?: string[];
   snoozeUntil?: number;
 }
@@ -155,6 +160,9 @@ export interface FeedIngredient {
 export interface NutritionalRequirement {
   stage: string;
   digestibleProtein: number; // as %
+  crudeProtein?: number; // as %
+  dietaryLysine?: number;
+  dietaryMethionine?: number;
   metabolizableEnergy: number; // ME (kcal/kg)
   calcium: number; // as %
   phosphorus: number; // as %
@@ -166,6 +174,19 @@ export interface NutritionalRequirement {
   maxDailyFeed: number; // kg/day
 }
 
+export interface SavedFeedRecipe {
+  id: string;
+  name: string;
+  stage: string;
+  dateCreated: string;
+  ingredients: Record<string, number>;
+  isPercentage: boolean;
+  costPerKg: number;
+  targetBatchKg: number;
+  notes: string;
+  timestamp: number;
+}
+
 export interface FinancialRecord {
   id: string;
   date: string;
@@ -174,6 +195,7 @@ export interface FinancialRecord {
   amount: number;
   description: string;
   pigId?: string;
+  pigIds?: string[];
 }
 
 export interface StaffMember {
@@ -185,6 +207,7 @@ export interface StaffMember {
   joinDate: string;
   status: string; // "Active", "Inactive", "On Leave"
   allowAppAccess: boolean;
+  isFinancialsRestricted?: boolean;
   email: string;
   inviteStatus?: string; // "none", "pending", "sent", "failed"
   gender?: string;
@@ -203,6 +226,7 @@ export interface FeedInventoryItem {
   id: string;
   name: string;
   feedType: string;
+  itemCategory?: string; // "Complete Feed" | "Feed Ingredient"
   quantity: number;
   unit: string;
   unitWeight: number;

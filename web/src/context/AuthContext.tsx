@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState, useRef } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
-import { doc, getDoc, collection, getDocs, query, limit, writeBatch, onSnapshot, updateDoc } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs, query, limit, writeBatch, onSnapshot, updateDoc, setDoc, deleteDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { defaultIngredients } from "@/lib/defaultIngredients";
 import { getCurrencyByCountry } from "@/lib/currencyUtils";
@@ -13,11 +13,21 @@ interface AuthContextType {
   userProfile: UserProfile | null;
   activeFarmUid: string | null;
   isStaff: boolean;
+  isStaffDenied: boolean;
+  isFinancialsRestricted: boolean;
   loading: boolean;
+  isProfileComplete: boolean;
   isPassActive: boolean;
   passTimeRemaining: string;
   isPaidPremium: boolean;
   activate3HourPass: () => Promise<void>;
+  createGoogleUserProfile: (profileData: {
+    firstName: string;
+    lastName: string;
+    farmName: string;
+    country: string;
+  }) => Promise<void>;
+  detachFromStaffRegistryAndCreateFarm: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -25,11 +35,16 @@ const AuthContext = createContext<AuthContextType>({
   userProfile: null,
   activeFarmUid: null,
   isStaff: false,
+  isStaffDenied: false,
+  isFinancialsRestricted: false,
   loading: true,
+  isProfileComplete: true,
   isPassActive: false,
   passTimeRemaining: "",
   isPaidPremium: false,
   activate3HourPass: async () => {},
+  createGoogleUserProfile: async () => {},
+  detachFromStaffRegistryAndCreateFarm: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -37,6 +52,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [rawProfile, setRawProfile] = useState<UserProfile | null>(null);
   const [activeFarmUid, setActiveFarmUid] = useState<string | null>(null);
   const [isStaff, setIsStaff] = useState<boolean>(false);
+  const [isStaffDenied, setIsStaffDenied] = useState<boolean>(false);
+  const [isFinancialsRestricted, setIsFinancialsRestricted] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [isPassActive, setIsPassActive] = useState<boolean>(false);
   const [passTimeRemaining, setPassTimeRemaining] = useState<string>("");
@@ -84,12 +101,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     let profileUnsubscribe: (() => void) | null = null;
+    let staffUnsubscribe: (() => void) | null = null;
 
     const unsubscribeAuth = onAuthStateChanged(auth, async (currentUser) => {
       // Clean up previous profile listener
       if (profileUnsubscribe) {
         profileUnsubscribe();
         profileUnsubscribe = null;
+      }
+      if (staffUnsubscribe) {
+        staffUnsubscribe();
+        staffUnsubscribe = null;
       }
 
       setUser(currentUser);
@@ -102,6 +124,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           if (userDocSnap.exists()) {
             setActiveFarmUid(currentUser.uid);
             setIsStaff(false);
+            setIsStaffDenied(false);
+            setIsFinancialsRestricted(false);
 
             // Listen to owner profile in real-time
             profileUnsubscribe = onSnapshot(userDocRef, async (snapshot) => {
@@ -161,8 +185,39 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
               if (registryDocSnap.exists()) {
                 const managerUid = registryDocSnap.data().managerUid;
                 if (managerUid) {
-                  setActiveFarmUid(managerUid);
-                  setIsStaff(true);
+                  // Verify staff record in manager's staff sub-collection (matching Android AuthViewModel)
+                  const staffCollRef = collection(db, "users", managerUid, "staff");
+                  const staffQuery = query(staffCollRef, limit(100));
+                  
+                  staffUnsubscribe = onSnapshot(staffQuery, (staffSnap) => {
+                    const matchedStaff = staffSnap.docs
+                      .map((d) => ({ id: d.id, ...d.data() } as any))
+                      .find((s) => s.email?.trim().toLowerCase() === email);
+
+                    if (!matchedStaff || matchedStaff.allowAppAccess !== true || matchedStaff.status === "Archived") {
+                      setIsStaff(true);
+                      setIsStaffDenied(true);
+                      setIsFinancialsRestricted(true);
+                      setActiveFarmUid(null);
+                      return;
+                    }
+
+                    // Staff is authorized
+                    setIsStaff(true);
+                    setIsStaffDenied(false);
+                    setActiveFarmUid(managerUid);
+
+                    // Check role restrictions (matching Android role check)
+                    const role = (matchedStaff.role || "").toLowerCase();
+                    const isRestricted =
+                      role.includes("hand") ||
+                      role.includes("labor") ||
+                      role.includes("labour") ||
+                      role.includes("worker") ||
+                      role.includes("herdsman") ||
+                      role.includes("attendant");
+                    setIsFinancialsRestricted(isRestricted);
+                  });
 
                   const managerDocRef = doc(db, "users", managerUid);
                   // Listen to manager profile in real-time
@@ -175,7 +230,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                       setRawProfile({ ...data, isAdmin: isAdminUser } as UserProfile);
                     }
                   });
+                } else {
+                  setIsStaff(false);
+                  setIsStaffDenied(false);
+                  setIsFinancialsRestricted(false);
                 }
+              } else {
+                setIsStaff(false);
+                setIsStaffDenied(false);
+                setIsFinancialsRestricted(false);
               }
             }
           }
@@ -186,6 +249,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setRawProfile(null);
         setActiveFarmUid(null);
         setIsStaff(false);
+        setIsStaffDenied(false);
+        setIsFinancialsRestricted(false);
       }
       setLoading(false);
     });
@@ -194,6 +259,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       unsubscribeAuth();
       if (profileUnsubscribe) {
         profileUnsubscribe();
+      }
+      if (staffUnsubscribe) {
+        staffUnsubscribe();
       }
     };
   }, []);
@@ -213,6 +281,168 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     : null;
 
+  const isProfileComplete = Boolean(
+    isStaff ||
+    (rawProfile && rawProfile.farmName?.trim() && rawProfile.country?.trim())
+  );
+
+  const createGoogleUserProfile = async ({
+    firstName,
+    lastName,
+    farmName,
+    country,
+  }: {
+    firstName: string;
+    lastName: string;
+    farmName: string;
+    country: string;
+  }) => {
+    if (!user) throw new Error("No authenticated user");
+    const currency = getCurrencyByCountry(country);
+    const newProfile: UserProfile = {
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      farmName: farmName.trim(),
+      country: country.trim(),
+      email: user.email?.trim().toLowerCase() || "",
+      isPremium: false,
+      isAdmin: user.email?.trim().toLowerCase() === "bibiniitech@gmail.com",
+      isKofisPerson: false,
+      settings: {
+        selectedCurrency: currency.code,
+        currencySymbol: currency.symbol,
+        weaningDays: "56",
+        farrowingDays: "114",
+        ironDay1: "3",
+        ironDay2: "10",
+        autoClassifyBarrows: true,
+        autoClassifySows: true,
+        giltAgeThresholdWeeks: "26",
+        porkerUseAge: true,
+        porkerStarterAge: "16",
+        porkerGrowerAge: "24",
+        porkerStarterWeight: "25",
+        porkerGrowerWeight: "60",
+        breederUseAge: true,
+        breederPigletAge: "8",
+        breederWeanerAge: "16",
+        breederGrowerAge: "24",
+        breederPigletWeight: "10",
+        breederWeanerWeight: "25",
+        breederGrowerWeight: "60",
+        notificationsEnabled: true,
+      },
+    };
+
+    const userDocRef = doc(db, "users", user.uid);
+    await setDoc(userDocRef, {
+      ...newProfile,
+      createdAt: new Date(),
+    });
+
+    setActiveFarmUid(user.uid);
+    setIsStaff(false);
+    setRawProfile(newProfile);
+
+    // Seed default ingredients if empty
+    try {
+      const ingredientsCollRef = collection(db, "users", user.uid, "feed_ingredients");
+      const ingredientsSnap = await getDocs(query(ingredientsCollRef, limit(1)));
+      if (ingredientsSnap.empty) {
+        const batch = writeBatch(db);
+        defaultIngredients.forEach((ing) => {
+          const newDocRef = doc(ingredientsCollRef);
+          batch.set(newDocRef, {
+            ...ing,
+            id: newDocRef.id,
+          });
+        });
+        await batch.commit();
+      }
+    } catch (seedErr) {
+      console.error("Error seeding default ingredients:", seedErr);
+    }
+  };
+
+  const detachFromStaffRegistryAndCreateFarm = async () => {
+    if (!user) throw new Error("No authenticated user");
+    const email = user.email?.trim().toLowerCase();
+    if (email) {
+      try {
+        await deleteDoc(doc(db, "staff_registry", email));
+      } catch (e) {
+        console.warn("Could not delete from staff_registry:", e);
+      }
+    }
+
+    const currency = getCurrencyByCountry("Ghana");
+    const newProfile: UserProfile = {
+      firstName: user.displayName?.split(" ")[0] || "Farmer",
+      lastName: user.displayName?.split(" ").slice(1).join(" ") || "",
+      farmName: "My Swine Farm",
+      country: "Ghana",
+      email: email || "",
+      isPremium: false,
+      isAdmin: email === "bibiniitech@gmail.com",
+      isKofisPerson: false,
+      settings: {
+        selectedCurrency: currency.code,
+        currencySymbol: currency.symbol,
+        weaningDays: "56",
+        farrowingDays: "114",
+        ironDay1: "3",
+        ironDay2: "10",
+        autoClassifyBarrows: true,
+        autoClassifySows: true,
+        giltAgeThresholdWeeks: "26",
+        porkerUseAge: true,
+        porkerStarterAge: "16",
+        porkerGrowerAge: "24",
+        porkerStarterWeight: "25",
+        porkerGrowerWeight: "60",
+        breederUseAge: true,
+        breederPigletAge: "8",
+        breederWeanerAge: "16",
+        breederGrowerAge: "24",
+        breederPigletWeight: "10",
+        breederWeanerWeight: "25",
+        breederGrowerWeight: "60",
+        notificationsEnabled: true,
+      },
+    };
+
+    const userDocRef = doc(db, "users", user.uid);
+    await setDoc(userDocRef, {
+      ...newProfile,
+      createdAt: new Date(),
+    });
+
+    setActiveFarmUid(user.uid);
+    setIsStaff(false);
+    setIsStaffDenied(false);
+    setIsFinancialsRestricted(false);
+    setRawProfile(newProfile);
+
+    // Seed default ingredients if empty
+    try {
+      const ingredientsCollRef = collection(db, "users", user.uid, "feed_ingredients");
+      const ingredientsSnap = await getDocs(query(ingredientsCollRef, limit(1)));
+      if (ingredientsSnap.empty) {
+        const batch = writeBatch(db);
+        defaultIngredients.forEach((ing) => {
+          const newDocRef = doc(ingredientsCollRef);
+          batch.set(newDocRef, {
+            ...ing,
+            id: newDocRef.id,
+          });
+        });
+        await batch.commit();
+      }
+    } catch (seedErr) {
+      console.error("Error seeding default ingredients:", seedErr);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -220,11 +450,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         userProfile,
         activeFarmUid,
         isStaff,
+        isStaffDenied,
+        isFinancialsRestricted,
         loading,
+        isProfileComplete,
         isPassActive,
         passTimeRemaining,
         isPaidPremium,
         activate3HourPass,
+        createGoogleUserProfile,
+        detachFromStaffRegistryAndCreateFarm,
       }}
     >
       {children}

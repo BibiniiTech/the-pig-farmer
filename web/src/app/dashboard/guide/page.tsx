@@ -263,26 +263,32 @@ function HowToGuideContent() {
 
   return (
     <div className="relative min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 flex flex-col font-sans">
-      {!isMobile && <DesktopHeader label="HOW-TO GUIDE" showBack backPath="/dashboard" />}
+      {!isMobile && (
+        <DesktopHeader
+          label={t("how_to_guide") || "HOW-TO GUIDE"}
+          showBack
+          backPath="/dashboard"
+          labelColor="text-[#1B5E20] dark:text-[#81C784]"
+        />
+      )}
 
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
-        {/* Mobile Header Back Row */}
-        {isMobile && (
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => router.push("/dashboard")}
-              className="p-2 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 shadow-sm"
-              aria-label="Back to Dashboard"
-            >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <h1 className="text-xl font-black text-zinc-900 dark:text-white tracking-tight">
-              {t("how_to_guide")}
-            </h1>
-          </div>
-        )}
+        {/* Top Header Back Row */}
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => router.push("/dashboard")}
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition font-bold text-xs shadow-xs"
+            aria-label="Back to Dashboard"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+            <span>Back</span>
+          </button>
+          <h1 className="text-xl sm:text-2xl font-black text-[#1B5E20] dark:text-[#81C784] tracking-tight">
+            {t("how_to_guide")}
+          </h1>
+        </div>
 
         {/* Intro Hero Banner */}
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-800 text-white p-6 sm:p-8 shadow-md">

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartSwine</string>
+    <string name="weight_checker_title">PANTANTIYA NG TIMBANG</string>
+    <string name="back_button_content_description">Bumalik</string>
+    <string name="important_notes_title">Mahalagang Paalala</string>
+    <string name="weight_checker_notes">• Pabilog ng Dibdib: Sukatin ang paligid sa likod ng unahang mga paa, siguraduhing lapat ang metro sa katawan (Punto B).\n• Haba ng Katawan: Sukatin mula sa pagitan ng tainga hanggang sa ugat ng buntot nang hindi maluwag ang metro (Punto A).\n• Siguraduhing nakatayo nang maayos ang baboy sa patag na sahig para sa pinakatumpak na timbang.\n</string>
+    <string name="converter_title">Taga-palit ng Yunit</string>
+    <string name="unit_lbs">Lbs</string>
+    <string name="unit_kgs">Kg</string>
+    <string name="weigh_with_scale">Timbangin gamit ang Timbangan</string>
+    <string name="weigh_with_tape_title">Timbangin gamit ang Metro</string>
+    <string name="weigh_with_tape_subtitle">Tantiyahin ang timbang gamit ang medida.</string>
+    <string name="label_length">Haba (%1$s)</string>
+    <string name="label_girth">Pabilog ng Dibdib (%1$s)</string>
+    <string name="unit_cm">cm</string>
+    <string name="unit_in">in</string>
+    <string name="placeholder_a">A</string>
+    <string name="placeholder_b">B</string>
+    <string name="label_estimated_live_weight">Tantiyang Timbang Habang Buhay</string>
+    <string name="label_estimated_carcass_weight">Tantiyang Timbang ng Karne</string>
+    <string name="msg_enter_measurements">Ipasok ang mga sukat sa larawan upang makalkula</string>
+    <string name="pig_diagram_content_description">Gabay sa pagsukat ng katawan ng baboy</string>
+    <string name="weight_format">%1$.1f Kg / %2$.1f Lbs</string>
+    <string name="estimated_results">Mga Resulta ng Pagtantiya</string>
+    <string name="specify_breed">Tukuyin ang Lahi</string>
+</resources>

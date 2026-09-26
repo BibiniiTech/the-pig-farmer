@@ -24,6 +24,7 @@ const ArrowLeftIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export default function FeedCalculatorPage() {
   const t = useTranslations("Feed");
+  const tCommon = useTranslations("Common");
   const { user, activeFarmUid, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -33,6 +34,8 @@ export default function FeedCalculatorPage() {
   const [giltsCount, setGiltsCount] = useState<number>(0);
   const [pregnantCount, setPregnantCount] = useState<number>(0);
   const [lactatingCount, setLactatingCount] = useState<number>(0);
+  const [breedersStarterCount, setBreedersStarterCount] = useState<number>(0);
+  const [breedersGrowerCount, setBreedersGrowerCount] = useState<number>(0);
   const [starterCount, setStarterCount] = useState<number>(0);
   const [growerCount, setGrowerCount] = useState<number>(0);
   const [finisherCount, setFinisherCount] = useState<number>(0);
@@ -62,7 +65,9 @@ export default function FeedCalculatorPage() {
       setGiltsCount(breeders.filter(p => p.status === "Gilt").length);
       setPregnantCount(breeders.filter(p => p.status === "Pregnant").length);
       setLactatingCount(breeders.filter(p => p.status === "Lactating").length);
-      setStarterCount(porkers.filter(p => p.status === "Starter").length);
+      setBreedersStarterCount(breeders.filter(p => p.status === "Starter" || p.status === "Piglet").length);
+      setBreedersGrowerCount(breeders.filter(p => p.status === "Grower").length);
+      setStarterCount(porkers.filter(p => p.status === "Starter" || p.status === "Piglet").length);
       setGrowerCount(porkers.filter(p => p.status === "Grower").length);
       setFinisherCount(porkers.filter(p => p.status === "Finisher").length);
     });
@@ -77,8 +82,10 @@ export default function FeedCalculatorPage() {
       Gilts: { rate: 2.2, label: t("giltsCount") || "Gilts" },
       Pregnant: { rate: 2.2, label: t("pregnantSows") || "Pregnant Sows" },
       Lactating: { rate: 5.5, label: t("lactatingSows") || "Lactating Sows" },
-      Starter: { rate: 0.7, label: t("starterPiglets") || "Starter Piglets" },
-      Grower: { rate: 1.8, label: t("growers") || "Growers" },
+      BreedersStarter: { rate: 0.7, label: "Young Breeders (Starter)" },
+      BreedersGrower: { rate: 1.8, label: "Young Breeders (Grower)" },
+      Starter: { rate: 0.7, label: t("starterPiglets") || "Starter Piglets (Porker)" },
+      Grower: { rate: 1.8, label: t("growers") || "Growers (Porker)" },
       Finisher: { rate: 2.5, label: t("finishers") || "Finishers" }
     };
 
@@ -91,6 +98,8 @@ export default function FeedCalculatorPage() {
       { key: "Gilts", count: giltsCount },
       { key: "Pregnant", count: pregnantCount },
       { key: "Lactating", count: lactatingCount },
+      { key: "BreedersStarter", count: breedersStarterCount },
+      { key: "BreedersGrower", count: breedersGrowerCount },
       { key: "Starter", count: starterCount },
       { key: "Grower", count: growerCount },
       { key: "Finisher", count: finisherCount }
@@ -114,37 +123,45 @@ export default function FeedCalculatorPage() {
     setCalculationBreakdown(breakdown);
     setTotalDailyReq(grandDailyTotal);
     setTotalPeriodReq(grandDailyTotal * calcDays);
-  }, [sowsCount, boarsCount, giltsCount, pregnantCount, lactatingCount, starterCount, growerCount, finisherCount, calcDays, t]);
+  }, [sowsCount, boarsCount, giltsCount, pregnantCount, lactatingCount, breedersStarterCount, breedersGrowerCount, starterCount, growerCount, finisherCount, calcDays, t]);
 
   if (loading || !user) {
     return (
-      <div className="flex h-screen items-center justify-center bg-white text-zinc-900">
+      <div className="flex h-screen items-center justify-center bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-amber-500 border-t-transparent"></div>
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-x-hidden">
-      {!isMobile && <DesktopHeader />}
+    <div className="relative min-h-screen bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans overflow-x-hidden">
+      {!isMobile && (
+        <DesktopHeader
+          showBack
+          backPath="/dashboard?section=feed"
+          label={t("calculator") || "FEED CALCULATOR"}
+          labelColor="text-[#E65100] dark:text-[#FFB74D]"
+        />
+      )}
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
-        <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 pb-4">
+        <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-4">
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard?section=feed"
-              className="p-2 rounded-xl border border-zinc-200 text-zinc-600 hover:bg-zinc-100 transition"
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition font-bold text-xs shadow-xs"
             >
-              <ArrowLeftIcon className="h-5 w-5" />
+              <ArrowLeftIcon className="h-4 w-4" />
+              <span>{tCommon("back") || "Back"}</span>
             </Link>
-            <div className="h-10 w-10 rounded-xl bg-amber-50 border border-amber-200/60 flex items-center justify-center flex-shrink-0">
-              <CalculateIcon className="h-5 w-5 text-amber-600" />
+            <div className="h-10 w-10 rounded-xl bg-[#FFF3E0] dark:bg-[#E65100]/30 border border-[#E65100]/30 flex items-center justify-center flex-shrink-0">
+              <CalculateIcon className="h-5 w-5 text-[#E65100] dark:text-[#FFB74D]" />
             </div>
             <div>
-              <h1 className="text-xl sm:text-2xl font-black text-amber-600">
+              <h1 className="text-xl sm:text-2xl font-black text-[#E65100] dark:text-[#FFB74D]">
                 {t("calculator") || "Calculator"}
               </h1>
-              <p className="text-xs text-zinc-500">{t("calculatorDesc") || "Calculate daily and periodic feed requirements"}</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">{t("calculatorDesc") || "Calculate daily and periodic feed requirements"}</p>
             </div>
           </div>
         </div>
@@ -194,7 +211,18 @@ export default function FeedCalculatorPage() {
                   <input type="number" min="0" value={lactatingCount} onChange={(e) => setLactatingCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-amber-500 shadow-sm" />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-zinc-500 mb-1">{t("starterPiglets") || "Starter Piglets"}</label>
+                  <label className="block text-xs font-bold text-zinc-500 mb-1">Breeder Starters</label>
+                  <input type="number" min="0" value={breedersStarterCount} onChange={(e) => setBreedersStarterCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-amber-500 shadow-sm" />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-zinc-500 mb-1">Breeder Growers</label>
+                  <input type="number" min="0" value={breedersGrowerCount} onChange={(e) => setBreedersGrowerCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-amber-500 shadow-sm" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-zinc-500 mb-1">{t("starterPiglets") || "Porker Starters"}</label>
                   <input type="number" min="0" value={starterCount} onChange={(e) => setStarterCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-amber-500 shadow-sm" />
                 </div>
               </div>

@@ -14,7 +14,8 @@ class TaskRepository(private val db: FirebaseFirestore) {
             .whereEqualTo("completed", false)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
-                    close(error)
+                    android.util.Log.w("TaskRepository", "Error fetching tasks: ${error.message}")
+                    close()
                     return@addSnapshotListener
                 }
                 val tasks = snapshot?.documents?.mapNotNull { doc ->

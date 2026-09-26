@@ -20,6 +20,8 @@ import RewardedPassModal from "@/components/ads/RewardedPassModal";
 
 function FinancialsContent() {
   const t = useTranslations("Financials");
+  const tNav = useTranslations("Navigation");
+  const tCommon = useTranslations("Common");
   const tHr = useTranslations("HR");
   const searchParams = useSearchParams();
   const shouldAdd = searchParams.get("add") === "true";
@@ -48,9 +50,15 @@ function FinancialsContent() {
     const key = type === "Income" ? incomeKeys[cat] : expenseKeys[cat];
     return key ? t(key) : cat;
   };
-  const { user, userProfile, activeFarmUid, loading } = useAuth();
+  const { user, userProfile, activeFarmUid, isFinancialsRestricted, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && isFinancialsRestricted) {
+      router.replace("/dashboard");
+    }
+  }, [loading, isFinancialsRestricted, router]);
 
   const currencySymbol = userProfile?.settings?.currencySymbol || "$";
 
@@ -70,30 +78,31 @@ function FinancialsContent() {
   const [type, setType] = useState("Expense");
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [category, setCategory] = useState("Feed");
+  const [customCategory, setCustomCategory] = useState("");
   const [amount, setAmount] = useState(0);
   const [description, setDescription] = useState("");
-  const [selectedPigId, setSelectedPigId] = useState("");
+  const [selectedPigIds, setSelectedPigIds] = useState<string[]>([]);
 
   const isPremium = Boolean(userProfile?.isPremium || userProfile?.isAdmin);
   const recordLimitReached = !isPremium && records.length >= TierLimiter.FREE_MAX_FINANCIAL_RECORDS;
 
   const categories = {
     Income: [
-      t("incomeCategories.pigSale"),
-      t("incomeCategories.manureSale"),
-      t("incomeCategories.breedingService"),
-      t("incomeCategories.equipmentSale"),
-      t("incomeCategories.other")
+      { key: "Pig Sale", label: t("incomeCategories.pigSale") },
+      { key: "Manure Sale", label: t("incomeCategories.manureSale") },
+      { key: "Breeding Service", label: t("incomeCategories.breedingService") },
+      { key: "Equipment Sale", label: t("incomeCategories.equipmentSale") },
+      { key: "Other", label: t("incomeCategories.other") }
     ],
     Expense: [
-      t("expenseCategories.feed"),
-      t("expenseCategories.vet"),
-      t("expenseCategories.labor"),
-      t("expenseCategories.equipment"),
-      t("expenseCategories.transport"),
-      t("expenseCategories.rent"),
-      t("expenseCategories.utility"),
-      t("expenseCategories.other")
+      { key: "Feed", label: t("expenseCategories.feed") },
+      { key: "Vet/Medication", label: t("expenseCategories.vet") },
+      { key: "Salary", label: t("expenseCategories.labor") },
+      { key: "Equipment", label: t("expenseCategories.equipment") },
+      { key: "Transport", label: t("expenseCategories.transport") },
+      { key: "Rent", label: t("expenseCategories.rent") },
+      { key: "Utility", label: t("expenseCategories.utility") },
+      { key: "Other", label: t("expenseCategories.other") }
     ]
   };
 
@@ -147,41 +156,45 @@ function FinancialsContent() {
       const finCollection = collection(db, "users", activeFarmUid, "financials");
       const newRef = doc(finCollection);
 
+      const finalCategory = (category === "Other" && customCategory.trim()) ? customCategory.trim() : category;
       const record: FinancialRecord = {
         id: newRef.id,
         date,
         type,
-        category,
+        category: finalCategory,
         amount,
         description
       };
-      const isPigSale = type === "Income" && (category === "Pig Sale" || category === t("incomeCategories.pigSale")) && !!selectedPigId;
+      const isPigSale = type === "Income" && category === "Pig Sale" && selectedPigIds.length > 0;
       if (isPigSale) {
-        record.pigId = selectedPigId;
+        if (selectedPigIds.length === 1) {
+          record.pigId = selectedPigIds[0];
+        }
+        record.pigIds = selectedPigIds;
       }
 
-      if (isPigSale) {
-        const soldPig = pigs.find((p) => p.id === selectedPigId);
-        if (soldPig) {
-          const batch = writeBatch(db);
-          batch.set(newRef, record);
+      if (isPigSale && selectedPigIds.length > 0) {
+        const batch = writeBatch(db);
+        batch.set(newRef, record);
 
-          const pigRef = doc(db, "users", activeFarmUid, "pigs", selectedPigId);
-          const archiveRef = doc(db, "users", activeFarmUid, "archived_pigs", selectedPigId);
+        for (const pid of selectedPigIds) {
+          const soldPig = pigs.find((p) => p.id === pid);
+          if (soldPig) {
+            const pigRef = doc(db, "users", activeFarmUid, "pigs", pid);
+            const archiveRef = doc(db, "users", activeFarmUid, "archived_pigs", pid);
 
-          const archivedPig: Pig = {
-            ...soldPig,
-            status: "Archived (Sold)",
-            location: "Archived",
-            notes: (soldPig.notes ? soldPig.notes + "\n" : "") + `Archived on: ${date || new Date().toISOString().split("T")[0]} Reason: Sold`,
-          };
+            const archivedPig: Pig = {
+              ...soldPig,
+              status: "Archived (Sold)",
+              location: "Archived",
+              notes: (soldPig.notes ? soldPig.notes + "\n" : "") + `Archived on: ${date || new Date().toISOString().split("T")[0]} Reason: Sold`,
+            };
 
-          batch.set(archiveRef, archivedPig);
-          batch.delete(pigRef);
-          await batch.commit();
-        } else {
-          await setDoc(newRef, record);
+            batch.set(archiveRef, archivedPig);
+            batch.delete(pigRef);
+          }
         }
+        await batch.commit();
       } else {
         await setDoc(newRef, record);
       }
@@ -189,7 +202,8 @@ function FinancialsContent() {
       // Reset
       setAmount(0);
       setDescription("");
-      setSelectedPigId("");
+      setCustomCategory("");
+      setSelectedPigIds([]);
       setShowAddModal(false);
     } catch (err) {
       console.error("Failed to log transaction:", err);
@@ -304,14 +318,14 @@ function FinancialsContent() {
 
   if (loading || !user) {
     return (
-      <div className="flex h-screen items-center justify-center bg-white text-zinc-900">
+      <div className="flex h-screen items-center justify-center bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans overflow-x-hidden">
       {/* Watermark Logo Background */}
       {!isMobile && (
         <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
@@ -324,7 +338,14 @@ function FinancialsContent() {
       )}
 
       <div className="relative z-10 flex flex-col min-h-screen print:hidden">
-        {!isMobile && <DesktopHeader />}
+        {!isMobile && (
+          <DesktopHeader
+            showBack
+            backPath="/dashboard"
+            label={tNav("financials") || "FINANCIALS"}
+            labelColor="text-[#00796B] dark:text-[#4DB6AC]"
+          />
+        )}
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
           {/* Top Bar with Back Button and Heading */}
@@ -332,15 +353,15 @@ function FinancialsContent() {
             <button
               type="button"
               onClick={() => router.push("/dashboard")}
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-50 hover:text-zinc-900 transition font-bold text-xs shadow-xs"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-700 hover:text-zinc-900 transition font-bold text-xs shadow-xs"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
-              <span>Back</span>
+              <span>{tCommon("back") || "Back"}</span>
             </button>
-            <h1 className="text-xl sm:text-2xl font-black text-teal-900 text-center flex-1">
-              Financials
+            <h1 className="text-xl sm:text-2xl font-black text-[#00796B] dark:text-[#4DB6AC] text-center flex-1">
+              {tNav("financials") || "Financials"}
             </h1>
             <div className="w-16" />
           </div>
@@ -550,8 +571,12 @@ function FinancialsContent() {
                             <td className="py-4 font-semibold text-zinc-800">{translateCategory(record.category, record.type)}</td>
                             <td className="py-4 text-zinc-500">{record.description}</td>
                             <td className="py-4 text-zinc-600 font-mono">
-                              {linkedPig ? (
-                                <Link href={`/dashboard/herd/${record.pigId}`} className="text-emerald-700 hover:underline">
+                              {record.pigIds && record.pigIds.length > 1 ? (
+                                <span className="text-xs font-semibold text-zinc-700">
+                                  {record.pigIds.length} Pigs ({record.pigIds.map(id => pigs.find(p => p.id === id)?.tagNumber || id).slice(0, 2).join(", ")}{record.pigIds.length > 2 ? "..." : ""})
+                                </span>
+                              ) : linkedPig ? (
+                                <Link href={`/dashboard/herd/${record.pigId || (record.pigIds && record.pigIds[0])}`} className="text-emerald-700 hover:underline">
                                   {linkedPig.tagNumber}
                                 </Link>
                               ) : t("none")}
@@ -576,7 +601,7 @@ function FinancialsContent() {
                 {/* Mobile Card View */}
                 <div className="sm:hidden space-y-4">
                   {records.map(record => {
-                    const linkedPig = pigs.find(p => p.id === record.pigId);
+                    const linkedPig = pigs.find(p => p.id === record.pigId || (record.pigIds && record.pigIds.includes(p.id)));
                     return (
                       <div key={record.id} className="p-4 rounded-xl border border-zinc-100 bg-zinc-50/50 space-y-3 relative overflow-hidden">
                         <div className="flex justify-between items-start">
@@ -596,8 +621,12 @@ function FinancialsContent() {
                         <div className="flex justify-between items-end border-t border-zinc-100 pt-3">
                           <div className="text-[10px]">
                             <span className="text-zinc-400 font-semibold uppercase">{t("linkedPig")}: </span>
-                            {linkedPig ? (
-                              <Link href={`/dashboard/herd/${record.pigId}`} className="text-emerald-700 font-bold hover:underline">
+                            {record.pigIds && record.pigIds.length > 1 ? (
+                              <span className="text-zinc-700 font-bold">
+                                {record.pigIds.length} Pigs
+                              </span>
+                            ) : linkedPig ? (
+                              <Link href={`/dashboard/herd/${record.pigId || (record.pigIds && record.pigIds[0])}`} className="text-emerald-700 font-bold hover:underline">
                                 {linkedPig.tagNumber}
                               </Link>
                             ) : <span className="text-zinc-500 font-bold">{t("none")}</span>}
@@ -647,20 +676,20 @@ function FinancialsContent() {
       {/* Log Transaction Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="bg-teal-50/95 border border-teal-200 rounded-2xl w-full max-w-md p-6 space-y-6 shadow-2xl text-teal-950">
+          <div className="bg-teal-50/95 border border-teal-200 rounded-2xl w-full max-w-md p-6 space-y-6 shadow-2xl text-teal-950 max-h-[90vh] overflow-y-auto no-scrollbar">
             <h3 className="text-lg font-bold text-teal-950 border-b border-teal-200/80 pb-3">{t("logTransaction")}</h3>
             <form onSubmit={handleAddTransaction} className="space-y-4">
               <div className="flex gap-2 p-1 bg-teal-100/70 border border-teal-200 rounded-lg">
                 <button
                   type="button"
-                  onClick={() => { setType("Expense"); setCategory(t("expenseCategories.feed")); }}
+                  onClick={() => { setType("Expense"); setCategory("Feed"); setCustomCategory(""); }}
                   className={`flex-1 py-1.5 text-xs font-bold rounded-md transition ${type === "Expense" ? "bg-white text-teal-900 shadow" : "text-teal-700"}`}
                 >
                   {t("expense")}
                 </button>
                 <button
                   type="button"
-                  onClick={() => { setType("Income"); setCategory(t("incomeCategories.pigSale")); }}
+                  onClick={() => { setType("Income"); setCategory("Pig Sale"); setCustomCategory(""); }}
                   className={`flex-1 py-1.5 text-xs font-bold rounded-md transition ${type === "Income" ? "bg-white text-teal-900 shadow" : "text-teal-700"}`}
                 >
                   {t("income")}
@@ -682,44 +711,89 @@ function FinancialsContent() {
                   <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("category")}</label>
                   <select
                     value={category}
-                    onChange={(e) => setCategory(e.target.value)}
+                    onChange={(e) => { setCategory(e.target.value); setCustomCategory(""); }}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                   >
-                    {((type === "Income" ? categories.Income : categories.Expense)).map(cat => (
-                      <option key={cat}>{cat}</option>
+                    {(type === "Income" ? categories.Income : categories.Expense).map(cat => (
+                      <option key={cat.key} value={cat.key}>{cat.label}</option>
                     ))}
                   </select>
                 </div>
               </div>
 
-              <div className={type === "Income" && category === t("incomeCategories.pigSale") ? "grid grid-cols-2 gap-4" : "grid grid-cols-1 gap-4"}>
+              {category === "Other" && (
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("amountWithSymbol", { symbol: currencySymbol })}</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Custom Category Name</label>
                   <input
-                    type="number"
-                    step="any"
+                    type="text"
                     required
-                    value={amount}
-                    onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
+                    value={customCategory}
+                    onChange={(e) => setCustomCategory(e.target.value)}
+                    placeholder="e.g. Disinfectant, Transport, Utilities, etc."
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                   />
                 </div>
-                {type === "Income" && category === t("incomeCategories.pigSale") && (
-                  <div>
-                    <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("linkPigOptional")}</label>
-                    <select
-                      value={selectedPigId}
-                      onChange={(e) => setSelectedPigId(e.target.value)}
-                      className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
-                    >
-                      <option value="">{t("none")}</option>
-                      {pigs.map(p => (
-                        <option key={p.id} value={p.id}>{p.tagNumber}</option>
-                      ))}
-                    </select>
-                  </div>
-                )}
+              )}
+
+              <div>
+                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("amountWithSymbol", { symbol: currencySymbol })}</label>
+                <input
+                  type="number"
+                  step="any"
+                  required
+                  value={amount}
+                  onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
+                  className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
+                />
               </div>
+
+              {type === "Income" && category === "Pig Sale" && (
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-xs font-semibold text-zinc-500">
+                      Select Pigs Sold ({selectedPigIds.length})
+                    </label>
+                    {selectedPigIds.length > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => setSelectedPigIds([])}
+                        className="text-[11px] text-zinc-400 hover:text-zinc-600 underline"
+                      >
+                        Clear All
+                      </button>
+                    )}
+                  </div>
+                  <div className="border border-zinc-200 rounded-lg max-h-40 overflow-y-auto p-2.5 space-y-1.5 bg-white shadow-sm">
+                    {pigs.filter(p => !p.status?.startsWith("Archived")).length === 0 ? (
+                      <p className="text-xs text-zinc-400 italic">No active pigs available</p>
+                    ) : (
+                      pigs.filter(p => !p.status?.startsWith("Archived")).map(p => (
+                        <label key={p.id} className="flex items-center justify-between text-xs text-zinc-700 hover:bg-zinc-50 p-1.5 rounded cursor-pointer transition">
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="checkbox"
+                              checked={selectedPigIds.includes(p.id)}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setSelectedPigIds(prev => [...prev, p.id]);
+                                } else {
+                                  setSelectedPigIds(prev => prev.filter(id => id !== p.id));
+                                }
+                              }}
+                              className="h-4 w-4 rounded border-zinc-300 text-teal-600 focus:ring-teal-500"
+                            />
+                            <span className="font-semibold text-zinc-900">{p.tagNumber || p.id}</span>
+                            <span className="text-[10px] text-zinc-400">({p.status || "Unknown"})</span>
+                          </div>
+                          {p.weight && p.weight > 0 && (
+                            <span className="text-[11px] text-zinc-500 font-mono">{p.weight} kg</span>
+                          )}
+                        </label>
+                      ))
+                    )}
+                  </div>
+                </div>
+              )}
 
               <div>
                 <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("description")}</label>

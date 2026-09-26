@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { doc, updateDoc, setDoc, collection } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
@@ -74,6 +75,8 @@ export default function InlineWeightSection({
   initialSubOption,
   initialPigTag
 }: InlineWeightSectionProps) {
+  const t = useTranslations("Dashboard");
+  const tw = useTranslations("Weight");
   const { activeFarmUid } = useAuth();
 
   // Single-open accordion: "convert" | "tape" | "scale" | "carcass" | null
@@ -242,12 +245,13 @@ export default function InlineWeightSection({
         lastWeightDate: todayStr,
       });
 
-      // Also create health record entry
+      // Also create health record entry matching Android canonical model
       const logCollection = collection(db, "users", activeFarmUid, "pigs", selectedPigId, "health_records");
       const logRef = doc(logCollection);
       await setDoc(logRef, {
         id: logRef.id,
         type: "Weight Check",
+        description: "Weight check recorded",
         weight: weightNum,
         notes: `Estimated weight via tape: ${weightNum} kg (Girth: ${girth}${unit}, Length: ${length}${unit})`,
         date: todayStr,
@@ -263,6 +267,51 @@ export default function InlineWeightSection({
       setSaveLoading(false);
     }
   };
+
+  // Tape Growth metrics for selected pig
+  const tapeSelectedPig = pigs.find((p) => p.id === selectedPigId);
+  const tapeGrowthMetrics = (() => {
+    if (!tapeSelectedPig || !estLiveKg || estLiveKg <= 0) return null;
+    let ageDays = 0;
+    if (tapeSelectedPig.birthDate) {
+      const birth = new Date(tapeSelectedPig.birthDate);
+      if (!isNaN(birth.getTime())) {
+        ageDays = Math.max(0, Math.floor((Date.now() - birth.getTime()) / (1000 * 60 * 60 * 24)));
+      }
+    }
+    const birthWeightKg = 1.3;
+    const lifetimeAdgGrams = ageDays > 0 ? Math.max(0, ((estLiveKg - birthWeightKg) / ageDays) * 1000) : 0;
+    const targetWeightKg = 90.0;
+    const weightRemainingKg = Math.max(0, targetWeightKg - estLiveKg);
+    const daysToMarket = lifetimeAdgGrams > 50 && weightRemainingKg > 0 ? Math.round(weightRemainingKg / (lifetimeAdgGrams / 1000)) : null;
+
+    let ratingText = "Low ADG";
+    let ratingClass = "bg-amber-100 text-amber-800 border-amber-200";
+    if (lifetimeAdgGrams >= 700) {
+      ratingText = "Optimal Growth";
+      ratingClass = "bg-emerald-100 text-emerald-800 border-emerald-200";
+    } else if (lifetimeAdgGrams >= 500) {
+      ratingText = "Normal Growth";
+      ratingClass = "bg-blue-100 text-blue-800 border-blue-200";
+    }
+
+    let projectedMarketDateStr = "";
+    if (daysToMarket !== null) {
+      const d = new Date();
+      d.setDate(d.getDate() + daysToMarket);
+      projectedMarketDateStr = d.toLocaleDateString("en-GB");
+    }
+
+    return {
+      ageDays,
+      lifetimeAdgGrams: Math.round(lifetimeAdgGrams),
+      daysToMarket,
+      projectedMarketDateStr,
+      isMarketReady: estLiveKg >= 90,
+      ratingText,
+      ratingClass,
+    };
+  })();
 
   // Scale Calculations
   const directWeightNum = parseFloat(scaleWeight) || 0;
@@ -301,10 +350,18 @@ export default function InlineWeightSection({
       ratingClass = "bg-blue-100 text-blue-800 border-blue-200";
     }
 
+    let projectedMarketDateStr = "";
+    if (daysToMarket !== null) {
+      const d = new Date();
+      d.setDate(d.getDate() + daysToMarket);
+      projectedMarketDateStr = d.toLocaleDateString("en-GB");
+    }
+
     return {
       ageDays,
       lifetimeAdgGrams: Math.round(lifetimeAdgGrams),
       daysToMarket,
+      projectedMarketDateStr,
       isMarketReady: roundedScaleKg >= 90,
       ratingText,
       ratingClass,
@@ -336,6 +393,7 @@ export default function InlineWeightSection({
       await setDoc(logRef, {
         id: logRef.id,
         type: "Weight Check",
+        description: "Weight check recorded",
         weight: roundedScaleKg,
         notes: `Measured via Scale: ${directWeightNum} ${scaleUnit} (${roundedScaleKg} kg)`,
         date: todayStr,
@@ -399,7 +457,7 @@ export default function InlineWeightSection({
               <ScaleIcon className="h-5 w-5" />
             </div>
             <div>
-              <span className="text-sm font-bold text-zinc-900">Convert Weight</span>
+              <span className="text-sm font-bold text-zinc-900">{t("convertWeight") || "Convert Weight"}</span>
               <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-800">
                 lbs ↔ kg
               </span>
@@ -459,7 +517,7 @@ export default function InlineWeightSection({
               <StraightenIcon className="h-5 w-5" />
             </div>
             <div>
-              <span className="text-sm font-bold text-zinc-900">Weigh with Tape</span>
+              <span className="text-sm font-bold text-zinc-900">{t("weighWithTape") || "Weigh with Tape"}</span>
               <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-800">
                 Heart Girth & Length
               </span>
@@ -579,32 +637,85 @@ export default function InlineWeightSection({
                   </div>
                 </div>
 
+                {/* Pig Selection for Tape Measurement & Growth Intelligence */}
+                <div className="pt-2 border-t border-slate-200 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <h5 className="text-[11px] font-bold text-slate-800">Select Pig for Growth Analysis & Record:</h5>
+                  </div>
+                  <select
+                    value={selectedPigId}
+                    onChange={(e) => setSelectedPigId(e.target.value)}
+                    className="w-full text-xs p-2 rounded-lg border border-zinc-200 bg-white font-medium"
+                  >
+                    <option value="">-- Select Pig Tag (Optional) --</option>
+                    {pigs.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        Tag: {p.tagNumber || p.id} ({p.status || p.breed || "Pig"})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Growth Intelligence Card (if pig selected) */}
+                {tapeGrowthMetrics && (
+                  <div className="bg-emerald-50/70 border border-emerald-200 rounded-xl p-3.5 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5 text-emerald-900 font-bold text-xs">
+                        <TrendingUpIcon className="h-4 w-4 text-emerald-700" />
+                        <span>Growth Intelligence</span>
+                      </div>
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${tapeGrowthMetrics.ratingClass}`}>
+                        {tapeGrowthMetrics.ratingText}
+                      </span>
+                    </div>
+                    <ul className="text-xs text-emerald-950 space-y-1">
+                      <li>
+                        • Lifetime ADG: <strong>{tapeGrowthMetrics.lifetimeAdgGrams} g/day</strong> (Age: {tapeGrowthMetrics.ageDays} days)
+                      </li>
+                      {tapeGrowthMetrics.isMarketReady ? (
+                        <li className="font-bold text-emerald-800">
+                          • 🎉 Pig has reached prime market weight (≥ 90 kg)!
+                        </li>
+                      ) : tapeGrowthMetrics.daysToMarket !== null ? (
+                        <li>
+                          • Projected Market Date: <strong>{tapeGrowthMetrics.projectedMarketDateStr}</strong> (~{tapeGrowthMetrics.daysToMarket} days remaining to reach 90 kg)
+                        </li>
+                      ) : null}
+                    </ul>
+                  </div>
+                )}
+
                 {/* Save to Profile Form */}
                 <form onSubmit={handleSaveToProfile} className="pt-2 border-t border-slate-200 space-y-2">
-                  <h5 className="text-[11px] font-bold text-slate-800">Save Weight to Pig Profile:</h5>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <select
-                      value={selectedPigId}
-                      onChange={(e) => setSelectedPigId(e.target.value)}
-                      required
-                      className="text-xs p-2 rounded-lg border border-zinc-200 bg-white font-medium"
-                    >
-                      <option value="">-- Select Pig Tag --</option>
-                      {pigs.map((p) => (
-                        <option key={p.id} value={p.id}>
-                          Tag: {p.tagNumber || p.id} ({p.breed || "Pig"})
-                        </option>
-                      ))}
-                    </select>
-                    <input
-                      type="number"
-                      step="0.1"
-                      value={saveWeightInput}
-                      onChange={(e) => setSaveWeightInput(e.target.value)}
-                      required
-                      placeholder="Weight in kg"
-                      className="text-xs p-2 rounded-lg border border-zinc-200 bg-white font-bold"
-                    />
+                    <div>
+                      <label className="text-[10px] font-black uppercase text-zinc-400 block mb-1">Target Pig</label>
+                      <select
+                        value={selectedPigId}
+                        onChange={(e) => setSelectedPigId(e.target.value)}
+                        required
+                        className="w-full text-xs p-2 rounded-lg border border-zinc-200 bg-white font-medium"
+                      >
+                        <option value="">-- Choose Pig Tag --</option>
+                        {pigs.map((p) => (
+                          <option key={p.id} value={p.id}>
+                            Tag: {p.tagNumber || p.id} ({p.status || p.breed || "Pig"})
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-black uppercase text-zinc-400 block mb-1">Weight to Save (kg)</label>
+                      <input
+                        type="number"
+                        step="0.1"
+                        value={saveWeightInput}
+                        onChange={(e) => setSaveWeightInput(e.target.value)}
+                        required
+                        placeholder="Weight in kg"
+                        className="w-full text-xs p-2 rounded-lg border border-zinc-200 bg-white font-bold"
+                      />
+                    </div>
                   </div>
                   <button
                     type="submit"
@@ -637,7 +748,7 @@ export default function InlineWeightSection({
               <ScaleIcon className="h-5 w-5" />
             </div>
             <div>
-              <span className="text-sm font-bold text-zinc-900">Weigh with Scale</span>
+              <span className="text-sm font-bold text-zinc-900">{t("weighWithScale") || tw("weighWithScale") || "Weigh with Scale"}</span>
               <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-800">
                 Direct Scale Reading
               </span>
@@ -734,7 +845,7 @@ export default function InlineWeightSection({
                         </li>
                       ) : growthMetrics.daysToMarket !== null ? (
                         <li>
-                          • Projected Market Date: <strong>~{growthMetrics.daysToMarket} days remaining</strong> to reach 90 kg
+                          • Projected Market Date: <strong>{growthMetrics.projectedMarketDateStr}</strong> (~{growthMetrics.daysToMarket} days remaining to reach 90 kg)
                         </li>
                       ) : null}
                     </ul>
@@ -841,7 +952,7 @@ export default function InlineWeightSection({
               <CalculateIcon className="h-5 w-5" />
             </div>
             <div>
-              <span className="text-sm font-bold text-zinc-900">Find Carcass Weight</span>
+              <span className="text-sm font-bold text-zinc-900">{t("findCarcassWeight") || "Find Carcass Weight"}</span>
               <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-800">
                 Meat Yield Breakdown
               </span>

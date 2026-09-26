@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartSwine</string>
+    <string name="weight_checker_title">SKELIM HEVI BILONG PIK</string>
+    <string name="back_button_content_description">Go bek</string>
+    <string name="important_notes_title">Bikpela Tok Save</string>
+    <string name="weight_checker_notes">• Bros bilong pik: Skelim baksait long tupela han bilong pik na mekim tep i tai gut (Mak B).\n• Longpela bilong pik: Skelim namel long tupela yau go daun long baksait inap long as bilong tel (Mak A).\n• Pik mas sanap stret long graun i no gat maunten bilong kisim gutpela skel.\n</string>
+    <string name="converter_title">Senisim Mak bilong Skel</string>
+    <string name="unit_lbs">Lbs</string>
+    <string name="unit_kgs">Kg</string>
+    <string name="weigh_with_scale">Skelim long skel</string>
+    <string name="weigh_with_tape_title">Skelim long rop o tep meta</string>
+    <string name="weigh_with_tape_subtitle">Skelim hevi bilong pik long tep meta.</string>
+    <string name="label_length">Longpela (%1$s)</string>
+    <string name="label_girth">Bros (%1$s)</string>
+    <string name="unit_cm">cm</string>
+    <string name="unit_in">in</string>
+    <string name="placeholder_a">A</string>
+    <string name="placeholder_b">B</string>
+    <string name="label_estimated_live_weight">Hevi bilong pik i stap laip</string>
+    <string name="label_estimated_carcass_weight">Hevi bilong mit ol i skelim</string>
+    <string name="msg_enter_measurements">Putim ol mak long piksa bilong kalkulaitim</string>
+    <string name="pig_diagram_content_description">Gaid bilong skelim bodi bilong pik</string>
+    <string name="weight_format">%1$.1f Kg / %2$.1f Lbs</string>
+    <string name="estimated_results">Samting ol i skelim</string>
+    <string name="specify_breed">Makim kain pik</string>
+</resources>

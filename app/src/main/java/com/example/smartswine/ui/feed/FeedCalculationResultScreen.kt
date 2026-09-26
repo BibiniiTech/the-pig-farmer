@@ -1,5 +1,6 @@
 package com.example.smartswine.ui.feed
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -12,9 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.smartswine.utils.StylishDivider
 import com.example.smartswine.ui.theme.SmartSwineTheme
+import com.example.smartswine.ui.theme.DarkBackground
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -32,6 +35,7 @@ fun FeedCalculationResultScreen(
     viewModel: FeedViewModel,
     onBack: () -> Unit,
     onNavigateToPaywall: () -> Unit,
+    onNavigateToAnalyze: () -> Unit = {},
 ) {
     val feedRequirements by viewModel.feedRequirements.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -44,6 +48,7 @@ fun FeedCalculationResultScreen(
         onBack = onBack,
         isPremium = isPremium,
         onNavigateToPaywall = onNavigateToPaywall,
+        onNavigateToAnalyze = onNavigateToAnalyze,
     ) { reqs ->
         PdfGenerator.generateFeedRequirementPdf(context, reqs, lang)
     }
@@ -56,8 +61,14 @@ fun FeedCalculationResultContent(
     onBack: () -> Unit,
     isPremium: Boolean = true,
     onNavigateToPaywall: () -> Unit = {},
+    onNavigateToAnalyze: () -> Unit = {},
     onExportPdf: (Map<String, Double>) -> Unit = {},
 ) {
+    val isDark = MaterialTheme.colorScheme.background == DarkBackground
+    val cardBg = if (isDark) MaterialTheme.colorScheme.surface else Color(0xFFFFF3E0)
+    val cardBorder = if (isDark) Color(0xFFE65100).copy(alpha = 0.5f) else Color(0xFFFFE0B2)
+    val headerColor = if (isDark) Color(0xFFFFB74D) else Color(0xFFE65100)
+
     Scaffold(
         topBar = {
             Column {
@@ -75,7 +86,7 @@ fun FeedCalculationResultContent(
                         text = stringResource("calculation_results"),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Black,
-                        color = MaterialTheme.colorScheme.primary,
+                        color = headerColor,
                         textAlign = TextAlign.Center,
                     )
                     Spacer(modifier = Modifier.width(48.dp))
@@ -93,7 +104,10 @@ fun FeedCalculationResultContent(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             feedRequirements?.let { reqs ->
-                Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)) {
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = cardBg),
+                    border = BorderStroke(1.dp, cardBorder)
+                ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         val days = reqs["__days"]?.toInt() ?: 1
                         val header = if (days > 1) stringResource("feed_requirements_days", days) else stringResource("daily_requirements")
@@ -103,7 +117,11 @@ fun FeedCalculationResultContent(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(header, style = MaterialTheme.typography.titleMedium)
+                            Text(
+                                header,
+                                style = MaterialTheme.typography.titleMedium,
+                                color = headerColor
+                            )
                         }
                         Spacer(Modifier.height(8.dp))
                         reqs.filter { !it.key.startsWith("__") }.forEach { (label, qty) ->
@@ -131,27 +149,52 @@ fun FeedCalculationResultContent(
                                     else -> stringResource(label.lowercase().replace(" ", "_"))
                                 }
 
-                                Text(localizedLabel, fontWeight = weight)
-                                Text("${String.format(Locale.getDefault(), "%.1f", qty)}kg", fontWeight = weight)
+                                Text(
+                                    localizedLabel,
+                                    fontWeight = weight,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                                Text(
+                                    "${String.format(Locale.getDefault(), "%.1f", qty)}kg",
+                                    fontWeight = weight,
+                                    color = if (label.contains("Total")) headerColor else MaterialTheme.colorScheme.onSurface
+                                )
                             }
                         }
                         Spacer(Modifier.height(16.dp))
-                        PremiumWrapper(
-                            isPremium = isPremium,
-                            onLockedClick = onNavigateToPaywall
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Button(
-                                onClick = { 
-                                    if (isPremium) onExportPdf(reqs) else onNavigateToPaywall() 
-                                },
-                                modifier = Modifier.fillMaxWidth()
+                            OutlinedButton(
+                                onClick = onNavigateToAnalyze,
+                                modifier = Modifier.weight(1f),
+                                colors = ButtonDefaults.outlinedButtonColors(
+                                    contentColor = if (isDark) Color(0xFFFFB74D) else Color(0xFFE65100)
+                                ),
+                                border = BorderStroke(1.dp, if (isDark) Color(0xFFFFB74D) else Color(0xFFE65100))
                             ) {
-                                Icon(
-                                    imageVector = if (isPremium) Icons.Default.PictureAsPdf else Icons.Default.Lock,
-                                    contentDescription = null
-                                )
-                                Spacer(Modifier.width(4.dp))
-                                Text(stringResource("export_requirements_pdf"))
+                                Text(stringResource("analyze_and_mix_feed"), fontWeight = FontWeight.Bold)
+                            }
+                            PremiumWrapper(
+                                isPremium = isPremium,
+                                onLockedClick = onNavigateToPaywall,
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Button(
+                                    onClick = { 
+                                        if (isPremium) onExportPdf(reqs) else onNavigateToPaywall() 
+                                    },
+                                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE65100)),
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Icon(
+                                        imageVector = if (isPremium) Icons.Default.PictureAsPdf else Icons.Default.Lock,
+                                        contentDescription = null
+                                    )
+                                    Spacer(Modifier.width(4.dp))
+                                    Text(stringResource("export_requirements_pdf"), maxLines = 1)
+                                }
                             }
                         }
                     }

@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SmartSwine</string>
-    <string name="weight_checker_title">KIKAGUA UZITO</string>
-    <string name="back_button_content_description">Nyuma</string>
-    <string name="important_notes_title">Vidokezo Muhimu</string>
-    <string name="weight_checker_notes">• Mzunguko wa Moyo: Pima kifua (nyuma kidogo ya miguu ya mbele) uhakikishe utepe umeenea mwilini na umekaza (Hatua B).\n• Urefu wa Mwili: Pima kutoka msingi wa masikio hadi msingi wa mkia uhakikishe utepe uko imara mwilini na haujalegea (Hatua A).\n• Hakikisha nguruwe amesimama sawasawa kwenye ardhi iliyonyooka kwa matokeo sahihi zaidi.\n</string>
-    <string name="converter_title">Kigeuzi</string>
+    <string name="weight_checker_title">MAKADIRIO YA UZITO</string>
+    <string name="back_button_content_description">Rudi Nyuma</string>
+    <string name="important_notes_title">Maelezo Muhimu</string>
+    <string name="weight_checker_notes">• Mzingo wa Kifua: Pima mzingo wa kifua mara tu baada ya miguu ya mbele huku utepe ukiwa umekaza sawasawa (Nukta B).\n• Urefu wa Mwili: Pima kuanzia katikati ya masikio kufuata uti wa mgongo hadi mwanzo wa mkia (Nukta A).\n• Hakikisha nguruwe amesimama imara kwenye ardhi iliyonyooka na tambarare kwa matokeo sahihi.\n</string>
+    <string name="converter_title">Kigeuzi cha Vipimo</string>
     <string name="unit_lbs">Lbs</string>
-    <string name="unit_kgs">Kilo</string>
-    <string name="weigh_with_tape_title">Pima kwa Utepe</string>
+    <string name="unit_kgs">Kg</string>
+    <string name="weigh_with_scale">Pima kwa Mizani</string>
+    <string name="weigh_with_tape_title">Pima kwa Utepe wa Kupimia</string>
     <string name="weigh_with_tape_subtitle">Kadiria uzito kwa kutumia utepe wa kupimia.</string>
     <string name="label_length">Urefu (%1$s)</string>
-    <string name="label_girth">Mzunguko (%1$s)</string>
+    <string name="label_girth">Mzingo wa Kifua (%1$s)</string>
     <string name="unit_cm">cm</string>
     <string name="unit_in">in</string>
     <string name="placeholder_a">A</string>
     <string name="placeholder_b">B</string>
-    <string name="label_estimated_live_weight">Uzito wa Kukadiria ukiwa Hai</string>
-    <string name="label_estimated_carcass_weight">Uzito wa Kukadiria wa Nyama</string>
-    <string name="msg_enter_measurements">Ingiza vipimo kwenye mchoro ili kukokotoa</string>
-    <string name="pig_diagram_content_description">Mwongozo wa upimaji wa nguruwe</string>
-    <string name="weight_format">%1$.1f Kilo / %2$.1f Lbs</string>
-    <string name="estimated_results">Matokeo ya Makadirio</string>
+    <string name="label_estimated_live_weight">Makadirio ya Uzito Akiwa Hai</string>
+    <string name="label_estimated_carcass_weight">Makadirio ya Uzito wa Mzoga</string>
+    <string name="msg_enter_measurements">Weka vipimo kwenye picha ili kukokotoa uzito</string>
+    <string name="pig_diagram_content_description">Mchoro wa maelekezo ya kupima mwili wa nguruwe</string>
+    <string name="weight_format">%1$.1f Kg / %2$.1f Lbs</string>
+    <string name="estimated_results">Matokeo Yaliyokadiriwa</string>
+    <string name="specify_breed">Chagua Aina ya Nguruwe</string>
 </resources>

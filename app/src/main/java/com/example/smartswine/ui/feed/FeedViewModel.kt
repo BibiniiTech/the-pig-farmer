@@ -4,10 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.smartswine.data.FeedRepository
+import com.example.smartswine.data.FinancialRepository
+import com.example.smartswine.model.FinancialRecord
 import com.example.smartswine.model.FeedIngredient
 import com.example.smartswine.model.NutritionalRequirement
 import com.example.smartswine.model.FeedInventoryItem
 import com.example.smartswine.model.FeedInventoryTransaction
+import com.example.smartswine.model.SavedFeedRecipe
+import com.example.smartswine.utils.DateUtils
 import com.example.smartswine.utils.Translator
 import com.example.smartswine.utils.AppLanguage
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,11 +30,19 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
     // Active Farm ID for multi-user support
     private var activeFarmId: String? = null
 
-    fun setActiveFarmId(uid: String) {
+    fun setActiveFarmId(uid: String?) {
         if (activeFarmId != uid) {
             activeFarmId = uid
             repository.setActiveFarmId(uid)
-            initializeData()
+            if (uid == null) {
+                _ingredients.value = emptyList()
+                _requirements.value = emptyList()
+                _feedInventoryItems.value = emptyList()
+                _feedInventoryTransactions.value = emptyList()
+                _savedRecipes.value = emptyList()
+            } else {
+                initializeData()
+            }
         }
     }
 
@@ -40,7 +52,7 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
     private val _globalIngredients = MutableStateFlow<List<FeedIngredient>>(emptyList())
     val globalIngredients: StateFlow<List<FeedIngredient>> = _globalIngredients.asStateFlow()
 
-    private val _requirements = MutableStateFlow<List<NutritionalRequirement>>(emptyList())
+    private val _requirements = MutableStateFlow<List<NutritionalRequirement>>(FeedRepository.DEFAULT_REQUIREMENTS)
     val nutritionalRequirements: StateFlow<List<NutritionalRequirement>> = _requirements.asStateFlow()
 
     private val _feedInventoryItems = MutableStateFlow<List<FeedInventoryItem>>(emptyList())
@@ -48,6 +60,9 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _feedInventoryTransactions = MutableStateFlow<List<FeedInventoryTransaction>>(emptyList())
     val feedInventoryTransactions: StateFlow<List<FeedInventoryTransaction>> = _feedInventoryTransactions.asStateFlow()
+
+    private val _savedRecipes = MutableStateFlow<List<SavedFeedRecipe>>(emptyList())
+    val savedRecipes: StateFlow<List<SavedFeedRecipe>> = _savedRecipes.asStateFlow()
 
     private val _isLoading = MutableStateFlow(value = false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
@@ -87,6 +102,7 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
         loadRequirements()
         loadFeedInventoryItems()
         loadFeedInventoryTransactions()
+        loadSavedRecipes()
 
         // Try to sync/initialize defaults in the background
         viewModelScope.launch {
@@ -122,10 +138,21 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
                     android.util.Log.e("FeedViewModel", "Error loading ingredients: ${e.message}")
                 }
                 .collect { list ->
-                    // Normalize categories and filter out duplicates by name as a UI safeguard
+                    // Identify any redundant duplicate items that exist in Firestore to prune them
+                    val redundantItems = list.filter { it.name.trim().lowercase() in REDUNDANT_INGREDIENT_NAMES }
+                    if (redundantItems.isNotEmpty()) {
+                        redundantItems.forEach { item ->
+                            if (item.id.isNotEmpty()) {
+                                launch { repository.deleteIngredient(item.id) }
+                            }
+                        }
+                    }
+
+                    // Normalize categories and filter out duplicates and redundant items
                     val normalizedList = list.asSequence()
+                        .filterNot { it.name.trim().lowercase() in REDUNDANT_INGREDIENT_NAMES }
                         .map { normalizeIngredient(it) }
-                        .distinctBy { it.name }
+                        .distinctBy { it.name.trim().lowercase() }
                         .toList()
                     
                     _ingredients.value = normalizedList
@@ -133,6 +160,10 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
                     _isLoading.value = false
                 }
         }
+    }
+
+    companion object {
+        val REDUNDANT_INGREDIENT_NAMES = setOf("barleyb", "dried brewers grain", "full fat soybean")
     }
 
     fun loadGlobalIngredients() {
@@ -217,12 +248,208 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
                     android.util.Log.e("FeedViewModel", "Error loading feed inventory transactions: ${e.message}")
                 }
                 .collect { list ->
-                    _feedInventoryTransactions.value = list.sortedByDescending { it.date }
+                    _feedInventoryTransactions.value = list.sortedByDescending { DateUtils.parseAnyDateNonNull(it.date) }
                 }
         }
     }
 
-    fun addFeedInventoryItem(name: String, feedType: String, initialQty: Double, unit: String, unitWeight: Double, minThreshold: Double) {
+    private fun loadSavedRecipes() {
+        viewModelScope.launch {
+            repository.getAllSavedRecipes()
+                .catch { e ->
+                    android.util.Log.e("FeedViewModel", "Error loading saved recipes: ${e.message}")
+                }
+                .collect { list ->
+                    _savedRecipes.value = list.sortedByDescending { DateUtils.parseAnyDateNonNull(it.dateCreated) }
+                }
+        }
+    }
+
+    fun saveFeedRecipe(
+        name: String,
+        stage: String,
+        ingredients: Map<String, Double>,
+        isPercentage: Boolean = true,
+        costPerKg: Double = 0.0,
+        targetBatchKg: Double = 1000.0,
+        notes: String = "",
+        onComplete: (Boolean, String?) -> Unit = { _, _ -> }
+    ) {
+        viewModelScope.launch {
+            try {
+                val dateStr = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).format(Date())
+                val recipe = SavedFeedRecipe(
+                    name = name,
+                    stage = stage,
+                    dateCreated = dateStr,
+                    ingredients = ingredients,
+                    isPercentage = isPercentage,
+                    costPerKg = costPerKg,
+                    targetBatchKg = targetBatchKg,
+                    notes = notes
+                )
+                val id = repository.saveFeedRecipe(recipe)
+                onComplete(true, id)
+            } catch (e: Exception) {
+                _error.value = e.message
+                onComplete(false, e.message)
+            }
+        }
+    }
+
+    fun deleteSavedRecipe(recipeId: String) {
+        viewModelScope.launch {
+            try {
+                repository.deleteSavedRecipe(recipeId)
+            } catch (e: Exception) {
+                _error.value = e.message
+            }
+        }
+    }
+
+    fun executeBatchMix(
+        recipeName: String,
+        stage: String,
+        batchWeightKg: Double,
+        ingredients: Map<String, Double>,
+        postToFinancials: Boolean = true,
+        onComplete: (Boolean, String?) -> Unit = { _, _ -> }
+    ) {
+        viewModelScope.launch {
+            try {
+                val dateStr = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).format(Date())
+                var totalBatchCost = 0.0
+
+                // 1. Process each ingredient and deduct stock
+                ingredients.forEach { (ingId, percent) ->
+                    val neededKg = (percent / 100.0) * batchWeightKg
+                    if (neededKg > 0.0001) {
+                        val ing = _ingredients.value.find { it.id == ingId }
+                        val ingName = ing?.name ?: ingId
+                        val ingCost = ing?.costPerKg ?: 0.0
+                        totalBatchCost += ingCost * neededKg
+
+                        // Match against feed inventory items
+                        val matchingInv = _feedInventoryItems.value.find {
+                            it.name.equals(ingName, ignoreCase = true) || it.id == ingId
+                        }
+                        if (matchingInv != null) {
+                            val convertedUsed = if (matchingInv.unit == "bags" && matchingInv.unitWeight > 0.0) {
+                                neededKg / matchingInv.unitWeight
+                            } else {
+                                neededKg
+                            }
+                            val updatedItem = matchingInv.copy(
+                                quantity = (matchingInv.quantity - convertedUsed).coerceAtLeast(0.0),
+                                lastUpdated = dateStr
+                            )
+                            repository.updateFeedInventoryItem(updatedItem)
+                        }
+
+                        // Record usage transaction
+                        val tx = FeedInventoryTransaction(
+                            itemId = matchingInv?.id ?: ingId,
+                            itemName = ingName,
+                            type = "Usage",
+                            quantity = neededKg,
+                            unit = "kg",
+                            cost = ingCost * neededKg,
+                            date = dateStr,
+                            notes = "Mixed into $batchWeightKg kg of $stage feed ($recipeName)"
+                        )
+                        repository.addFeedInventoryTransaction(tx)
+                    }
+                }
+
+                // 2. Restock or create the finished mixed feed item
+                val finishedName = if (recipeName.isNotBlank()) recipeName else "$stage Feed (Mixed)"
+                val existingFinished = _feedInventoryItems.value.find {
+                    it.name.equals(finishedName, ignoreCase = true)
+                }
+
+                val finalCostPerKg = if (batchWeightKg > 0.0) totalBatchCost / batchWeightKg else 0.0
+
+                val finishedId = if (existingFinished != null) {
+                    val addedQty = if (existingFinished.unit == "bags" && existingFinished.unitWeight > 0.0) {
+                        batchWeightKg / existingFinished.unitWeight
+                    } else {
+                        batchWeightKg
+                    }
+                    val updatedFinished = existingFinished.copy(
+                        quantity = existingFinished.quantity + addedQty,
+                        costPerUnit = if (finalCostPerKg > 0) finalCostPerKg else existingFinished.costPerUnit,
+                        lastUpdated = dateStr
+                    )
+                    repository.updateFeedInventoryItem(updatedFinished)
+                    existingFinished.id
+                } else {
+                    val newItem = FeedInventoryItem(
+                        name = finishedName,
+                        feedType = stage,
+                        quantity = batchWeightKg,
+                        unit = "kg",
+                        unitWeight = 50.0,
+                        minThreshold = 100.0,
+                        costPerUnit = finalCostPerKg,
+                        lastUpdated = dateStr
+                    )
+                    repository.addFeedInventoryItem(newItem)
+                }
+
+                // Log restock transaction for finished feed
+                val restockTx = FeedInventoryTransaction(
+                    itemId = finishedId,
+                    itemName = finishedName,
+                    type = "Restock",
+                    quantity = batchWeightKg,
+                    unit = "kg",
+                    cost = totalBatchCost,
+                    date = dateStr,
+                    notes = "Finished farm mix: $recipeName ($stage)"
+                )
+                repository.addFeedInventoryTransaction(restockTx)
+
+                // 3. Auto-post batch expense to financials
+                if (postToFinancials && totalBatchCost > 0.0) {
+                    val farmId = activeFarmId ?: com.google.firebase.auth.FirebaseAuth.getInstance().currentUser?.uid
+                    if (farmId != null) {
+                        try {
+                            val finRepo = FinancialRepository(com.google.firebase.firestore.FirebaseFirestore.getInstance())
+                            val displayDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+                            finRepo.addFinancialRecord(
+                                farmId,
+                                FinancialRecord(
+                                    date = displayDate,
+                                    type = "Expense",
+                                    category = "Feed",
+                                    amount = totalBatchCost,
+                                    description = "Batch Mix: $recipeName ($stage, ${batchWeightKg}kg)"
+                                )
+                            )
+                        } catch (finEx: Exception) {
+                            android.util.Log.e("FeedViewModel", "Error auto-posting batch mix to financials: ${finEx.message}")
+                        }
+                    }
+                }
+
+                onComplete(true, null)
+            } catch (e: Exception) {
+                _error.value = e.message
+                onComplete(false, e.message)
+            }
+        }
+    }
+
+    fun addFeedInventoryItem(
+        name: String,
+        feedType: String,
+        initialQty: Double,
+        unit: String,
+        unitWeight: Double,
+        minThreshold: Double,
+        costPerUnit: Double = 0.0,
+        itemCategory: String = "Complete Feed"
+    ) {
         viewModelScope.launch {
             try {
                 val dateStr = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).format(Date())
@@ -233,7 +460,9 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
                     unit = unit,
                     unitWeight = unitWeight,
                     minThreshold = minThreshold,
-                    lastUpdated = dateStr
+                    costPerUnit = costPerUnit,
+                    lastUpdated = dateStr,
+                    itemCategory = itemCategory
                 )
                 val generatedId = repository.addFeedInventoryItem(item)
                 
@@ -244,9 +473,9 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
                         type = "Restock",
                         quantity = initialQty,
                         unit = unit,
-                        cost = 0.0,
+                        cost = costPerUnit * initialQty,
                         date = dateStr,
-                        notes = "Initial stock entry"
+                        notes = "Initial stock entry ($itemCategory)"
                     )
                     repository.addFeedInventoryTransaction(transaction)
                 }
@@ -416,10 +645,21 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
         lastSelectedIngredientIds = selectedIngredientIds
         
         android.util.Log.d("FeedViewModel", "Starting formulation for $targetStage with ${selectedIngredientIds.size} ingredients (shuffle=$shuffle)")
+        _error.value = null
         viewModelScope.launch {
             _isFormulating.value = true
             try {
-                val targetRequirement = _requirements.value.find { it.stage == targetStage }
+                val targetRequirement = _requirements.value.find { 
+                    it.stage.equals(targetStage, ignoreCase = true) ||
+                    (targetStage.equals("Weaner/Starter", ignoreCase = true) && (it.stage.equals("Starter", ignoreCase = true) || it.stage.equals("Weaner", ignoreCase = true) || it.stage.equals("Weaner_Starter", ignoreCase = true))) ||
+                    (targetStage.equals("Starter", ignoreCase = true) && (it.stage.equals("Weaner/Starter", ignoreCase = true) || it.stage.equals("Weaner_Starter", ignoreCase = true))) ||
+                    it.stage.replace("/", "_").equals(targetStage.replace("/", "_"), ignoreCase = true)
+                } ?: FeedRepository.DEFAULT_REQUIREMENTS.find {
+                    it.stage.equals(targetStage, ignoreCase = true) ||
+                    (targetStage.equals("Weaner/Starter", ignoreCase = true) && (it.stage.equals("Starter", ignoreCase = true) || it.stage.equals("Weaner", ignoreCase = true) || it.stage.equals("Weaner_Starter", ignoreCase = true))) ||
+                    (targetStage.equals("Starter", ignoreCase = true) && (it.stage.equals("Weaner/Starter", ignoreCase = true) || it.stage.equals("Weaner_Starter", ignoreCase = true))) ||
+                    it.stage.replace("/", "_").equals(targetStage.replace("/", "_"), ignoreCase = true)
+                }
                 if (targetRequirement == null) {
                     _error.value = Translator.getString("target_requirements_not_found", currentLanguage)
                     android.util.Log.e("FeedViewModel", "Target requirement not found for stage: $targetStage")
@@ -427,7 +667,7 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
                     return@launch
                 }
 
-                val targetProtein = targetRequirement.digestibleProtein 
+                val targetProtein = targetRequirement.getTargetCrudeProtein()
                 val selectedIngredients = _ingredients.value.filter { it.id in selectedIngredientIds }
                 if (selectedIngredients.isEmpty()) {
                     _error.value = Translator.getString("select_at_least_one", currentLanguage)
@@ -435,52 +675,105 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
                     return@launch
                 }
 
-                val mandatoryNames = listOf("Mycotoxin Binder", "Common salt", "Vitamin Premix")
-                val mandatoryInclusions = mapOf(
-                    "Mycotoxin Binder" to 1.0,
-                    "Common salt" to 0.5,
-                    "Vitamin Premix" to 1.0,
-                )
-                
                 val currentUsed = mutableMapOf<String, Double>()
-                
-                var availablePercent = 100.0
-                mandatoryInclusions.forEach { (name, percent) ->
-                    val ingredient = _ingredients.value.find { it.name.contains(name, ignoreCase = true) }
-                    if (ingredient != null) {
-                        currentUsed[ingredient.id] = percent
-                        availablePercent -= percent
-                    } else {
-                        currentUsed[name] = percent
-                        availablePercent -= percent
-                    }
-                }
 
                 val supplementalCategory = "Vitamins, Minerals & Salt"
                 val supplementalIngredients = selectedIngredients.filter { 
-                    it.mainCategory == supplementalCategory && !mandatoryNames.any { name -> it.name.contains(name, ignoreCase = true) }
+                    it.mainCategory.equals(supplementalCategory, ignoreCase = true) ||
+                    it.name.contains("Salt", ignoreCase = true) ||
+                    it.name.contains("Premix", ignoreCase = true) ||
+                    it.name.contains("Limestone", ignoreCase = true) ||
+                    it.name.contains("Bone Meal", ignoreCase = true) ||
+                    it.name.contains("DCP", ignoreCase = true) ||
+                    it.name.contains("Oyster", ignoreCase = true) ||
+                    it.name.contains("Lysine", ignoreCase = true) ||
+                    it.name.contains("Methionine", ignoreCase = true)
                 }
-                val mainIngredients = selectedIngredients.filter { 
-                    it.mainCategory != supplementalCategory || mandatoryNames.any { name -> it.name.contains(name, ignoreCase = true) }
-                }
+                val mainIngredients = selectedIngredients.filter { it !in supplementalIngredients }
 
-                // Veterinary Limits (Max Inclusion %)
-                val limits = selectedIngredients.associate { ing ->
-                    val limit = when (targetStage.lowercase()) {
-                        "starter" -> ing.maxStarter
+                // Veterinary Limits (Max Inclusion %) across all production stages
+                val limits: Map<String, Double> = selectedIngredients.associate { ing ->
+                    val limit: Double = when (targetStage.lowercase()) {
+                        "creep", "pre-starter" -> minOf(ing.maxStarter * 0.7, ing.maxStarter)
+                        "weaner/starter", "starter", "weaner" -> ing.maxStarter
                         "grower" -> ing.maxGrower
                         "finisher" -> ing.maxFinisher
-                        "sow", "boar", "pregnant", "lactating" -> minOf(ing.maxGrower, ing.maxFinisher)
-                        else -> minOf(ing.maxStarter, ing.maxGrower, ing.maxFinisher)
+                        "pregnant", "gestating" -> minOf(ing.maxGrower, ing.maxFinisher)
+                        "lactating" -> ing.maxGrower
+                        else -> minOf(ing.maxStarter, minOf(ing.maxGrower, ing.maxFinisher))
                     }
-                    ing.id to limit
+                    ing.id to (if (limit > 0.0) limit else 50.0)
                 }
 
-                // Initial pass: Diversity for Main Ingredients ONLY
+                // STEP 1: MINERAL & SUPPLEMENT FIRST ALLOCATION
+                fun getCaPercent(ing: FeedIngredient) = if (ing.calcium > 50.0) ing.calcium / 10.0 else ing.calcium
+                fun getPPercent(ing: FeedIngredient) = if (ing.phosphorus > 50.0) ing.phosphorus / 10.0 else ing.phosphorus
+
+                var suppAllocated = 0.0
+
+                // 1a. Essential Salt & Premix
+                supplementalIngredients.forEach { ing ->
+                    val nameLower = ing.name.lowercase()
+                    val limit = limits[ing.id] ?: 2.0
+                    if (nameLower.contains("salt")) {
+                        val saltAmt = minOf(0.35, limit)
+                        currentUsed[ing.id] = saltAmt
+                        suppAllocated += saltAmt
+                    } else if (nameLower.contains("premix") || nameLower.contains("vitamin")) {
+                        val premixAmt = minOf(0.30, limit)
+                        currentUsed[ing.id] = premixAmt
+                        suppAllocated += premixAmt
+                    }
+                }
+
+                // 1b. Calcium and Phosphorus balancing
+                val mineralSources = supplementalIngredients.filter { ing ->
+                    val n = ing.name.lowercase()
+                    !n.contains("salt") && !n.contains("premix") && !n.contains("vitamin") &&
+                    (getCaPercent(ing) > 5.0 || getPPercent(ing) > 5.0)
+                }
+
+                // Sort mineral sources: prefer DCP / Bone meal for P first, Limestone/Oyster for remaining Ca
+                val sortedMinerals = mineralSources.sortedByDescending { getPPercent(it) }
+                var currentCaFromSupp = currentUsed.entries.sumOf { (id, pct) ->
+                    val ing = selectedIngredients.find { it.id == id } ?: return@sumOf 0.0
+                    getCaPercent(ing) * (pct / 100.0)
+                }
+                var currentPFromSupp = currentUsed.entries.sumOf { (id, pct) ->
+                    val ing = selectedIngredients.find { it.id == id } ?: return@sumOf 0.0
+                    getPPercent(ing) * (pct / 100.0)
+                }
+
+                sortedMinerals.forEach { ing ->
+                    val caPurity = getCaPercent(ing) / 100.0
+                    val pPurity = getPPercent(ing) / 100.0
+                    val limit = limits[ing.id] ?: 3.0
+                    
+                    var neededPct = 0.0
+                    if (pPurity > 0.05 && currentPFromSupp < targetRequirement.phosphorus * 0.7) {
+                        val deficitP = (targetRequirement.phosphorus * 0.7) - currentPFromSupp
+                        neededPct = minOf(deficitP / pPurity, limit)
+                    } else if (caPurity > 0.10 && currentCaFromSupp < targetRequirement.calcium * 0.8) {
+                        val deficitCa = (targetRequirement.calcium * 0.8) - currentCaFromSupp
+                        neededPct = minOf(deficitCa / caPurity, limit)
+                    }
+
+                    if (neededPct > 0.05) {
+                        currentUsed[ing.id] = neededPct
+                        suppAllocated += neededPct
+                        currentCaFromSupp += neededPct * caPurity
+                        currentPFromSupp += neededPct * pPurity
+                    }
+                }
+
+                // STEP 2: BUDGET FOR MAIN INGREDIENTS
+                val mainBudget = (100.0 - suppAllocated).coerceIn(10.0, 100.0)
+                var availablePercent = mainBudget
+
+                // Diversity allocation for main ingredients
                 mainIngredients.forEach { ing ->
-                    if (mandatoryNames.any { name -> ing.name.contains(name, ignoreCase = true) }) return@forEach
                     val name = ing.name.lowercase()
-                    val minInclusion = if (name.contains("bran")) 8.0 else 4.0
+                    val minInclusion = if (name.contains("bran")) 4.0 else 3.0
                     val limit = limits[ing.id] ?: 50.0
                     val safeStart = minOf(minInclusion, limit)
                     
@@ -490,28 +783,50 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
                     }
                 }
 
-                var remainingTotal = availablePercent
+                // Calculate remaining CP required from main ingredients
+                val currentCpFromAllocated = currentUsed.entries.sumOf { (id, pct) ->
+                    val ing = selectedIngredients.find { it.id == id } ?: return@sumOf 0.0
+                    ing.crudeProtein * (pct / 100.0)
+                }
+                val remainingCpNeeded = targetProtein - currentCpFromAllocated
+                val mainTargetCP = if (availablePercent > 0.5) {
+                    (remainingCpNeeded / (availablePercent / 100.0)).coerceIn(5.0, 50.0)
+                } else targetProtein
 
-                // Pearson Square Pools for Main Ingredients
-                val poolLow = mainIngredients.filter { it.crudeProtein < targetProtein && !mandatoryNames.any { name -> it.name.contains(name, ignoreCase = true) } }
+                // Cost-Aware Least-Cost Sorting for Energy & Protein Pools
+                val poolLow = mainIngredients.filter { it.crudeProtein < mainTargetCP }
                     .let { list ->
-                        if (shuffle) list.shuffled() 
-                        else list.sortedByDescending { it.metabolizableEnergy }
+                        if (shuffle) list.shuffled()
+                        else list.sortedWith(
+                            compareBy<FeedIngredient> { 
+                                // Lowest cost per unit energy first
+                                if (it.costPerKg > 0.0 && it.metabolizableEnergy > 0) it.costPerKg / it.metabolizableEnergy
+                                else 999.0
+                            }.thenByDescending { it.metabolizableEnergy }
+                        )
                     }.toMutableList()
                     
-                val poolHigh = mainIngredients.filter { it.crudeProtein >= targetProtein && !mandatoryNames.any { name -> it.name.contains(name, ignoreCase = true) } }
+                val poolHigh = mainIngredients.filter { it.crudeProtein >= mainTargetCP }
                     .let { list ->
-                        if (shuffle) list.shuffled() 
-                        else list.sortedByDescending { it.metabolizableEnergy }
+                        if (shuffle) list.shuffled()
+                        else list.sortedWith(
+                            compareBy<FeedIngredient> { 
+                                // Lowest cost per unit protein first
+                                if (it.costPerKg > 0.0 && it.crudeProtein > 0) it.costPerKg / it.crudeProtein
+                                else 999.0
+                            }.thenByDescending { it.crudeProtein }
+                        )
                     }.toMutableList()
 
-                // Balance Main Mix to 100%
+                var remainingTotal = availablePercent
+
+                // Balance Main Mix to remaining budget
                 while ((remainingTotal > 0.01) && poolLow.isNotEmpty() && poolHigh.isNotEmpty()) {
                     val low = poolLow.first()
                     val high = poolHigh.first()
                     
-                    val rLow = high.crudeProtein - targetProtein
-                    val rHigh = targetProtein - low.crudeProtein
+                    val rLow = (high.crudeProtein - mainTargetCP).coerceAtLeast(0.1)
+                    val rHigh = (mainTargetCP - low.crudeProtein).coerceAtLeast(0.1)
                     
                     val x = remainingTotal * (rLow / (rLow + rHigh))
                     val y = remainingTotal * (rHigh / (rLow + rHigh))
@@ -534,10 +849,11 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
                     if ((currentUsed[high.id] ?: 0.0) >= ((limits[high.id] ?: 100.0) - 0.01)) poolHigh.removeAt(0)
                 }
 
+                // Top up any residual main budget
                 if (remainingTotal > 0.01) {
                     val remainingPool = if (poolHigh.isNotEmpty()) {
                         if (shuffle) poolHigh.shuffled()
-                        else poolHigh.sortedByDescending { it.metabolizableEnergy / (it.crudeProtein + 1.0) }
+                        else poolHigh.sortedByDescending { it.metabolizableEnergy }
                     } else {
                         if (shuffle) poolLow.shuffled()
                         else poolLow.sortedByDescending { it.metabolizableEnergy }
@@ -552,85 +868,28 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
                     }
                 }
 
-                // SECONDARY PASS: Supplemental Ingredients based on deficits
-                // 1. Calculate current levels
-                fun getCaPercent(ing: FeedIngredient) = if (ing.calcium > 10.0) ing.calcium / 10.0 else ing.calcium
-                fun getPPercent(ing: FeedIngredient) = if (ing.phosphorus > 10.0) ing.phosphorus / 10.0 else ing.phosphorus
-                
-                fun calculateCurrentNutrients(): Map<String, Double> {
-                    var ca = 0.0; var p = 0.0; var lys = 0.0; var met = 0.0
-                    currentUsed.forEach { (id, percent) ->
-                        val ing = _ingredients.value.find { it.id == id } ?: return@forEach
-                        val factor = percent / 100.0
-                        ca += getCaPercent(ing) * factor
-                        p += getPPercent(ing) * factor
-                        lys += ing.lysine * factor
-                        met += (ing.methionine + ing.cystine) * factor
-                    }
-                    return mapOf("ca" to ca, "p" to p, "lys" to lys, "met" to met)
-                }
+                // STEP 3: GUARANTEE EXACT 100.0% BALANCE
+                val totalUsed = currentUsed.values.sum()
+                if (Math.abs(totalUsed - 100.0) > 0.001) {
+                    // Find main energy ingredient (highest inclusion) to adjust
+                    val leadIngredientId = currentUsed.filter { (id, _) ->
+                        mainIngredients.any { it.id == id }
+                    }.maxByOrNull { it.value }?.key ?: currentUsed.maxByOrNull { it.value }?.key
 
-                val targetCa = targetRequirement.calcium
-                val targetP = targetRequirement.phosphorus
-                val targetLys = (targetRequirement.lysine / 100.0) * targetRequirement.digestibleProtein
-                val targetMet = (targetRequirement.methionineCystine / 100.0) * targetRequirement.digestibleProtein
-
-                var totalAddedSupplements = 0.0
-                
-                // Sort supplements to prioritize those that fill multiple deficits or are more concentrated
-                val sortedSupplements = supplementalIngredients.sortedByDescending { it.calcium + it.phosphorus + it.lysine + it.methionine }
-
-                for (ing in sortedSupplements) {
-                    val current = calculateCurrentNutrients()
-                    val defCa = maxOf(0.0, targetCa - (current["ca"] ?: 0.0))
-                    val defP = maxOf(0.0, targetP - (current["p"] ?: 0.0))
-                    val defLys = maxOf(0.0, targetLys - (current["lys"] ?: 0.0))
-                    val defMet = maxOf(0.0, targetMet - (current["met"] ?: 0.0))
-                    
-                    if (defCa <= 0 && defP <= 0 && defLys <= 0 && defMet <= 0) break
-                    
-                    // How much of this ingredient do we need to fill the biggest deficit it addresses?
-                    val needCa = if (getCaPercent(ing) > 0) defCa / (getCaPercent(ing) / 100.0) else 0.0
-                    val needP = if (getPPercent(ing) > 0) defP / (getPPercent(ing) / 100.0) else 0.0
-                    val needLys = if (ing.lysine > 0) defLys / (ing.lysine / 100.0) else 0.0
-                    val needMet = if ((ing.methionine + ing.cystine) > 0) defMet / ((ing.methionine + ing.cystine) / 100.0) else 0.0
-                    
-                    var needed = maxOf(needCa, needP, needLys, needMet)
-                    val limit = limits[ing.id] ?: 2.0
-                    needed = minOf(needed, limit)
-                    
-                    if (needed > 0.01) {
-                        currentUsed[ing.id] = needed
-                        totalAddedSupplements += needed
-                    }
-                }
-
-                // Final adjustment: Reduce main ingredients to make room for supplements while keeping 100%
-                if (totalAddedSupplements > 0) {
-                    val mainTotal = 100.0 - (mandatoryInclusions.values.sum()) - totalAddedSupplements
-                    val previousMainTotal = 100.0 - (mandatoryInclusions.values.sum())
-                    val scaleFactor = mainTotal / previousMainTotal
-                    
-                    val mainIds = mainIngredients.map { it.id }.filter { !mandatoryNames.any { name -> 
-                        val ing = _ingredients.value.find { i -> i.id == it }
-                        ing?.name?.contains(name, ignoreCase = true) ?: false
-                    } }
-                    
-                    mainIds.forEach { id ->
-                        if (currentUsed.containsKey(id)) {
-                            currentUsed[id] = (currentUsed[id] ?: 0.0) * scaleFactor
+                    if (leadIngredientId != null) {
+                        val diff = 100.0 - totalUsed
+                        val adjusted = (currentUsed[leadIngredientId] ?: 0.0) + diff
+                        if (adjusted > 0) {
+                            currentUsed[leadIngredientId] = adjusted
                         }
                     }
                 }
 
                 _formulationResult.value = currentUsed.filter { it.value > 0.001 }
                 _targetRequirement.value = targetRequirement
+                _error.value = null
                 
-                if (remainingTotal > 0.1) {
-                    val totalStr = "%.1f".format(Locale.getDefault(), 100.0 - remainingTotal)
-                    _error.value = Translator.getString("formula_incomplete", currentLanguage, totalStr)
-                }
-                android.util.Log.d("FeedViewModel", "Formulation result set: ${_formulationResult.value?.size} ingredients. Remaining: $remainingTotal")
+                android.util.Log.d("FeedViewModel", "Formulation finished with ${_formulationResult.value?.size} ingredients. Sum: ${currentUsed.values.sum()}%")
             } catch (e: Exception) {
                 _error.value = Translator.getString("formulation_failed", currentLanguage, e.message ?: "Unknown error")
             } finally {
@@ -709,8 +968,170 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun checkIngredientSafety(
+        items: List<Pair<FeedIngredient, Double>>,
+        stage: String
+    ): List<InclusionSafetyAlert> {
+        if (items.isEmpty()) return emptyList()
+        val totalQty = items.sumOf { it.second }.coerceAtLeast(0.0001)
+        val alerts = mutableListOf<InclusionSafetyAlert>()
+
+        items.forEach { (ing, qty) ->
+            val currentPercent = (qty / totalQty) * 100.0
+            val maxLimit: Double = when (stage.lowercase()) {
+                "creep", "pre-starter" -> minOf(ing.maxStarter * 0.7, ing.maxStarter)
+                "weaner/starter", "starter", "weaner" -> ing.maxStarter
+                "grower" -> ing.maxGrower
+                "finisher" -> ing.maxFinisher
+                "pregnant", "gestating" -> minOf(ing.maxGrower, ing.maxFinisher)
+                "lactating" -> ing.maxGrower
+                else -> minOf(ing.maxStarter, minOf(ing.maxGrower, ing.maxFinisher))
+            }
+
+            if (maxLimit in 0.01..99.9 && currentPercent > (maxLimit + 0.05)) {
+                val ingNameLower = ing.name.lowercase()
+                val (riskKey, risk) = when {
+                    ingNameLower.contains("cottonseed") -> "risk_gossypol_toxicity" to "Excess gossypol toxicity risk (heart & liver damage in monogastrics)"
+                    ingNameLower.contains("cassava peel") -> "risk_hydrocyanic_acid" to "High hydrocyanic acid & fibrous anti-nutritional factor risk"
+                    ingNameLower.contains("salt") && currentPercent > 0.5 -> "risk_salt_toxicity" to "Risk of hypernatremia / salt toxicity; ensure unlimited fresh water"
+                    ingNameLower.contains("fish") && currentPercent > 10.0 -> "risk_fishy_taint" to "Fishy taint risk in meat quality and high sodium / mineral load"
+                    ingNameLower.contains("wheat bran") || ingNameLower.contains("rice bran") -> "risk_excess_fiber" to "Excess dietary fiber impairs nutrient digestion and feed conversion"
+                    ingNameLower.contains("bone meal") || ingNameLower.contains("dcp") -> "risk_excess_mineral" to "Excess mineral inclusion can disrupt calcium-to-phosphorus absorption"
+                    else -> "risk_exceeds_limit" to "Exceeds safe recommended inclusion limit ($maxLimit%) for $stage stage"
+                }
+                alerts.add(
+                    InclusionSafetyAlert(
+                        ingredientName = ing.name,
+                        currentPercent = currentPercent,
+                        maxAllowedPercent = maxLimit,
+                        stage = stage,
+                        riskDescription = risk,
+                        riskKey = riskKey
+                    )
+                )
+            }
+        }
+        return alerts
+    }
+
+    fun calculateNutritionalContent(
+        items: List<Pair<FeedIngredient, Double>>,
+        isPercentageMode: Boolean = false,
+        isDryMatterMode: Boolean = false
+    ): FeedNutrientProfile {
+        if (items.isEmpty()) return FeedNutrientProfile()
+        
+        val totalQty = items.sumOf { it.second }.coerceAtLeast(0.0001)
+
+        var cp = 0.0
+        var me = 0.0
+        var cf = 0.0
+        var ca = 0.0
+        var p = 0.0
+        var lys = 0.0
+        var met = 0.0
+        var weightedDm = 0.0
+        var totalCost = 0.0
+
+        items.forEach { (ing, qty) ->
+            val fraction = qty / totalQty
+            val effectiveQty = if (isPercentageMode) (qty / 100.0) * 100.0 else qty
+
+            cp += ing.crudeProtein * fraction
+            me += ing.metabolizableEnergy * fraction
+            cf += ing.crudeFiber * fraction
+            
+            val caPct = if (ing.calcium > 50.0) ing.calcium / 10.0 else ing.calcium
+            val pPct = if (ing.phosphorus > 50.0) ing.phosphorus / 10.0 else ing.phosphorus
+            ca += caPct * fraction
+            p += pPct * fraction
+
+            // True Amino Acid logic (% of diet)
+            val isPureLys = ing.name.contains("Lysine", ignoreCase = true) || (ing.crudeProtein > 80.0 && ing.lysine > 50.0)
+            val ingDietaryLys = if (isPureLys) ing.lysine else (ing.crudeProtein * (ing.lysine / 100.0))
+            lys += ingDietaryLys * fraction
+
+            val isPureMet = ing.name.contains("Methionine", ignoreCase = true) || (ing.crudeProtein > 80.0 && (ing.methionine + ing.cystine) > 50.0)
+            val ingDietaryMet = if (isPureMet) (ing.methionine + ing.cystine) else (ing.crudeProtein * ((ing.methionine + ing.cystine) / 100.0))
+            met += ingDietaryMet * fraction
+
+            val dmVal = if (ing.dryMatter > 0.0) ing.dryMatter else 90.0
+            weightedDm += dmVal * fraction
+
+            if (ing.costPerKg > 0.0) {
+                totalCost += ing.costPerKg * effectiveQty
+            }
+        }
+
+        val totalWeight = if (isPercentageMode) 100.0 else items.sumOf { it.second }
+        val costPerKg = if (isPercentageMode) {
+            items.sumOf { (ing, qty) -> (qty / totalQty) * (if (ing.costPerKg > 0) ing.costPerKg else 0.0) }
+        } else {
+            if (totalQty > 0.0001) totalCost / totalQty else 0.0
+        }
+        val costPer50kgBag = costPerKg * 50.0
+
+        val caPRatio = if (p > 0.0001) ca / p else 0.0
+
+        // Dry Matter Basis Conversion if enabled
+        val dmFactor = if (isDryMatterMode && weightedDm > 0.0) 100.0 / weightedDm else 1.0
+        val finalCp = cp * dmFactor
+        val finalMe = me * dmFactor
+        val finalCf = cf * dmFactor
+        val finalCa = ca * dmFactor
+        val finalP = p * dmFactor
+        val finalLys = lys * dmFactor
+        val finalMet = met * dmFactor
+        val finalDp = finalCp * 0.85
+
+        return FeedNutrientProfile(
+            crudeProtein = finalCp,
+            metabolizableEnergy = finalMe,
+            digestibleProtein = finalDp,
+            crudeFiber = finalCf,
+            calcium = finalCa,
+            phosphorus = finalP,
+            lysine = finalLys,
+            methionine = finalMet,
+            totalWeight = totalWeight,
+            costPerKg = costPerKg,
+            costPer50kgBag = costPer50kgBag,
+            totalCost = if (isPercentageMode) costPerKg * 100.0 else totalCost,
+            caPRatio = caPRatio,
+            dryMatterPercent = weightedDm
+        )
+    }
+
     override fun onCleared() {
         super.onCleared()
         android.util.Log.d("FeedViewModel", "ViewModel cleared: ${this.hashCode()}")
     }
 }
+
+data class InclusionSafetyAlert(
+    val ingredientName: String,
+    val currentPercent: Double,
+    val maxAllowedPercent: Double,
+    val stage: String,
+    val riskDescription: String,
+    val riskKey: String = ""
+)
+
+typealias IngredientSafetyAlert = InclusionSafetyAlert
+
+data class FeedNutrientProfile(
+    val crudeProtein: Double = 0.0,
+    val metabolizableEnergy: Double = 0.0,
+    val digestibleProtein: Double = 0.0,
+    val crudeFiber: Double = 0.0,
+    val calcium: Double = 0.0,
+    val phosphorus: Double = 0.0,
+    val lysine: Double = 0.0,
+    val methionine: Double = 0.0,
+    val totalWeight: Double = 0.0,
+    val costPerKg: Double = 0.0,
+    val costPer50kgBag: Double = 0.0,
+    val totalCost: Double = 0.0,
+    val caPRatio: Double = 0.0,
+    val dryMatterPercent: Double = 90.0
+)

@@ -26,7 +26,7 @@ class ProductionViewModel : ViewModel() {
     // Active Farm ID for multi-user support
     private var activeFarmId: String? = null
 
-    fun setActiveFarmId(uid: String) {
+    fun setActiveFarmId(uid: String?) {
         activeFarmId = uid
     }
 
@@ -90,16 +90,23 @@ class ProductionViewModel : ViewModel() {
                                 batch.update(pigRef, "purpose", "Breeder")
                                 
                                 if (outcome == "Successful" || outcome == "Mating Successful") {
-                                    if (checkPregnancy) {
-                                        val tRef = db.collection("users").document(userId).collection("tasks").document()
-                                        val taskDate = DateUtils.addDaysToDate(record.date, 21)
-                                        batch.set(tRef, TaskItem(id = tRef.id, name = "Confirm Pregnancy: Pig $pigTag", date = taskDate, notes = "Scheduled 21 days after mating on ${record.date}", pigIds = listOf(pigId)))
-                                    } else {
-                                        batch.update(pigRef, "status", "Pregnant")
-                                        val tRef = db.collection("users").document(userId).collection("tasks").document()
-                                        val taskDate = DateUtils.addDaysToDate(record.date, 114)
-                                        batch.set(tRef, TaskItem(id = tRef.id, name = "Farrowing: Pig $pigTag", date = taskDate, notes = "Scheduled 114 days after mating on ${record.date}", pigIds = listOf(pigId)))
-                                    }
+                                    val day110Date = DateUtils.addDaysToDate(record.date, 110)
+                                    val day114Date = DateUtils.addDaysToDate(record.date, 114)
+                                    batch.update(pigRef, "expectedFarrowingDate", day114Date, "farrowingPenMoveDate", day110Date)
+
+                                    // 1. Day 21 Return-to-Heat check
+                                    val tHeatRef = db.collection("users").document(userId).collection("tasks").document()
+                                    val heatDate = DateUtils.addDaysToDate(record.date, 21)
+                                    batch.set(tHeatRef, TaskItem(id = tHeatRef.id, name = "Check Return-to-Heat / Estrus: Pig $pigTag", date = heatDate, notes = "Check if sow returns to heat 18-24 days post-mating on ${record.date}", pigIds = listOf(pigId)))
+
+                                    // 2. Day 110 Move to Farrowing Crate
+                                    val tCrateRef = db.collection("users").document(userId).collection("tasks").document()
+                                    batch.set(tCrateRef, TaskItem(id = tCrateRef.id, name = "Move to Farrowing Crate: Pig $pigTag", date = day110Date, notes = "Move sow to sanitized farrowing pen & wash/deworm 4-5 days before due date", pigIds = listOf(pigId)))
+
+                                    // 3. Day 114 Expected Farrowing Due Date
+                                    batch.update(pigRef, "status", "Pregnant")
+                                    val tRef = db.collection("users").document(userId).collection("tasks").document()
+                                    batch.set(tRef, TaskItem(id = tRef.id, name = "Farrowing: Pig $pigTag", date = day114Date, notes = "Scheduled 114 days after mating on ${record.date}", pigIds = listOf(pigId)))
                                 }
                             }
                         }
@@ -117,14 +124,23 @@ class ProductionViewModel : ViewModel() {
                         if (record.type == "Confirm Pregnancy" && snapshot != null) {
                             val outcome = pigOutcomes[pigId] ?: (if (pregnancyConfirmed) "Successful" else "Failed")
                             if (outcome == "Successful") {
-                                batch.update(pigRef, "status", "Pregnant", "purpose", "Breeder")
                                 val lastMating = snapshot.getString("lastBreedingDate") ?: record.date
+                                val day110Date = DateUtils.addDaysToDate(lastMating, 110)
+                                val day114Date = DateUtils.addDaysToDate(lastMating, 114)
+                                batch.update(pigRef, "status", "Pregnant", "purpose", "Breeder", "expectedFarrowingDate", day114Date, "farrowingPenMoveDate", day110Date)
+
+                                val tCrateRef = db.collection("users").document(userId).collection("tasks").document()
+                                batch.set(tCrateRef, TaskItem(id = tCrateRef.id, name = "Move to Farrowing Crate: Pig $pigTag", date = day110Date, notes = "Move sow to sanitized farrowing pen & wash/deworm 4-5 days before due date", pigIds = listOf(pigId)))
+
                                 val tRef = db.collection("users").document(userId).collection("tasks").document()
-                                val taskDate = DateUtils.addDaysToDate(lastMating, 114)
-                                batch.set(tRef, TaskItem(id = tRef.id, name = "Farrowing: Pig $pigTag", date = taskDate, notes = "Scheduled 114 days after mating on $lastMating", pigIds = listOf(pigId)))
-                                finalDescription = "${record.description}\nPregnancy Confirmed. Scheduled farrowing for $taskDate".trim()
+                                batch.set(tRef, TaskItem(id = tRef.id, name = "Farrowing: Pig $pigTag", date = day114Date, notes = "Scheduled 114 days after mating on $lastMating", pigIds = listOf(pigId)))
+                                finalDescription = "${record.description}\nPregnancy Confirmed. Due on $day114Date".trim()
                             } else {
-                                finalDescription = "${record.description}\nPregnancy Check Failed.".trim()
+                                batch.update(pigRef, "status", "Sow", "lastBreedingDate", "", "expectedFarrowingDate", "", "farrowingPenMoveDate", "")
+                                val tRemateRef = db.collection("users").document(userId).collection("tasks").document()
+                                val remateDate = DateUtils.addDaysToDate(record.date, 3)
+                                batch.set(tRemateRef, TaskItem(id = tRemateRef.id, name = "Re-mate / Heat Check: Pig $pigTag", date = remateDate, notes = "Conception check failed on ${record.date}. Monitor for next estrus cycle.", pigIds = listOf(pigId)))
+                                finalDescription = "${record.description}\nPregnancy Check Failed. Reset to open Sow.".trim()
                             }
                         }
 
@@ -140,12 +156,19 @@ class ProductionViewModel : ViewModel() {
 
                             val numMales = pigNumMales[pigId]?.toIntOrNull() ?: details["numMales"] as? Int ?: 0
                             val numFemales = pigNumFemales[pigId]?.toIntOrNull() ?: details["numFemales"] as? Int ?: 0
+                            val stillborns = details["stillborns"]?.toString()?.toIntOrNull() ?: record.stillbornCount
+                            val mummies = details["mummies"]?.toString()?.toIntOrNull() ?: record.mummiesCount
+                            val litterWeight = details["litterBirthWeight"]?.toString()?.toDoubleOrNull() ?: record.litterBirthWeightKg
+
                             val maleTagsStr = pigMaleTags[pigId] ?: details["maleTags"]?.toString() ?: ""
                             val femaleTagsStr = pigFemaleTags[pigId] ?: details["femaleTags"]?.toString() ?: ""
                             
                             val maleTags = maleTagsStr.split(",").map { it.trim() }.filter { it.isNotEmpty() }
                             val femaleTags = femaleTagsStr.split(",").map { it.trim() }.filter { it.isNotEmpty() }
-                            finalDescription = "${record.description}\nFarrowed: $numMales Males, $numFemales Females".trim()
+                            finalDescription = "${record.description}\nFarrowed: $numMales Males, $numFemales Females" +
+                                (if (stillborns > 0) ", $stillborns Stillborn" else "") +
+                                (if (mummies > 0) ", $mummies Mummies" else "") +
+                                (if (litterWeight > 0.0) ", Litter Wt: ${litterWeight}kg" else "")
 
                             val breed = snapshot.getString("breed") ?: ""
                             val location = snapshot.getString("location") ?: ""
@@ -170,7 +193,28 @@ class ProductionViewModel : ViewModel() {
                                 val newPigRef = db.collection("users").document(userId).collection("pigs").document()
                                 batch.set(newPigRef, Pig(id = newPigRef.id, tagNumber = tag, gender = "Female", breed = breed, birthDate = record.date, status = "Piglet", sowTag = sowTagSnapshot, boarTag = boarTag, location = location))
                             }
-                            batch.update(pigRef, "status", "Lactating", "hasFarrowed", true, "weaned", false, "purpose", "Breeder")
+
+                            val currentParity = (snapshot.getLong("parity") ?: 0L).toInt()
+                            batch.update(pigRef, 
+                                "status", "Lactating", 
+                                "hasFarrowed", true, 
+                                "weaned", false, 
+                                "purpose", "Breeder",
+                                "parity", currentParity + 1,
+                                "expectedFarrowingDate", "",
+                                "farrowingPenMoveDate", ""
+                            )
+
+                            // Auto-schedule Weaning 28 days post-farrowing
+                            val weanTaskRef = db.collection("users").document(userId).collection("tasks").document()
+                            val weanDate = DateUtils.addDaysToDate(record.date, 28)
+                            batch.set(weanTaskRef, TaskItem(
+                                id = weanTaskRef.id,
+                                name = "Weaning: Pig $pigTag",
+                                date = weanDate,
+                                notes = "Weaning due 28 days after farrowing on ${record.date}",
+                                pigIds = listOf(pigId)
+                            ))
                         }
 
                         if (record.type == "Weaning" && snapshot != null) {
@@ -185,6 +229,15 @@ class ProductionViewModel : ViewModel() {
                             // Mothers (Sow/Lactating) transition back to "Sow" status (ready for next cycle)
                             if (snapshot.getString("status") == "Lactating" || snapshot.getString("status") == "Nursing" || snapshot.getString("status") == "Sow") {
                                 batch.update(pigRef, "status", "Sow")
+                                val heatTaskRef = db.collection("users").document(userId).collection("tasks").document()
+                                val heatCheckDate = DateUtils.addDaysToDate(record.date, 5)
+                                batch.set(heatTaskRef, TaskItem(
+                                    id = heatTaskRef.id,
+                                    name = "Post-Weaning Heat Check: Pig $pigTag",
+                                    date = heatCheckDate,
+                                    notes = "Weaning-to-Service Interval surveillance (4-7 days expected)",
+                                    pigIds = listOf(pigId)
+                                ))
                             } else {
                                 val sowTagVal = snapshot.getString("sowTag") ?: ""
                                 if (sowTagVal.isNotEmpty()) {
@@ -192,12 +245,42 @@ class ProductionViewModel : ViewModel() {
                                         val otherOffspring = db.collection("users").document(userId).collection("pigs").whereEqualTo("sowTag", sowTagVal).whereEqualTo("weaned", false).get().await()
                                         if (otherOffspring.documents.all { it.id in pigIds }) {
                                             val sowSnapshot = db.collection("users").document(userId).collection("pigs").whereEqualTo("tagNumber", sowTagVal).limit(1).get().await()
-                                            if (!sowSnapshot.isEmpty) db.collection("users").document(userId).collection("pigs").document(sowSnapshot.documents[0].id).update("status", "Sow")
+                                            if (!sowSnapshot.isEmpty) {
+                                                val sowDocId = sowSnapshot.documents[0].id
+                                                db.collection("users").document(userId).collection("pigs").document(sowDocId).update("status", "Sow")
+                                                val heatTaskRef = db.collection("users").document(userId).collection("tasks").document()
+                                                val heatCheckDate = DateUtils.addDaysToDate(record.date, 5)
+                                                db.collection("users").document(userId).collection("tasks").document(heatTaskRef.id).set(TaskItem(
+                                                    id = heatTaskRef.id,
+                                                    name = "Post-Weaning Heat Check: Pig $sowTagVal",
+                                                    date = heatCheckDate,
+                                                    notes = "Weaning-to-Service Interval surveillance (4-7 days expected)",
+                                                    pigIds = listOf(sowDocId)
+                                                ))
+                                            }
                                         }
                                     }
                                 }
                             }
                             finalDescription = "${record.description}\nWeaned and moved to location: $newLocation".trim()
+                        }
+
+                        if (record.type == "Medication" || record.type == "Deworming" || record.type == "Vaccination" || record.type == "Treatment") {
+                            val withdrawalDays = details["withdrawalDays"]?.toString()?.toIntOrNull() ?: record.withdrawalPeriodDays
+                            if (withdrawalDays > 0) {
+                                val safeDate = DateUtils.addDaysToDate(record.date, withdrawalDays)
+                                val medName = details["medication"]?.toString() ?: record.medication.ifEmpty { record.type }
+                                batch.update(pigRef, "activeWithdrawalUntil", safeDate, "withdrawalMedication", medName)
+                                val wTaskRef = db.collection("users").document(userId).collection("tasks").document()
+                                batch.set(wTaskRef, TaskItem(
+                                    id = wTaskRef.id,
+                                    name = "Meat Withdrawal Cleared: Pig $pigTag",
+                                    date = safeDate,
+                                    notes = "Safe for slaughter and meat sale. Medication: $medName",
+                                    pigIds = listOf(pigId)
+                                ))
+                                finalDescription = "${record.description}\nDrug Withdrawal: $withdrawalDays days. Safe date: $safeDate".trim()
+                            }
                         }
 
                         if (record.type == "Castration" && snapshot != null && snapshot.getString("gender")?.equals("Male", ignoreCase = true) == true) {
@@ -243,7 +326,8 @@ class ProductionViewModel : ViewModel() {
                             if (reason == "Sold" && individualSalePrice > 0) {
                                 val fRef = db.collection("users").document(userId).collection("financials").document()
                                 batch.set(fRef, FinancialRecord(id = fRef.id, type = "Income", category = "Pig Sale", amount = individualSalePrice, date = record.date, description = "Sale of Pig ${snapshot?.getString("tagNumber") ?: pigId}", pigId = pigId))
-                                finalDescription += "\nSold for: Ksh $individualSalePrice"
+                                val currSym = com.example.smartswine.ui.settings.SettingsViewModel.getInstance().currencySymbol.value
+                                finalDescription += "\nSold for: $currSym$individualSalePrice"
                             }
                             cleanupTasksForPig(pigId, userId)
                         }

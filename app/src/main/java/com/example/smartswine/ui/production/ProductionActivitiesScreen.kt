@@ -1,5 +1,6 @@
 package com.example.smartswine.ui.production
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,6 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -20,12 +22,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.smartswine.utils.StylishDivider
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
+import java.util.Locale
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bibiniitech.smartswine.R
 import com.example.smartswine.model.Pig
 import com.example.smartswine.ui.herd.HerdViewModel
 import com.example.smartswine.ui.theme.SmartSwineTheme
+import com.example.smartswine.ui.theme.DarkBackground
 import com.example.smartswine.utils.DateUtils
 import com.example.smartswine.utils.LocalAppLanguage
 import com.example.smartswine.utils.Translator
@@ -36,6 +41,8 @@ import com.example.smartswine.utils.stringResource
 fun ProductionActivitiesScreen(
     viewModel: ProductionViewModel,
     herdViewModel: HerdViewModel,
+    initialActivity: String? = null,
+    initialPigId: String? = null,
     onBack: () -> Unit,
 ) {
     val pigs by herdViewModel.pigs.collectAsStateWithLifecycle()
@@ -44,13 +51,24 @@ fun ProductionActivitiesScreen(
     ProductionActivitiesContent(
         pigs = pigs,
         isLoading = isLoading,
+        initialActivity = initialActivity,
+        initialPigId = initialPigId,
         onLogActivity = { pigIds, activityName, notes, date, trackHeat, checkPregnancy, extra ->
+            val wDays = (extra["withdrawalDays"] as? Int) ?: 0
+            val safeDate = if (wDays > 0) DateUtils.addDaysToDate(date, wDays) else ""
             viewModel.logHealthActivity(
                 pigIds = pigIds,
                 record = com.example.smartswine.model.HealthRecord(
                     date = date,
                     type = activityName,
-                    description = notes
+                    description = notes,
+                    medication = (extra["medicationName"] as? String) ?: "",
+                    dosage = (extra["medicationDosage"] as? String) ?: "",
+                    stillbornCount = (extra["stillborns"] as? Int) ?: 0,
+                    mummiesCount = (extra["mummies"] as? Int) ?: 0,
+                    litterBirthWeightKg = (extra["litterBirthWeight"] as? Double) ?: 0.0,
+                    withdrawalPeriodDays = wDays,
+                    safeSlaughterDate = safeDate
                 ),
                 trackHeat = trackHeat,
                 checkPregnancy = checkPregnancy,
@@ -67,11 +85,81 @@ fun ProductionActivitiesScreen(
 fun ProductionActivitiesContent(
     pigs: List<Pig>,
     isLoading: Boolean,
+    initialActivity: String? = null,
+    initialPigId: String? = null,
     onLogActivity: (List<String>, String, String, String, Boolean, Boolean, Map<String, Any>) -> Unit,
     onBack: () -> Unit,
 ) {
-    val showLogDialogState = remember { mutableStateOf<ProductionActivityType?>(null) }
-    val showLogDialog = showLogDialogState.value
+    val categories = remember {
+        listOf(
+            ProductionActivityType("Heat Detection", iconResId = R.drawable.ic_heat, description = "Heat Detection"),
+            ProductionActivityType("Breeding/Mating", iconResId = R.drawable.ic_breeding, description = "Breeding/Mating"),
+            ProductionActivityType("Confirm Pregnancy", iconResId = R.drawable.ic_pregnancy_check, description = "Confirm Pregnancy"),
+            ProductionActivityType("Farrowing", iconResId = R.drawable.ic_farrowing, description = "Farrowing"),
+            ProductionActivityType("Weaning", iconResId = R.drawable.ic_weaning, description = "Weaning"),
+            ProductionActivityType("Castration", iconResId = R.drawable.ic_castration, description = "Castration"),
+            ProductionActivityType("Teeth Clipping", iconResId = R.drawable.ic_teeth_clipping, description = "Teeth Clipping"),
+            ProductionActivityType("Tail Docking", iconResId = R.drawable.ic_tail_docking, description = "Tail Docking"),
+            ProductionActivityType("Deworming", iconResId = R.drawable.ic_deworming, description = "Deworming"),
+            ProductionActivityType("Iron Injection", iconResId = R.drawable.ic_iron, description = "Iron Injection"),
+            ProductionActivityType("Vaccination", iconResId = R.drawable.ic_vaccination, description = "Vaccination"),
+            ProductionActivityType("Medication", iconResId = R.drawable.ic_medication, description = "Medication"),
+            ProductionActivityType("Culling", iconResId = R.drawable.ic_culling, description = "Culling"),
+            ProductionActivityType("Custom", icon = Icons.AutoMirrored.Filled.NoteAdd, description = "Custom Activity")
+        )
+    }
+
+    val targetActivity = remember(initialActivity) {
+        if (initialActivity.isNullOrBlank()) null
+        else categories.find { it.name.equals(initialActivity, ignoreCase = true) }
+            ?: categories.find { 
+                val act = initialActivity.lowercase()
+                val cat = it.name.lowercase()
+                (act.contains("heat") && cat.contains("heat")) ||
+                ((act.contains("breeding") || act.contains("mating")) && cat.contains("breeding")) ||
+                ((act.contains("pregnancy") || act.contains("confirm")) && cat.contains("pregnancy")) ||
+                (act.contains("farrowing") && cat.contains("farrowing")) ||
+                (act.contains("weaning") && cat.contains("weaning")) ||
+                (act.contains("castration") && cat.contains("castration")) ||
+                (act.contains("teeth") && cat.contains("teeth")) ||
+                (act.contains("tail") && cat.contains("tail")) ||
+                (act.contains("deworming") && cat.contains("deworming")) ||
+                (act.contains("iron") && cat.contains("iron")) ||
+                (act.contains("vaccin") && cat.contains("vaccin")) ||
+                (act.contains("medication") && cat.contains("medication")) ||
+                (act.contains("weight") && cat.contains("weight")) ||
+                (act.contains("culling") && cat.contains("culling"))
+            }
+    }
+
+    var activeDialogActivity by remember(targetActivity) { mutableStateOf(targetActivity) }
+
+    if (activeDialogActivity != null) {
+        LogActivityDialog(
+            activityType = activeDialogActivity!!,
+            pigs = pigs,
+            initialPigId = initialPigId,
+            onDismiss = {
+                if (initialActivity != null) {
+                    onBack()
+                } else {
+                    activeDialogActivity = null
+                }
+            },
+            onLog = { pigIds, details ->
+                onLogActivity(
+                    pigIds,
+                    activeDialogActivity!!.name,
+                    details["notes"]?.toString() ?: "",
+                    details["date"]?.toString() ?: "",
+                    details["trackHeat"] == true,
+                    details["checkPregnancy"] == true,
+                    details
+                )
+                onBack()
+            }
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -116,24 +204,6 @@ fun ProductionActivitiesContent(
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            val categories = listOf(
-                ProductionActivityType("Heat Detection", iconResId = R.drawable.ic_heat, description = stringResource("heat_detection_desc")),
-                ProductionActivityType("Breeding/Mating", iconResId = R.drawable.ic_breeding, description = stringResource("breeding_mating_desc")),
-                ProductionActivityType("Confirm Pregnancy", iconResId = R.drawable.ic_pregnancy_check, description = stringResource("confirm_pregnancy_desc")),
-                ProductionActivityType("Farrowing", iconResId = R.drawable.ic_farrowing, description = stringResource("farrowing_desc")),
-                ProductionActivityType("Weaning", iconResId = R.drawable.ic_weaning, description = stringResource("weaning_desc")),
-                ProductionActivityType("Castration", iconResId = R.drawable.ic_castration, description = stringResource("castration_desc")),
-                ProductionActivityType("Teeth Clipping", iconResId = R.drawable.ic_teeth_clipping, description = stringResource("teeth_clipping_desc")),
-                ProductionActivityType("Tail Docking", iconResId = R.drawable.ic_tail_docking, description = stringResource("tail_docking_desc")),
-                ProductionActivityType("Deworming", iconResId = R.drawable.ic_deworming, description = stringResource("deworming_desc")),
-                ProductionActivityType("Iron Injection", iconResId = R.drawable.ic_iron, description = stringResource("iron_injection_desc")),
-                ProductionActivityType("Vaccination", iconResId = R.drawable.ic_vaccination, description = stringResource("vaccination_desc")),
-                ProductionActivityType("Medication", iconResId = R.drawable.ic_medication, description = stringResource("medication_desc")),
-                ProductionActivityType("Weight Check", iconResId = R.drawable.ic_weight_checker, description = stringResource("weight_check_desc")),
-                ProductionActivityType("Culling", iconResId = R.drawable.ic_culling, description = stringResource("culling_desc")),
-                ProductionActivityType("Custom", icon = Icons.AutoMirrored.Filled.NoteAdd, description = stringResource("custom_activity_desc"))
-            )
-
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier
@@ -141,33 +211,12 @@ fun ProductionActivitiesContent(
                     .imePadding()
             ) {
                 items(categories) { activity ->
-                    ActivityCard(activity) {
-                        showLogDialogState.value = activity
+                    ActivityCard(activity = activity) {
+                        activeDialogActivity = activity
                     }
                 }
-                item { Spacer(modifier = Modifier.height(120.dp)) }
             }
         }
-    }
-
-    showLogDialog?.let { activity ->
-        LogActivityDialog(
-            activityType = activity,
-            pigs = pigs,
-            onDismiss = { showLogDialogState.value = null },
-            onLog = { pigIds, details ->
-                onLogActivity(
-                    pigIds,
-                    activity.name,
-                    details["notes"]?.toString() ?: "",
-                    details["date"]?.toString() ?: "",
-                    details["trackHeat"] == true,
-                    details["checkPregnancy"] == true,
-                    details
-                )
-                showLogDialogState.value = null
-            }
-        )
     }
 }
 
@@ -232,15 +281,37 @@ fun ActivityCard(
 fun LogActivityDialog(
     activityType: ProductionActivityType,
     pigs: List<Pig>,
+    initialPigId: String? = null,
     onDismiss: () -> Unit,
     onLog: (List<String>, Map<String, Any>) -> Unit
 ) {
-    val selectedPigsState = remember { mutableStateOf(setOf<Pig>()) }
-    val selectedSowState = remember { mutableStateOf<Pig?>(null) }
-    val selectedBoarState = remember { mutableStateOf<Pig?>(null) }
+    val cleanInitialPigId = remember(initialPigId) {
+        initialPigId?.replace(Regex("(?i)^tag:?\\s*"), "")?.trim()
+    }
+    val initialPig = remember(cleanInitialPigId, initialPigId, pigs) {
+        if (!cleanInitialPigId.isNullOrBlank()) {
+            pigs.find { 
+                it.id == cleanInitialPigId || 
+                it.tagNumber.equals(cleanInitialPigId, ignoreCase = true) ||
+                it.id == initialPigId ||
+                it.tagNumber.equals(initialPigId, ignoreCase = true)
+            }
+        } else null
+    }
+    val selectedPigsState = remember(initialPig) {
+        mutableStateOf(if (initialPig != null) setOf(initialPig) else emptySet())
+    }
+    val selectedSowState = remember(initialPig) {
+        mutableStateOf(if (initialPig?.gender?.equals("female", ignoreCase = true) == true) initialPig else null)
+    }
+    val selectedBoarState = remember(initialPig) {
+        mutableStateOf(if (initialPig?.gender?.equals("male", ignoreCase = true) == true) initialPig else null)
+    }
     val expandedState = remember { mutableStateOf(value = false) }
     val sowExpandedState = remember { mutableStateOf(false) }
     val boarExpandedState = remember { mutableStateOf(false) }
+    val isAiOrBorrowedBoarState = remember { mutableStateOf(false) }
+    val customBoarTagState = remember { mutableStateOf("") }
     val notesState = remember { mutableStateOf("") }
     val trackHeatState = remember { mutableStateOf(false) }
     val checkPregnancyState = remember { mutableStateOf(false) }
@@ -249,6 +320,10 @@ fun LogActivityDialog(
     val numFemalesState = remember { mutableStateOf("") }
     val maleTagsState = remember { mutableStateOf("") }
     val femaleTagsState = remember { mutableStateOf("") }
+    val stillbornsState = remember { mutableStateOf("") }
+    val mummiesState = remember { mutableStateOf("") }
+    val litterBirthWeightState = remember { mutableStateOf("") }
+    val withdrawalDaysState = remember { mutableStateOf("") }
     val medicationNameState = remember { mutableStateOf("") }
     val medicationDosageState = remember { mutableStateOf("") }
     val customActivityNameState = remember { mutableStateOf("") }
@@ -260,6 +335,7 @@ fun LogActivityDialog(
     val salePriceState = remember { mutableStateOf("") }
     val showDatePickerState = remember { mutableStateOf(false) }
     val languageCode = LocalAppLanguage.current.code
+    val currencySymbol = remember { com.example.smartswine.ui.settings.SettingsViewModel.getInstance().currencySymbol.value }
 
     val appLanguage = LocalAppLanguage.current
     val locale = remember(appLanguage) { appLanguage.toLocale() }
@@ -291,16 +367,30 @@ fun LogActivityDialog(
         }
     }
 
+    val isDark = MaterialTheme.colorScheme.background == DarkBackground
+    val dialogContainerColor = if (isDark) MaterialTheme.colorScheme.surface else Color(0xFFF0FDFE)
+    val dialogTitleColor = if (isDark) Color(0xFF4DD0E1) else Color(0xFF006064)
+    val dialogTextColor = if (isDark) MaterialTheme.colorScheme.onSurface else Color(0xFF004D40)
+
     AlertDialog(
-        onDismissRequest = { },
+        onDismissRequest = onDismiss,
         properties = DialogProperties(dismissOnClickOutside = false, dismissOnBackPress = true),
-        title = { Text(stringResource("log_activity_title", getTranslatedActivityType(activityType.name))) },
+        containerColor = dialogContainerColor,
+        titleContentColor = dialogTitleColor,
+        textContentColor = dialogTextColor,
+        title = {
+            Text(
+                stringResource("log_activity_title", getTranslatedActivityType(activityType.name)),
+                color = dialogTitleColor,
+                fontWeight = FontWeight.Bold
+            )
+        },
         text = {
             Column(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier.verticalScroll(rememberScrollState())
             ) {
-                val filteredPigs = remember(activityType.name, pigs, showAllPigsForIronState.value) {
+                val filteredPigs = remember(activityType.name, pigs, showAllPigsForIronState.value, initialPig) {
                     val baseList = when (activityType.name) {
                         "Heat Detection" -> {
                             pigs.filter { 
@@ -354,7 +444,12 @@ fun LogActivityDialog(
                         "Deworming", "Vaccination", "Medication", "Weight Check", "Culling", "Custom" -> pigs
                         else -> pigs
                     }
-                    baseList.sortedBy { it.tagNumber }
+                    val withInitial = if (initialPig != null && activityType.name != "Breeding/Mating" && !baseList.any { it.id == initialPig.id }) {
+                        baseList + initialPig
+                    } else {
+                        baseList
+                    }
+                    withInitial.sortedBy { it.tagNumber }
                 }
 
                 OutlinedTextField(
@@ -409,6 +504,71 @@ fun LogActivityDialog(
                         )
                     }
 
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        OutlinedTextField(
+                            value = stillbornsState.value,
+                            onValueChange = { stillbornsState.value = it },
+                            label = { Text(stringResource("stillborns_dead")) },
+                            modifier = Modifier.weight(1f),
+                            keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number)
+                        )
+                        OutlinedTextField(
+                            value = mummiesState.value,
+                            onValueChange = { mummiesState.value = it },
+                            label = { Text(stringResource("mummies")) },
+                            modifier = Modifier.weight(1f),
+                            keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number)
+                        )
+                    }
+
+                    OutlinedTextField(
+                        value = litterBirthWeightState.value,
+                        onValueChange = { litterBirthWeightState.value = it },
+                        label = { Text(stringResource("total_litter_birth_weight_kg")) },
+                        placeholder = { Text(stringResource("eg_weight_sample")) },
+                        modifier = Modifier.fillMaxWidth(),
+                        keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Decimal)
+                    )
+
+                    // Litter Quality & Viability Summary Card
+                    val males = numMalesState.value.toIntOrNull() ?: 0
+                    val females = numFemalesState.value.toIntOrNull() ?: 0
+                    val still = stillbornsState.value.toIntOrNull() ?: 0
+                    val mum = mummiesState.value.toIntOrNull() ?: 0
+                    val bornAlive = males + females
+                    val totalBorn = bornAlive + still + mum
+                    val totalWt = litterBirthWeightState.value.toDoubleOrNull() ?: 0.0
+
+                    if (totalBorn > 0) {
+                        val summaryCardBg = if (isDark) Color(0xFF00363A) else Color(0xFFE0F2F1)
+                        val summaryCardBorder = if (isDark) Color(0xFF00695C) else Color(0xFF80CBC4)
+                        val summaryTitleColor = if (isDark) Color(0xFF80DEEA) else Color(0xFF004D40)
+                        val summaryTextColor = if (isDark) Color(0xFF4DD0E1) else Color(0xFF00695C)
+                        val summaryBodyColor = if (isDark) MaterialTheme.colorScheme.onSurface else Color(0xFF004D40)
+
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = summaryCardBg),
+                            border = BorderStroke(1.dp, summaryCardBorder)
+                        ) {
+                            Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                Text(stringResource("litter_performance_summary"), fontWeight = FontWeight.Bold, color = summaryTitleColor, style = MaterialTheme.typography.titleSmall)
+                                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                                    Text("${stringResource("born_alive")}: $bornAlive", color = summaryTextColor)
+                                    Text("${stringResource("total_born")}: $totalBorn", fontWeight = FontWeight.SemiBold, color = summaryTitleColor)
+                                }
+                                if (totalWt > 0.0 && bornAlive > 0) {
+                                    val avgWt = totalWt / bornAlive
+                                    val avgStatus = if (avgWt >= 1.3) stringResource("good_status") else if (avgWt >= 1.0) stringResource("fair_status") else stringResource("low_viability_status")
+                                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                                        Text("${stringResource("avg_birth_weight")}: ${String.format(Locale.getDefault(), "%.2f", avgWt)} kg", color = summaryBodyColor)
+                                        Text(avgStatus, fontWeight = FontWeight.Bold, color = if (avgWt < 1.0) (if (isDark) Color(0xFFEF5350) else Color(0xFFC62828)) else (if (isDark) Color(0xFF81C784) else Color(0xFF2E7D32)))
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     if ((numMalesState.value.toIntOrNull() ?: 0) > 0) {
                         OutlinedTextField(
                             value = maleTagsState.value,
@@ -439,7 +599,8 @@ fun LogActivityDialog(
                             value = selectedSowState.value?.tagNumber ?: stringResource("select_sow"),
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text(stringResource("sow_tag_help")) },
+                            label = { Text(stringResource("sow_tag_help") + " *") },
+                            isError = selectedSowState.value == null,
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = sowExpandedState.value) },
                             modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable).fillMaxWidth()
                         )
@@ -448,11 +609,11 @@ fun LogActivityDialog(
                             onDismissRequest = { sowExpandedState.value = false }
                         ) {
                             pigs.asSequence()
-                                .filter { it.gender.equals("Female", ignoreCase = true) && (it.status == "Sow" || it.status == "Gilt" || it.status == "Pregnant" || it.status == "Lactating" || it.status == "Nursing" || it.status == "Finisher") }
+                                .filter { (it.gender.equals("Female", ignoreCase = true) && (it.status == "Sow" || it.status == "Gilt" || it.status == "Pregnant" || it.status == "Lactating" || it.status == "Nursing" || it.status == "Finisher")) || (initialPig != null && it.id == initialPig.id && it.gender.equals("Female", ignoreCase = true)) }
                                 .sortedBy { it.tagNumber }
                                 .forEach { pig ->
                                     DropdownMenuItem(
-                                        text = { Text("${pig.tagNumber} (${pig.status})") },
+                                        text = { Text("${pig.tagNumber} (${stringResource(pig.status.lowercase().replace(" ", "_"))})") },
                                         onClick = {
                                             selectedSowState.value = pig
                                             sowExpandedState.value = false
@@ -462,16 +623,31 @@ fun LogActivityDialog(
                         }
                     }
 
-                    // Boar Selection
+                    if (selectedSowState.value == null) {
+                        Text(
+                            text = "* Sow tag is required to log breeding",
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.labelSmall,
+                            modifier = Modifier.padding(start = 4.dp, top = 2.dp)
+                        )
+                    }
+
+                    // Boar Selection (Optional - AI / Borrowed Boar support)
                     ExposedDropdownMenuBox(
                         expanded = boarExpandedState.value,
                         onExpandedChange = { boarExpandedState.value = !boarExpandedState.value }
                     ) {
+                        val boarDisplay = when {
+                            selectedBoarState.value != null -> selectedBoarState.value!!.tagNumber
+                            isAiOrBorrowedBoarState.value && customBoarTagState.value.isNotBlank() -> "${stringResource("ai_borrowed_prefix")}: ${customBoarTagState.value}"
+                            isAiOrBorrowedBoarState.value -> stringResource("ai_external_boar")
+                            else -> stringResource("select_boar_optional")
+                        }
                         OutlinedTextField(
-                            value = selectedBoarState.value?.tagNumber ?: stringResource("select_boar"),
+                            value = boarDisplay,
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text(stringResource("boar_tag_label")) },
+                            label = { Text(stringResource("boar_tag_optional_ai")) },
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = boarExpandedState.value) },
                             modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable).fillMaxWidth()
                         )
@@ -479,21 +655,51 @@ fun LogActivityDialog(
                             expanded = boarExpandedState.value,
                             onDismissRequest = { boarExpandedState.value = false }
                         ) {
-                            pigs.filter { 
-                                it.gender.equals("Male", ignoreCase = true) && 
-                                it.status == "Boar"
-                            }
-                                .sortedBy { it.tagNumber }
-                                .forEach { pig ->
+                            DropdownMenuItem(
+                                text = { Text(stringResource("ai_external_boar_dropdown")) },
+                                onClick = {
+                                    selectedBoarState.value = null
+                                    isAiOrBorrowedBoarState.value = true
+                                    boarExpandedState.value = false
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource("none_not_specified")) },
+                                onClick = {
+                                    selectedBoarState.value = null
+                                    isAiOrBorrowedBoarState.value = false
+                                    customBoarTagState.value = ""
+                                    boarExpandedState.value = false
+                                }
+                            )
+                            HorizontalDivider()
+                            val availableBoars = pigs.filter { 
+                                (it.gender.equals("Male", ignoreCase = true) && it.status == "Boar") || (initialPig != null && it.id == initialPig.id && it.gender.equals("Male", ignoreCase = true))
+                            }.sortedBy { it.tagNumber }
+
+                            if (availableBoars.isNotEmpty()) {
+                                availableBoars.forEach { pig ->
                                     DropdownMenuItem(
-                                        text = { Text("${pig.tagNumber} (${pig.status})") },
+                                        text = { Text("🐗 ${pig.tagNumber} (${stringResource(pig.status.lowercase().replace(" ", "_"))})") },
                                         onClick = {
                                             selectedBoarState.value = pig
+                                            isAiOrBorrowedBoarState.value = false
                                             boarExpandedState.value = false
                                         }
                                     )
                                 }
+                            }
                         }
+                    }
+
+                    if (isAiOrBorrowedBoarState.value) {
+                        OutlinedTextField(
+                            value = customBoarTagState.value,
+                            onValueChange = { customBoarTagState.value = it },
+                            label = { Text(stringResource("external_boar_tag_label")) },
+                            placeholder = { Text(stringResource("external_boar_tag_placeholder")) },
+                            modifier = Modifier.fillMaxWidth()
+                        )
                     }
 
                     Row(
@@ -538,7 +744,7 @@ fun LogActivityDialog(
                                         Row(verticalAlignment = Alignment.CenterVertically) {
                                             Checkbox(checked = isSelected, onCheckedChange = null)
                                             Spacer(modifier = Modifier.width(8.dp))
-                                            Text("${pig.tagNumber} (${pig.status})")
+                                            Text("${pig.tagNumber} (${stringResource(pig.status.lowercase().replace(" ", "_"))})")
                                         }
                                     },
                                     onClick = {
@@ -614,6 +820,46 @@ fun LogActivityDialog(
                         modifier = Modifier.fillMaxWidth()
                     )
 
+                    if (activityType.name == "Deworming" || activityType.name == "Medication" || activityType.name == "Vaccination") {
+                        Spacer(Modifier.height(4.dp))
+                        Text(
+                            stringResource("meat_withdrawal_title"),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = if (isDark) Color(0xFF4DD0E1) else Color(0xFF006064),
+                            fontWeight = FontWeight.Bold
+                        )
+                        OutlinedTextField(
+                            value = withdrawalDaysState.value,
+                            onValueChange = { withdrawalDaysState.value = it },
+                            label = { Text(stringResource("withdrawal_days_label")) },
+                            placeholder = { Text(stringResource("zero_if_none")) },
+                            modifier = Modifier.fillMaxWidth(),
+                            keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number)
+                        )
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                            val presets = listOf("0d" to "0", "7d" to "7", "14d" to "14", "21d" to "21", "28d" to "28")
+                            presets.forEach { (label, days) ->
+                                AssistChip(
+                                    onClick = { withdrawalDaysState.value = days },
+                                    label = { Text(label, fontSize = 11.sp) },
+                                    colors = AssistChipDefaults.assistChipColors(
+                                        containerColor = if (withdrawalDaysState.value == days) (if (isDark) Color(0xFF00695C) else Color(0xFF80DEEA)) else Color.Transparent
+                                    )
+                                )
+                            }
+                        }
+                        val wDays = withdrawalDaysState.value.toIntOrNull() ?: 0
+                        if (wDays > 0) {
+                            val safeDate = DateUtils.addDaysToDate(formattedDate, wDays)
+                            Text(
+                                "${stringResource("safe_for_meat_on")}: $safeDate",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = if (isDark) Color(0xFFFF8A80) else Color(0xFFD32F2F),
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    }
+
                     if (activityType.name == "Iron Injection" && selectedPigsState.value.all { it.ironInjections == 0 }) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Checkbox(
@@ -663,11 +909,39 @@ fun LogActivityDialog(
                         }
                     }
 
+                    val pigsUnderWithdrawal = remember(selectedPigsState.value) {
+                        selectedPigsState.value.filter { it.activeWithdrawalUntil.isNotEmpty() && DateUtils.isWithdrawalActive(it.activeWithdrawalUntil, locale) }
+                    }
+                    if (cullingReasonState.value == stringResource("reason_sold") && pigsUnderWithdrawal.isNotEmpty()) {
+                        val warnCardBg = if (isDark) Color(0xFF3E1212) else Color(0xFFFFEBEE)
+                        val warnBorder = if (isDark) Color(0xFFE57373) else Color(0xFFEF5350)
+                        val warnIconColor = if (isDark) Color(0xFFFF8A80) else Color(0xFFC62828)
+                        val warnTextColor = if (isDark) Color(0xFFFFCDD2) else Color(0xFFB71C1C)
+
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = warnCardBg),
+                            border = BorderStroke(1.dp, warnBorder)
+                        ) {
+                            Row(modifier = Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Default.Warning, contentDescription = null, tint = warnIconColor)
+                                Spacer(Modifier.width(8.dp))
+                                Column {
+                                    Text(stringResource("critical_food_safety_warning"), fontWeight = FontWeight.Black, color = warnIconColor, style = MaterialTheme.typography.labelMedium)
+                                    val pigNames = pigsUnderWithdrawal.joinToString { it.tagNumber }
+                                    val safeDate = pigsUnderWithdrawal.first().activeWithdrawalUntil
+                                    val med = pigsUnderWithdrawal.first().withdrawalMedication
+                                    Text(stringResource("meat_withdrawal_warning_msg", pigNames, med, safeDate), color = warnTextColor, style = MaterialTheme.typography.bodySmall)
+                                }
+                            }
+                        }
+                    }
+
                     if (cullingReasonState.value == stringResource("reason_sold")) {
                         OutlinedTextField(
                             value = salePriceState.value,
                             onValueChange = { salePriceState.value = it },
-                            label = { Text(stringResource("total_sale_price", "Ksh")) },
+                            label = { Text(stringResource("total_sale_price", currencySymbol)) },
                             modifier = Modifier.fillMaxWidth(),
                             keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number)
                         )
@@ -733,7 +1007,10 @@ fun LogActivityDialog(
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    TextButton(onClick = onDismiss) { Text(stringResource("cancel")) }
+                    TextButton(
+                        onClick = onDismiss,
+                        colors = ButtonDefaults.textButtonColors(contentColor = if (isDark) Color(0xFF4DD0E1) else Color(0xFF00838F))
+                    ) { Text(stringResource("cancel")) }
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(
                         onClick = {
@@ -749,10 +1026,19 @@ fun LogActivityDialog(
                                 when (activityType.name) {
                                     "Breeding/Mating" -> {
                                         val sowTag = selectedSowState.value?.tagNumber ?: ""
-                                        val boarTag = selectedBoarState.value?.tagNumber ?: ""
-                                        if (sowTag.isNotEmpty() || boarTag.isNotEmpty()) {
+                                        val boarTag = when {
+                                            selectedBoarState.value != null -> selectedBoarState.value!!.tagNumber
+                                            isAiOrBorrowedBoarState.value && customBoarTagState.value.isNotBlank() -> "AI (${customBoarTagState.value.trim()})"
+                                            isAiOrBorrowedBoarState.value -> "AI / External"
+                                            else -> ""
+                                        }
+                                        if (sowTag.isNotEmpty()) {
                                             if (finalNotes.isNotEmpty()) finalNotes.append("\n")
-                                            finalNotes.append(Translator.getString("mated_sow_with_boar", languageCode, sowTag, boarTag))
+                                            if (boarTag.isNotEmpty()) {
+                                                finalNotes.append(Translator.getString("mated_sow_with_boar", languageCode, sowTag, boarTag))
+                                            } else {
+                                                finalNotes.append("Inseminated: Sow $sowTag (AI / External)")
+                                            }
                                         }
                                     }
                                     "Farrowing" -> {
@@ -770,15 +1056,26 @@ fun LogActivityDialog(
                                         }
                                     }
                                     "Weight Check" -> {
-                                        // Handle weights map in ViewModel or locally if needed. 
-                                        // For simplicity, we just pass the notes. 
-                                        // But if we want to add to notes here:
                                         if (pigWeightsState.value.isNotEmpty() && pigIds.size == 1) {
                                             val w = pigWeightsState.value[pigIds[0]] ?: ""
                                             if (w.isNotEmpty()) {
                                                 if (finalNotes.isNotEmpty()) finalNotes.append("\n")
                                                 finalNotes.append(Translator.getString("weight_updated_to", languageCode, w))
                                             }
+                                        }
+                                    }
+                                    "Culling" -> {
+                                        val reason = cullingReasonState.value
+                                        if (reason.isNotEmpty()) {
+                                            if (finalNotes.isNotEmpty()) finalNotes.append("\n")
+                                            finalNotes.append(Translator.getString("culled_reason_detail", languageCode, reason))
+                                        }
+                                    }
+                                    "Custom" -> {
+                                        val name = customActivityNameState.value
+                                        if (name.isNotEmpty()) {
+                                            if (finalNotes.isNotEmpty()) finalNotes.append("\n")
+                                            finalNotes.append(Translator.getString("custom_activity_detail", languageCode, name))
                                         }
                                     }
                                     "Confirm Pregnancy" -> {
@@ -796,6 +1093,13 @@ fun LogActivityDialog(
                                     }
                                 }
 
+                                val resolvedBoarTag = when {
+                                    selectedBoarState.value != null -> selectedBoarState.value!!.tagNumber
+                                    isAiOrBorrowedBoarState.value && customBoarTagState.value.isNotBlank() -> customBoarTagState.value.trim()
+                                    isAiOrBorrowedBoarState.value -> "AI / External"
+                                    else -> ""
+                                }
+
                                 onLog(
                                     pigIds,
                                     mapOf(
@@ -809,7 +1113,7 @@ fun LogActivityDialog(
                                         "maleTags" to maleTagsState.value,
                                         "femaleTags" to femaleTagsState.value,
                                         "sowTag" to (selectedSowState.value?.tagNumber ?: ""),
-                                        "boarTag" to (selectedBoarState.value?.tagNumber ?: ""),
+                                        "boarTag" to resolvedBoarTag,
                                         "medicationName" to medicationNameState.value,
                                         "medicationDosage" to medicationDosageState.value,
                                         "scheduleSecondIron" to scheduleSecondIronState.value,
@@ -817,13 +1121,21 @@ fun LogActivityDialog(
                                         "pigWeights" to pigWeightsState.value,
                                         "cullingReason" to cullingReasonState.value,
                                         "salePrice" to (salePriceState.value.toDoubleOrNull() ?: 0.0),
-                                        "customActivityName" to customActivityNameState.value
+                                        "customActivityName" to customActivityNameState.value,
+                                        "stillborns" to (stillbornsState.value.toIntOrNull() ?: 0),
+                                        "mummies" to (mummiesState.value.toIntOrNull() ?: 0),
+                                        "litterBirthWeight" to (litterBirthWeightState.value.toDoubleOrNull() ?: 0.0),
+                                        "withdrawalDays" to (withdrawalDaysState.value.toIntOrNull() ?: 0)
                                     )
                                 )
                             }
                         },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF00838F),
+                            contentColor = Color.White
+                        ),
                         enabled = when (activityType.name) {
-                            "Breeding/Mating" -> selectedSowState.value != null && selectedBoarState.value != null
+                            "Breeding/Mating" -> selectedSowState.value != null
                             "Custom" -> selectedPigsState.value.isNotEmpty() && customActivityNameState.value.isNotBlank()
                             else -> selectedPigsState.value.isNotEmpty()
                         }

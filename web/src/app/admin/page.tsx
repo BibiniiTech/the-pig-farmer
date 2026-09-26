@@ -211,14 +211,14 @@ export default function AdminPage() {
 
   if (loading || !userProfile?.isAdmin) {
     return (
-      <div className="flex h-screen items-center justify-center bg-white text-zinc-900">
+      <div className="flex h-screen items-center justify-center bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900 font-sans pb-20 overflow-hidden">
+    <div className="min-h-screen bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100 font-sans pb-20 overflow-hidden">
       {/* Watermark Logo Background */}
       {!isMobile && (
         <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.05] pointer-events-none select-none">
@@ -234,14 +234,19 @@ export default function AdminPage() {
         {/* Header */}
         {!isMobile && (
           <header className="bg-white sticky top-0 z-50 border-b border-zinc-100">
-            <DesktopHeader label={t("title")} />
+            <DesktopHeader
+              label={t("title") || "ADMIN PANEL"}
+              showBack
+              backPath="/dashboard"
+              labelColor="text-[#C2185B] dark:text-[#F06292]"
+            />
 
             {/* Tabs (Desktop only) */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex border-t border-zinc-100">
               <button
                 onClick={() => setActiveTab("suggestions")}
                 className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 border-b-2 transition ${
-                  activeTab === "suggestions" ? "border-emerald-500 text-emerald-600" : "border-transparent text-zinc-500 hover:text-zinc-700"
+                  activeTab === "suggestions" ? "border-pink-500 text-pink-600" : "border-transparent text-zinc-500 hover:text-zinc-700"
                 }`}
               >
                 <StorefrontIcon className="h-5 w-5" />
@@ -250,7 +255,7 @@ export default function AdminPage() {
               <button
                 onClick={() => setActiveTab("ingredients")}
                 className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 border-b-2 transition ${
-                  activeTab === "ingredients" ? "border-emerald-500 text-emerald-600" : "border-transparent text-zinc-500 hover:text-zinc-700"
+                  activeTab === "ingredients" ? "border-pink-500 text-pink-600" : "border-transparent text-zinc-500 hover:text-zinc-700"
                 }`}
               >
                 <ListIcon className="h-5 w-5" />
@@ -259,7 +264,7 @@ export default function AdminPage() {
               <button
                 onClick={() => setActiveTab("videos")}
                 className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 border-b-2 transition ${
-                  activeTab === "videos" ? "border-emerald-500 text-emerald-600" : "border-transparent text-zinc-500 hover:text-zinc-700"
+                  activeTab === "videos" ? "border-pink-500 text-pink-600" : "border-transparent text-zinc-500 hover:text-zinc-700"
                 }`}
               >
                 <PlayCircleIcon className="h-5 w-5" />
@@ -267,6 +272,25 @@ export default function AdminPage() {
               </button>
             </div>
           </header>
+        )}
+
+        {/* Mobile Header Bar */}
+        {isMobile && (
+          <div className="flex items-center gap-3 px-4 py-3 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
+            <button
+              onClick={() => router.push("/dashboard")}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 font-bold text-xs shadow-xs"
+              aria-label="Back to Dashboard"
+            >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+              <span>Back</span>
+            </button>
+            <h1 className="text-lg font-black text-[#C2185B] dark:text-[#F06292] tracking-tight">
+              {t("title") || "Admin Panel"}
+            </h1>
+          </div>
         )}
 
         {/* Mobile-only Tabs (Floating or sub-header) */}

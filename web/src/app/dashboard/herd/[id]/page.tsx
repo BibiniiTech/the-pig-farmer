@@ -22,6 +22,7 @@ export default function PigProfilePage() {
   const t = useTranslations("PigProfile");
   const th = useTranslations("Herd");
   const tHr = useTranslations("HR");
+  const tCommon = useTranslations("Common");
   
   const translateGender = (gender: string) => {
     if (!gender) return "";
@@ -103,6 +104,20 @@ export default function PigProfilePage() {
   const [recordType, setRecordType] = useState("Medication");
   const [recordDesc, setRecordDesc] = useState("");
   const [recordWeight, setRecordWeight] = useState("");
+  const [recordBoarTag, setRecordBoarTag] = useState("");
+  const [recordPregnancyConfirmed, setRecordPregnancyConfirmed] = useState(true);
+  const [recordWithdrawalDays, setRecordWithdrawalDays] = useState("0");
+
+  const addDays = (dateStr: string, days: number) => {
+    const result = new Date(dateStr);
+    result.setDate(result.getDate() + days);
+    return result.toISOString().split("T")[0];
+  };
+
+  const isFutureDate = (dateStr: string) => {
+    const today = new Date().toISOString().split("T")[0];
+    return dateStr > today;
+  };
 
   // Weight Warning Logic matching Android PigProfileScreen.kt and DashboardViewModel.kt
   const weightRecords = healthRecords.filter(r => r.type === "Weight Check");
@@ -266,35 +281,259 @@ export default function PigProfilePage() {
 
   const handleAddHealthRecord = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!activeFarmUid || !pigId) return;
+    if (!activeFarmUid || !pigId || !pig) return;
 
     try {
+      const isFuture = isFutureDate(recordDate);
       const targetColl = isArchived ? "archived_pigs" : "pigs";
       const recordsRef = collection(db, "users", activeFarmUid, targetColl, pigId, "health_records");
       const newRef = doc(recordsRef);
+      const pigTag = pig.tagNumber || pigId;
 
       let finalDesc = recordDesc;
       if (recordType === "Weight Check" && recordWeight) {
         finalDesc = t("weightCheckDesc", { notes: recordDesc, weight: recordWeight });
       }
 
-      await setDoc(newRef, {
-        id: newRef.id,
-        date: recordDate,
-        type: recordType,
-        description: finalDesc
-      }, { merge: true });
-
-      if (recordType === "Weight Check" && recordWeight) {
-        const pigDocRef = doc(db, "users", activeFarmUid, targetColl, pigId);
-        await updateDoc(pigDocRef, {
-          weight: parseFloat(recordWeight) || 0,
-          lastWeightDate: recordDate
+      if (isFuture) {
+        const taskRef = doc(collection(db, "users", activeFarmUid, "tasks"));
+        await setDoc(taskRef, {
+          id: taskRef.id,
+          name: `${recordType}: Pig ${pigTag}`,
+          date: recordDate,
+          notes: finalDesc || recordDesc,
+          pigIds: [pigId],
+          completed: false
         });
+
+        await setDoc(newRef, {
+          id: newRef.id,
+          date: recordDate,
+          type: recordType,
+          description: finalDesc,
+          taskId: taskRef.id
+        }, { merge: true });
+      } else {
+        const batch = writeBatch(db);
+        const pigRef = doc(db, "users", activeFarmUid, targetColl, pigId);
+
+        // Specialized Activity Logic matching Android HerdRepository.kt
+        if (recordType === "Heat Detection") {
+          const tHeatRef = doc(collection(db, "users", activeFarmUid, "tasks"));
+          const heatDate = addDays(recordDate, 21);
+          batch.set(tHeatRef, {
+            id: tHeatRef.id,
+            name: `Heat Detection: Pig ${pigTag}`,
+            date: heatDate,
+            notes: `Auto-created 21 days after heat detection on ${recordDate}`,
+            pigIds: [pigId],
+            completed: false
+          });
+        } else if (recordType === "Breeding" || recordType === "Breeding/Mating") {
+          const day110 = addDays(recordDate, 110);
+          const day114 = addDays(recordDate, 114);
+          const updates: any = {
+            lastBreedingDate: recordDate,
+            purpose: "Breeder",
+            status: "Pregnant",
+            expectedFarrowingDate: day114,
+            farrowingPenMoveDate: day110
+          };
+          if (recordBoarTag.trim()) {
+            updates.lastBoarTag = recordBoarTag.trim();
+          }
+          batch.update(pigRef, updates);
+
+          // 1. Day 21 Return-to-heat
+          const tHeat = doc(collection(db, "users", activeFarmUid, "tasks"));
+          batch.set(tHeat, {
+            id: tHeat.id,
+            name: `Check Return-to-Heat / Estrus: Pig ${pigTag}`,
+            date: addDays(recordDate, 21),
+            notes: `Check if sow returns to heat 18-24 days post-mating on ${recordDate}`,
+            pigIds: [pigId],
+            completed: false
+          });
+
+          // 2. Day 110 Move to crate
+          const tCrate = doc(collection(db, "users", activeFarmUid, "tasks"));
+          batch.set(tCrate, {
+            id: tCrate.id,
+            name: `Move to Farrowing Crate: Pig ${pigTag}`,
+            date: day110,
+            notes: `Move sow to sanitized farrowing pen & wash/deworm 4-5 days before due date`,
+            pigIds: [pigId],
+            completed: false
+          });
+
+          // 3. Day 114 Expected Farrowing Due Date
+          const tFarrow = doc(collection(db, "users", activeFarmUid, "tasks"));
+          batch.set(tFarrow, {
+            id: tFarrow.id,
+            name: `Farrowing: Pig ${pigTag}`,
+            date: day114,
+            notes: `Scheduled 114 days after mating on ${recordDate}`,
+            pigIds: [pigId],
+            completed: false
+          });
+        } else if (recordType === "Confirm Pregnancy" || recordType === "Pregnancy Confirmation") {
+          if (recordPregnancyConfirmed) {
+            const sowBreedingDate = pig.lastBreedingDate || recordDate;
+            const day110 = addDays(sowBreedingDate, 110);
+            const day114 = addDays(sowBreedingDate, 114);
+            batch.update(pigRef, {
+              status: "Pregnant",
+              purpose: "Breeder",
+              expectedFarrowingDate: day114,
+              farrowingPenMoveDate: day110
+            });
+
+            const tCrate = doc(collection(db, "users", activeFarmUid, "tasks"));
+            batch.set(tCrate, {
+              id: tCrate.id,
+              name: `Move to Farrowing Crate: Pig ${pigTag}`,
+              date: day110,
+              notes: `Move sow to sanitized farrowing pen & wash/deworm 4-5 days before due date`,
+              pigIds: [pigId],
+              completed: false
+            });
+
+            const tFarrow = doc(collection(db, "users", activeFarmUid, "tasks"));
+            batch.set(tFarrow, {
+              id: tFarrow.id,
+              name: `Farrowing: Pig ${pigTag}`,
+              date: day114,
+              notes: `Scheduled 114 days after mating on ${sowBreedingDate}`,
+              pigIds: [pigId],
+              completed: false
+            });
+            finalDesc = `${recordDesc}\nPregnancy Confirmed. Due on ${day114}`.trim();
+          } else {
+            batch.update(pigRef, {
+              status: "Sow",
+              lastBreedingDate: "",
+              expectedFarrowingDate: "",
+              farrowingPenMoveDate: ""
+            });
+            const tRemate = doc(collection(db, "users", activeFarmUid, "tasks"));
+            const remateDate = addDays(recordDate, 3);
+            batch.set(tRemate, {
+              id: tRemate.id,
+              name: `Re-mate / Heat Check: Pig ${pigTag}`,
+              date: remateDate,
+              notes: `Conception check failed on ${recordDate}. Monitor for next estrus cycle and re-mate.`,
+              pigIds: [pigId],
+              completed: false
+            });
+            finalDesc = `${recordDesc}\nPregnancy check failed. Reset to open Sow.`.trim();
+          }
+        } else if (recordType === "Farrowing") {
+          const currentParity = pig.parity || 0;
+          batch.update(pigRef, {
+            status: "Lactating",
+            hasFarrowed: true,
+            weaned: false,
+            isWeaned: false,
+            purpose: "Breeder",
+            parity: currentParity + 1,
+            expectedFarrowingDate: "",
+            farrowingPenMoveDate: ""
+          });
+
+          const weanTask = doc(collection(db, "users", activeFarmUid, "tasks"));
+          batch.set(weanTask, {
+            id: weanTask.id,
+            name: `Weaning: Pig ${pigTag}`,
+            date: addDays(recordDate, 28),
+            notes: `Weaning due 28 days after farrowing on ${recordDate}`,
+            pigIds: [pigId],
+            completed: false
+          });
+
+          const ironTask = doc(collection(db, "users", activeFarmUid, "tasks"));
+          batch.set(ironTask, {
+            id: ironTask.id,
+            name: `Iron Injection: Pig ${pigTag}`,
+            date: addDays(recordDate, 3),
+            notes: `Administer 1st iron injection to newborn piglets (3 days post-farrowing)`,
+            pigIds: [pigId],
+            completed: false
+          });
+
+          const creepTask = doc(collection(db, "users", activeFarmUid, "tasks"));
+          batch.set(creepTask, {
+            id: creepTask.id,
+            name: `Creep Feed Introduction: Pig ${pigTag}`,
+            date: addDays(recordDate, 7),
+            notes: `Introduce high-protein creep feed to piglets at 7-10 days of age`,
+            pigIds: [pigId],
+            completed: false
+          });
+        } else if (recordType === "Weaning") {
+          if (pig.status === "Lactating" || pig.status === "Nursing" || pig.status === "Sow") {
+            batch.update(pigRef, { status: "Sow" });
+            const heatTask = doc(collection(db, "users", activeFarmUid, "tasks"));
+            batch.set(heatTask, {
+              id: heatTask.id,
+              name: `Post-Weaning Heat Check: Pig ${pigTag}`,
+              date: addDays(recordDate, 5),
+              notes: `Wean-to-Service Interval surveillance (4-7 days expected post-weaning)`,
+              pigIds: [pigId],
+              completed: false
+            });
+          } else {
+            batch.update(pigRef, { status: "Starter", weaned: true, isWeaned: true });
+          }
+        } else if (recordType === "Castration" && pig.gender?.toLowerCase() === "male") {
+          batch.update(pigRef, { castrated: true, isCastrated: true, castrationDate: recordDate });
+        } else if (recordType === "Teeth Clipping") {
+          batch.update(pigRef, { teethClipped: true, isTeethClipped: true });
+        } else if (recordType === "Tail Docking") {
+          batch.update(pigRef, { tailDocked: true, isTailDocked: true });
+        } else if (recordType === "Iron Injection") {
+          const currentCount = pig.ironInjections || 0;
+          batch.update(pigRef, { ironInjections: currentCount + 1 });
+        } else if (["Medication", "Deworming", "Vaccination", "Treatment"].includes(recordType)) {
+          const wDays = parseInt(recordWithdrawalDays, 10) || 0;
+          if (wDays > 0) {
+            const safeDate = addDays(recordDate, wDays);
+            batch.update(pigRef, {
+              activeWithdrawalUntil: safeDate,
+              withdrawalMedication: recordType
+            });
+            const wTask = doc(collection(db, "users", activeFarmUid, "tasks"));
+            batch.set(wTask, {
+              id: wTask.id,
+              name: `Meat Withdrawal Cleared: Pig ${pigTag}`,
+              date: safeDate,
+              notes: `Safe for slaughter and meat sale. Medication/Treatment: ${recordType}`,
+              pigIds: [pigId],
+              completed: false
+            });
+            finalDesc = `${finalDesc}\nDrug Withdrawal: ${wDays} days. Safe date: ${safeDate}`.trim();
+          }
+        } else if (recordType === "Weight Check" && recordWeight) {
+          batch.update(pigRef, {
+            weight: parseFloat(recordWeight) || 0,
+            lastWeightDate: recordDate
+          });
+        }
+
+        batch.set(newRef, {
+          id: newRef.id,
+          date: recordDate,
+          type: recordType,
+          description: finalDesc
+        }, { merge: true });
+
+        await batch.commit();
       }
 
       setRecordDesc("");
       setRecordWeight("");
+      setRecordBoarTag("");
+      setRecordPregnancyConfirmed(true);
+      setRecordWithdrawalDays("0");
       setShowRecordModal(false);
     } catch (err) {
       console.error("Adding record failed:", err);
@@ -364,7 +603,7 @@ export default function PigProfilePage() {
 
   if (loading || !user || dataLoading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-white text-zinc-900">
+      <div className="flex h-screen items-center justify-center bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
       </div>
     );
@@ -372,7 +611,7 @@ export default function PigProfilePage() {
 
   if (!pig) {
     return (
-      <div className="flex h-screen flex-col items-center justify-center bg-white text-zinc-900 p-4">
+      <div className="flex h-screen flex-col items-center justify-center bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100 p-4">
         <p className="text-lg font-semibold text-zinc-500">{t("profileNotFound")}</p>
         <Link href="/dashboard/herd" className="mt-4 text-emerald-600 hover:underline">
           {t("backToHerd")}
@@ -382,7 +621,7 @@ export default function PigProfilePage() {
   }
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans overflow-x-hidden">
       {/* Watermark Logo Background */}
       {!isMobile && (
         <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
@@ -395,7 +634,14 @@ export default function PigProfilePage() {
       )}
 
       <div className="relative z-10 flex flex-col min-h-screen print:hidden">
-        {!isMobile && <DesktopHeader showBack backPath="/dashboard/herd" />}
+        {!isMobile && (
+          <DesktopHeader
+            showBack
+            backPath="/dashboard/herd"
+            label={`${t("tag") || "TAG"}: ${pig.tagNumber}`}
+            labelColor="text-[#2E7D32] dark:text-[#81C784]"
+          />
+        )}
 
         <main className="flex-1 max-w-3xl w-full mx-auto px-4 py-8 space-y-5">
           {/* Top Bar with Back Button & Actions */}
@@ -403,15 +649,16 @@ export default function PigProfilePage() {
             <div className="flex items-center gap-3">
               <Link
                 href="/dashboard/herd"
-                className="p-2 hover:bg-zinc-100 rounded-xl transition-colors text-zinc-600 border border-zinc-200 bg-white shadow-xs flex items-center justify-center shrink-0"
+                className="inline-flex items-center gap-2 px-3 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition-colors text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 shadow-xs font-bold text-xs shrink-0"
                 aria-label="Back to herd list"
                 title="Back to herd list"
               >
-                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
+                <span>{tCommon("back") || "Back"}</span>
               </Link>
-              <h1 className="text-xl sm:text-2xl font-black text-emerald-800 tracking-tight">
+              <h1 className="text-xl sm:text-2xl font-black text-[#2E7D32] dark:text-[#81C784] tracking-tight">
                 {pig.tagNumber}
               </h1>
             </div>
@@ -908,12 +1155,71 @@ export default function PigProfilePage() {
                   <option value="Treatment">{t("actionTypes.treatment")}</option>
                   <option value="Heat Detection">{t("actionTypes.heat")}</option>
                   <option value="Breeding">{t("actionTypes.breeding")}</option>
-                  <option value="Pregnancy Confirmation">{t("actionTypes.pregnancy")}</option>
+                  <option value="Confirm Pregnancy">{t("actionTypes.pregnancy")}</option>
+                  <option value="Farrowing">Farrowing</option>
+                  <option value="Weaning">Weaning</option>
                   <option value="Deworming">{t("actionTypes.deworming")}</option>
+                  <option value="Iron Injection">Iron Injection</option>
+                  <option value="Castration">Castration</option>
+                  <option value="Teeth Clipping">Teeth Clipping</option>
+                  <option value="Tail Docking">Tail Docking</option>
                   <option value="Weight Check">{t("actionTypes.weight")}</option>
                   <option value="Other">{t("actionTypes.other")}</option>
                 </select>
               </div>
+
+              {(recordType === "Breeding" || recordType === "Breeding/Mating") && (
+                <div>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Boar Tag / ID</label>
+                  <input
+                    type="text"
+                    value={recordBoarTag}
+                    onChange={(e) => setRecordBoarTag(e.target.value)}
+                    placeholder="e.g. Boar-01"
+                    className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-sm"
+                  />
+                </div>
+              )}
+
+              {(recordType === "Confirm Pregnancy" || recordType === "Pregnancy Confirmation") && (
+                <div>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Pregnancy Confirmed?</label>
+                  <div className="flex gap-4">
+                    <label className="flex items-center gap-2 cursor-pointer text-sm font-semibold">
+                      <input
+                        type="radio"
+                        checked={recordPregnancyConfirmed}
+                        onChange={() => setRecordPregnancyConfirmed(true)}
+                        className="h-4 w-4 border-zinc-300 text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span>Confirmed (Pregnant)</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer text-sm font-semibold">
+                      <input
+                        type="radio"
+                        checked={!recordPregnancyConfirmed}
+                        onChange={() => setRecordPregnancyConfirmed(false)}
+                        className="h-4 w-4 border-zinc-300 text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span>Failed (Open / Sow)</span>
+                    </label>
+                  </div>
+                </div>
+              )}
+
+              {["Medication", "Deworming", "Vaccination", "Treatment"].includes(recordType) && (
+                <div>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Meat Withdrawal Period (Days)</label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={recordWithdrawalDays}
+                    onChange={(e) => setRecordWithdrawalDays(e.target.value)}
+                    placeholder="e.g. 14"
+                    className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-sm"
+                  />
+                </div>
+              )}
 
               {recordType === "Weight Check" && (
                 <div className="animate-in fade-in slide-in-from-top-1 duration-200">

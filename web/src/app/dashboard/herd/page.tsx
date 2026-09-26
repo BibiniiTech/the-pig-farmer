@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { collection, onSnapshot, doc, setDoc } from "firebase/firestore";
+import { collection, onSnapshot, doc, setDoc, writeBatch } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 import { useDevice } from "@/context/DeviceContext";
@@ -11,7 +11,7 @@ import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import HerdReport from "@/components/reports/HerdReport";
-import { evaluatePerformance, calculateAgeMonths, calculateAgeDays, formatSwineAge } from "@/lib/swineGrowthDatabase";
+import { evaluatePerformance, calculateAgeMonths, calculateAgeDays, formatSwineAge, calculatePigStatus, getCalculatedStatus } from "@/lib/swineGrowthDatabase";
 import { ExportPdfIcon, HerdDataIcon } from "@/components/icons/DashboardIcons";
 import { useTranslations } from "next-intl";
 import { Pig } from "@/lib/types";
@@ -71,6 +71,7 @@ export default function HerdPage() {
   const t = useTranslations("Herd");
   const td = useTranslations("Dashboard");
   const tHr = useTranslations("HR");
+  const tCommon = useTranslations("Common");
   const { user, userProfile, activeFarmUid, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -185,8 +186,23 @@ export default function HerdPage() {
     setDataLoading(true);
     const pigsQuery = collection(db, "users", activeFarmUid, "pigs");
     const unsubscribe = onSnapshot(pigsQuery, (snapshot) => {
-      const list = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Pig));
+      const rawList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Pig));
+      const list = rawList.map(p => calculatePigStatus(p));
       setPigs(list.sort((a, b) => a.tagNumber.localeCompare(b.tagNumber)));
+
+      // Heal outdated pigs in background matching Android HerdViewModel.kt lines 220-221
+      const outdated = list.filter((p) => {
+        const raw = rawList.find(r => r.id === p.id);
+        return raw && raw.status !== p.status;
+      });
+      if (outdated.length > 0) {
+        const batch = writeBatch(db);
+        outdated.forEach(p => {
+          const ref = doc(db, "users", activeFarmUid, "pigs", p.id);
+          batch.update(ref, { status: p.status });
+        });
+        batch.commit().catch(err => console.warn("healOutdatedPigs sync warning:", err));
+      }
       
       const breeders = list.filter(p => p.purpose === "Breeder");
       const porkers = list.filter(p => p.purpose === "Porker");
@@ -266,7 +282,7 @@ export default function HerdPage() {
           boarTag,
           location,
           source,
-          status: purpose === "Breeder" ? (gender === "Male" ? "Boar" : "Sow") : "Piglet",
+          status: getCalculatedStatus({ birthDate, purpose, gender, weaned: false, castrated: false } as Pig),
           notes
         };
         await setDoc(newRef, newPig, { merge: true });
@@ -313,7 +329,7 @@ export default function HerdPage() {
             boarTag,
             location: entry.location,
             source,
-            status: purpose === "Breeder" ? "Boar" : "Piglet",
+            status: getCalculatedStatus({ birthDate, purpose, gender: "Male", weaned: false, castrated: false } as Pig),
             notes: notes || "Batch addition (Male)"
           };
           await setDoc(newRef, newPig, { merge: true });
@@ -344,7 +360,7 @@ export default function HerdPage() {
             boarTag,
             location: entry.location,
             source,
-            status: purpose === "Breeder" ? "Sow" : "Piglet",
+            status: getCalculatedStatus({ birthDate, purpose, gender: "Female", weaned: false, castrated: false } as Pig),
             notes: notes || "Batch addition (Female)"
           };
           await setDoc(newRef, newPig, { merge: true });
@@ -395,14 +411,14 @@ export default function HerdPage() {
 
   if (loading || !user) {
     return (
-      <div className="flex h-screen items-center justify-center bg-white text-zinc-900">
+      <div className="flex h-screen items-center justify-center bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans overflow-x-hidden">
       {/* Watermark Logo Background */}
       {!isMobile && (
         <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
@@ -415,7 +431,14 @@ export default function HerdPage() {
       )}
 
       <div className="relative z-10 flex flex-col min-h-screen print:hidden">
-        {!isMobile && <DesktopHeader />}
+        {!isMobile && (
+          <DesktopHeader
+            showBack
+            backPath="/dashboard"
+            label={t("title") || "HERD DATA"}
+            labelColor="text-[#2E7D32] dark:text-[#81C784]"
+          />
+        )}
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
           {/* Top Actions & Heading Bar */}
@@ -424,23 +447,24 @@ export default function HerdPage() {
               <button
                 type="button"
                 onClick={() => router.push("/dashboard")}
-                className="p-2 hover:bg-zinc-100 rounded-xl transition-colors text-zinc-600 border border-zinc-200 bg-white shadow-xs flex items-center justify-center shrink-0"
+                className="inline-flex items-center gap-2 px-3 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition-colors text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 shadow-xs font-bold text-xs shrink-0"
                 aria-label="Back to dashboard"
                 title="Back to dashboard"
               >
-                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
+                <span>{tCommon("back") || "Back"}</span>
               </button>
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center flex-shrink-0">
-                  <HerdDataIcon className="h-5 w-5 text-emerald-600" />
+                <div className="h-10 w-10 rounded-xl bg-[#E8F5E9] dark:bg-[#1B5E20]/40 border border-[#2E7D32]/30 flex items-center justify-center flex-shrink-0">
+                  <HerdDataIcon className="h-5 w-5 text-[#2E7D32] dark:text-[#81C784]" />
                 </div>
                 <div>
-                  <h1 className="text-lg sm:text-2xl font-black text-emerald-600">
+                  <h1 className="text-xl sm:text-2xl font-black text-[#2E7D32] dark:text-[#81C784]">
                     {t("title") || "Herd Data"}
                   </h1>
-                  <p className="text-[11px] sm:text-xs text-zinc-500">{t("desc") || "Manage individual pigs, track health, and view records"}</p>
+                  <p className="text-[11px] sm:text-xs text-zinc-500 dark:text-zinc-400">{t("desc") || "Manage individual pigs, track health, and view records"}</p>
                 </div>
               </div>
             </div>
@@ -454,7 +478,7 @@ export default function HerdPage() {
                     : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
                 }`}
               >
-                Active Herd ({pigs.length})
+                {t("activeHerd") || "Active"} ({pigs.length})
               </button>
               <button
                 onClick={() => setViewingArchived(true)}
@@ -465,7 +489,7 @@ export default function HerdPage() {
                 }`}
               >
                 <ArchiveIcon className="h-4 w-4" />
-                Archived ({archivedPigs.length})
+                {t("archivedHerd") || "Archived"} ({archivedPigs.length})
               </button>
               <button
                 onClick={() => {
@@ -498,7 +522,7 @@ export default function HerdPage() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Tag / Location / Breed"
+                  placeholder={t("searchPlaceholder") || "Tag / Location / Breed"}
                   className="w-full pl-9 pr-4 py-1.5 bg-white border border-zinc-200 rounded-xl text-xs sm:text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-sm"
                 />
               </div>

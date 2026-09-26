@@ -47,6 +47,7 @@ data class UserProfile(
     val firstName: String = "",
     val lastName: String = "",
     val farmName: String = "",
+    val farmLogo: String = "",
     val country: String = "",
     val countryCode: String = "",
     val email: String = "",
@@ -88,6 +89,9 @@ class AuthViewModel : ViewModel() {
     private val _isStaffAccessDenied = MutableStateFlow<Boolean>(false)
     val isStaffAccessDenied: StateFlow<Boolean> = _isStaffAccessDenied.asStateFlow()
 
+    private val _isFinancialsRestricted = MutableStateFlow<Boolean>(false)
+    val isFinancialsRestricted: StateFlow<Boolean> = _isFinancialsRestricted.asStateFlow()
+
     private var profileListener: ListenerRegistration? = null
     private var registryListener: ListenerRegistration? = null
     private var managerProfileListener: ListenerRegistration? = null
@@ -104,6 +108,7 @@ class AuthViewModel : ViewModel() {
                 _activeFarmUid.value = null
                 _isProfileComplete.value = null
                 _isStaffAccessDenied.value = false
+                _isFinancialsRestricted.value = false
             }
         }
     }
@@ -116,6 +121,7 @@ class AuthViewModel : ViewModel() {
         managerProfileListener?.remove()
         managerProfileListener = null
         _isStaffAccessDenied.value = false
+        _isFinancialsRestricted.value = false
     }
 
     private fun fetchUserProfile(uid: String) {
@@ -133,6 +139,7 @@ class AuthViewModel : ViewModel() {
                     _activeFarmUid.value = uid
                     _isProfileComplete.value = true
                     _isStaffAccessDenied.value = false
+                    _isFinancialsRestricted.value = false
                     registryListener?.remove() // If we are owner, we don't need registry
 
                     // Auto-fix admin permission for super-admin email
@@ -189,6 +196,12 @@ class AuthViewModel : ViewModel() {
                                             .get()
                                             .addOnSuccessListener { staffSnapshot ->
                                                 if (!staffSnapshot.isEmpty) {
+                                                    val staffDoc = staffSnapshot.documents.firstOrNull()
+                                                    val staffRole = staffDoc?.getString("role") ?: ""
+                                                    val isRestricted = staffRole.lowercase().let { r ->
+                                                        r.contains("hand") || r.contains("labor") || r.contains("worker") || r.contains("herdsman") || r.contains("attendant")
+                                                    }
+                                                    _isFinancialsRestricted.value = isRestricted
                                                     _userProfile.value = managerProfile
                                                     _activeFarmUid.value = managerUid
                                                     _isProfileComplete.value = true
@@ -199,6 +212,7 @@ class AuthViewModel : ViewModel() {
                                                     _activeFarmUid.value = null
                                                     _isProfileComplete.value = false
                                                     _isStaffAccessDenied.value = true
+                                                    _isFinancialsRestricted.value = false
                                                 }
                                             }
                                             .addOnFailureListener {
@@ -206,6 +220,7 @@ class AuthViewModel : ViewModel() {
                                                 _activeFarmUid.value = null
                                                 _isProfileComplete.value = false
                                                 _isStaffAccessDenied.value = true
+                                                _isFinancialsRestricted.value = false
                                             }
                                     } else {
                                         // Manager lost premium status, revoke staff access
@@ -230,6 +245,45 @@ class AuthViewModel : ViewModel() {
             }
     }
 
+    fun detachFromStaffRegistryAndCreateFarm(onComplete: (Boolean, String?) -> Unit = { _, _ -> }) {
+        val user = auth.currentUser
+        if (user == null) {
+            onComplete(false, "No authenticated user")
+            return
+        }
+        val cleanEmail = user.email?.trim()?.lowercase()
+        if (cleanEmail == null) {
+            onComplete(false, "User has no email")
+            return
+        }
+
+        viewModelScope.launch {
+            try {
+                registryListener?.remove()
+                registryListener = null
+                managerProfileListener?.remove()
+                managerProfileListener = null
+
+                try {
+                    db.collection("staff_registry").document(cleanEmail).delete().await()
+                } catch (e: Exception) {
+                    // If already removed or not found, proceed
+                }
+
+                _isStaffAccessDenied.value = false
+                _isProfileComplete.value = false
+                _activeFarmUid.value = null
+                _userProfile.value = null
+                _isFinancialsRestricted.value = false
+
+                fetchUserProfile(user.uid)
+                onComplete(true, null)
+            } catch (e: Exception) {
+                onComplete(false, e.message)
+            }
+        }
+    }
+
     fun signOut() {
         cleanupListeners()
         auth.signOut()
@@ -242,7 +296,12 @@ class AuthViewModel : ViewModel() {
             return
         }
         val uid = user.uid
-        val collections = listOf("pigs", "archived_pigs", "financials", "ingredients", "requirements", "staff", "salaries")
+        val collections = listOf(
+            "pigs", "archived_pigs", "financials", "feed_ingredients", 
+            "nutritional_requirements", "tasks", "feed_inventory", 
+            "feed_transactions", "feed_inventory_transactions", 
+            "saved_feed_recipes", "farm_alerts", "staff", "salaries"
+        )
         
         viewModelScope.launch {
             try {
@@ -310,7 +369,9 @@ class AuthViewModel : ViewModel() {
         db.collection("users").document(uid).set(finalProfile, com.google.firebase.firestore.SetOptions.merge())
             .addOnSuccessListener {
                 _userProfile.value = finalProfile
+                _activeFarmUid.value = uid
                 _isProfileComplete.value = true
+                _isStaffAccessDenied.value = false
                 onComplete(true, null)
             }
             .addOnFailureListener { e ->

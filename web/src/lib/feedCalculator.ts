@@ -14,8 +14,34 @@ export interface FormulationResult {
   error?: string;
 }
 
+export interface InclusionSafetyAlert {
+  ingredientName: string;
+  currentPercent: number;
+  maxAllowedPercent: number;
+  stage: string;
+  riskDescription: string;
+  riskKey: string;
+}
+
+export interface FeedNutrientProfile {
+  crudeProtein: number;
+  metabolizableEnergy: number;
+  digestibleProtein: number;
+  crudeFiber: number;
+  calcium: number;
+  phosphorus: number;
+  lysine: number;
+  methionine: number;
+  totalWeight: number;
+  costPerKg?: number;
+  costPer50kgBag?: number;
+  totalCost?: number;
+  caPRatio?: number;
+}
+
 /**
- * Port of the Android Kotlin Feed formulation Pearson Square & deficit balancing algorithm
+ * 100% Parity Port of the Android Kotlin Feed formulation Pearson Square & deficit balancing algorithm
+ * (FeedViewModel.kt lines 670-895)
  */
 export function formulateFeed(
   targetRequirement: NutritionalRequirement,
@@ -23,9 +49,16 @@ export function formulateFeed(
   selectedIds: string[],
   shuffle: boolean = false
 ): FormulationResult {
-  const targetProtein = targetRequirement.digestibleProtein;
-  const targetStage = targetRequirement.stage;
-  
+  // Target Crude Protein: use NRC crudeProtein standard, fallback to digestibleProtein / 0.85
+  const targetProtein =
+    targetRequirement.crudeProtein && targetRequirement.crudeProtein > 0
+      ? targetRequirement.crudeProtein
+      : targetRequirement.digestibleProtein && targetRequirement.digestibleProtein > 0
+      ? targetRequirement.digestibleProtein / 0.85
+      : 16.0;
+
+  const targetStage = targetRequirement.stage || "Grower";
+
   const selectedIngredients = allIngredients.filter(ing => selectedIds.includes(ing.id));
   if (selectedIngredients.length === 0) {
     return {
@@ -33,86 +66,178 @@ export function formulateFeed(
       targetRequirement,
       nutritionalComparison: [],
       totalPercentage: 0,
-      error: "Please select at least one ingredient to formulate."
+      error: "Please select at least one ingredient to formulate.",
     };
   }
 
   const currentUsed: { [id: string]: number } = {};
-  let availablePercent = 100.0;
 
   const supplementalCategory = "Vitamins, Minerals & Salt";
   const supplementalIngredients = selectedIngredients.filter(
-    ing => ing.mainCategory === supplementalCategory
+    ing =>
+      (ing.mainCategory && ing.mainCategory.toLowerCase() === supplementalCategory.toLowerCase()) ||
+      ing.name.toLowerCase().includes("salt") ||
+      ing.name.toLowerCase().includes("premix") ||
+      ing.name.toLowerCase().includes("limestone") ||
+      ing.name.toLowerCase().includes("bone meal") ||
+      ing.name.toLowerCase().includes("dcp") ||
+      ing.name.toLowerCase().includes("oyster") ||
+      ing.name.toLowerCase().includes("lysine") ||
+      ing.name.toLowerCase().includes("methionine")
   );
-  
+
   const mainIngredients = selectedIngredients.filter(
-    ing => ing.mainCategory !== supplementalCategory
+    ing => !supplementalIngredients.some(s => s.id === ing.id)
   );
 
   // Veterinary limits based on target stage
   const limits: { [id: string]: number } = {};
   selectedIngredients.forEach(ing => {
     let limit = 100.0;
-    switch (targetStage.toLowerCase()) {
-      case "starter":
-        limit = ing.maxStarter;
-        break;
-      case "grower":
-        limit = ing.maxGrower;
-        break;
-      case "finisher":
-        limit = ing.maxFinisher;
-        break;
-      case "sow":
-      case "boar":
-      case "pregnant":
-      case "lactating":
-        limit = Math.min(ing.maxGrower, ing.maxFinisher);
-        break;
-      default:
-        limit = Math.min(ing.maxStarter, ing.maxGrower, ing.maxFinisher);
+    const stageLower = targetStage.toLowerCase();
+    if (stageLower === "creep" || stageLower === "pre-starter") {
+      limit = Math.min(ing.maxStarter * 0.7, ing.maxStarter);
+    } else if (stageLower === "weaner/starter" || stageLower === "starter" || stageLower === "weaner") {
+      limit = ing.maxStarter;
+    } else if (stageLower === "grower") {
+      limit = ing.maxGrower;
+    } else if (stageLower === "finisher") {
+      limit = ing.maxFinisher;
+    } else if (stageLower === "pregnant" || stageLower === "gestating") {
+      limit = Math.min(ing.maxGrower, ing.maxFinisher);
+    } else if (stageLower === "lactating") {
+      limit = ing.maxGrower;
+    } else {
+      limit = Math.min(ing.maxStarter, Math.min(ing.maxGrower, ing.maxFinisher));
     }
-    limits[ing.id] = limit;
+    limits[ing.id] = limit > 0 ? limit : 50.0;
   });
 
-  // Initial pass: Diversity for Main Ingredients
+  // Helper getters for Ca and P percentage (accounting for g/kg vs %)
+  const getCaPercent = (ing: FeedIngredient) => (ing.calcium > 50.0 ? ing.calcium / 10.0 : ing.calcium);
+  const getPPercent = (ing: FeedIngredient) => (ing.phosphorus > 50.0 ? ing.phosphorus / 10.0 : ing.phosphorus);
+
+  let suppAllocated = 0.0;
+
+  // STEP 1a: Essential Salt & Premix Pre-allocation
+  supplementalIngredients.forEach(ing => {
+    const nameLower = ing.name.toLowerCase();
+    const limit = limits[ing.id] ?? 2.0;
+    if (nameLower.includes("salt")) {
+      const saltAmt = Math.min(0.35, limit);
+      currentUsed[ing.id] = saltAmt;
+      suppAllocated += saltAmt;
+    } else if (nameLower.includes("premix") || nameLower.includes("vitamin")) {
+      const premixAmt = Math.min(0.30, limit);
+      currentUsed[ing.id] = premixAmt;
+      suppAllocated += premixAmt;
+    }
+  });
+
+  // STEP 1b: Calcium & Phosphorus balancing
+  const mineralSources = supplementalIngredients.filter(ing => {
+    const n = ing.name.toLowerCase();
+    return (
+      !n.includes("salt") &&
+      !n.includes("premix") &&
+      !n.includes("vitamin") &&
+      (getCaPercent(ing) > 5.0 || getPPercent(ing) > 5.0)
+    );
+  });
+
+  const sortedMinerals = [...mineralSources].sort((a, b) => getPPercent(b) - getPPercent(a));
+  let currentCaFromSupp = Object.entries(currentUsed).reduce((sum, [id, pct]) => {
+    const ing = selectedIngredients.find(i => i.id === id);
+    return sum + (ing ? getCaPercent(ing) * (pct / 100.0) : 0);
+  }, 0);
+  let currentPFromSupp = Object.entries(currentUsed).reduce((sum, [id, pct]) => {
+    const ing = selectedIngredients.find(i => i.id === id);
+    return sum + (ing ? getPPercent(ing) * (pct / 100.0) : 0);
+  }, 0);
+
+  sortedMinerals.forEach(ing => {
+    const caPurity = getCaPercent(ing) / 100.0;
+    const pPurity = getPPercent(ing) / 100.0;
+    const limit = limits[ing.id] ?? 3.0;
+
+    let neededPct = 0.0;
+    if (pPurity > 0.05 && currentPFromSupp < targetRequirement.phosphorus * 0.7) {
+      const deficitP = targetRequirement.phosphorus * 0.7 - currentPFromSupp;
+      neededPct = Math.min(deficitP / pPurity, limit);
+    } else if (caPurity > 0.1 && currentCaFromSupp < targetRequirement.calcium * 0.8) {
+      const deficitCa = targetRequirement.calcium * 0.8 - currentCaFromSupp;
+      neededPct = Math.min(deficitCa / caPurity, limit);
+    }
+
+    if (neededPct > 0.05) {
+      currentUsed[ing.id] = neededPct;
+      suppAllocated += neededPct;
+      currentCaFromSupp += neededPct * caPurity;
+      currentPFromSupp += neededPct * pPurity;
+    }
+  });
+
+  // STEP 2: BUDGET FOR MAIN INGREDIENTS
+  const mainBudget = Math.max(10.0, Math.min(100.0, 100.0 - suppAllocated));
+  let availablePercent = mainBudget;
+
+  // Diversity allocation for main ingredients
   mainIngredients.forEach(ing => {
     const name = ing.name.toLowerCase();
-    const minInclusion = name.includes("bran") ? 8.0 : 4.0;
+    const minInclusion = name.includes("bran") ? 4.0 : 3.0;
     const limit = limits[ing.id] ?? 50.0;
     const safeStart = Math.min(minInclusion, limit);
 
     if (availablePercent >= safeStart) {
-      currentUsed[ing.id] = (currentUsed[ing.id] ?? 0) + safeStart;
+      currentUsed[ing.id] = (currentUsed[ing.id] ?? 0.0) + safeStart;
       availablePercent -= safeStart;
     }
   });
 
-  let remainingTotal = availablePercent;
+  // Calculate remaining CP required from main ingredients
+  const currentCpFromAllocated = Object.entries(currentUsed).reduce((sum, [id, pct]) => {
+    const ing = selectedIngredients.find(i => i.id === id);
+    return sum + (ing ? ing.crudeProtein * (pct / 100.0) : 0);
+  }, 0);
+  const remainingCpNeeded = targetProtein - currentCpFromAllocated;
+  const mainTargetCP =
+    availablePercent > 0.5
+      ? Math.max(5.0, Math.min(50.0, remainingCpNeeded / (availablePercent / 100.0)))
+      : targetProtein;
 
-  // Pearson Square Pools for Main Ingredients
-  let poolLow = mainIngredients.filter(
-    ing => ing.crudeProtein < targetProtein
-  );
-  let poolHigh = mainIngredients.filter(
-    ing => ing.crudeProtein >= targetProtein
-  );
+  // Cost-Aware Least-Cost Sorting for Energy & Protein Pools
+  let poolLow = mainIngredients.filter(ing => ing.crudeProtein < mainTargetCP);
+  let poolHigh = mainIngredients.filter(ing => ing.crudeProtein >= mainTargetCP);
 
   if (shuffle) {
     poolLow = [...poolLow].sort(() => Math.random() - 0.5);
     poolHigh = [...poolHigh].sort(() => Math.random() - 0.5);
   } else {
-    poolLow = [...poolLow].sort((a, b) => b.metabolizableEnergy - a.metabolizableEnergy);
-    poolHigh = [...poolHigh].sort((a, b) => b.metabolizableEnergy - a.metabolizableEnergy);
+    // Energy pool: lowest cost per unit energy first
+    poolLow = [...poolLow].sort((a, b) => {
+      const costRatioA = a.costPerKg > 0 && a.metabolizableEnergy > 0 ? a.costPerKg / a.metabolizableEnergy : 999.0;
+      const costRatioB = b.costPerKg > 0 && b.metabolizableEnergy > 0 ? b.costPerKg / b.metabolizableEnergy : 999.0;
+      if (Math.abs(costRatioA - costRatioB) > 0.0001) return costRatioA - costRatioB;
+      return b.metabolizableEnergy - a.metabolizableEnergy;
+    });
+    // Protein pool: lowest cost per unit protein first
+    poolHigh = [...poolHigh].sort((a, b) => {
+      const costRatioA = a.costPerKg > 0 && a.crudeProtein > 0 ? a.costPerKg / a.crudeProtein : 999.0;
+      const costRatioB = b.costPerKg > 0 && b.crudeProtein > 0 ? b.costPerKg / b.crudeProtein : 999.0;
+      if (Math.abs(costRatioA - costRatioB) > 0.0001) return costRatioA - costRatioB;
+      return b.crudeProtein - a.crudeProtein;
+    });
   }
 
-  // Balance Main Mix to 100% using Pearson Square logic
+  let remainingTotal = availablePercent;
+
+  // Balance Main Mix to remaining budget using Pearson Square logic
   while (remainingTotal > 0.01 && poolLow.length > 0 && poolHigh.length > 0) {
     const low = poolLow[0];
     const high = poolHigh[0];
 
-    const rLow = high.crudeProtein - targetProtein;
-    const rHigh = targetProtein - low.crudeProtein;
+    const rLow = Math.max(0.1, high.crudeProtein - mainTargetCP);
+    const rHigh = Math.max(0.1, mainTargetCP - low.crudeProtein);
 
     const x = remainingTotal * (rLow / (rLow + rHigh));
     const y = remainingTotal * (rHigh / (rLow + rHigh));
@@ -129,21 +254,26 @@ export function formulateFeed(
 
     currentUsed[low.id] = (currentUsed[low.id] ?? 0.0) + useX;
     currentUsed[high.id] = (currentUsed[high.id] ?? 0.0) + useY;
-    remainingTotal -= (useX + useY);
+    remainingTotal -= useX + useY;
 
-    if ((currentUsed[low.id] ?? 0.0) >= ((limits[low.id] ?? 100.0) - 0.01)) {
+    if ((currentUsed[low.id] ?? 0.0) >= (limits[low.id] ?? 100.0) - 0.01) {
       poolLow.shift();
     }
-    if ((currentUsed[high.id] ?? 0.0) >= ((limits[high.id] ?? 100.0) - 0.01)) {
+    if ((currentUsed[high.id] ?? 0.0) >= (limits[high.id] ?? 100.0) - 0.01) {
       poolHigh.shift();
     }
   }
 
-  // Spillover pass if remaining total exists
+  // Top up any residual main budget
   if (remainingTotal > 0.01) {
-    const remainingPool = poolHigh.length > 0 
-      ? [...poolHigh].sort((a, b) => (shuffle ? Math.random() - 0.5 : (b.metabolizableEnergy / (b.crudeProtein + 1)) - (a.metabolizableEnergy / (a.crudeProtein + 1))))
-      : [...poolLow].sort((a, b) => (shuffle ? Math.random() - 0.5 : b.metabolizableEnergy - a.metabolizableEnergy));
+    const remainingPool =
+      poolHigh.length > 0
+        ? shuffle
+          ? [...poolHigh].sort(() => Math.random() - 0.5)
+          : [...poolHigh].sort((a, b) => b.metabolizableEnergy - a.metabolizableEnergy)
+        : shuffle
+        ? [...poolLow].sort(() => Math.random() - 0.5)
+        : [...poolLow].sort((a, b) => b.metabolizableEnergy - a.metabolizableEnergy);
 
     for (const ing of remainingPool) {
       const cap = (limits[ing.id] ?? 100.0) - (currentUsed[ing.id] ?? 0.0);
@@ -154,74 +284,28 @@ export function formulateFeed(
     }
   }
 
-  // SECONDARY PASS: Supplemental Deficits
-  const getCaPercent = (ing: FeedIngredient) => ing.calcium > 50.0 ? ing.calcium / 10.0 : ing.calcium;
-  const getPPercent = (ing: FeedIngredient) => ing.phosphorus > 50.0 ? ing.phosphorus / 10.0 : ing.phosphorus;
+  // STEP 3: GUARANTEE EXACT 100.0% BALANCE
+  const totalUsed = Object.values(currentUsed).reduce((sum, v) => sum + v, 0);
+  if (Math.abs(totalUsed - 100.0) > 0.001) {
+    // Find main energy ingredient with highest inclusion to absorb minor rounding difference
+    const mainEntries = Object.entries(currentUsed).filter(([id]) =>
+      mainIngredients.some(m => m.id === id)
+    );
+    const leadEntry =
+      mainEntries.length > 0
+        ? mainEntries.sort((a, b) => b[1] - a[1])[0]
+        : Object.entries(currentUsed).sort((a, b) => b[1] - a[1])[0];
 
-  const calculateCurrentNutrients = () => {
-    let ca = 0.0, p = 0.0, lys = 0.0, met = 0.0;
-    Object.entries(currentUsed).forEach(([id, percent]) => {
-      const ing = allIngredients.find(i => i.id === id || i.name === id);
-      if (!ing) return;
-      const factor = percent / 100.0;
-      ca += getCaPercent(ing) * factor;
-      p += getPPercent(ing) * factor;
-      lys += ing.lysine * factor;
-      met += (ing.methionine + ing.cystine) * factor;
-    });
-    return { ca, p, lys, met };
-  };
-
-  const targetCa = targetRequirement.calcium;
-  const targetP = targetRequirement.phosphorus;
-  const targetLys = (targetRequirement.lysine / 100.0) * targetRequirement.digestibleProtein;
-  const targetMet = (targetRequirement.methionineCystine / 100.0) * targetRequirement.digestibleProtein;
-
-  let totalAddedSupplements = 0.0;
-  const sortedSupplements = [...supplementalIngredients].sort((a, b) => {
-    return (b.calcium + b.phosphorus + b.lysine + b.methionine) - (a.calcium + a.phosphorus + a.lysine + a.methionine);
-  });
-
-  for (const ing of sortedSupplements) {
-    const current = calculateCurrentNutrients();
-    const defCa = Math.max(0.0, targetCa - current.ca);
-    const defP = Math.max(0.0, targetP - current.p);
-    const defLys = Math.max(0.0, targetLys - current.lys);
-    const defMet = Math.max(0.0, targetMet - current.met);
-
-    if (defCa <= 0 && defP <= 0 && defLys <= 0 && defMet <= 0) break;
-
-    const needCa = getCaPercent(ing) > 0 ? defCa / (getCaPercent(ing) / 100.0) : 0.0;
-    const needP = getPPercent(ing) > 0 ? defP / (getPPercent(ing) / 100.0) : 0.0;
-    const needLys = ing.lysine > 0 ? defLys / (ing.lysine / 100.0) : 0.0;
-    const needMet = (ing.methionine + ing.cystine) > 0 ? defMet / ((ing.methionine + ing.cystine) / 100.0) : 0.0;
-
-    let needed = Math.max(needCa, needP, needLys, needMet);
-    const limit = limits[ing.id] ?? 2.0;
-    needed = Math.min(needed, limit);
-
-    if (needed > 0.01) {
-      currentUsed[ing.id] = needed;
-      totalAddedSupplements += needed;
+    if (leadEntry) {
+      const diff = 100.0 - totalUsed;
+      const adjusted = leadEntry[1] + diff;
+      if (adjusted > 0) {
+        currentUsed[leadEntry[0]] = adjusted;
+      }
     }
   }
 
-  // Adjust main ingredients down to make room for supplemental additions
-  if (totalAddedSupplements > 0) {
-    const mainTotal = 100.0 - totalAddedSupplements;
-    const previousMainTotal = 100.0;
-    const scaleFactor = mainTotal / previousMainTotal;
-
-    const mainIds = mainIngredients.map(ing => ing.id);
-
-    mainIds.forEach(id => {
-      if (currentUsed[id] !== undefined) {
-        currentUsed[id] = currentUsed[id] * scaleFactor;
-      }
-    });
-  }
-
-  // Build nutritional comparison output
+  // Build final output
   const finalUsed: Record<string, number> = {};
   let totalPercentage = 0;
   Object.entries(currentUsed).forEach(([id, percent]) => {
@@ -241,53 +325,80 @@ export function formulateFeed(
     finalNutrients.energy += ing.metabolizableEnergy * factor;
     finalNutrients.ca += getCaPercent(ing) * factor;
     finalNutrients.p += getPPercent(ing) * factor;
-    finalNutrients.lys += ing.lysine * factor;
-    finalNutrients.met += (ing.methionine + ing.cystine) * factor;
+
+    const isPureLys = ing.name.toLowerCase().includes("lysine") || (ing.crudeProtein > 80.0 && ing.lysine > 50.0);
+    const ingDietaryLys = isPureLys ? ing.lysine : ing.crudeProtein * (ing.lysine / 100.0);
+    finalNutrients.lys += ingDietaryLys * factor;
+
+    const isPureMet =
+      ing.name.toLowerCase().includes("methionine") || (ing.crudeProtein > 80.0 && ing.methionine + ing.cystine > 50.0);
+    const ingDietaryMet = isPureMet ? ing.methionine + ing.cystine : ing.crudeProtein * ((ing.methionine + ing.cystine) / 100.0);
+    finalNutrients.met += ingDietaryMet * factor;
   });
+
+  const targetDietaryLys =
+    targetRequirement.dietaryLysine && targetRequirement.dietaryLysine > 0
+      ? targetRequirement.dietaryLysine
+      : targetRequirement.lysine > 0
+      ? (targetRequirement.lysine / 100.0) * targetProtein * 0.85
+      : 0.95;
+
+  const targetDietaryMet =
+    targetRequirement.dietaryMethionine && targetRequirement.dietaryMethionine > 0
+      ? targetRequirement.dietaryMethionine
+      : targetRequirement.methionineCystine > 0
+      ? (targetRequirement.methionineCystine / 100.0) * targetProtein * 0.85
+      : 0.55;
 
   const nutritionalComparison = [
     {
-      label: "Digestible Protein (%)",
-      target: targetRequirement.digestibleProtein,
+      label: "Crude Protein (%)",
+      target: targetProtein,
       actual: finalNutrients.protein,
-      isDeficient: finalNutrients.protein < targetRequirement.digestibleProtein - 0.05
+      isDeficient: finalNutrients.protein < targetProtein - 0.2,
+    },
+    {
+      label: "Digestible Protein (%)",
+      target: targetRequirement.digestibleProtein || targetProtein * 0.85,
+      actual: finalNutrients.protein * 0.85,
+      isDeficient: finalNutrients.protein * 0.85 < (targetRequirement.digestibleProtein || targetProtein * 0.85) - 0.2,
     },
     {
       label: "Crude Fiber (%)",
       target: targetRequirement.crudeFiber,
       actual: finalNutrients.fiber,
-      isDeficient: finalNutrients.fiber < targetRequirement.crudeFiber - 0.05
+      isDeficient: finalNutrients.fiber < targetRequirement.crudeFiber - 0.1,
     },
     {
       label: "Metabolizable Energy (kcal/kg)",
       target: targetRequirement.metabolizableEnergy,
       actual: finalNutrients.energy,
-      isDeficient: finalNutrients.energy < targetRequirement.metabolizableEnergy - 100
+      isDeficient: finalNutrients.energy < targetRequirement.metabolizableEnergy - 100,
     },
     {
       label: "Calcium (%)",
       target: targetRequirement.calcium,
       actual: finalNutrients.ca,
-      isDeficient: finalNutrients.ca < targetRequirement.calcium - 0.02
+      isDeficient: finalNutrients.ca < targetRequirement.calcium - 0.05,
     },
     {
       label: "Phosphorus (%)",
       target: targetRequirement.phosphorus,
       actual: finalNutrients.p,
-      isDeficient: finalNutrients.p < targetRequirement.phosphorus - 0.02
+      isDeficient: finalNutrients.p < targetRequirement.phosphorus - 0.05,
     },
     {
-      label: "Lysine (%)",
-      target: targetLys,
+      label: "Dietary Lysine (%)",
+      target: targetDietaryLys,
       actual: finalNutrients.lys,
-      isDeficient: finalNutrients.lys < targetLys - 0.02
+      isDeficient: finalNutrients.lys < targetDietaryLys - 0.05,
     },
     {
-      label: "Methionine + Cystine (%)",
-      target: targetMet,
+      label: "Dietary Methionine + Cystine (%)",
+      target: targetDietaryMet,
       actual: finalNutrients.met,
-      isDeficient: finalNutrients.met < targetMet - 0.02
-    }
+      isDeficient: finalNutrients.met < targetDietaryMet - 0.05,
+    },
   ];
 
   return {
@@ -295,25 +406,99 @@ export function formulateFeed(
     targetRequirement,
     nutritionalComparison,
     totalPercentage: Math.min(100.0, totalPercentage),
-    error: totalPercentage < 99.9 ? `Formulation incomplete. Total mix sums to ${totalPercentage.toFixed(1)}%. Try selecting more ingredients.` : undefined
+    error:
+      totalPercentage < 99.5
+        ? `Formulation incomplete. Total mix sums to ${totalPercentage.toFixed(1)}%. Try selecting more energy and protein ingredients.`
+        : undefined,
   };
 }
 
 /**
+ * Inclusion safety alerts matching Android FeedViewModel.kt lines 980-1015
+ */
+export function checkIngredientSafety(
+  items: { ingredient: FeedIngredient; quantity: number }[],
+  stage: string = "Grower"
+): InclusionSafetyAlert[] {
+  if (items.length === 0) return [];
+  const totalQty = Math.max(0.0001, items.reduce((sum, item) => sum + item.quantity, 0));
+  const alerts: InclusionSafetyAlert[] = [];
+
+  items.forEach(({ ingredient: ing, quantity: qty }) => {
+    const currentPercent = (qty / totalQty) * 100.0;
+    let maxLimit = 100.0;
+    const stageLower = stage.toLowerCase();
+    if (stageLower === "creep" || stageLower === "pre-starter") {
+      maxLimit = Math.min(ing.maxStarter * 0.7, ing.maxStarter);
+    } else if (stageLower === "weaner/starter" || stageLower === "starter" || stageLower === "weaner") {
+      maxLimit = ing.maxStarter;
+    } else if (stageLower === "grower") {
+      maxLimit = ing.maxGrower;
+    } else if (stageLower === "finisher") {
+      maxLimit = ing.maxFinisher;
+    } else if (stageLower === "pregnant" || stageLower === "gestating") {
+      maxLimit = Math.min(ing.maxGrower, ing.maxFinisher);
+    } else if (stageLower === "lactating") {
+      maxLimit = ing.maxGrower;
+    } else {
+      maxLimit = Math.min(ing.maxStarter, Math.min(ing.maxGrower, ing.maxFinisher));
+    }
+
+    if (maxLimit > 0.01 && maxLimit < 99.9 && currentPercent > maxLimit + 0.05) {
+      const ingNameLower = ing.name.toLowerCase();
+      let riskKey = "risk_exceeds_limit";
+      let risk = `Exceeds safe recommended inclusion limit (${maxLimit.toFixed(1)}%) for ${stage} stage`;
+
+      if (ingNameLower.includes("cottonseed")) {
+        riskKey = "risk_gossypol_toxicity";
+        risk = "Excess gossypol toxicity risk (heart & liver damage in monogastrics)";
+      } else if (ingNameLower.includes("cassava peel")) {
+        riskKey = "risk_hydrocyanic_acid";
+        risk = "High hydrocyanic acid & fibrous anti-nutritional factor risk";
+      } else if (ingNameLower.includes("salt") && currentPercent > 0.5) {
+        riskKey = "risk_salt_toxicity";
+        risk = "Risk of hypernatremia / salt toxicity; ensure unlimited fresh water";
+      } else if (ingNameLower.includes("fish") && currentPercent > 10.0) {
+        riskKey = "risk_fishy_taint";
+        risk = "Fishy taint risk in meat quality and high sodium / mineral load";
+      } else if (ingNameLower.includes("wheat bran") || ingNameLower.includes("rice bran")) {
+        riskKey = "risk_excess_fiber";
+        risk = "Excess dietary fiber impairs nutrient digestion and feed conversion";
+      } else if (ingNameLower.includes("bone meal") || ingNameLower.includes("dcp")) {
+        riskKey = "risk_excess_mineral";
+        risk = "Excess mineral inclusion can disrupt calcium-to-phosphorus absorption";
+      }
+
+      alerts.push({
+        ingredientName: ing.name,
+        currentPercent,
+        maxAllowedPercent: maxLimit,
+        stage,
+        riskDescription: risk,
+        riskKey,
+      });
+    }
+  });
+
+  return alerts;
+}
+
+/**
  * Intake rate calculations based on pig counts and daily guidelines
+ * Matches Android FeedViewModel.kt lines 907-935
  */
 export function calculateRequirements(stats: { [key: string]: number }, days: number = 1): { [key: string]: number } {
   const rates: { [stage: string]: number } = {
-    "Starter": 0.7,
-    "Grower": 1.8,
-    "Finisher": 2.5,
-    "breeders_starter": 0.7,
-    "breeders_grower": 1.8,
-    "gilts": 2.2,
-    "boars": 2.2,
-    "sows": 2.2,
-    "Pregnant": 2.2,
-    "Lactating": 5.5,
+    Starter: 0.7,
+    Grower: 1.8,
+    Finisher: 2.5,
+    breeders_starter: 0.7,
+    breeders_grower: 1.8,
+    gilts: 2.2,
+    boars: 2.2,
+    sows: 2.2,
+    Pregnant: 2.2,
+    Lactating: 5.5,
   };
 
   const results: { [key: string]: number } = {};
@@ -340,21 +525,13 @@ export function calculateRequirements(stats: { [key: string]: number }, days: nu
   return results;
 }
 
-export interface FeedNutrientProfile {
-  crudeProtein: number;
-  metabolizableEnergy: number;
-  digestibleProtein: number;
-  crudeFiber: number;
-  calcium: number;
-  phosphorus: number;
-  lysine: number;
-  methionine: number;
-  totalWeight: number;
-}
-
+/**
+ * Comprehensive nutritional analysis matching Android FeedViewModel.kt calculateNutritionalContent
+ */
 export function analyzeFeedMix(
   items: { ingredient: FeedIngredient; quantity: number }[],
-  isPercentageMode: boolean = false
+  isPercentageMode: boolean = false,
+  isDryMatterMode: boolean = false
 ): FeedNutrientProfile {
   if (items.length === 0) {
     return {
@@ -367,6 +544,10 @@ export function analyzeFeedMix(
       lysine: 0,
       methionine: 0,
       totalWeight: 0,
+      costPerKg: 0,
+      costPer50kgBag: 0,
+      totalCost: 0,
+      caPRatio: 0,
     };
   }
 
@@ -379,31 +560,72 @@ export function analyzeFeedMix(
   let p = 0;
   let lys = 0;
   let met = 0;
+  let weightedDm = 0;
+  let totalCost = 0;
 
   items.forEach(({ ingredient: ing, quantity: qty }) => {
     const fraction = qty / totalQty;
+    const effectiveQty = isPercentageMode ? (qty / 100.0) * 100.0 : qty;
+
     cp += ing.crudeProtein * fraction;
     me += ing.metabolizableEnergy * fraction;
     cf += ing.crudeFiber * fraction;
+
     const caPct = ing.calcium > 50.0 ? ing.calcium / 10.0 : ing.calcium;
     const pPct = ing.phosphorus > 50.0 ? ing.phosphorus / 10.0 : ing.phosphorus;
     ca += caPct * fraction;
     p += pPct * fraction;
-    lys += ing.lysine * fraction;
-    met += (ing.methionine + ing.cystine) * fraction;
+
+    const isPureLys = ing.name.toLowerCase().includes("lysine") || (ing.crudeProtein > 80.0 && ing.lysine > 50.0);
+    const ingDietaryLys = isPureLys ? ing.lysine : ing.crudeProtein * (ing.lysine / 100.0);
+    lys += ingDietaryLys * fraction;
+
+    const isPureMet =
+      ing.name.toLowerCase().includes("methionine") || (ing.crudeProtein > 80.0 && ing.methionine + ing.cystine > 50.0);
+    const ingDietaryMet = isPureMet ? ing.methionine + ing.cystine : ing.crudeProtein * ((ing.methionine + ing.cystine) / 100.0);
+    met += ingDietaryMet * fraction;
+
+    const dmVal = ing.dryMatter && ing.dryMatter > 0 ? ing.dryMatter : 90.0;
+    weightedDm += dmVal * fraction;
+
+    if (ing.costPerKg && ing.costPerKg > 0) {
+      totalCost += ing.costPerKg * effectiveQty;
+    }
   });
 
-  const dp = cp * 0.85;
+  const totalWeight = isPercentageMode ? 100.0 : items.reduce((sum, item) => sum + item.quantity, 0);
+  const costPerKg = isPercentageMode
+    ? items.reduce((sum, { ingredient: ing, quantity: qty }) => sum + (qty / totalQty) * (ing.costPerKg > 0 ? ing.costPerKg : 0), 0)
+    : totalQty > 0.0001
+    ? totalCost / totalQty
+    : 0;
+  const costPer50kgBag = costPerKg * 50.0;
+  const caPRatio = p > 0.0001 ? ca / p : 0;
+
+  // Dry Matter conversion if requested
+  const dmFactor = isDryMatterMode && weightedDm > 0 ? 100.0 / weightedDm : 1.0;
+  const finalCp = cp * dmFactor;
+  const finalMe = me * dmFactor;
+  const finalCf = cf * dmFactor;
+  const finalCa = ca * dmFactor;
+  const finalP = p * dmFactor;
+  const finalLys = lys * dmFactor;
+  const finalMet = met * dmFactor;
+  const finalDp = finalCp * 0.85;
 
   return {
-    crudeProtein: cp,
-    metabolizableEnergy: me,
-    digestibleProtein: dp,
-    crudeFiber: cf,
-    calcium: ca,
-    phosphorus: p,
-    lysine: lys,
-    methionine: met,
-    totalWeight: isPercentageMode ? 100 : items.reduce((sum, item) => sum + item.quantity, 0),
+    crudeProtein: finalCp,
+    metabolizableEnergy: finalMe,
+    digestibleProtein: finalDp,
+    crudeFiber: finalCf,
+    calcium: finalCa,
+    phosphorus: finalP,
+    lysine: finalLys,
+    methionine: finalMet,
+    totalWeight,
+    costPerKg,
+    costPer50kgBag,
+    totalCost: isPercentageMode ? costPerKg * 100.0 : totalCost,
+    caPRatio,
   };
 }

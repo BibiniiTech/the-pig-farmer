@@ -11,4 +11,6 @@ data class TaskItem(
     val completed: Boolean = false,
     val pigIds: List<String> = emptyList(),
     val healthRecordIds: List<String> = emptyList(),
+    val snoozeUntil: Long? = null,
+    val isArchived: Boolean = false
 )

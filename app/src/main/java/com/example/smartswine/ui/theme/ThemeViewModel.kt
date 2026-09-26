@@ -25,4 +25,9 @@ class ThemeViewModel : ViewModel() {
         _isDarkMode.value = enabled
         prefs.edit().putBoolean("is_dark_mode", enabled).apply()
     }
+
+    fun toggleTheme() {
+        setUseSystemTheme(false)
+        toggleDarkMode(!_isDarkMode.value)
+    }
 }

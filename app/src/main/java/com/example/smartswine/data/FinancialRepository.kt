@@ -16,17 +16,21 @@ class FinancialRepository(private val db: FirebaseFirestore) {
             .orderBy("date", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
-                    close(error)
+                    android.util.Log.w("FinancialRepository", "Error listening to financials: ${error.message}")
+                    close()
                     return@addSnapshotListener
                 }
-                val records = snapshot?.toObjects(FinancialRecord::class.java) ?: emptyList()
+                val records = snapshot?.documents?.mapNotNull { doc ->
+                    doc.toObject(FinancialRecord::class.java)?.copy(id = doc.id)
+                } ?: emptyList()
                 trySend(records)
             }
         awaitClose { listener.remove() }
     }
 
     suspend fun addFinancialRecord(userId: String, record: FinancialRecord) {
-        db.collection("users").document(userId).collection("financials").add(record).await()
+        val docRef = db.collection("users").document(userId).collection("financials").document()
+        docRef.set(record.copy(id = docRef.id)).await()
     }
 
     suspend fun deleteFinancialRecord(userId: String, recordId: String) {

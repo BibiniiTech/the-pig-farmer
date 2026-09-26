@@ -61,13 +61,13 @@
     <string name="ingredient_banana_peels_dried">Peaux de banane (séchées)</string>
     <string name="ingredient_taro_leaves_fresh">Feuilles de taro (fraîches)</string>
     <string name="ingredient_water_hyacinth_fresh">Jacinthe d\'eau (fraîche)</string>
-    <string name="ingredient_banana_pseudostem_fresh">Tronc de bananier (frais)</string>
+    <string name="ingredient_banana_pseudostem_fresh">Pseudotronc de bananier (frais)</string>
     <string name="ingredient_azolla_fresh">Azolla (fraîche)</string>
     <string name="ingredient_duckweed_fresh">Lentille d\'eau (fraîche)</string>
     <string name="ingredient_coffee_pulp_dried">Pulpe de café (séchée)</string>
-    <string name="ingredient_cacao_cocoa_pod_husks_dried">Cabosses de cacao (séchées)</string>
+    <string name="ingredient_cacao_cocoa_pod_husks_dried">Coques de cabosses de cacao (séchées)</string>
     <string name="ingredient_mango_seed_kernel_meal">Farine d\'amande de noyau de mangue</string>
-    <string name="ingredient_palm_oil_decanter_cake">Gâteau de décanteur d\'huile de palme</string>
+    <string name="ingredient_palm_oil_decanter_cake">Boues de décantation de palme</string>
     <string name="ingredient_bambara_groundnut_meal">Farine de pois bambara</string>
     <string name="ingredient_sugarcane_bagasse_dried">Bagasse de canne à sucre (séchée)</string>
     <string name="ingredient_jackfruit_waste_fresh">Déchets de jacquier (frais)</string>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartSwine</string>
+    <string name="weight_checker_title">豚体重測定・推計</string>
+    <string name="back_button_content_description">戻る</string>
+    <string name="important_notes_title">測定上の重要事項</string>
+    <string name="weight_checker_notes">• 胸囲：前肢の付け根の直後で、メジャーを皮膚に密着させて測定します（測定点 B）。\n• 体長：両耳の基部中央から背骨に沿って尾の付け根まで測定します（測定点 A）。\n• 正確な結果を得るため、豚を平らな床面に四肢で真っ直ぐ立たせてください。\n</string>
+    <string name="converter_title">換算ツール</string>
+    <string name="unit_lbs">ポンド</string>
+    <string name="unit_kgs">kg</string>
+    <string name="weigh_with_scale">台貫・体重計で実測</string>
+    <string name="weigh_with_tape_title">メジャー測定（胸囲・体長）</string>
+    <string name="weigh_with_tape_subtitle">巻尺による生体重の推定計算。</string>
+    <string name="label_length">体長 (%1$s)</string>
+    <string name="label_girth">胸囲 (%1$s)</string>
+    <string name="unit_cm">cm</string>
+    <string name="unit_in">インチ</string>
+    <string name="placeholder_a">A</string>
+    <string name="placeholder_b">B</string>
+    <string name="label_estimated_live_weight">推定生体重</string>
+    <string name="label_estimated_carcass_weight">推定枝肉重量</string>
+    <string name="msg_enter_measurements">図の部位の数値を入力して計算</string>
+    <string name="pig_diagram_content_description">豚体測定部位ガイド</string>
+    <string name="weight_format">%1$.1f kg / %2$.1f ポンド</string>
+    <string name="estimated_results">推計結果</string>
+    <string name="specify_breed">品種を指定</string>
+</resources>

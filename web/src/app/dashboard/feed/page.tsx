@@ -28,6 +28,7 @@ import {
 } from "@/lib/feedCalculator";
 import { FeedIngredient, NutritionalRequirement, FeedInventoryItem, FeedInventoryTransaction } from "@/lib/types";
 import PremiumWrapper from "@/components/PremiumWrapper";
+import IngredientsCatalogModal from "@/components/feed/IngredientsCatalogModal";
 
 // SVG Icons matching Android Material Icons
 const PrintIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -79,6 +80,7 @@ const defaultRequirements: NutritionalRequirement[] = [
 
 export default function FeedPage() {
   const t = useTranslations("Feed");
+  const tCommon = useTranslations("Common");
   
   const translateIngredientName = (name: string) => {
     if (!name) return "";
@@ -132,6 +134,7 @@ export default function FeedPage() {
   const [showUsageModal, setShowUsageModal] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
   const [showRewardedPassModal, setShowRewardedPassModal] = useState(false);
+  const [isCatalogOpen, setIsCatalogOpen] = useState(false);
 
   // Add Item inputs
   const [newName, setNewName] = useState("");
@@ -642,14 +645,14 @@ export default function FeedPage() {
 
   if (loading || !user) {
     return (
-      <div className="flex h-screen items-center justify-center bg-white text-zinc-900">
+      <div className="flex h-screen items-center justify-center bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans overflow-x-hidden">
       {/* Watermark Logo Background */}
       {!isMobile && (
         <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
@@ -662,28 +665,47 @@ export default function FeedPage() {
       )}
 
       <div className="relative z-10 flex flex-col min-h-screen print:hidden">
-        {!isMobile && <DesktopHeader />}
+        {!isMobile && (
+          <DesktopHeader
+            showBack
+            backPath="/dashboard?section=feed"
+            label={t("inventory") || "FEED INVENTORY"}
+            labelColor="text-[#E65100] dark:text-[#FFB74D]"
+          />
+        )}
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-12 print:p-0">
 
           {/* Header Bar */}
-          <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 pb-4">
+          <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-4">
             <div className="flex items-center gap-3">
               <Link
                 href="/dashboard?section=feed"
-                className="p-2 rounded-xl border border-zinc-200 text-zinc-600 hover:bg-zinc-100 transition"
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition font-bold text-xs shadow-xs"
               >
-                <ArrowLeftIcon className="h-5 w-5" />
+                <ArrowLeftIcon className="h-4 w-4" />
+                <span>{tCommon("back") || "Back"}</span>
               </Link>
-              <div className="h-10 w-10 rounded-xl bg-amber-50 border border-amber-200/60 flex items-center justify-center flex-shrink-0">
-                <InventoryIcon className="h-5 w-5 text-amber-600" />
+              <div className="h-10 w-10 rounded-xl bg-[#FFF3E0] dark:bg-[#E65100]/30 border border-[#E65100]/30 flex items-center justify-center flex-shrink-0">
+                <InventoryIcon className="h-5 w-5 text-[#E65100] dark:text-[#FFB74D]" />
               </div>
               <div>
-                <h1 className="text-xl sm:text-2xl font-black text-amber-600">
+                <h1 className="text-xl sm:text-2xl font-black text-[#E65100] dark:text-[#FFB74D]">
                   {t("inventory") || "Feed Inventory"}
                 </h1>
-                <p className="text-xs text-zinc-500">{t("inventoryDesc") || "Manage feed stock, restock bags, and log usage"}</p>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400">{t("inventoryDesc") || "Manage feed stock, restock bags, and log usage"}</p>
               </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setIsCatalogOpen(true)}
+                className="rounded-xl border border-amber-300 bg-amber-50 px-3.5 py-2 text-xs font-bold text-amber-900 hover:bg-amber-100 transition shadow-xs flex items-center gap-2 active:scale-95"
+              >
+                <ScienceIcon className="h-4 w-4 text-amber-600" />
+                <span>Ingredients Catalog ({ingredients.length})</span>
+              </button>
             </div>
           </div>
 
@@ -1464,6 +1486,16 @@ export default function FeedPage() {
           </div>
         );
       })()}
+
+      <IngredientsCatalogModal
+        isOpen={isCatalogOpen}
+        onClose={() => setIsCatalogOpen(false)}
+        ingredients={ingredients}
+        activeFarmUid={activeFarmUid}
+        currencySymbol={userProfile?.settings?.currencySymbol || "$"}
+        isPremium={Boolean(userProfile?.isPremium || userProfile?.isAdmin)}
+        onRequestRewardedPass={() => setShowRewardedPassModal(true)}
+      />
 
       <RewardedPassModal
         isOpen={showRewardedPassModal}

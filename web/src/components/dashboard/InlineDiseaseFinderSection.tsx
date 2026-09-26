@@ -100,6 +100,7 @@ const CloseIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export default function InlineDiseaseFinderSection() {
   const t = useTranslations("Symptoms");
+  const td = useTranslations("Dashboard");
   const { activeFarmUid } = useAuth();
 
   // Pigs in farm
@@ -527,7 +528,7 @@ export default function InlineDiseaseFinderSection() {
               <SearchIcon className="h-5 w-5" />
             </div>
             <div>
-              <span className="text-sm font-bold text-zinc-900">Find with Symptoms</span>
+              <span className="text-sm font-bold text-zinc-900">{td("findWithSymptoms") || "Find with Symptoms"}</span>
               {selectedSymptoms.size > 0 && (
                 <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-100 text-indigo-800">
                   {selectedSymptoms.size} Selected
@@ -1059,7 +1060,7 @@ export default function InlineDiseaseFinderSection() {
               <BookOpenIcon className="h-5 w-5" />
             </div>
             <div>
-              <span className="text-sm font-bold text-zinc-900">Common Pig Diseases</span>
+              <span className="text-sm font-bold text-zinc-900">{td("commonPigDiseases") || "Common Pig Diseases"}</span>
               <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-100 text-indigo-800">
                 {DISEASES.length} Illnesses
               </span>

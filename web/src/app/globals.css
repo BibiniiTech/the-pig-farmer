@@ -5,20 +5,62 @@ html {
 }
 
 :root {
-  --background: #ffffff;
+  --background: #F8FAF9;
   --foreground: #171717;
+  --surface: #FFFFFF;
 }
 
 .dark {
-  --background: #0a0a0a;
+  --background: #121212;
   --foreground: #ededed;
+  --surface: #1E1E1E;
+  --surface-variant: #2C2C2C;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Android Core Theme Palette */
+  --color-farm-green: #2E7D32;
+  --color-farm-green-light: #81C784;
+  --color-farm-green-dark: #1B5E20;
+  --color-farm-secondary: #D32F2F;
+  --color-farm-secondary-light: #FF8A80;
+  --color-farm-bg: #F8FAF9;
+  --color-farm-surface: #FFFFFF;
+  --color-dark-bg: #121212;
+  --color-dark-surface: #1E1E1E;
+  --color-dark-surface-variant: #2C2C2C;
+
+  /* Android 9 Accordion Module Palettes */
+  --color-feed-primary: #E65100;
+  --color-feed-primary-dark: #FFB74D;
+  --color-feed-bg-light: #FFF3E0;
+  --color-weight-primary: #455A64;
+  --color-weight-primary-dark: #90A4AE;
+  --color-weight-bg-light: #ECEFF1;
+  --color-disease-primary: #3F51B5;
+  --color-disease-primary-dark: #7986CB;
+  --color-disease-bg-light: #E8EAF6;
+  --color-activity-primary: #00838F;
+  --color-activity-primary-dark: #4DD0E1;
+  --color-activity-bg-light: #E0F7FA;
+  --color-financial-primary: #00796B;
+  --color-financial-primary-dark: #4DB6AC;
+  --color-financial-bg-light: #E0F2F1;
+  --color-hr-primary: #7B1FA2;
+  --color-hr-primary-dark: #BA68C8;
+  --color-hr-bg-light: #F3E5F5;
+  --color-market-primary: #C2185B;
+  --color-market-primary-dark: #F06292;
+  --color-market-bg-light: #FFEBEE;
+  --color-tips-primary: #5D4037;
+  --color-tips-primary-dark: #A1887F;
+  --color-tips-bg-light: #EFEBE9;
 
   /* Custom shades used in the UI */
   --color-zinc-55: #f7f7f8;
@@ -30,8 +72,10 @@ html {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #121212;
     --foreground: #ededed;
+    --surface: #1E1E1E;
+    --surface-variant: #2C2C2C;
   }
 }
 

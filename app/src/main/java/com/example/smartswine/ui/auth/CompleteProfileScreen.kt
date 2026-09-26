@@ -16,6 +16,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bibiniitech.smartswine.R
+import com.example.smartswine.utils.LocalAppLanguage
+import com.example.smartswine.utils.Translator
 import com.example.smartswine.utils.stringResource
 import com.google.firebase.auth.FirebaseUser
 import androidx.compose.ui.tooling.preview.Preview
@@ -69,6 +71,7 @@ fun CompleteProfileContent(
     isLoading: Boolean = false,
     errorMessage: String? = null
 ) {
+    val appLanguage = LocalAppLanguage.current
     val firstNameState = remember { mutableStateOf(initialFirstName) }
     val lastNameState = remember { mutableStateOf(initialLastName) }
     val farmNameState = remember { mutableStateOf("") }
@@ -242,7 +245,7 @@ fun CompleteProfileContent(
                 if (firstNameState.value.isBlank() || lastNameState.value.isBlank() ||
                     farmNameState.value.isBlank() || countryState.value == null
                 ) {
-                    localErrorState.value = "Please fill in all fields"
+                    localErrorState.value = Translator.getString("fill_all_fields", appLanguage.code)
                 } else {
                     localErrorState.value = null
 
@@ -254,7 +257,7 @@ fun CompleteProfileContent(
                         countryCode = countryState.value?.code ?: "",
                         email = email,
                         isPremium = false,
-                        appLanguage = "en" // Default, will sync from settings
+                        appLanguage = appLanguage.code
                     )
                     onComplete(userProfile)
                 }

@@ -4,8 +4,11 @@ import androidx.compose.ui.platform.LocalContext
 import com.example.smartswine.util.PdfGenerator
 import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.animation.*
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -32,6 +35,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.foundation.lazy.itemsIndexed
+import com.example.smartswine.ui.components.NativeAdCard
+import com.example.smartswine.ui.components.RewardedPassDialog
+import com.example.smartswine.utils.LocalIsPaidPremium
+import com.example.smartswine.utils.TierLimiter
 import com.example.smartswine.utils.LocalIsPremium
 import com.example.smartswine.utils.PremiumWrapper
 import com.example.smartswine.utils.stringResource
@@ -49,6 +57,7 @@ import com.example.smartswine.utils.DateUtils
 @Composable
 fun HerdDataScreen(
     viewModel: HerdViewModel,
+    initiallyShowAdd: Boolean = false,
     onNavigateToPigProfile: (String) -> Unit,
     onNavigateToArchived: () -> Unit,
     onNavigateToPaywall: () -> Unit,
@@ -68,7 +77,9 @@ fun HerdDataScreen(
     val currentLanguageCode = LocalAppLanguage.current.code
 
     val isPremium = LocalIsPremium.current
-    val pigLimitReached = !isPremium && allPigs.size >= 20
+    val isPaidPremium = LocalIsPaidPremium.current
+    val pigLimitReached = !isPremium && allPigs.size >= TierLimiter.FREE_MAX_PIGS
+    var showRewardedPassDialog by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         HerdDataContent(
@@ -80,7 +91,9 @@ fun HerdDataScreen(
             purposeFilter = purposeFilter,
             statusFilter = statusFilter,
             isPremium = isPremium,
+            isPaidPremium = isPaidPremium,
             pigLimitReached = pigLimitReached,
+            initiallyShowAdd = initiallyShowAdd,
             onSearchQueryChange = { viewModel.setSearchQuery(it) },
             onPurposeFilterChange = { viewModel.setPurposeFilter(it) },
             onStatusFilterChange = { viewModel.setStatusFilter(it) },
@@ -90,6 +103,7 @@ fun HerdDataScreen(
             onNavigateToPigProfile = onNavigateToPigProfile,
             onShowArchived = onNavigateToArchived,
             onNavigateToPaywall = onNavigateToPaywall,
+            onLockedExportPdf = { showRewardedPassDialog = true },
             onBack = onBack,
         ) {
             PdfGenerator.generateHerdReportPdf(
@@ -98,6 +112,24 @@ fun HerdDataScreen(
                 allPigs = allPigs,
                 healthRecords = viewModel.getAllHealthRecords().value,
                 lang = currentLanguageCode
+            )
+        }
+
+        if (showRewardedPassDialog) {
+            RewardedPassDialog(
+                title = stringResource("unlock_herd_pdf_title"),
+                description = stringResource("unlock_herd_pdf_desc"),
+                onDismiss = { showRewardedPassDialog = false },
+                onNavigateToPaywall = onNavigateToPaywall,
+                onPassActivated = {
+                    PdfGenerator.generateHerdReportPdf(
+                        context = localContext,
+                        pigs = pigs,
+                        allPigs = allPigs,
+                        healthRecords = viewModel.getAllHealthRecords().value,
+                        lang = currentLanguageCode
+                    )
+                }
             )
         }
 
@@ -129,7 +161,9 @@ fun HerdDataContent(
     purposeFilter: String?,
     statusFilter: String?,
     isPremium: Boolean,
+    isPaidPremium: Boolean = false,
     pigLimitReached: Boolean,
+    initiallyShowAdd: Boolean = false,
     onSearchQueryChange: (String) -> Unit,
     onPurposeFilterChange: (String?) -> Unit,
     onStatusFilterChange: (String?) -> Unit,
@@ -137,10 +171,11 @@ fun HerdDataContent(
     onNavigateToPigProfile: (String) -> Unit,
     onShowArchived: () -> Unit,
     onNavigateToPaywall: () -> Unit,
+    onLockedExportPdf: () -> Unit = {},
     onBack: () -> Unit,
     onExportPdf: () -> Unit
 ) {
-    val showAddDialog = remember { mutableStateOf(false) }
+    val showAddDialog = remember { mutableStateOf(initiallyShowAdd) }
     val showFilterMenu = remember { mutableStateOf(false) }
 
     Scaffold(
@@ -160,23 +195,19 @@ fun HerdDataContent(
                         text = stringResource("herd_data_title"),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Black,
-                        color = MaterialTheme.colorScheme.primary,
+                        color = Color(0xFF2E7D32),
                         textAlign = TextAlign.Center,
                         modifier = Modifier.weight(1f)
                     )
-                    PremiumWrapper(isPremium = isPremium, onLockedClick = onNavigateToPaywall) {
+                    PremiumWrapper(isPremium = isPremium, onLockedClick = onLockedExportPdf) {
                         IconButton(onClick = { 
-                            if (isPremium) onExportPdf() else onNavigateToPaywall() 
+                            if (isPremium) onExportPdf() else onLockedExportPdf() 
                         }) {
                             Icon(Icons.Default.PictureAsPdf, contentDescription = stringResource("export_pdf"))
                         }
                     }
                 }
-                StylishDivider(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
-
-                StatsRibbon(stats = stats, onShowArchived = onShowArchived)
-                
-                StylishDivider(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+                StylishDivider(modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp))
             }
         },
         floatingActionButton = {
@@ -187,7 +218,7 @@ fun HerdDataContent(
                 },
                 icon = { Icon(if (pigLimitReached) Icons.Default.Lock else Icons.Default.Add, contentDescription = null) },
                 text = { Text(stringResource("add_pig_btn")) },
-                containerColor = if (pigLimitReached) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
+                containerColor = if (pigLimitReached) MaterialTheme.colorScheme.error else Color(0xFF2E7D32),
                 contentColor = if (pigLimitReached) MaterialTheme.colorScheme.onError else MaterialTheme.colorScheme.onPrimary
             )
         },
@@ -204,20 +235,36 @@ fun HerdDataContent(
                 onValueChange = onSearchQueryChange,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                placeholder = { Text(stringResource("search_placeholder")) },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                    .padding(horizontal = 16.dp, vertical = 4.dp),
+                placeholder = { 
+                    Text(
+                        text = stringResource("search_herd_placeholder"),
+                        style = MaterialTheme.typography.bodyMedium
+                    ) 
+                },
+                leadingIcon = { 
+                    Icon(
+                        Icons.Default.Search, 
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp)
+                    ) 
+                },
                 trailingIcon = {
-                    IconButton(onClick = { showFilterMenu.value = !showFilterMenu.value }) {
+                    IconButton(
+                        onClick = { showFilterMenu.value = !showFilterMenu.value },
+                        modifier = Modifier.size(36.dp)
+                    ) {
                         Icon(
                             imageVector = Icons.Default.FilterList,
                             contentDescription = stringResource("filter"),
-                            tint = if (showFilterMenu.value) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                            tint = if (showFilterMenu.value) Color(0xFF2E7D32) else MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(20.dp)
                         )
                     }
                 },
                 singleLine = true,
-                shape = MaterialTheme.shapes.medium
+                textStyle = MaterialTheme.typography.bodyMedium,
+                shape = RoundedCornerShape(12.dp)
             )
 
             if (showFilterMenu.value) {
@@ -285,25 +332,46 @@ fun HerdDataContent(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     item {
+                        StatsRibbon(
+                            stats = stats,
+                            onShowArchived = onShowArchived
+                        )
+                    }
+
+                    item {
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 8.dp)
+                                .padding(vertical = 4.dp)
                                 .clickable { onShowArchived() },
                             colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                                contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-                            )
+                                containerColor = Color(0xFFE8F5E9),
+                                contentColor = Color(0xFF1B5E20)
+                            ),
+                            border = BorderStroke(1.dp, Color(0xFFC8E6C9))
                         ) {
                             Row(
                                 modifier = Modifier.padding(16.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Icon(Icons.Default.Archive, contentDescription = null)
+                                Icon(
+                                    imageVector = Icons.Default.Archive,
+                                    contentDescription = null,
+                                    tint = Color(0xFF2E7D32)
+                                )
                                 Spacer(Modifier.width(16.dp))
                                 Column {
-                                    Text(stringResource("archived_pigs_title"), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                                    Text(stringResource("archived_pigs_subtitle"), style = MaterialTheme.typography.bodySmall)
+                                    Text(
+                                        text = stringResource("archived_pigs_title"),
+                                        style = MaterialTheme.typography.titleMedium,
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color(0xFF1B5E20)
+                                    )
+                                    Text(
+                                        text = stringResource("archived_pigs_subtitle"),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = Color(0xFF2E7D32)
+                                    )
                                 }
                             }
                         }
@@ -315,6 +383,16 @@ fun HerdDataContent(
 
                     items(pigs) { pig ->
                         PigItem(pig, onClick = { onNavigateToPigProfile(pig.id) })
+                    }
+
+                    if (!isPaidPremium) {
+                        item {
+                            NativeAdCard(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 8.dp)
+                            )
+                        }
                     }
 
                     item {
@@ -339,7 +417,12 @@ fun HerdDataContent(
 }
 
 @Composable
-fun StatsRibbon(stats: Map<String, Int>, onShowArchived: () -> Unit) {
+fun StatsRibbon(
+    stats: Map<String, Int>, 
+    onShowArchived: () -> Unit,
+    containerColor: Color = Color(0xFFE8F5E9),
+    contentColor: Color = Color(0xFF1B5E20)
+) {
     val currentIndexState = remember { mutableIntStateOf(0) }
     
     LaunchedEffect(Unit) {
@@ -361,10 +444,11 @@ fun StatsRibbon(stats: Map<String, Int>, onShowArchived: () -> Unit) {
                 }
             },
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            containerColor = containerColor,
+            contentColor = contentColor
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        border = BorderStroke(1.dp, Color(0xFFC8E6C9)),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         AnimatedContent(
             targetState = currentIndexState.intValue,
@@ -588,6 +672,7 @@ fun AddPigDialog(
                     text = if (isMultiple) stringResource("add_multiple_pigs") else stringResource("add_new_pig"),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
+                    color = Color(0xFF2E7D32),
                     textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(12.dp))
@@ -599,14 +684,24 @@ fun AddPigDialog(
                     Switch(
                         checked = isMultiple,
                         onCheckedChange = { isMultiple = it },
-                        modifier = Modifier.padding(horizontal = 12.dp).scale(0.8f)
+                        modifier = Modifier.padding(horizontal = 12.dp).scale(0.8f),
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = Color.White,
+                            checkedTrackColor = Color(0xFF2E7D32)
+                        )
                     )
                     Text(stringResource("multiple"), style = MaterialTheme.typography.labelMedium)
                 }
             }
         },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth().verticalScroll(scrollState)) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .imePadding()
+                    .verticalScroll(scrollState)
+            ) {
                 if (!isMultiple) {
                     // Single Mode
                     OutlinedTextField(value = tagNumber.value, onValueChange = { tagNumber.value = it }, label = { Text(stringResource("tag_number")) }, modifier = Modifier.fillMaxWidth())
@@ -785,35 +880,41 @@ fun AddPigDialog(
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    TextButton(onClick = onDismiss) { Text(stringResource("cancel")) }
+                    TextButton(
+                        onClick = onDismiss,
+                        colors = ButtonDefaults.textButtonColors(contentColor = Color(0xFF2E7D32))
+                    ) { Text(stringResource("cancel")) }
                     Spacer(modifier = Modifier.width(8.dp))
-                    Button(onClick = {
-                        val formData = HerdViewModel.AddPigFormData(
-                            isMultiple = isMultiple,
-                            birthDate = birthDate.value,
-                            breed = breed.value,
-                            purpose = purpose.value,
-                            sowTag = sowTag.value,
-                            boarTag = boarTag.value,
-                            source = source.value,
-                            notes = notes.value,
-                            tagNumber = tagNumber.value,
-                            gender = gender.value,
-                            castrated = castrated.value,
-                            castrationDate = castrationDate.value,
-                            hasFarrowed = hasFarrowed.value,
-                            weight = weight.value,
-                            location = location.value,
-                            purchasePrice = purchasePrice.value,
-                            malePigs = maleData.values.toList(),
-                            femalePigs = femaleData.values.toList()
-                        )
-                        onConfirm(formData)
-                    }) { Text(stringResource("add")) }
+                    Button(
+                        onClick = {
+                            val formData = HerdViewModel.AddPigFormData(
+                                isMultiple = isMultiple,
+                                birthDate = birthDate.value,
+                                breed = breed.value,
+                                purpose = purpose.value,
+                                sowTag = sowTag.value,
+                                boarTag = boarTag.value,
+                                source = source.value,
+                                notes = notes.value,
+                                tagNumber = tagNumber.value,
+                                gender = gender.value,
+                                castrated = castrated.value,
+                                castrationDate = castrationDate.value,
+                                hasFarrowed = hasFarrowed.value,
+                                weight = weight.value,
+                                location = location.value,
+                                purchasePrice = purchasePrice.value,
+                                malePigs = maleData.values.toList(),
+                                femalePigs = femaleData.values.toList()
+                            )
+                            onConfirm(formData)
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32))
+                    ) { Text(stringResource("add")) }
                 }
                 
-                // Extra spacer to allow buttons to be scrolled higher
-                Spacer(modifier = Modifier.height(100.dp))
+                // Extra spacer to allow buttons and inputs to be scrolled smoothly above keyboard
+                Spacer(modifier = Modifier.height(160.dp))
             }
         },
         confirmButton = { },

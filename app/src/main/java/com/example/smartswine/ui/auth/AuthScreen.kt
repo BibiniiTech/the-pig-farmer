@@ -200,7 +200,7 @@ fun AuthScreen(
                                 val userId = task.result?.user?.uid ?: ""
                                 if (userId.isBlank()) {
                                     isLoadingState.value = false
-                                    errorState.value = "Failed to get user ID"
+                                    errorState.value = Translator.getString("failed_get_user_id", languageViewModel.currentLanguage.value.code)
                                     return@addOnCompleteListener
                                 }
                                 val userData = hashMapOf(
@@ -271,7 +271,7 @@ fun AuthScreen(
                             }
                         }
                     } else {
-                        errorState.value = "Unexpected credential type"
+                        errorState.value = Translator.getString("unexpected_credential_type", languageViewModel.currentLanguage.value.code)
                     }
                 } catch (e: Exception) {
                     if (e is GetCredentialCancellationException) {
@@ -297,7 +297,7 @@ fun AuthScreen(
             onDismiss = { showResetDialogState.value = false },
         ) {
             if (resetEmailState.value.isBlank()) {
-                resetErrorState.value = "Please enter your email"
+                resetErrorState.value = Translator.getString("enter_email_error", languageViewModel.currentLanguage.value.code)
             } else {
                 auth.sendPasswordResetEmail(resetEmailState.value)
                     .addOnCompleteListener { task ->
@@ -540,7 +540,7 @@ fun AuthContent(
 
         Button(
             onClick = onToggleMode,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 48.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
                 contentColor = MaterialTheme.colorScheme.onSecondaryContainer
@@ -548,7 +548,8 @@ fun AuthContent(
         ) {
             Text(
                 text = if (isLogin) stringResource("no_account") else stringResource("have_account"),
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center
             )
         }
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartSwine</string>
+    <string name="weight_checker_title">ESTIMATIVA DE PESO</string>
+    <string name="back_button_content_description">Voltar</string>
+    <string name="important_notes_title">Observações Importantes</string>
+    <string name="weight_checker_notes">• Perímetro Torácico: Meça o tórax logo atrás das patas dianteiras com a fita bem ajustada ao corpo (Ponto B).\n• Comprimento Corporal: Meça da base das orelhas ao longo da coluna até a base da cauda (Ponto A).\n• Certifique-se de que o suíno esteja apoiado nas quatro patas em chão plano e nivelado.\n</string>
+    <string name="converter_title">Conversor de Unidades</string>
+    <string name="unit_lbs">Lbs</string>
+    <string name="unit_kgs">Kg</string>
+    <string name="weigh_with_scale">Pesar com Balança</string>
+    <string name="weigh_with_tape_title">Pesar com Fita Métrica</string>
+    <string name="weigh_with_tape_subtitle">Estimar peso corporal por biometria (fita métrica).</string>
+    <string name="label_length">Comprimento (%1$s)</string>
+    <string name="label_girth">Perímetro Torácico (%1$s)</string>
+    <string name="unit_cm">cm</string>
+    <string name="unit_in">pol</string>
+    <string name="placeholder_a">A</string>
+    <string name="placeholder_b">B</string>
+    <string name="label_estimated_live_weight">Peso Vivo Estimado</string>
+    <string name="label_estimated_carcass_weight">Peso de Carcaça Estimado</string>
+    <string name="msg_enter_measurements">Insira as medidas no diagrama para calcular o peso</string>
+    <string name="pig_diagram_content_description">Guia ilustrado de biometria suína</string>
+    <string name="weight_format">%1$.1f Kg / %2$.1f Lbs</string>
+    <string name="estimated_results">Resultados Estimados</string>
+    <string name="specify_breed">Especificar Raça</string>
+</resources>

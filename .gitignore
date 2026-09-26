@@ -1,16 +1,46 @@
+# IDE & Gradle
 *.iml
-.gradle
+.gradle/
 /local.properties
+local.properties
+.DS_Store
+/captures
+.externalNativeBuild
+.cxx
+
+# IntelliJ / Android Studio internal caches
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
-local.properties
+
+# Android Build Outputs & Release Bundles
+/build/
+/app/build/
+/app/release/*.aab
+/app/release/*.apk
+
+# Web App & Node Modules
+/web/node_modules/
+/web/.next/
+/web/.env*.local
+/web/out/
+/functions/node_modules/
+
+# Secrets, Service Accounts & API Keys
+functions/service-account.json
+service-account*.json
+*.key
+*.jks
+*.keystore
+/web/WEBHOOK SIGNING SECRET.txt
+/web/Web API*.txt
+
+# Binaries, Logs & Temp Dumps
 firebase.exe
+firepit-log.txt
+logcat*.txt
+*.log
+

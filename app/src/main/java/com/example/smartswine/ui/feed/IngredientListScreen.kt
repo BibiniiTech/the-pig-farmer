@@ -24,6 +24,7 @@ import com.example.smartswine.utils.LocalAppLanguage
 import com.example.smartswine.utils.Translator
 import com.example.smartswine.utils.StylishDivider
 import com.example.smartswine.utils.stringResource
+import com.example.smartswine.utils.getCategoryKey
 import com.example.smartswine.model.FeedIngredient
 import com.example.smartswine.ui.navigation.Screen
 import com.example.smartswine.ui.theme.SmartSwineTheme
@@ -170,7 +171,7 @@ fun IngredientListContent(
                                     fontWeight = FontWeight.Bold,
                                 )
                                 Text(
-                                    text = ingredient.category,
+                                    text = stringResource(getCategoryKey(ingredient.category)),
                                     style = MaterialTheme.typography.bodySmall,
                                 )
                                 Text(
@@ -178,7 +179,7 @@ fun IngredientListContent(
                                     style = MaterialTheme.typography.bodySmall,
                                 )
                             }
-                            Icon(Icons.Default.Edit, contentDescription = "Edit")
+                            Icon(Icons.Default.Edit, contentDescription = stringResource("edit"))
                         }
                     }
                 }

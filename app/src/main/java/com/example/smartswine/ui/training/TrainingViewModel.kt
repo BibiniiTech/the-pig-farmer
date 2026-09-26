@@ -147,3 +147,8 @@ class TrainingViewModel : ViewModel() {
         videosListener?.remove()
     }
 }
+
+fun resolveVideoTitle(title: String): String {
+    val translated = com.example.smartswine.utils.Translator.getString(title, java.util.Locale.getDefault().language)
+    return if (translated.isNotBlank() && translated != title) translated else title
+}

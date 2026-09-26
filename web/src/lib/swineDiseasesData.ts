@@ -1369,7 +1369,16 @@ export function diagnoseSwineDiseases(
     if (b.matchPercent !== a.matchPercent) {
       return b.matchPercent - a.matchPercent;
     }
-    return b.matchedWeight - a.matchedWeight;
+    if (b.matchedWeight !== a.matchedWeight) {
+      return b.matchedWeight - a.matchedWeight;
+    }
+    const severityOrder: Record<SeverityLevel, number> = {
+      CRITICAL: 4,
+      HIGH: 3,
+      MODERATE: 2,
+      LOW: 1,
+    };
+    return (severityOrder[b.disease.severity] || 0) - (severityOrder[a.disease.severity] || 0);
   });
 
   return results;

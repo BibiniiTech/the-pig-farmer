@@ -8,6 +8,7 @@ import com.example.smartswine.model.NutritionalRequirement
 import com.example.smartswine.model.FeedInventoryItem
 import com.example.smartswine.model.FeedInventoryTransaction
 import com.example.smartswine.model.FinancialRecord
+import com.example.smartswine.model.SavedFeedRecipe
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.WriteBatch
@@ -28,7 +29,7 @@ class FeedRepository {
     // Active Farm ID for multi-user support
     private var activeFarmId: String? = null
 
-    fun setActiveFarmId(uid: String) {
+    fun setActiveFarmId(uid: String?) {
         activeFarmId = uid
     }
 
@@ -64,13 +65,20 @@ class FeedRepository {
             .document(activeFarmId ?: auth.currentUser?.uid ?: "anonymous")
             .collection("financials")
 
+    private val savedRecipesCollection
+        get() = firestore.collection("users")
+            .document(activeFarmId ?: auth.currentUser?.uid ?: "anonymous")
+            .collection("saved_feed_recipes")
+
     fun getAllFeedInventoryItems(): Flow<List<FeedInventoryItem>> = callbackFlow {
         val subscription = feedInventoryCollection.addSnapshotListener { snapshot, error ->
             if (auth.currentUser == null) {
+                close()
                 return@addSnapshotListener
             }
             if (error != null) {
-                close(error)
+                android.util.Log.w("FeedRepository", "Error listening to feed inventory: ${error.message}")
+                close()
                 return@addSnapshotListener
             }
             if (snapshot != null) {
@@ -84,10 +92,12 @@ class FeedRepository {
     fun getAllFeedInventoryTransactions(): Flow<List<FeedInventoryTransaction>> = callbackFlow {
         val subscription = feedInventoryTransactionsCollection.addSnapshotListener { snapshot, error ->
             if (auth.currentUser == null) {
+                close()
                 return@addSnapshotListener
             }
             if (error != null) {
-                close(error)
+                android.util.Log.w("FeedRepository", "Error listening to feed transactions: ${error.message}")
+                close()
                 return@addSnapshotListener
             }
             if (snapshot != null) {
@@ -139,10 +149,12 @@ class FeedRepository {
     fun getAllIngredients(): Flow<List<FeedIngredient>> = callbackFlow {
         val subscription = ingredientsCollection.addSnapshotListener { snapshot, error ->
             if (auth.currentUser == null) {
+                close()
                 return@addSnapshotListener
             }
             if (error != null) {
-                close(error)
+                android.util.Log.w("FeedRepository", "Error listening to ingredients: ${error.message}")
+                close()
                 return@addSnapshotListener
             }
             if (snapshot != null) {
@@ -157,6 +169,16 @@ class FeedRepository {
         val docRef = ingredientsCollection.document()
         val ingredientWithId = ingredient.copy(id = docRef.id)
         docRef.set(ingredientWithId).await()
+    }
+
+    suspend fun deleteIngredient(ingredientId: String) {
+        if (ingredientId.isNotEmpty()) {
+            try {
+                ingredientsCollection.document(ingredientId).delete().await()
+            } catch (e: Exception) {
+                android.util.Log.e("FeedRepository", "Error deleting ingredient $ingredientId: ${e.message}")
+            }
+        }
     }
 
     suspend fun addTransaction(transaction: FeedTransaction) {
@@ -343,10 +365,12 @@ class FeedRepository {
     fun getAllRequirements(): Flow<List<NutritionalRequirement>> = callbackFlow {
         val subscription = requirementsCollection.addSnapshotListener { snapshot, error ->
             if (auth.currentUser == null) {
+                close()
                 return@addSnapshotListener
             }
             if (error != null) {
-                close(error)
+                android.util.Log.w("FeedRepository", "Error listening to requirements: ${error.message}")
+                close()
                 return@addSnapshotListener
             }
             if (snapshot != null) {
@@ -357,23 +381,50 @@ class FeedRepository {
         awaitClose { subscription.remove() }
     }
 
-    suspend fun initializeDefaultRequirements() {
-        val defaultRequirements = listOf(
-            NutritionalRequirement("Starter", 17.0, 3350.0, 0.90, 0.75, 7.90, 5.20, 1.25, 3.0, 0.35, 0.85),
-            NutritionalRequirement("Grower", 14.5, 3300.0, 0.75, 0.50, 6.10, 4.00, 1.10, 5.0, 0.75, 1.50),
-            NutritionalRequirement("Finisher", 13.0, 3300.0, 0.75, 0.50, 5.70, 3.00, 1.00, 6.0, 1.50, 2.50),
-        )
+    fun getAllSavedRecipes(): Flow<List<SavedFeedRecipe>> = callbackFlow {
+        val subscription = savedRecipesCollection.addSnapshotListener { snapshot, error ->
+            if (auth.currentUser == null) {
+                close()
+                return@addSnapshotListener
+            }
+            if (error != null) {
+                android.util.Log.w("FeedRepository", "Error listening to saved recipes: ${error.message}")
+                close()
+                return@addSnapshotListener
+            }
+            if (snapshot != null) {
+                val recipes = snapshot.toObjects(SavedFeedRecipe::class.java)
+                trySend(recipes)
+            }
+        }
+        awaitClose { subscription.remove() }
+    }
 
-        for (requirement in defaultRequirements) {
-            // Use set() which will update existing or create new
-            requirementsCollection.document(requirement.stage).set(requirement).await()
+    suspend fun saveFeedRecipe(recipe: SavedFeedRecipe): String {
+        val docRef = if (recipe.id.isNotEmpty()) savedRecipesCollection.document(recipe.id) else savedRecipesCollection.document()
+        val recipeWithId = recipe.copy(id = docRef.id)
+        docRef.set(recipeWithId).await()
+        return docRef.id
+    }
+
+    suspend fun deleteSavedRecipe(recipeId: String) {
+        if (recipeId.isNotEmpty()) {
+            savedRecipesCollection.document(recipeId).delete().await()
+        }
+    }
+
+    suspend fun initializeDefaultRequirements() {
+        for (requirement in DEFAULT_REQUIREMENTS) {
+            val docId = requirement.stage.replace("/", "_")
+            requirementsCollection.document(docId).set(requirement).await()
         }
     }
 
     fun getGlobalIngredients(): Flow<List<FeedIngredient>> = callbackFlow {
         val subscription = globalIngredientsCollection.addSnapshotListener { snapshot, error ->
             if (error != null) {
-                close(error)
+                android.util.Log.w("FeedRepository", "Error listening to global ingredients: ${error.message}")
+                close()
                 return@addSnapshotListener
             }
             if (snapshot != null) {
@@ -400,5 +451,100 @@ class FeedRepository {
         if (ingredientId.isNotEmpty()) {
             globalIngredientsCollection.document(ingredientId).delete().await()
         }
+    }
+
+    companion object {
+        val DEFAULT_REQUIREMENTS = listOf(
+            NutritionalRequirement(
+                stage = "Creep",
+                crudeProtein = 20.0,
+                digestibleProtein = 17.0,
+                metabolizableEnergy = 3400.0,
+                calcium = 0.85,
+                phosphorus = 0.70,
+                lysine = 7.90,
+                methionineCystine = 4.40,
+                dietaryLysine = 1.35,
+                dietaryMethionine = 0.75,
+                crudeFiber = 3.0,
+                minDailyFeed = 0.15,
+                maxDailyFeed = 0.50
+            ),
+            NutritionalRequirement(
+                stage = "Weaner/Starter",
+                crudeProtein = 18.5,
+                digestibleProtein = 16.0,
+                metabolizableEnergy = 3350.0,
+                calcium = 0.80,
+                phosphorus = 0.65,
+                lysine = 7.20,
+                methionineCystine = 4.10,
+                dietaryLysine = 1.15,
+                dietaryMethionine = 0.65,
+                crudeFiber = 4.0,
+                minDailyFeed = 0.50,
+                maxDailyFeed = 1.20
+            ),
+            NutritionalRequirement(
+                stage = "Grower",
+                crudeProtein = 16.0,
+                digestibleProtein = 14.0,
+                metabolizableEnergy = 3250.0,
+                calcium = 0.70,
+                phosphorus = 0.55,
+                lysine = 6.10,
+                methionineCystine = 3.50,
+                dietaryLysine = 0.95,
+                dietaryMethionine = 0.55,
+                crudeFiber = 5.0,
+                minDailyFeed = 1.20,
+                maxDailyFeed = 2.20
+            ),
+            NutritionalRequirement(
+                stage = "Finisher",
+                crudeProtein = 14.0,
+                digestibleProtein = 12.0,
+                metabolizableEnergy = 3200.0,
+                calcium = 0.60,
+                phosphorus = 0.50,
+                lysine = 5.40,
+                methionineCystine = 3.20,
+                dietaryLysine = 0.75,
+                dietaryMethionine = 0.45,
+                crudeFiber = 6.0,
+                minDailyFeed = 2.00,
+                maxDailyFeed = 3.20
+            ),
+            NutritionalRequirement(
+                stage = "Pregnant",
+                crudeProtein = 13.0,
+                digestibleProtein = 11.0,
+                metabolizableEnergy = 3100.0,
+                calcium = 0.80,
+                phosphorus = 0.60,
+                lysine = 4.60,
+                methionineCystine = 2.90,
+                dietaryLysine = 0.60,
+                dietaryMethionine = 0.38,
+                crudeFiber = 8.0,
+                minDailyFeed = 2.00,
+                maxDailyFeed = 2.50
+            ),
+            NutritionalRequirement(
+                stage = "Lactating",
+                crudeProtein = 17.5,
+                digestibleProtein = 15.0,
+                metabolizableEnergy = 3350.0,
+                calcium = 0.90,
+                phosphorus = 0.75,
+                lysine = 6.00,
+                methionineCystine = 3.40,
+                dietaryLysine = 1.05,
+                dietaryMethionine = 0.60,
+                crudeFiber = 4.5,
+                minDailyFeed = 4.50,
+                maxDailyFeed = 7.00
+            )
+        )
     }
 }

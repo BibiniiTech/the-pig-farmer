@@ -18,13 +18,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.smartswine.data.AdRewardManager
 import com.example.smartswine.data.BillingManager
 import com.example.smartswine.data.SecurityManager
 import com.example.smartswine.data.SecurityStatus
+import com.google.android.gms.ads.MobileAds
 import com.example.smartswine.ui.auth.AccessDeniedScreen
 import com.example.smartswine.ui.auth.AuthScreen
 import com.example.smartswine.ui.auth.AuthViewModel
 import com.example.smartswine.ui.auth.CompleteProfileScreen
+import com.example.smartswine.ui.components.WhatsNewDialog
+import com.example.smartswine.ui.components.WhatsNewManager
 import com.example.smartswine.ui.dashboard.DashboardViewModel
 import com.example.smartswine.ui.feed.FeedViewModel
 import com.example.smartswine.ui.financials.FinancialViewModel
@@ -52,12 +56,24 @@ fun SmartSwineApp(onExit: () -> Unit) {
     val isStaffAccessDenied by authViewModel.isStaffAccessDenied.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        MobileAds.initialize(context)
+    }
+    val adRewardManager = remember { AdRewardManager.getInstance(context) }
+    val isPassActive by adRewardManager.isPassActive.collectAsStateWithLifecycle()
+    val passRemainingTime by adRewardManager.passTimeRemainingFormatted.collectAsStateWithLifecycle()
+
+    val isPaidPremium = profile?.isPremium == true || profile?.isAdmin == true || (profile?.email == "bibiniitech@gmail.com")
+    val effectivePremium = isPaidPremium || isPassActive
+
     val connectivityObserver = remember { ConnectivityObserver(context = context.applicationContext) }
     val networkStatus by connectivityObserver.observe().collectAsStateWithLifecycle(initialValue = ConnectivityStatus.Available)
 
     CompositionLocalProvider(
         LocalAppLanguage provides currentLanguage,
-        LocalIsPremium provides (profile?.isPremium == true || profile?.isAdmin == true || (profile?.email == "bibiniitech@gmail.com")),
+        LocalIsPremium provides effectivePremium,
+        LocalIsPaidPremium provides isPaidPremium,
+        LocalPassRemainingTime provides if (isPassActive && !isPaidPremium) passRemainingTime else null,
     ) {
         SmartSwineTheme(darkTheme = isDarkMode) {
             val billingManager = BillingManager.getInstance(context)
@@ -86,10 +102,10 @@ fun SmartSwineApp(onExit: () -> Unit) {
             if (securityResult is SecurityStatus.Violation) {
                 AlertDialog(
                     onDismissRequest = { },
-                    title = { Text("Security Violation") },
+                    title = { Text(stringResource("security_violation")) },
                     text = { Text(securityResult.message) },
                     confirmButton = {
-                        Button(onClick = onExit) { Text("Exit App") }
+                        Button(onClick = onExit) { Text(stringResource("exit_app")) }
                     }
                 )
             }
@@ -122,14 +138,12 @@ fun SmartSwineApp(onExit: () -> Unit) {
             val hrViewModel: HumanResourceViewModel = viewModel()
             
             LaunchedEffect(activeFarmUid) {
-                activeFarmUid?.let { uid ->
-                    dashboardViewModel.setActiveFarmId(uid)
-                    herdViewModel.setActiveFarmId(uid)
-                    productionViewModel.setActiveFarmId(uid)
-                    financialViewModel.setActiveFarmId(uid)
-                    feedViewModel.setActiveFarmId(uid)
-                    hrViewModel.setActiveFarmId(uid)
-                }
+                dashboardViewModel.setActiveFarmId(activeFarmUid)
+                herdViewModel.setActiveFarmId(activeFarmUid)
+                productionViewModel.setActiveFarmId(activeFarmUid)
+                financialViewModel.setActiveFarmId(activeFarmUid)
+                feedViewModel.setActiveFarmId(activeFarmUid)
+                hrViewModel.setActiveFarmId(activeFarmUid)
             }
 
             LaunchedEffect(currentLanguage) {
@@ -141,28 +155,53 @@ fun SmartSwineApp(onExit: () -> Unit) {
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
             var showExitDialog by remember { mutableStateOf(value = false) }
+            var showWhatsNewDialog by remember { mutableStateOf(value = false) }
+
+            LaunchedEffect(user, isProfileComplete) {
+                if (user != null && isProfileComplete == true && WhatsNewManager.shouldShowWhatsNew(context)) {
+                    showWhatsNewDialog = true
+                }
+            }
 
             val currentBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = currentBackStackEntry?.destination?.route
-            val isAtDashboard = (currentRoute == Screen.Dashboard.route) || (currentRoute == null)
+            val isAtDashboard = (currentRoute == Screen.Dashboard.route) ||
+                    (currentRoute == Screen.Dashboard.routeWithArgs) ||
+                    (currentRoute == null)
 
-            BackHandler(enabled = (user != null) && isAtDashboard) {
+            // Close drawer on back press if it is open
+            BackHandler(enabled = drawerState.isOpen) {
+                coroutineScope.launch { drawerState.close() }
+            }
+
+            // Show exit confirmation only when at root dashboard with closed drawer
+            BackHandler(enabled = (user != null) && isAtDashboard && !drawerState.isOpen) {
                 showExitDialog = true
+            }
+
+            if (showWhatsNewDialog) {
+                WhatsNewDialog(
+                    onDismiss = { showWhatsNewDialog = false },
+                    onExploreGuide = {
+                        showWhatsNewDialog = false
+                        navController.navigate(Screen.HowToGuide.route)
+                    }
+                )
             }
 
             if (showExitDialog) {
                 AlertDialog(
                     onDismissRequest = { showExitDialog = false },
-                    title = { Text("Exit App?") },
-                    text = { Text("Are you sure you want to exit SmartSwine?") },
+                    title = { Text(stringResource("exit_app_question")) },
+                    text = { Text(stringResource("exit_app_confirm_msg")) },
                     confirmButton = {
                         Button(onClick = onExit) {
-                            Text("Exit")
+                            Text(stringResource("exit"))
                         }
                     },
                     dismissButton = {
                         TextButton(onClick = { showExitDialog = false }) {
-                            Text("Cancel")
+                            Text(stringResource("cancel"))
                         }
                     },
                 )
@@ -204,7 +243,22 @@ fun SmartSwineApp(onExit: () -> Unit) {
                         }
                     } else if (!complete) {
                         if (isStaffAccessDenied) {
-                            AccessDeniedScreen { authViewModel.signOut() }
+                            AccessDeniedScreen(
+                                onCreateOwnFarm = {
+                                    authViewModel.detachFromStaffRegistryAndCreateFarm()
+                                },
+                                onSignOut = {
+                                    coroutineScope.launch {
+                                        dashboardViewModel.setActiveFarmId(null)
+                                        herdViewModel.setActiveFarmId(null)
+                                        productionViewModel.setActiveFarmId(null)
+                                        financialViewModel.setActiveFarmId(null)
+                                        feedViewModel.setActiveFarmId(null)
+                                        hrViewModel.setActiveFarmId(null)
+                                        authViewModel.signOut()
+                                    }
+                                }
+                            )
                         } else {
                             CompleteProfileScreen(
                                 firebaseUser = user!!,
@@ -216,37 +270,76 @@ fun SmartSwineApp(onExit: () -> Unit) {
                             drawerState = drawerState,
                             userProfile = profile,
                             currentRoute = currentRoute,
+                            isDarkMode = isDarkMode,
+                            onToggleDarkMode = { themeViewModel.toggleTheme() },
+                            currentLanguage = currentLanguage,
+                            onLanguageChange = { languageViewModel.setLanguage(it) },
+                            onAddPigClick = {
+                                coroutineScope.launch { drawerState.close() }
+                                navController.navigate(Screen.HerdData.createRoute(showAdd = true))
+                            },
+                            onCalculateFeedClick = {
+                                coroutineScope.launch { drawerState.close() }
+                                navController.navigate(Screen.Feed.createRoute(showCalculator = true))
+                            },
+                            onMixFeedClick = {
+                                coroutineScope.launch { drawerState.close() }
+                                navController.navigate(Screen.Feed.createRoute(showFormulator = true))
+                            },
+                            onAddEmployeeClick = {
+                                coroutineScope.launch { drawerState.close() }
+                                navController.navigate(Screen.Dashboard.createRoute(section = "human_resources", subOption = "add")) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        inclusive = true
+                                    }
+                                }
+                            },
                             onNavigateTo = { screen -> 
-                                if (screen == Screen.Dashboard) {
-                                    navController.popBackStack(navController.graph.findStartDestination().id, inclusive = false)
-                                } else if (navController.currentDestination?.route != screen.route) {
-                                    navController.navigate(screen.route) {
+                                val isDashboardTarget = screen == Screen.Dashboard ||
+                                    screen == Screen.HumanResource ||
+                                    screen == Screen.MarketAccess ||
+                                    screen == Screen.DiseaseFinder ||
+                                    screen == Screen.WeightChecker ||
+                                    screen == Screen.Training
+
+                                val targetRoute = when (screen) {
+                                    Screen.Dashboard -> Screen.Dashboard.route
+                                    Screen.HumanResource -> Screen.Dashboard.createRoute("human_resources")
+                                    Screen.MarketAccess -> Screen.Dashboard.createRoute("market")
+                                    Screen.DiseaseFinder -> Screen.Dashboard.createRoute("symptoms_analyzer")
+                                    Screen.WeightChecker -> Screen.Dashboard.createRoute("weight_checker")
+                                    Screen.Training -> Screen.Dashboard.createRoute("training")
+                                    else -> screen.route
+                                }
+                                if (isDashboardTarget) {
+                                    navController.navigate(targetRoute) {
                                         popUpTo(navController.graph.findStartDestination().id) {
-                                            saveState = true
+                                            inclusive = true
                                         }
+                                    }
+                                } else if (navController.currentDestination?.route != targetRoute) {
+                                    navController.navigate(targetRoute) {
                                         launchSingleTop = true
-                                        restoreState = true
                                     }
                                 }
                                 coroutineScope.launch { drawerState.close() }
                             },
                             onSignOut = {
-                                authViewModel.signOut()
-                                coroutineScope.launch { drawerState.close() }
+                                coroutineScope.launch {
+                                    try {
+                                        drawerState.snapTo(DrawerValue.Closed)
+                                    } catch (_: Exception) {}
+                                    dashboardViewModel.setActiveFarmId(null)
+                                    herdViewModel.setActiveFarmId(null)
+                                    productionViewModel.setActiveFarmId(null)
+                                    financialViewModel.setActiveFarmId(null)
+                                    feedViewModel.setActiveFarmId(null)
+                                    hrViewModel.setActiveFarmId(null)
+                                    authViewModel.signOut()
+                                }
                             }
                         ) {
-                            Scaffold(
-                                floatingActionButton = {
-                                    FloatingActionButton(
-                                        onClick = { coroutineScope.launch { drawerState.open() } },
-                                        containerColor = MaterialTheme.colorScheme.primary,
-                                        contentColor = MaterialTheme.colorScheme.onPrimary
-                                    ) {
-                                        Icon(Icons.Default.Menu, contentDescription = "Menu")
-                                    }
-                                },
-                                floatingActionButtonPosition = FabPosition.Start
-                            ) { innerPadding ->
+                            Scaffold { innerPadding ->
                                 Column(modifier = Modifier.padding(innerPadding)) {
                                     if (networkStatus == ConnectivityStatus.Unavailable) {
                                         Surface(
@@ -254,7 +347,7 @@ fun SmartSwineApp(onExit: () -> Unit) {
                                             modifier = Modifier.fillMaxWidth()
                                         ) {
                                             Text(
-                                                text = "You are currently offline. Changes will sync when reconnected.",
+                                                text = stringResource("offline_banner_msg"),
                                                 style = MaterialTheme.typography.labelSmall,
                                                 color = MaterialTheme.colorScheme.onErrorContainer,
                                                 modifier = Modifier.padding(vertical = 4.dp, horizontal = 16.dp),
@@ -274,7 +367,8 @@ fun SmartSwineApp(onExit: () -> Unit) {
                                         hrViewModel = hrViewModel,
                                         authViewModel = authViewModel,
                                         themeViewModel = themeViewModel,
-                                        languageViewModel = languageViewModel
+                                        languageViewModel = languageViewModel,
+                                        onOpenDrawer = { coroutineScope.launch { drawerState.open() } }
                                     )
                                 }
                             }

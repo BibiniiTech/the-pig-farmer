@@ -1,11 +1,13 @@
 package com.example.smartswine.ui.settings
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -35,8 +37,13 @@ import com.example.smartswine.utils.StylishDivider
 import com.example.smartswine.utils.stringResource
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.unit.sp
+import com.example.smartswine.utils.LocalAppLanguage
 import com.example.smartswine.ui.auth.AuthViewModel
 import com.example.smartswine.utils.GlobalNotice
+import com.example.smartswine.ui.components.WhatsNewDialog
+import com.example.smartswine.ui.components.PlayStoreReviewManager
 import com.bibiniitech.smartswine.BuildConfig
 
 data class SettingsState(
@@ -68,8 +75,10 @@ data class SettingsState(
 )
 
 data class SettingsActions(
+    val onBack: () -> Unit = {},
     val onNavigateToEditProfile: () -> Unit = {},
     val onNavigateToTerms: () -> Unit = {},
+    val onNavigateToGuide: () -> Unit = {},
     val onDarkModeChange: (Boolean) -> Unit = {},
     val onNotificationsEnabledChange: (Boolean) -> Unit = {},
     val onWeaningDaysChange: (String) -> Unit = {},
@@ -101,8 +110,10 @@ data class SettingsActions(
 
 @Composable
 fun SettingsScreen(
+    onBack: () -> Unit = {},
     onNavigateToEditProfile: () -> Unit,
     onNavigateToTerms: () -> Unit,
+    onNavigateToGuide: () -> Unit = {},
     themeViewModel: ThemeViewModel = viewModel(),
     settingsViewModel: SettingsViewModel = viewModel(),
     languageViewModel: LanguageViewModel = viewModel(),
@@ -169,8 +180,10 @@ fun SettingsScreen(
     )
 
     val actions = SettingsActions(
+        onBack = onBack,
         onNavigateToEditProfile = onNavigateToEditProfile,
         onNavigateToTerms = onNavigateToTerms,
+        onNavigateToGuide = onNavigateToGuide,
         onDarkModeChange = { themeViewModel.toggleDarkMode(it) },
         onNotificationsEnabledChange = { enabled ->
             settingsViewModel.notificationsEnabled.value = enabled
@@ -233,21 +246,54 @@ fun SettingsScreenContent(
 ) {
     val scrollState = rememberScrollState()
     val uriHandler = LocalUriHandler.current
+    val context = LocalContext.current
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState)
-            .padding(16.dp)
-            .imePadding()
-    ) {
-        Text(
-            text = stringResource("settings"),
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 24.dp)
-        )
+    val currentAppLanguage = LocalAppLanguage.current
+    var showPreferredDatesDialog by remember { mutableStateOf(false) }
+    var showSetStatusDialog by remember { mutableStateOf(false) }
+    var showPorkersDialog by remember { mutableStateOf(false) }
+    var showBreedersDialog by remember { mutableStateOf(false) }
+    var showClearDialog by remember { mutableStateOf(false) }
+    var showWhatsNewDialog by remember { mutableStateOf(false) }
+    var clearType by remember { mutableStateOf("") } // "pigs", "financials", "ingredients", "staff", "all", "account"
 
+    Scaffold(
+        topBar = {
+            Column {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 8.dp, end = 16.dp, top = 16.dp, bottom = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    IconButton(onClick = actions.onBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource("back")
+                        )
+                    }
+                    Text(
+                        text = stringResource("settings"),
+                        style = MaterialTheme.typography.headlineMedium.copy(fontSize = 30.sp),
+                        fontWeight = FontWeight.Black,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                StylishDivider(modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp))
+            }
+        }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .verticalScroll(scrollState)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .imePadding()
+        ) {
+
+        // ─── 1. HEADER: EDIT PROFILE ─────────────────────────────────────────
         SettingsSection(title = stringResource("account")) {
             SettingsItem(
                 icon = Icons.Default.Person,
@@ -256,303 +302,147 @@ fun SettingsScreenContent(
                 onClick = actions.onNavigateToEditProfile
             )
         }
-        
-        StylishDivider(modifier = Modifier.padding(vertical = 12.dp))
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        SettingsSection(title = stringResource("preferences"), isCollapsible = true) {
-            SettingsToggleItem(
-                icon = Icons.Default.Notifications,
-                title = stringResource("push_notifications"),
-                subtitle = stringResource("push_notifications_subtitle"),
-                checked = state.notificationsEnabled,
-                onCheckedChange = actions.onNotificationsEnabledChange
-            )
-            HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
-            
-            SettingsToggleItem(
-                icon = Icons.Default.Brightness4,
-                title = stringResource("dark_mode"),
-                subtitle = stringResource("dark_mode_subtitle"),
-                checked = state.isDarkMode,
-                onCheckedChange = actions.onDarkModeChange
-            )
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        SettingsSection(title = stringResource("weaning"), isCollapsible = true) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
+        // ─── 2. DARK THEME & LANGUAGE (SIDE-BY-SIDE ON SAME LINE) ───────────
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            // Dark theme toggle pill
+            Surface(
+                onClick = { actions.onDarkModeChange(!state.isDarkMode) },
+                shape = RoundedCornerShape(16.dp),
+                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+                modifier = Modifier.weight(1f)
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_weaning),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(24.dp)
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Text(
-                    text = stringResource("wean_at"),
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Medium,
-                    modifier = Modifier.weight(1f)
-                )
-                
-                OutlinedTextField(
-                    value = state.weaningDays,
-                    onValueChange = actions.onWeaningDaysChange,
-                    modifier = Modifier.width(80.dp),
-                    textStyle = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Center),
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    shape = RoundedCornerShape(8.dp)
-                )
-                
-                Text(
-                    text = stringResource("days"),
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(start = 12.dp)
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        SettingsSection(title = stringResource("farrowing"), isCollapsible = true) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_farrowing),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(24.dp)
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Text(
-                    text = stringResource("sows_farrow_at"),
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Medium,
-                    modifier = Modifier.weight(1f)
-                )
-                
-                OutlinedTextField(
-                    value = state.farrowingDays,
-                    onValueChange = actions.onFarrowingDaysChange,
-                    modifier = Modifier.width(80.dp),
-                    textStyle = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Center),
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    shape = RoundedCornerShape(8.dp)
-                )
-                
-                Text(
-                    text = stringResource("days"),
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(start = 12.dp)
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        SettingsSection(title = stringResource("iron_injection"), isCollapsible = true) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_iron),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(24.dp)
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Column(modifier = Modifier.weight(1f)) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(text = stringResource("iron_administered_on"), style = MaterialTheme.typography.bodyLarge)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        OutlinedTextField(
-                            value = state.ironDay1,
-                            onValueChange = actions.onIronDay1Change,
-                            modifier = Modifier.width(60.dp),
-                            textStyle = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Center),
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            shape = RoundedCornerShape(8.dp)
+                Row(
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Icon(
+                            imageVector = if (state.isDarkMode) Icons.Default.DarkMode else Icons.Default.LightMode,
+                            contentDescription = null,
+                            tint = if (state.isDarkMode) Color(0xFFFFD54F) else Color(0xFFFFB74D),
+                            modifier = Modifier.size(22.dp)
+                        )
+                        Text(
+                            text = if (state.isDarkMode) stringResource("dark") else stringResource("light"),
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                     }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(text = stringResource("and") + " ", style = MaterialTheme.typography.bodyLarge)
-                        OutlinedTextField(
-                            value = state.ironDay2,
-                            onValueChange = actions.onIronDay2Change,
-                            modifier = Modifier.width(60.dp),
-                            textStyle = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Center),
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            shape = RoundedCornerShape(8.dp)
+                    Switch(
+                        checked = state.isDarkMode,
+                        onCheckedChange = { actions.onDarkModeChange(it) },
+                        modifier = Modifier
+                            .scale(0.85f)
+                            .height(26.dp)
+                    )
+                }
+            }
+
+            // Language flag dropdown
+            var showLangMenu by remember { mutableStateOf(false) }
+            Box {
+                Surface(
+                    onClick = { showLangMenu = true },
+                    shape = RoundedCornerShape(16.dp),
+                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Text(text = currentAppLanguage.flag, fontSize = 22.sp)
+                        Text(
+                            text = currentAppLanguage.code.uppercase(),
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = stringResource("after_birth"), style = MaterialTheme.typography.bodyLarge)
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropDown,
+                            contentDescription = "Select Language",
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(22.dp)
+                        )
+                    }
+                }
+
+                DropdownMenu(
+                    expanded = showLangMenu,
+                    onDismissRequest = { showLangMenu = false }
+                ) {
+                    AppLanguage.values().forEach { lang ->
+                        DropdownMenuItem(
+                            text = {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                                ) {
+                                    Text(text = lang.flag, fontSize = 20.sp)
+                                    Text(
+                                        text = lang.displayName,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        fontSize = 16.sp,
+                                        fontWeight = if (lang == currentAppLanguage) FontWeight.Bold else FontWeight.Normal
+                                    )
+                                }
+                            },
+                            onClick = {
+                                showLangMenu = false
+                                actions.onLanguageChange(lang)
+                            }
+                        )
                     }
                 }
             }
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-        SettingsSection(title = stringResource("porker_status"), isCollapsible = true) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(stringResource("age_weeks"), style = MaterialTheme.typography.bodyMedium, color = if (state.porkerUseAge) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface)
-                Switch(checked = !state.porkerUseAge, onCheckedChange = { actions.onPorkerUseAgeChange(!it) })
-                Text(stringResource("weight_kg"), style = MaterialTheme.typography.bodyMedium, color = if (!state.porkerUseAge) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface)
-            }
-
-            HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
-
-            if (state.porkerUseAge) {
-                StatusRangeItem(label = stringResource("starter"), range = "0 to ", value = state.porkerStarterAge, onValueChange = actions.onPorkerStarterAgeChange, unit = stringResource("weeks"))
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
-                StatusRangeItem(label = stringResource("grower"), range = "${state.porkerStarterAge} to ", value = state.porkerGrowerAge, onValueChange = actions.onPorkerGrowerAgeChange, unit = stringResource("weeks"))
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
-                StatusRangeItem(label = stringResource("finisher"), range = "${state.porkerGrowerAge} ", value = stringResource("above"), onValueChange = {}, readOnly = true, unit = stringResource("weeks"))
-            } else {
-                StatusRangeItem(label = stringResource("starter"), range = "0 to ", value = state.porkerStarterWeight, onValueChange = actions.onPorkerStarterWeightChange, unit = stringResource("kg"))
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
-                StatusRangeItem(label = stringResource("grower"), range = "${state.porkerStarterWeight} to ", value = state.porkerGrowerWeight, onValueChange = actions.onPorkerGrowerWeightChange, unit = stringResource("kg"))
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
-                StatusRangeItem(label = stringResource("finisher"), range = "${state.porkerGrowerWeight} ", value = stringResource("above"), onValueChange = {}, readOnly = true, unit = stringResource("kg"))
-            }
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        SettingsSection(title = stringResource("breeder_status"), isCollapsible = true) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(stringResource("age_weeks"), style = MaterialTheme.typography.bodyMedium, color = if (state.breederUseAge) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface)
-                Switch(checked = !state.breederUseAge, onCheckedChange = { actions.onBreederUseAgeChange(!it) })
-                Text(stringResource("weight_kg"), style = MaterialTheme.typography.bodyMedium, color = if (!state.breederUseAge) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface)
-            }
-
-            HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
-
-            if (state.breederUseAge) {
-                StatusRangeItem(label = stringResource("piglet"), range = "0 to ", value = state.breederPigletAge, onValueChange = actions.onBreederPigletAgeChange, unit = stringResource("weeks"))
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
-                StatusRangeItem(label = stringResource("weaners"), range = "${state.breederPigletAge} to ", value = state.breederWeanerAge, onValueChange = actions.onBreederWeanerAgeChange, unit = stringResource("weeks"))
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
-                StatusRangeItem(label = stringResource("grower"), range = "${state.breederWeanerAge} to ", value = state.breederGrowerAge, onValueChange = actions.onBreederGrowerAgeChange, unit = stringResource("weeks"))
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
-                StatusRangeItem(label = stringResource("boar_gilt"), range = "${state.breederGrowerAge} ", value = stringResource("above"), onValueChange = {}, readOnly = true, unit = stringResource("weeks"))
-            } else {
-                StatusRangeItem(label = stringResource("piglet"), range = "0 to ", value = state.breederPigletWeight, onValueChange = actions.onBreederPigletWeightChange, unit = stringResource("kg"))
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
-                StatusRangeItem(label = stringResource("weaners"), range = "${state.breederPigletWeight} to ", value = state.breederWeanerWeight, onValueChange = actions.onBreederWeanerWeightChange, unit = stringResource("kg"))
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
-                StatusRangeItem(label = stringResource("grower"), range = "${state.breederWeanerWeight} to ", value = state.breederGrowerWeight, onValueChange = actions.onBreederGrowerWeightChange, unit = stringResource("kg"))
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
-                StatusRangeItem(label = stringResource("boar_gilt"), range = "${state.breederGrowerWeight} ", value = stringResource("above"), onValueChange = {}, readOnly = true, unit = stringResource("kg"))
-            }
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        SettingsSection(title = stringResource("terminology_classification"), isCollapsible = true) {
-            SettingsToggleItem(
-                icon = Icons.Default.Male,
-                title = stringResource("castrated_male_is_barrow"),
-                subtitle = stringResource("automatically_set_barrow"),
-                checked = state.autoClassifyBarrows,
-                onCheckedChange = actions.onAutoClassifyBarrowsChange
+        // ─── 3. PREFERRED DATES (POPUP TRIGGER) ──────────────────────────────
+        SettingsSection(title = stringResource("preferred_dates")) {
+            SettingsItem(
+                icon = Icons.Default.DateRange,
+                title = stringResource("preferred_dates"),
+                subtitle = stringResource("preferred_dates_subtitle"),
+                onClick = { showPreferredDatesDialog = true }
             )
-            HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+        }
 
-            SettingsToggleItem(
-                icon = Icons.Default.Female,
-                title = stringResource("farrowing_female_is_sow"),
-                subtitle = stringResource("automatically_set_sow"),
-                checked = state.autoClassifySows,
-                onCheckedChange = actions.onAutoClassifySowsChange
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // ─── 4. SET STATUS (POPUP TRIGGER) ───────────────────────────────────
+        SettingsSection(title = stringResource("set_status")) {
+            SettingsItem(
+                icon = Icons.Default.Tune,
+                title = stringResource("set_status"),
+                subtitle = stringResource("set_status_subtitle"),
+                onClick = { showSetStatusDialog = true }
             )
-            HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
-            
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(Icons.Default.Female, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(24.dp))
-                Spacer(modifier = Modifier.width(16.dp))
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(stringResource("gilt_classification"), style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium)
-                    Text(stringResource("gilt_classification_subtitle", state.giltAgeThresholdWeeks), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-                OutlinedTextField(
-                    value = state.giltAgeThresholdWeeks,
-                    onValueChange = actions.onGiltAgeThresholdWeeksChange,
-                    modifier = Modifier.width(70.dp),
-                    textStyle = MaterialTheme.typography.bodyMedium.copy(textAlign = TextAlign.Center),
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    shape = RoundedCornerShape(8.dp)
-                )
-            }
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-        SettingsSection(title = stringResource("currency"), isCollapsible = true) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(Icons.Default.Payments, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(24.dp))
-                Spacer(modifier = Modifier.width(16.dp))
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(stringResource("currency_unit"), style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium)
-                    Text(stringResource("currency_display", state.selectedCurrency, state.currencySymbol), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-                OutlinedTextField(
-                    value = state.selectedCurrency,
-                    onValueChange = { actions.onUpdateCurrency(it.uppercase()) },
-                    modifier = Modifier.width(80.dp),
-                    textStyle = MaterialTheme.typography.bodyMedium.copy(textAlign = TextAlign.Center),
-                    singleLine = true,
-                    shape = RoundedCornerShape(8.dp)
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        SettingsSection(title = stringResource("data_management"), isCollapsible = true) {
+        // ─── 5. DATA MANAGEMENT ──────────────────────────────────────────────
+        SettingsSection(title = stringResource("data_management")) {
             SettingsItem(
                 icon = if (state.isSyncing) Icons.Default.Sync else Icons.Default.CloudDone,
                 title = if (state.isSyncing) stringResource("syncing") else stringResource("sync_with_cloud"),
@@ -560,9 +450,6 @@ fun SettingsScreenContent(
                 onClick = actions.onSaveSettings
             )
             HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
-
-            var showClearDialog by remember { mutableStateOf(value = false) }
-            var clearType by remember { mutableStateOf("") } // "pigs", "financials", "ingredients", "staff", "all"
 
             SettingsItem(
                 icon = Icons.Default.DeleteSweep,
@@ -612,81 +499,55 @@ fun SettingsScreenContent(
                 textColor = MaterialTheme.colorScheme.error,
                 onClick = { clearType = "account"; showClearDialog = true }
             )
+        }
 
-            if (showClearDialog) {
-                AlertDialog(
-                    onDismissRequest = { showClearDialog = false },
-                    title = {
-                        Text(
-                            when (clearType) {
-                                "account" -> stringResource("delete_account") + "?"
-                                "all" -> stringResource("factory_reset") + "?"
-                                else -> stringResource("confirm_deletion")
-                            }
-                        )
-                    },
-                    text = { 
-                        Text(
-                            when (clearType) {
-                                "account" -> stringResource("delete_account_confirm_msg")
-                                "all" -> stringResource("factory_reset_confirm_msg")
-                                else -> stringResource("clear_records_confirm_msg")
-                            }
-                        ) 
-                    },
-                    confirmButton = {
-                        Button(
-                            onClick = {
-                                when (clearType) {
-                                    "account" -> actions.onDeleteAccount { showClearDialog = false }
-                                    "all" -> actions.onFactoryReset { showClearDialog = false }
-                                    else -> actions.onClearCollection(clearType) { showClearDialog = false }
-                                }
-                            },
-                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
-                        ) {
-                            Text(if (clearType == "account") stringResource("delete_account") else stringResource("delete_everything"))
-                        }
-                    },
-                    dismissButton = {
-                        TextButton(onClick = { showClearDialog = false }) {
-                            Text(stringResource("cancel"))
-                        }
-                    }
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // ─── 6. LEGAL & POLICIES (STANDALONE) ────────────────────────────────
+        Surface(
+            shape = RoundedCornerShape(14.dp),
+            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f),
+            border = BorderStroke(0.8.dp, MaterialTheme.colorScheme.outlineVariant),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column {
+                SettingsItem(
+                    icon = Icons.Default.MenuBook,
+                    title = stringResource("how_to_guide"),
+                    onClick = actions.onNavigateToGuide
+                )
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+                SettingsItem(
+                    icon = Icons.Default.AutoAwesome,
+                    title = stringResource("whats_new_title"),
+                    onClick = { showWhatsNewDialog = true }
+                )
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+                SettingsItem(
+                    icon = Icons.Default.Star,
+                    title = stringResource("rate_5_stars"),
+                    subtitle = "SmartSwine on Google Play Store",
+                    onClick = { PlayStoreReviewManager.openPlayStoreForReview(context) }
+                )
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+                SettingsItem(
+                    icon = Icons.Default.Description,
+                    title = stringResource("terms_of_service"),
+                    onClick = actions.onNavigateToTerms
+                )
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+                SettingsItem(
+                    icon = Icons.Default.PrivacyTip,
+                    title = stringResource("privacy_policy"),
+                    onClick = { uriHandler.openUri("https://sites.google.com/view/smartswine-privacypolicy/home") }
                 )
             }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        SettingsSection(title = stringResource("about"), isCollapsible = true) {
-            SettingsItem(
-                icon = Icons.Default.Description,
-                title = stringResource("terms_of_service"),
-                onClick = actions.onNavigateToTerms
-            )
-            HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
-            SettingsItem(
-                icon = Icons.Default.PrivacyTip,
-                title = stringResource("privacy_policy"),
-                onClick = { uriHandler.openUri("https://sites.google.com/view/smartswine-privacypolicy/home") }
-            )
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        SettingsSection(title = stringResource("select_language"), isCollapsible = true) {
-            Box(modifier = Modifier.padding(16.dp)) {
-                LanguageSelectionGrid(
-                    onLanguageChange = actions.onLanguageChange
-                )
-            }
-        }
-        
-        Spacer(modifier = Modifier.height(24.dp))
-        
         Text(
-            text = stringResource("app_version", BuildConfig.VERSION_NAME),
+            text = "v${BuildConfig.VERSION_NAME}",
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
             modifier = Modifier.fillMaxWidth(),
@@ -700,7 +561,7 @@ fun SettingsScreenContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Developed By:",
+                text = stringResource("developed_by"),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
             )
@@ -755,13 +616,542 @@ fun SettingsScreenContent(
             }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "copyright 2026",
+                text = stringResource("app_copyright", "2026"),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
             )
         }
-        
-        Spacer(modifier = Modifier.height(120.dp))
+
+        Spacer(modifier = Modifier.height(140.dp))
+    }
+    }
+
+    // ═════════════════════════════════════════════════════════════════════════
+    // POPUP DIALOGS
+    // ═════════════════════════════════════════════════════════════════════════
+
+    if (showWhatsNewDialog) {
+        WhatsNewDialog(
+            onDismiss = { showWhatsNewDialog = false },
+            onExploreGuide = {
+                showWhatsNewDialog = false
+                actions.onNavigateToGuide()
+            }
+        )
+    }
+
+    // ─── A. PREFERRED DATES POPUP DIALOG ──────────────────────────────────────
+    if (showPreferredDatesDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                actions.onSaveSettings()
+                showPreferredDatesDialog = false
+            },
+            title = {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Icon(Icons.Default.DateRange, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                    Text(stringResource("preferred_dates"), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                }
+            },
+            text = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = 500.dp)
+                        .verticalScroll(rememberScrollState())
+                        .imePadding(),
+                    verticalArrangement = Arrangement.spacedBy(14.dp)
+                ) {
+                    // Weaning Card
+                    Surface(
+                        shape = RoundedCornerShape(14.dp),
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f),
+                        border = BorderStroke(0.8.dp, MaterialTheme.colorScheme.outlineVariant)
+                    ) {
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(painter = painterResource(id = R.drawable.ic_weaning), contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(26.dp))
+                                Spacer(Modifier.width(10.dp))
+                                Text(stringResource("weaning"), fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleMedium.copy(fontSize = 16.sp))
+                            }
+                            Spacer(Modifier.height(4.dp))
+                            Text(
+                                text = stringResource("weaning_explanation"),
+                                style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Spacer(Modifier.height(10.dp))
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(stringResource("wean_at"), style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp), modifier = Modifier.weight(1f))
+                                OutlinedTextField(
+                                    value = state.weaningDays,
+                                    onValueChange = actions.onWeaningDaysChange,
+                                    modifier = Modifier.width(88.dp),
+                                    textStyle = MaterialTheme.typography.bodyMedium.copy(fontSize = 16.sp, textAlign = TextAlign.Center),
+                                    singleLine = true,
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                    shape = RoundedCornerShape(8.dp)
+                                )
+                                Spacer(Modifier.width(8.dp))
+                                Text(stringResource("days"), style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp))
+                            }
+                        }
+                    }
+
+                    // Farrowing Card
+                    Surface(
+                        shape = RoundedCornerShape(14.dp),
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f),
+                        border = BorderStroke(0.8.dp, MaterialTheme.colorScheme.outlineVariant)
+                    ) {
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(painter = painterResource(id = R.drawable.ic_farrowing), contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(26.dp))
+                                Spacer(Modifier.width(10.dp))
+                                Text(stringResource("farrowing"), fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleMedium.copy(fontSize = 16.sp))
+                            }
+                            Spacer(Modifier.height(4.dp))
+                            Text(
+                                text = stringResource("farrowing_explanation"),
+                                style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Spacer(Modifier.height(10.dp))
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(stringResource("sows_farrow_at"), style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp), modifier = Modifier.weight(1f))
+                                OutlinedTextField(
+                                    value = state.farrowingDays,
+                                    onValueChange = actions.onFarrowingDaysChange,
+                                    modifier = Modifier.width(88.dp),
+                                    textStyle = MaterialTheme.typography.bodyMedium.copy(fontSize = 16.sp, textAlign = TextAlign.Center),
+                                    singleLine = true,
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                    shape = RoundedCornerShape(8.dp)
+                                )
+                                Spacer(Modifier.width(8.dp))
+                                Text(stringResource("days"), style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp))
+                            }
+                        }
+                    }
+
+                    // Iron Injection Card
+                    Surface(
+                        shape = RoundedCornerShape(14.dp),
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f),
+                        border = BorderStroke(0.8.dp, MaterialTheme.colorScheme.outlineVariant)
+                    ) {
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(painter = painterResource(id = R.drawable.ic_iron), contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(26.dp))
+                                Spacer(Modifier.width(10.dp))
+                                Text(stringResource("iron_injection"), fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleMedium.copy(fontSize = 16.sp))
+                            }
+                            Spacer(Modifier.height(4.dp))
+                            Text(
+                                text = stringResource("iron_explanation"),
+                                style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Spacer(Modifier.height(10.dp))
+                            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Text(stringResource("iron_day_1_first_dose"), style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp))
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        OutlinedTextField(
+                                            value = state.ironDay1,
+                                            onValueChange = actions.onIronDay1Change,
+                                            modifier = Modifier.width(78.dp),
+                                            textStyle = MaterialTheme.typography.bodyMedium.copy(fontSize = 16.sp, textAlign = TextAlign.Center),
+                                            singleLine = true,
+                                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                            shape = RoundedCornerShape(8.dp)
+                                        )
+                                        Spacer(Modifier.width(6.dp))
+                                        Text(stringResource("days"), style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp))
+                                    }
+                                }
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Text(stringResource("iron_day_2_second_dose"), style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp))
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        OutlinedTextField(
+                                            value = state.ironDay2,
+                                            onValueChange = actions.onIronDay2Change,
+                                            modifier = Modifier.width(78.dp),
+                                            textStyle = MaterialTheme.typography.bodyMedium.copy(fontSize = 16.sp, textAlign = TextAlign.Center),
+                                            singleLine = true,
+                                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                            shape = RoundedCornerShape(8.dp)
+                                        )
+                                        Spacer(Modifier.width(6.dp))
+                                        Text(stringResource("days"), style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp))
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        actions.onSaveSettings()
+                        showPreferredDatesDialog = false
+                    }
+                ) {
+                    Text(stringResource("save"), fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showPreferredDatesDialog = false }) {
+                    Text(stringResource("cancel"), fontSize = 16.sp)
+                }
+            }
+        )
+    }
+
+    // ─── B. SET STATUS SELECTION POPUP DIALOG ────────────────────────────────
+    if (showSetStatusDialog) {
+        AlertDialog(
+            onDismissRequest = { showSetStatusDialog = false },
+            title = {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Icon(Icons.Default.Tune, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                    Text(stringResource("set_status"), style = MaterialTheme.typography.titleLarge.copy(fontSize = 22.sp), fontWeight = FontWeight.Bold)
+                }
+            },
+            text = {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Text(
+                        text = stringResource("set_status_subtitle"),
+                        style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+
+                    // Option 1: Porkers
+                    Surface(
+                        onClick = {
+                            showSetStatusDialog = false
+                            showPorkersDialog = true
+                        },
+                        shape = RoundedCornerShape(14.dp),
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(18.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(Icons.Default.Scale, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(30.dp))
+                            Spacer(modifier = Modifier.width(16.dp))
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(text = stringResource("porkers"), style = MaterialTheme.typography.titleMedium.copy(fontSize = 18.sp), fontWeight = FontWeight.Bold)
+                                Text(text = stringResource("porkers_subtitle"), style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                            Icon(Icons.Default.ChevronRight, contentDescription = null, tint = MaterialTheme.colorScheme.outline, modifier = Modifier.size(22.dp))
+                        }
+                    }
+
+                    // Option 2: Breeders
+                    Surface(
+                        onClick = {
+                            showSetStatusDialog = false
+                            showBreedersDialog = true
+                        },
+                        shape = RoundedCornerShape(14.dp),
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(18.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(Icons.Default.Pets, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(30.dp))
+                            Spacer(modifier = Modifier.width(16.dp))
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(text = stringResource("breeders"), style = MaterialTheme.typography.titleMedium.copy(fontSize = 18.sp), fontWeight = FontWeight.Bold)
+                                Text(text = stringResource("breeders_subtitle"), style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                            Icon(Icons.Default.ChevronRight, contentDescription = null, tint = MaterialTheme.colorScheme.outline, modifier = Modifier.size(22.dp))
+                        }
+                    }
+                }
+            },
+            confirmButton = {},
+            dismissButton = {
+                TextButton(onClick = { showSetStatusDialog = false }) {
+                    Text(stringResource("cancel"), fontSize = 16.sp)
+                }
+            }
+        )
+    }
+
+    // ─── C. PORKERS STATUS DETAILS POPUP DIALOG ──────────────────────────────
+    if (showPorkersDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                actions.onSaveSettings()
+                showPorkersDialog = false
+            },
+            title = {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Icon(Icons.Default.Scale, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                    Text(stringResource("porker_status"), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                }
+            },
+            text = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                        .imePadding(),
+                    verticalArrangement = Arrangement.spacedBy(14.dp)
+                ) {
+                    Text(
+                        text = stringResource("porkers_explanation"),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+
+                    // Age vs Weight Mode Switch
+                    Surface(
+                        shape = RoundedCornerShape(10.dp),
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
+                        border = BorderStroke(0.8.dp, MaterialTheme.colorScheme.outlineVariant)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 14.dp, vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                stringResource("age_weeks"),
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = if (state.porkerUseAge) FontWeight.Bold else FontWeight.Normal,
+                                color = if (state.porkerUseAge) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                            )
+                            Switch(checked = !state.porkerUseAge, onCheckedChange = { actions.onPorkerUseAgeChange(!it) })
+                            Text(
+                                stringResource("weight_kg"),
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = if (!state.porkerUseAge) FontWeight.Bold else FontWeight.Normal,
+                                color = if (!state.porkerUseAge) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                            )
+                        }
+                    }
+
+                    // Thresholds
+                    Surface(
+                        shape = RoundedCornerShape(12.dp),
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f),
+                        border = BorderStroke(0.8.dp, MaterialTheme.colorScheme.outlineVariant)
+                    ) {
+                        Column {
+                            if (state.porkerUseAge) {
+                                StatusRangeItem(label = stringResource("starter"), range = "0 to ", value = state.porkerStarterAge, onValueChange = actions.onPorkerStarterAgeChange, unit = stringResource("weeks"))
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 14.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+                                StatusRangeItem(label = stringResource("grower"), range = "${state.porkerStarterAge} to ", value = state.porkerGrowerAge, onValueChange = actions.onPorkerGrowerAgeChange, unit = stringResource("weeks"))
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 14.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+                                StatusRangeItem(label = stringResource("finisher"), range = "${state.porkerGrowerAge} ", value = stringResource("above"), onValueChange = {}, readOnly = true, unit = stringResource("weeks"))
+                            } else {
+                                StatusRangeItem(label = stringResource("starter"), range = "0 to ", value = state.porkerStarterWeight, onValueChange = actions.onPorkerStarterWeightChange, unit = stringResource("kg"))
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 14.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+                                StatusRangeItem(label = stringResource("grower"), range = "${state.porkerStarterWeight} to ", value = state.porkerGrowerWeight, onValueChange = actions.onPorkerGrowerWeightChange, unit = stringResource("kg"))
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 14.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+                                StatusRangeItem(label = stringResource("finisher"), range = "${state.porkerGrowerWeight} ", value = stringResource("above"), onValueChange = {}, readOnly = true, unit = stringResource("kg"))
+                            }
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        actions.onSaveSettings()
+                        showPorkersDialog = false
+                    }
+                ) {
+                    Text(stringResource("save"))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        showPorkersDialog = false
+                        showSetStatusDialog = true
+                    }
+                ) {
+                    Text(stringResource("previous"))
+                }
+            }
+        )
+    }
+
+    // ─── D. BREEDERS STATUS DETAILS POPUP DIALOG ─────────────────────────────
+    if (showBreedersDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                actions.onSaveSettings()
+                showBreedersDialog = false
+            },
+            title = {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Icon(Icons.Default.Pets, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                    Text(stringResource("breeder_status"), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                }
+            },
+            text = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                        .imePadding(),
+                    verticalArrangement = Arrangement.spacedBy(14.dp)
+                ) {
+                    Text(
+                        text = stringResource("breeders_explanation"),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+
+                    // Age vs Weight Mode Switch
+                    Surface(
+                        shape = RoundedCornerShape(10.dp),
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
+                        border = BorderStroke(0.8.dp, MaterialTheme.colorScheme.outlineVariant)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 14.dp, vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                stringResource("age_weeks"),
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = if (state.breederUseAge) FontWeight.Bold else FontWeight.Normal,
+                                color = if (state.breederUseAge) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                            )
+                            Switch(checked = !state.breederUseAge, onCheckedChange = { actions.onBreederUseAgeChange(!it) })
+                            Text(
+                                stringResource("weight_kg"),
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = if (!state.breederUseAge) FontWeight.Bold else FontWeight.Normal,
+                                color = if (!state.breederUseAge) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                            )
+                        }
+                    }
+
+                    // Thresholds
+                    Surface(
+                        shape = RoundedCornerShape(12.dp),
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f),
+                        border = BorderStroke(0.8.dp, MaterialTheme.colorScheme.outlineVariant)
+                    ) {
+                        Column {
+                            if (state.breederUseAge) {
+                                StatusRangeItem(label = stringResource("piglet"), range = "0 to ", value = state.breederPigletAge, onValueChange = actions.onBreederPigletAgeChange, unit = stringResource("weeks"))
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 14.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+                                StatusRangeItem(label = stringResource("weaners"), range = "${state.breederPigletAge} to ", value = state.breederWeanerAge, onValueChange = actions.onBreederWeanerAgeChange, unit = stringResource("weeks"))
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 14.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+                                StatusRangeItem(label = stringResource("grower"), range = "${state.breederWeanerAge} to ", value = state.breederGrowerAge, onValueChange = actions.onBreederGrowerAgeChange, unit = stringResource("weeks"))
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 14.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+                                StatusRangeItem(label = stringResource("boar_gilt"), range = "${state.breederGrowerAge} ", value = stringResource("above"), onValueChange = {}, readOnly = true, unit = stringResource("weeks"))
+                            } else {
+                                StatusRangeItem(label = stringResource("piglet"), range = "0 to ", value = state.breederPigletWeight, onValueChange = actions.onBreederPigletWeightChange, unit = stringResource("kg"))
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 14.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+                                StatusRangeItem(label = stringResource("weaners"), range = "${state.breederPigletWeight} to ", value = state.breederWeanerWeight, onValueChange = actions.onBreederWeanerWeightChange, unit = stringResource("kg"))
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 14.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+                                StatusRangeItem(label = stringResource("grower"), range = "${state.breederWeanerWeight} to ", value = state.breederGrowerWeight, onValueChange = actions.onBreederGrowerWeightChange, unit = stringResource("kg"))
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 14.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+                                StatusRangeItem(label = stringResource("boar_gilt"), range = "${state.breederGrowerWeight} ", value = stringResource("above"), onValueChange = {}, readOnly = true, unit = stringResource("kg"))
+                            }
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        actions.onSaveSettings()
+                        showBreedersDialog = false
+                    }
+                ) {
+                    Text(stringResource("save"))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        showBreedersDialog = false
+                        showSetStatusDialog = true
+                    }
+                ) {
+                    Text(stringResource("previous"))
+                }
+            }
+        )
+    }
+
+    // ─── E. CONFIRMATION ALERT DIALOG FOR DATA CLEARING ──────────────────────
+    if (showClearDialog) {
+        AlertDialog(
+            onDismissRequest = { showClearDialog = false },
+            title = {
+                Text(
+                    when (clearType) {
+                        "account" -> stringResource("delete_account") + "?"
+                        "all" -> stringResource("factory_reset") + "?"
+                        else -> stringResource("confirm_deletion")
+                    }
+                )
+            },
+            text = {
+                Text(
+                    when (clearType) {
+                        "account" -> stringResource("delete_account_confirm_msg")
+                        "all" -> stringResource("factory_reset_confirm_msg")
+                        else -> stringResource("clear_records_confirm_msg")
+                    }
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        when (clearType) {
+                            "account" -> actions.onDeleteAccount { showClearDialog = false }
+                            "all" -> actions.onFactoryReset { showClearDialog = false }
+                            else -> actions.onClearCollection(clearType) { showClearDialog = false }
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+                ) {
+                    Text(if (clearType == "account") stringResource("delete_account") else stringResource("delete_everything"))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showClearDialog = false }) {
+                    Text(stringResource("cancel"))
+                }
+            }
+        )
     }
 }
 
@@ -778,13 +1168,13 @@ fun SettingsSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .then(if (isCollapsible) Modifier.clickable { isExpanded = !isExpanded } else Modifier)
-                .padding(vertical = 8.dp),
+                .padding(vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge.copy(fontSize = 18.sp),
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(start = 4.dp)
@@ -801,7 +1191,7 @@ fun SettingsSection(
         if (isExpanded) {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
+                shape = RoundedCornerShape(18.dp),
                 elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f)
@@ -830,27 +1220,27 @@ fun SettingsItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(18.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
                 tint = if (textColor == MaterialTheme.colorScheme.error) textColor else MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(26.dp)
             )
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(18.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = MaterialTheme.typography.bodyLarge.copy(fontSize = 18.sp),
                     color = textColor,
                     fontWeight = FontWeight.Medium
                 )
                 subtitle?.let {
                     Text(
                         text = it,
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
@@ -859,7 +1249,7 @@ fun SettingsItem(
                 imageVector = Icons.Default.ChevronRight,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.outline,
-                modifier = Modifier.size(20.dp)
+                modifier = Modifier.size(22.dp)
             )
         }
     }
@@ -876,26 +1266,26 @@ fun SettingsToggleItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(18.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             imageVector = icon,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(26.dp)
         )
-        Spacer(modifier = Modifier.width(16.dp))
+        Spacer(modifier = Modifier.width(18.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 18.sp),
                 fontWeight = FontWeight.Medium
             )
             subtitle?.let {
                 Text(
                     text = it,
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
@@ -919,19 +1309,19 @@ fun StatusRangeItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(18.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(modifier = Modifier.weight(1f)) {
-            Text(text = label, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
-            Text(text = "$range $value $unit", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(text = label, style = MaterialTheme.typography.bodyLarge.copy(fontSize = 18.sp), fontWeight = FontWeight.Bold)
+            Text(text = "$range $value $unit", style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp), color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         if (!readOnly) {
             OutlinedTextField(
                 value = value,
                 onValueChange = { if (it.all { c -> c.isDigit() }) onValueChange(it) },
-                modifier = Modifier.width(70.dp),
-                textStyle = MaterialTheme.typography.bodyMedium.copy(textAlign = TextAlign.Center),
+                modifier = Modifier.width(80.dp),
+                textStyle = MaterialTheme.typography.bodyMedium.copy(fontSize = 16.sp, textAlign = TextAlign.Center),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 shape = RoundedCornerShape(8.dp)

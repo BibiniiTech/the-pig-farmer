@@ -16,6 +16,19 @@ export default function OfflinePage() {
       </div>
 
       <div className="relative z-10 flex flex-col items-center gap-6 max-w-sm">
+        <div className="w-full flex items-center justify-start">
+          <button
+            onClick={() => window.history.back()}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 transition font-bold text-xs shadow-xs"
+            aria-label="Go Back"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+            <span>Back</span>
+          </button>
+        </div>
+
         {/* Logo */}
         <div className="relative mb-2">
           <div className="absolute inset-0 rounded-3xl bg-emerald-300/30 blur-2xl scale-110" />
@@ -44,7 +57,7 @@ export default function OfflinePage() {
         </div>
 
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-zinc-900">
+          <h1 className="text-2xl font-extrabold tracking-tight text-[#2E7D32]">
             {t("title")}
           </h1>
           <p className="mt-2 text-sm text-zinc-500 leading-relaxed">

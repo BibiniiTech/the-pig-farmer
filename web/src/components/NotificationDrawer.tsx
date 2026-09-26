@@ -332,18 +332,18 @@ export default function NotificationDrawer({
 
       {/* Slide-Over Drawer Sheet */}
       <div className="fixed inset-y-0 right-0 max-w-full flex">
-        <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col animate-in slide-in-from-right duration-300 border-l border-zinc-200">
+        <div className="w-screen max-w-md bg-white dark:bg-[#1E1E1E] text-zinc-900 dark:text-zinc-100 shadow-2xl flex flex-col animate-in slide-in-from-right duration-300 border-l border-zinc-200 dark:border-zinc-800">
           
           {/* ─── HEADER ────────────────────────────────────────────── */}
-          <div className="p-5 border-b border-zinc-150 flex items-center justify-between bg-zinc-50/80">
+          <div className="p-5 border-b border-zinc-150 dark:border-zinc-800 flex items-center justify-between bg-zinc-50/80 dark:bg-[#252525]/80">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl bg-emerald-50 border border-emerald-200/60 text-emerald-700 flex items-center justify-center shrink-0">
+              <div className="h-10 w-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/60 dark:border-emerald-800/40 text-emerald-700 dark:text-emerald-400 flex items-center justify-center shrink-0">
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
               </div>
               <div>
-                <h2 className="text-base font-bold text-zinc-900">{tNotif("title")}</h2>
+                <h2 className="text-base font-bold text-zinc-900 dark:text-zinc-100">{tNotif("title")}</h2>
                 <p className="text-xs text-zinc-400 font-medium">{totalCount} {tNotif("notifications") || "Notifications"}</p>
               </div>
             </div>
@@ -390,8 +390,8 @@ export default function NotificationDrawer({
                           key={snoozeKey}
                           className={`p-3.5 rounded-2xl border transition-all flex flex-col gap-2.5 relative ${
                             taskGroup.isOverdue
-                              ? "bg-red-50/70 border-red-200"
-                              : "bg-zinc-50 border-zinc-200"
+                              ? "bg-red-50/70 dark:bg-red-950/30 border-red-200 dark:border-red-900/50"
+                              : "bg-zinc-50 dark:bg-[#252525] border-zinc-200 dark:border-zinc-800"
                           }`}
                         >
                           <div
@@ -400,12 +400,12 @@ export default function NotificationDrawer({
                           >
                             <div className="flex items-center gap-3 min-w-0">
                               <div className={`h-10 w-10 rounded-xl flex items-center justify-center shrink-0 ${
-                                taskGroup.isOverdue ? "bg-red-100 text-red-700" : "bg-emerald-100 text-emerald-800"
+                                taskGroup.isOverdue ? "bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300" : "bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300"
                               }`}>
                                 <IconComp className="h-5 w-5" />
                               </div>
                               <div className="min-w-0">
-                                <h4 className="font-bold text-xs sm:text-sm text-zinc-900 truncate">
+                                <h4 className="font-bold text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 truncate">
                                   {activityDisplay}
                                 </h4>
                                 <p className={`text-xs truncate ${taskGroup.isOverdue ? "text-red-700 font-medium" : "text-zinc-500"}`}>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartSwine</string>
+    <string name="weight_checker_title">VARK GEWIGSKATTEERDER</string>
+    <string name="back_button_content_description">Terug</string>
+    <string name="important_notes_title">Belangrike Notas</string>
+    <string name="weight_checker_notes">• Borsomtrek: Meet reg agter die voorbene met die maatband styf teen die liggaam (Punt B).\n• Liggaamslengte: Meet vanaf die middel tussen die ore al langs die ruggraat tot by die stertwortel (Punt A).\n• Maak seker die vark staan vierkantig op \'n gelyk oppervlak vir die akkuraatste resultaat.\n</string>
+    <string name="converter_title">Eenheid-omskakelaar</string>
+    <string name="unit_lbs">Lbs</string>
+    <string name="unit_kgs">Kg</string>
+    <string name="weigh_with_scale">Weeg met Varkskaal</string>
+    <string name="weigh_with_tape_title">Weeg met Meetband</string>
+    <string name="weigh_with_tape_subtitle">Skat liggaamsgewig met \'n meetband.</string>
+    <string name="label_length">Lengte (%1$s)</string>
+    <string name="label_girth">Borsomvang (%1$s)</string>
+    <string name="unit_cm">cm</string>
+    <string name="unit_in">duim</string>
+    <string name="placeholder_a">A</string>
+    <string name="placeholder_b">B</string>
+    <string name="label_estimated_live_weight">Beraamde Lewendige Gewig</string>
+    <string name="label_estimated_carcass_weight">Beraamde Karkasgewig</string>
+    <string name="msg_enter_measurements">Voer mates op die diagram in om te bereken</string>
+    <string name="pig_diagram_content_description">Liggaamsmetingsgids vir varke</string>
+    <string name="weight_format">%1$.1f Kg / %2$.1f Lbs</string>
+    <string name="estimated_results">Beraamde Resultate</string>
+    <string name="specify_breed">Spesifiseer Ras</string>
+</resources>

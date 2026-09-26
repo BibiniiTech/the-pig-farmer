@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SmartSwine</string>
-    <string name="weight_checker_title">VERIFIKATÈ PWA</string>
+    <string name="weight_checker_title">ESTIMASYON PWA KOCHON</string>
     <string name="back_button_content_description">Retounen</string>
     <string name="important_notes_title">Nòt Enpòtan</string>
-    <string name="weight_checker_notes">• Sikonferans Pwatrin: Mezire tora a (jis dèyè janm devan yo) asire w riban an byen kole sou kò a (Pwen B).\n• Longè Kò: Mezire soti nan baz zòrèy yo rive nan baz ke a, asire w riban an byen kole sou kò a (Pwen A).\n• Asire kochon an kanpe byen sou yon tè ki nivo pou rezilta a ka pi egzak.\n</string>
-    <string name="converter_title">Konvètisè</string>
+    <string name="weight_checker_notes">• Lajè Pwatrin: Mezire kòb pwatrin lan jis dèyè de pye devan yo, asire mèt riban an byen sere sou kò a (Pwen B).\n• Longè Kò: Mezire depi nan mitan de zòrèy yo swiv kolòn do a rive nan rasin ke a (Pwen A).\n• Asire kochon an kanpe dwat sou kat pye l sou yon tè ki plat pou mezi a ka egzak.\n</string>
+    <string name="converter_title">Konvètisè Inite</string>
     <string name="unit_lbs">Lbs</string>
     <string name="unit_kgs">Kg</string>
-    <string name="weigh_with_tape_title">Peze ak Riban</string>
-    <string name="weigh_with_tape_subtitle">Estime pwa ak yon riban mezire.</string>
-    <string name="label_length">Longè (%1$s)</string>
-    <string name="label_girth">Sikonferans (%1$s)</string>
+    <string name="weigh_with_scale">Peze ak Balans</string>
+    <string name="weigh_with_tape_title">Peze ak Mèt Riban</string>
+    <string name="weigh_with_tape_subtitle">Estime pwa kochon an ak mezi riban.</string>
+    <string name="label_length">Longè Kò (%1$s)</string>
+    <string name="label_girth">Lajè Pwatrin (%1$s)</string>
     <string name="unit_cm">cm</string>
-    <string name="unit_in">in</string>
+    <string name="unit_in">pous</string>
     <string name="placeholder_a">A</string>
     <string name="placeholder_b">B</string>
-    <string name="label_estimated_live_weight">Pwa Vivan Estime</string>
-    <string name="label_estimated_carcass_weight">Pwa Vyann Estime</string>
-    <string name="msg_enter_measurements">Antre mezi yo sou dyagram nan pou kalkile</string>
-    <string name="pig_diagram_content_description">Gid mezi kochon</string>
+    <string name="label_estimated_live_weight">Estimasyon Pwa sou Pye</string>
+    <string name="label_estimated_carcass_weight">Estimasyon Pwa Vyann Pandye</string>
+    <string name="msg_enter_measurements">Mete mezi yo sou desen an pou kalkile pwa a</string>
+    <string name="pig_diagram_content_description">Desen gid pou mezire kò kochon</string>
     <string name="weight_format">%1$.1f Kg / %2$.1f Lbs</string>
-    <string name="estimated_results">Rezilta Estime</string>
+    <string name="estimated_results">Rezilta Estimasyon yo</string>
+    <string name="specify_breed">Chwazi Ras Kochon</string>
 </resources>

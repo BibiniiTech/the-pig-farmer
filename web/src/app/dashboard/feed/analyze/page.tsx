@@ -11,10 +11,12 @@ import DesktopHeader from "@/components/layouts/DesktopHeader";
 import { useTranslations } from "next-intl";
 import { AnalyticsIcon, ScienceIcon, ExportPdfIcon } from "@/components/icons/DashboardIcons";
 import { FeedIngredient, NutritionalRequirement } from "@/lib/types";
-import { analyzeFeedMix, FeedNutrientProfile } from "@/lib/feedCalculator";
+import { analyzeFeedMix, checkIngredientSafety, FeedNutrientProfile, InclusionSafetyAlert } from "@/lib/feedCalculator";
 import { TierLimiter } from "@/lib/tierLimiter";
 import NativeAdBanner from "@/components/ads/NativeAdBanner";
 import RewardedPassModal from "@/components/ads/RewardedPassModal";
+import IngredientsCatalogModal from "@/components/feed/IngredientsCatalogModal";
+import BatchMixModal from "@/components/feed/BatchMixModal";
 
 const ArrowLeftIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -48,6 +50,7 @@ const defaultRequirements: Record<string, NutritionalRequirement> = {
 
 export default function AnalyzeFeedPage() {
   const t = useTranslations("Feed");
+  const tCommon = useTranslations("Common");
   const { user, userProfile, activeFarmUid, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -61,6 +64,9 @@ export default function AnalyzeFeedPage() {
   const [showAddIngredientModal, setShowAddIngredientModal] = useState<boolean>(false);
   const [ingredientSearchQuery, setIngredientSearchQuery] = useState<string>("");
   const [showRewardedPassModal, setShowRewardedPassModal] = useState<boolean>(false);
+  const [isCatalogOpen, setIsCatalogOpen] = useState<boolean>(false);
+  const [isBatchModalOpen, setIsBatchModalOpen] = useState<boolean>(false);
+  const [batchToast, setBatchToast] = useState<string | null>(null);
 
   const ingredientLimitReached = !isPremium && analyzeItems.length >= TierLimiter.FREE_MAX_FEED_INGREDIENTS;
 
@@ -111,41 +117,63 @@ export default function AnalyzeFeedPage() {
     analyzePercentageMode
   );
 
+  const safetyAlerts = checkIngredientSafety(
+    analyzeItems.map(item => ({ ingredient: item.ingredient, quantity: item.quantity })),
+    analyzeTargetStage
+  );
+
   const benchmarkReq = defaultRequirements[analyzeTargetStage.toLowerCase()] || defaultRequirements.grower;
 
   const totalInputQty = analyzeItems.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0);
 
   if (loading || !user) {
     return (
-      <div className="flex h-screen items-center justify-center bg-white text-zinc-900">
+      <div className="flex h-screen items-center justify-center bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-amber-500 border-t-transparent"></div>
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-x-hidden">
-      {!isMobile && <DesktopHeader />}
+    <div className="relative min-h-screen bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans overflow-x-hidden">
+      {!isMobile && (
+        <DesktopHeader
+          showBack
+          backPath="/dashboard?section=feed"
+          label={t("analyzeFeed") || "ANALYZE FEED"}
+          labelColor="text-[#E65100] dark:text-[#FFB74D]"
+        />
+      )}
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-8">
-        <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 pb-4">
+        <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-4">
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard?section=feed"
-              className="p-2 rounded-xl border border-zinc-200 text-zinc-600 hover:bg-zinc-100 transition"
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition font-bold text-xs shadow-xs"
             >
-              <ArrowLeftIcon className="h-5 w-5" />
+              <ArrowLeftIcon className="h-4 w-4" />
+              <span>{tCommon("back") || "Back"}</span>
             </Link>
-            <div className="h-10 w-10 rounded-xl bg-amber-50 border border-amber-200/60 flex items-center justify-center flex-shrink-0">
-              <AnalyticsIcon className="h-5 w-5 text-amber-600" />
+            <div className="h-10 w-10 rounded-xl bg-[#FFF3E0] dark:bg-[#E65100]/30 border border-[#E65100]/30 flex items-center justify-center flex-shrink-0">
+              <AnalyticsIcon className="h-5 w-5 text-[#E65100] dark:text-[#FFB74D]" />
             </div>
             <div>
-              <h1 className="text-xl sm:text-2xl font-black text-amber-600">
+              <h1 className="text-xl sm:text-2xl font-black text-[#E65100] dark:text-[#FFB74D]">
                 {t("analyzeFeed") || "Analyze Feed"}
               </h1>
-              <p className="text-xs text-zinc-500">{t("analyzeFeedDesc") || "Calculate resulting nutritional profile of your custom feed mix"}</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">{t("analyzeFeedDesc") || "Calculate resulting nutritional profile of your custom feed mix"}</p>
             </div>
           </div>
+
+          <button
+            type="button"
+            onClick={() => setIsCatalogOpen(true)}
+            className="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200/80 text-amber-900 text-xs font-bold transition flex items-center gap-2 shadow-2xs active:scale-95"
+          >
+            <ScienceIcon className="h-4 w-4 text-amber-600" />
+            <span>Ingredients ({ingredients.length})</span>
+          </button>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -283,27 +311,57 @@ export default function AnalyzeFeedPage() {
           </div>
 
           <div className="lg:col-span-7 bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between flex-wrap gap-2">
               <div>
                 <h3 className="text-lg font-bold text-zinc-900">Nutrient Breakdown</h3>
                 <p className="text-xs text-zinc-500">Benchmark comparison for {analyzeTargetStage}</p>
               </div>
               {analyzeItems.length > 0 && (
-                <button
-                  onClick={() => {
-                    if (!isPremium) {
-                      setShowRewardedPassModal(true);
-                      return;
-                    }
-                    window.print();
-                  }}
-                  className="px-3.5 py-1.5 bg-white border border-zinc-200 text-xs font-bold text-zinc-700 rounded-xl hover:bg-zinc-100 flex items-center gap-1.5 shadow-xs"
-                >
-                  <ExportPdfIcon className="h-3.5 w-3.5 text-zinc-500" />
-                  Print Analysis
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsBatchModalOpen(true)}
+                    className="px-3.5 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition active:scale-95"
+                  >
+                    <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                    <span>Mix Batch</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!isPremium) {
+                        setShowRewardedPassModal(true);
+                        return;
+                      }
+                      window.print();
+                    }}
+                    className="px-3.5 py-1.5 bg-white border border-zinc-200 text-xs font-bold text-zinc-700 rounded-xl hover:bg-zinc-100 flex items-center gap-1.5 shadow-xs"
+                  >
+                    <ExportPdfIcon className="h-3.5 w-3.5 text-zinc-500" />
+                    Print Analysis
+                  </button>
+                </div>
               )}
             </div>
+
+            {/* Inclusion Safety Alerts */}
+            {safetyAlerts.length > 0 && (
+              <div className="space-y-2">
+                {safetyAlerts.map((alert, idx) => (
+                  <div key={idx} className="p-3 bg-amber-50 border border-amber-200/90 rounded-xl flex items-start gap-2.5 shadow-2xs">
+                    <span className="text-base shrink-0 mt-0.5">⚠️</span>
+                    <div className="text-xs">
+                      <p className="font-bold text-amber-900">
+                        {alert.ingredientName}: {alert.currentPercent.toFixed(1)}% (Max Recommended: {alert.maxAllowedPercent.toFixed(1)}%)
+                      </p>
+                      <p className="text-amber-800 text-[11px] mt-0.5">{alert.riskDescription}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {analyzeItems.length === 0 ? (
               <div className="py-20 text-center text-zinc-400">
@@ -413,11 +471,54 @@ export default function AnalyzeFeedPage() {
         </div>
       )}
 
+      <IngredientsCatalogModal
+        isOpen={isCatalogOpen}
+        onClose={() => setIsCatalogOpen(false)}
+        ingredients={ingredients}
+        activeFarmUid={activeFarmUid}
+        currencySymbol={userProfile?.settings?.currencySymbol || "$"}
+        isPremium={isPremium}
+        onRequestRewardedPass={() => setShowRewardedPassModal(true)}
+      />
+
       <RewardedPassModal
         isOpen={showRewardedPassModal}
         onClose={() => setShowRewardedPassModal(false)}
         featureName="Feed Analysis & Full Formulas"
       />
+
+      {/* Batch Mix Modal */}
+      <BatchMixModal
+        isOpen={isBatchModalOpen}
+        onClose={() => setIsBatchModalOpen(false)}
+        recipeName={`${analyzeTargetStage} Feed Mix`}
+        stage={analyzeTargetStage}
+        defaultBatchKg={analyzePercentageMode ? 1000 : (totalInputQty > 0 ? totalInputQty : 1000)}
+        requiredIngredients={(() => {
+          const sumWeight = analyzeItems.reduce((s, it) => s + it.quantity, 0) || 1;
+          return analyzeItems.map(item => ({
+            id: item.ingredient.id,
+            name: item.ingredient.name,
+            percent: analyzePercentageMode ? item.quantity : (item.quantity / sumWeight) * 100,
+            costPerKg: item.ingredient.costPerKg || 0,
+          }));
+        })()}
+        activeFarmUid={activeFarmUid || ""}
+        onSuccess={(msg) => {
+          setBatchToast(msg);
+          setTimeout(() => setBatchToast(null), 5000);
+        }}
+      />
+
+      {/* Toast confirmation */}
+      {batchToast && (
+        <div className="fixed bottom-6 right-6 z-50 py-3 px-4.5 bg-zinc-900 text-white text-xs font-bold rounded-2xl shadow-2xl flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-2 duration-200">
+          <svg className="h-4 w-4 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+          </svg>
+          <span>{batchToast}</span>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import { Pig } from "./types";
+
 interface GrowthPoint {
   ageDays: number;
   weightKg: number;
@@ -357,3 +359,52 @@ export function formatSwineAge(birthDateStr?: string, compact: boolean = false):
     ? `${years} yr, ${remMonths} mo`
     : `${years} yr${years > 1 ? "s" : ""}, ${remMonths} mo`;
 }
+
+/**
+ * 100% Parity with Android HerdViewModel.kt lines 234-269:
+ * Computes the lifecycle production status for a pig based on age, purpose, gender, and castration.
+ */
+export function getCalculatedStatus(pig: Pig): string {
+  const ageDays = calculateAgeDays(pig.birthDate);
+  const purpose = (pig.purpose || "").toLowerCase();
+  const gender = (pig.gender || "").toLowerCase();
+
+  if (purpose === "porker") {
+    if (ageDays <= 28 && !pig.weaned) return "Piglet";
+    if (ageDays <= 70) return "Starter";
+    if (ageDays <= 112) return "Grower";
+    return "Finisher";
+  } else if (purpose === "breeder") {
+    if (ageDays > 182) { // 6 months (adult breeding stock)
+      if (gender === "female") {
+        return pig.hasFarrowed ? "Sow" : "Gilt";
+      } else if (gender === "male") {
+        return pig.castrated ? "Barrow" : "Boar";
+      }
+    } else {
+      if (ageDays <= 28 && !pig.weaned) return "Piglet";
+      if (ageDays <= 70) return "Starter";
+      return "Grower";
+    }
+  }
+
+  // Fallback defaults if purpose isn't set
+  if (ageDays <= 28 && !pig.weaned) return "Piglet";
+  if (ageDays <= 70) return "Starter";
+  if (ageDays <= 112) return "Grower";
+  return "Finisher";
+}
+
+/**
+ * Preserves high-priority manual statuses (Pregnant, Lactating, Nursing) while
+ * evaluating dynamic age/lifecycle progression for all other pigs.
+ */
+export function calculatePigStatus(pig: Pig): Pig {
+  const s = (pig.status || "").toLowerCase();
+  if (s === "pregnant" || s === "lactating" || s === "nursing" || s.startsWith("archived")) {
+    return pig;
+  }
+  const dynamicStatus = getCalculatedStatus(pig);
+  return { ...pig, status: dynamicStatus };
+}
+

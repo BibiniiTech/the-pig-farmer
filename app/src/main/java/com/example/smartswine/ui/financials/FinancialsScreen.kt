@@ -1,9 +1,16 @@
 package com.example.smartswine.ui.financials
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import com.example.smartswine.ui.components.NativeAdCard
+import com.example.smartswine.ui.components.RewardedPassDialog
+import com.example.smartswine.utils.LocalIsPaidPremium
+import com.example.smartswine.utils.TierLimiter
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -21,35 +28,60 @@ import androidx.compose.ui.unit.dp
 import com.example.smartswine.utils.StylishDivider
 import com.example.smartswine.utils.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.smartswine.ui.theme.DarkBackground
 import com.example.smartswine.ui.theme.SmartSwineTheme
 import com.example.smartswine.model.FinancialRecord
 import com.example.smartswine.model.Pig
 import com.example.smartswine.util.PdfGenerator
 import com.example.smartswine.utils.DateUtils
+import com.example.smartswine.utils.LocalAppLanguage
+import java.util.Calendar
 import java.util.Locale
 
 @Composable
 fun FinancialsScreen(
     viewModel: FinancialViewModel,
+    initialShowAdd: Boolean = false,
+    userCountry: String = "",
     onNavigateToPaywall: () -> Unit,
     onBack: () -> Unit,
 ) {
     val records by viewModel.records.collectAsStateWithLifecycle()
     val allPigs by viewModel.allPigs.collectAsStateWithLifecycle()
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val error by viewModel.error.collectAsStateWithLifecycle()
 
-    FinancialsScreenContent(
-        records = records,
-        allPigs = allPigs,
-        isLoading = isLoading,
-        onNavigateToPaywall = onNavigateToPaywall,
-        onBack = onBack,
-        onAddRecord = { record, soldPigIds ->
-            viewModel.addRecord(record)
-            soldPigIds.forEach { viewModel.archiveSoldPig(it) }
-        },
-        onDeleteRecord = viewModel::deleteRecord,
-    )
+    Box(modifier = Modifier.fillMaxSize()) {
+        FinancialsScreenContent(
+            records = records,
+            allPigs = allPigs,
+            isLoading = isLoading,
+            initialShowAdd = initialShowAdd,
+            userCountry = userCountry,
+            onNavigateToPaywall = onNavigateToPaywall,
+            onBack = onBack,
+            onAddRecord = { record, soldPigIds ->
+                viewModel.addRecord(record)
+                soldPigIds.forEach { viewModel.archiveSoldPig(it) }
+            },
+            onDeleteRecord = viewModel::deleteRecord,
+        )
+
+        error?.let { msg ->
+            Snackbar(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 80.dp, start = 16.dp, end = 16.dp),
+                action = {
+                    TextButton(onClick = { viewModel.clearError() }) {
+                        Text(stringResource("dismiss"))
+                    }
+                }
+            ) {
+                Text(msg)
+            }
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,17 +90,40 @@ fun FinancialsScreenContent(
     records: List<FinancialRecord>,
     allPigs: List<Pig>,
     isLoading: Boolean,
+    initialShowAdd: Boolean = false,
+    userCountry: String = "",
     onNavigateToPaywall: () -> Unit,
     onBack: () -> Unit,
     onAddRecord: (FinancialRecord, List<String>) -> Unit,
     onDeleteRecord: (String) -> Unit,
 ) {
     val isPremium = com.example.smartswine.utils.LocalIsPremium.current
+    val isPaidPremium = com.example.smartswine.utils.LocalIsPaidPremium.current
+    val recordLimitReached = !isPaidPremium && records.size >= TierLimiter.FREE_MAX_FINANCIAL_RECORDS
+    var showRewardedPassDialog by remember { mutableStateOf(false) }
+
     val context = LocalContext.current
     val appLanguage = com.example.smartswine.utils.LocalAppLanguage.current
     val locale = remember(appLanguage) { appLanguage.toLocale() }
-    val showAddDialog = remember { mutableStateOf(value = false) }
+    val settingsCurrencySymbol by com.example.smartswine.ui.settings.SettingsViewModel.getInstance().currencySymbol.collectAsState()
+    val currencySymbol = remember(userCountry, settingsCurrencySymbol) {
+        val countrySymbol = if (userCountry.isNotBlank()) com.example.smartswine.utils.CountryCurrencyHelper.getCurrencyForCountry(userCountry).symbol else ""
+        if (countrySymbol.isNotBlank() && countrySymbol != "$") {
+            countrySymbol
+        } else if (settingsCurrencySymbol.isNotBlank() && settingsCurrencySymbol != "$") {
+            settingsCurrencySymbol
+        } else if (countrySymbol.isNotBlank()) {
+            countrySymbol
+        } else {
+            settingsCurrencySymbol.ifBlank { "$" }
+        }
+    }
+    val showAddDialog = remember { mutableStateOf(value = initialShowAdd) }
     val showExportDialog = remember { mutableStateOf(value = false) }
+
+    val isDark = MaterialTheme.colorScheme.background == DarkBackground
+    val financialPrimary = if (isDark) Color(0xFF4DB6AC) else Color(0xFF00796B)
+    val financialBg = if (isDark) Color(0xFF004D40) else Color(0xFFE0F2F1)
 
     Scaffold(
         topBar = {
@@ -87,18 +142,18 @@ fun FinancialsScreenContent(
                         text = stringResource("financials_upper"),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Black,
-                        color = MaterialTheme.colorScheme.primary,
+                        color = financialPrimary,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.weight(1f)
                     )
                     com.example.smartswine.utils.PremiumWrapper(
                         isPremium = isPremium,
-                        onLockedClick = onNavigateToPaywall
+                        onLockedClick = { showRewardedPassDialog = true }
                     ) {
                         IconButton(onClick = { 
-                            if (isPremium) showExportDialog.value = true else onNavigateToPaywall() 
+                            if (isPremium) showExportDialog.value = true else showRewardedPassDialog = true 
                         }) {
-                            Icon(Icons.Default.PictureAsPdf, contentDescription = stringResource("export_pdf"))
+                            Icon(Icons.Default.PictureAsPdf, contentDescription = stringResource("export_pdf"), tint = financialPrimary)
                         }
                     }
                 }
@@ -107,11 +162,14 @@ fun FinancialsScreenContent(
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                onClick = { showAddDialog.value = true },
-                icon = { Icon(Icons.Default.Add, contentDescription = null) },
-                text = { Text(stringResource("add_entry")) },
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
+                onClick = { 
+                    if (recordLimitReached) onNavigateToPaywall()
+                    else showAddDialog.value = true 
+                },
+                icon = { Icon(if (recordLimitReached) Icons.Default.Lock else Icons.Default.Add, contentDescription = null) },
+                text = { Text(if (recordLimitReached) "Limit Reached (${TierLimiter.FREE_MAX_FINANCIAL_RECORDS})" else stringResource("add_entry"), fontWeight = FontWeight.Bold) },
+                containerColor = if (recordLimitReached) MaterialTheme.colorScheme.error else financialPrimary,
+                contentColor = Color.White
             )
         }
     ) { padding ->
@@ -121,20 +179,43 @@ fun FinancialsScreenContent(
                 .padding(padding)
                 .imePadding()
         ) {
-            FinancialSummaryCard(records)
-            
             if (isLoading) {
-                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                LinearProgressIndicator(modifier = Modifier.fillMaxWidth(), color = financialPrimary)
+            }
+
+            val sortedRecords = remember(records, locale) {
+                records.sortedByDescending { DateUtils.parseAnyDateNonNull(it.date, locale) }
             }
 
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(records) { record ->
-                    FinancialRecordItem(record, allPigs) {
+                item { FinancialSummaryCard(records, currencySymbol) }
+                item { UnitEconomicsCard(records, allPigs, currencySymbol) }
+                item { ExpenseCategoryDistributionCard(records, currencySymbol) }
+                item {
+                    Text(
+                        text = stringResource("transactions_count", records.size),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = financialPrimary,
+                        modifier = Modifier.padding(top = 4.dp)
+                    )
+                }
+                items(sortedRecords) { record ->
+                    FinancialRecordItem(record, allPigs, currencySymbol) {
                         onDeleteRecord(record.id)
+                    }
+                }
+                if (!isPaidPremium) {
+                    item {
+                        NativeAdCard(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp)
+                        )
                     }
                 }
                 item { Spacer(modifier = Modifier.height(120.dp)) }
@@ -142,9 +223,22 @@ fun FinancialsScreenContent(
         }
     }
 
+    if (showRewardedPassDialog) {
+        RewardedPassDialog(
+            title = stringResource("unlock_financial_pdf_title"),
+            description = stringResource("unlock_financial_pdf_desc"),
+            onDismiss = { showRewardedPassDialog = false },
+            onNavigateToPaywall = onNavigateToPaywall,
+            onPassActivated = {
+                showExportDialog.value = true
+            }
+        )
+    }
+
     if (showAddDialog.value) {
         AddFinancialRecordDialog(
             pigs = allPigs.filter { it.location != "Archived" },
+            currencySymbol = currencySymbol,
             onDismiss = { showAddDialog.value = false },
         ) { record, soldPigIds ->
             onAddRecord(record, soldPigIds)
@@ -157,17 +251,17 @@ fun FinancialsScreenContent(
             onDismiss = { showExportDialog.value = false },
             onExport = { filter ->
                 val filteredRecords = when (filter) {
-                    "Daily" -> records.filter { it.date == DateUtils.getCurrentDateDisplay() }
+                    "Daily" -> records.filter { it.date == DateUtils.getCurrentDateDisplay(locale) }
                     "current_month", "Monthly" -> {
                         val cal = java.util.Calendar.getInstance()
-                        val currentMonthStr = java.text.SimpleDateFormat("MMMM", Locale.getDefault()).format(cal.time)
-                        val currentYearStr = java.text.SimpleDateFormat("yyyy", Locale.getDefault()).format(cal.time)
+                        val currentMonthStr = java.text.SimpleDateFormat("MMMM", locale).format(cal.time)
+                        val currentYearStr = java.text.SimpleDateFormat("yyyy", locale).format(cal.time)
                         records.filter { it.date.contains(currentMonthStr) && it.date.contains(currentYearStr) }
                     }
                     "Last 3 Months" -> {
                         val threeMonthsAgo = java.util.Calendar.getInstance().apply { add(java.util.Calendar.MONTH, -3) }
                         records.filter { record ->
-                            val recordDate = DateUtils.parseDisplay(record.date, locale)
+                            val recordDate = DateUtils.parseAnyDate(record.date, locale)
                             (recordDate != null) && recordDate.after(threeMonthsAgo.time)
                         }
                     }
@@ -305,35 +399,43 @@ fun getTranslatedFinancialCategory(category: String): String {
 }
 
 @Composable
-fun FinancialSummaryCard(records: List<FinancialRecord>) {
+fun FinancialSummaryCard(
+    records: List<FinancialRecord>,
+    currencySymbol: String = com.example.smartswine.ui.settings.SettingsViewModel.getInstance().currencySymbol.value
+) {
     val totalIncome = records.asSequence().filter { it.type == "Income" }.sumOf { it.amount }
     val totalExpense = records.asSequence().filter { it.type == "Expense" }.sumOf { it.amount }
     val netProfit = totalIncome - totalExpense
 
+    val isDark = MaterialTheme.colorScheme.background == DarkBackground
+    val financialPrimary = if (isDark) Color(0xFF4DB6AC) else Color(0xFF00796B)
+    val financialBg = if (isDark) Color(0xFF004D40) else Color(0xFFE0F2F1)
+
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
-        )
+            containerColor = financialBg.copy(alpha = if (isDark) 0.35f else 0.75f),
+            contentColor = MaterialTheme.colorScheme.onSurface
+        ),
+        border = BorderStroke(1.dp, financialPrimary.copy(alpha = 0.35f))
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(stringResource("financial_summary"), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Text(stringResource("financial_summary"), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = financialPrimary)
             Spacer(modifier = Modifier.height(8.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(stringResource("income") + ":")
-                Text(String.format(Locale.getDefault(), "%.2f", totalIncome), color = Color(0xFF4CAF50), fontWeight = FontWeight.Bold)
+                Text("$currencySymbol${String.format(Locale.getDefault(), "%.2f", totalIncome)}", color = Color(0xFF4CAF50), fontWeight = FontWeight.Bold)
             }
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(stringResource("expense") + ":")
-                Text(String.format(Locale.getDefault(), "%.2f", totalExpense), color = Color.Red, fontWeight = FontWeight.Bold)
+                Text("$currencySymbol${String.format(Locale.getDefault(), "%.2f", totalExpense)}", color = Color.Red, fontWeight = FontWeight.Bold)
             }
-            HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
+            HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp), color = financialPrimary.copy(alpha = 0.2f))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(stringResource("net_profit") + ":", fontWeight = FontWeight.Bold)
                 Text(
-                    String.format(Locale.getDefault(), "%.2f", netProfit),
+                    "$currencySymbol${String.format(Locale.getDefault(), "%.2f", netProfit)}",
                     color = if (netProfit >= 0) Color(0xFF4CAF50) else Color.Red,
                     fontWeight = FontWeight.Bold
                 )
@@ -343,7 +445,211 @@ fun FinancialSummaryCard(records: List<FinancialRecord>) {
 }
 
 @Composable
-fun FinancialRecordItem(record: FinancialRecord, allPigs: List<Pig> = emptyList(), onDelete: () -> Unit) {
+fun UnitEconomicsCard(records: List<FinancialRecord>, allPigs: List<Pig>, currencySymbol: String = "$") {
+    val isDark = MaterialTheme.colorScheme.background == DarkBackground
+    val financialPrimary = if (isDark) Color(0xFF4DB6AC) else Color(0xFF00796B)
+    val cardBg = if (isDark) Color(0xFF00382E) else Color(0xFFE8F5E9)
+
+    val activePigs = remember(allPigs) { allPigs.filter { it.location != "Archived" && !it.status.startsWith("Archived", ignoreCase = true) } }
+    val totalLiveHerdWeightKg = remember(activePigs) { activePigs.sumOf { it.weight } }
+    
+    // In commercial pig farming, COP is calculated on operational cycle expenses (~180 days batch/grow-out).
+    // Scoping prevents mixing years of capital startup costs with current standing herd weight.
+    val (cycleExpenses, isScopedToCycle) = remember(records) {
+        val cycleCutoff = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -180) }
+        val expenseRecords = records.filter { it.type == "Expense" }
+        val recentExpenses = expenseRecords.filter { record ->
+            val d = DateUtils.parseAnyDate(record.date)
+            d != null && d.after(cycleCutoff.time)
+        }
+        if (recentExpenses.isNotEmpty()) {
+            Pair(recentExpenses.sumOf { it.amount }, true)
+        } else {
+            Pair(expenseRecords.sumOf { it.amount }, false)
+        }
+    }
+    
+    val costOfProductionPerKg = if (totalLiveHerdWeightKg > 0.0) {
+        cycleExpenses / totalLiveHerdWeightKg
+    } else 0.0
+
+    val breakEvenPerFinisher = costOfProductionPerKg * 90.0 // 90 kg standard market finisher
+    val targetSellingPrice20Margin = costOfProductionPerKg * 1.20
+    val targetSellingPriceFinisher = breakEvenPerFinisher * 1.20
+
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = cardBg.copy(alpha = if (isDark) 0.5f else 0.85f),
+            contentColor = MaterialTheme.colorScheme.onSurface
+        ),
+        border = BorderStroke(1.dp, financialPrimary.copy(alpha = 0.35f))
+    ) {
+        Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Default.AttachMoney, contentDescription = null, tint = financialPrimary, modifier = Modifier.size(20.dp))
+                Spacer(Modifier.width(6.dp))
+                Text(
+                    stringResource("unit_economics_breakeven"),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = financialPrimary
+                )
+            }
+
+            Surface(
+                shape = RoundedCornerShape(8.dp),
+                color = financialPrimary.copy(alpha = 0.12f)
+            ) {
+                Text(
+                    text = if (isScopedToCycle) {
+                        "${activePigs.size} ${stringResource("pigs")} (${String.format(Locale.getDefault(), "%.0f", totalLiveHerdWeightKg)} kg) • 180d ${stringResource("cycle")}"
+                    } else {
+                        "${activePigs.size} ${stringResource("pigs")} (${String.format(Locale.getDefault(), "%.0f", totalLiveHerdWeightKg)} kg)"
+                    },
+                    style = MaterialTheme.typography.labelSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = financialPrimary,
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                )
+            }
+
+            HorizontalDivider(color = financialPrimary.copy(alpha = 0.2f))
+
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(stringResource("cop_per_kg_label"), style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    "$currencySymbol${String.format(Locale.getDefault(), "%.2f / kg", costOfProductionPerKg)}",
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
+
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(stringResource("breakeven_finisher_label"), style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    "$currencySymbol${String.format(Locale.getDefault(), "%.2f", breakEvenPerFinisher)}",
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFFC62828)
+                )
+            }
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                Text(
+                    stringResource("target_selling_price_margin"),
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Medium
+                )
+                Text(
+                    "$currencySymbol${String.format(Locale.getDefault(), "%.2f", targetSellingPriceFinisher)} ($currencySymbol${String.format(Locale.getDefault(), "%.2f/kg", targetSellingPrice20Margin)})",
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF2E7D32)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun ExpenseCategoryDistributionCard(records: List<FinancialRecord>, currencySymbol: String = "$") {
+    val isDark = MaterialTheme.colorScheme.background == DarkBackground
+    val financialPrimary = if (isDark) Color(0xFF4DB6AC) else Color(0xFF00796B)
+    val cardBg = if (isDark) Color(0xFF00382E) else Color(0xFFE0F2F1)
+
+    val expenses = remember(records) { records.filter { it.type == "Expense" } }
+    val totalExpense = remember(expenses) { expenses.sumOf { it.amount } }
+
+    val feedTotal = remember(expenses) { expenses.filter { it.category.equals("Feed", ignoreCase = true) }.sumOf { it.amount } }
+    val medicineTotal = remember(expenses) { expenses.filter { it.category.equals("Medicine", ignoreCase = true) || it.category.equals("Vaccination", ignoreCase = true) }.sumOf { it.amount } }
+    val laborTotal = remember(expenses) { expenses.filter { it.category.equals("Labor", ignoreCase = true) || it.category.equals("Salary", ignoreCase = true) }.sumOf { it.amount } }
+    val otherTotal = (totalExpense - feedTotal - medicineTotal - laborTotal).coerceAtLeast(0.0)
+
+    val feedPct = if (totalExpense > 0.0) (feedTotal / totalExpense * 100.0) else 0.0
+    val medPct = if (totalExpense > 0.0) (medicineTotal / totalExpense * 100.0) else 0.0
+    val laborPct = if (totalExpense > 0.0) (laborTotal / totalExpense * 100.0) else 0.0
+    val otherPct = if (totalExpense > 0.0) (otherTotal / totalExpense * 100.0) else 0.0
+
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = cardBg.copy(alpha = if (isDark) 0.35f else 0.75f),
+            contentColor = MaterialTheme.colorScheme.onSurface
+        ),
+        border = BorderStroke(1.dp, financialPrimary.copy(alpha = 0.35f))
+    ) {
+        Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Default.Assessment, contentDescription = null, tint = financialPrimary, modifier = Modifier.size(20.dp))
+                    Spacer(Modifier.width(6.dp))
+                    Text(
+                        stringResource("expense_distribution_benchmarks"),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = financialPrimary
+                    )
+                }
+            }
+
+            HorizontalDivider(color = financialPrimary.copy(alpha = 0.2f))
+
+            // Feed distribution
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("${stringResource("feed_label")} (${String.format(Locale.getDefault(), "%.1f", feedPct)}%):", style = MaterialTheme.typography.bodySmall)
+                Text("$currencySymbol${String.format(Locale.getDefault(), "%.2f", feedTotal)}", fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodySmall)
+            }
+            LinearProgressIndicator(
+                progress = { (feedPct / 100f).toFloat().coerceIn(0f, 1f) },
+                modifier = Modifier.fillMaxWidth().height(6.dp),
+                color = if (feedPct > 80.0) Color(0xFFD32F2F) else Color(0xFF388E3C),
+                trackColor = Color(0xFFCFD8DC)
+            )
+
+            // Health / Medicine
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("${stringResource("vet_health_label")} (${String.format(Locale.getDefault(), "%.1f", medPct)}%):", style = MaterialTheme.typography.bodySmall)
+                Text("$currencySymbol${String.format(Locale.getDefault(), "%.2f", medicineTotal)}", fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodySmall)
+            }
+
+            // Labor
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("${stringResource("labor_operations_label")} (${String.format(Locale.getDefault(), "%.1f", laborPct)}%):", style = MaterialTheme.typography.bodySmall)
+                Text("$currencySymbol${String.format(Locale.getDefault(), "%.2f", laborTotal)}", fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodySmall)
+            }
+
+            // Benchmark assessment
+            val benchmarkText = when {
+                totalExpense == 0.0 -> stringResource("no_expense_records_yet")
+                feedPct in 60.0..75.0 -> stringResource("benchmark_feed_optimal")
+                feedPct > 75.0 -> stringResource("benchmark_feed_alert")
+                else -> stringResource("benchmark_feed_below")
+            }
+            Text(
+                text = benchmarkText,
+                style = MaterialTheme.typography.labelSmall,
+                color = if (feedPct > 75.0) Color(0xFFC62828) else Color(0xFF2E7D32),
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun FinancialRecordItem(record: FinancialRecord, allPigs: List<Pig> = emptyList(), currencySymbol: String = "$", onDelete: () -> Unit) {
+    val isDark = MaterialTheme.colorScheme.background == DarkBackground
+    val financialPrimary = if (isDark) Color(0xFF4DB6AC) else Color(0xFF00796B)
+
     val pigTag = if (!record.pigId.isNullOrEmpty()) {
         allPigs.find { it.id == record.pigId }?.tagNumber ?: (stringResource("tag") + ": ${record.pigId}")
     } else null
@@ -372,7 +678,14 @@ fun FinancialRecordItem(record: FinancialRecord, allPigs: List<Pig> = emptyList(
         )
     }
 
-    ElevatedCard(modifier = Modifier.fillMaxWidth()) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        border = BorderStroke(1.dp, financialPrimary.copy(alpha = 0.25f))
+    ) {
         Row(
             modifier = Modifier
                 .padding(16.dp)
@@ -382,7 +695,12 @@ fun FinancialRecordItem(record: FinancialRecord, allPigs: List<Pig> = emptyList(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(getTranslatedFinancialCategory(record.category), fontWeight = FontWeight.Bold)
-                Text(record.date, style = MaterialTheme.typography.bodySmall)
+                val appLanguage = LocalAppLanguage.current
+                val formattedDate = remember(record.date, appLanguage) {
+                    val parsed = DateUtils.parseAnyDateNonNull(record.date)
+                    DateUtils.formatDateToDisplay(parsed, appLanguage.toLocale())
+                }
+                Text(formattedDate, style = MaterialTheme.typography.bodySmall)
                 if (record.description.isNotEmpty()) {
                     Text(
                         record.description, 
@@ -391,12 +709,12 @@ fun FinancialRecordItem(record: FinancialRecord, allPigs: List<Pig> = emptyList(
                     )
                 }
                 pigTag?.let {
-                    Text(stringResource("animal_tag", it), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+                    Text(stringResource("animal_tag", it), style = MaterialTheme.typography.bodySmall, color = financialPrimary)
                 }
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    "${if (record.type == "Income") "+" else "-"}${String.format(Locale.getDefault(), "%.2f", record.amount)}",
+                    "${if (record.type == "Income") "+" else "-"}$currencySymbol${String.format(Locale.getDefault(), "%.2f", record.amount)}",
                     color = if (record.type == "Income") Color(0xFF4CAF50) else Color.Red,
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.titleMedium
@@ -413,9 +731,12 @@ fun FinancialRecordItem(record: FinancialRecord, allPigs: List<Pig> = emptyList(
 @Composable
 fun AddFinancialRecordDialog(
     pigs: List<Pig>,
+    currencySymbol: String = "$",
     onDismiss: () -> Unit,
     onConfirm: (FinancialRecord, List<String>) -> Unit,
 ) {
+    val isDark = MaterialTheme.colorScheme.background == DarkBackground
+    val financialPrimary = if (isDark) Color(0xFF4DB6AC) else Color(0xFF00796B)
     val appLanguage = com.example.smartswine.utils.LocalAppLanguage.current
     val locale = remember(appLanguage) { appLanguage.toLocale() }
     var date by remember(locale) { mutableStateOf(DateUtils.getCurrentDateDisplay(locale)) }
@@ -450,10 +771,10 @@ fun AddFinancialRecordDialog(
                         date = DateUtils.formatDateToDisplay(it, locale)
                     }
                     showDatePicker.value = false
-                }) { Text(stringResource("ok")) }
+                }) { Text(stringResource("ok"), color = financialPrimary) }
             },
             dismissButton = {
-                TextButton(onClick = { showDatePicker.value = false }) { Text(stringResource("cancel")) }
+                TextButton(onClick = { showDatePicker.value = false }) { Text(stringResource("cancel"), color = financialPrimary) }
             }
         ) {
             DatePicker(state = datePickerState)
@@ -462,12 +783,16 @@ fun AddFinancialRecordDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource("add_transaction")) },
+        containerColor = MaterialTheme.colorScheme.surface,
+        titleContentColor = MaterialTheme.colorScheme.onSurface,
+        textContentColor = MaterialTheme.colorScheme.onSurface,
+        title = { Text(stringResource("add_transaction"), color = financialPrimary, fontWeight = FontWeight.Bold) },
         text = {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier
                     .fillMaxWidth()
+                    .imePadding()
                     .verticalScroll(scrollState)
             ) {
                 // Date Picker
@@ -571,7 +896,11 @@ fun AddFinancialRecordDialog(
                                         Row(verticalAlignment = Alignment.CenterVertically) {
                                             Checkbox(
                                                 checked = selectedPigIds.contains(pig.id),
-                                                onCheckedChange = null
+                                                onCheckedChange = null,
+                                                colors = CheckboxDefaults.colors(
+                                                    checkedColor = financialPrimary,
+                                                    checkmarkColor = Color.White
+                                                )
                                             )
                                             Text(text = "${pig.tagNumber} (${pig.status})", modifier = Modifier.padding(start = 8.dp))
                                         }
@@ -593,7 +922,7 @@ fun AddFinancialRecordDialog(
                 OutlinedTextField(
                     value = amount,
                     onValueChange = { if (it.all { char -> (char.isDigit() || char == '.') }) amount = it },
-                    label = { Text(stringResource("amount")) },
+                    label = { Text("${stringResource("amount")} ($currencySymbol)") },
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
@@ -602,6 +931,9 @@ fun AddFinancialRecordDialog(
                     label = { Text(stringResource("description")) },
                     modifier = Modifier.fillMaxWidth()
                 )
+
+                // Keyboard scrolling runway
+                Spacer(modifier = Modifier.height(140.dp))
             }
         },
         confirmButton = {
@@ -619,19 +951,28 @@ fun AddFinancialRecordDialog(
                         selectedPigIds.toList()
                     )
                 },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = financialPrimary,
+                    contentColor = Color.White
+                ),
                 enabled = amount.isNotEmpty() && (category != "Other" || customCategory.isNotBlank())
             ) {
                 Text(stringResource("save"))
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource("cancel")) }
+            TextButton(
+                onClick = onDismiss,
+                colors = ButtonDefaults.textButtonColors(contentColor = financialPrimary)
+            ) { Text(stringResource("cancel")) }
         }
     )
 }
 
 @Composable
 fun PdfExportOptionsDialog(onDismiss: () -> Unit, onExport: (String) -> Unit) {
+    val isDark = MaterialTheme.colorScheme.background == DarkBackground
+    val financialPrimary = if (isDark) Color(0xFF4DB6AC) else Color(0xFF00796B)
     val options = listOf(
         "all_transactions" to "All Transactions",
         "current_month" to "Monthly", // Assuming "Monthly" means current month based on code
@@ -641,13 +982,14 @@ fun PdfExportOptionsDialog(onDismiss: () -> Unit, onExport: (String) -> Unit) {
     )
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource("export_pdf")) },
+        title = { Text(stringResource("export_pdf"), color = financialPrimary, fontWeight = FontWeight.Bold) },
         text = {
             Column {
                 options.forEach { (key, _) ->
                     TextButton(
                         onClick = { onExport(key) },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.textButtonColors(contentColor = financialPrimary)
                     ) {
                         Text(stringResource(key))
                     }
@@ -656,7 +998,10 @@ fun PdfExportOptionsDialog(onDismiss: () -> Unit, onExport: (String) -> Unit) {
         },
         confirmButton = {},
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource("cancel")) }
+            TextButton(
+                onClick = onDismiss,
+                colors = ButtonDefaults.textButtonColors(contentColor = financialPrimary)
+            ) { Text(stringResource("cancel")) }
         }
     )
 }

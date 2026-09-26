@@ -135,7 +135,7 @@ export default function NavbarDropdown() {
     { key: "symptoms", label: t("symptoms"), path: "/dashboard?section=symptoms", icon: SymptomsAnalyzerIcon, description: t("symptomsDesc") },
     { key: "weight", label: t("weight"), path: "/dashboard?section=weight", icon: WeightCheckerIcon, description: t("weightDesc") },
     { key: "training", label: t("training"), path: "/dashboard?section=training", icon: TrainingTipsIcon, description: t("trainingDesc") },
-    { key: "guide", label: "How-To Guide", path: "/dashboard/guide", icon: TrainingTipsIcon, description: "Step-by-step feature guides" },
+    { key: "guide", label: t("howToGuide") || "How-To Guide", path: "/dashboard/guide", icon: TrainingTipsIcon, description: "Step-by-step feature guides" },
     { key: "billing", label: t("billing"), path: "/dashboard/billing", icon: PremiumIcon, description: t("billingDesc") },
   ];
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartSwine</string>
+    <string name="weight_checker_title">GEWICHTSSCHÄTZUNG</string>
+    <string name="back_button_content_description">Zurück</string>
+    <string name="important_notes_title">Wichtige Hinweise</string>
+    <string name="weight_checker_notes">• Brustumfang: Direkt hinter den Vorderbeinen straff anliegend messen (Punkt B).\n• Körperlänge: Von der Mitte zwischen den Ohren entlang der Wirbelsäule bis zum Schwanzansatz messen (Punkt A).\n• Das Schwein muss für eine exakte Messung gerade auf ebenem Untergrund stehen.\n</string>
+    <string name="converter_title">Einheitenrechner</string>
+    <string name="unit_lbs">Lbs</string>
+    <string name="unit_kgs">Kg</string>
+    <string name="weigh_with_scale">Mit Viehwaage wiegen</string>
+    <string name="weigh_with_tape_title">Mit Maßband wiegen</string>
+    <string name="weigh_with_tape_subtitle">Gewichtsschätzung über Brustumfang und Körperlänge.</string>
+    <string name="label_length">Körperlänge (%1$s)</string>
+    <string name="label_girth">Brustumfang (%1$s)</string>
+    <string name="unit_cm">cm</string>
+    <string name="unit_in">Zoll</string>
+    <string name="placeholder_a">A</string>
+    <string name="placeholder_b">B</string>
+    <string name="label_estimated_live_weight">Geschätztes Lebendgewicht</string>
+    <string name="label_estimated_carcass_weight">Geschätztes Schlachtgewicht</string>
+    <string name="msg_enter_measurements">Körpermaße in die Skizze eintragen</string>
+    <string name="pig_diagram_content_description">Messanleitung Schweinekörper</string>
+    <string name="weight_format">%1$.1f Kg / %2$.1f Lbs</string>
+    <string name="estimated_results">Schätzergebnisse</string>
+    <string name="specify_breed">Rasse angeben</string>
+</resources>

@@ -19,7 +19,7 @@
     <string name="ingredient_molasses">Melaza</string>
     <string name="ingredient_soybean_meal">Harina de soja</string>
     <string name="ingredient_fish_meal">Harina de pescado</string>
-    <string name="ingredient_pkc">Harina de semilla de palma</string>
+    <string name="ingredient_pkc">Torta / harina de palmiste (PKC)</string>
     <string name="ingredient_copra">Copra</string>
     <string name="ingredient_full_fat_soybeans">Soja integral</string>
     <string name="ingredient_groundnut_cake">Torta de maní</string>
@@ -61,13 +61,13 @@
     <string name="ingredient_banana_peels_dried">Cáscaras de plátano (secas)</string>
     <string name="ingredient_taro_leaves_fresh">Hojas de taro (frescas)</string>
     <string name="ingredient_water_hyacinth_fresh">Jacinto de agua (fresco)</string>
-    <string name="ingredient_banana_pseudostem_fresh">Tallo de plátano (fresco)</string>
+    <string name="ingredient_banana_pseudostem_fresh">Pseudotallo de plátano (fresco)</string>
     <string name="ingredient_azolla_fresh">Azolla (fresca)</string>
     <string name="ingredient_duckweed_fresh">Lenteja de agua (fresca)</string>
     <string name="ingredient_coffee_pulp_dried">Pulpa de café (seca)</string>
     <string name="ingredient_cacao_cocoa_pod_husks_dried">Cáscaras de mazorca de cacao (secas)</string>
     <string name="ingredient_mango_seed_kernel_meal">Harina de almendra de semilla de mango</string>
-    <string name="ingredient_palm_oil_decanter_cake">Torta de decantación de aceite de palma</string>
+    <string name="ingredient_palm_oil_decanter_cake">Lodos / torta de decantación de palma</string>
     <string name="ingredient_bambara_groundnut_meal">Harina de cacahuete de Bambara</string>
     <string name="ingredient_sugarcane_bagasse_dried">Bagazo de caña de azúcar (seco)</string>
     <string name="ingredient_jackfruit_waste_fresh">Residuos de yaca (frescos)</string>

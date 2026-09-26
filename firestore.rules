@@ -69,7 +69,10 @@ service cloud.firestore {
       );
       allow create: if isAuthenticated() && isOwner(request.resource.data.managerUid);
       allow update: if isAuthenticated() && isOwner(resource.data.managerUid) && isOwner(request.resource.data.managerUid);
-      allow delete: if isAuthenticated() && isOwner(resource.data.managerUid);
+      allow delete: if isAuthenticated() && (
+        isOwner(resource.data.managerUid) ||
+        ('email' in request.auth.token && request.auth.token.email.lower() == email.lower())
+      );
     }
 
     // User Data and Subcollections
@@ -90,38 +93,60 @@ service cloud.firestore {
       allow delete: if isOwner(userId);
 
       // Subcollections (Pigs, Financials, Tasks, etc.)
+      // Owner has full access to all subcollections
       match /{allSubcollections=**} {
-        // Owner has full access
         allow read, write: if isOwner(userId);
-
-        // Staff has read access to everything
-        allow read: if isStaffOf(userId);
       }
 
-      // Specific Write access for Staff on operational collections
+      // Specific Read and Write access for Staff on operational collections ONLY
       match /pigs/{pigId} {
-        allow write: if isStaffOf(userId);
+        allow read, write: if isStaffOf(userId);
         match /health_records/{recordId} {
-          allow write: if isStaffOf(userId);
+          allow read, write: if isStaffOf(userId);
         }
       }
       match /archived_pigs/{pigId} {
-        allow write: if isStaffOf(userId);
+        allow read, write: if isStaffOf(userId);
         match /health_records/{recordId} {
-          allow write: if isStaffOf(userId);
+          allow read, write: if isStaffOf(userId);
         }
       }
       match /tasks/{taskId} {
-        allow write: if isStaffOf(userId);
+        allow read, write: if isStaffOf(userId);
       }
       match /feed_inventory/{itemId} {
-        allow write: if isStaffOf(userId);
+        allow read, write: if isStaffOf(userId);
       }
       match /feed_inventory_transactions/{txId} {
-        allow write: if isStaffOf(userId);
+        allow read, write: if isStaffOf(userId);
       }
       match /feed_transactions/{txId} {
-        allow write: if isStaffOf(userId);
+        allow read, write: if isStaffOf(userId);
+      }
+      match /feed_ingredients/{ingId} {
+        allow read, write: if isStaffOf(userId);
+      }
+      match /nutritional_requirements/{reqId} {
+        allow read, write: if isStaffOf(userId);
+      }
+      match /saved_feed_recipes/{recipeId} {
+        allow read, write: if isStaffOf(userId);
+      }
+      match /farm_alerts/{alertId} {
+        allow read, write: if isStaffOf(userId);
+      }
+
+      // Sensitive collections: Owner full access, Staff restricted operational access
+      match /financials/{recordId} {
+        allow read, write: if isOwner(userId);
+        allow create: if isStaffOf(userId);
+      }
+      match /staff/{staffId} {
+        allow read: if isOwner(userId) || (isStaffOf(userId) && ('email' in request.auth.token && resource.data.email.lower() == request.auth.token.email.lower()));
+        allow write: if isOwner(userId);
+      }
+      match /salaries/{salaryId} {
+        allow read, write: if isOwner(userId);
       }
     }
   }

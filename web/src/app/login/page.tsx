@@ -84,7 +84,20 @@ export default function LoginPage() {
             ironDay2: "10",
             autoClassifyBarrows: true,
             autoClassifySows: true,
-            giltAgeThresholdWeeks: "26"
+            giltAgeThresholdWeeks: "26",
+            porkerUseAge: true,
+            porkerStarterAge: "16",
+            porkerGrowerAge: "24",
+            porkerStarterWeight: "25",
+            porkerGrowerWeight: "60",
+            breederUseAge: true,
+            breederPigletAge: "8",
+            breederWeanerAge: "16",
+            breederGrowerAge: "24",
+            breederPigletWeight: "10",
+            breederWeanerWeight: "25",
+            breederGrowerWeight: "60",
+            notificationsEnabled: true,
           }
         });
 
@@ -159,7 +172,21 @@ export default function LoginPage() {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-md space-y-8 rounded-2xl border border-zinc-200 bg-white/85 p-8 shadow-2xl backdrop-blur-md">
+      <div className="relative z-10 w-full max-w-md space-y-6 rounded-2xl border border-zinc-200 bg-white/85 p-8 shadow-2xl backdrop-blur-md">
+        <div className="flex items-center justify-between">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 transition font-bold text-xs shadow-xs"
+            aria-label="Back to Home"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+            <span>Back</span>
+          </Link>
+          <div className="w-16" />
+        </div>
+
         <div className="text-center flex flex-col items-center">
           <Link href="/" className="flex flex-col items-center hover:opacity-80 transition-opacity cursor-pointer">
             <img
@@ -167,7 +194,7 @@ export default function LoginPage() {
               alt="SmartSwine Logo"
               className="h-16 w-16 object-contain rounded-xl shadow-md border border-zinc-200/50 bg-white p-1 mb-4"
             />
-            <h1 id="login-title" className="mt-2 text-3xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-950 via-emerald-800 to-green-600 bg-clip-text text-transparent">
+            <h1 id="login-title" className="mt-2 text-3xl font-extrabold tracking-tight text-[#1B5E20]">
               {t("title")}
             </h1>
           </Link>

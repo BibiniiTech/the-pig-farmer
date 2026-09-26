@@ -12,30 +12,40 @@
     "forever": "para siempre",
     "basicDescription": "Perfecto para aficionados y granjeros que comienzan a explorar el seguimiento.",
     "currentFreePlan": "Plan Gratuito Actual",
-    "smartSwinePremium": "SmartSwine Premium",
-    "perMonth": "mes",
+    "smartSwinePremium": "SmartPorcino Premium",
+    "perMonth": "Mes",
     "billedYearly": "(facturado anualmente)",
     "premiumDescription": "Maximiza la productividad, alimentos dinámicos con Cuadrado de Pearson y operaciones ilimitadas.",
     "planComparison": "Comparación de Planes",
     "feature": "Característica",
     "basicFree": "Básico (Gratis)",
-    "premium": "Premium",
+    "premium": "prima",
     "paymentSuccess": "¡Pago exitoso! Tus funciones premium se activarán en breve.",
     "modalClosed": "Modal de Paystack cerrado",
+    "billingDetails": "Detalles de contacto de facturación",
+    "billingDetailsSub": "Para recibos y pagos",
+    "emailAddress": "E-mail",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "phone": "Teléfono",
+    "enterEmailPrompt": "Ingrese el correo electrónico para continuar",
+    "enterValidEmail": "Introduzca una dirección de correo electrónico válida",
+    "invalidEmail": "Por favor ingrese una dirección de correo electrónico válida.",
     "features": {
-      "unlimitedPigs": "Cerdos y camadas ilimitados",
+      "unlimitedPigs": "Añadir Cerdos Ilimitados al Rebaño",
       "pigsLimit": "Hasta 20 cerdos",
       "unlimited": "Ilimitado",
       "growthTracking": "Seguimiento automático del crecimiento",
-      "feedFormulation": "Formulación de Alimento",
+      "feedFormulation": "Formulación de Precisión",
       "unavailable": "❌ No disponible",
       "feedDescription": "Ilimitado para todas las etapas",
-      "addEmployee": "Añadir empleado",
+      "addEmployee": "Añadir Personal y Compartir Datos",
       "employeeDescription": "Ilimitado y con acceso del personal a los datos de la granja",
-      "pdfReports": "Exportación de informes PDF",
+      "pdfReports": "Exportar Todos los Informes a PDF",
       "pdfDescription": "⚡ Sí, guardado/impresión instantánea de PDFs",
-      "symptomsAnalyzer": "Analizador de síntomas",
-      "fullAccess": "Acceso total"
+      "symptomsAnalyzer": "Guía de Diagnóstico y Tratamiento",
+      "fullAccess": "Acceso total",
+      "adFreeExperience": "Experiencia Sin Publicidad y Sincronización Prioritaria"
     }
   },
   "Home": {
@@ -46,10 +56,10 @@
     "installWebApp": "Instalar App Web",
     "launchWebApp": "Lanzar App Web",
     "downloadMobileApp": "Descargar App Móvil",
-    "copyright": "Copyright 2026",
-    "developedBy": "Desarrollado por: Goshen AgriFirm & Bibinii Tech",
+    "copyright": "Derechos de autor 2026",
+    "developedBy": "Desarrollado por Bibinii Tech",
     "whatsapp": "WhatsApp",
-    "telegram": "Telegram"
+    "telegram": "telegrama"
   },
   "Dashboard": {
     "welcome": "Bienvenido a {farmName}",
@@ -59,68 +69,98 @@
     "farmerName": "Granjero {name}",
     "staffMember": "Miembro del personal",
     "farmOwner": "Dueño de la granja",
-    "premium": "Premium",
+    "premium": "prima",
     "premiumAccessActive": "Acceso Premium Activo",
     "freeTier": "Nivel Gratuito",
     "upgrade": "💎 Mejorar",
     "totalPigs": "Número total de cerdos: {count}",
-    "breedersPorkers": "Reproductores: {breeders} | Engorde: {porkers}",
-    "totalBreeders": "Número total de reproductores: {count}",
+    "breedersPorkers": "Criadores: {breeders} | Porkers: {porkers}",
+    "totalBreeders": "Número total de criadores: {count}",
     "piglet": "Lechón",
     "starter": "Iniciador",
-    "grower": "Crecimiento",
+    "grower": "Cerdo en crecimiento",
     "boar": "Verraco",
-    "gilt": "Cerdilla",
-    "pregnant": "Gestante",
+    "gilt": "Primeriza",
+    "pregnant": "Preñada",
     "lactating": "Lactante",
     "sow": "Cerda",
-    "totalPorkers": "Número total de cerdos de engorde: {count}",
-    "finisher": "Finalizador",
+    "totalPorkers": "Número total de porkers: {count}",
+    "finisher": "Cerdo de engorde",
     "archivedPigs": "Cerdos archivados",
     "viewCulled": "Ver animales descartados o vendidos",
     "farmOperations": "Operaciones de la granja",
-    "herdData": "Datos de la piara",
+    "herdData": "Datos del ganado",
     "herdDataDesc": "Añade cerdos, sigue su crecimiento automáticamente y ve perfiles individuales.",
     "feedManagement": "Gestión de Alimento",
     "feedManagementDesc": "Calcula la demanda proyectada, formula raciones de alta calidad y sigue el inventario.",
-    "herdActivities": "Actividades de la piara",
+    "herdActivities": "Actividades",
     "herdActivitiesDesc": "Registra montas, confirmación de preñez, partos, destetes e inyecciones de hierro.",
     "financials": "Finanzas",
     "financialsDesc": "Registra ingresos y gastos, contabilidad automática y exporta informes PDF.",
-    "hr": "Recursos Humanos",
+    "hr": "Recursos humanos",
     "hrDesc": "Registra personal, gestiona nóminas y comparte acceso a la app.",
-    "localHub": "Centro Local",
+    "localHub": "Centro de Mercado",
     "localHubDesc": "Conecta con veterinarios locales, vendedores de alimento y compradores de cerdos.",
-    "symptomsAnalyzer": "Analizador de síntomas",
+    "symptomsAnalyzer": "Buscador de Enfermedades",
     "symptomsAnalyzerDesc": "Analiza síntomas (piel, heces, respiración) para identificar enfermedades rápidamente.",
-    "weightChecker": "Verificador de peso",
+    "weightChecker": "Pesar Cerdos",
     "weightCheckerDesc": "Estima el peso usando cinta métrica y actualiza perfiles fácilmente.",
-    "trainingTips": "Consejos de capacitación",
+    "trainingTips": "Consejos de Porcicultura",
     "trainingTipsDesc": "Accede a guías generales de porcicultura y tutoriales en video.",
+    "findWithSymptoms": "Buscar por Síntomas",
+    "commonPigDiseases": "Enfermedades Porcinas Comunes",
+    "convertWeight": "Convertir Peso",
+    "weighWithTape": "Pesar con cinta",
+    "findCarcassWeight": "Calcular Peso en Canal",
+    "dressingPercentage": "Rendimiento en Canal (%)",
+    "headOn": "Con cabeza",
+    "headOff": "Sin cabeza",
+    "estimatedUsableMeat": "Carne Aprovechable Estimada",
+    "visceraDeduction": "Deducción de Vísceras",
+    "archiveStaff": "Archivar Empleado",
+    "staffArchivedSuccess": "Empleado archivado con éxito",
+    "staffProfile": "Detalles del Empleado",
+    "logSalary": "Registrar Salario",
+    "edit": "Editar",
+    "uploadPhoto": "Subir Foto",
+    "takePhoto": "Tomar Foto",
+    "removePhoto": "Eliminar Foto",
     "adminPanel": "Panel de Administración",
     "adminPanelDesc": "Gestiona ingredientes globales, verifica proveedores y actualiza tutoriales.",
-    "recentTransactions": "Transacciones recientes",
+    "recentTransactions": "Transacciones Recientes",
     "noTransactions": "No se encontraron transacciones financieras recientes.",
     "upcomingActivities": "Notificaciones",
     "notifications": "Notificaciones",
     "noActivities": "No hay actividades próximas",
     "allTasksCompleted": "¡Todas las tareas completadas!",
     "generalTask": "Tarea general",
-    "language": "Idioma",
+    "language": "Seleccionar idioma",
     "feed": "Alimentación",
     "inventory": "Inventario de alimentos",
     "calculator": "Calcular Alimento",
     "mixFeed": "Mezclar Ración",
     "analyzeFeed": "Analizar Alimento",
-    "marketHub": "Centro de Mercado"
+    "marketHub": "Centro de Mercado",
+    "weighWithScale": "Pesar con báscula",
+    "logActivitiesEvents": "Actividades y eventos",
+    "openActivityCalendar": "Abrir Reproducción y Actividades",
+    "cashflowRecords": "Finanzas",
+    "financialSummary": "Resumen financiero",
+    "totalIncome": "Ingreso Total",
+    "totalExpenses": "Gasto Total",
+    "netProfit": "Beneficio neto",
+    "viewAll": "Ver Todo",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "addEntry": "Añadir transacción"
   },
   "Login": {
-    "title": "SmartSwine Web",
-    "createAccount": "Crea tu cuenta de granja",
+    "title": "Web porcina inteligente",
+    "createAccount": "Crear cuenta",
     "signInTitle": "Inicia sesión para acceder a tus métricas",
-    "fillAllFields": "Por favor, completa todos los campos.",
-    "passwordsDoNotMatch": "Las contraseñas no coinciden.",
-    "passwordTooShort": "La contraseña debe tener al menos 6 caracteres.",
+    "fillAllFields": "Por favor complete todos los campos",
+    "passwordsDoNotMatch": "Las contraseñas no coinciden",
+    "passwordTooShort": "La contraseña debe tener al menos 6 caracteres",
     "authFailed": "Autenticación fallida.",
     "googleFailed": "Fallo al iniciar sesión con Google.",
     "enterEmailReset": "Ingresa tu correo para restablecer la contraseña.",
@@ -130,7 +170,7 @@
     "lastName": "Apellido",
     "farmName": "Nombre de la granja",
     "country": "País",
-    "email": "Correo electrónico",
+    "email": "E-mail",
     "password": "Contraseña",
     "confirmPassword": "Confirmar contraseña",
     "processing": "Procesando...",
@@ -140,24 +180,24 @@
     "alreadyHaveAccount": "¿Ya tienes cuenta? Inicia sesión",
     "newHere": "¿Eres nuevo? Regístrate",
     "orContinueWith": "O continúa con",
-    "google": "Google"
+    "google": "google"
   },
   "Footer": {
     "rights": "Todos los derechos reservados.",
-    "developedBy": "Desarrollado por el equipo de SmartSwine",
-    "privacyPolicy": "Política de Privacidad",
-    "termsOfService": "Términos de Servicio",
+    "developedBy": "Desarrollado por Bibinii Tech",
+    "privacyPolicy": "Política de privacidad",
+    "termsOfService": "Términos de servicio",
     "refundPolicy": "Política de Reembolso",
     "accountDeletion": "Eliminación de cuenta"
   },
   "Herd": {
-    "title": "Inventario de Cerdos",
+    "title": "Datos del ganado",
     "titleArchived": "Inventario de Cerdos (Archivados)",
-    "exportPdf": "Exportar PDF",
+    "exportPdf": "Exportar todo PDF",
     "exportPdfPremium": "Exportar PDF (Premium)",
     "noArchived": "No se encontraron cerdos archivados.",
     "noPigs": "Aún no hay cerdos registrados.",
-    "tagNumber": "Número de Chapa",
+    "tagNumber": "Número de arete / crotal",
     "age": "Edad",
     "lessThanMonth": "Menos de 1 mes",
     "months": "{count} meses",
@@ -166,7 +206,7 @@
     "weight": "Peso",
     "weightKg": "Peso (kg)",
     "location": "Ubicación",
-    "locationPen": "Ubicación / Corral",
+    "locationPen": "Ubicación (Corral #)",
     "addNewPigs": "Añadir nuevos cerdos",
     "singlePig": "Cerdos Individual",
     "multipleBatch": "Lote Múltiple",
@@ -176,16 +216,16 @@
     "breedPlaceholder": "ej. Berkshire x Large White",
     "males": "Machos",
     "females": "Hembras",
-    "qty": "Cant:",
+    "qty": "Cant.",
     "birthDate": "Fecha de Nacimiento",
-    "sowTag": "Chapa de la Cerda",
+    "sowTag": "Arete de cerda",
     "motherTag": "Chapa de la Madre",
-    "boarTag": "Chapa del Verraco",
+    "boarTag": "Arete de verraco",
     "fatherTag": "Chapa del Padre",
     "source": "Origen",
     "bornOnFarm": "Nacido en granja",
-    "broughtToFarm": "Comprado",
-    "purchasePrice": "Precio de Compra",
+    "broughtToFarm": "Traído a granja",
+    "purchasePrice": "Precio de compra",
     "financialExpense": "Gasto Financiero",
     "purchasePricePlaceholder": "Ingresa precio de compra...",
     "notes": "Notas",
@@ -193,9 +233,9 @@
     "cancel": "Cancelar",
     "save": "Guardar",
     "limitReached": "Los usuarios gratuitos solo pueden tener hasta 20 cerdos. Mejora a Premium para añadir más.",
-    "porker": "Engorde",
-    "breeder": "Reproductor",
-    "addPigs": "+ Añadir Cerdos",
+    "porker": "Cerdo de cebo",
+    "breeder": "Criador",
+    "addPigs": "Añadir Cerdos",
     "male": "Macho",
     "female": "Hembra",
     "excellent": "Excelente",
@@ -204,137 +244,164 @@
     "poor": "Deficiente",
     "blank": "Vacío",
     "piglet": "Lechón",
-    "gilt": "Cerdita",
+    "gilt": "Primeriza",
     "sow": "Cerda",
     "boar": "Verraco",
     "barrow": "Verraco castrado",
     "pregnant": "Preñada",
-    "lactating": "Lactante"
+    "lactating": "Lactante",
+    "searchPlaceholder": "Arete / Ubicación / Raza",
+    "activeHerd": "Activo",
+    "archivedHerd": "Cerdos archivados",
+    "tag": "Arete / Crotal",
+    "castrated_label": "(Castrado)",
+    "desc": "Registre animales, gestione aretes, asigne corrales y rastree linaje.",
+    "pigs": "Cerdos"
   },
   "Profile": {
     "owner": "Dueño",
     "staff": "Personal",
-    "settings": "Configuración de cuenta",
-    "signOut": "Cerrar Sesión"
+    "settings": "Ajustes",
+    "signOut": "Cerrar sesión"
   },
   "Navigation": {
     "navigateTo": "Navegar a",
     "home": "Inicio",
     "homeDesc": "Resumen de granja y estadísticas",
-    "herd": "Datos de la piara",
+    "herd": "Datos del ganado",
     "herdDesc": "Gestiona registros individuales",
-    "feed": "Gestión de Alimento",
+    "feed": "Alimentación",
     "feedDesc": "Inventario y formulación",
     "activities": "Actividades",
     "activitiesDesc": "Sigue salud y reproducción",
     "financials": "Finanzas",
     "financialsDesc": "Libro de ingresos y gastos",
-    "hr": "Recursos Humanos",
+    "hr": "Recursos humanos",
     "hrDesc": "Gestiona personal y acceso",
-    "hub": "Centro Local",
+    "hub": "Centro de Mercado",
     "hubDesc": "Mercados y recursos",
-    "symptoms": "Analizador de síntomas",
+    "symptoms": "Buscador de Enfermedades",
     "symptomsDesc": "Herramienta de diagnóstico IA",
-    "weight": "Verificador de peso",
+    "weight": "Pesar Cerdos",
     "weightDesc": "Seguimiento de crecimiento",
-    "training": "Capacitación",
+    "training": "Consejos de Porcicultura",
     "trainingDesc": "Aprende técnicas de manejo",
     "billing": "Facturación y Premium",
     "billingDesc": "Suscripción y funciones",
-    "admin": "Panel Admin",
-    "settings": "Configuración",
-    "signOut": "Cerrar Sesión"
+    "admin": "Panel de Administración",
+    "settings": "Ajustes",
+    "signOut": "Cerrar sesión",
+    "quickAccess": "ACCESO RÁPIDO",
+    "addPigs": "Añadir Cerdos",
+    "calculateFeed": "Calcular Alimento",
+    "mixFeed": "Mezclar Ración",
+    "analyzeFeed": "Analizar Alimento",
+    "addEmployee": "Añadir empleado",
+    "findDisease": "Identificar Enfermedad",
+    "dark": "Oscuro",
+    "light": "Claro",
+    "marketHub": "Centro de Mercado",
+    "diseaseFinder": "Buscador de Enfermedades",
+    "weighPigs": "Pesar Cerdos",
+    "trainingTips": "Consejos de Porcicultura",
+    "herdData": "Datos del ganado",
+    "feedManagement": "Alimentación",
+    "herdActivities": "Actividades",
+    "humanResources": "Recursos humanos",
+    "howToGuide": "Guía Práctica",
+    "rate5Stars": "Calificar con 5 Estrellas en Google Play",
+    "back": "Atrás"
   },
   "Activities": {
     "title": "Ejecutar Procedimiento",
     "description": "Selecciona una actividad para actualizar estados, registrar salud o programar tareas.",
     "categories": {
       "heat": {
-        "type": "Detección de Celo",
-        "desc": "Monitoreo de cerdas listas para monta."
+        "type": "Detección de celo",
+        "desc": "Monitorear cerdas para preparación reproductiva"
       },
       "breeding": {
-        "type": "Monta/Inseminación",
-        "desc": "Registra sesiones exitosas."
+        "type": "Monta / Servicio",
+        "desc": "Registrar montas o inseminaciones exitosas"
       },
       "pregnancy": {
         "type": "Confirmar Preñez",
-        "desc": "Registra chequeos físicos o ecografía."
+        "desc": "Registrar controles de ultrasonido o físicos"
       },
       "farrowing": {
         "type": "Parto",
-        "desc": "Registra nuevas camadas y nacimientos."
+        "desc": "Registrar nuevas camadas y detalles de nacimiento"
       },
       "weaning": {
         "type": "Destete",
-        "desc": "Registra cuando los lechones dejan la cerda."
+        "desc": "Registrar cuándo los lechones dejan a la cerda"
       },
       "castration": {
         "type": "Castración",
-        "desc": "Registra castración de machos."
+        "desc": "Registrar castración de lechones machos"
       },
       "teeth": {
-        "type": "Descolmillado",
-        "desc": "Corte de dientes de lechones recién nacidos."
+        "type": "Corte de colmillos",
+        "desc": "Recortar dientes de lechones recién nacidos"
       },
       "tail": {
-        "type": "Descole",
-        "desc": "Corte de colas para prevenir infecciones."
+        "type": "Corte de cola",
+        "desc": "Corte de colas para prevenir mordeduras e infecciones"
       },
       "deworming": {
         "type": "Desparasitación",
-        "desc": "Administración de antiparasitarios."
+        "desc": "Administrar medicamento desparasitante"
       },
       "iron": {
-        "type": "Inyección de Hierro",
-        "desc": "Aplicación de hierro para prevenir anemia."
+        "type": "Inyección de hierro",
+        "desc": "Dar inyecciones de hierro para prevenir anemia"
       },
       "vaccination": {
-        "type": "Vacunación",
-        "desc": "Registra inyecciones de rutina."
+        "type": "Vacunación.",
+        "desc": "Registrar vacunas de rutina o emergencia"
       },
       "medication": {
-        "type": "Medicación",
-        "desc": "Tratamientos para animales enfermos."
+        "type": "Medicamento",
+        "desc": "Seguir tratamientos para animales enfermos"
       },
       "weight": {
-        "type": "Chequeo de Peso",
-        "desc": "Registro de progreso de crecimiento."
+        "type": "Control de peso",
+        "desc": "Registrar progreso de crecimiento"
       },
       "culling": {
         "type": "Descarte",
-        "desc": "Registro de eliminación de la piara."
+        "desc": "Registrar remoción del rebaño"
       },
       "custom": {
         "type": "Personalizado",
-        "desc": "Cualquier otra actividad u observación."
+        "desc": "Registrar cualquier otra actividad u observación de la granja"
       }
     },
-    "logActivity": "Registrar Actividad: {type}",
+    "logActivity": "Registrar actividad",
     "procedureDate": "Fecha del Procedimiento",
-    "selectSow": "-- Elegir Cerda --",
-    "selectBoar": "-- Elegir Verraco --",
+    "selectSow": "Seleccionar cerda",
+    "selectBoar": "Seleccionar verraco",
     "matingOutcome": "Resultado de la Monta",
     "successful": "Exitoso",
     "unsuccessful": "No exitoso",
     "heatOutcome": "Resultado del Celo",
-    "heatDetected": "Celo detectado",
+    "heatDetected": "Celo",
     "noHeatDetected": "Celo no detectado",
-    "pregnancyConfirmed": "¿Preñez confirmada?",
+    "pregnancyConfirmed": "Embarazo confirmado",
     "yes": "Sí",
     "no": "No",
-    "malePiglets": "Lechones Machos",
-    "femalePiglets": "Lechones Hembras",
+    "malePiglets": "Lechones machos",
+    "femalePiglets": "Lechones hembras",
     "maleTags": "Chapas Machos (Separadas por comas)",
     "femaleTags": "Chapas Hembras (Separadas por comas)",
-    "medicationName": "Nombre del Medicamento",
+    "medicationName": "Nombre del medicamento",
     "dosage": "Dosis",
-    "scheduleSecondIron": "¿Programar 2da inyección de hierro (7 días después)?",
+    "scheduleSecondIron": "Programar 2ª inyección de hierro (7 días)",
     "showAllPigs": "Mostrar todos los cerdos",
     "showUnder2Months": "Solo menores de 2 meses",
     "customName": "Nombre de actividad personalizada",
-    "reason": "Razón",
-    "totalSalePrice": "Precio Total de Venta ({symbol})",
+    "reason": "Motivo",
+    "totalSalePrice": "Precio total de venta ({symbol})",
     "selectTargetPigs": "Seleccionar Cerdos Destino ({count})",
     "noPigsMatch": "No hay cerdos que coincidan con la etapa o reglas de estado.",
     "weaningLocations": "Ubicaciones de Destete",
@@ -343,46 +410,61 @@
     "descriptionNotes": "Notas de Descripción",
     "cancel": "Cancelar",
     "logAction": "Registrar Acción",
-    "expectedFarrowing": "Fecha Probable de Parto: {date}",
-    "chooseSow": "Seleccionar Cerda (Hembra)",
-    "chooseBoar": "Seleccionar Verraco (Macho)"
+    "expectedFarrowing": "Fecha prevista de parto: {date}",
+    "chooseSow": "Seleccionar cerda",
+    "chooseBoar": "Seleccionar verraco",
+    "back": "Atrás",
+    "chooseActivityToExecute": "Elija la actividad para ejecutar/programar",
+    "stillborns": "Nacidos Muertos",
+    "mummies": "Momificados",
+    "reasonNatural": "Causas naturales",
+    "reasonDisease": "Enfermedad",
+    "reasonSold": "Vendido",
+    "criticalFoodSafetyWarning": "ADVERTENCIA CRÍTICA DE INOCUIDAD ALIMENTARIA",
+    "meatWithdrawalTitle": "Periodo de Retiro en Carne"
   },
   "Feed": {
-    "lowStockWarning": "Advertencia de Stock Bajo",
+    "lowStockWarning": "Inventario bajo",
     "lowStockDesc": "Algunos insumos están bajo el umbral de seguridad. Por favor, reabastece.",
-    "inventory": "Inventario de Alimento",
+    "inventory": "Inventario de alimentos",
     "inventoryDesc": "Sigue y gestiona tu stock de alimento",
-    "exportPdf": "Exportar PDF",
+    "exportPdf": "Exportar todo PDF",
     "exportPdfPremium": "Exportar PDF (Premium)",
-    "addFeedItem": "+ Añadir Insumo",
+    "addFeedItem": "Añadir alimento",
     "noItems": "Aún no hay insumos registrados.",
-    "low": "Bajo",
-    "minThreshold": "Umbral mín: {count} {unit}",
-    "logUsage": "Registrar Uso",
+    "low": "BAJA",
+    "minThreshold": "Umbral de alerta mínimo",
+    "logUsage": "Registrar uso",
     "restock": "Reabastecer",
-    "transactionHistory": "Historial de Transacciones",
+    "transactionHistory": "Historial de transacciones",
     "recentMovements": "Movimientos recientes de inventario",
     "noTransactions": "No se registraron transacciones de inventario.",
-    "formulator": "Formulador de Alimento",
-    "formulatorDesc": "Balanceo científico de raciones",
+    "formulator": "Formulador de alimentos",
+    "formulatorDesc": "Analice el perfil nutricional de su mezcla de ración personalizada",
+    "mixFeed": "Formulador de alimentos",
+    "mixingResults": "Resultados de la Mezcla",
     "targetGrowthStage": "Etapa de Crecimiento Objetivo",
-    "selectIngredients": "Seleccionar Ingredientes",
+    "selectIngredients": "2. Seleccione ingredientes disponibles:",
     "formulateRation": "Formular Ración",
     "noActiveFormulation": "Sin Formulación Activa",
     "formulatePrompt": "Selecciona etapa, verifica ingredientes y formula.",
     "feedFormulaMix": "Fórmula: Mezcla {stage}",
     "totalMix": "Mezcla total",
-    "perTonMix": "{(percent * 10).toFixed(1)} kg/ton",
-    "nutritionalAnalysis": "Análisis Nutricional",
+    "perTonMix": "{(porcentaje * 10).toFixed(1)} kg/ton",
+    "nutritionalAnalysis": "Análisis nutricional",
     "nutrient": "Nutriente",
     "target": "Objetivo",
-    "actual": "Actual",
+    "actual": "real",
     "status": "Estado",
-    "deficient": "Deficiente",
-    "ok": "OK",
-    "calculator": "Calculadora de Alimento",
+    "deficient": "DEFICIENTE",
+    "ok": "Aceptar",
+    "calculator": "Calculadora",
     "calculatorDesc": "Demanda proyectada de la piara",
-    "demandCalculator": "Calculadora de Demanda",
+    "demandCalculator": "Calculadora",
+    "quantityNeeded": "Cantidad Necesaria",
+    "numberOfPigs": "Número de Cerdos",
+    "analyzeFeed": "Analizar Alimento",
+    "analyzeFeedDesc": "Analice el perfil nutricional de su mezcla de ración personalizada",
     "calculatorPrompt": "Verifica conteos e ingresa el periodo de proyección.",
     "sowsCount": "Cerdas",
     "boarsCount": "Verracos",
@@ -393,7 +475,7 @@
     "growers": "Crecimiento",
     "finishers": "Engorde",
     "projectionPeriod": "Periodo de Proyección (Días)",
-    "generateReport": "Generar Informe de Proyección",
+    "generateReport": "Generar informe",
     "noActiveCalculation": "Sin Cálculo Activo",
     "calcPrompt": "Configura conteos y haz clic en calcular.",
     "projectedResults": "Resultados de Demanda Proyectada",
@@ -403,7 +485,7 @@
     "projectedTotal": "Total Proyectado: {count} kg",
     "addNewItem": "Añadir Nuevo Insumo",
     "name": "Nombre",
-    "feedType": "Tipo de Alimento",
+    "feedType": "Tipo de alimento",
     "baseUnit": "Unidad Base",
     "initQty": "Cant Inicial",
     "bagWt": "Peso Saco (kg)",
@@ -413,41 +495,41 @@
     "restockItem": "Reabastecer Insumo",
     "qtyAdded": "Cant Añadida",
     "unit": "Unidad",
-    "totalCost": "Costo Total ({symbol})",
+    "totalCost": "Costo Total",
     "notes": "Notas",
     "addStock": "Añadir Stock",
     "logFeedUsage": "Registrar Uso de Alimento",
     "qtyUsed": "Cant Usada",
-    "exportData": "Exportar Datos de Alimento",
-    "selectRange": "Seleccionar Rango",
-    "currentMonth": "Mes Actual",
-    "last3Months": "Últimos 3 Meses",
+    "exportData": "Exportar datos de alimentación",
+    "selectRange": "Seleccionar rango:",
+    "currentMonth": "Mes actual",
+    "last3Months": "Últimos 3 meses",
     "custom": "Personalizado",
-    "fromDate": "Desde",
-    "toDate": "Hasta",
+    "fromDate": "Desde fecha",
+    "toDate": "Hasta fecha",
     "export": "Exportar",
     "disclaimer": "Descargo: Consulta siempre con un nutricionista animal o veterinario calificado antes de cambios significativos.",
     "reportTitle": "Informe de Inventario de Alimento - {range}",
     "generatedOn": "Generado el: {date}",
-    "feedName": "Nombre del Alimento",
+    "feedName": "Nombre del alimento",
     "addition": "Adición",
     "usage": "Uso",
     "inStock": "En Stock",
     "totalKg": "Total (kg)",
-    "ingredientsComposition": "Composición de Ingredientes",
+    "ingredientsComposition": "Composición de ingredientes",
     "ingredient": "Ingrediente",
     "rationPercentage": "Porcentaje Ración (%)",
     "perTonMixKg": "Mezcla por Tonelada (kg)",
-    "formulaIncomplete": "Fórmula incompleta ({percent}%)",
-    "growthStage": "Etapa de Crecimiento",
+    "formulaIncomplete": "Fórmula incompleta ({percent}%): Los ingredientes ne permettent pas une formule complète sans dépasser les limites.",
+    "growthStage": "Etapa de crecimiento",
     "dailyKg": "Diario (kg)",
-    "days": "{count} Días",
+    "days": "{count} días",
     "managementSystemReport": "Informe del Sistema de Gestión SmartSwine",
-    "bags": "Sacos",
+    "bags": "sacos",
     "kg": "kg",
     "starter": "Iniciador",
-    "grower": "Crecimiento",
-    "finisher": "Finalizador",
+    "grower": "Cerdo en crecimiento",
+    "finisher": "Cerdo de engorde",
     "ingredientsList": {
       "maize": "Maíz",
       "maize_bran": "Salvado de maíz",
@@ -469,28 +551,39 @@
       "vitaminsMineralsSalt": "Vitaminas, Minerales y Sal"
     },
     "nutrients": {
-      "digestibleProtein": "Proteína digestible (%)",
-      "crudeFiber": "Fibra cruda (%)",
+      "digestibleProtein": "Proteína Digestible",
+      "crudeFiber": "Fibra Bruta",
       "metabolizableEnergy": "Energía metabolizable (kcal/kg)",
       "calcium": "Calcio (%)",
       "phosphorus": "Fósforo (%)",
-      "lysine": "Lisina (%)",
+      "lysine": "Lisina",
       "methionineCystine": "Metionina + Cistina (%)"
-    }
+    },
+    "category": "Categoría",
+    "headCount": "Cerdos",
+    "dailyIntake": "Rate",
+    "dailyTotal": "Total diario",
+    "mixFeedDesc": "Desbloquee optimización lineal de raciones, objetivos por etapa y minimización de costos.",
+    "runFormulator": "Calculate Ration",
+    "noFeedInventoryItems": "No feed items recorded",
+    "addFirstFeedItem": "Añadir alimento",
+    "addFirstItem": "Añadir Artículo",
+    "sow": "Cerda",
+    "boar": "Verraco"
   },
   "Financials": {
-    "totalRevenue": "Ingresos Totales",
+    "totalRevenue": "Ingreso Total",
     "totalExpenses": "Gastos Totales",
     "netCashflow": "Flujo Neto",
     "farmCashflowLedger": "Libro de Caja de la Granja",
-    "logTransaction": "Registrar Transacción",
+    "logTransaction": "Añadir transacción",
     "noTransactions": "Aún no hay transacciones registradas.",
     "date": "Fecha",
     "type": "Tipo",
     "category": "Categoría",
     "description": "Descripción",
     "linkedPig": "Cerdo Vinculado",
-    "amount": "Monto",
+    "amount": "Cantidad",
     "actions": "Acciones",
     "delete": "Eliminar",
     "none": "Ninguno",
@@ -520,17 +613,17 @@
       "other": "Otro"
     },
     "confirmDelete": "¿Estás seguro de que deseas eliminar este registro?",
-    "exportPdf": "Exportar PDF",
+    "exportPdf": "Exportar todo PDF",
     "exportPdfPremium": "Exportar PDF (Premium)",
     "transactionsCount": "Transacciones ({count})",
     "transactions": "Transacciones"
   },
   "Hub": {
-    "directoryRegion": "Región del Directorio: {region}",
+    "directoryRegion": "Región del directorio",
     "allRegions": "Todas las Regiones",
-    "verifiedVendors": "Vendedores Verificados",
-    "porkBuyers": "Compradores y Mataderos",
-    "vetServices": "Servicios Veterinarios",
+    "verifiedVendors": "Proveedores Verificados",
+    "porkBuyers": "Compradores de Cerdos y Mataderos / Camales",
+    "vetServices": "Serviços veterinários",
     "mySuggestions": "Mis Sugerencias",
     "suggestProvider": "Sugerir un Proveedor",
     "noVendors": "No hay vendedores registrados para esta región.",
@@ -541,41 +634,41 @@
     "listings": "anuncios",
     "verified": "Verificado",
     "call": "Llamar",
-    "email": "Correo",
+    "email": "Correo electrónico",
     "noEmail": "Sin Correo",
     "status": {
       "approved": "Aprobado",
       "rejected": "Rechazado",
       "pending": "Pendiente"
     },
-    "category": "Categoría: {type}",
+    "category": "Categoría",
     "feedback": "Comentario:",
     "businessName": "Nombre del Negocio / Doctor",
     "serviceCategory": "Categoría de Servicio",
     "selectService": "Seleccionar Servicio",
     "country": "País",
-    "phoneNumber": "Número de Teléfono",
+    "phoneNumber": "Teléfono",
     "cityLocation": "Ciudad / Ubicación",
     "emailOptional": "Correo electrónico (Opcional)",
-    "submitSuggestion": "Enviar Sugerencia",
+    "submitSuggestion": "Enviar sugestão",
     "successSubmit": "¡Sugerencia enviada con éxito! Esperando aprobación.",
     "errorSubmit": "Error al enviar la sugerencia. Intenta de nuevo.",
     "duplicateError": "Este proveedor ya está registrado o sugerido.",
     "services": {
-      "butcher": "Carnicero",
-      "meatProcessor": "Procesador de Carne",
-      "abattoir": "Matadero",
-      "feedSupplier": "Proveedor de Alimento",
-      "toolsSupplier": "Proveedor de Herramientas",
-      "vetShop": "Tienda Veterinaria",
-      "vetServices": "Servicios Veterinarios",
+      "butcher": "Açougueiro",
+      "meatProcessor": "Processador de carne",
+      "abattoir": "Abatedouro",
+      "feedSupplier": "Fornecedor de ração",
+      "toolsSupplier": "Fornecedor de ferramentas",
+      "vetShop": "Loja veterinária",
+      "vetServices": "Serviços veterinários",
       "other": "Otro"
     }
   },
   "Weight": {
     "title": "Pesaje con Cinta y Conversor",
     "description": "Estima el peso vivo usando medidas de perímetro torácico y largo corporal, o convierte unidades estándar.",
-    "weighWithTape": "Pesar con Cinta",
+    "weighWithTape": "Pesar con cinta",
     "inches": "Pulgadas",
     "centimeters": "Centímetros",
     "bodyLength": "A = Largo Corporal ({unit})",
@@ -583,11 +676,11 @@
     "heartGirth": "B = Perímetro Torácico ({unit})",
     "heartGirthDesc": "Mide la circunferencia del pecho justo detrás de las patas delanteras.",
     "measurementGuide": "Mide el Largo (Punto A) y Perímetro (Punto B) como se muestra arriba.",
-    "estimatedResults": "Resultados Estimados",
-    "estLiveWeight": "Peso Vivo Estimado",
-    "estCarcassWeight": "Peso en Canal Estimado (72%)",
+    "estimatedResults": "Resultados estimados",
+    "estLiveWeight": "Peso vivo estimado",
+    "estCarcassWeight": "Peso de carcaça estimado",
     "enterPositiveValues": "Ingresa valores positivos para realizar la proyección.",
-    "weightConverter": "Conversor de Peso",
+    "weightConverter": "Convertir Peso",
     "pounds": "Libras (Lbs)",
     "kilograms": "Kilogramos (Kg)",
     "saveToProfile": "Guardar en Perfil",
@@ -595,23 +688,24 @@
     "selectPigTag": "Seleccionar Chapa",
     "choosePigTag": "-- Elegir Chapa --",
     "weightToSave": "Peso a Guardar (kg)",
-    "saveWeight": "Guardar Peso en Perfil",
+    "saveWeight": "Guardar peso en perfil del cerdo",
     "savingWeight": "Guardando peso...",
-    "importantNotes": "Notas Importantes",
+    "importantNotes": "Notas importantes",
     "noteBodyLength": "Largo Corporal: Mide desde la base de las orejas hasta la base de la cola asegurando que la cinta esté firme (Punto A).",
     "noteHeartGirth": "Perímetro Torácico: Mide el tórax (detrás de las patas delanteras) asegurando que la cinta ajuste bien (Punto B).",
     "noteSquarely": "Asegúrate de que el cerdo esté parado sobre terreno nivelado para mayor precisión.",
-    "saveSuccess": "¡Peso guardado con éxito!",
+    "saveSuccess": "¡Peso guardado con éxito para el cerdo %s!",
     "saveError": "Error al guardar el peso. Revisa tu conexión.",
     "validWeightAlert": "Por favor, ingresa un peso válido en kg.",
     "weightCheckedManually": "Peso verificado manualmente: {weight} kg.",
-    "tapeEstimationLog": "Peso estimado por cinta: {weight} kg / {lbs} lbs (Girth: {girth} {unit}, Largo: {length} {unit})."
+    "tapeEstimationLog": "Peso estimado por cinta: {weight} kg / {lbs} lbs (Girth: {girth} {unit}, Largo: {length} {unit}).",
+    "weighWithScale": "Pesar con báscula"
   },
   "Training": {
-    "title": "Consejos Rápidos de Manejo",
+    "title": "Consejos Rápidos de Cría",
     "searchTips": "Buscar consejos...",
     "noTipsFound": "No se encontraron consejos.",
-    "videoTutorials": "Tutoriales en Video",
+    "videoTutorials": "Tutoriales en Vídeo",
     "closeForm": "✕ Cerrar",
     "addVideo": "＋ Añadir Video",
     "tutorialTitle": "Título del Tutorial",
@@ -628,112 +722,112 @@
       "health": "Salud",
       "housing": "Instalaciones",
       "waste": "Residuos",
-      "general": "General"
+      "general": "generales"
     },
     "tips": {
       "tip6": {
         "title": "Edad de destete para pequeños productores",
-        "content": "Destetar entre los 28 y 35 días en lugar de antes. Esto permite que los lechones crezcan más fuertes y se adapten mejor al alimento sólido."
+        "content": "Destete a los 28 o 35 días en lugar de antes. Esto permite que los lechones crezcan más fuertes y asimilen el alimento sólido."
       },
       "tip7": {
         "title": "Método de separación gradual",
-        "content": "Reduce el estrés retirando a la cerda del corral de parto y dejando a los lechones en su entorno familiar durante la primera semana."
+        "content": "Reduzca el estrés retirando a la cerda de la paridera y dejando a los lechones en su corral conocido durante la primera semana."
       },
       "tip8": {
-        "title": "Prevención de corrientes de aire",
-        "content": "Bloquea vientos fríos en el área de recría instalando cortinas temporales o tablas a la altura de los lechones (unos 50cm)."
+        "title": "Protección contra corrientes de aire",
+        "content": "Bloquee los vientos fríos en el corral de destete colocando cortinas o tablas de madera de unos 50 cm de altura."
       },
       "tip11": {
-        "title": "Solución de rehidratación casera",
-        "content": "Usa una solución de electrolitos económica (5 cucharadas de azúcar, 1/2 de sal en 5 litros de agua limpia) los primeros 3 días del destete."
+        "title": "Suero rehidratante casero",
+        "content": "Suministre un electrolito casero (5 cucharadas de azúcar y 1/2 de sal en 5 litros de agua limpia) los primeros 3 días de destete."
       },
       "tip17": {
-        "title": "Suplemento mineral con arcilla",
-        "content": "Coloca una palada de tierra roja limpia en el corral. Los lechones la consumen para obtener hierro y minerales de forma natural."
+        "title": "Tierra arcillosa limpia con minerales",
+        "content": "Coloque una palada de tierra arcillosa roja limpia en el corral. Los lechones la consumen y obtienen hierro y minerales naturales."
       },
       "tip20": {
-        "title": "Hervido de subproductos",
-        "content": "Hierve cáscaras de yuca, papa o camote para eliminar toxinas naturales y mejorar la digestibilidad."
+        "title": "Cocción de subproductos agrícolas",
+        "content": "Hierva cáscaras de yuca, ñame y papas para eliminar toxinas naturales (ácido cianhídrico) y mejorar la digestibilidad."
       },
       "tip21": {
         "title": "Fuentes locales de proteína",
-        "content": "Complementa el alimento comercial cultivando forrajes como Moringa, Azolla o hojas de camote en la granja."
+        "content": "Complemente el alimento comercial sembrando forrajes ricos en proteína como moringa, azolla o botón de oro en la finca."
       },
       "tip22": {
         "title": "Restricción de alimento en gestación",
-        "content": "Limita a las cerdas gestantes a 2-2.5 kg diarios para evitar sobrepeso, lo que causa partos difíciles."
+        "content": "Limite a las cerdas gestantes a 2 o 2.5 kg diarios para evitar el sobrepeso, que causa partos difíciles y aplastamientos."
       },
       "tip26": {
-        "title": "Hervido de residuos de cocina",
-        "content": "Hierve residuos de comida por 30 minutos para destruir virus como la Peste Porcina Africana o la Fiebre Aftosa."
+        "title": "Calidad y sal de la harina de pescado",
+        "content": "Revise el contenido de sal en la harina de pescado artesanal para evitar intoxicaciones fatales por exceso de sodio."
       },
       "tip28": {
-        "title": "Carbón para la digestión",
-        "content": "Coloca trozos de carbón vegetal en los corrales. Los cerdos lo mastican para ayudar a absorber toxinas y reducir diarreas."
+        "title": "Carbonato de calcio y conchilla",
+        "content": "Agregue 1 a 1.5% de harina de hueso o carbonato de calcio para garantizar patas fuertes y un esqueleto firme en animales en engorde."
       },
       "tip34": {
-        "title": "Monta controlada",
-        "content": "Lleva a la hembra en celo al corral del verraco en lugar de dejar que el macho ande suelto por la piara."
+        "title": "Pesar el alimento por kilos",
+        "content": "Pese siempre el alimento con una balanza en lugar de calcular por latas o baldes para tener control exacto de los costos."
       },
       "tip35": {
-        "title": "Respuesta de inmovilidad",
-        "content": "Prueba el celo presionando el lomo de la cerda; si se queda quieta y levanta las orejas, está lista para la monta."
+        "title": "Detección de celo por presión dorsal",
+        "content": "Presione firmemente el lomo de la cerda frente al verraco: si se queda completamente inmóvil, está lista para la monta."
       },
       "tip39": {
-        "title": "Barras protectoras DIY",
-        "content": "Instala barras de protección (postes de madera a 20cm de la pared y 20cm del suelo) en los corrales de parto para evitar aplastamientos."
+        "title": "Tranquilidad al inicio de la gestación",
+        "content": "Evite ruidos, golpes o traslados durante los primeros 30 días post-servicio para garantizar la implantación embrionaria."
       },
       "tip43": {
-        "title": "Calendario de registros",
-        "content": "Marca la fecha de monta; la gestación dura 114 días (3 meses, 3 semanas, 3 días), permitiéndote preparar el parto a tiempo."
+        "title": "Limpieza de ubres antes del amamantamiento",
+        "content": "Lave las tetas de la cerda con agua tibia y jabón suave antes del primer amamantamiento para reducir diarreas neonatales."
       },
       "tip47": {
-        "title": "Edad de primera monta",
-        "content": "Espera hasta que la cerda tenga al menos 8 meses y esté en su segundo o tercer celo para asegurar una camada más numerosa."
+        "title": "Detección de repetición de celo (Día 21)",
+        "content": "Pase al verraco entre el día 18 y 24 post-servicio para identificar de inmediato a las cerdas que no quedaron preñadas."
       },
       "tip48": {
-        "title": "Aislamiento de nuevas compras",
-        "content": "Mantén cerdos nuevos en un corral separado al menos a 20 metros del resto por 30 días para verificar su salud."
+        "title": "Calostro manual para lechones débiles",
+        "content": "Ordeñe calostro de la cerda y suminístrelo con jeringa a los lechones más chicos en sus primeras 2 horas de vida."
       },
       "tip49": {
-        "title": "Pediluvio casero",
-        "content": "Coloca un recipiente con agua y desinfectante (como cloro o cal) en la entrada de la granja."
+        "title": "Cuidado al cortar los colmillos",
+        "content": "Despunte únicamente la punta de los dientes de aguja sin dañar la encía para evitar infecciones bacterianas en la boca."
       },
       "tip51": {
-        "title": "Restricción de visitas",
-        "content": "No permitas visitas dentro de los corrales. Discute negocios fuera del área de los animales."
+        "title": "Botas exclusivas para visitantes",
+        "content": "Tenga botas exclusivas para las visitas y prohíba la entrada de personas que hayan visitado otras piaras recientemente."
       },
       "tip55": {
-        "title": "Control natural de parásitos",
-        "content": "Semillas de papaya o calabaza trituradas pueden ayudar a reducir la carga de parásitos internos de forma económica."
+        "title": "Aislamiento inmediato del cerdo enfermo",
+        "content": "Separe de inmediato a cualquier animal con fiebre, decaído o con diarrea a un corral de enfermería apartado."
       },
       "tip60": {
-        "title": "Entierro adecuado",
-        "content": "Entierra animales muertos al menos a 2 metros de profundidad, lejos de fuentes de agua, y cubre con cal."
+        "title": "Entierro profundo con cal de cadáveres",
+        "content": "Entierre los cerdos muertos a 1.5 metros de profundidad y cúbralos con cal viva para evitar que perros carroñeros los desentierren."
       },
       "tip61": {
-        "title": "Espacio por animal",
-        "content": "Provee al menos 1 metro cuadrado por cerdo en engorde para reducir peleas, estrés y lesiones en la piel."
+        "title": "Control de ratas y moscas",
+        "content": "Controle roedores e insectos alrededor de los corrales: son los principales transmisores de disentería y salmonela."
       },
       "tip62": {
-        "title": "Ventilación cruzada",
-        "content": "Diseña porquerizas con costados abiertos para permitir que la brisa elimine olores y gases."
+        "title": "Registro estricto de vacunas",
+        "content": "Lleve un control de fechas de vacunación (Peste Porcina, Parvovirus, Micoplasma) y conserve los biológicos en refrigeración."
       },
       "tip75": {
-        "title": "Compostaje DIY",
-        "content": "Apila el estiércol en un rincón seco, cubre con hojas y voltea semanalmente para crear abono orgánico."
+        "title": "Biodigestor con estiércol de cerdo",
+        "content": "Conecte los canales de lavado a un biodigestor plástico para generar gas de cocina gratis y biol fertilizante."
       },
       "tip76": {
-        "title": "Biodigestor de bolsa",
-        "content": "Instala un biodigestor plástico económico para tratar desechos y producir gas de cocina gratuito."
+        "title": "Compostaje de estiércol con aserrín",
+        "content": "Mezcle la porquinaza sólida con cascarilla de arroz o aserrín para obtener abono orgánico de alta calidad para sus cultivos."
       },
       "tip92": {
-        "title": "Edad de castración",
-        "content": "Castra antes de los 7 días. A esta edad el procedimiento es rápido, sana pronto y causa menos dolor."
+        "title": "Compra de granos en época de cosecha",
+        "content": "Compre maíz y soya durante los meses de cosecha cuando el precio baja y almacénelos en silos secos."
       },
       "tip94": {
-        "title": "Registros en cuaderno",
-        "content": "Mantén un cuaderno pequeño en el galpón para anotar fechas clave y tratamientos de cada cerda."
+        "title": "Ubicación del corral respecto al viento",
+        "content": "Oriente las instalaciones de forma que el viento predominante no lleve los olores hacia las casas vecinas."
       }
     }
   },
@@ -751,11 +845,11 @@
     "noMatches": "No se encontraron coincidencias para los síntomas seleccionados.",
     "noMatchesDesc": "Modifica la selección o consulta a tu veterinario local.",
     "potentialMatches": "{count} Coincidencias Potenciales",
-    "matchAccuracy": "Precisión: {count} síntoma(s) detectado(s)",
-    "descriptionLabel": "Descripción:",
+    "matchAccuracy": "Precisión de coincidencia: {count} síntoma(s) detectado(s)",
+    "descriptionLabel": "Descripción",
     "otherSymptoms": "Otros síntomas a vigilar:",
-    "preventionLabel": "Plan de Acción y Prevención:",
-    "viewDetails": "Ver detalles y prevención",
+    "preventionLabel": "Plan de prevención y acción:",
+    "viewDetails": "Ver Detalles",
     "disclaimer": "Descargo: Esta herramienta IA es para asistencia educativa. NO sustituye el diagnóstico veterinario profesional. Consulta siempre a un médico veterinario.",
     "severity": {
       "LOW": "BAJA",
@@ -764,50 +858,50 @@
       "CRITICAL": "CRÍTICA"
     },
     "groups": {
-      "sg_skin_coat": "Piel y Pelaje",
-      "sg_digestive_stool": "Digestivo y Heces",
+      "sg_skin_coat": "Piel y pelaje",
+      "sg_digestive_stool": "Digestivo y heces",
       "sg_respiratory": "Respiratorio",
-      "sg_behavioral_nervous": "Comportamiento y Nervios",
+      "sg_behavioral_nervous": "Comportamiento y nervioso",
       "sg_reproduction": "Reproducción",
-      "sg_general_limbs": "General y Extremidades"
+      "sg_general_limbs": "General y extremidades"
     },
     "list": {
-      "sym_skin_discoloration": "Decoloración de piel (Rojo/Morado)",
-      "sym_diamond_lesions": "Lesiones en forma de diamante",
-      "sym_itching": "Picazón/Rascado",
+      "sym_skin_discoloration": "Decoloración de la piel (rojo/púrpura)",
+      "sym_diamond_lesions": "Lésiones cutáneas en forma de diamante",
+      "sym_itching": "Picazón",
       "sym_hair_loss": "Pérdida de pelo",
       "sym_pale_skin": "Piel pálida",
-      "sym_jaundice": "Ictericia (Piel amarilla)",
+      "sym_jaundice": "Ictericia",
       "sym_skin_crusts": "Costras en la piel",
-      "sym_rough_hair": "Pelo erizado/áspero",
+      "sym_rough_hair": "Pelaje áspero",
       "sym_sunburn": "Quemadura solar",
-      "sym_ear_necrosis": "Necrosis de oreja",
-      "sym_blisters_snout_feet": "Ampollas en hocico/patas",
+      "sym_ear_necrosis": "Necrosis de la oreja",
+      "sym_blisters_snout_feet": "Ampollas en el hocico/pies",
       "sym_diarrhea": "Diarrea",
-      "sym_vomiting": "Vómito",
+      "sym_vomiting": "Vómitos",
       "sym_bloody_diarrhea": "Diarrea con sangre",
-      "sym_blood_in_stool": "Sangre en heces",
+      "sym_blood_in_stool": "Sangre en las heces",
       "sym_rectal_prolapse": "Prolapso rectal",
-      "sym_bloat": "Timpanismo (Hinchazón)",
+      "sym_bloat": "Hinchazón",
       "sym_dehydration": "Deshidratación",
       "sym_loss_of_appetite": "Pérdida de apetito",
       "sym_weight_loss": "Pérdida de peso",
       "sym_coughing": "Tos",
-      "sym_difficulty_breathing": "Dificultad al respirar",
+      "sym_difficulty_breathing": "Dificultad para respirar",
       "sym_nasal_discharge": "Secreción nasal",
-      "sym_sneezing": "Estornudo",
+      "sym_sneezing": "Estornudos",
       "sym_thumping": "Respiración abdominal",
-      "sym_nose_bleeds": "Sangrado nasal",
-      "sym_frothing": "Espuma en la boca",
+      "sym_nose_bleeds": "Hemorragia nasal",
+      "sym_frothing": "Espuma por la boca",
       "sym_excessive_salivation": "Salivación excesiva",
-      "sym_lethargy": "Letargo/Decaimiento",
+      "sym_lethargy": "Letargo",
       "sym_seizures": "Convulsiones",
       "sym_muscle_stiffness": "Rigidez muscular",
       "sym_trembling": "Temblores",
       "sym_blindness": "Ceguera",
       "sym_paralysis": "Parálisis",
-      "sym_incoordination": "Incoordinación al caminar",
-      "sym_circling": "Camina en círculos",
+      "sym_incoordination": "Incoordinación",
+      "sym_circling": "Caminar en círculos",
       "sym_convulsions": "Convulsiones",
       "sym_nervousness": "Nerviosismo",
       "sym_twitching": "Espasmos",
@@ -815,26 +909,26 @@
       "sym_abortion": "Aborto",
       "sym_infertility": "Infertilidad",
       "sym_mummified_piglets": "Lechones momificados",
-      "sym_small_litter": "Camada pequeña",
+      "sym_small_litter": "Tamaño de camada pequeño",
       "sym_swollen_vulva": "Vulva hinchada",
       "sym_enlarged_scrotum": "Escroto agrandado",
-      "sym_swollen_udder": "Ubre hinchada/Mastitis",
+      "sym_swollen_udder": "Ubre hinchada o mastitis",
       "sym_high_fever": "Fiebre alta",
       "sym_lameness": "Cojera",
       "sym_sudden_death": "Muerte súbita",
       "sym_swollen_joints": "Articulaciones hinchadas",
-      "sym_swollen_navel": "Ombligo hinchado",
-      "sym_leg_weakness": "Debilidad de patas",
+      "sym_swollen_navel": "Hinchazón del ombligo",
+      "sym_leg_weakness": "Debilidad en las piernas",
       "sym_swollen_eyelids": "Párpados hinchados",
-      "sym_stunted_growth": "Retraso en crecimiento",
+      "sym_stunted_growth": "Crecimiento atrofiado",
       "sym_pale_mucous": "Mucosas pálidas",
-      "sym_bleeding_orifices": "Sangrado por orificios",
+      "sym_bleeding_orifices": "Sangrado por los orificios",
       "sym_watery_diarrhea": "Diarrea acuosa",
       "sym_abscesses": "Abscesos",
-      "sym_anemia": "Anemia",
-      "sym_thirst": "Sed excesiva",
+      "sym_anemia": "anemia",
+      "sym_thirst": "Sed",
       "sym_fractures": "Fracturas",
-      "sym_cracked_hooves": "Cascos agrietados",
+      "sym_cracked_hooves": "Pezuñas agrietadas",
       "sym_red_urine": "Orina roja/oscura"
     },
     "diseases": {
@@ -942,19 +1036,19 @@
       },
       "dis_anemia": {
         "name": "Anemia por Deficiencia de Hierro",
-        "scientificName": "Deficiencia de Hierro",
+        "scientificName": "Iron Deficiency",
         "description": "Común en lechones de interior sin suplementos de hierro.",
         "prevention": "Inyecciones de hierro al nacer."
       },
       "dis_ulcers": {
         "name": "Úlceras Gástricas",
-        "scientificName": "Gastric Ulcers",
+        "scientificName": "Úlceras Gástricas",
         "description": "Causadas por alimento muy fino o estrés.",
         "prevention": "Ajustar el tamaño de partícula del alimento."
       },
       "dis_pss": {
         "name": "Síndrome de Estrés Porcina",
-        "scientificName": "Susceptibilidad genética",
+        "scientificName": "Genetic stress susceptibility",
         "description": "Condición genética desencadenada por el estrés.",
         "prevention": "Selección genética y manejo tranquilo."
       },
@@ -1074,7 +1168,7 @@
       },
       "dis_ascaris": {
         "name": "Ascaris suum",
-        "scientificName": "Lombriz Grande",
+        "scientificName": "Large Roundworm",
         "description": "Parásito interno que causa daño pulmonar y hepático.",
         "prevention": "Desparasitación regular."
       },
@@ -1104,31 +1198,31 @@
       },
       "dis_ringworm": {
         "name": "Tiña",
-        "scientificName": "Dermatofitosis",
+        "scientificName": "Dermatophytosis",
         "description": "Infección fúngica de la piel.",
         "prevention": "Saneamiento y tratamiento tópico."
       },
       "dis_mulberry_heart": {
         "name": "Enfermedad del Corazón de Mora",
-        "scientificName": "Deficiencia Vit E/Se",
+        "scientificName": "Vit E/Se Deficiency",
         "description": "Deficiencia nutricional que afecta al corazón.",
         "prevention": "Suplementación."
       },
       "dis_vit_a": {
         "name": "Deficiencia de Vitamina A",
-        "scientificName": "Deficiencia Vitamina A",
+        "scientificName": "Deficiencia de Vitamina A",
         "description": "Deficiencia nutricional.",
         "prevention": "Ajuste dietético."
       },
       "dis_rickets": {
         "name": "Raquitismo",
-        "scientificName": "Deficiencia Vit D/Ca/P",
+        "scientificName": "Vit D/Ca/P Deficiency",
         "description": "Deficiencia nutricional que afecta el crecimiento óseo.",
         "prevention": "Minerales equilibrados y luz solar."
       },
       "dis_salt_poisoning": {
         "name": "Intoxicación por Sal",
-        "scientificName": "Privación de agua",
+        "scientificName": "Water Deprivation",
         "description": "Causada por falta de agua seguida de consumo excesivo.",
         "prevention": "Acceso constante a agua fresca."
       },
@@ -1158,13 +1252,13 @@
       },
       "dis_splayleg": {
         "name": "Splayleg (Patas Abiertas)",
-        "scientificName": "Hipoplasia miofibrilar",
+        "scientificName": "Myofibrillar hypoplasia",
         "description": "Lechones nacidos incapaces de pararse con las patas traseras.",
         "prevention": "Vendar las patas y tracción en el suelo."
       },
       "dis_vulvovaginitis": {
         "name": "vulvovaginitis",
-        "scientificName": "Toxicidad por Zearalenona",
+        "scientificName": "Zearalenone Toxicity",
         "description": "Causada por toxinas fúngicas estrogénicas en el alimento.",
         "prevention": "Cambiar la fuente de alimento."
       },
@@ -1212,7 +1306,7 @@
       },
       "dis_cysticercosis": {
         "name": "Cisticercosis",
-        "scientificName": "Larvas de Taenia solium",
+        "scientificName": "Taenia solium larvae",
         "description": "Etapa larvaria de la tenia humana en el músculo del cerdo.",
         "prevention": "Evitar el acceso a desechos humanos."
       },
@@ -1230,67 +1324,67 @@
       },
       "dis_ear_necrosis": {
         "name": "Necrosis de la Oreja",
-        "scientificName": "Necrosis de Oreja",
+        "scientificName": "Necrosis de la Oreja",
         "description": "A menudo causada por estrés, hacinamiento o infección.",
         "prevention": "Reducir la densidad y tratar la infección secundaria."
       },
       "dis_sunburn": {
         "name": "Quemadura Solar",
-        "scientificName": "Dermatitis solar",
+        "scientificName": "Solar dermatitis",
         "description": "Afecta a cerdos de piel blanca en exteriores.",
         "prevention": "Proporcionar sombra."
       },
       "dis_tail_biting": {
         "name": "Mordedura de Cola",
-        "scientificName": "Estrés conductual",
+        "scientificName": "Behavioral stress",
         "description": "Problema de comportamiento debido al estrés/aburrimiento.",
         "prevention": "Reducir el estrés y enriquecer el medio ambiente."
       },
       "dis_navel_ill": {
         "name": "Infección del Ombligo (Navel Ill)",
-        "scientificName": "Infección umbilical",
+        "scientificName": "Navel Infection",
         "description": "Infección del cordón umbilical al nacer.",
         "prevention": "Desinfección con yodo al nacer y saneamiento."
       },
       "dis_iron_toxicity": {
         "name": "Toxicidad por Hierro",
-        "scientificName": "Exceso de hierro",
+        "scientificName": "Ferrous excess",
         "description": "Puede ocurrir si se inyecta hierro a lechones deficientes en Vit E.",
         "prevention": "Asegurar que la dieta de la cerda esté equilibrada."
       },
       "dis_aflatoxicosis": {
         "name": "Aflatoxicosis",
-        "scientificName": "Toxina de Aspergillus flavus",
+        "scientificName": "Aspergillus flavus toxin",
         "description": "Envenenamiento por toxinas de granos o alimentos mohosos que causan daño hepático e ictericia.",
         "prevention": "Evitar alimento mohoso, almacenar granos en seco y usar secuestrantes de toxinas."
       },
       "dis_parakeratosis": {
         "name": "Paraqueratosis (Deficiencia de zinc)",
-        "scientificName": "Deficiencia de Zinc",
+        "scientificName": "Zinc deficiency",
         "description": "Enfermedad nutricional que causa lesiones cutáneas severas, costrosas y engrosadas.",
         "prevention": "Asegurar relación calcio-zinc equilibrada y suplementar con zinc."
       },
       "dis_biotin_deficiency": {
         "name": "Deficiencia de biotina",
-        "scientificName": "Deficiencia de Vitamina H",
+        "scientificName": "Vitamin H deficiency",
         "description": "Deficiencia nutricional que causa pezuñas agrietadas, lesiones en la piel y cojera.",
         "prevention": "Suplementar dieta con biotina y evitar pisos de concreto húmedos o rugosos."
       },
       "dis_gossypol_toxicity": {
         "name": "Toxicidad por gosipol",
-        "scientificName": "Intoxicación por gosipol",
+        "scientificName": "Gossypol poisoning",
         "description": "Intoxicación por alimentar con harina de algodón cruda o en exceso, causando dificultad respiratoria.",
         "prevention": "Limitar harina de algodón en la dieta y usar sulfato de hierro."
       },
       "dis_cassava_poisoning": {
         "name": "Intoxicación por yuca",
-        "scientificName": "Glucósidos cianogénicos",
+        "scientificName": "Cyanogenic glycosides",
         "description": "Envenenamiento por cianuro debido a raíces o cáscaras de yuca crudas o mal procesadas.",
         "prevention": "Pelar, hervir, secar al sol o fermentar la yuca antes de ofrecerla."
       },
       "dis_sweet_potato_toxicity": {
         "name": "Intoxicación por camote",
-        "scientificName": "Toxicidad por Ipomeamarona",
+        "scientificName": "Ipomeamarone toxicity",
         "description": "Envenenamiento por camotes mohosos, causando dificultad respiratoria severa.",
         "prevention": "Desechar camotes dañados o mohosos; alimentar solo con tubérculos sanos."
       },
@@ -1350,7 +1444,7 @@
       },
       "dis_sow_hysteria": {
         "name": "Histeria de la cerda",
-        "scientificName": "Psicosis puerperal",
+        "scientificName": "Puerperal psychosis",
         "description": "Trastorno de conducta donde cerdas primerizas se vuelven agresivas y muerden a los lechones.",
         "prevention": "Proporcionar ambiente tranquilo para el parto, vigilar primerizas y usar sedantes si es necesario."
       },
@@ -1398,31 +1492,31 @@
       },
       "dis_pityriasis_rosea": {
         "name": "Pitiriasis rosada",
-        "scientificName": "Pseudo-tiña",
+        "scientificName": "Pseudo-ringworm",
         "description": "Condición de la piel no contagiosa en cerdos jóvenes que forma costras en anillo.",
         "prevention": "Suele curarse sola; mantener cama limpia y seca, y reducir estrés."
       },
       "dis_photosensitization": {
         "name": "Fotosensibilización",
-        "scientificName": "Dermatitis solar",
+        "scientificName": "Solar dermatitis",
         "description": "Reacción cutánea severa a la luz solar en cerdos blancos tras comer ciertas plantas.",
         "prevention": "Proporcionar sombra, eliminar malezas sensibilizantes y resguardar a los cerdos."
       },
       "dis_shoulder_ulcers": {
         "name": "Úlceras de hombro en cerdas",
-        "scientificName": "Úlceras por decúbito",
+        "scientificName": "Decubitus ulcers",
         "description": "Llagas de presión en los hombros de cerdas delgadas alojadas en concreto duro.",
         "prevention": "Proporcionar cama suave, mantener cerdas en buena condición corporal y usar tapetes."
       },
       "dis_ear_biting": {
         "name": "Canibalismo de orejas",
-        "scientificName": "Respuesta al estrés",
+        "scientificName": "Stress response behavior",
         "description": "Conducta anormal donde los cerdos muerden las orejas de sus compañeros, causando necrosis.",
         "prevention": "Reducir hacinamiento, mejorar ventilación y dar enriquecimiento (cadenas)."
       },
       "dis_gastric_torsion": {
         "name": "Torsión gástrica (Timpanismo)",
-        "scientificName": "Vólvulo gástrico",
+        "scientificName": "Gastric dilation-volvulus",
         "description": "Hinchazón súbita y torsión del estómago, provocando muerte rápida.",
         "prevention": "Evitar comidas copiosas tras ayunos largos y dividir la ración diaria."
       },
@@ -1434,19 +1528,19 @@
       },
       "dis_cold_stress": {
         "name": "Estrés por frío (Hipotermia)",
-        "scientificName": "Susceptibilidad a hipotermia",
+        "scientificName": "Hypothermia susceptibility",
         "description": "Enfriamiento corporal grave en lechones, causa temblores y alta mortalidad.",
         "prevention": "Proporcionar lámparas de calor, cajas térmicas y evitar corrientes de aire."
       },
       "dis_necrotic_enteritis": {
         "name": "Enteritis necrótica",
-        "scientificName": "Clostridium perfringens Tipo C",
+        "scientificName": "Clostridium perfringens Type C",
         "description": "Toxina bacteriana que causa diarrea sanguinolenta grave y alta mortalidad en lechones.",
         "prevention": "Vacinar cerdas antes del parto y mantener higiene absoluta."
       },
       "dis_navel_bleeding": {
         "name": "Sangrado umbilical",
-        "scientificName": "Hemorragia umbilical",
+        "scientificName": "Umbilical hemorrhage",
         "description": "Hemorragia excesiva del cordón umbilical en lechones recién nacidos.",
         "prevention": "Atar cordones umbilicales al nacer, evitar alimento con micotoxinas en cerdas."
       },
@@ -1464,7 +1558,7 @@
       },
       "dis_prdc": {
         "name": "Complejo respiratorio porcino (CRP)",
-        "scientificName": "Complejo Respiratorio Porcino",
+        "scientificName": "Complejo respiratorio porcino (CRP)",
         "description": "Infección respiratoria mixta viral y bacteriana que causa tos y retraso en crecimiento.",
         "prevention": "Mejorar ventilación, evitar hacinamiento y controlar virus primarios."
       },
@@ -1482,7 +1576,7 @@
       },
       "dis_endocarditis": {
         "name": "Endocarditis bacteriana",
-        "scientificName": "Endocarditis estreptocócica",
+        "scientificName": "Streptococcal endocarditis",
         "description": "Infección en válvulas del corazón que causa paro cardíaco ante situaciones de estrés.",
         "prevention": "Tratar heridas y poliartritis a tiempo, evitar líneas genéticas susceptibles."
       },
@@ -1494,7 +1588,7 @@
       },
       "dis_congenital_tremor": {
         "name": "Temblor congénito",
-        "scientificName": "Pestivirus porcino atípico",
+        "scientificName": "Atypical Porcine Pestivirus",
         "description": "Trastorno neurológico en lechones recién nacidos que causa temblores severos.",
         "prevention": "Evitar usar semen de machos afectados y reducir estrés en cerdas gestantes."
       }
@@ -1527,13 +1621,13 @@
   "HR": {
     "title": "Directorio de Gestión de Personal",
     "description": "Añade miembros al equipo, configura salarios y gestiona accesos.",
-    "totalStaff": "Personal Total",
-    "monthlyPayroll": "Nómina Mensual",
+    "totalStaff": "Total de personal",
+    "monthlyPayroll": "Nómina mensual",
     "expandTeam": "Expande tu equipo",
     "addStaff": "+ Añadir Personal",
     "noStaff": "Aún no hay personal registrado.",
     "phone": "Teléfono",
-    "email": "Correo",
+    "email": "Correo electrónico",
     "salary": "Salario",
     "joined": "Ingreso",
     "appAccess": "Acceso App",
@@ -1541,27 +1635,52 @@
     "remove": "Eliminar",
     "editStaffDetails": "Editar Detalles de Personal",
     "registerStaffMember": "Registrar Miembro de Personal",
-    "fullName": "Nombre Completo",
+    "fullName": "Nombre completo",
     "role": "Puesto",
     "status": "Estado",
     "salaryLabel": "Salario ({symbol}/mes)",
     "joinedDate": "Fecha de Ingreso",
-    "allowAppAccess": "¿Permitir acceso a la base de datos?",
+    "allowAppAccess": "Permitir acceso a la aplicación",
     "cancel": "Cancelar",
     "saveUpdates": "Guardar Cambios",
     "registerStaff": "Registrar Personal",
     "active": "Activo",
     "inactive": "Inactivo",
     "onLeave": "De Licencia",
+    "inviteStatus": "Estado de la invitación",
+    "invite_sent": "Invitación enviada",
+    "invite_pending": "Enviando...",
+    "invite_failed": "Fallido",
+    "invite_none": "No invitado",
+    "resend": "Reenviar",
     "premiumFeatureAdd": "Añadir personal es una función Premium. Mejora para expandir tu equipo.",
     "premiumFeatureExport": "Exportar informes PDF es Premium. ¡Mejora para desbloquear!",
     "confirmDelete": "¿Estás seguro de que deseas eliminar a este miembro?",
-    "exportPdf": "Exportar PDF",
-    "exportPdfPremium": "Exportar PDF (Premium)"
+    "exportPdf": "Exportar todo PDF",
+    "exportPdfPremium": "Exportar PDF (Premium)",
+    "pigs": "Cerdos",
+    "residentialAddress": "Dirección de Residencia",
+    "emergencyContactDetails": "Datos de Contacto de Emergencia",
+    "emergencyContactName": "Nombre de Contacto de Emergencia",
+    "emergencyContactRelation": "Parentesco / Relación",
+    "emergencyContactPhone": "Teléfono de Emergencia",
+    "emergencyContactAddress": "Dirección de Emergencia",
+    "emergencyRelationPlaceholder": "ej. Cónyuge, Padre/Madre, Hermano/a",
+    "dateOfBirth": "Fecha de Nacimiento",
+    "gender": "Género",
+    "monthlySalary": "Salario Mensual",
+    "logSalaryPayment": "Registrar pago de salario",
+    "staffDetails": "Detalles del personal",
+    "staffProfile": "Perfil de Empleado",
+    "fullStaffReport": "Informe de Personal y Nómina",
+    "archiveStaff": "Archivar Empleado",
+    "deleteStaffMember": "Eliminar miembro del personal",
+    "editStaffMember": "Editar miembro del personal",
+    "activeStaff": "Personal Activo"
   },
   "PigProfile": {
     "weightUpdateRequired": "Actualización de Peso Requerida",
-    "weightUpdateDesc": "El peso no ha sido actualizado en los últimos 25 días. Por favor, actualízalo.",
+    "weightUpdateDesc": "El peso no se ha actualizado en los últimos 25 días. Actualice el peso para un seguimiento preciso.",
     "statusLocation": "Estado y Ubicación",
     "gender": "Género",
     "purpose": "Propósito",
@@ -1569,8 +1688,8 @@
     "weight": "Peso",
     "location": "Ubicación",
     "birthDate": "Fecha de Nacimiento",
-    "sowTag": "Chapa Cerda",
-    "boarTag": "Chapa Verraco",
+    "sowTag": "Arete de cerda",
+    "boarTag": "Arete de verraco",
     "unassigned": "Sin asignar",
     "notes": "Notas",
     "deleteProfile": "Eliminar Perfil",
@@ -1581,7 +1700,7 @@
     "editPigDetails": "Editar Detalles del Cerdo",
     "breed": "Raza",
     "cancel": "Cancelar",
-    "saveChanges": "Guardar Cambios",
+    "saveChanges": "Guardar cambios",
     "logHealthAction": "Registrar Acción de Salud",
     "actionDate": "Fecha de Acción",
     "actionType": "Tipo de Acción",
@@ -1593,17 +1712,17 @@
     "confirmDelete": "¿Estás seguro de que deseas eliminar este perfil?",
     "profileNotFound": "Perfil no encontrado.",
     "backToHerd": "Volver a la Piara",
-    "manualWeightLog": "Peso actualizado manualmente en detalles",
+    "manualWeightLog": "Peso actualizado manualmente en los detalles del cerdo.",
     "weightCheckDesc": "{notes}\nPeso actualizado a: {weight} kg",
     "actionTypes": {
       "medication": "Medicamento",
       "vaccination": "Vacunación",
       "treatment": "Tratamiento",
-      "heat": "Detección de Celo",
+      "heat": "Detección de celo",
       "breeding": "Monta",
       "pregnancy": "Confirmar Preñez",
       "deworming": "Desparasitación",
-      "weight": "Chequeo de Peso",
+      "weight": "Control de peso",
       "other": "Otro",
       "weight_check": "Control de peso",
       "culling": "Descarte",
@@ -1613,18 +1732,22 @@
       "weaning": "Destete",
       "castration": "Castración",
       "heat_detection": "Detección de celo",
-      "breeding_mating": "Cruce",
+      "breeding_mating": "Monta / Servicio",
       "pregnancy_check": "Diagnóstico de gestación",
       "farrowing": "Parto",
       "custom": "Personalizado"
     },
-    "reportTitle": "Informe de Perfil: {tag}"
+    "reportTitle": "Informe de Perfil: {tag}",
+    "tag": "Arete / Crotal",
+    "tagNumber": "Número de arete / crotal",
+    "castrated_label": "(Castrado)",
+    "source": "Origen"
   },
   "Admin": {
     "title": "Panel de Administración",
     "suggestions": "Sugerencias",
     "ingredients": "Ingredientes",
-    "videos": "Videos",
+    "videos": "Vídeos",
     "pendingSuggestions": "Sugerencias Pendientes",
     "approvedSuggestions": "Sugerencias Aprobadas",
     "rejectedSuggestions": "Sugerencias Rechazadas",
@@ -1633,14 +1756,14 @@
     "noApproved": "Sin sugerencias aprobadas.",
     "noRejected": "Sin sugerencias rechazadas.",
     "noDirectory": "Sin anuncios en el directorio.",
-    "searchIngredients": "Buscar Ingredientes...",
-    "addIngredient": "Añadir Ingrediente",
+    "searchIngredients": "Buscar ingredientes...",
+    "addIngredient": "Agregar ingrediente",
     "searchVideos": "Buscar Videos...",
     "addVideo": "Añadir Video",
     "noIngredients": "No se encontraron ingredientes.",
-    "noVideos": "No se encontraron tutoriales.",
+    "noVideos": "No se encontraron videos tutoriales.",
     "rejectSuggestion": "Rechazar Sugerencia",
-    "rejectionReason": "Ingresa razón del rechazo:",
+    "rejectionReason": "Ingrese comentarios o motivo del rechazo:",
     "reasonPlaceholder": "Razón del rechazo...",
     "confirmRejection": "Confirmar Rechazo",
     "cancel": "Cancelar",
@@ -1648,104 +1771,104 @@
     "reject": "Rechazar",
     "edit": "Editar",
     "delete": "Eliminar",
-    "saveChanges": "Guardar Cambios",
-    "editSuggestion": "Editar Sugerencia",
-    "editProvider": "Editar Proveedor",
-    "editIngredient": "Editar Ingrediente",
+    "saveChanges": "Guardar cambios",
+    "editSuggestion": "Editar Detalles de Sugerencia",
+    "editProvider": "Editar Listado de Proveedor",
+    "editIngredient": "Editar ingrediente",
     "newIngredient": "Nuevo Ingrediente",
-    "editVideo": "Editar Tutorial",
-    "newVideo": "Nuevo Tutorial",
+    "editVideo": "Editar Video Tutorial",
+    "newVideo": "Agregar Video Tutorial",
     "deleteSuggestion": "Eliminar Sugerencia",
-    "deleteProvider": "Eliminar Proveedor",
+    "deleteProvider": "Eliminar Listado de Proveedor",
     "deleteIngredient": "Eliminar Ingrediente Global",
-    "deleteVideo": "Eliminar Tutorial",
-    "confirmDeleteSuggestion": "¿Eliminar '{name}' permanentemente?",
-    "confirmDeleteProvider": "¿Eliminar '{name}' permanentemente?",
-    "confirmDeleteIngredient": "¿Eliminar '{name}'? Se dejará de ofrecer a nuevos usuarios.",
-    "confirmDeleteVideo": "¿Eliminar '{name}' permanentemente?",
-    "providerName": "Nombre del Proveedor",
-    "serviceType": "Tipo de Servicio",
+    "deleteVideo": "Eliminar Video Tutorial",
+    "confirmDeleteSuggestion": "¿Está seguro de que desea eliminar permanentemente '{name}'?",
+    "confirmDeleteProvider": "¿Está seguro de que desea eliminar permanentemente '{name}'?",
+    "confirmDeleteIngredient": "¿Está seguro de que desea eliminar '{name}' de la base de formulación global? Dejará de propagarse a nuevos usuarios.",
+    "confirmDeleteVideo": "¿Está seguro de que desea eliminar permanentemente '{name}'?",
+    "providerName": "Nome do provedor",
+    "serviceType": "Tipo de serviço",
     "contact": "Contacto",
-    "email": "Correo",
+    "email": "Correo electrónico",
     "city": "Ciudad",
     "country": "País",
     "name": "Nombre",
     "category": "Categoría",
     "location": "Ubicación",
     "description": "Descripción",
-    "ingredientName": "Nombre del Ingrediente",
-    "mainCategory": "Categoría Principal",
-    "protein": "Proteína Cruda (%)",
+    "ingredientName": "Nombre del ingrediente",
+    "mainCategory": "Categoría principal",
+    "protein": "Proteína cruda (%)",
     "me": "EM (MJ/kg)",
-    "fiber": "Fibra Cruda (%)",
-    "dryMatter": "Materia Seca (%)",
+    "fiber": "Fibra Bruta",
+    "dryMatter": "Materia seca %",
     "calcium": "Calcio (%)",
     "phosphorus": "Fósforo (%)",
-    "lysine": "Lisina (%)",
-    "methionine": "Metionina (%)",
+    "lysine": "Lisina",
+    "methionine": "Metionina",
     "maxInclusion": "Límites Máx. Inclusión (%)",
     "starter": "Iniciador",
-    "grower": "Crecimiento",
-    "finisher": "Finalizador",
-    "videoTitle": "Título de Video",
+    "grower": "Cerdo en crecimiento",
+    "finisher": "Cerdo de engorde",
+    "videoTitle": "Título del Video",
     "youtubeLink": "Enlace o ID de YouTube",
     "user": "Usuario",
     "rejectionReasonLabel": "Razón de Rechazo:"
   },
   "Terms": {
-    "title": "Términos de Servicio",
-    "lastUpdated": "Última Actualización: Abril 2026",
-    "contactSupport": "Soporte:",
+    "title": "Términos de servicio",
+    "lastUpdated": "Última actualización: %s",
+    "contactSupport": "Contactar soporte: %s",
     "sections": {
       "s1": {
-        "title": "1. Aceptación de Términos",
-        "content": "Al usar SmartSwine, aceptas estos términos. Si no estás de acuerdo, por favor no uses el servicio."
+        "title": "1. Aceptación de los términos",
+        "content": "Al acceder y utilizar la aplicación SmartSwine, usted acepta estar sujeto a estos Términos de servicio. Si no está de acuerdo con estos términos, no utilice el servicio."
       },
       "s2": {
-        "title": "2. Descripción del Servicio",
-        "content": "SmartSwine provee herramientas de gestión incluyendo: seguimiento de piara, registros financieros, gestión de RRHH, diagnóstico por IA y acceso a mercado."
+        "title": "2. Descripción del servicio",
+        "content": "\"SmartSwine\" proporciona herramientas de gestión agrícola que incluyen, entre otras :\n• Seguimiento del ganado y datos de salud.\n• Mantenimiento de registros financieros.\n• Gestión de recursos humanos.\n• Sugerencias de diagnóstico asistidas por IA.\n• Información de acceso al mercado."
       },
       "s3": {
-        "title": "3. Privacidad y Nube",
-        "content": "Eres dueño de tus datos. Usamos Google Firebase para seguridad pero no garantizamos seguridad absoluta. Eres responsable de la exactitud de los datos."
+        "title": "3. Privacidad de datos y respaldo en la nube",
+        "content": "Usted conserva la propiedad de los datos que ingresa. Sus datos se almacenan de forma segura mediante Google Firebase. Aunque nos esforzamos por proteger sus datos, no podemos garantizar una seguridad absoluta. Al habilitar el Respaldo en la nube, usted acepta el almacenamiento y la sincronización de sus datos. No vendemos sus datos a terceros. Usted es responsable de la precisión de los datos ingresados."
       },
       "s4": {
-        "title": "4. No es Consejo Veterinario (Aviso Crítico)",
-        "content": "Las funciones de IA son educativas. No sustituyen al veterinario. Consulta siempre a un profesional antes de decisiones médicas."
+        "title": "4. Sin asesoramiento médico o veterinario",
+        "content": "Las funciones de IA y las calculadoras son solo para fines educativos. Los resultados generados no sustituyen el asesoramiento veterinario profesional. El usuario acepta consultar a un veterinario antes de tomar cualquier decisión médica. El propietario de la aplicación no es responsable de las pérdidas resultantes del uso de estas funciones."
       },
       "s5": {
-        "title": "5. Responsabilidades",
-        "content": "Eres responsable de tu cuenta y su actividad."
+        "title": "5. Responsabilidades del usuario",
+        "content": "Los usuarios son responsables de mantener la confidencialidad de sus credenciales. Usted es responsable de todas las actividades que ocurran bajo su cuenta."
       },
       "s6": {
-        "title": "6. Conducta Prohibida",
-        "content": "No uses la app para fines ilegales o datos financieros fraudulentos."
+        "title": "6. Conducta prohibida",
+        "content": "Los usuarios aceptan no: utilizar la aplicación para fines ilegales, intentar realizar ingeniería inversa o ingresar datos financieros fraudulentos."
       },
       "s7": {
-        "title": "7. Disponibilidad",
-        "content": "Buscamos 99% de disponibilidad pero no garantizamos acceso ininterrumpido."
+        "title": "7. Disponibilidad del servicio",
+        "content": "Nos esforzamos por lograr un tiempo de actividad del 99%, pero no garantizamos el acceso ininterrumpido. Los respaldos se proporcionan por conveniencia; se recomienda a los usuarios mantener sus propios registros."
       },
       "s8": {
-        "title": "8. Limitación de Responsabilidad",
-        "content": "La app se provee \"tal cual\". No somos responsables por pérdidas de animales o discrepancias financieras."
+        "title": "8. Limitación de responsabilidad",
+        "content": "La aplicación se proporciona \"tal cual\". En la medida permitida por la ley, los desarrolladores no serán responsables de ningún daño directo o indirecto resultante del uso del servicio."
       },
       "s9": {
-        "title": "9. Datos Financieros",
-        "content": "No es consejo contable profesional. Consulta con un contador certificado."
+        "title": "9. Datos financieros",
+        "content": "El módulo financiero es una herramienta de seguimiento y no constituye asesoramiento contable profesional. Se recomienda a los usuarios exportar sus datos para que sean revisados por expertos."
       },
       "s10": {
-        "title": "10. Cambios",
-        "content": "Nos reservamos el derecho de modificar términos."
+        "title": "10. Cambios en los términos",
+        "content": "Nos reservamos el derecho de modificar estos términos en cualquier momento. El uso continuado de la aplicación constituye la aceptación de los nuevos términos."
       },
       "s11": {
-        "title": "11. Contacto",
-        "content": "bibiniitech@gmail.com"
+        "title": "11. Información de contacto",
+        "content": "Para soporte o consultas legales, comuníquese con el desarrollador a través de los ajustes del perfil de la aplicación."
       }
     }
   },
   "Privacy": {
-    "title": "Política de Privacidad",
-    "lastUpdated": "Última Actualización: Abril 2026",
+    "title": "Política de privacidad",
+    "lastUpdated": "Última actualización: %s",
     "importantTitle": "Tu Privacidad es Importante",
     "importantDesc": "Estamos comprometidos con proteger tus datos usando estándares de la industria.",
     "viewFull": "Ver Política Completa ↗",
@@ -1765,13 +1888,18 @@
     "subtitle": "SmartSwine · Gestor de Porqueriza"
   },
   "Settings": {
-    "title": "Configuración",
-    "editProfile": "Editar Perfil",
+    "title": "Ajustes",
+    "editProfile": "Editar perfil",
     "cyclesTiming": "Ciclos y Tiempos",
     "herdStatus": "Estado de Piara",
-    "dataManagement": "Gestión de Datos",
+    "dataManagement": "Gestión de datos",
     "aboutSmartSwine": "Sobre SmartSwine",
-    "farmName": "Nombre de Granja",
+    "farmLogo": "Logotipo de la Granja",
+    "farmLogoDesc": "Cargue el logotipo de su granja personalizado para personalizar su panel y encabezados de aplicaciones.",
+    "uploadLogo": "Subir logotipo",
+    "changeLogo": "Cambiar logotipo",
+    "removeLogo": "Eliminar logotipo",
+    "farmName": "Nombre de la granja",
     "country": "País",
     "localization": "Localización",
     "currencyCode": "Código Moneda",
@@ -1787,24 +1915,24 @@
     "autoBarrows": "Auto-clasificar Capones",
     "autoBarrowsDesc": "Cambia estado a Capón después de castración.",
     "autoSows": "Auto-clasificar Cerdas",
-    "autoSowsDesc": "Cambia estado a Cerda después del primer parto.",
-    "giltClassification": "Clasificación de Cerdillas",
+    "autoSowsDesc": "Establecer automáticamente como 'Cerda' si tiene historial de parto",
+    "giltClassification": "Clasificación de marranas",
     "giltDesc": "Umbral de edad si aún no ha parido.",
-    "weeks": "Semanas",
-    "clearHerdData": "Limpiar Datos de Piara",
-    "clearHerdDesc": "Elimina perfiles y registros. Usa con precaución.",
-    "clearFinancials": "Limpiar Finanzas",
+    "weeks": "semanas",
+    "clearHerdData": "Borrar datos del ganado",
+    "clearHerdDesc": "Eliminar registros de cerdos",
+    "clearFinancials": "Borrar finanzas",
     "clearFinDesc": "Elimina ingresos y gastos.",
-    "clearFeedData": "Limpiar Datos Alimento",
-    "clearFeedDesc": "Elimina inventario y transacciones.",
+    "clearFeedData": "Borrar datos alim.",
+    "clearFeedDesc": "Restablecer ingredientes",
     "clearHRData": "Limpiar Datos RRHH",
     "clearHRDesc": "Elimina personal y nóminas.",
     "cloudSync": "Sincronización Nube",
     "cloudSyncDesc": "Datos sincronizados automáticamente con SmartSwine Cloud.",
     "version": "v2.1.0-beta",
     "aboutDesc": "Diseñado para acceso de escritorio. Ofrece seguimiento avanzado, formulación y análisis financiero.",
-    "termsOfService": "Términos de Servicio",
-    "privacyPolicy": "Política de Privacidad",
+    "termsOfService": "Términos de servicio",
+    "privacyPolicy": "Política de privacidad",
     "cancel": "Cancelar",
     "saving": "Guardando...",
     "saveAll": "Guardar Todo",
@@ -1818,16 +1946,16 @@
     "dateCompleted": "Fecha de Fin",
     "heatOutcome": "Resultado Celo",
     "matingOutcome": "Resultado Monta",
-    "pregnancyConfirmed": "¿Preñez confirmada?",
-    "malePiglets": "Lechones Machos",
-    "femalePiglets": "Lechones Hembras",
+    "pregnancyConfirmed": "Embarazo confirmado",
+    "malePiglets": "Lechones machos",
+    "femalePiglets": "Lechones hembras",
     "maleTags": "Chapas Machos (Separadas por comas)",
     "femaleTags": "Chapas Hembras (Separadas por comas)",
-    "medicationName": "Nombre Medicamento",
+    "medicationName": "Nombre del medicamento",
     "dosage": "Dosis",
     "scheduleIron": "¿Programar 2da dosis hierro (7 días después)?",
-    "reason": "Razón",
-    "totalSalePrice": "Precio Venta Total ({symbol})",
+    "reason": "Motivo",
+    "totalSalePrice": "Precio total de venta ({symbol})",
     "selectAffectedPigs": "Seleccionar Cerdos Afectados ({count})",
     "procedureNotes": "Notas Procedimiento",
     "completeTask": "Completar Tarea",
@@ -1838,13 +1966,13 @@
     "price": "Precio ({symbol})",
     "notesPlaceholder": "ej. completado con éxito",
     "outcomes": {
-      "heatDetected": "Celo Detectado",
+      "heatDetected": "Celo",
       "noHeatDetected": "No Detectado",
       "successful": "Exitoso",
       "unsuccessful": "No Exitoso",
       "yesPregnant": "Sí (Gestante)",
       "noFailed": "No (Falló)",
-      "naturalCauses": "Causas Naturales",
+      "naturalCauses": "Causas naturales",
       "disease": "Enfermedad",
       "sold": "Vendido"
     },
@@ -1857,7 +1985,7 @@
     "weightUpdateLog": "Peso actualizado a: {weight} kg",
     "culledLog": "Descartado ({reason})",
     "soldLog": "Vendido por: {symbol} {price}",
-    "culledReasonLog": "Razón de descarte: {reason}"
+    "culledReasonLog": "Motivo de Descarte: {reason}"
   },
   "Premium": {
     "featureTitle": "Función Premium",
@@ -1867,7 +1995,7 @@
   "StaffLockout": {
     "title": "Acceso Bloqueado",
     "description": "Suscripción Premium expirada o inactiva. Personal requiere que el dueño tenga Premium activo.",
-    "signOut": "Cerrar Sesión"
+    "signOut": "Cerrar sesión"
   },
   "Paystack": {
     "upgrade": "Mejorar a Premium"
@@ -1879,7 +2007,7 @@
     "herdInventory": "Informe de Inventario de Piara",
     "financialLedger": "Informe de Libro de Caja",
     "hrDirectory": "Informe de Directorio de Personal",
-    "tagNumber": "Chapa",
+    "tagNumber": "Número de arete / crotal",
     "breed": "Raza",
     "gender": "Género",
     "age": "Edad",
@@ -1888,32 +2016,46 @@
     "location": "Ubicación",
     "performance": "Rendimiento",
     "summary": "Resumen",
-    "totalPigs": "Cerdos Totales",
+    "totalPigs": "Número total de cerdos: %d",
     "averageWeight": "Peso Promedio",
     "date": "Fecha",
     "type": "Tipo",
     "category": "Categoría",
     "description": "Descripción",
-    "amount": "Monto",
-    "totalIncome": "Ingresos Totales",
-    "totalExpense": "Gastos Totales",
+    "amount": "Cantidad",
+    "totalIncome": "Ingreso Total",
+    "totalExpense": "Gasto Total",
     "netBalance": "Balance Neto",
-    "staffName": "Nombre Personal",
+    "staffName": "Nombre del empleado",
     "role": "Puesto",
     "salary": "Salario",
     "joined": "Ingreso",
     "payrollSummary": "Resumen de Nómina",
-    "totalStaff": "Personal Total",
-    "monthlyPayroll": "Nómina Mensual",
-    "detailedHistory": "Detailed transaction history",
-    "narration": "Narration",
-    "balance": "Balance"
+    "totalStaff": "Total de personal",
+    "monthlyPayroll": "Nómina mensual",
+    "detailedHistory": "Historial de Transacciones Detallado",
+    "narration": "Narración",
+    "balance": "Saldo",
+    "feedReportTitle": "Informe de inventario de alimentos",
+    "totalMonthlyPayroll": "Nómina mensual",
+    "employeeProfileReport": "Perfil de Empleado"
   },
   "Common": {
-    "loading": "Cargando..."
+    "loading": "Cargando...",
+    "back": "Atrás",
+    "pigs": "Cerdos",
+    "close": "Cerrar",
+    "tag": "Arete / Crotal"
   },
   "Notifications": {
     "title": "Notificaciones",
+    "noActivities": "No hay actividades próximas",
+    "allTasksCompleted": "Todas las tareas están actualizadas.",
+    "generalTask": "Tarea general",
+    "weightUpdateTitle": "Actualización de Peso Necesaria",
+    "weightUpdateReminder": "El cerdo {tag} no ha sido pesado en 30 días. Por favor, actualice su peso.",
+    "lowStockTitle": "Alerta de Stock Bajo",
+    "lowStockReminder": "El stock de {name} es bajo ({qty} restante). Por favor, reabastezca.",
     "activeNotifications": "{count} Notificaciones",
     "allCaughtUp": "¡Todo al día! No hay tareas pendientes.",
     "noPendingNotifications": "No hay notificaciones pendientes.",
@@ -1941,11 +2083,11 @@
     "lastWeighedDaysAgo": "Cerdo #{tag}: Último pesaje hace {days} días",
     "stockLeftMinFormat": "{current}: {unit} kg restantes (Mín: {min} kg)",
     "pigs": "Cerdos",
-    "pig": "Cerdo",
+    "pig": "Cerdo #",
     "general": "generales",
     "overdue": "Atrasado",
     "due": "Pendiente",
-    "snoozeFor": "Snooze for"
+    "snoozeFor": "Posponer para"
   },
   "Guide": {
     "clear_all": "Borrar Todo",

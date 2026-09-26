@@ -199,11 +199,11 @@ class MarketViewModel : ViewModel() {
                     createdAt = System.currentTimeMillis()
                 )
 
-                // Transaction to ensure atomic write
-                db.runTransaction { transaction ->
-                    transaction.set(providerRef, provider)
-                    transaction.update(db.collection("market_suggestions").document(suggestion.id), "status", "approved")
-                }.await()
+                // Batch to ensure atomic write
+                val batch = db.batch()
+                batch.set(providerRef, provider)
+                batch.update(db.collection("market_suggestions").document(suggestion.id), "status", "approved")
+                batch.commit().await()
 
                 onComplete(true, null)
             } catch (e: Exception) {

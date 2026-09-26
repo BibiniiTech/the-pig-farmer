@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SmartSwine</string>
-    <string name="weight_checker_title">အလေးချိန်စစ်ဆေးစနစ်</string>
+    <string name="weight_checker_title">ဝက်အလေးချိန် ခန့်မှန်းတွက်ချက်စနစ်</string>
     <string name="back_button_content_description">နောက်သို့</string>
     <string name="important_notes_title">အရေးကြီးသော မှတ်ချက်များ</string>
-    <string name="weight_checker_notes">• ရင်ပတ်ပတ်လည်: ရှေ့ခြေထောက်များနောက်မှ ရင်ပတ်ကို တိပ်ဖြင့် တင်းတင်းကျပ်ကျပ် ပတ်၍ တိုင်းတာပါ (Point B)။\n• ကိုယ်ထည်အလျား: နားရွက်ခြေရင်းမှ အမြီးခြေရင်းအထိ တိပ်ကို ခန္ဓာကိုယ်ပေါ်တွင် တင်းတင်းရင်းရင်း တိုင်းတာပါ (Point A)။\n• တိကျသောရလဒ်ရရန် ဝက်ကို ညီညာသော မြေပြင်ပေါ်တွင် မတ်မတ်ရပ်ခိုင်းပါ။\n</string>
-    <string name="converter_title">ယူနစ်ပြောင်းလဲခြင်း</string>
-    <string name="unit_lbs">Lbs</string>
-    <string name="unit_kgs">Kg</string>
-    <string name="weigh_with_tape_title">ပေတိပ်ဖြင့် တိုင်းတာရန်</string>
-    <string name="weigh_with_tape_subtitle">ပေတိပ်အသုံးပြု၍ အလေးချိန်ကို ခန့်မှန်းပါ။</string>
-    <string name="label_length">အလျား (%1$s)</string>
-    <string name="label_girth">ရင်ပတ် (%1$s)</string>
-    <string name="unit_cm">cm</string>
-    <string name="unit_in">in</string>
+    <string name="weight_checker_notes">• ရင်အုပ်လုံးပတ်- ရှေ့ခြေထောက်နှစ်ဖက် အနောက်ဘက် ရင်အုပ်ကို တိပ်ကြိုးဖြင့် တင်းတင်းရင်းရင်း တိုင်းတာပါ (အမှတ် B)\n• ခန္ဓာကိုယ်အလျား- နားရွက်နှစ်ဖက်ကြားမှ ကျောရိုးတစ်လျှောက် အမြီးရင်းအထိ တိုင်းတာပါ (အမှတ် A)\n• တိကျသောအဖြေရရန် ဝက်ကို ညီညာသော မြေပြင်ပေါ်တွင် မတ်မတ်ရပ်စေပါ\n</string>
+    <string name="converter_title">ယူနစ်ပြောင်းလဲကိရိယာ</string>
+    <string name="unit_lbs">ပေါင်</string>
+    <string name="unit_kgs">ကီလို</string>
+    <string name="weigh_with_scale">ပေါင်ချိန်စက်ဖြင့် ချိန်တွယ်ရန်</string>
+    <string name="weigh_with_tape_title">ပေကြိုးဖြင့် အလေးချိန်တွက်ရန်</string>
+    <string name="weigh_with_tape_subtitle">ပေကြိုးတိုင်းတာမှုဖြင့် ကိုယ်အလေးချိန် ခန့်မှန်းခြင်း။</string>
+    <string name="label_length">ခန္ဓာကိုယ်အလျား (%1$s)</string>
+    <string name="label_girth">ရင်အုပ်လုံးပတ် (%1$s)</string>
+    <string name="unit_cm">စင်တီမီတာ</string>
+    <string name="unit_in">လက်မ</string>
     <string name="placeholder_a">A</string>
     <string name="placeholder_b">B</string>
-    <string name="label_estimated_live_weight">ခန့်မှန်းခြေ အရှင်အလေးချိန်</string>
-    <string name="label_estimated_carcass_weight">ခန့်မှန်းခြေ အသားထွက်နှုန်း</string>
-    <string name="msg_enter_measurements">တွက်ချက်ရန် တိုင်းတာချက်များကို ဖြည့်သွင်းပါ</string>
-    <string name="pig_diagram_content_description">ဝက်အလေးချိန်တိုင်းတာမှု လမ်းညွှန်</string>
-    <string name="weight_format">%1$.1f Kg / %2$.1f Lbs</string>
-    <string name="estimated_results">ခန့်မှန်းခြေ ရလဒ်များ</string>
+    <string name="label_estimated_live_weight">ခန့်မှန်း အရှင်အလေးချိန်</string>
+    <string name="label_estimated_carcass_weight">ခန့်မှန်း အသားအလေးချိန်</string>
+    <string name="msg_enter_measurements">အလေးချိန်တွက်ရန် အတိုင်းအတာများကို ပုံပေါ်တွင် ထည့်ပါ</string>
+    <string name="pig_diagram_content_description">ဝက်ခန္ဓာကိုယ် အတိုင်းအတာပြ ပုံကြမ်း</string>
+    <string name="weight_format">%1$.1f ကီလို / %2$.1f ပေါင်</string>
+    <string name="estimated_results">တွက်ချက်ရရှိသော အဖြေများ</string>
+    <string name="specify_breed">ဝက်မျိုးစိတ် သတ်မှတ်ရန်</string>
 </resources>

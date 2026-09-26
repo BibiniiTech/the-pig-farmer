@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SmartSwine</string>
-    <string name="weight_checker_title">PEMERIKSA BERAT</string>
+    <string name="weight_checker_title">TAKSASI BOBOT BABI</string>
     <string name="back_button_content_description">Kembali</string>
     <string name="important_notes_title">Catatan Penting</string>
-    <string name="weight_checker_notes">• Lingkar Dada: Ukur toraks (tepat di belakang kaki depan) pastikan pita pas di sepanjang badan dan bertemu dengan kencang (Titik B).\n• Panjang Badan: Ukur dari pangkal telinga hingga pangkal ekor pastikan pita kencang pada badan dan tidak longgar (Titik A).\n• Pastikan babi berdiri tegak di permukaan tanah yang rata untuk hasil yang paling akurat.\n</string>
-    <string name="converter_title">Konverter</string>
+    <string name="weight_checker_notes">• Lingkar Dada: Ukur lingkar dada tepat di belakang kaki depan dengan pita ukur pas menempel di badan (Titik B).\n• Panjang Badan: Ukur dari pangkal telinga sampai pangkal ekor di sepanjang garis punggung (Titik A).\n• Pastikan babi berdiri tegak di lantai datar yang rata untuk hasil taksasi bobot yang paling akurat.\n</string>
+    <string name="converter_title">Konverter Satuan</string>
     <string name="unit_lbs">Lbs</string>
     <string name="unit_kgs">Kg</string>
-    <string name="weigh_with_tape_title">Timbang dengan Pita</string>
-    <string name="weigh_with_tape_subtitle">Estimasi berat dengan pita pengukur.</string>
-    <string name="label_length">Panjang (%1$s)</string>
-    <string name="label_girth">Lingkar (%1$s)</string>
+    <string name="weigh_with_scale">Timbang dengan Timbangan Ternak</string>
+    <string name="weigh_with_tape_title">Taksir Bobot dengan Pita Ukur</string>
+    <string name="weigh_with_tape_subtitle">Estimasi bobot badan menggunakan pita ukur.</string>
+    <string name="label_length">Panjang Badan (%1$s)</string>
+    <string name="label_girth">Lingkar Dada (%1$s)</string>
     <string name="unit_cm">cm</string>
-    <string name="unit_in">in</string>
+    <string name="unit_in">inci</string>
     <string name="placeholder_a">A</string>
     <string name="placeholder_b">B</string>
-    <string name="label_estimated_live_weight">Estimasi Berat Hidup</string>
+    <string name="label_estimated_live_weight">Estimasi Bobot Hidup</string>
     <string name="label_estimated_carcass_weight">Estimasi Berat Karkas</string>
-    <string name="msg_enter_measurements">Masukkan pengukuran pada diagram untuk menghitung</string>
-    <string name="pig_diagram_content_description">Panduan pengukuran babi</string>
+    <string name="msg_enter_measurements">Masukkan ukuran pada diagram untuk menghitung bobot</string>
+    <string name="pig_diagram_content_description">Panduan pengukuran tubuh babi</string>
     <string name="weight_format">%1$.1f Kg / %2$.1f Lbs</string>
-    <string name="estimated_results">Hasil Estimasi</string>
+    <string name="estimated_results">Hasil Taksasi Bobot</string>
+    <string name="specify_breed">Tentukan Ras Babi</string>
 </resources>

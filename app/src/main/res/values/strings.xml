@@ -7,6 +7,7 @@
     <string name="converter_title">Converter</string>
     <string name="unit_lbs">Lbs</string>
     <string name="unit_kgs">Kgs</string>
+    <string name="weigh_with_scale">Weigh with Scale</string>
     <string name="weigh_with_tape_title">Weigh with Tape</string>
     <string name="weigh_with_tape_subtitle">Estimate weight with measuring tape.</string>
     <string name="label_length">Length (%1$s)</string>

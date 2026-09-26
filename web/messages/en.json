@@ -32,19 +32,20 @@
     "enterValidEmail": "Enter a valid email address",
     "invalidEmail": "Please enter a valid email address.",
     "features": {
-      "unlimitedPigs": "Unlimited Pigs & Litters",
+      "unlimitedPigs": "Add Unlimited Pigs to Herd",
       "pigsLimit": "Up to 20 pigs",
       "unlimited": "Unlimited",
       "growthTracking": "Automatic Pig Growth Tracking",
-      "feedFormulation": "Feed Formulation",
+      "feedFormulation": "Precision Feed Formulation",
       "unavailable": "❌ Unavailable",
       "feedDescription": "Unlimited for all stages",
-      "addEmployee": "Add Employee",
+      "addEmployee": "Add Staff, Allow Access & Track Activities in Real-Time",
       "employeeDescription": "Unlimited and with staff access to farm data",
-      "pdfReports": "PDF Report Exports",
+      "pdfReports": "Export All Reports to PDF",
       "pdfDescription": "⚡ Yes, Instant save/print PDFs",
-      "symptomsAnalyzer": "Symptoms Analyzer",
-      "fullAccess": "Full Access"
+      "symptomsAnalyzer": "Disease Diagnosis & Treatment Guide",
+      "fullAccess": "Full Access",
+      "adFreeExperience": "Ad-Free & Priority Cloud Sync"
     }
   },
   "Home": {
@@ -139,7 +140,19 @@
     "calculator": "Calculate Feed",
     "mixFeed": "Mix Feed",
     "analyzeFeed": "Analyze Feed",
-    "marketHub": "Market Hub"
+    "marketHub": "Market Hub",
+    "weighWithScale": "Weigh with Scale",
+    "logActivitiesEvents": "Log activities & events",
+    "openActivityCalendar": "Open Breeding & Activities",
+    "cashflowRecords": "Financials",
+    "financialSummary": "Financial Summary",
+    "totalIncome": "Total Income",
+    "totalExpenses": "Total Expense",
+    "netProfit": "Net Profit",
+    "viewAll": "View All",
+    "next": "Next",
+    "previous": "Previous",
+    "addEntry": "Add Transaction"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -178,9 +191,9 @@
     "accountDeletion": "Account Deletion"
   },
   "Herd": {
-    "title": "Pigs Inventory",
+    "title": "Herd Data",
     "titleArchived": "Pigs Inventory (Archived)",
-    "exportPdf": "Export PDF",
+    "exportPdf": "Export All PDF",
     "exportPdfPremium": "Export PDF (Premium)",
     "noArchived": "No archived pigs found.",
     "noPigs": "No pigs registered in this farm yet.",
@@ -236,7 +249,14 @@
     "boar": "Boar",
     "barrow": "Barrow",
     "pregnant": "Pregnant",
-    "lactating": "Lactating"
+    "lactating": "Lactating",
+    "searchPlaceholder": "Tag / Location / Breed",
+    "activeHerd": "Active",
+    "archivedHerd": "Archived Pigs",
+    "tag": "Tag",
+    "castrated_label": "(Castrated)",
+    "desc": "Register animals, manage ear tags, assign pens, and track lineage.",
+    "pigs": "Pigs"
   },
   "Profile": {
     "owner": "Owner",
@@ -250,7 +270,7 @@
     "homeDesc": "Farm overview and stats",
     "herd": "Herd Data",
     "herdDesc": "Manage individual pig records",
-    "feed": "Feed Management",
+    "feed": "Feed",
     "feedDesc": "Inventory and formulation",
     "activities": "Herd Activities",
     "activitiesDesc": "Track health and breeding",
@@ -258,20 +278,20 @@
     "financialsDesc": "Revenue and expense ledger",
     "hr": "Human Resources",
     "hrDesc": "Manage staff and access",
-    "hub": "Local Hub",
+    "hub": "Market Hub",
     "hubDesc": "Markets and resources",
-    "symptoms": "Symptoms Analyzer",
+    "symptoms": "Disease Finder",
     "symptomsDesc": "AI health diagnostic tool",
-    "weight": "Weight Checker",
+    "weight": "Weigh Pigs",
     "weightDesc": "Growth performance tracking",
-    "training": "Training Tips",
+    "training": "Pig Farming Tips",
     "trainingDesc": "Learn husbandry techniques",
     "billing": "Billing & Premium",
     "billingDesc": "Subscription and features",
     "admin": "Admin Panel",
     "settings": "Settings",
     "signOut": "Sign Out",
-    "quickAccess": "Quick Access",
+    "quickAccess": "QUICK ACCESS",
     "addPigs": "Add Pigs",
     "calculateFeed": "Calculate Feed",
     "mixFeed": "Mix Feed",
@@ -279,7 +299,18 @@
     "addEmployee": "Add Employee",
     "findDisease": "Find Disease",
     "dark": "Dark",
-    "light": "Light"
+    "light": "Light",
+    "marketHub": "Market Hub",
+    "diseaseFinder": "Disease Finder",
+    "weighPigs": "Weigh Pigs",
+    "trainingTips": "Pig Farming Tips",
+    "herdData": "Herd Data",
+    "feedManagement": "Feed",
+    "herdActivities": "Herd Activities",
+    "humanResources": "Human Resources",
+    "howToGuide": "How-To Guide",
+    "rate5Stars": "Rate 5 Stars on Google Play",
+    "back": "Back"
   },
   "Activities": {
     "title": "Execute Herd Procedure",
@@ -381,7 +412,16 @@
     "logAction": "Log Action",
     "expectedFarrowing": "Expected Farrowing Date: {date}",
     "chooseSow": "Select Sow (Female)",
-    "chooseBoar": "Select Boar (Male)"
+    "chooseBoar": "Select Boar (Male)",
+    "back": "Back",
+    "chooseActivityToExecute": "Choose Activity to Execute/Schedule",
+    "stillborns": "Stillborns",
+    "mummies": "Mummies",
+    "reasonNatural": "Natural Causes",
+    "reasonDisease": "Disease",
+    "reasonSold": "Sold",
+    "criticalFoodSafetyWarning": "CRITICAL FOOD SAFETY WARNING",
+    "meatWithdrawalTitle": "Meat Withdrawal Period"
   },
   "Feed": {
     "lowStockWarning": "Low Stock Warning",
@@ -518,7 +558,18 @@
       "phosphorus": "Phosphorus (%)",
       "lysine": "Lysine (%)",
       "methionineCystine": "Methionine + Cystine (%)"
-    }
+    },
+    "category": "Category",
+    "headCount": "Pigs",
+    "dailyIntake": "Rate",
+    "dailyTotal": "Daily Total",
+    "mixFeedDesc": "Unlock linear programming feed balancing, stage nutrient targets, and cost optimizations.",
+    "runFormulator": "Calculate Ration",
+    "noFeedInventoryItems": "No feed items recorded",
+    "addFirstFeedItem": "Add Feed Item",
+    "addFirstItem": "Add Item",
+    "sow": "Sow",
+    "boar": "Boar"
   },
   "Financials": {
     "totalRevenue": "Total Revenue",
@@ -647,7 +698,8 @@
     "saveError": "Error saving weight. Check your connection.",
     "validWeightAlert": "Please enter a valid weight in kg.",
     "weightCheckedManually": "Weight checked manually: {weight} kg.",
-    "tapeEstimationLog": "Tape calculation estimated weight: {weight} kg / {lbs} lbs (Girth: {girth} {unit}, Length: {length} {unit})."
+    "tapeEstimationLog": "Tape calculation estimated weight: {weight} kg / {lbs} lbs (Girth: {girth} {unit}, Length: {length} {unit}).",
+    "weighWithScale": "Weigh with Scale"
   },
   "Training": {
     "title": "Quick Farming Tips",
@@ -1605,7 +1657,26 @@
     "premiumFeatureExport": "Exporting PDF reports is a Premium feature. Upgrade to unlock!",
     "confirmDelete": "Are you sure you want to remove this staff member?",
     "exportPdf": "Export PDF",
-    "exportPdfPremium": "Export PDF (Premium)"
+    "exportPdfPremium": "Export PDF (Premium)",
+    "pigs": "Pigs",
+    "residentialAddress": "Residential Address",
+    "emergencyContactDetails": "Emergency Contact Details",
+    "emergencyContactName": "Emergency Contact Name",
+    "emergencyContactRelation": "Emergency Contact Relation",
+    "emergencyContactPhone": "Emergency Contact Phone",
+    "emergencyContactAddress": "Emergency Contact Address",
+    "emergencyRelationPlaceholder": "e.g. Spouse, Parent, Sibling",
+    "dateOfBirth": "Date of Birth",
+    "gender": "Gender",
+    "monthlySalary": "Monthly Salary",
+    "logSalaryPayment": "Log Salary Payment",
+    "staffDetails": "Staff Details",
+    "staffProfile": "Employee Details",
+    "fullStaffReport": "Staff & Payroll Report",
+    "archiveStaff": "Archive Employee",
+    "deleteStaffMember": "Delete Staff Member",
+    "editStaffMember": "Edit Staff Member",
+    "activeStaff": "Active Staff"
   },
   "PigProfile": {
     "weightUpdateRequired": "Weight Update Required",
@@ -1666,7 +1737,11 @@
       "farrowing": "Farrowing",
       "custom": "Custom"
     },
-    "reportTitle": "Pig Profile Report: {tag}"
+    "reportTitle": "Pig Profile Report: {tag}",
+    "tag": "Tag",
+    "tagNumber": "Tag Number",
+    "castrated_label": "(Castrated)",
+    "source": "Source"
   },
   "Admin": {
     "title": "Admin Panel",
@@ -1960,10 +2035,17 @@
     "monthlyPayroll": "Monthly Payroll",
     "detailedHistory": "Detailed transaction history",
     "narration": "Narration",
-    "balance": "Balance"
+    "balance": "Balance",
+    "feedReportTitle": "Feed Inventory Report",
+    "totalMonthlyPayroll": "Monthly Payroll",
+    "employeeProfileReport": "Employee Details"
   },
   "Common": {
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "back": "Back",
+    "pigs": "Pigs",
+    "close": "Close",
+    "tag": "Tag"
   },
   "Notifications": {
     "title": "Notifications",

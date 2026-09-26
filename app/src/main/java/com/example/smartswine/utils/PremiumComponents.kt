@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import com.example.smartswine.ui.theme.SmartSwineTheme
 
 val LocalIsPremium = compositionLocalOf { false }
+val LocalIsPaidPremium = compositionLocalOf { false }
+val LocalPassRemainingTime = compositionLocalOf<String?> { null }
 
 @Composable
 fun PremiumIcon(
@@ -26,7 +28,7 @@ fun PremiumIcon(
 ) {
     Icon(
         imageVector = Icons.Default.Lock,
-        contentDescription = "Premium",
+        contentDescription = stringResource("premium"),
         tint = tint,
         modifier = modifier.size(16.dp)
     )
@@ -36,9 +38,10 @@ fun PremiumIcon(
 fun PremiumWrapper(
     isPremium: Boolean,
     onLockedClick: () -> Unit,
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    Box(contentAlignment = Alignment.TopEnd) {
+    Box(modifier = modifier, contentAlignment = Alignment.TopEnd) {
         Box(modifier = Modifier.then(
             if (!isPremium) Modifier.clickable { onLockedClick() } else Modifier
         )) {

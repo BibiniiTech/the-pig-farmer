@@ -3,17 +3,21 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, doc, addDoc, deleteDoc, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 import { useDevice } from "@/context/DeviceContext";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import { useTranslations } from "next-intl";
 import { ScienceIcon, ExportPdfIcon } from "@/components/icons/DashboardIcons";
-import { FeedIngredient, NutritionalRequirement } from "@/lib/types";
+import { FeedIngredient, NutritionalRequirement, SavedFeedRecipe } from "@/lib/types";
 import { formulateFeed, FormulationResult } from "@/lib/feedCalculator";
 import PremiumWrapper from "@/components/PremiumWrapper";
 import NativeAdBanner from "@/components/ads/NativeAdBanner";
+import SavedRecipesModal from "@/components/feed/SavedRecipesModal";
+import SaveRecipeModal from "@/components/feed/SaveRecipeModal";
+import IngredientsCatalogModal from "@/components/feed/IngredientsCatalogModal";
+import BatchMixModal from "@/components/feed/BatchMixModal";
 
 const ArrowLeftIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -36,6 +40,7 @@ const defaultRequirements: NutritionalRequirement[] = [
 
 export default function MixFeedPage() {
   const t = useTranslations("Feed");
+  const tCommon = useTranslations("Common");
   const { user, userProfile, activeFarmUid, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -47,6 +52,14 @@ export default function MixFeedPage() {
   const [formulation, setFormulation] = useState<FormulationResult | null>(null);
   const [formulatorError, setFormulatorError] = useState<string | null>(null);
   const [expandedCategory, setExpandedCategory] = useState<string | null>("Energy");
+
+  // Saved Recipes states
+  const [savedRecipes, setSavedRecipes] = useState<SavedFeedRecipe[]>([]);
+  const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
+  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
+  const [isBatchModalOpen, setIsBatchModalOpen] = useState(false);
+  const [isCatalogOpen, setIsCatalogOpen] = useState(false);
+  const [saveToast, setSaveToast] = useState<string | null>(null);
 
   const toggleCategory = (cat: string) => {
     setExpandedCategory(prev => (prev === cat ? null : cat));
@@ -81,6 +94,86 @@ export default function MixFeedPage() {
 
     return () => unsub();
   }, [activeFarmUid]);
+
+  // Subscribe to saved recipes in real-time
+  useEffect(() => {
+    if (!activeFarmUid) return;
+    const q = query(
+      collection(db, "users", activeFarmUid, "saved_feed_recipes"),
+      orderBy("timestamp", "desc")
+    );
+    const unsub = onSnapshot(q, (snapshot) => {
+      const list = snapshot.docs.map((d) => ({
+        id: d.id,
+        ...d.data(),
+      } as SavedFeedRecipe));
+      setSavedRecipes(list);
+    }, (err) => {
+      console.warn("Error listening to saved recipes:", err);
+    });
+
+    return () => unsub();
+  }, [activeFarmUid]);
+
+  const calculatedCostPerKg = React.useMemo(() => {
+    if (!formulation) return 0;
+    const ings = formulation.ingredients || formulation.proportions || {};
+    let totalCost = 0;
+    let totalPct = 0;
+    Object.entries(ings).forEach(([id, pct]) => {
+      const ing = ingredients.find(i => i.id === id);
+      if (ing && ing.costPerKg > 0) {
+        totalCost += (pct / 100) * ing.costPerKg;
+      }
+      totalPct += pct;
+    });
+    return totalPct > 0 ? totalCost / (totalPct / 100) : 0;
+  }, [formulation, ingredients]);
+
+  const handleSaveRecipe = async (data: { name: string; notes: string; targetBatchKg: number }) => {
+    if (!activeFarmUid || !formulation) return;
+    const ingredientsMap = formulation.ingredients || formulation.proportions || {};
+    const newRecipe = {
+      name: data.name,
+      stage: selectedStage,
+      dateCreated: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+      ingredients: ingredientsMap,
+      isPercentage: true,
+      costPerKg: calculatedCostPerKg,
+      targetBatchKg: data.targetBatchKg,
+      notes: data.notes,
+      timestamp: Date.now(),
+    };
+
+    await addDoc(collection(db, "users", activeFarmUid, "saved_feed_recipes"), newRecipe);
+    setSaveToast(`Formulation "${data.name}" saved successfully!`);
+    setTimeout(() => setSaveToast(null), 4000);
+  };
+
+  const handleDeleteRecipe = async (recipeId: string) => {
+    if (!activeFarmUid || !recipeId) return;
+    await deleteDoc(doc(db, "users", activeFarmUid, "saved_feed_recipes", recipeId));
+  };
+
+  const handleLoadRecipe = (recipe: SavedFeedRecipe) => {
+    if (recipe.stage) {
+      setSelectedStage(recipe.stage);
+    }
+    const ingIds = Object.keys(recipe.ingredients || {});
+    if (ingIds.length > 0) {
+      setSelectedIds(ingIds);
+      const targetReq =
+        requirements.find(
+          req => req.stage.toLowerCase() === (recipe.stage || "Grower").toLowerCase()
+        ) || defaultRequirements[1];
+      const result = formulateFeed(targetReq, ingredients, ingIds);
+      setFormulation(result);
+      if (result.error) setFormulatorError(result.error);
+      else setFormulatorError(null);
+    }
+    setSaveToast(`Loaded formulation "${recipe.name}"`);
+    setTimeout(() => setSaveToast(null), 4000);
+  };
 
   const handleToggleSelect = (id: string) => {
     setSelectedIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
@@ -142,7 +235,7 @@ export default function MixFeedPage() {
 
   if (loading || !user) {
     return (
-      <div className="flex h-screen items-center justify-center bg-white text-zinc-900">
+      <div className="flex h-screen items-center justify-center bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-amber-500 border-t-transparent"></div>
       </div>
     );
@@ -153,27 +246,61 @@ export default function MixFeedPage() {
   const supplementalList = ingredients.filter(i => i.mainCategory === "Vitamins, Minerals & Salt");
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-x-hidden">
-      {!isMobile && <DesktopHeader />}
+    <div className="relative min-h-screen bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans overflow-x-hidden">
+      {!isMobile && (
+        <DesktopHeader
+          showBack
+          backPath="/dashboard?section=feed"
+          label={t("mixFeed") || "FEED FORMULATOR"}
+          labelColor="text-[#E65100] dark:text-[#FFB74D]"
+        />
+      )}
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-8">
-        <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 pb-4">
+        <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-4">
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard?section=feed"
-              className="p-2 rounded-xl border border-zinc-200 text-zinc-600 hover:bg-zinc-100 transition"
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition font-bold text-xs shadow-xs"
             >
-              <ArrowLeftIcon className="h-5 w-5" />
+              <ArrowLeftIcon className="h-4 w-4" />
+              <span>{tCommon("back") || "Back"}</span>
             </Link>
-            <div className="h-10 w-10 rounded-xl bg-amber-50 border border-amber-200/60 flex items-center justify-center flex-shrink-0">
-              <ScienceIcon className="h-5 w-5 text-amber-600" />
+            <div className="h-10 w-10 rounded-xl bg-[#FFF3E0] dark:bg-[#E65100]/30 border border-[#E65100]/30 flex items-center justify-center flex-shrink-0">
+              <ScienceIcon className="h-5 w-5 text-[#E65100] dark:text-[#FFB74D]" />
             </div>
             <div>
-              <h1 className="text-xl sm:text-2xl font-black text-amber-600">
+              <h1 className="text-xl sm:text-2xl font-black text-[#E65100] dark:text-[#FFB74D]">
                 {t("mixFeed") || "Mix Feed"}
               </h1>
-              <p className="text-xs text-zinc-500">{t("mixFeedDesc") || "Pearson square multi-nutrient balanced feed formulation"}</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">{t("mixFeedDesc") || "Pearson square multi-nutrient balanced feed formulation"}</p>
             </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setIsCatalogOpen(true)}
+              className="px-3.5 py-2.5 rounded-xl bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-700 text-xs font-bold transition flex items-center gap-2 shadow-2xs active:scale-95"
+            >
+              <ScienceIcon className="h-4 w-4 text-amber-600" />
+              <span>Ingredients ({ingredients.length})</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsSavedModalOpen(true)}
+              className="px-4 py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200/80 text-amber-900 text-xs font-bold transition flex items-center gap-2 shadow-2xs active:scale-95"
+            >
+              <svg className="h-4 w-4 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+              </svg>
+              <span>Saved Formulations</span>
+              {savedRecipes.length > 0 && (
+                <span className="h-5 min-w-5 px-1.5 rounded-full bg-amber-600 text-white font-black text-[10px] flex items-center justify-center">
+                  {savedRecipes.length}
+                </span>
+              )}
+            </button>
           </div>
         </div>
 
@@ -245,16 +372,39 @@ export default function MixFeedPage() {
             </div>
 
             <div className="lg:col-span-7 bg-amber-50/50 backdrop-blur-md border border-amber-200/80 rounded-2xl p-6 shadow-sm space-y-6">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between flex-wrap gap-2">
                 <h3 className="text-lg font-bold text-zinc-900">{t("mixingResults") || "Mixing Results"}</h3>
                 {formulation && (
-                  <button
-                    onClick={() => window.print()}
-                    className="px-3.5 py-1.5 bg-white border border-amber-200 text-xs font-bold text-amber-900 rounded-xl hover:bg-amber-50 flex items-center gap-1.5 shadow-xs"
-                  >
-                    <ExportPdfIcon className="h-3.5 w-3.5 text-amber-600" />
-                    Print Recipe
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsBatchModalOpen(true)}
+                      className="px-3.5 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition active:scale-95"
+                    >
+                      <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                      </svg>
+                      <span>Mix Batch</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setIsSaveModalOpen(true)}
+                      className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition active:scale-95"
+                    >
+                      <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                      </svg>
+                      <span>Save Formulation</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => window.print()}
+                      className="px-3.5 py-1.5 bg-white border border-amber-200 text-xs font-bold text-amber-900 rounded-xl hover:bg-amber-50 flex items-center gap-1.5 shadow-xs transition"
+                    >
+                      <ExportPdfIcon className="h-3.5 w-3.5 text-amber-600" />
+                      Print Recipe
+                    </button>
+                  </div>
                 )}
               </div>
 
@@ -317,6 +467,71 @@ export default function MixFeedPage() {
         </PremiumWrapper>
 
         <NativeAdBanner />
+
+        {/* Saved Recipes Browser Modal */}
+        <SavedRecipesModal
+          isOpen={isSavedModalOpen}
+          onClose={() => setIsSavedModalOpen(false)}
+          savedRecipes={savedRecipes}
+          allIngredients={ingredients}
+          currencySymbol={userProfile?.settings?.currencySymbol || "$"}
+          onLoadRecipe={handleLoadRecipe}
+          onDeleteRecipe={handleDeleteRecipe}
+        />
+
+        {/* Save Recipe Input Modal */}
+        <SaveRecipeModal
+          isOpen={isSaveModalOpen}
+          onClose={() => setIsSaveModalOpen(false)}
+          stage={selectedStage}
+          ingredientsCount={Object.keys(formulation?.ingredients || formulation?.proportions || {}).length}
+          costPerKg={calculatedCostPerKg}
+          currencySymbol={userProfile?.settings?.currencySymbol || "$"}
+          onSave={handleSaveRecipe}
+        />
+
+        {/* Ingredients Catalog Modal */}
+        <IngredientsCatalogModal
+          isOpen={isCatalogOpen}
+          onClose={() => setIsCatalogOpen(false)}
+          ingredients={ingredients}
+          activeFarmUid={activeFarmUid}
+          currencySymbol={userProfile?.settings?.currencySymbol || "$"}
+          isPremium={Boolean(userProfile?.isPremium || userProfile?.isAdmin)}
+        />
+
+        {/* Batch Mix Modal */}
+        <BatchMixModal
+          isOpen={isBatchModalOpen}
+          onClose={() => setIsBatchModalOpen(false)}
+          recipeName={`${selectedStage} Feed Mix`}
+          stage={selectedStage}
+          defaultBatchKg={1000}
+          requiredIngredients={Object.entries(formulation?.ingredients || formulation?.proportions || {}).map(([id, pct]) => {
+            const ing = ingredients.find(i => i.id === id);
+            return {
+              id,
+              name: ing?.name || id,
+              percent: pct,
+              costPerKg: ing?.costPerKg || 0,
+            };
+          })}
+          activeFarmUid={activeFarmUid || ""}
+          onSuccess={(msg) => {
+            setSaveToast(msg);
+            setTimeout(() => setSaveToast(null), 5000);
+          }}
+        />
+
+        {/* Toast confirmation */}
+        {saveToast && (
+          <div className="fixed bottom-6 right-6 z-50 py-3 px-4.5 bg-zinc-900 text-white text-xs font-bold rounded-2xl shadow-2xl flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-2 duration-200">
+            <svg className="h-4 w-4 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+            </svg>
+            <span>{saveToast}</span>
+          </div>
+        )}
       </main>
     </div>
   );

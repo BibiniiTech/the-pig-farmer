@@ -14,8 +14,8 @@ android {
         applicationId = "com.bibiniitech.smartswine"
         minSdk = 24
         targetSdk = 36
-        versionCode = 25
-        versionName = "1.25"
+        versionCode = 26
+        versionName = "2.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -59,7 +59,7 @@ android {
     }
 
     lint {
-        disable += "CredentialsPlayConsole"
+        disable += "MissingTranslation"
         disable += "OldTargetApi"
     }
 }
@@ -98,6 +98,9 @@ dependencies {
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
+    implementation(libs.play.services.ads)
+    implementation(libs.unity.mediation)
+    implementation(libs.unity.ads)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

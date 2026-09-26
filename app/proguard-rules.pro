@@ -95,3 +95,11 @@
     public <fields>;
     public <methods>;
 }
+
+# Google Mobile Ads Mediation - Unity Ads
+-keepattributes JavascriptInterface
+-keep class com.unity3d.ads.** { *; }
+-dontwarn com.unity3d.ads.**
+-keep class com.google.ads.mediation.unity.** { *; }
+-dontwarn com.google.ads.mediation.unity.**
+

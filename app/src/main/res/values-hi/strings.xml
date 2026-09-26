@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartSwine</string>
+    <string name="weight_checker_title">सूअर वजन अनुमानक</string>
+    <string name="back_button_content_description">वापस</string>
+    <string name="important_notes_title">महत्वपूर्ण निर्देश</string>
+    <string name="weight_checker_notes">• छाती का घेरा: आगे के पैरों के ठीक पीछे छाती का घेरा नापें, फीता शरीर से सटा हुआ होना चाहिए (बिंदु B)।\n• शरीर की लंबाई: कानों के बीच से रीढ़ की हड्डी के साथ पूंछ की जड़ तक नापें (बिंदु A)।\n• सटीक परिणाम हेतु सुनिश्चित करें कि सूअर समतल जमीन पर सीधा खड़ा हो।\n</string>
+    <string name="converter_title">इकाई परिवर्तक</string>
+    <string name="unit_lbs">पाउंड</string>
+    <string name="unit_kgs">किग्रा</string>
+    <string name="weigh_with_scale">कांटा / इलेक्ट्रॉनिक तराजू से तौलें</string>
+    <string name="weigh_with_tape_title">फीते से वजन मापें</string>
+    <string name="weigh_with_tape_subtitle">इंची टेप से नापकर वजन का अनुमान लगाएं।</string>
+    <string name="label_length">लंबाई (%1$s)</string>
+    <string name="label_girth">छाती का घेरा (%1$s)</string>
+    <string name="unit_cm">सेमी</string>
+    <string name="unit_in">इंच</string>
+    <string name="placeholder_a">A</string>
+    <string name="placeholder_b">B</string>
+    <string name="label_estimated_live_weight">अनुमानित जीवित वजन</string>
+    <string name="label_estimated_carcass_weight">अनुमानित कारकास वजन</string>
+    <string name="msg_enter_measurements">वजन की गणना के लिए चित्र में माप दर्ज करें</string>
+    <string name="pig_diagram_content_description">सूअर शरीर मापन मार्गदर्शिका</string>
+    <string name="weight_format">%1$.1f किग्रा / %2$.1f पाउंड</string>
+    <string name="estimated_results">अनुमानित परिणाम</string>
+    <string name="specify_breed">नस्ल निर्दिष्ट करें</string>
+</resources>

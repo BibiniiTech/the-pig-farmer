@@ -18,7 +18,8 @@ class HerdRepository(private val db: FirebaseFirestore) {
         val listener = db.collection("users").document(userId).collection("pigs")
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
-                    close(error)
+                    android.util.Log.w("HerdRepository", "Error listening to pigs: ${error.message}")
+                    close()
                     return@addSnapshotListener
                 }
                 val pigs = snapshot?.documents?.mapNotNull { doc ->
@@ -33,7 +34,8 @@ class HerdRepository(private val db: FirebaseFirestore) {
         val listener = db.collection("users").document(userId).collection("archived_pigs")
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
-                    close(error)
+                    android.util.Log.w("HerdRepository", "Error listening to archived pigs: ${error.message}")
+                    close()
                     return@addSnapshotListener
                 }
                 val pigs = snapshot?.documents?.mapNotNull { doc ->
@@ -52,33 +54,76 @@ class HerdRepository(private val db: FirebaseFirestore) {
     }
 
     fun getPig(userId: String, pigId: String): Flow<Pig?> = callbackFlow {
-        val listener = db.collection("users").document(userId).collection("pigs").document(pigId)
+        var archiveListener: com.google.firebase.firestore.ListenerRegistration? = null
+        val activeListener = db.collection("users").document(userId).collection("pigs").document(pigId)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
-                    close(error)
+                    android.util.Log.w("HerdRepository", "Error listening to pig $pigId: ${error.message}")
+                    close()
                     return@addSnapshotListener
                 }
-                val pig = snapshot?.toObject(Pig::class.java)?.copy(id = snapshot.id)
-                trySend(pig)
+                if (snapshot != null && snapshot.exists()) {
+                    val pig = snapshot.toObject(Pig::class.java)?.copy(id = snapshot.id)
+                    trySend(pig)
+                } else {
+                    // Fallback to archived_pigs if not found in active herd
+                    archiveListener?.remove()
+                    archiveListener = db.collection("users").document(userId).collection("archived_pigs").document(pigId)
+                        .addSnapshotListener { archSnapshot, archError ->
+                            if (archError == null && archSnapshot != null && archSnapshot.exists()) {
+                                val archPig = archSnapshot.toObject(Pig::class.java)?.copy(id = archSnapshot.id)
+                                trySend(archPig)
+                            } else {
+                                trySend(null)
+                            }
+                        }
+                }
             }
-        awaitClose { listener.remove() }
+        awaitClose {
+            activeListener.remove()
+            archiveListener?.remove()
+        }
     }
 
     fun getHealthRecords(userId: String, pigId: String): Flow<List<HealthRecord>> = callbackFlow {
-        val listener = db.collection("users").document(userId).collection("pigs").document(pigId)
+        var archiveListener: com.google.firebase.firestore.ListenerRegistration? = null
+        val activeListener = db.collection("users").document(userId).collection("pigs").document(pigId)
             .collection("health_records")
             .orderBy("date", Query.Direction.ASCENDING)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
-                    close(error)
+                    android.util.Log.w("HerdRepository", "Error listening to health records: ${error.message}")
+                    close()
                     return@addSnapshotListener
                 }
                 val records = snapshot?.documents?.mapNotNull { doc ->
                     doc.toObject(HealthRecord::class.java)?.copy(id = doc.id)
                 } ?: emptyList()
-                trySend(records)
+                
+                if (records.isNotEmpty()) {
+                    trySend(records)
+                } else {
+                    // Fallback to archived_pigs subcollection
+                    archiveListener?.remove()
+                    archiveListener = db.collection("users").document(userId).collection("archived_pigs").document(pigId)
+                        .collection("health_records")
+                        .orderBy("date", Query.Direction.ASCENDING)
+                        .addSnapshotListener { archSnap, archErr ->
+                            if (archErr == null && archSnap != null && !archSnap.isEmpty) {
+                                val archRecords = archSnap.documents.mapNotNull { doc ->
+                                    doc.toObject(HealthRecord::class.java)?.copy(id = doc.id)
+                                }
+                                trySend(archRecords)
+                            } else {
+                                trySend(records)
+                            }
+                        }
+                }
             }
-        awaitClose { listener.remove() }
+        awaitClose {
+            activeListener.remove()
+            archiveListener?.remove()
+        }
     }
 
     suspend fun addPig(userId: String, pig: Pig) {
@@ -94,12 +139,12 @@ class HerdRepository(private val db: FirebaseFirestore) {
     }
 
     suspend fun archivePig(userId: String, pigId: String, archivedPig: Pig) {
-        db.runTransaction { transaction ->
-            val pigRef = db.collection("users").document(userId).collection("pigs").document(pigId)
-            val archiveRef = db.collection("users").document(userId).collection("archived_pigs").document(pigId)
-            transaction.set(archiveRef, archivedPig)
-            transaction.delete(pigRef)
-        }.await()
+        val batch = db.batch()
+        val pigRef = db.collection("users").document(userId).collection("pigs").document(pigId)
+        val archiveRef = db.collection("users").document(userId).collection("archived_pigs").document(pigId)
+        batch.set(archiveRef, archivedPig)
+        batch.delete(pigRef)
+        batch.commit().await()
     }
 
     suspend fun addHealthRecordWithLogic(
@@ -177,30 +222,43 @@ class HerdRepository(private val db: FirebaseFirestore) {
                 batch.update(pigRef, "lastBreedingDate", record.date)
                 val boarTag = details["boarTag"]?.toString() ?: ""
                 if (boarTag.isNotEmpty()) batch.update(pigRef, "lastBoarTag", boarTag)
-                
                 batch.update(pigRef, "purpose", "Breeder")
-                if (checkPregnancy) {
-                    val tRef = db.collection("users").document(userId).collection("tasks").document()
-                    val taskDate = DateUtils.addDaysToDate(record.date, 21)
-                    batch.set(tRef, TaskItem(
-                        id = tRef.id,
-                        name = "Confirm Pregnancy: Pig $pigTag",
-                        date = taskDate,
-                        notes = "Scheduled 21 days after mating on ${record.date}",
-                        pigIds = listOf(pigId)
-                    ))
-                } else {
-                    batch.update(pigRef, "status", "Pregnant")
-                    val tRef = db.collection("users").document(userId).collection("tasks").document()
-                    val taskDate = DateUtils.addDaysToDate(record.date, 114)
-                    batch.set(tRef, TaskItem(
-                        id = tRef.id,
-                        name = "Farrowing: Pig $pigTag",
-                        date = taskDate,
-                        notes = "Scheduled 114 days after mating on ${record.date}",
-                        pigIds = listOf(pigId)
-                    ))
-                }
+
+                val day110Date = DateUtils.addDaysToDate(record.date, 110)
+                val day114Date = DateUtils.addDaysToDate(record.date, 114)
+                batch.update(pigRef, "expectedFarrowingDate", day114Date, "farrowingPenMoveDate", day110Date)
+
+                // 1. Day 21 Return-to-Heat surveillance window (18-24 days)
+                val tHeatRef = db.collection("users").document(userId).collection("tasks").document()
+                val heatDate = DateUtils.addDaysToDate(record.date, 21)
+                batch.set(tHeatRef, TaskItem(
+                    id = tHeatRef.id,
+                    name = "Check Return-to-Heat / Estrus: Pig $pigTag",
+                    date = heatDate,
+                    notes = "Check if sow returns to heat 18-24 days post-mating on ${record.date}",
+                    pigIds = listOf(pigId)
+                ))
+
+                // 2. Day 110 Move Sow to Farrowing Pen & Wash/Deworm
+                val tCrateRef = db.collection("users").document(userId).collection("tasks").document()
+                batch.set(tCrateRef, TaskItem(
+                    id = tCrateRef.id,
+                    name = "Move to Farrowing Crate: Pig $pigTag",
+                    date = day110Date,
+                    notes = "Move sow to sanitized farrowing pen & wash/deworm 4-5 days before due date",
+                    pigIds = listOf(pigId)
+                ))
+
+                // 3. Day 114 Expected Farrowing Due Date
+                batch.update(pigRef, "status", "Pregnant")
+                val tFarrowRef = db.collection("users").document(userId).collection("tasks").document()
+                batch.set(tFarrowRef, TaskItem(
+                    id = tFarrowRef.id,
+                    name = "Farrowing: Pig $pigTag",
+                    date = day114Date,
+                    notes = "Scheduled 114 days after mating on ${record.date}",
+                    pigIds = listOf(pigId)
+                ))
             }
             "Confirm Pregnancy", "Pregnancy Check" -> {
                 batch.update(pigRef, "purpose", "Breeder")
@@ -208,13 +266,37 @@ class HerdRepository(private val db: FirebaseFirestore) {
                     batch.update(pigRef, "status", "Pregnant")
                     val pigDoc = pigRef.get().await()
                     val lastMating = pigDoc.getString("lastBreedingDate") ?: record.date
-                    val tRef = db.collection("users").document(userId).collection("tasks").document()
-                    val taskDate = DateUtils.addDaysToDate(lastMating, 114)
-                    batch.set(tRef, TaskItem(
-                        id = tRef.id,
+                    val day110Date = DateUtils.addDaysToDate(lastMating, 110)
+                    val day114Date = DateUtils.addDaysToDate(lastMating, 114)
+                    batch.update(pigRef, "expectedFarrowingDate", day114Date, "farrowingPenMoveDate", day110Date)
+
+                    val tCrateRef = db.collection("users").document(userId).collection("tasks").document()
+                    batch.set(tCrateRef, TaskItem(
+                        id = tCrateRef.id,
+                        name = "Move to Farrowing Crate: Pig $pigTag",
+                        date = day110Date,
+                        notes = "Move sow to sanitized farrowing pen & wash/deworm 4-5 days before due date",
+                        pigIds = listOf(pigId)
+                    ))
+
+                    val tFarrowRef = db.collection("users").document(userId).collection("tasks").document()
+                    batch.set(tFarrowRef, TaskItem(
+                        id = tFarrowRef.id,
                         name = "Farrowing: Pig $pigTag",
-                        date = taskDate,
+                        date = day114Date,
                         notes = "Scheduled 114 days after mating on $lastMating",
+                        pigIds = listOf(pigId)
+                    ))
+                } else {
+                    // Mating failed - reset sow status to open/Sow and schedule re-mating
+                    batch.update(pigRef, "status", "Sow", "lastBreedingDate", "", "expectedFarrowingDate", "", "farrowingPenMoveDate", "")
+                    val tRemateRef = db.collection("users").document(userId).collection("tasks").document()
+                    val remateDate = DateUtils.addDaysToDate(record.date, 3)
+                    batch.set(tRemateRef, TaskItem(
+                        id = tRemateRef.id,
+                        name = "Re-mate / Heat Check: Pig $pigTag",
+                        date = remateDate,
+                        notes = "Conception check failed on ${record.date}. Monitor for next estrus cycle and re-mate.",
                         pigIds = listOf(pigId)
                     ))
                 }
@@ -252,7 +334,29 @@ class HerdRepository(private val db: FirebaseFirestore) {
                     val newPigRef = db.collection("users").document(userId).collection("pigs").document()
                     batch.set(newPigRef, Pig(id = newPigRef.id, tagNumber = tag, gender = "Female", breed = breed, birthDate = record.date, status = "Piglet", sowTag = sowTagSnapshot, boarTag = boarTag, location = location))
                 }
-                batch.update(pigRef, "status", "Lactating", "hasFarrowed", true, "weaned", false, "purpose", "Breeder")
+
+                // Increment Sow Parity
+                val currentParity = (pigDoc.getLong("parity") ?: 0L).toInt()
+                batch.update(pigRef, 
+                    "status", "Lactating", 
+                    "hasFarrowed", true, 
+                    "weaned", false, 
+                    "purpose", "Breeder",
+                    "parity", currentParity + 1,
+                    "expectedFarrowingDate", "",
+                    "farrowingPenMoveDate", ""
+                )
+
+                // Auto-schedule Weaning 28 days post-farrowing
+                val weanTaskRef = db.collection("users").document(userId).collection("tasks").document()
+                val weanDate = DateUtils.addDaysToDate(record.date, 28)
+                batch.set(weanTaskRef, TaskItem(
+                    id = weanTaskRef.id,
+                    name = "Weaning: Pig $pigTag",
+                    date = weanDate,
+                    notes = "Weaning due 28 days after farrowing on ${record.date}",
+                    pigIds = listOf(pigId)
+                ))
             }
             "Weaning" -> {
                 val pigDoc = pigRef.get().await()
@@ -261,6 +365,16 @@ class HerdRepository(private val db: FirebaseFirestore) {
                 
                 if (isMom) {
                     batch.update(pigRef, "status", "Sow")
+                    // Auto-schedule Day 5 Post-Weaning Heat Check (Weaning-to-Service Interval: 4-7 days)
+                    val heatTaskRef = db.collection("users").document(userId).collection("tasks").document()
+                    val heatCheckDate = DateUtils.addDaysToDate(record.date, 5)
+                    batch.set(heatTaskRef, TaskItem(
+                        id = heatTaskRef.id,
+                        name = "Post-Weaning Heat Check: Pig $pigTag",
+                        date = heatCheckDate,
+                        notes = "Check for estrus/standing heat 4-7 days post-weaning for immediate re-insemination",
+                        pigIds = listOf(pigId)
+                    ))
                 } else {
                     val weaningLoc = details["weaningLocation"]?.toString() ?: ""
                     batch.update(pigRef, "status", "Starter", "weaned", true)
@@ -273,7 +387,17 @@ class HerdRepository(private val db: FirebaseFirestore) {
                         if (otherOffspring.documents.all { it.id == pigId }) {
                             val sowSnapshot = db.collection("users").document(userId).collection("pigs").whereEqualTo("tagNumber", sowTagVal).limit(1).get().await()
                             if (!sowSnapshot.isEmpty) {
-                                db.collection("users").document(userId).collection("pigs").document(sowSnapshot.documents[0].id).update("status", "Sow")
+                                val sowDocId = sowSnapshot.documents[0].id
+                                batch.update(db.collection("users").document(userId).collection("pigs").document(sowDocId), "status", "Sow")
+                                val heatTaskRef = db.collection("users").document(userId).collection("tasks").document()
+                                val heatCheckDate = DateUtils.addDaysToDate(record.date, 5)
+                                batch.set(heatTaskRef, TaskItem(
+                                    id = heatTaskRef.id,
+                                    name = "Post-Weaning Heat Check: Pig $sowTagVal",
+                                    date = heatCheckDate,
+                                    notes = "Check for estrus/standing heat 4-7 days post-weaning for immediate re-insemination",
+                                    pigIds = listOf(sowDocId)
+                                ))
                             }
                         }
                     }
@@ -296,8 +420,27 @@ class HerdRepository(private val db: FirebaseFirestore) {
                 val currentInjections = (pigDoc.getLong("ironInjections") ?: 0L).toInt()
                 batch.update(pigRef, "ironInjections", currentInjections + 1)
             }
+            "Medication", "Deworming", "Vaccination", "Treatment" -> {
+                val withdrawalDays = details["withdrawalDays"]?.toString()?.toIntOrNull() ?: record.withdrawalPeriodDays
+                if (withdrawalDays > 0) {
+                    val safeDate = DateUtils.addDaysToDate(record.date, withdrawalDays)
+                    val medName = details["medication"]?.toString() ?: record.medication.ifEmpty { record.type }
+                    batch.update(pigRef, 
+                        "activeWithdrawalUntil", safeDate,
+                        "withdrawalMedication", medName
+                    )
+                    val wTaskRef = db.collection("users").document(userId).collection("tasks").document()
+                    batch.set(wTaskRef, TaskItem(
+                        id = wTaskRef.id,
+                        name = "Meat Withdrawal Cleared: Pig $pigTag",
+                        date = safeDate,
+                        notes = "Safe for slaughter and meat sale. Medication: $medName",
+                        pigIds = listOf(pigId)
+                    ))
+                }
+            }
             "Weight Check" -> {
-                val weightVal = details["weight"]?.toString()?.toDoubleOrNull() ?: 0.0
+                val weightVal = details["weight"]?.toString()?.toDoubleOrNull() ?: record.weight
                 if (weightVal > 0.0) {
                     batch.update(pigRef, "weight", weightVal, "lastWeightDate", record.date)
                 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartSwine</string>
+    <string name="weight_checker_title">ประมาณการน้ำหนักสุกร</string>
+    <string name="back_button_content_description">ย้อนกลับ</string>
+    <string name="important_notes_title">ข้อควรทราบสำคัญ</string>
+    <string name="weight_checker_notes">• รอบอก: วัดรอบลำตัวชิดด้านหลังขาหน้า โดยให้สายวัดแนบกระชับพอดีกับลำตัวสุกร (จุด B)\n• ความยาวลำตัว: วัดจากกึ่งกลางระหว่างโคนหูไปตามแนวกระดูกสันหลังจนถึงโคนหาง (จุด A)\n• สุกรต้องยืนตรง 4 ขาบนพื้นราบเสมอกันเพื่อให้ผลการคำนวณแม่นยำที่สุด\n</string>
+    <string name="converter_title">เครื่องมือแปลงหน่วย</string>
+    <string name="unit_lbs">ปอนด์</string>
+    <string name="unit_kgs">กก.</string>
+    <string name="weigh_with_scale">ชั่งด้วยเครื่องชั่งน้ำหนักสัตว์</string>
+    <string name="weigh_with_tape_title">ประมาณน้ำหนักด้วยสายวัด</string>
+    <string name="weigh_with_tape_subtitle">ประมาณน้ำหนักตัวสุกรด้วยสายวัด.</string>
+    <string name="label_length">ความยาวลำตัว (%1$s)</string>
+    <string name="label_girth">รอบอก (%1$s)</string>
+    <string name="unit_cm">ซม.</string>
+    <string name="unit_in">นิ้ว</string>
+    <string name="placeholder_a">A</string>
+    <string name="placeholder_b">B</string>
+    <string name="label_estimated_live_weight">น้ำหนักมีชีวิตโดยประมาณ</string>
+    <string name="label_estimated_carcass_weight">น้ำหนักซากโดยประมาณ</string>
+    <string name="msg_enter_measurements">กรอกข้อมูลการวัดลงในภาพเพื่อคำนวณ</string>
+    <string name="pig_diagram_content_description">ภาพแนะนำตำแหน่งการวัดขนาดลำตัวสุกร</string>
+    <string name="weight_format">%1$.1f กก. / %2$.1f ปอนด์</string>
+    <string name="estimated_results">ผลการคำนวณน้ำหนัก</string>
+    <string name="specify_breed">ระบุสายพันธุ์สุกร</string>
+</resources>

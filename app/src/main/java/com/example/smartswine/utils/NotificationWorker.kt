@@ -5,17 +5,16 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import com.example.smartswine.MainActivity
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.work.*
 import com.bibiniitech.smartswine.R
+import com.example.smartswine.MainActivity
 import com.example.smartswine.model.TaskItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
-import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -34,14 +33,29 @@ class NotificationWorker(context: Context, params: WorkerParameters) : Coroutine
         val db = FirebaseFirestore.getInstance()
 
         try {
-            // Fetch user language
+            // 1. Resolve Active Farm ID (Owner vs Staff Member)
+            var targetFarmUid = userId
             val userDoc = db.collection("users").document(userId).get().await()
-            val langCode = userDoc.getString("appLanguage") ?: "en"
+            val langCode = if (userDoc.exists()) {
+                userDoc.getString("appLanguage") ?: "en"
+            } else {
+                val email = auth.currentUser?.email?.trim()?.lowercase()
+                if (email != null) {
+                    val registryDoc = db.collection("staff_registry").document(email).get().await()
+                    if (registryDoc.exists()) {
+                        targetFarmUid = registryDoc.getString("managerUid")
+                            ?: registryDoc.getString("ownerUid") 
+                            ?: registryDoc.getString("farmUid") 
+                            ?: userId
+                    }
+                }
+                "en"
+            }
             val locale = AppLanguage.entries.find { it.code == langCode }?.toLocale() ?: Locale.getDefault()
 
-            // Fetch incomplete tasks
-            Log.d("NotificationWorker", "Fetching tasks for user: $userId")
-            val tasksSnapshot = db.collection("users").document(userId)
+            // 2. Fetch incomplete tasks for the farm
+            Log.d("NotificationWorker", "Fetching tasks for farm: $targetFarmUid")
+            val tasksSnapshot = db.collection("users").document(targetFarmUid)
                 .collection("tasks")
                 .whereEqualTo("completed", false)
                 .get()
@@ -62,51 +76,52 @@ class NotificationWorker(context: Context, params: WorkerParameters) : Coroutine
             val notificationsToShow = mutableListOf<Triple<String, String, Int>>()
 
             tasks.forEach { task ->
-                val dateFromTask = DateUtils.parseTask(task.date, locale)
+                val dateFromTask = DateUtils.parseAnyDate(task.date, locale)
+                
                 if (dateFromTask != null) {
                     val taskDate = Calendar.getInstance().apply {
                         time = dateFromTask
-                        set(Calendar.YEAR, today.get(Calendar.YEAR))
-                        
-                        // Smart year matching: Find if this month/day is closer to last year, this year, or next year
-                        // This handles overdue tasks from previous months/years and upcoming ones at year-end.
-                        val diffDays = (timeInMillis - today.timeInMillis) / (1000 * 60 * 60 * 24)
-                        if (diffDays > 180) {
-                            add(Calendar.YEAR, -1)
-                        } else if (diffDays < -180) {
-                            add(Calendar.YEAR, 1)
+                        if (get(Calendar.YEAR) == 1970) {
+                            set(Calendar.YEAR, today.get(Calendar.YEAR))
+                            val diffDays = (timeInMillis - today.timeInMillis) / (1000 * 60 * 60 * 24)
+                            if (diffDays > 180) {
+                                add(Calendar.YEAR, -1)
+                            } else if (diffDays < -180) {
+                                add(Calendar.YEAR, 1)
+                            }
                         }
                     }
 
                     val diffInMillis = taskDate.timeInMillis - today.timeInMillis
                     val diffInDays = TimeUnit.MILLISECONDS.toDays(diffInMillis)
 
+                    val isWithdrawalTask = task.name.contains("Withdrawal", ignoreCase = true)
                     val titleKey: String
                     val bodyKey: String
                     val showNotification: Boolean
 
-                    when (diffInDays) {
-                        2L -> {
+                    when {
+                        !isWithdrawalTask && diffInDays == 2L -> {
                             titleKey = "notif_upcoming"
                             bodyKey = "notif_msg_in_2_days"
                             showNotification = true
                         }
-                        1L -> {
+                        !isWithdrawalTask && diffInDays == 1L -> {
                             titleKey = "notif_upcoming"
                             bodyKey = "notif_msg_tomorrow"
                             showNotification = true
                         }
-                        0L -> {
+                        diffInDays == 0L -> {
                             titleKey = "notif_due_today"
                             bodyKey = "notif_msg_today"
                             showNotification = true
                         }
-                        -1L -> {
+                        diffInDays == -1L -> {
                             titleKey = "notif_overdue"
                             bodyKey = "notif_msg_yesterday"
                             showNotification = true
                         }
-                        -2L -> {
+                        diffInDays < -1L -> {
                             titleKey = "notif_overdue"
                             bodyKey = "notif_msg_overdue"
                             showNotification = true
@@ -120,23 +135,34 @@ class NotificationWorker(context: Context, params: WorkerParameters) : Coroutine
 
                     if (showNotification) {
                         val title = Translator.getString(titleKey, langCode)
-                        val message = Translator.getString(bodyKey, langCode, task.name)
+                        val message = Translator.getString(bodyKey, langCode, getLocalizedTaskName(task.name, langCode))
                         notificationsToShow.add(Triple(title, message, task.id.hashCode()))
                     }
                 }
             }
 
-            // Fetch pigs for weight update reminders
-            val pigsSnapshot = db.collection("users").document(userId)
+            // 3. Fetch pigs for weight update reminders
+            val pigsSnapshot = db.collection("users").document(targetFarmUid)
                 .collection("pigs")
                 .get()
                 .await()
             
             pigsSnapshot.documents.forEach { doc ->
-                val lastWeight = doc.getString("lastWeightDate") ?: doc.getString("birthDate") ?: ""
+                val lastWeightDate = doc.getString("lastWeightDate") ?: ""
+                val weight = doc.getDouble("weight") ?: 0.0
+                val birthDate = doc.getString("birthDate") ?: ""
+                val lastWeight = if (lastWeightDate.isNotBlank()) {
+                    lastWeightDate
+                } else if (weight <= 0.0) {
+                    birthDate
+                } else {
+                    ""
+                }
                 val tag = doc.getString("tagNumber") ?: "Unknown"
                 if (lastWeight.isNotEmpty()) {
-                    val lastDate = DateUtils.parseInternal(lastWeight) ?: DateUtils.parseProduction(lastWeight)
+                    val lastDate = DateUtils.parseSwineDate(lastWeight)
+                        ?: DateUtils.parseInternal(lastWeight)
+                        ?: DateUtils.parseProduction(lastWeight)
                     if (lastDate != null) {
                         val diff = today.timeInMillis - lastDate.time
                         val days = TimeUnit.MILLISECONDS.toDays(diff)
@@ -149,8 +175,8 @@ class NotificationWorker(context: Context, params: WorkerParameters) : Coroutine
                 }
             }
 
-            // Fetch feed inventory for low stock alerts
-            val feedSnapshot = db.collection("users").document(userId)
+            // 4. Fetch feed inventory for low stock alerts
+            val feedSnapshot = db.collection("users").document(targetFarmUid)
                 .collection("feed_inventory")
                 .get()
                 .await()
@@ -188,6 +214,45 @@ class NotificationWorker(context: Context, params: WorkerParameters) : Coroutine
         } catch (e: Exception) {
             Log.e("NotificationWorker", "Error in worker", e)
             return Result.retry()
+        }
+    }
+
+    private fun getLocalizedTaskName(name: String, langCode: String): String {
+        val parts = name.split(": ", limit = 2)
+        val activityPart = parts[0]
+        val pigPart = parts.getOrNull(1)
+
+        val localizedActivity = when {
+            activityPart.contains("Move to Farrowing Crate", ignoreCase = true) || activityPart.contains("Farrowing Pen Move", ignoreCase = true) -> Translator.getString("farrowing_pen_move", langCode)
+            activityPart.contains("Check Return-to-Heat", ignoreCase = true) || activityPart.contains("Re-mate", ignoreCase = true) || activityPart.contains("Heat Check", ignoreCase = true) || activityPart.contains("Heat Detection", ignoreCase = true) || activityPart.contains("Estrus", ignoreCase = true) -> Translator.getString("heat_detection", langCode)
+            activityPart.contains("Breeding", ignoreCase = true) || activityPart.contains("Mating", ignoreCase = true) -> Translator.getString("breeding_mating", langCode)
+            activityPart.contains("Confirm Pregnancy", ignoreCase = true) || activityPart.contains("Pregnancy Check", ignoreCase = true) -> Translator.getString("pregnancy_check", langCode)
+            activityPart.contains("Farrowing", ignoreCase = true) -> Translator.getString("farrowing", langCode)
+            activityPart.contains("Weaning", ignoreCase = true) -> Translator.getString("weaning", langCode)
+            activityPart.contains("Castration", ignoreCase = true) -> Translator.getString("castration", langCode)
+            activityPart.contains("Teeth Clipping", ignoreCase = true) -> Translator.getString("teeth_clipping", langCode)
+            activityPart.contains("Tail Docking", ignoreCase = true) -> Translator.getString("tail_docking", langCode)
+            activityPart.contains("Deworming", ignoreCase = true) -> Translator.getString("deworming", langCode)
+            activityPart.contains("Iron Injection", ignoreCase = true) || activityPart.contains("Iron", ignoreCase = true) -> Translator.getString("iron_injection", langCode)
+            activityPart.contains("Vaccination", ignoreCase = true) -> Translator.getString("vaccination", langCode)
+            activityPart.contains("Medication", ignoreCase = true) -> Translator.getString("medication", langCode)
+            activityPart.contains("Weight Check", ignoreCase = true) -> Translator.getString("weight_check", langCode)
+            activityPart.contains("Culling", ignoreCase = true) -> Translator.getString("culling", langCode)
+            activityPart.contains("Feed", ignoreCase = true) -> Translator.getString("feed_pigs", langCode)
+            else -> activityPart
+        }
+
+        return if (pigPart != null) {
+            val pigLabel = Translator.getString("pig", langCode)
+            val pigsLabel = Translator.getString("pigs", langCode)
+            val cleanPigPart = when {
+                pigPart.startsWith("Pigs ", ignoreCase = true) -> "$pigsLabel ${pigPart.substring(5)}"
+                pigPart.startsWith("Pig ", ignoreCase = true) -> "$pigLabel ${pigPart.substring(4)}"
+                else -> pigPart
+            }
+            "$localizedActivity: $cleanPigPart"
+        } else {
+            localizedActivity
         }
     }
 

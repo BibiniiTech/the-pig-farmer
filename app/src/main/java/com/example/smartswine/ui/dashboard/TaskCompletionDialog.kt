@@ -1,8 +1,10 @@
 package com.example.smartswine.ui.dashboard
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -17,6 +19,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.smartswine.model.HealthRecord
 import com.example.smartswine.model.Pig
 import com.example.smartswine.model.TaskItem
@@ -32,6 +35,8 @@ fun TaskCompletionDialog(
     allPigs: List<Pig>,
     onDismissRequest: () -> Unit,
     onDeleteTask: () -> Unit,
+    onSnoozeTask: ((Int) -> Unit)? = null,
+    onDeleteTaskForPig: ((String) -> Unit)? = null,
     onLogHealthActivity: (List<String>, HealthRecord, Boolean, Boolean, Boolean, Map<String, Any>) -> Unit,
 ) {
     // Side effect to handle empty list - avoids modifying state during composition
@@ -52,15 +57,15 @@ fun TaskCompletionDialog(
     val isBreeding = remember(activityName) { 
         activityName.contains("Breeding", ignoreCase = true) || activityName.contains("Mating", ignoreCase = true) 
     }
-    val isPregnancyCheck = remember(activityName) { activityName.contains("Pregnancy Check", ignoreCase = true) }
+    val isPregnancyCheck = remember(activityName) { activityName.contains("Pregnancy", ignoreCase = true) }
     val isFarrowing = remember(activityName) { activityName.contains("Farrowing", ignoreCase = true) }
     val isWeaning = remember(activityName) { activityName.contains("Weaning", ignoreCase = true) }
-    val isWeightCheck = remember(activityName) { activityName.contains("Weight Check", ignoreCase = true) }
+    val isWeightCheck = remember(activityName) { activityName.contains("Weight", ignoreCase = true) }
     val isCulling = remember(activityName) { activityName.contains("Culling", ignoreCase = true) }
     val isMedicationActivity = remember(activityName) {
-        activityName.contains("Iron Injection", true) ||
+        activityName.contains("Iron", ignoreCase = true) ||
         activityName.contains("Deworming", ignoreCase = true) ||
-        activityName.contains("Vaccination", ignoreCase = true) ||
+        activityName.contains("Vaccin", ignoreCase = true) ||
         activityName.contains("Medication", ignoreCase = true)
     }
     
@@ -68,16 +73,20 @@ fun TaskCompletionDialog(
     // State for multi-animal selection and per-animal inputs
     val taskPigIdentifiers = remember(tasksToEdit) {
         tasksToEdit.flatMap { task ->
-            val identifierPart = task.name.substringAfter(": ", "")
-            if (identifierPart.isNotEmpty()) {
-                // Split by comma to handle multiple pigs in one task (e.g. "Pigs 1, 2")
-                identifierPart.split(",")
-                    .map { it.replace("Pigs", "", ignoreCase = true)
-                             .replace("Pig", "", ignoreCase = true)
-                             .trim() }
-                    .filter { it.isNotEmpty() }
-            } else emptyList()
-        }
+            val fromName = task.name.substringAfter(": ", "").let { identifierPart ->
+                if (identifierPart.isNotEmpty()) {
+                    // Split by comma to handle multiple pigs in one task (e.g. "Pigs 1, 2")
+                    identifierPart.split(",")
+                        .map { it.replace("Pigs", "", ignoreCase = true)
+                                 .replace("Pig", "", ignoreCase = true)
+                                 .replace("Tag:", "", ignoreCase = true)
+                                 .replace("Tag", "", ignoreCase = true)
+                                 .trim() }
+                        .filter { it.isNotEmpty() && !it.equals("General", ignoreCase = true) }
+                } else emptyList()
+            }
+            fromName + task.pigIds
+        }.distinct()
     }
 
     // Pre-map for performance
@@ -89,6 +98,7 @@ fun TaskCompletionDialog(
         taskPigIdentifiers.asSequence().map { identifier ->
             pigIdMap[identifier]?.id
                 ?: pigTagMap[identifier]?.id
+                ?: allPigs.find { it.tagNumber.equals(identifier, ignoreCase = true) }?.id
                 ?: identifier
         }.filter { id ->
             // Ensure male pigs aren't shown for female-specific tasks
@@ -187,6 +197,8 @@ fun TaskCompletionDialog(
         }
     }
 
+    val showSnoozeMenu = remember { mutableStateOf(false) }
+
     AlertDialog(
         onDismissRequest = onDismissRequest,
         confirmButton = { },
@@ -225,6 +237,8 @@ fun TaskCompletionDialog(
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier
+                    .fillMaxWidth()
+                    .imePadding()
                     .padding(top = 8.dp)
                     .verticalScroll(rememberScrollState())
             ) {
@@ -377,11 +391,7 @@ fun TaskCompletionDialog(
                 }
 
                 // Medication Section (if applicable)
-                if (activityName.contains("Iron Injection", true) ||
-                    activityName.contains("Deworming", ignoreCase = true) ||
-                    activityName.contains("Vaccination", ignoreCase = true) ||
-                    activityName.contains("Medication", ignoreCase = true)
-                ) {
+                if (isMedicationActivity) {
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         OutlinedTextField(
                             value = medicationNameState.value,
@@ -503,7 +513,7 @@ fun TaskCompletionDialog(
                                 }
 
                                     when {
-                                        activityName.contains("Weight Check", ignoreCase = true) -> {
+                                        isWeightCheck -> {
                                             if (!isGroup) {
                                                 OutlinedTextField(
                                                     value = pigWeightsState.value[id] ?: "",
@@ -515,32 +525,32 @@ fun TaskCompletionDialog(
                                                 )
                                             }
                                         }
-                                    activityName.contains("Culling", ignoreCase = true) -> {
-                                        if (!isGroup && cullingReasonState.value == "Sold") {
-                                            OutlinedTextField(
-                                                value = pigSalePricesState.value[id] ?: "",
-                                                onValueChange = { pigSalePricesState.value += (id to it) },
-                                                label = { Text(stringResource("amount")) },
-                                                modifier = Modifier.width(180.dp),
-                                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                                singleLine = true
-                                            )
+                                        isCulling -> {
+                                            if (!isGroup && cullingReasonState.value == "Sold") {
+                                                OutlinedTextField(
+                                                    value = pigSalePricesState.value[id] ?: "",
+                                                    onValueChange = { pigSalePricesState.value += (id to it) },
+                                                    label = { Text(stringResource("amount")) },
+                                                    modifier = Modifier.width(180.dp),
+                                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                                    singleLine = true
+                                                )
+                                            }
+                                        }
+                                        isWeaning -> {
+                                            if (!isGroup) {
+                                                OutlinedTextField(
+                                                    value = pigWeaningLocationsState.value[id] ?: "",
+                                                    onValueChange = { pigWeaningLocationsState.value += (id to it) },
+                                                    label = { Text(stringResource("pen_hash")) },
+                                                    modifier = Modifier.fillMaxWidth()
+                                                )
+                                            }
+                                        }
+                                        isMedicationActivity -> {
+                                            // Specific per-animal inputs if any (none required currently after generalizing schedule next)
                                         }
                                     }
-                                    activityName.contains("Weaning", ignoreCase = true) -> {
-                                        if (!isGroup) {
-                                            OutlinedTextField(
-                                                value = pigWeaningLocationsState.value[id] ?: "",
-                                                onValueChange = { pigWeaningLocationsState.value += (id to it) },
-                                                label = { Text(stringResource("pen_hash")) },
-                                                modifier = Modifier.fillMaxWidth()
-                                            )
-                                        }
-                                    }
-                                    activityName.contains("Iron Injection", true) -> {
-                                        // Specific per-animal inputs if any (none required currently after generalizing schedule next)
-                                    }
-                                }
                             }
                         }
                     }
@@ -708,26 +718,179 @@ fun TaskCompletionDialog(
                     }
                 }
 
-                
-                Spacer(modifier = Modifier.height(16.dp))
-                
+                val isSaveEnabled = when {
+                    taskPigIds.isNotEmpty() && selectedPigIdsState.value.isEmpty() -> false
+                    isHeatDetection -> selectedPigIdsState.value.all { pigOutcomesState.value.containsKey(it) }
+                    isBreeding -> selectedPigIdsState.value.all { pigOutcomesState.value.containsKey(it) }
+                    isPregnancyCheck -> selectedPigIdsState.value.all { pigOutcomesState.value.containsKey(it) }
+                    isFarrowing -> selectedPigIdsState.value.all { id ->
+                        val nMales = pigNumMalesState.value[id]?.toIntOrNull() ?: 0
+                        val nFemales = pigNumFemalesState.value[id]?.toIntOrNull() ?: 0
+                        if (nMales == 0 && nFemales == 0) return@all false
+                        
+                        val mTags = pigMaleTagsState.value[id]?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() } ?: emptyList()
+                        val fTags = pigFemaleTagsState.value[id]?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() } ?: emptyList()
+                        
+                        // Validate counts
+                        if (nMales != mTags.size || nFemales != fTags.size) return@all false
+                        
+                        // Validate no duplicates across all selected pigs for this farrowing
+                        val allTags = selectedPigIdsState.value.flatMap { pid ->
+                            val mt = pigMaleTagsState.value[pid]?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() } ?: emptyList()
+                            val ft = pigFemaleTagsState.value[pid]?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() } ?: emptyList()
+                            mt + ft
+                        }
+                        allTags.size == allTags.distinct().size
+                    }
+                    isWeaning -> selectedPigIdsState.value.all { id ->
+                        pigWeaningLocationsState.value[id]?.isNotEmpty() == true
+                    }
+                    activityName.contains("Weight Check", ignoreCase = true) -> 
+                        selectedPigIdsState.value.all { id -> (pigWeightsState.value[id]?.toDoubleOrNull() ?: 0.0) > 0 }
+                    else -> true
+                }
+
+                HorizontalDivider(
+                    modifier = Modifier.padding(top = 8.dp, bottom = 12.dp),
+                    color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f)
+                )
+
+                // ── ALERT ACTIONS: SNOOZE & DELETE (EQUAL SIZED CARDS, SPACED TO PREVENT MISCLICKS) ──
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    TextButton(onClick = onDismissRequest) {
-                        Text(stringResource("cancel"))
+                    // Snooze Card with dropdown menu
+                    Box(modifier = Modifier.weight(1f)) {
+                        Surface(
+                            onClick = { showSnoozeMenu.value = true },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(52.dp),
+                            shape = RoundedCornerShape(14.dp),
+                            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.7f))
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxSize(),
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Schedule,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(20.dp),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                Spacer(Modifier.width(8.dp))
+                                Text(
+                                    text = stringResource("snooze"),
+                                    style = MaterialTheme.typography.labelLarge.copy(fontSize = 16.sp),
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
+                        DropdownMenu(
+                            expanded = showSnoozeMenu.value,
+                            onDismissRequest = { showSnoozeMenu.value = false }
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text(stringResource("snooze_1h")) },
+                                onClick = {
+                                    showSnoozeMenu.value = false
+                                    onSnoozeTask?.invoke(1)
+                                    onDismissRequest()
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource("snooze_tomorrow")) },
+                                onClick = {
+                                    showSnoozeMenu.value = false
+                                    onSnoozeTask?.invoke(24)
+                                    onDismissRequest()
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource("snooze_1w")) },
+                                onClick = {
+                                    showSnoozeMenu.value = false
+                                    onSnoozeTask?.invoke(168)
+                                    onDismissRequest()
+                                }
+                            )
+                        }
                     }
-                    
-                    TextButton(onClick = onDeleteTask) {
-                        Text(stringResource("delete"), color = MaterialTheme.colorScheme.error)
+
+                    // Delete Notification Card
+                    Surface(
+                        onClick = {
+                            val targetPigId = selectedPigIdsState.value.firstOrNull() ?: taskPigIds.firstOrNull()
+                            if (isGroup && !targetPigId.isNullOrEmpty() && onDeleteTaskForPig != null) {
+                                val displayTag = pigIdMap[targetPigId]?.tagNumber ?: targetPigId
+                                onDeleteTaskForPig(displayTag)
+                            } else {
+                                onDeleteTask()
+                            }
+                            onDismissRequest()
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(52.dp),
+                        shape = RoundedCornerShape(14.dp),
+                        color = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.15f),
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.error.copy(alpha = 0.4f))
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.DeleteOutline,
+                                contentDescription = null,
+                                modifier = Modifier.size(20.dp),
+                                tint = MaterialTheme.colorScheme.error
+                            )
+                            Spacer(Modifier.width(8.dp))
+                            Text(
+                                text = stringResource("delete"),
+                                style = MaterialTheme.typography.labelLarge.copy(fontSize = 16.sp),
+                                fontWeight = FontWeight.SemiBold,
+                                color = MaterialTheme.colorScheme.error
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(14.dp))
+
+                // ── DIALOG CONFIRMATION: CANCEL & SAVE (UNIFORMED & CENTERED) ──
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    OutlinedButton(
+                        onClick = onDismissRequest,
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(52.dp),
+                        shape = RoundedCornerShape(14.dp),
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.7f))
+                    ) {
+                        Text(
+                            text = stringResource("cancel"),
+                            style = MaterialTheme.typography.labelLarge.copy(fontSize = 16.sp),
+                            fontWeight = FontWeight.SemiBold
+                        )
                     }
 
                     Button(
                         onClick = {
                             val finalPigIds = selectedPigIdsState.value.toList()
-                            if (finalPigIds.isNotEmpty()) {
+                            if (finalPigIds.isNotEmpty() || taskPigIds.isEmpty()) {
                                 val data = mutableMapOf<String, Any>()
                                 data["notes"] = notesState.value
                                 data["medicationName"] = medicationNameState.value
@@ -751,8 +914,6 @@ fun TaskCompletionDialog(
 
                                 // Extract breeding tags if applicable
                                 if (isBreeding) {
-                                    // Extract from first task name which is usually "Breeding/Mating: Sow TAG-X, Boar TAG-Y"
-                                    // or just get the identifiers
                                     val taskName = firstTask.name
                                     val sowTag = taskName.substringAfter("Sow ", "").substringBefore(",").trim()
                                     val boarTag = taskName.substringAfter("Boar ", "").trim()
@@ -765,7 +926,7 @@ fun TaskCompletionDialog(
                                 if (scheduleNextState.value) {
                                     data["nextScheduledDate"] = DateUtils.parseDisplay(nextDateState.value, locale)?.let { 
                                         DateUtils.formatToProduction(it) 
-                                    } ?: ""
+                                     } ?: ""
                                 }
 
                                 onLogHealthActivity(
@@ -779,47 +940,34 @@ fun TaskCompletionDialog(
                                             else notesState.value
                                     ),
                                     pigOutcomesState.value.values.any { it == "Heat Detected" },
-                                    activityName.contains("Breeding", true) || activityName.contains("Mating", true),
+                                    isBreeding,
                                     pigOutcomesState.value.values.any { it == "Successful" || it == "Mating Successful" },
                                     data
                                 )
                             }
                         },
-                        enabled = when {
-                            taskPigIds.isNotEmpty() && selectedPigIdsState.value.isEmpty() -> false
-                            isHeatDetection -> selectedPigIdsState.value.all { pigOutcomesState.value.containsKey(it) }
-                            isBreeding -> selectedPigIdsState.value.all { pigOutcomesState.value.containsKey(it) }
-                            isPregnancyCheck -> selectedPigIdsState.value.all { pigOutcomesState.value.containsKey(it) }
-                            isFarrowing -> selectedPigIdsState.value.all { id ->
-                                val nMales = pigNumMalesState.value[id]?.toIntOrNull() ?: 0
-                                val nFemales = pigNumFemalesState.value[id]?.toIntOrNull() ?: 0
-                                if (nMales == 0 && nFemales == 0) return@all false
-                                
-                                val mTags = pigMaleTagsState.value[id]?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() } ?: emptyList()
-                                val fTags = pigFemaleTagsState.value[id]?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() } ?: emptyList()
-                                
-                                // Validate counts
-                                if (nMales != mTags.size || nFemales != fTags.size) return@all false
-                                
-                                // Validate no duplicates across all selected pigs for this farrowing
-                                val allTags = selectedPigIdsState.value.flatMap { pid ->
-                                    val mt = pigMaleTagsState.value[pid]?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() } ?: emptyList()
-                                    val ft = pigFemaleTagsState.value[pid]?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() } ?: emptyList()
-                                    mt + ft
-                                }
-                                allTags.size == allTags.distinct().size
-                            }
-                            isWeaning -> selectedPigIdsState.value.all { id ->
-                                pigWeaningLocationsState.value[id]?.isNotEmpty() == true
-                            }
-                            activityName.contains("Weight Check", ignoreCase = true) -> 
-                                selectedPigIdsState.value.all { id -> (pigWeightsState.value[id]?.toDoubleOrNull() ?: 0.0) > 0 }
-                            else -> true
-                        }
+                        enabled = isSaveEnabled,
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(52.dp),
+                        shape = RoundedCornerShape(14.dp)
                     ) {
-                        Text(stringResource("save"))
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = null,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = stringResource("save"),
+                            style = MaterialTheme.typography.labelLarge.copy(fontSize = 16.sp),
+                            fontWeight = FontWeight.Bold
+                        )
                     }
                 }
+
+                // Keyboard scrolling runway
+                Spacer(modifier = Modifier.height(140.dp))
             }
 
             Spacer(modifier = Modifier.height(8.dp))

@@ -13,29 +13,39 @@
     "basicDescription": "Parfait pour les amateurs et les éleveurs débutants pour explorer le suivi.",
     "currentFreePlan": "Plan gratuit actuel",
     "smartSwinePremium": "SmartSwine Premium",
-    "perMonth": "mois",
+    "perMonth": "Mois",
     "billedYearly": "(facturé annuellement)",
     "premiumDescription": "Maximisez la productivité, les aliments dynamiques Pearson Square et des opérations illimitées.",
     "planComparison": "Comparaison des plans",
     "feature": "Fonctionnalité",
     "basicFree": "Basique (Gratuit)",
-    "premium": "Premium",
+    "premium": "Prime",
     "paymentSuccess": "Paiement réussi ! Vos fonctionnalités premium seront activées sous peu.",
     "modalClosed": "Fenêtre de paiement fermée",
+    "billingDetails": "Coordonnées de facturation",
+    "billingDetailsSub": "Pour les reçus et le paiement",
+    "emailAddress": "Adresse e-mail",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "phone": "Numéro de téléphone",
+    "enterEmailPrompt": "Entrez votre e-mail pour continuer",
+    "enterValidEmail": "Entrez une adresse e-mail valide",
+    "invalidEmail": "Veuillez saisir une adresse e-mail valide.",
     "features": {
-      "unlimitedPigs": "Cochons et portées illimités",
+      "unlimitedPigs": "Ajouter un Nombre Illimité de Porcs au Troupeau",
       "pigsLimit": "Jusqu'à 20 cochons",
       "unlimited": "Illimité",
       "growthTracking": "Suivi automatique de la croissance des cochons",
-      "feedFormulation": "Formulation des aliments",
+      "feedFormulation": "Formulation de Précision",
       "unavailable": "❌ Indisponible",
       "feedDescription": "Illimité pour toutes les étapes",
-      "addEmployee": "Ajouter un employé",
+      "addEmployee": "Ajouter du Personnel et Partager les Données",
       "employeeDescription": "Illimité et avec accès du personnel aux données de la ferme",
-      "pdfReports": "Exportations de rapports PDF",
+      "pdfReports": "Exporter Tous les Rapports en PDF",
       "pdfDescription": "⚡ Oui, enregistrement/impression instantanés de PDF",
-      "symptomsAnalyzer": "Analyseur de symptômes",
-      "fullAccess": "Accès complet"
+      "symptomsAnalyzer": "Guide Diagnostic & Traitements",
+      "fullAccess": "Accès complet",
+      "adFreeExperience": "Sans Publicité & Synchronisation Prioritaire"
     }
   },
   "Home": {
@@ -46,10 +56,10 @@
     "installWebApp": "Installer l'application Web",
     "launchWebApp": "Lancer l'application Web",
     "downloadMobileApp": "Télécharger l'application mobile",
-    "copyright": "Copyright 2026",
-    "developedBy": "Développé par : Goshen AgriFirm & Bibinii Tech",
+    "copyright": "Droits d'auteur 2026",
+    "developedBy": "Développé par Bibinii Tech",
     "whatsapp": "WhatsApp",
-    "telegram": "Telegram"
+    "telegram": "Télégramme"
   },
   "Dashboard": {
     "welcome": "Bienvenue à {farmName}",
@@ -59,24 +69,24 @@
     "farmerName": "Éleveur {name}",
     "staffMember": "Membre du personnel",
     "farmOwner": "Propriétaire de la ferme",
-    "premium": "Premium",
+    "premium": "Prime",
     "premiumAccessActive": "Accès Premium actif",
     "freeTier": "Niveau gratuit",
     "upgrade": "💎 Améliorer",
-    "totalPigs": "Nombre total de cochons : {count}",
-    "breedersPorkers": "Reproducteurs : {breeders} | Porcs charcutiers : {porkers}",
+    "totalPigs": "Nombre total de porcs : {count}",
+    "breedersPorkers": "Reproducteurs : {breeders} | Porcs de chair : {porkers}",
     "totalBreeders": "Nombre total de reproducteurs : {count}",
     "piglet": "Porcelet",
-    "starter": "Starter",
-    "grower": "Croissance",
+    "starter": "Démarreur",
+    "grower": "Porc en croissance",
     "boar": "Verrat",
-    "gilt": "Cochete",
+    "gilt": "Cochette",
     "pregnant": "Gestante",
     "lactating": "Allaitante",
     "sow": "Truie",
-    "totalPorkers": "Nombre total de porcs charcutiers : {count}",
-    "finisher": "Finition",
-    "archivedPigs": "Cochons archivés",
+    "totalPorkers": "Nombre total de porcs de chair : {count}",
+    "finisher": "Porc à l'engrais",
+    "archivedPigs": "Porcs archivés",
     "viewCulled": "Voir les animaux réformés ou vendus",
     "farmOperations": "Opérations de la ferme",
     "herdData": "Données du troupeau",
@@ -89,14 +99,32 @@
     "financialsDesc": "Enregistrez les revenus et les dépenses, journalisation financière automatique et exportez des rapports financiers PDF.",
     "hr": "Ressources humaines",
     "hrDesc": "Enregistrez les membres du personnel, notez les détails de la paie et partagez l'accès à l'application avec les travailleurs.",
-    "localHub": "Hub local",
+    "localHub": "Pôle Marché",
     "localHubDesc": "Connectez-vous avec des vétérinaires locaux, des vendeurs d'aliments et des acheteurs de porcs, et suggérez de développer le hub.",
-    "symptomsAnalyzer": "Analyseur de symptômes",
+    "symptomsAnalyzer": "Diagnostic des maladies",
     "symptomsAnalyzerDesc": "Analysez les symptômes (peau, selles, respiration) pour identifier les maladies avant l'arrivée du vétérinaire.",
-    "weightChecker": "Vérificateur de poids",
+    "weightChecker": "Peser les porcs",
     "weightCheckerDesc": "Estimez le poids des cochons à l'aide d'un ruban à mesurer et mettez facilement à jour le profil du cochon avec le poids.",
-    "trainingTips": "Conseils de formation",
+    "trainingTips": "Conseils d'élevage porcin",
     "trainingTipsDesc": "Accédez aux directives générales et aux conseils sur la porcherie avec des tutoriels vidéo.",
+    "findWithSymptoms": "Recherche par symptômes",
+    "commonPigDiseases": "Maladies courantes du porc",
+    "convertWeight": "Convertir le poids",
+    "weighWithTape": "Peser au ruban barymétrique",
+    "findCarcassWeight": "Calculer le poids carcasse",
+    "dressingPercentage": "Rendement carcasse",
+    "headOn": "Carcasse avec tête",
+    "headOff": "Carcasse sans tête (détêtée)",
+    "estimatedUsableMeat": "Viande nette valorisable estimée",
+    "visceraDeduction": "Déduction abats et viscères",
+    "archiveStaff": "Archiver l'employé",
+    "staffArchivedSuccess": "Employé archivé avec succès",
+    "staffProfile": "Fiche de l'employé",
+    "logSalary": "Enregistrer un salaire",
+    "edit": "Modifier",
+    "uploadPhoto": "Téléverser une photo",
+    "takePhoto": "Prendre une photo",
+    "removePhoto": "Supprimer la photo",
     "adminPanel": "Panneau d'administration",
     "adminPanelDesc": "Gérez les ingrédients mondiaux, vérifiez les suggestions des prestataires et mettez à jour les tutoriels vidéo de formation.",
     "recentTransactions": "Transactions récentes",
@@ -105,22 +133,34 @@
     "notifications": "Notifications",
     "noActivities": "Aucune activité à venir",
     "allTasksCompleted": "Toutes les tâches sont terminées !",
-    "generalTask": "Tâche générale",
-    "language": "Langue",
+    "generalTask": "Tâche Générale",
+    "language": "Choisir la langue",
     "feed": "Alimentation",
     "inventory": "Inventaire des aliments",
     "calculator": "Calculer la ration",
     "mixFeed": "Fabriquer l'aliment",
     "analyzeFeed": "Analyser l'aliment",
-    "marketHub": "Pôle Marché"
+    "marketHub": "Pôle Marché",
+    "weighWithScale": "Peser avec balance",
+    "logActivitiesEvents": "Activités et événements",
+    "openActivityCalendar": "Ouvrir Reproduction et Activités",
+    "cashflowRecords": "Finances",
+    "financialSummary": "Résumé financier",
+    "totalIncome": "Revenu Total",
+    "totalExpenses": "Dépense Totale",
+    "netProfit": "Bénéfice net",
+    "viewAll": "Voir tout",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "addEntry": "Ajouter une transaction"
   },
   "Login": {
-    "title": "SmartSwine Web",
-    "createAccount": "Créez votre compte de ferme",
+    "title": "Web SmartSwine",
+    "createAccount": "Créer un compte",
     "signInTitle": "Connectez-vous pour accéder aux métriques de votre ferme",
-    "fillAllFields": "Veuillez remplir tous les champs.",
-    "passwordsDoNotMatch": "Les mots de passe ne correspondent pas.",
-    "passwordTooShort": "Le mot de passe doit comporter au moins 6 caractères.",
+    "fillAllFields": "Veuillez remplir tous les champs",
+    "passwordsDoNotMatch": "Les mots de passe ne correspondent pas",
+    "passwordTooShort": "Le mot de passe doit comporter au moins 6 caractères",
     "authFailed": "Authentification échouée.",
     "googleFailed": "Échec de la connexion avec Google.",
     "enterEmailReset": "Veuillez d'abord saisir votre adresse e-mail pour réinitialiser votre mot de passe.",
@@ -144,20 +184,20 @@
   },
   "Footer": {
     "rights": "Tous droits réservés.",
-    "developedBy": "Développé par l'équipe SmartSwine",
+    "developedBy": "Développé par Bibinii Tech",
     "privacyPolicy": "Politique de confidentialité",
     "termsOfService": "Conditions d'utilisation",
     "refundPolicy": "Politique de remboursement",
     "accountDeletion": "Suppression du compte"
   },
   "Herd": {
-    "title": "Inventaire des porcs",
+    "title": "Données du troupeau",
     "titleArchived": "Inventaire des porcs (archivé)",
-    "exportPdf": "Exporter en PDF",
+    "exportPdf": "Exporter tout en PDF",
     "exportPdfPremium": "Exporter en PDF (Premium)",
-    "noArchived": "Aucun cochon archivé trouvé.",
+    "noArchived": "Aucun porc archivé trouvé.",
     "noPigs": "Aucun cochon enregistré dans cette ferme pour le moment.",
-    "tagNumber": "Numéro de boucle",
+    "tagNumber": "Numéro d'étiquette",
     "age": "Âge",
     "lessThanMonth": "Moins d'un mois",
     "months": "{count} mois",
@@ -165,22 +205,22 @@
     "gender": "Genre",
     "weight": "Poids",
     "weightKg": "Poids (kg)",
-    "location": "Emplacement",
-    "locationPen": "Emplacement / Case",
+    "location": "Localisation",
+    "locationPen": "Emplacement (Loge / Case n°)",
     "addNewPigs": "Ajouter de nouveaux cochons",
     "singlePig": "Cochon unique",
     "multipleBatch": "Lot multiple",
     "breed": "Race",
-    "purpose": "Usage",
+    "purpose": "Objectif",
     "specifyBreed": "Préciser la race",
-    "breedPlaceholder": "ex: Berkshire x Large White",
+    "breedPlaceholder": "ex. Large White x Landrace",
     "males": "Mâles",
     "females": "Femelles",
-    "qty": "Qté :",
+    "qty": "Qté",
     "birthDate": "Date de naissance",
-    "sowTag": "Boucle truie",
+    "sowTag": "N° Boucle truie",
     "motherTag": "Boucle mère",
-    "boarTag": "Boucle verrat",
+    "boarTag": "N° Boucle verrat",
     "fatherTag": "Boucle père",
     "source": "Source",
     "bornOnFarm": "Né à la ferme",
@@ -188,14 +228,14 @@
     "purchasePrice": "Prix d'achat",
     "financialExpense": "Dépense financière",
     "purchasePricePlaceholder": "Saisir le prix d'achat...",
-    "notes": "Notes",
+    "notes": "Remarques",
     "notesPlaceholder": "Commentaires supplémentaires...",
     "cancel": "Annuler",
     "save": "Enregistrer",
     "limitReached": "Les utilisateurs gratuits ne peuvent avoir que jusqu'à 20 cochons. Veuillez passer à Premium pour en ajouter d'autres.",
-    "porker": "Porc charcutier",
+    "porker": "Porc de chair",
     "breeder": "Reproducteur",
-    "addPigs": "+ Ajouter des cochons",
+    "addPigs": "Ajouter des porcs",
     "male": "Mâle",
     "female": "Femelle",
     "excellent": "Excellent",
@@ -209,12 +249,19 @@
     "boar": "Verrat",
     "barrow": "Mâle castré",
     "pregnant": "Gestante",
-    "lactating": "Allaitante"
+    "lactating": "Allaitante",
+    "searchPlaceholder": "N° boucle / Emplacement / Race",
+    "activeHerd": "Actif",
+    "archivedHerd": "Porcs archivés",
+    "tag": "Étiquette",
+    "castrated_label": "(Castré)",
+    "desc": "Enregistrez les animaux, gérez les boucles auriculaires, assignez les loges et suivez le lignage.",
+    "pigs": "Porcs"
   },
   "Profile": {
     "owner": "Propriétaire",
     "staff": "Personnel",
-    "settings": "Paramètres du compte",
+    "settings": "Paramètres",
     "signOut": "Se déconnecter"
   },
   "Navigation": {
@@ -223,7 +270,7 @@
     "homeDesc": "Aperçu de la ferme et statistiques",
     "herd": "Données du troupeau",
     "herdDesc": "Gérer les dossiers individuels des cochons",
-    "feed": "Gestion des aliments",
+    "feed": "Alimentation",
     "feedDesc": "Inventaire et formulation",
     "activities": "Activités du troupeau",
     "activitiesDesc": "Suivre la santé et la reproduction",
@@ -231,19 +278,39 @@
     "financialsDesc": "Grand livre des revenus et dépenses",
     "hr": "Ressources humaines",
     "hrDesc": "Gérer le personnel et l'accès",
-    "hub": "Hub local",
+    "hub": "Pôle Marché",
     "hubDesc": "Marchés et ressources",
-    "symptoms": "Analyseur de symptômes",
+    "symptoms": "Diagnostic des maladies",
     "symptomsDesc": "Outil de diagnostic de santé IA",
-    "weight": "Vérificateur de poids",
+    "weight": "Peser les porcs",
     "weightDesc": "Suivi des performances de croissance",
-    "training": "Conseils de formation",
+    "training": "Conseils d'élevage porcin",
     "trainingDesc": "Apprendre les techniques d'élevage",
     "billing": "Facturation & Premium",
     "billingDesc": "Abonnement et fonctionnalités",
-    "admin": "Panneau d'admin",
+    "admin": "Panneau d'administration",
     "settings": "Paramètres",
-    "signOut": "Se déconnecter"
+    "signOut": "Se déconnecter",
+    "quickAccess": "ACCÈS RAPIDE",
+    "addPigs": "Ajouter des porcs",
+    "calculateFeed": "Calculer la ration",
+    "mixFeed": "Fabriquer l'aliment",
+    "analyzeFeed": "Analyser l'aliment",
+    "addEmployee": "Ajouter un employé",
+    "findDisease": "Diagnostiquer une maladie",
+    "dark": "Sombre",
+    "light": "Clair",
+    "marketHub": "Pôle Marché",
+    "diseaseFinder": "Diagnostic des maladies",
+    "weighPigs": "Peser les porcs",
+    "trainingTips": "Conseils d'élevage porcin",
+    "herdData": "Données du troupeau",
+    "feedManagement": "Alimentation",
+    "herdActivities": "Activités du troupeau",
+    "humanResources": "Ressources humaines",
+    "howToGuide": "Guide Pratique",
+    "rate5Stars": "Noter 5 étoiles sur Google Play",
+    "back": "Retour"
   },
   "Activities": {
     "title": "Exécuter une procédure sur le troupeau",
@@ -251,76 +318,76 @@
     "categories": {
       "heat": {
         "type": "Détection des chaleurs",
-        "desc": "Surveiller les truies pour la préparation à la reproduction."
+        "desc": "Surveiller les truies pour la reproduction"
       },
       "breeding": {
-        "type": "Saillie/Accouplement",
-        "desc": "Enregistrer les sessions d'accouplement réussies."
+        "type": "Saillie",
+        "desc": "Enregistrer les sessions de saillie réussies"
       },
       "pregnancy": {
         "type": "Confirmer la gestation",
-        "desc": "Enregistrer les contrôles échographiques ou physiques."
+        "desc": "Enregistrer les contrôles échographiques ou physiques"
       },
       "farrowing": {
         "type": "Mise bas",
-        "desc": "Enregistrer les nouvelles portées et les détails de la naissance."
+        "desc": "Enregistrer les nouvelles portées et les détails de naissance"
       },
       "weaning": {
         "type": "Sevrage",
-        "desc": "Enregistrer quand les porcelets quittent la truie."
+        "desc": "Enregistrer quand les porcelets quittent la truie"
       },
       "castration": {
         "type": "Castration",
-        "desc": "Enregistrer la castration des porcs mâles."
+        "desc": "Enregistrer la castration des porcelets mâles"
       },
       "teeth": {
-        "type": "Coupe des dents",
-        "desc": "Couper les dents de lait des porcelets nouveau-nés."
+        "type": "Épointage des dents",
+        "desc": "Couper les dents de lait des porcelets nouveau-nés"
       },
       "tail": {
-        "type": "Coupe de la queue",
-        "desc": "Couper les queues pour prévenir les morsures et les infections."
+        "type": "Caudectomie (coupe des queues)",
+        "desc": "Couper les queues pour prévenir les morsures et les infections"
       },
       "deworming": {
-        "type": "Vermifugation",
-        "desc": "Administrer des médicaments vermifuges."
+        "type": "Déparasitage",
+        "desc": "Administrer des médicaments vermifuges"
       },
       "iron": {
         "type": "Injection de fer",
-        "desc": "Donner des injections de fer pour prévenir l'anémie."
+        "desc": "Donner des injections de fer pour prévenir l'anémie"
       },
       "vaccination": {
-        "type": "Vaccination",
-        "desc": "Enregistrer les injections de routine ou d'urgence."
+        "type": "Vaccination.",
+        "desc": "Enregistrer les vaccins de routine ou d'urgence"
       },
       "medication": {
         "type": "Médicament",
-        "desc": "Suivre les traitements pour les animaux malades."
+        "desc": "Suivre les traitements pour les animaux malades"
       },
       "weight": {
         "type": "Contrôle du poids",
-        "desc": "Enregistrer les progrès de la croissance."
+        "desc": "Enregistrer les progrès de la croissance"
       },
       "culling": {
         "type": "Réforme",
-        "desc": "Enregistrer le retrait du troupeau."
+        "desc": "Enregistrer le retrait du troupeau"
       },
       "custom": {
         "type": "Personnalisé",
-        "desc": "Enregistrer toute autre activité ou observation de la ferme."
+        "desc": "Enregistrer toute autre activité ou observation de la ferme"
       }
     },
-    "logActivity": "Enregistrer l'activité : {type}",
+    "logActivity": "Enregistrer l'activité",
     "procedureDate": "Date de la procédure",
-    "selectSow": "-- Choisir la truie --",
-    "selectBoar": "-- Choisir le verrat --",
+    "selectSow": "Choisir une truie",
+    "selectBoar": "Choisir un verrat",
     "matingOutcome": "Résultat de l'accouplement",
     "successful": "Réussi",
     "unsuccessful": "Échec",
     "heatOutcome": "Résultat des chaleurs",
-    "heatDetected": "Chaleurs détectées",
+    "heatDetected": "Chaleur",
     "noHeatDetected": "Aucune chaleur détectée",
-    "pregnancyConfirmed": "Gestation confirmée ?",
+    "pregnancyConfirmed": "Gestation confirmée",
     "yes": "Oui",
     "no": "Non",
     "malePiglets": "Porcelets mâles",
@@ -328,8 +395,8 @@
     "maleTags": "Boucles mâles (séparées par des virgules)",
     "femaleTags": "Boucles femelles (séparées par des virgules)",
     "medicationName": "Nom du médicament",
-    "dosage": "Dosage",
-    "scheduleSecondIron": "Planifier la 2ème injection de fer (7 jours plus tard) ?",
+    "dosage": "Posologie",
+    "scheduleSecondIron": "Planifier 2e injection de fer (7 jours)",
     "showAllPigs": "Afficher tous les cochons",
     "showUnder2Months": "Afficher moins de 2 mois uniquement",
     "customName": "Nom de l'activité personnalisée",
@@ -344,29 +411,40 @@
     "cancel": "Annuler",
     "logAction": "Enregistrer l'action",
     "expectedFarrowing": "Date de mise bas prévue : {date}",
-    "chooseSow": "Sélectionner la truie (Femelle)",
-    "chooseBoar": "Sélectionner le verrat (Mâle)"
+    "chooseSow": "Choisir une truie",
+    "chooseBoar": "Choisir un verrat",
+    "back": "Retour",
+    "chooseActivityToExecute": "Choisissez l'activité à exécuter/planifier",
+    "stillborns": "Mort-nés",
+    "mummies": "Momifiés",
+    "reasonNatural": "Causes naturelles",
+    "reasonDisease": "Maladie",
+    "reasonSold": "Vendu",
+    "criticalFoodSafetyWarning": "AVERTISSEMENT CRITIQUE DE SÉCURITÉ SANITAIRE",
+    "meatWithdrawalTitle": "Délai d'Attente Avant Abattage"
   },
   "Feed": {
-    "lowStockWarning": "Alerte stock bas",
+    "lowStockWarning": "Stock faible",
     "lowStockDesc": "Certains articles d'aliments sont tombés en dessous de leur seuil de sécurité. Veuillez vous réapprovisionner.",
     "inventory": "Inventaire des aliments",
     "inventoryDesc": "Suivez et gérez votre stock d'aliments",
-    "exportPdf": "Exporter en PDF",
+    "exportPdf": "Exporter tout en PDF",
     "exportPdfPremium": "Exporter en PDF (Premium)",
-    "addFeedItem": "+ Ajouter un aliment",
+    "addFeedItem": "Ajouter un aliment",
     "noItems": "Aucun aliment enregistré pour le moment.",
-    "low": "Bas",
-    "minThreshold": "Seuil min : {count} {unit}",
-    "logUsage": "Enregistrer l'usage",
+    "low": "FAIBLE",
+    "minThreshold": "Seuil d'alerte minimum",
+    "logUsage": "Enregistrer l'utilisation",
     "restock": "Réapprovisionner",
     "transactionHistory": "Historique des transactions",
     "recentMovements": "Mouvements d'inventaire récents",
     "noTransactions": "Aucune transaction d'inventaire enregistrée.",
     "formulator": "Formulateur d'aliments",
-    "formulatorDesc": "Équilibrage scientifique des rations",
+    "formulatorDesc": "Analyser le profil nutritionnel et l'équilibre de votre mélange d'aliment fermier",
+    "mixFeed": "Formulateur d'aliments",
+    "mixingResults": "Résultats du mélange",
     "targetGrowthStage": "Stade de croissance cible",
-    "selectIngredients": "Sélectionner les ingrédients",
+    "selectIngredients": "2. Choisir les ingrédients disponibles :",
     "formulateRation": "Formuler la ration",
     "noActiveFormulation": "Aucune formulation active",
     "formulatePrompt": "Sélectionnez le stade de croissance, vérifiez les ingrédients et formulez.",
@@ -376,13 +454,17 @@
     "nutritionalAnalysis": "Analyse nutritionnelle",
     "nutrient": "Nutriment",
     "target": "Cible",
-    "actual": "Actuel",
+    "actual": "Réel",
     "status": "Statut",
-    "deficient": "Déficient",
+    "deficient": "DÉFICIENT",
     "ok": "OK",
-    "calculator": "Calculateur d'aliments",
+    "calculator": "Calculateur",
     "calculatorDesc": "Demande projetée du troupeau",
-    "demandCalculator": "Calculateur de demande d'aliments",
+    "demandCalculator": "Calculateur",
+    "quantityNeeded": "Quantité requise",
+    "numberOfPigs": "Nombre de porcs",
+    "analyzeFeed": "Analyser l'aliment",
+    "analyzeFeedDesc": "Analyser le profil nutritionnel et l'équilibre de votre mélange d'aliment fermier",
     "calculatorPrompt": "Vérifiez le nombre de vos animaux et saisissez la période de projection du calcul.",
     "sowsCount": "Nombre de truies",
     "boarsCount": "Nombre de verrats",
@@ -393,7 +475,7 @@
     "growers": "Porcs en croissance",
     "finishers": "Porcs en finition",
     "projectionPeriod": "Période de projection (jours)",
-    "generateReport": "Générer le rapport de projection",
+    "generateReport": "Générer le rapport",
     "noActiveCalculation": "Aucun calcul actif",
     "calcPrompt": "Configurez les nombres à gauche et cliquez sur calculer.",
     "projectedResults": "Résultats de la demande d'aliments projetée",
@@ -413,41 +495,41 @@
     "restockItem": "Réapprovisionner l'aliment",
     "qtyAdded": "Qté ajoutée",
     "unit": "Unité",
-    "totalCost": "Coût total ({symbol})",
-    "notes": "Notes",
+    "totalCost": "Coût total",
+    "notes": "Remarques",
     "addStock": "Ajouter du stock",
     "logFeedUsage": "Enregistrer l'usage d'aliments",
     "qtyUsed": "Qté utilisée",
-    "exportData": "Exporter les données d'aliments",
-    "selectRange": "Sélectionner la période",
+    "exportData": "Exporter données aliments",
+    "selectRange": "Choisir la période :",
     "currentMonth": "Mois actuel",
     "last3Months": "3 derniers mois",
     "custom": "Personnalisé",
-    "fromDate": "Du",
-    "toDate": "Au",
+    "fromDate": "Date de début",
+    "toDate": "Date de fin",
     "export": "Exporter",
     "disclaimer": "Avertissement : Consultez toujours un nutritionniste animalier qualifié ou un vétérinaire avant d'apporter des modifications importantes au régime alimentaire de votre troupeau.",
     "reportTitle": "Rapport d'inventaire d'aliments - {range}",
     "generatedOn": "Généré le : {date}",
     "feedName": "Nom de l'aliment",
     "addition": "Ajout",
-    "usage": "Usage",
-    "inStock": "En stock",
+    "usage": "Utilisation",
+    "inStock": "En Stock",
     "totalKg": "Total (kg)",
     "ingredientsComposition": "Composition des ingrédients",
     "ingredient": "Ingrédient",
     "rationPercentage": "Pourcentage de la ration (%)",
     "perTonMixKg": "Mix par tonne (kg)",
-    "formulaIncomplete": "Formule incomplète ({percent}%)",
+    "formulaIncomplete": "Formule incomplète ({percent} %) : Les ingrédients ne permettent pas une formule complète sans dépasser les limites.",
     "growthStage": "Stade de croissance",
     "dailyKg": "Quotidien (kg)",
-    "days": "{count} Jours",
+    "days": "{count} jours",
     "managementSystemReport": "Rapport du système de gestion SmartSwine",
-    "bags": "Sacs",
+    "bags": "sacs",
     "kg": "kg",
-    "starter": "Starter",
-    "grower": "Croissance",
-    "finisher": "Finition",
+    "starter": "Démarreur",
+    "grower": "Porc en croissance",
+    "finisher": "Porc à l'engrais",
     "ingredientsList": {
       "maize": "Maïs",
       "maize_bran": "Son de maïs",
@@ -469,26 +551,37 @@
       "vitaminsMineralsSalt": "Vitamines, Minéraux et Sel"
     },
     "nutrients": {
-      "digestibleProtein": "Protéine digestible (%)",
-      "crudeFiber": "Fibre brute (%)",
+      "digestibleProtein": "Protéine digestible",
+      "crudeFiber": "Cellulose brute (CB)",
       "metabolizableEnergy": "Énergie métabolisable (kcal/kg)",
       "calcium": "Calcium (%)",
       "phosphorus": "Phosphore (%)",
-      "lysine": "Lysine (%)",
+      "lysine": "Lysine",
       "methionineCystine": "Méthionine + Cystine (%)"
-    }
+    },
+    "category": "Catégorie",
+    "headCount": "Porcs",
+    "dailyIntake": "Rate",
+    "dailyTotal": "Total quotidien",
+    "mixFeedDesc": "Débloquez l'optimisation des rations aux moindres coûts et les objectifs nutritionnels par stade.",
+    "runFormulator": "Calculate Ration",
+    "noFeedInventoryItems": "No feed items recorded",
+    "addFirstFeedItem": "Ajouter un aliment",
+    "addFirstItem": "Ajouter un article",
+    "sow": "Truie",
+    "boar": "Verrat"
   },
   "Financials": {
-    "totalRevenue": "Revenu total",
+    "totalRevenue": "Revenu Total",
     "totalExpenses": "Dépenses totales",
     "netCashflow": "Flux de trésorerie net",
     "farmCashflowLedger": "Grand livre de trésorerie de la ferme",
-    "logTransaction": "Enregistrer une transaction",
+    "logTransaction": "Ajouter une transaction",
     "noTransactions": "Aucune transaction enregistrée pour le moment.",
     "date": "Date",
-    "type": "Type",
+    "type": "Tapez",
     "category": "Catégorie",
-    "description": "Description",
+    "description": "Descriptif",
     "linkedPig": "Cochon lié",
     "amount": "Montant",
     "actions": "Actions",
@@ -510,26 +603,26 @@
       "other": "Autre"
     },
     "expenseCategories": {
-      "feed": "Aliments",
+      "feed": "Alimentation",
       "vet": "Vétérinaire/Médicaments",
       "labor": "Main-d'œuvre/Salaire",
       "equipment": "Équipement",
-      "transport": "Transport",
+      "transport": "Transports",
       "rent": "Loyer",
       "utility": "Charges (eau, élec...)",
       "other": "Autre"
     },
     "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet enregistrement de transaction ?",
-    "exportPdf": "Exporter en PDF",
+    "exportPdf": "Exporter tout en PDF",
     "exportPdfPremium": "Exporter en PDF (Premium)",
     "transactionsCount": "Transactions ({count})",
     "transactions": "Transactions"
   },
   "Hub": {
-    "directoryRegion": "Région du répertoire : {region}",
+    "directoryRegion": "Région de l'annuaire",
     "allRegions": "Toutes les régions",
-    "verifiedVendors": "Vendeurs vérifiés",
-    "porkBuyers": "Acheteurs de porc & Abattoirs",
+    "verifiedVendors": "Fournisseurs vérifiés",
+    "porkBuyers": "Acheteurs de porcs & Abattoirs",
     "vetServices": "Services vétérinaires",
     "mySuggestions": "Mes suggestions",
     "suggestProvider": "Suggérer un prestataire",
@@ -548,7 +641,7 @@
       "rejected": "Rejeté",
       "pending": "En attente"
     },
-    "category": "Catégorie : {type}",
+    "category": "Catégorie",
     "feedback": "Commentaire :",
     "businessName": "Nom de l'entreprise / du docteur",
     "serviceCategory": "Catégorie de service",
@@ -557,7 +650,7 @@
     "phoneNumber": "Numéro de téléphone",
     "cityLocation": "Ville / Emplacement",
     "emailOptional": "Adresse e-mail (Optionnelle)",
-    "submitSuggestion": "Soumettre la suggestion",
+    "submitSuggestion": "Envoyer la suggestion",
     "successSubmit": "Suggestion d'annonce soumise avec succès ! En attente de l'approbation de l'administrateur.",
     "errorSubmit": "Échec de la soumission de la suggestion. Veuillez réessayer.",
     "duplicateError": "Ce prestataire est déjà répertorié ou suggéré.",
@@ -567,7 +660,7 @@
       "abattoir": "Abattoir",
       "feedSupplier": "Fournisseur d'aliments",
       "toolsSupplier": "Fournisseur d'outils",
-      "vetShop": "Pharmacie vétérinaire",
+      "vetShop": "Magasin vétérinaire",
       "vetServices": "Services vétérinaires",
       "other": "Autre"
     }
@@ -575,7 +668,7 @@
   "Weight": {
     "title": "Peser les cochons avec un ruban & Convertisseur d'unités",
     "description": "Estimez le poids vif des porcs en utilisant les mesures au ruban du tour de poitrine et de la longueur du corps, ou convertissez les métriques de poids standard.",
-    "weighWithTape": "Peser avec le ruban",
+    "weighWithTape": "Peser au ruban barymétrique",
     "inches": "Pouces",
     "centimeters": "Centimètres",
     "bodyLength": "A = Longueur du corps ({unit})",
@@ -585,9 +678,9 @@
     "measurementGuide": "Mesurez la longueur (Point A) et le tour de poitrine (Point B) comme indiqué ci-dessus.",
     "estimatedResults": "Résultats estimés",
     "estLiveWeight": "Poids vif estimé",
-    "estCarcassWeight": "Poids carcasse estimé (72%)",
+    "estCarcassWeight": "Poids carcasse estimé",
     "enterPositiveValues": "Saisissez des valeurs positives pour le tour de poitrine et la longueur du corps pour exécuter la projection du poids vif/carcasse.",
-    "weightConverter": "Convertisseur de poids",
+    "weightConverter": "Convertir le poids",
     "pounds": "Livres (Lbs)",
     "kilograms": "Kilogrammes (Kg)",
     "saveToProfile": "Enregistrer dans le profil du cochon",
@@ -595,23 +688,24 @@
     "selectPigTag": "Sélectionner la boucle du cochon",
     "choosePigTag": "-- Choisir la boucle --",
     "weightToSave": "Poids à enregistrer (kg)",
-    "saveWeight": "Enregistrer le poids dans le profil",
+    "saveWeight": "Enregistrer le poids dans le profil du porc",
     "savingWeight": "Enregistrement du poids...",
     "importantNotes": "Notes importantes",
     "noteBodyLength": "Longueur du corps : Mesurez de la base des oreilles à la base de la queue en vous assurant que le ruban est ferme sur le corps et non lâche (Point A).",
     "noteHeartGirth": "Tour de poitrine : Mesurez le thorax (juste derrière les pattes avant) en vous assurant que le ruban est ajusté le long du corps et se rejoint étroitement (Point B).",
     "noteSquarely": "Assurez-vous que le cochon se tient bien droit sur un sol plat pour obtenir le résultat le plus précis.",
-    "saveSuccess": "Poids enregistré avec succès dans le profil du cochon !",
+    "saveSuccess": "Poids enregistré avec succès pour le porc %s !",
     "saveError": "Erreur lors de l'enregistrement du poids. Vérifiez votre connexion.",
     "validWeightAlert": "Veuillez saisir un poids valide en kg.",
     "weightCheckedManually": "Poids vérifié manuellement : {weight} kg.",
-    "tapeEstimationLog": "Poids estimé par calcul au ruban : {weight} kg / {lbs} lbs (Tour : {girth} {unit}, Longueur : {length} {unit})."
+    "tapeEstimationLog": "Poids estimé par calcul au ruban : {weight} kg / {lbs} lbs (Tour : {girth} {unit}, Longueur : {length} {unit}).",
+    "weighWithScale": "Peser avec balance"
   },
   "Training": {
-    "title": "Conseils rapides d'élevage",
+    "title": "Conseils Rapides d'Élevage",
     "searchTips": "Rechercher des conseils...",
     "noTipsFound": "Aucun conseil trouvé correspondant à votre recherche.",
-    "videoTutorials": "Tutoriels vidéo",
+    "videoTutorials": "Tutoriels Vidéo",
     "closeForm": "✕ Fermer le formulaire",
     "addVideo": "＋ Ajouter une vidéo",
     "tutorialTitle": "Titre du tutoriel",
@@ -632,108 +726,108 @@
     },
     "tips": {
       "tip6": {
-        "title": "Âge du sevrage pour les petits exploitants",
-        "content": "Sevrez les porcelets entre 28 et 35 jours au lieu de plus tôt. Cela permet aux porcelets de devenir plus forts et de s'adapter aux aliments solides en utilisant les ressources simples de la ferme."
+        "title": "Âge de sevrage en petit élevage",
+        "content": "Sevrez les porcelets entre 28 et 35 jours. Cela permet aux porcelets d'être plus robustes et de mieux valoriser les aliments solides locaux."
       },
       "tip7": {
-        "title": "Méthode de séparation graduelle",
-        "content": "Réduisez le stress du sevrage en sortant la truie de la case de mise bas et en laissant les porcelets dans leur environnement familier pendant la première semaine."
+        "title": "Méthode de séparation progressive",
+        "content": "Réduisez le stress en retirant la truie de la maternité et en laissant les porcelets dans leur loge familière la première semaine."
       },
       "tip8": {
-        "title": "Prévention des courants d'air pour les sevrés",
-        "content": "Bloquez les vents froids dans la case de nurserie en installant des rideaux temporaires ou des planches de bois jusqu'à la hauteur des porcelets (environ 50 cm)."
+        "title": "Protection contre les courants d'air",
+        "content": "Bloquez le vent froid dans la pouponnière avec des bâches ou des planches jusqu'à 50 cm de haut."
       },
       "tip11": {
         "title": "Solution de réhydratation maison",
-        "content": "Donnez une solution d'électrolytes maison bon marché (5 cuillères à soupe de sucre, 1/2 cuillère à soupe de sel dans 5 litres d'eau propre) pendant les 3 premiers jours du sevrage pour lutter contre le stress."
+        "content": "Distribuez une solution économique (5 cuillères de sucre, 1/2 cuillère de sel dans 5 litres d'eau propre) les 3 premiers jours du sevrage."
       },
       "tip17": {
-        "title": "Supplément minéral en terre argileuse",
-        "content": "Mettez une pelletée propre de terre argileuse rouge fraîche (provenant d'une zone propre) dans la case de mise bas/sevrage. Les porcelets en mangent pour obtenir du fer et des minéraux naturels."
+        "title": "Apport de terre argileuse propre",
+        "content": "Déposez une pelletée de terre argileuse rouge propre dans l'enclos. Les porcelets la consomment pour son fer et ses oligo-éléments naturels."
       },
       "tip20": {
-        "title": "Ébullition des sous-produits agricoles",
-        "content": "Faites bouillir les sous-produits agricoles comme les épluchures d'igname, les épluchures de manioc et les fanes de patates douces pour détruire les toxines naturelles et améliorer la digestibilité."
+        "title": "Cuisson des sous-produits agricoles",
+        "content": "Faites bouillir les épluchures de manioc et d'igname pour détruire l'acide cyanhydrique et faciliter leur assimilation."
       },
       "tip21": {
-        "title": "Sources de protéines locales",
-        "content": "Complétez les aliments commerciaux en cultivant des plantes fourragères riches en protéines comme le Moringa, l'Azolla ou les feuilles de patate douce sur la ferme."
+        "title": "Fourrages protéiques locaux",
+        "content": "Enrichissez la ration avec des feuilles de Moringa, d'Azolla ou de patate douce cultivées sur la ferme pour réduire les coûts d'aliment."
       },
       "tip22": {
-        "title": "Restriction alimentaire pendant la gestation",
-        "content": "Limitez les truies gestantes à 2-2,5 kg d'aliments par jour pour éviter qu'elles ne deviennent trop grasses, ce qui cause des mises bas difficiles."
+        "title": "Rationnement des truies gestantes",
+        "content": "Limitez la truie gestante à 2 - 2,5 kg d'aliment par jour pour éviter l'engraissement excessif qui complique la mise bas."
       },
       "tip26": {
-        "title": "Ébullition des déchets de cuisine",
-        "content": "Faites bouillir les déchets alimentaires des hôtels ou des cuisines pendant 30 minutes pour détruire les virus de la peste porcine africaine et de la fièvre aphteuse."
+        "title": "Qualité et salinité de la farine de poisson",
+        "content": "Contrôlez la teneur en sel de la farine de poisson artisanale pour éviter les intoxications aiguës par le sodium."
       },
       "tip28": {
-        "title": "Charbon de bois pour la digestion",
-        "content": "Placez de petits morceaux de charbon de bois dans les cases de croissance. Les cochons le mâchent pour aider à lier les toxines de l'estomac et réduire la diarrhée."
+        "title": "Coquilles d'huîtres et calcaire broyé",
+        "content": "Ajoutez 1 à 1,5% de coquilles marines ou calcaire broyé pour assurer la solidité de l'ossature chez les jeunes porcs."
       },
       "tip34": {
-        "title": "Saillie contrôlée dans la case du verrat",
-        "content": "Amenez la truie en chaleur dans la case du verrat pour l'accouplement, plutôt que de laisser le verrat courir librement dans le troupeau de truies."
+        "title": "Pesée rigoureuse de la ration",
+        "content": "Pesez les aliments au kilo à l'aide d'une balance plutôt qu'au seau pour maîtriser précisément le coût de revient."
       },
       "tip35": {
-        "title": "Réponse à la chaleur immobile",
-        "content": "Testez les chaleurs en appuyant fermement vos mains sur le dos de la truie ; si elle reste complètement immobile et dresse ses oreilles, elle est prête pour la saillie."
+        "title": "Détection des chaleurs par chevauchement",
+        "content": "Appliquez une pression ferme sur le dos de la truie en présence d'un verrat : le réflexe d'immobilité confirme le moment idéal."
       },
       "tip39": {
-        "title": "Protection contre l'écrasement des porcelets DIY",
-        "content": "Installez des \"barres de protection\" (poteaux en bois lourds ou tuyaux métalliques placés à 20 cm des murs et à 20 cm du sol) dans les cases de mise bas."
+        "title": "Calme absolu en début de gestation",
+        "content": "Évitez tout stress, déplacement ou bagarre pendant les 30 premiers jours de gestation pour sécuriser la nidation embryonnaire."
       },
       "tip43": {
-        "title": "Calendrier des enregistrements de reproduction",
-        "content": "Notez la date de saillie sur un calendrier ; la gestation dure 114 jours (3 mois, 3 semaines, 3 jours), ce qui vous permet de préparer la case de mise bas."
+        "title": "Lavage des mamelles avant tétée",
+        "content": "Nettoyez les mamelles de la truie à l'eau tiède savonneuse avant la première tétée pour réduire les colibacilloses néonatales."
       },
       "tip47": {
-        "title": "Âge de la première saillie des cochetes",
-        "content": "Attendez qu'une cochete ait au moins 8 mois et qu'elle en soit à son deuxième ou troisième cycle de chaleur avant de la saillir pour assurer une première portée plus nombreuse."
+        "title": "Contrôle des retours en chaleur (J21)",
+        "content": "Présentez le verrat entre le 18ème et le 24ème jour post-saillie pour détecter immédiatement les échecs de fécondation."
       },
       "tip48": {
-        "title": "Isolement des nouveaux achats",
-        "content": "Gardez les cochons nouvellement achetés dans une case séparée à au moins 20 mètres de votre troupeau principal pendant 30 jours pour vérifier s'ils sont malades."
+        "title": "Colostrum manuel pour les avortons",
+        "content": "Trayez du colostrum à la main et donnez-le à la seringue aux porcelets les plus faibles dès la première heure de vie."
       },
       "tip49": {
-        "title": "Installation d'un pédiluve DIY",
-        "content": "Placez un bac en plastique peu profond ou un pneu coupé en deux rempli d'eau et de désinfectant (comme du chlore ou de la chaux agricole) à l'entrée de la ferme."
+        "title": "Prudence lors du meulage des dents",
+        "content": "Meulez uniquement la pointe des dents de lait sans entamer la gencive pour éviter les abcès douloureux de la mâchoire."
       },
       "tip51": {
-        "title": "Politique de restriction des visiteurs",
-        "content": "Ne laissez pas de visiteurs (en particulier d'autres acheteurs de porcs ou éleveurs) entrer dans vos cases de cochons. Discutez affaires à l'extérieur de la zone des cases."
+        "title": "Bottes dédiées pour les visiteurs",
+        "content": "Exigez des bottes propres de l'élevage pour toute personne extérieure afin de ne pas introduire de germes pathogènes."
       },
       "tip55": {
-        "title": "Contrôle naturel des parasites",
-        "content": "Donnez des graines de papaye écrasées ou des graines de citrouille aux porcs en croissance comme remède naturel bon marché pour aider à réduire les vers internes."
+        "title": "Isolement immédiat de tout porc malade",
+        "content": "Isolez sans délai tout animal fiévreux ou prostré dans un box d'infirmerie situé à l'écart du bâtiment principal."
       },
       "tip60": {
-        "title": "Inhumation appropriée des mortalités",
-        "content": "Enterrez les cochons morts à au moins 2 mètres de profondeur, loin des sources d'eau, et couvrez le cadavre de chaux agricole avant de reboucher."
+        "title": "Enfouissement profond des cadavres",
+        "content": "Enterrez les porcs morts à au moins 1,5 m de profondeur et recouvrez-les de chaux vive pour empêcher les chiens de creuser."
       },
       "tip61": {
-        "title": "Espace de case à faible coût",
-        "content": "Prévoyez au moins 1 mètre carré d'espace par porc charcutier pour réduire les bagarres, le stress et les lésions cutanées."
+        "title": "Lutte anti-rats et anti-mouches",
+        "content": "Éliminez les rongeurs et les mouches autour des bâtiments : ils sont les principaux vecteurs de salmonelles et dysenterie."
       },
       "tip62": {
-        "title": "Ventilation transversale naturelle",
-        "content": "Concevez des porcheries avec des côtés ouverts (en utilisant du grillage ou des lattes de bambou) pour permettre à une brise naturelle de passer et d'éliminer les odeurs."
+        "title": "Suivi rigoureux des vaccinations",
+        "content": "Respectez le protocole vaccinal régional (Rouget, Parvovirose, Mycoplasme) et conservez les vaccins au frais."
       },
       "tip75": {
-        "title": "Tas de compost DIY",
-        "content": "Empilez le fumier de porc dans un coin sec désigné, couvrez-le de feuilles de bananier ou de plastique et retournez-le chaque semaine avec une pelle pour faire du compost."
+        "title": "Biogaz issu des déjections porcines",
+        "content": "Raccordez les fosses à un digesteur simple pour produire du gaz de cuisson gratuit et un engrais liquide de premier choix."
       },
       "tip76": {
-        "title": "Biogaz en sac flexible",
-        "content": "Installez un digesteur de biogaz tubulaire en plastique simple et peu coûteux pour traiter le fumier de porc, produisant du gaz de cuisson gratuit pour le foyer."
+        "title": "Compostage du lisier avec de la paille",
+        "content": "Mélangez le fumier avec de la sciure ou de la balle de riz pour obtenir un compost organique riche pour vos cultures."
       },
       "tip92": {
-        "title": "Limite d'âge pour la castration",
-        "content": "Castrez les porcelets mâles avant l'âge de 7 jours. À cet âge, la procédure est rapide, guérit vite et cause une douleur minimale."
+        "title": "Achat d'ingrédients en saison de récolte",
+        "content": "Achetez le maïs et le son en pleine récolte lorsque les prix sont au plus bas et stockez-les au sec."
       },
       "tip94": {
-        "title": "Enregistrements simples sur carnet",
-        "content": "Gardez un petit carnet bon marché dans la porcherie pour noter les dates de saillie, les dates de mise bas et les traitements pour chaque truie."
+        "title": "Implantation du bâtiment sous le vent",
+        "content": "Construisez la porcherie en aval des habitations pour préserver le voisinage des nuisances olfactives."
       }
     }
   },
@@ -752,37 +846,37 @@
     "noMatchesDesc": "Veuillez modifier la sélection ou consulter votre vétérinaire local pour des examens physiques.",
     "potentialMatches": "{count} correspondances potentielles",
     "matchAccuracy": "Précision de la correspondance : {count} symptôme(s) détecté(s)",
-    "descriptionLabel": "Description :",
+    "descriptionLabel": "Descriptif",
     "otherSymptoms": "Autres symptômes à surveiller :",
     "preventionLabel": "Plan de prévention et d'action :",
-    "viewDetails": "Cliquez pour voir les détails et la prévention",
+    "viewDetails": "Voir les détails",
     "disclaimer": "Avertissement : Cet outil d'IA est basé sur la recherche vétérinaire pour une assistance éducative. Il ne remplace PAS un diagnostic vétérinaire professionnel. Consultez toujours un vétérinaire qualifié avant de commencer des traitements ou d'acheter des médicaments.",
     "severity": {
       "LOW": "FAIBLE",
-      "MODERATE": "MODÉRÉE",
-      "HIGH": "ÉLEVÉE",
+      "MODERATE": "MODÉRÉ",
+      "HIGH": "ÉLEVÉ",
       "CRITICAL": "CRITIQUE"
     },
     "groups": {
-      "sg_skin_coat": "Peau & Pelage",
-      "sg_digestive_stool": "Digestif & Selles",
+      "sg_skin_coat": "Peau et pelage",
+      "sg_digestive_stool": "Digestif et selles",
       "sg_respiratory": "Respiratoire",
-      "sg_behavioral_nervous": "Comportemental & Nerveux",
+      "sg_behavioral_nervous": "Comportemental et nerveux",
       "sg_reproduction": "Reproduction",
-      "sg_general_limbs": "Général & Membres"
+      "sg_general_limbs": "Général et membres"
     },
     "list": {
-      "sym_skin_discoloration": "Décoloration de la peau (Rouge/Violet)",
-      "sym_diamond_lesions": "Lésions cutanées en forme de losange",
+      "sym_skin_discoloration": "Décoloration de la peau (rouge/violet)",
+      "sym_diamond_lesions": "Lésions cutanées en forme de diamant",
       "sym_itching": "Démangeaisons",
       "sym_hair_loss": "Perte de poils",
       "sym_pale_skin": "Peau pâle",
       "sym_jaundice": "Jaunisse",
       "sym_skin_crusts": "Croûtes cutanées",
-      "sym_rough_hair": "Pelage rêche",
+      "sym_rough_hair": "Pelage rugueux",
       "sym_sunburn": "Coup de soleil",
       "sym_ear_necrosis": "Nécrose de l'oreille",
-      "sym_blisters_snout_feet": "Ampoules sur le groin/les pattes",
+      "sym_blisters_snout_feet": "Ampoules sur le groin/les pieds",
       "sym_diarrhea": "Diarrhée",
       "sym_vomiting": "Vomissements",
       "sym_bloody_diarrhea": "Diarrhée sanglante",
@@ -796,21 +890,21 @@
       "sym_difficulty_breathing": "Difficulté à respirer",
       "sym_nasal_discharge": "Écoulement nasal",
       "sym_sneezing": "Éternuements",
-      "sym_thumping": "Respiration abdominale saccadée",
+      "sym_thumping": "Respiration abdominale",
       "sym_nose_bleeds": "Saignements de nez",
       "sym_frothing": "Mousse à la bouche",
       "sym_excessive_salivation": "Salivation excessive",
       "sym_lethargy": "Léthargie",
-      "sym_seizures": "Crises d'épilepsie",
+      "sym_seizures": "Convulsions",
       "sym_muscle_stiffness": "Raideur musculaire",
       "sym_trembling": "Tremblements",
       "sym_blindness": "Cécité",
       "sym_paralysis": "Paralysie",
       "sym_incoordination": "Incoordination",
-      "sym_circling": "Mouvement en cercle",
+      "sym_circling": "Marche en cercle",
       "sym_convulsions": "Convulsions",
       "sym_nervousness": "Nervosité",
-      "sym_twitching": "Tics musculaires",
+      "sym_twitching": "Contractions musculaires",
       "sym_tail_biting": "Morsure de queue",
       "sym_abortion": "Avortement",
       "sym_infertility": "Infertilité",
@@ -818,23 +912,23 @@
       "sym_small_litter": "Petite taille de portée",
       "sym_swollen_vulva": "Vulve enflée",
       "sym_enlarged_scrotum": "Scrotum élargi",
-      "sym_swollen_udder": "Pis enflé ou mammite",
-      "sym_high_fever": "Forte fièvre",
+      "sym_swollen_udder": "Mamelle gonflée ou mammite",
+      "sym_high_fever": "Fievre élevée",
       "sym_lameness": "Boiterie",
-      "sym_sudden_death": "Mort subite",
+      "sym_sudden_death": "Mort soudaine",
       "sym_swollen_joints": "Articulations enflées",
       "sym_swollen_navel": "Gonflement du nombril",
       "sym_leg_weakness": "Faiblesse des pattes",
       "sym_swollen_eyelids": "Paupières enflées",
       "sym_stunted_growth": "Retard de croissance",
       "sym_pale_mucous": "Muqueuses pâles",
-      "sym_bleeding_orifices": "Saignements par les orifices",
+      "sym_bleeding_orifices": "Saignement des orifices",
       "sym_watery_diarrhea": "Diarrhée aqueuse",
       "sym_abscesses": "Abcès",
       "sym_anemia": "Anémie",
       "sym_thirst": "Soif",
       "sym_fractures": "Fractures",
-      "sym_cracked_hooves": "Sabots fissurés",
+      "sym_cracked_hooves": "Sabots fendus",
       "sym_red_urine": "Urine rouge/foncée"
     },
     "diseases": {
@@ -942,7 +1036,7 @@
       },
       "dis_anemia": {
         "name": "Anémie ferriprive",
-        "scientificName": "Carence en fer",
+        "scientificName": "Iron Deficiency",
         "description": "Fréquente chez les porcelets en intérieur sans suppléments de fer.",
         "prevention": "Injections de fer à la naissance."
       },
@@ -954,7 +1048,7 @@
       },
       "dis_pss": {
         "name": "Syndrome de stress porcin",
-        "scientificName": "Susceptibilité génétique au stress",
+        "scientificName": "Genetic stress susceptibility",
         "description": "Condition génétique déclenchée par le stress.",
         "prevention": "Sélection génétique et manipulation calme."
       },
@@ -1074,7 +1168,7 @@
       },
       "dis_ascaris": {
         "name": "Ascaris suum (Grand ver rond)",
-        "scientificName": "Grand ver rond",
+        "scientificName": "Large Roundworm",
         "description": "Parasite interne causant des dommages aux poumons et au foie.",
         "prevention": "Vermifugation régulière."
       },
@@ -1104,13 +1198,13 @@
       },
       "dis_ringworm": {
         "name": "Teigne",
-        "scientificName": "Dermatophytose",
+        "scientificName": "Dermatophytosis",
         "description": "Infection cutanée fongique.",
         "prevention": "Assainissement et traitement topique."
       },
       "dis_mulberry_heart": {
         "name": "Maladie du cœur de mûre",
-        "scientificName": "Carence en Vit E/Se",
+        "scientificName": "Vit E/Se Deficiency",
         "description": "Carence nutritionnelle affectant le cœur.",
         "prevention": "Supplémentation."
       },
@@ -1122,13 +1216,13 @@
       },
       "dis_rickets": {
         "name": "Rachitisme",
-        "scientificName": "Carence en Vit D/Ca/P",
+        "scientificName": "Vit D/Ca/P Deficiency",
         "description": "Carence nutritionnelle affectant la croissance osseuse.",
         "prevention": "Minéraux équilibrés et lumière du soleil."
       },
       "dis_salt_poisoning": {
         "name": "Intoxication par le sel",
-        "scientificName": "Privation d'eau",
+        "scientificName": "Water Deprivation",
         "description": "Causée par un manque d'eau suivi d'une surconsommation.",
         "prevention": "Accès permanent à l'eau fraîche."
       },
@@ -1158,13 +1252,13 @@
       },
       "dis_splayleg": {
         "name": "Splayleg (Écartement des pattes)",
-        "scientificName": "Hypoplasie myofibrillaire",
+        "scientificName": "Myofibrillar hypoplasia",
         "description": "Porcelets nés incapables de se tenir debout avec les pattes arrière.",
         "prevention": "Ligature des pattes et traction au sol."
       },
       "dis_vulvovaginitis": {
         "name": "Vulvovaginite",
-        "scientificName": "Toxicité à la zéaralénone",
+        "scientificName": "Zearalenone Toxicity",
         "description": "Causée par des toxines fongiques estrogéniques dans l'aliment.",
         "prevention": "Changer de source d'aliment."
       },
@@ -1212,7 +1306,7 @@
       },
       "dis_cysticercosis": {
         "name": "Cysticercose",
-        "scientificName": "Larves de Taenia solium",
+        "scientificName": "Taenia solium larvae",
         "description": "Stade larvaire du ténia humain dans le muscle du porc.",
         "prevention": "Empêcher l'accès aux déchets humains."
       },
@@ -1236,67 +1330,67 @@
       },
       "dis_sunburn": {
         "name": "Coup de soleil",
-        "scientificName": "Dermatite solaire",
+        "scientificName": "Solar dermatitis",
         "description": "Affecte les porcs à peau blanche en extérieur.",
         "prevention": "Fournir de l'ombre."
       },
       "dis_tail_biting": {
         "name": "Morsure de queue",
-        "scientificName": "Stress comportemental",
+        "scientificName": "Behavioral stress",
         "description": "Problème comportemental dû au stress/ennui.",
         "prevention": "Réduire le stress et enrichir l'environnement."
       },
       "dis_navel_ill": {
         "name": "Infection de l'ombilic (Navel Ill)",
-        "scientificName": "Infection ombilicale",
+        "scientificName": "Navel Infection",
         "description": "Infection du cordon ombilical à la naissance.",
         "prevention": "Trempage à l'iode à la naissance et assainissement."
       },
       "dis_iron_toxicity": {
         "name": "Toxicité ferrique",
-        "scientificName": "Excès ferreux",
+        "scientificName": "Ferrous excess",
         "description": "Peut survenir si le fer est injecté à des porcelets carencés en Vit E.",
         "prevention": "Assurer une alimentation équilibrée de la truie."
       },
       "dis_aflatoxicosis": {
         "name": "Aflatoxicose",
-        "scientificName": "Toxine d'Aspergillus flavus",
+        "scientificName": "Aspergillus flavus toxin",
         "description": "Empoisonnement par des toxines provenant de grains ou d'aliments moisis, entraînant des lésions hépatiques et un ictère.",
         "prevention": "Éviter les aliments moisis, stocker les grains au sec et utiliser des liants de toxines."
       },
       "dis_parakeratosis": {
         "name": "Parakératose (Carence en zinc)",
-        "scientificName": "Carence en zinc",
+        "scientificName": "Zinc deficiency",
         "description": "Maladie nutritionnelle provoquant des lésions cutanées croûteuses et épaissies sévères.",
         "prevention": "Assurer un équilibre calcium/zinc dans l'alimentation et supplémenter en zinc."
       },
       "dis_biotin_deficiency": {
         "name": "Carence en biotine",
-        "scientificName": "Carence en vitamine H",
+        "scientificName": "Vitamin H deficiency",
         "description": "Carence nutritionnelle causant des sabots fendus, des lésions cutanées et de la boiterie.",
         "prevention": "Supplémenter l'alimentation en biotine et éviter les sols en béton rugueux et humides."
       },
       "dis_gossypol_toxicity": {
         "name": "Toxicité du gossypol",
-        "scientificName": "Empoisonnement au gossypol",
+        "scientificName": "Gossypol poisoning",
         "description": "Intoxication due à l'alimentation avec du tourteau de coton brut ou en excès, causant une détresse respiratoire.",
         "prevention": "Limiter le tourteau de coton dans la ration et utiliser du sulfate de fer."
       },
       "dis_cassava_poisoning": {
         "name": "Empoisonnement par le manioc",
-        "scientificName": "Glycosides cyanogènes",
+        "scientificName": "Cyanogenic glycosides",
         "description": "Intoxication au cyanure par des racines ou épluchures de manioc crues ou mal préparées.",
         "prevention": "Éplucher, bouillir, sécher au soleil ou fermenter le manioc avant de nourrir."
       },
       "dis_sweet_potato_toxicity": {
         "name": "Intoxication par la patate douce",
-        "scientificName": "Toxicité à l'ipomeamarone",
+        "scientificName": "Ipomeamarone toxicity",
         "description": "Intoxication due à des patates douces moisies, provoquant une grave détresse respiratoire.",
         "prevention": "Jeter les patates douces endommagées ou moisies ; ne nourrir qu'avec des tubercules sains."
       },
       "dis_mma": {
         "name": "Dysgalactie post-partum (MMA)",
-        "scientificName": "Mammite-Métrite-Agalactie",
+        "scientificName": "Mastitis-Metritis-Agalactia",
         "description": "Mammite, métrite et agalactie provoquant de la fièvre et un manque de lait chez les truies après la mise bas.",
         "prevention": "Maintenir une hygiène stricte des cases de mise bas et assurer une nutrition adéquate."
       },
@@ -1350,7 +1444,7 @@
       },
       "dis_sow_hysteria": {
         "name": "Hystérie de la truie",
-        "scientificName": "Psychose puerpérale",
+        "scientificName": "Puerperal psychosis",
         "description": "Trouble comportemental où les truies deviennent agressives et mordent leurs porcelets à la mise bas.",
         "prevention": "Fournir un environnement calme, surveiller les cochettes et utiliser des sédatifs si besoin."
       },
@@ -1398,31 +1492,31 @@
       },
       "dis_pityriasis_rosea": {
         "name": "Pityriasis rosé",
-        "scientificName": "Pseudo-teigne",
+        "scientificName": "Pseudo-ringworm",
         "description": "Affection cutanée non contagieuse chez les jeunes porcs formant des croûtes annulaires.",
         "prevention": "Guérit généralement seule ; maintenir une litière propre et sèche."
       },
       "dis_photosensitization": {
         "name": "Photosensibilisation",
-        "scientificName": "Dermatite solaire",
+        "scientificName": "Solar dermatitis",
         "description": "Réaction cutanée sévère au soleil chez les porcs blancs après ingestion de certaines plantes.",
         "prevention": "Fournir de l'ombre, éliminer les plantes sensibilisantes et garder les porcs à l'abri."
       },
       "dis_shoulder_ulcers": {
         "name": "Ulcères de l'épaule de la truie",
-        "scientificName": "Ulcères de décubitus",
+        "scientificName": "Decubitus ulcers",
         "description": "Escarres de décubitus sur l'épaule des truies maigres logées sur béton dur.",
         "prevention": "Fournir une litière souple, veiller à l'état corporel des truies et utiliser des tapis."
       },
       "dis_ear_biting": {
         "name": "Cannibalisme d'oreilles",
-        "scientificName": "Comportement de réponse au stress",
+        "scientificName": "Stress response behavior",
         "description": "Comportement anormal où les porcs mordent les oreilles de leurs congénères, causant une nécrose.",
         "prevention": "Réduire la densité, améliorer la ventilation et fournir des objets à mordre (chaînes)."
       },
       "dis_gastric_torsion": {
         "name": "Torsion gastrique (Météorisation)",
-        "scientificName": "Dilatation-torsion de l'estomac",
+        "scientificName": "Gastric dilation-volvulus",
         "description": "Gonflement soudain et torsion de l'estomac, entraînant une mort très rapide.",
         "prevention": "Éviter les repas volumineux après un long jeûne et fractionner les rations."
       },
@@ -1434,7 +1528,7 @@
       },
       "dis_cold_stress": {
         "name": "Stress lié au froid (Hypothermie)",
-        "scientificName": "Susceptibilité à l'hypothermie",
+        "scientificName": "Hypothermia susceptibility",
         "description": "Refroidissement corporel sévère chez les porcelets, causant des tremblements et une forte mortalité.",
         "prevention": "Fournir des lampes chauffantes, des boîtes à porcelets et éviter les courants d'air."
       },
@@ -1446,7 +1540,7 @@
       },
       "dis_navel_bleeding": {
         "name": "Saignement du cordon",
-        "scientificName": "Hémorragie ombilicale",
+        "scientificName": "Umbilical hemorrhage",
         "description": "Hémorragie excessive du cordon ombilical chez les porcelets nouveau-nés.",
         "prevention": "Ligaturer le cordon à la naissance, éviter les mycotoxines dans l'aliment des truies."
       },
@@ -1464,7 +1558,7 @@
       },
       "dis_prdc": {
         "name": "Complexe respiratoire porcin (CRP)",
-        "scientificName": "Complexe respiratoire porcin",
+        "scientificName": "Complexe respiratoire porcin (CRP)",
         "description": "Infection respiratoire mixte virale et bactérienne provoquant toux et retard de croissance.",
         "prevention": "Améliorer la ventilation, éviter la surpopulation et contrôler les virus primaires."
       },
@@ -1482,7 +1576,7 @@
       },
       "dis_endocarditis": {
         "name": "Endocardite bactérienne",
-        "scientificName": "Endocardite streptococcique",
+        "scientificName": "Streptococcal endocarditis",
         "description": "Infection des valves cardiaques causant une insuffisance cardiaque et une mort subite lors d'un stress.",
         "prevention": "Traiter rapidement les infections articulaires et plaies, éviter les génétiques sensibles."
       },
@@ -1494,7 +1588,7 @@
       },
       "dis_congenital_tremor": {
         "name": "Tremblement congénital",
-        "scientificName": "Pestivirus porcin atypique",
+        "scientificName": "Atypical Porcine Pestivirus",
         "description": "Trouble neurologique chez le porcelet nouveau-né provoquant de graves tremblements.",
         "prevention": "Éviter d'utiliser la semence de verrats affectés et réduire le stress des truies gestantes."
       }
@@ -1532,47 +1626,72 @@
     "expandTeam": "Développez votre équipe",
     "addStaff": "+ Ajouter du personnel",
     "noStaff": "Aucun personnel enregistré dans cette ferme pour le moment.",
-    "phone": "Téléphone",
+    "phone": "Numéro de téléphone",
     "email": "E-mail",
     "salary": "Salaire",
     "joined": "Arrivée",
     "appAccess": "Accès App",
     "edit": "Modifier",
-    "remove": "Retirer",
+    "remove": "Supprimer",
     "editStaffDetails": "Modifier les détails du personnel",
     "registerStaffMember": "Enregistrer un membre du personnel",
     "fullName": "Nom complet",
-    "role": "Rôle",
+    "role": "Poste",
     "status": "Statut",
     "salaryLabel": "Salaire ({symbol}/mois)",
     "joinedDate": "Date d'arrivée",
-    "allowAppAccess": "Autoriser l'accès à la base de données web/app ?",
+    "allowAppAccess": "Autoriser l'accès",
     "cancel": "Annuler",
     "saveUpdates": "Enregistrer les mises à jour",
     "registerStaff": "Enregistrer le personnel",
     "active": "Actif",
     "inactive": "Inactif",
     "onLeave": "En congé",
+    "inviteStatus": "Statut de l'invitation",
+    "invite_sent": "Invitation envoyée",
+    "invite_pending": "Envoi...",
+    "invite_failed": "Échoué",
+    "invite_none": "Non invité",
+    "resend": "Renvoyer",
     "premiumFeatureAdd": "L'ajout de membres du personnel est une fonctionnalité Premium. Veuillez passer à Premium pour agrandir votre équipe.",
     "premiumFeatureExport": "L'exportation de rapports PDF est une fonctionnalité Premium. Passez à Premium pour débloquer !",
     "confirmDelete": "Êtes-vous sûr de vouloir retirer ce membre du personnel ?",
-    "exportPdf": "Exporter en PDF",
-    "exportPdfPremium": "Exporter en PDF (Premium)"
+    "exportPdf": "Exporter tout en PDF",
+    "exportPdfPremium": "Exporter en PDF (Premium)",
+    "pigs": "Porcs",
+    "residentialAddress": "Adresse de résidence",
+    "emergencyContactDetails": "Contact en cas d'urgence",
+    "emergencyContactName": "Nom du contact d'urgence",
+    "emergencyContactRelation": "Lien de parenté / Relation",
+    "emergencyContactPhone": "Téléphone d'urgence",
+    "emergencyContactAddress": "Adresse du contact d'urgence",
+    "emergencyRelationPlaceholder": "ex. Conjoint, Parent, Frère/Sœur",
+    "dateOfBirth": "Date de naissance",
+    "gender": "Genre",
+    "monthlySalary": "Salaire mensuel",
+    "logSalaryPayment": "Enregistrer paie",
+    "staffDetails": "Détails du personnel",
+    "staffProfile": "Dossier de l'employé",
+    "fullStaffReport": "Rapport du personnel et paie",
+    "archiveStaff": "Archiver l'employé",
+    "deleteStaffMember": "Supprimer le membre du personnel",
+    "editStaffMember": "Modifier le membre du personnel",
+    "activeStaff": "Personnel en activité"
   },
   "PigProfile": {
     "weightUpdateRequired": "Mise à jour du poids requise",
-    "weightUpdateDesc": "Le poids n'a pas été mis à jour au cours des 25 derniers jours. Veuillez mettre à jour le poids pour un suivi précis.",
+    "weightUpdateDesc": "Le poids n'a pas été mis à jour ces 25 derniers jours. Veuillez mettre à jour le poids pour un suivi précis.",
     "statusLocation": "Statut & Emplacement",
     "gender": "Genre",
-    "purpose": "Usage",
+    "purpose": "Objectif",
     "currentStatus": "Statut actuel",
     "weight": "Poids",
-    "location": "Emplacement",
+    "location": "Localisation",
     "birthDate": "Date de naissance",
-    "sowTag": "Boucle truie",
-    "boarTag": "Boucle verrat",
+    "sowTag": "N° Boucle truie",
+    "boarTag": "N° Boucle verrat",
     "unassigned": "Non assigné",
-    "notes": "Notes",
+    "notes": "Remarques",
     "deleteProfile": "Supprimer le profil",
     "editDetails": "✏️ Modifier les détails",
     "healthHistory": "Historique de santé",
@@ -1581,7 +1700,7 @@
     "editPigDetails": "Modifier les détails du cochon",
     "breed": "Race",
     "cancel": "Annuler",
-    "saveChanges": "Enregistrer les changements",
+    "saveChanges": "Enregistrer les modifications",
     "logHealthAction": "Enregistrer une action de santé",
     "actionDate": "Date de l'action",
     "actionType": "Type d'action",
@@ -1593,7 +1712,7 @@
     "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce profil de cochon ?",
     "profileNotFound": "Profil du cochon non trouvé.",
     "backToHerd": "Retour au troupeau",
-    "manualWeightLog": "Poids mis à jour manuellement dans les détails du cochon",
+    "manualWeightLog": "Poids mis à jour manuellement dans les détails du porc",
     "weightCheckDesc": "{notes}\nPoids mis à jour à : {weight} kg",
     "actionTypes": {
       "medication": "Médicament",
@@ -1606,9 +1725,9 @@
       "weight": "Contrôle du poids",
       "other": "Autre",
       "weight_check": "Contrôle du poids",
-      "culling": "Reforme",
-      "teeth_clipping": "Coupe des dents",
-      "tail_docking": "Coupe de la queue",
+      "culling": "Réforme",
+      "teeth_clipping": "Épointage des dents",
+      "tail_docking": "Caudectomie (coupe des queues)",
       "iron_injection": "Injection de fer",
       "weaning": "Sevrage",
       "castration": "Castration",
@@ -1618,7 +1737,11 @@
       "farrowing": "Mise bas",
       "custom": "Personnalisé"
     },
-    "reportTitle": "Rapport du profil du cochon : {tag}"
+    "reportTitle": "Rapport du profil du cochon : {tag}",
+    "tag": "Étiquette",
+    "tagNumber": "Numéro d'étiquette",
+    "castrated_label": "(Castré)",
+    "source": "Source"
   },
   "Admin": {
     "title": "Panneau d'administration",
@@ -1635,12 +1758,12 @@
     "noDirectory": "Aucune annonce dans le répertoire.",
     "searchIngredients": "Rechercher des ingrédients...",
     "addIngredient": "Ajouter un ingrédient",
-    "searchVideos": "Rechercher des vidéos...",
+    "searchVideos": "Rechercher des tutoriels...",
     "addVideo": "Ajouter une vidéo",
     "noIngredients": "Aucun ingrédient trouvé.",
-    "noVideos": "Aucun tutoriel vidéo trouvé.",
+    "noVideos": "Aucun tutoriel vidéo disponible.",
     "rejectSuggestion": "Rejeter la suggestion",
-    "rejectionReason": "Saisir le commentaire / la raison du rejet :",
+    "rejectionReason": "Entrez le motif du rejet :",
     "reasonPlaceholder": "Raison du rejet...",
     "confirmRejection": "Confirmer le rejet",
     "cancel": "Annuler",
@@ -1648,104 +1771,104 @@
     "reject": "Rejeter",
     "edit": "Modifier",
     "delete": "Supprimer",
-    "saveChanges": "Enregistrer les changements",
-    "editSuggestion": "Modifier les détails de la suggestion",
-    "editProvider": "Modifier l'annonce du prestataire",
-    "editIngredient": "Modifier l'ingrédient d'aliment",
+    "saveChanges": "Enregistrer les modifications",
+    "editSuggestion": "Modifier la suggestion",
+    "editProvider": "Modifier la fiche du prestataire",
+    "editIngredient": "Modifier l'ingrédient",
     "newIngredient": "Ajouter un ingrédient d'aliment",
     "editVideo": "Modifier le tutoriel vidéo",
     "newVideo": "Ajouter un tutoriel vidéo",
     "deleteSuggestion": "Supprimer la suggestion",
-    "deleteProvider": "Supprimer l'annonce du prestataire",
-    "deleteIngredient": "Supprimer l'ingrédient mondial",
+    "deleteProvider": "Supprimer la fiche du prestataire",
+    "deleteIngredient": "Supprimer l'ingrédient global",
     "deleteVideo": "Supprimer le tutoriel vidéo",
     "confirmDeleteSuggestion": "Êtes-vous sûr de vouloir supprimer définitivement '{name}' ?",
     "confirmDeleteProvider": "Êtes-vous sûr de vouloir supprimer définitivement '{name}' ?",
-    "confirmDeleteIngredient": "Êtes-vous sûr de vouloir supprimer '{name}' ? Cela arrêtera de proposer cet ingrédient aux nouveaux utilisateurs.",
-    "confirmDeleteVideo": "Êtes-vous sûr de vouloir supprimer définitivement '{name}' ?",
+    "confirmDeleteIngredient": "Êtes-vous sûr de vouloir supprimer '{name}' de la base de formulation globale ? Cet ingrédient ne sera plus proposé aux nouveaux éleveurs.",
+    "confirmDeleteVideo": "Êtes-vous sûr de vouloir supprimer définitivement ce tutoriel vidéo '{name}' ?",
     "providerName": "Nom du prestataire",
     "serviceType": "Type de service",
-    "contact": "Contact",
+    "contact": "Contacter",
     "email": "E-mail",
     "city": "Ville",
     "country": "Pays",
     "name": "Nom",
     "category": "Catégorie",
-    "location": "Emplacement",
-    "description": "Description",
+    "location": "Localisation",
+    "description": "Descriptif",
     "ingredientName": "Nom de l'ingrédient",
     "mainCategory": "Catégorie principale",
-    "protein": "Protéines brutes (%)",
+    "protein": "Protéine brute (%)",
     "me": "EM (MJ/kg)",
-    "fiber": "Fibres brutes (%)",
-    "dryMatter": "Matière sèche (%)",
+    "fiber": "Cellulose brute (CB)",
+    "dryMatter": "Matière sèche %",
     "calcium": "Calcium (%)",
     "phosphorus": "Phosphore (%)",
-    "lysine": "Lysine (%)",
-    "methionine": "Méthionine (%)",
+    "lysine": "Lysine",
+    "methionine": "Méthionine",
     "maxInclusion": "Limites d'inclusion max (%)",
-    "starter": "Starter",
-    "grower": "Croissance",
-    "finisher": "Finition",
-    "videoTitle": "Titre de la vidéo",
+    "starter": "Démarreur",
+    "grower": "Porc en croissance",
+    "finisher": "Porc à l'engrais",
+    "videoTitle": "Titre du tutoriel vidéo",
     "youtubeLink": "Lien YouTube ou ID",
     "user": "Utilisateur",
     "rejectionReasonLabel": "Raison du rejet :"
   },
   "Terms": {
     "title": "Conditions d'utilisation",
-    "lastUpdated": "Dernière mise à jour : Avril 2026",
-    "contactSupport": "Contacter le support :",
+    "lastUpdated": "Dernière mise à jour : %s",
+    "contactSupport": "Contacter l'assistance : %s",
     "sections": {
       "s1": {
         "title": "1. Acceptation des conditions",
-        "content": "En accédant et en utilisant l'application SmartSwine, vous acceptez d'être lié par ces conditions d'utilisation. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser le service."
+        "content": "En accédant à l'application SmartSwine et en l'utilisant, vous acceptez d'être lié par ces conditions d'utilisation. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser le service."
       },
       "s2": {
         "title": "2. Description du service",
         "content": "\"SmartSwine\" fournit des outils de gestion de ferme incluant, mais sans s'y limiter :\n• Suivi du troupeau et données de santé.\n• Tenue de registres financiers.\n• Gestion des ressources humaines.\n• Suggestions de diagnostic assistées par IA.\n• Informations sur l'accès au marché."
       },
       "s3": {
-        "title": "3. Confidentialité des données et sauvegarde dans le cloud",
-        "content": "Vous conservez la propriété des données que vous saisissez (données du troupeau, finances, etc.).\nLes données de votre ferme sont stockées en toute sécurité via Google Firebase. Bien que nous nous efforcions de protéger vos données, nous ne pouvons garantir une sécurité absolue.\nEn activant la sauvegarde dans le cloud, vous consentez au stockage et à la synchronisation de vos données sur vos appareils.\nNous ne vendons pas vos données personnelles ou de ferme à des tiers.\nVous êtes responsable de l'exactitude des données saisies. Des données incorrectes dans les modules \"Aliments\" ou \"Finances\" peuvent entraîner des calculs erronés."
+        "title": "3. Confidentialité des données et sauvegarde cloud",
+        "content": "Vous restez propriétaire des données que vous saisissez. Vos données de ferme sont stockées de manière sécurisée via Google Firebase. Bien que nous nous efforcions de les protéger, nous ne pouvons garantir une sécurité absolue. En activant la sauvegarde cloud, vous consentez au stockage et à la synchronisation de vos données. Nous ne vendons pas vos données à des tiers. Vous êtes responsable de l'exactitude des données saisies."
       },
       "s4": {
-        "title": "4. Pas de conseils médicaux ou vétérinaires (Avertissement critique)",
-        "content": "Les fonctionnalités \"Calculateur d'aliments\", \"Formulateur d'aliments\", \"Analyseur de symptômes\" et \"Recherche de maladies\" sont uniquement à des fins éducatives et informatives.\n• Les résultats de l'IA sont générés par des algorithmes et ne remplacent pas les conseils, le diagnostic ou le traitement d'un vétérinaire professionnel.\n• L'utilisateur accepte de consulter un vétérinaire agréé avant de prendre toute décision alimentaire ou médicale concernant le bétail.\n• Le propriétaire de l'application n'est pas responsable de toute perte de bétail ou de dommages résultant de l'utilisation de l'application et de ses fonctionnalités."
+        "title": "4. Pas de conseils médicaux ou vétérinaires",
+        "content": "Les fonctionnalités AI et les calculateurs sont à but éducatif uniquement. Les résultats générés ne remplacent pas un avis vétérinaire professionnel. L'utilisateur accepte de consulter un vétérinaire agréé avant toute décision médicale. Le propriétaire de l'application n'est pas responsable des pertes résultant de l'utilisation de ces fonctionnalités."
       },
       "s5": {
         "title": "5. Responsabilités de l'utilisateur",
-        "content": "Les utilisateurs sont responsables du maintien de la confidentialité de leurs identifiants de compte. Vous êtes responsable de toutes les activités qui se produisent sous votre compte."
+        "content": "Les utilisateurs sont responsables du maintien de la confidentialité de leurs identifiants. Vous êtes responsable de toutes les activités survenant sous votre compte."
       },
       "s6": {
         "title": "6. Conduite interdite",
-        "content": "Les utilisateurs s'engagent à ne pas :\n• Utiliser l'application à des fins illégales.\n• Tenter de désosser l'application.\n• Saisir des données financières frauduleuses dans le but de tromper des tiers."
+        "content": "Les utilisateurs s'engagent à ne pas : utiliser l'application à des fins illégales, tenter de rétro-concevoir l'application, ou saisir des données financières frauduleuses."
       },
       "s7": {
         "title": "7. Disponibilité du service",
-        "content": "Nous nous efforçons d'atteindre une disponibilité de 99 % mais ne garantissons pas un accès ininterrompu au service. Les sauvegardes de données sont fournies par commodité ; cependant, les utilisateurs sont encouragés à tenir leurs propres registres."
+        "content": "Nous visons une disponibilité de 99 % mais ne garantissons pas un accès ininterrompu. Les sauvegardes sont fournies pour commodité ; les utilisateurs sont encouragés à tenir leurs propres registres."
       },
       "s8": {
         "title": "8. Limitation de responsabilité",
-        "content": "L'application SmartSwine est fournie \"en l'état\". Dans toute la mesure permise par la loi, ses développeurs ne seront pas responsables des dommages directs, indirects, accessoires ou consécutifs résultant de l'utilisation ou de l'incapacité d'utiliser le service, y compris la perte de bétail ou les écarts financiers."
+        "content": "L'application est fournie \"en l'état\". Dans la mesure permise par la loi, les développeurs ne seront pas responsables des dommages directs ou indirects résultant de l'utilisation du service."
       },
       "s9": {
         "title": "9. Données financières",
-        "content": "Le module \"Finances\" est un outil de suivi et ne constitue pas un conseil professionnel en comptabilité ou en fiscalité. Les utilisateurs sont encouragés à exporter leurs données pour examen par des comptables agréés."
+        "content": "Le module financier est un outil de suivi et ne constitue pas un conseil comptable professionnel. Les utilisateurs sont encouragés à exporter leurs données pour révision par des experts."
       },
       "s10": {
         "title": "10. Modifications des conditions",
-        "content": "Nous nous réservons le droit de modifier ces conditions à tout moment. L'utilisation continue de l'application constitue l'acceptation des nouvelles conditions."
+        "content": "Nous nous réservons le droit de modifier ces conditions. L'utilisation continue de l'application constitue l'acceptation des nouvelles conditions."
       },
       "s11": {
         "title": "11. Informations de contact",
-        "content": "Pour toute question relative au support ou d'ordre juridique, veuillez contacter le développeur via les paramètres du profil de l'application ou à bibiniitech@gmail.com."
+        "content": "Pour toute question juridique ou d'assistance, veuillez contacter le développeur via les paramètres du profil de l'application."
       }
     }
   },
   "Privacy": {
     "title": "Politique de confidentialité",
-    "lastUpdated": "Dernière mise à jour : Avril 2026",
+    "lastUpdated": "Dernière mise à jour : %s",
     "importantTitle": "La confidentialité de vos données est importante pour nous",
     "importantDesc": "SmartSwine s'engage à protéger vos données personnelles et de ferme. Nous utilisons des mesures de sécurité conformes aux normes de l'industrie pour garantir que vos informations sont conservées en toute sécurité.",
     "viewFull": "Consulter la politique de confidentialité complète ↗",
@@ -1767,10 +1890,15 @@
   "Settings": {
     "title": "Paramètres",
     "editProfile": "Modifier le profil",
-    "cyclesTiming": "Cycles & Timing",
+    "cyclesTiming": "Cycles et timing",
     "herdStatus": "Statut du troupeau",
     "dataManagement": "Gestion des données",
     "aboutSmartSwine": "À propos de SmartSwine",
+    "farmLogo": "Logo de l'élevage",
+    "farmLogoDesc": "Téléchargez le logo de votre ferme personnalisé pour personnaliser votre tableau de bord et les en-têtes de vos applications.",
+    "uploadLogo": "Télécharger le logo",
+    "changeLogo": "Changer de logo",
+    "removeLogo": "Supprimer le logo",
     "farmName": "Nom de la ferme",
     "country": "Pays",
     "localization": "Localisation",
@@ -1787,21 +1915,21 @@
     "autoBarrows": "Classer auto en Barrows",
     "autoBarrowsDesc": "Définir automatiquement le statut sur 'Barrow' (mâle castré) après l'activité de castration.",
     "autoSows": "Classer auto en Sows",
-    "autoSowsDesc": "Définir automatiquement le statut sur 'Sow' (truie) après la première mise bas.",
-    "giltClassification": "Classification des cochetes",
+    "autoSowsDesc": "Définir automatiquement comme 'Truie' si historique de mise bas",
+    "giltClassification": "Classification des cochettes",
     "giltDesc": "Seuil d'âge pour classer une femelle comme 'Gilt' (cochete) si elle n'a pas encore mis bas.",
-    "weeks": "Semaines",
-    "clearHerdData": "Effacer les données du troupeau",
-    "clearHerdDesc": "Supprimer tous les profils de cochons et les dossiers de santé. Utiliser avec prudence.",
-    "clearFinancials": "Effacer les finances",
+    "weeks": "semaines",
+    "clearHerdData": "Effacer données troupeau",
+    "clearHerdDesc": "Supprimer tous les enregistrements de porcs",
+    "clearFinancials": "Effacer finances",
     "clearFinDesc": "Supprimer tous les enregistrements de revenus et de dépenses.",
-    "clearFeedData": "Effacer les données d'aliments",
-    "clearFeedDesc": "Supprimer tout l'inventaire d'aliments et les transactions.",
+    "clearFeedData": "Effacer données alim.",
+    "clearFeedDesc": "Réinitialiser ingrédients",
     "clearHRData": "Effacer les données RH",
     "clearHRDesc": "Supprimer tout le personnel et les enregistrements de paie.",
     "cloudSync": "Synchro Cloud",
     "cloudSyncDesc": "Vos données sont automatiquement synchronisées avec le Cloud SmartSwine via Firebase.",
-    "version": "v2.1.0-beta",
+    "version": "v2.1.0-bêta",
     "aboutDesc": "Conçu pour l'accès de bureau à vos données de ferme. SmartSwine fournit un suivi avancé du troupeau, une formulation d'aliments et des analyses financières pour les éleveurs de porcs modernes.",
     "termsOfService": "Conditions d'utilisation",
     "privacyPolicy": "Politique de confidentialité",
@@ -1818,13 +1946,13 @@
     "dateCompleted": "Date de fin",
     "heatOutcome": "Résultat des chaleurs",
     "matingOutcome": "Résultat de l'accouplement",
-    "pregnancyConfirmed": "Gestation confirmée ?",
+    "pregnancyConfirmed": "Gestation confirmée",
     "malePiglets": "Porcelets mâles",
     "femalePiglets": "Porcelets femelles",
     "maleTags": "Boucles mâles (séparées par des virgules)",
     "femaleTags": "Boucles femelles (séparées par des virgules)",
     "medicationName": "Nom du médicament",
-    "dosage": "Dosage",
+    "dosage": "Posologie",
     "scheduleIron": "Planifier la 2ème injection de fer (7 jours plus tard) ?",
     "reason": "Raison",
     "totalSalePrice": "Prix de vente total ({symbol})",
@@ -1838,7 +1966,7 @@
     "price": "Prix ({symbol})",
     "notesPlaceholder": "ex: terminé avec succès",
     "outcomes": {
-      "heatDetected": "Chaleurs détectées",
+      "heatDetected": "Chaleur",
       "noHeatDetected": "Aucune chaleur détectée",
       "successful": "Réussi",
       "unsuccessful": "Échec",
@@ -1857,7 +1985,7 @@
     "weightUpdateLog": "Poids mis à jour à : {weight} kg",
     "culledLog": "Réformé ({reason})",
     "soldLog": "Réformé (Vendu) pour : {symbol} {price}",
-    "culledReasonLog": "Raison de la réforme : {reason}"
+    "culledReasonLog": "Motif de réforme : {reason}"
   },
   "Premium": {
     "featureTitle": "Fonctionnalité Premium",
@@ -1879,42 +2007,56 @@
     "herdInventory": "Rapport d'inventaire du troupeau",
     "financialLedger": "Rapport du grand livre de trésorerie de la ferme",
     "hrDirectory": "Rapport du répertoire de gestion du personnel",
-    "tagNumber": "Numéro de boucle",
+    "tagNumber": "Numéro d'étiquette",
     "breed": "Race",
     "gender": "Genre",
     "age": "Âge",
     "weight": "Poids (kg)",
     "status": "Statut",
-    "location": "Emplacement",
-    "performance": "Performance",
+    "location": "Localisation",
+    "performance": "Performances",
     "summary": "Résumé",
-    "totalPigs": "Nombre total de cochons",
+    "totalPigs": "Nombre total de porcs : %d",
     "averageWeight": "Poids moyen",
     "date": "Date",
-    "type": "Type",
+    "type": "Tapez",
     "category": "Catégorie",
-    "description": "Description",
+    "description": "Descriptif",
     "amount": "Montant",
-    "totalIncome": "Revenu total",
-    "totalExpense": "Dépense totale",
+    "totalIncome": "Revenu Total",
+    "totalExpense": "Dépense Totale",
     "netBalance": "Solde net",
-    "staffName": "Nom du personnel",
-    "role": "Rôle",
+    "staffName": "Nom de l'employé",
+    "role": "Poste",
     "salary": "Salaire",
     "joined": "Arrivée",
     "payrollSummary": "Résumé de la paie",
     "totalStaff": "Effectif total",
     "monthlyPayroll": "Paie mensuelle",
-    "detailedHistory": "Detailed transaction history",
+    "detailedHistory": "Historique Détaillé des Transactions",
     "narration": "Narration",
-    "balance": "Balance"
+    "balance": "Solde",
+    "feedReportTitle": "Rapport d'inventaire alimentaire",
+    "totalMonthlyPayroll": "Paie mensuelle",
+    "employeeProfileReport": "Dossier de l'employé"
   },
   "Common": {
-    "loading": "Chargement..."
+    "loading": "Chargement...",
+    "back": "Retour",
+    "pigs": "Porcs",
+    "close": "Fermer",
+    "tag": "Étiquette"
   },
   "Notifications": {
     "title": "Notifications",
-    "activeNotifications": "{count} Notifications",
+    "noActivities": "Aucune activité à venir",
+    "allTasksCompleted": "Toutes les tâches sont à jour",
+    "generalTask": "Tâche Générale",
+    "weightUpdateTitle": "Pesée requise",
+    "weightUpdateReminder": "Le porc {tag} n'a pas été pesé depuis 30 jours. Veuillez actualiser son poids vif.",
+    "lowStockTitle": "Alerte stock bas d'aliment",
+    "lowStockReminder": "Le stock de {name} est bas (il ne reste que {qty}). Pensez à réapprovisionner.",
+    "activeNotifications": "{count}Notifications",
     "allCaughtUp": "Tout est à jour ! Aucune tâche en attente.",
     "noPendingNotifications": "Aucune notification en attente.",
     "herdProceduresTasks": "INTERVENTIONS ET TÂCHES DU CHEPTEL",
@@ -1941,11 +2083,11 @@
     "lastWeighedDaysAgo": "Porc n°{tag} : Pesé pour la dernière fois il y a {days} jours",
     "stockLeftMinFormat": "{current} : {unit} kg restants (Min : {min} kg)",
     "pigs": "Porcs",
-    "pig": "Porc",
+    "pig": "Porc n°",
     "general": "Général",
     "overdue": "En retard",
     "due": "À faire",
-    "snoozeFor": "Snooze for"
+    "snoozeFor": "Répéter pendant"
   },
   "Guide": {
     "clear_all": "Tout effacer",

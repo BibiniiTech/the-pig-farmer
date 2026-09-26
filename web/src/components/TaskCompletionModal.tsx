@@ -56,6 +56,7 @@ export default function TaskCompletionModal({
   // Medication / vaccine fields
   const [medicationName, setMedicationName] = useState("");
   const [medicationDosage, setMedicationDosage] = useState("");
+  const [withdrawalDays, setWithdrawalDays] = useState("0");
   const [scheduleSecondIron, setScheduleSecondIron] = useState(false);
 
   // Breeding outcomes
@@ -89,6 +90,7 @@ export default function TaskCompletionModal({
     setNotes("");
     setMedicationName("");
     setMedicationDosage("");
+    setWithdrawalDays("0");
     setScheduleSecondIron(false);
     setMatingOutcome("Successful");
     setPregnancyOutcome("Successful");
@@ -323,19 +325,48 @@ export default function TaskCompletionModal({
           
           finalDescription = `${notes}\nMated Sow ${sowTag} with Boar ${boarTag}\nOutcome: ${matingOutcome}`.trim();
           if (pig.gender === "Female") {
+            const day110 = addDays(logDate, 110);
+            const day114 = addDays(logDate, 114);
             batch.update(pigRef, {
               lastBreedingDate: logDate,
               lastBoarTag: boarTag,
-              purpose: "Breeder"
+              purpose: "Breeder",
+              status: "Pregnant",
+              expectedFarrowingDate: day114,
+              farrowingPenMoveDate: day110
             });
             if (matingOutcome === "Successful") {
-              const taskRef = doc(collection(db, "users", activeFarmUid, "tasks"));
-              batch.set(taskRef, {
-                id: taskRef.id,
-                name: t("confirmPregnancyTask", { tag: pig.tagNumber }),
+              // 1. Day 21 Return-to-Heat surveillance
+              const tHeat = doc(collection(db, "users", activeFarmUid, "tasks"));
+              batch.set(tHeat, {
+                id: tHeat.id,
+                name: `Check Return-to-Heat / Estrus: Pig ${pig.tagNumber}`,
                 date: addDays(logDate, 21),
-                notes: t("confirmPregnancyNotes", { date: logDate }),
-                pigIds: [pigId]
+                notes: `Check if sow returns to heat 18-24 days post-mating on ${logDate}`,
+                pigIds: [pigId],
+                completed: false
+              });
+
+              // 2. Day 110 Move Sow to Farrowing Pen
+              const tCrate = doc(collection(db, "users", activeFarmUid, "tasks"));
+              batch.set(tCrate, {
+                id: tCrate.id,
+                name: `Move to Farrowing Crate: Pig ${pig.tagNumber}`,
+                date: day110,
+                notes: `Move sow to sanitized farrowing pen & wash/deworm 4-5 days before due date`,
+                pigIds: [pigId],
+                completed: false
+              });
+
+              // 3. Day 114 Expected Farrowing Due Date
+              const tFarrow = doc(collection(db, "users", activeFarmUid, "tasks"));
+              batch.set(tFarrow, {
+                id: tFarrow.id,
+                name: `Farrowing: Pig ${pig.tagNumber}`,
+                date: day114,
+                notes: `Scheduled 114 days after mating on ${logDate}`,
+                pigIds: [pigId],
+                completed: false
               });
             }
           }
@@ -351,7 +382,8 @@ export default function TaskCompletionModal({
               name: `Heat Detection: Pig ${pig.tagNumber}`,
               date: addDays(logDate, 21),
               notes: `Auto-created 21 days after heat detection on ${logDate}`,
-              pigIds: [pigId]
+              pigIds: [pigId],
+              completed: false
             });
           }
         }
@@ -359,19 +391,54 @@ export default function TaskCompletionModal({
         // Confirm Pregnancy
         if (isPregnancyCheck) {
           if (pregnancyOutcome === "Successful") {
-            batch.update(pigRef, { status: "Pregnant", purpose: "Breeder" });
             const sowBreedingDate = pig.lastBreedingDate || logDate;
+            const day110Date = addDays(sowBreedingDate, 110);
+            const day114Date = addDays(sowBreedingDate, 114);
+            batch.update(pigRef, {
+              status: "Pregnant",
+              purpose: "Breeder",
+              expectedFarrowingDate: day114Date,
+              farrowingPenMoveDate: day110Date
+            });
+
+            const tCrateRef = doc(collection(db, "users", activeFarmUid, "tasks"));
+            batch.set(tCrateRef, {
+              id: tCrateRef.id,
+              name: `Move to Farrowing Crate: Pig ${pig.tagNumber}`,
+              date: day110Date,
+              notes: `Move sow to sanitized farrowing pen & wash/deworm 4-5 days before due date`,
+              pigIds: [pigId],
+              completed: false
+            });
+
             const taskRef = doc(collection(db, "users", activeFarmUid, "tasks"));
             batch.set(taskRef, {
               id: taskRef.id,
-              name: t("farrowingTask", { tag: pig.tagNumber }),
-              date: addDays(sowBreedingDate, 114),
-              notes: t("farrowingNotes", { date: sowBreedingDate }),
-              pigIds: [pigId]
+              name: `Farrowing: Pig ${pig.tagNumber}`,
+              date: day114Date,
+              notes: `Scheduled 114 days after mating on ${sowBreedingDate}`,
+              pigIds: [pigId],
+              completed: false
             });
-            finalDescription = `${notes}\nPregnancy Confirmed. Farrowing scheduled.`.trim();
+            finalDescription = `${notes}\nPregnancy Confirmed. Due on ${day114Date}`.trim();
           } else {
-            finalDescription = `${notes}\nPregnancy check failed.`.trim();
+            batch.update(pigRef, {
+              status: "Sow",
+              lastBreedingDate: "",
+              expectedFarrowingDate: "",
+              farrowingPenMoveDate: ""
+            });
+            const tRemateRef = doc(collection(db, "users", activeFarmUid, "tasks"));
+            const remateDate = addDays(logDate, 3);
+            batch.set(tRemateRef, {
+              id: tRemateRef.id,
+              name: `Re-mate / Heat Check: Pig ${pig.tagNumber}`,
+              date: remateDate,
+              notes: `Conception check failed on ${logDate}. Monitor for next estrus cycle and re-mate.`,
+              pigIds: [pigId],
+              completed: false
+            });
+            finalDescription = `${notes}\nPregnancy check failed. Reset to open Sow.`.trim();
           }
         }
 
@@ -380,7 +447,49 @@ export default function TaskCompletionModal({
           const malesCount = parseInt(numMales) || 0;
           const femalesCount = parseInt(numFemales) || 0;
           finalDescription = `${notes}\nFarrowed: ${malesCount} Males, ${femalesCount} Females`.trim();
-          batch.update(pigRef, { status: "Lactating", hasFarrowed: true, weaned: false, purpose: "Breeder" });
+          const currentParity = pig.parity || 0;
+          batch.update(pigRef, {
+            status: "Lactating",
+            hasFarrowed: true,
+            weaned: false,
+            purpose: "Breeder",
+            parity: currentParity + 1,
+            expectedFarrowingDate: "",
+            farrowingPenMoveDate: ""
+          });
+
+          // Auto-schedule Weaning 28 days post-farrowing
+          const weanTaskRef = doc(collection(db, "users", activeFarmUid, "tasks"));
+          batch.set(weanTaskRef, {
+            id: weanTaskRef.id,
+            name: `Weaning: Pig ${pig.tagNumber}`,
+            date: addDays(logDate, 28),
+            notes: `Weaning due 28 days after farrowing on ${logDate}`,
+            pigIds: [pigId],
+            completed: false
+          });
+
+          // Auto-schedule Iron Injection 3 days post-farrowing
+          const ironTaskRef = doc(collection(db, "users", activeFarmUid, "tasks"));
+          batch.set(ironTaskRef, {
+            id: ironTaskRef.id,
+            name: `Iron Injection: Pig ${pig.tagNumber}`,
+            date: addDays(logDate, 3),
+            notes: `Administer 1st iron injection to newborn piglets (3 days post-farrowing)`,
+            pigIds: [pigId],
+            completed: false
+          });
+
+          // Auto-schedule Creep Feed 7 days post-farrowing
+          const creepTaskRef = doc(collection(db, "users", activeFarmUid, "tasks"));
+          batch.set(creepTaskRef, {
+            id: creepTaskRef.id,
+            name: `Creep Feed Introduction: Pig ${pig.tagNumber}`,
+            date: addDays(logDate, 7),
+            notes: `Introduce high-protein creep feed to piglets at 7-10 days of age`,
+            pigIds: [pigId],
+            completed: false
+          });
 
           const maleTagsArr = maleTags.split(",").map(t => t.trim()).filter(t => t.length > 0);
           for (let i = 0; i < malesCount; i++) {
@@ -430,8 +539,17 @@ export default function TaskCompletionModal({
           }
           finalDescription = `${notes}\nWeaned and moved to location: ${targetLocation}`.trim();
 
-          if (pig.status === "Lactating" || pig.status === "Nursing") {
+          if (pig.status === "Lactating" || pig.status === "Nursing" || pig.status === "Sow") {
             batch.update(pigRef, { status: "Sow" });
+            const heatTaskRef = doc(collection(db, "users", activeFarmUid, "tasks"));
+            batch.set(heatTaskRef, {
+              id: heatTaskRef.id,
+              name: `Post-Weaning Heat Check: Pig ${pig.tagNumber}`,
+              date: addDays(logDate, 5),
+              notes: `Check for estrus/standing heat 4-7 days post-weaning for immediate re-insemination`,
+              pigIds: [pigId],
+              completed: false
+            });
           } else {
             const sowTagVal = pig.sowTag || "";
             if (sowTagVal) {
@@ -448,7 +566,17 @@ export default function TaskCompletionModal({
                 const sowQuery = query(collection(db, "users", activeFarmUid, "pigs"), where("tagNumber", "==", sowTagVal));
                 const sowSnap = await getDocs(sowQuery);
                 if (!sowSnap.empty) {
-                  batch.update(sowSnap.docs[0].ref, { status: "Sow" });
+                  const sowDoc = sowSnap.docs[0];
+                  batch.update(sowDoc.ref, { status: "Sow" });
+                  const heatTaskRef = doc(collection(db, "users", activeFarmUid, "tasks"));
+                  batch.set(heatTaskRef, {
+                    id: heatTaskRef.id,
+                    name: `Post-Weaning Heat Check: Pig ${sowTagVal}`,
+                    date: addDays(logDate, 5),
+                    notes: `Check for estrus/standing heat 4-7 days post-weaning for immediate re-insemination`,
+                    pigIds: [sowDoc.id],
+                    completed: false
+                  });
                 }
               }
             }
@@ -473,6 +601,26 @@ export default function TaskCompletionModal({
         // Iron Injection / Medication
         if (isMedicationActivity) {
           finalDescription = `${notes}\nMedication/Vaccine: ${medicationName || activityName}, Dosage: ${medicationDosage || "N/A"}`.trim();
+          const wDays = parseInt(withdrawalDays, 10) || 0;
+          if (wDays > 0) {
+            const safeDate = addDays(logDate, wDays);
+            const medName = medicationName || activityName;
+            batch.update(pigRef, {
+              activeWithdrawalUntil: safeDate,
+              withdrawalMedication: medName
+            });
+            const wTaskRef = doc(collection(db, "users", activeFarmUid, "tasks"));
+            batch.set(wTaskRef, {
+              id: wTaskRef.id,
+              name: `Meat Withdrawal Cleared: Pig ${pig.tagNumber}`,
+              date: safeDate,
+              notes: `Safe for slaughter and meat sale. Medication: ${medName}`,
+              pigIds: [pigId],
+              completed: false
+            });
+            finalDescription += `\nDrug Withdrawal: ${wDays} days. Safe date: ${safeDate}`;
+          }
+
           if (activityName.toLowerCase().includes("iron")) {
             const currentCount = pig.ironInjections || 0;
             batch.update(pigRef, { ironInjections: currentCount + 1 });
@@ -483,7 +631,8 @@ export default function TaskCompletionModal({
                 name: t("ironTask", { tag: pig.tagNumber }),
                 date: addDays(logDate, 7),
                 notes: t("ironNotes"),
-                pigIds: [pigId]
+                pigIds: [pigId],
+                completed: false
               });
             }
           }
@@ -727,6 +876,17 @@ export default function TaskCompletionModal({
                   value={medicationDosage}
                   onChange={(e) => setMedicationDosage(e.target.value)}
                   placeholder="e.g. 2 ml"
+                  className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
+                />
+              </div>
+              <div className="col-span-2">
+                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Meat Withdrawal Period (Days)</label>
+                <input
+                  type="number"
+                  min="0"
+                  value={withdrawalDays}
+                  onChange={(e) => setWithdrawalDays(e.target.value)}
+                  placeholder="e.g. 14"
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                 />
               </div>

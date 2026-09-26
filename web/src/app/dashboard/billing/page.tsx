@@ -11,6 +11,7 @@ import { useTranslations } from "next-intl";
 
 export default function BillingPage() {
   const t = useTranslations("Billing");
+  const tCommon = useTranslations("Common");
   const { user, userProfile, loading } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
@@ -60,7 +61,7 @@ export default function BillingPage() {
 
   if (loading || !user) {
     return (
-      <div className="flex h-screen items-center justify-center bg-white text-zinc-900">
+      <div className="flex h-screen items-center justify-center bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
       </div>
     );
@@ -121,7 +122,7 @@ export default function BillingPage() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
+    <div className="relative min-h-screen bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans overflow-hidden">
       {/* Load Lemon.js for seamless overlay checkout */}
       <Script
         src="https://assets.lemonsqueezy.com/lemon.js"
@@ -143,12 +144,34 @@ export default function BillingPage() {
       )}
 
       <div className="relative z-10 flex flex-col min-h-screen">
-        {!isMobile && <DesktopHeader />}
+        {!isMobile && (
+          <DesktopHeader
+            showBack
+            backPath="/dashboard"
+            label={t("smartSwinePremium") || "SMARTSWINE PREMIUM"}
+            labelColor="text-[#00796B] dark:text-[#4DB6AC]"
+          />
+        )}
 
-        <main className="flex-1 max-w-5xl w-full mx-auto px-4 py-12 space-y-12">
+        <main className="flex-1 max-w-5xl w-full mx-auto px-4 py-8 space-y-8">
+          {/* Top Bar with Back Button */}
+          <div className="flex items-center justify-between gap-4">
+            <button
+              type="button"
+              onClick={() => router.push("/dashboard")}
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-700 hover:text-zinc-900 transition font-bold text-xs shadow-xs"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              <span>{tCommon("back") || "Back"}</span>
+            </button>
+            <div className="w-16" />
+          </div>
+
           {/* Top Info */}
           <div className="text-center max-w-2xl mx-auto space-y-4">
-            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-800 via-emerald-600 to-green-500 bg-clip-text text-transparent">
+            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-800 via-teal-700 to-green-600 bg-clip-text text-transparent">
               {t("title")}
             </h1>
             <p className="text-zinc-600 text-sm md:text-base font-medium">

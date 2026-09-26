@@ -59,17 +59,20 @@ exports.verifyPurchase = onCall({ maxInstances: 10 }, async (request) => {
     const expiryTimeMillis = parseInt(response.data.expiryTimeMillis || "0");
     const now = Date.now();
 
-    // Check if the subscription is active
-    const isActive = paymentState === 1 && expiryTimeMillis > now;
+    // Check if the subscription is active (payment received or free trial, and not expired)
+    const isPaymentValid = paymentState === 1 || paymentState === 2 || (paymentState === undefined && expiryTimeMillis > now);
+    const isActive = isPaymentValid && expiryTimeMillis > now;
 
     // Securely update the user's Firestore document
     const uid = request.auth.uid;
-    await admin.firestore().collection("users").doc(uid).update({
+    await admin.firestore().collection("users").doc(uid).set({
       isPremium: isActive,
-      premiumExpiry: expiryTimeMillis
-    });
+      premiumExpiry: expiryTimeMillis,
+      subscriptionSource: isActive ? "play_store" : "",
+      updatedAt: Date.now()
+    }, { merge: true });
 
-    logger.info(`Subscription verification for user ${uid}: active=${isActive}, expiry=${expiryTimeMillis}`);
+    logger.info(`Subscription verification for user ${uid}: active=${isActive}, expiry=${expiryTimeMillis}, source=play_store`);
     return { success: true, isPremium: isActive };
   } catch (error) {
     logger.error("Google Play Developer API request failed:", error);

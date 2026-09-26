@@ -16,7 +16,8 @@ sealed class TaskIcon {
 @Composable
 fun getTranslatedActivityName(activityName: String): String {
     return when {
-        activityName.contains("Heat Detection", ignoreCase = true) -> stringResource("heat_detection")
+        activityName.contains("Move to Farrowing Crate", ignoreCase = true) || activityName.contains("Farrowing Pen Move", ignoreCase = true) -> stringResource("farrowing_pen_move")
+        activityName.contains("Check Return-to-Heat", ignoreCase = true) || activityName.contains("Re-mate", ignoreCase = true) || activityName.contains("Heat Check", ignoreCase = true) || activityName.contains("Heat Detection", ignoreCase = true) || activityName.contains("Estrus", ignoreCase = true) -> stringResource("heat_detection")
         activityName.contains("Breeding", ignoreCase = true) || activityName.contains("Mating", ignoreCase = true) -> stringResource("breeding_mating")
         activityName.contains("Confirm Pregnancy", ignoreCase = true) || activityName.contains("Pregnancy Check", ignoreCase = true) -> stringResource("pregnancy_check")
         activityName.contains("Farrowing", ignoreCase = true) -> stringResource("farrowing")
@@ -25,7 +26,7 @@ fun getTranslatedActivityName(activityName: String): String {
         activityName.contains("Teeth Clipping", ignoreCase = true) -> stringResource("teeth_clipping")
         activityName.contains("Tail Docking", ignoreCase = true) -> stringResource("tail_docking")
         activityName.contains("Deworming", ignoreCase = true) -> stringResource("deworming")
-        activityName.contains("Iron Injection", ignoreCase = true) -> stringResource("iron_injection")
+        activityName.contains("Iron Injection", ignoreCase = true) || activityName.contains("Iron", ignoreCase = true) -> stringResource("iron_injection")
         activityName.contains("Vaccination", ignoreCase = true) -> stringResource("vaccination")
         activityName.contains("Medication", ignoreCase = true) -> stringResource("medication")
         activityName.contains("Weight Check", ignoreCase = true) -> stringResource("weight_check")

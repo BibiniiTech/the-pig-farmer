@@ -65,9 +65,20 @@ const LANGUAGES: AppLanguageOption[] = [
   { code: "af", displayName: "Afrikaans", flag: "🇿🇦" },
 ];
 
-export default function DesktopHeader({ label, showBack, backPath }: { label?: string; showBack?: boolean; backPath?: string }) {
+export default function DesktopHeader({
+  label,
+  showBack,
+  backPath,
+  labelColor,
+}: {
+  label?: string;
+  showBack?: boolean;
+  backPath?: string;
+  labelColor?: string;
+}) {
   const t = useTranslations("Dashboard");
-  const { user, userProfile, activeFarmUid } = useAuth();
+  const tCommon = useTranslations("Common");
+  const { user, userProfile, activeFarmUid, isFinancialsRestricted } = useAuth();
   const [selectedLang, setSelectedLang] = useState("en");
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
 
@@ -181,18 +192,20 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
 
   return (
     <>
-      <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+      <header className="border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-[#1E1E1E]/90 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
             {showBack && (
               <button
                 onClick={() => router.push(backPath || "/dashboard")}
-                className="p-2 hover:bg-zinc-100 rounded-lg transition-colors text-zinc-600"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-zinc-250 dark:border-zinc-700 bg-white/90 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700 hover:text-zinc-900 transition-colors shadow-2xs font-bold text-xs"
                 aria-label="Go back"
+                title="Go back"
               >
-                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
+                <span className="hidden sm:inline">{tCommon("back") || "Back"}</span>
               </button>
             )}
             <button
@@ -224,7 +237,7 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
 
           <div className="flex items-center gap-3">
             {label && (
-              <h1 className="hidden md:block text-[10px] font-black text-zinc-400 tracking-widest mr-2 uppercase">
+              <h1 className={`hidden md:block text-xs font-black tracking-wider mr-2 uppercase ${labelColor || "text-zinc-500 dark:text-zinc-400"}`}>
                 {label}
               </h1>
             )}
@@ -232,14 +245,14 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
             <div className="relative">
               <button
                 onClick={() => setIsNotificationDrawerOpen(true)}
-                className="relative p-2 text-zinc-650 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition duration-200 focus:outline-none"
+                className="relative p-2 text-zinc-650 dark:text-zinc-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 rounded-lg transition duration-200 focus:outline-none"
                 aria-label={t("upcomingActivities")}
               >
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
                 {totalNotifications > 0 && (
-                  <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[11px] font-bold text-white ring-2 ring-white">
+                  <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[11px] font-bold text-white ring-2 ring-white dark:ring-[#1E1E1E]">
                     {totalNotifications > 9 ? "9+" : totalNotifications}
                   </span>
                 )}
@@ -249,7 +262,7 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
             {/* How-To Guide Button */}
             <Link
               href="/dashboard/guide"
-              className="p-2 text-zinc-650 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition duration-200 focus:outline-none"
+              className="p-2 text-zinc-650 dark:text-zinc-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 rounded-lg transition duration-200 focus:outline-none"
               aria-label="How-To Guide"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -262,7 +275,7 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
             <div className="relative inline-block text-left">
               <button
                 onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-                className="inline-flex items-center justify-center gap-1.5 h-10 px-3 bg-zinc-100 hover:bg-zinc-200 border border-zinc-200 rounded-xl text-xs font-semibold text-zinc-650 hover:text-zinc-950 transition duration-350 shadow-sm focus:outline-none select-none"
+                className="inline-flex items-center justify-center gap-1.5 h-10 px-3 bg-zinc-100 dark:bg-[#252525] hover:bg-zinc-200 dark:hover:bg-zinc-700 border border-zinc-200 dark:border-zinc-700 rounded-xl text-xs font-semibold text-zinc-650 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition duration-350 shadow-sm focus:outline-none select-none"
                 aria-label="Select Language"
               >
                 <span className="text-base leading-none">
@@ -289,8 +302,8 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
               )}
 
               {isLangDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-xl border border-zinc-200 bg-white/95 backdrop-blur-md shadow-xl z-40 py-1.5 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 origin-top-right">
-                  <div className="px-3 py-1 text-[10px] font-bold text-zinc-400 uppercase tracking-wider border-b border-zinc-100 mb-1">
+                <div className="absolute right-0 mt-2 w-48 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white/95 dark:bg-[#1E1E1E]/95 backdrop-blur-md shadow-xl z-40 py-1.5 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 origin-top-right">
+                  <div className="px-3 py-1 text-[10px] font-bold text-zinc-400 uppercase tracking-wider border-b border-zinc-100 dark:border-zinc-800 mb-1">
                     {t("language")}
                   </div>
                   <div className="max-h-[240px] overflow-y-auto no-scrollbar">
@@ -302,8 +315,8 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
                           onClick={() => handleLanguageChange(lang.code)}
                           className={`w-full flex items-center justify-between px-4 py-2 text-xs font-bold transition duration-200 ${
                             isSelected
-                              ? "text-emerald-700 bg-emerald-50/50"
-                              : "text-zinc-650 hover:bg-zinc-100 hover:text-zinc-900"
+                              ? "text-emerald-700 dark:text-emerald-400 bg-emerald-50/50 dark:bg-emerald-950/40"
+                              : "text-zinc-650 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white"
                           }`}
                         >
                           <div className="flex items-center gap-2">
@@ -321,7 +334,7 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
               )}
             </div>
 
-            <div className="h-6 w-px bg-zinc-200 mx-1" />
+            <div className="h-6 w-px bg-zinc-200 dark:bg-zinc-700 mx-1" />
 
             {/* Hamburger Menu Button - Replaces old owner card dropdown */}
             <button
@@ -329,7 +342,7 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
               onClick={() => setDrawerOpen(true)}
               aria-label="Open navigation menu"
               title="Menu"
-              className="p-2 -mr-1 rounded-xl text-zinc-700 hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
+              className="p-2 -mr-1 rounded-xl text-zinc-700 dark:text-zinc-200 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-emerald-50/70 dark:hover:bg-zinc-800 transition-colors"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
@@ -439,16 +452,18 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
 
           {/* Navigation Items */}
           {[
-            { key: "herd", label: tNav("herdData"), path: "/dashboard/herd", icon: HerdDataIcon },
-            { key: "feed", label: tNav("feedManagement"), path: "/dashboard/feed", icon: FeedManagementIcon },
-            { key: "activities", label: tNav("herdActivities"), path: "/dashboard/activities", icon: HerdActivitiesIcon },
+            { key: "herd", label: tNav("herd"), path: "/dashboard/herd", icon: HerdDataIcon },
+            { key: "feed", label: tNav("feed"), path: "/dashboard/feed", icon: FeedManagementIcon },
+            { key: "activities", label: tNav("activities"), path: "/dashboard/activities", icon: HerdActivitiesIcon },
             { key: "financials", label: tNav("financials"), path: "/dashboard/financials", icon: FinancialsIcon },
-            { key: "hr", label: tNav("humanResources"), path: "/dashboard?section=hr", icon: HumanResourcesIcon },
-            { key: "hub", label: tNav("localHub"), path: "/dashboard?section=hub", icon: LocalHubIcon },
-            { key: "symptoms", label: tNav("diseaseFinder"), path: "/dashboard?section=symptoms", icon: SymptomsAnalyzerIcon },
-            { key: "weight", label: tNav("weighPigs"), path: "/dashboard?section=weight", icon: WeightCheckerIcon },
-            { key: "training", label: tNav("trainingTips"), path: "/dashboard?section=training", icon: TrainingTipsIcon },
-          ].map((item) => {
+            { key: "hr", label: tNav("hr"), path: "/dashboard?section=hr", icon: HumanResourcesIcon },
+            { key: "hub", label: tNav("hub"), path: "/dashboard?section=hub", icon: LocalHubIcon },
+            { key: "symptoms", label: tNav("symptoms"), path: "/dashboard?section=symptoms", icon: SymptomsAnalyzerIcon },
+            { key: "weight", label: tNav("weight"), path: "/dashboard?section=weight", icon: WeightCheckerIcon },
+            { key: "training", label: tNav("training"), path: "/dashboard?section=training", icon: TrainingTipsIcon },
+          ]
+            .filter((item) => !isFinancialsRestricted || (item.key !== "financials" && item.key !== "hr"))
+            .map((item) => {
             const Icon = item.icon;
             const isSelected = pathname === item.path;
             return (
@@ -473,6 +488,21 @@ export default function DesktopHeader({ label, showBack, backPath }: { label?: s
               </Link>
             );
           })}
+
+          {/* How-To Guide */}
+          <Link
+            href="/dashboard/guide"
+            onClick={() => setDrawerOpen(false)}
+            className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-white/90 hover:bg-white/10 transition-colors"
+          >
+            <div className="h-8 w-8 rounded-lg bg-sky-500/20 flex items-center justify-center text-sky-300">
+              <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="9" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3m.08 4h.01" />
+              </svg>
+            </div>
+            <span>{tNav("howToGuide") || "How-To Guide"}</span>
+          </Link>
 
           {/* Settings button */}
           <button

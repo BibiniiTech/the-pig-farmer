@@ -25,7 +25,7 @@ export default function TermsOfServicePage() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 flex flex-col font-sans overflow-hidden">
+    <div className="relative min-h-screen bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans overflow-hidden">
       {/* Watermark Logo Background */}
       {!isMobile && (
         <div className="fixed inset-0 z-0 flex items-center justify-center opacity-[0.15] pointer-events-none select-none">
@@ -39,12 +39,33 @@ export default function TermsOfServicePage() {
 
       <div className="relative z-10 flex flex-col min-h-screen">
         {/* Header */}
-        {!isMobile && <DesktopHeader />}
+        {!isMobile && (
+          <DesktopHeader
+            showBack
+            backPath="/dashboard"
+            label={t("title") || "TERMS OF SERVICE"}
+            labelColor="text-[#1B5E20] dark:text-[#81C784]"
+          />
+        )}
 
         {/* Content Body */}
-        <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+        <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+          {/* Top Bar with Back Button */}
+          <div className="flex items-center justify-between gap-4">
+            <Link
+              href="/dashboard"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-700 hover:text-zinc-900 transition font-bold text-xs shadow-xs"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              <span>Back</span>
+            </Link>
+            <div className="w-16" />
+          </div>
+
           <div className="text-center space-y-4">
-            <h1 className="text-4xl font-extrabold text-zinc-900 tracking-tight">{t("title")}</h1>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1B5E20] dark:text-[#81C784] tracking-tight">{t("title")}</h1>
             <p className="text-sm text-zinc-500 font-medium">{t("lastUpdated")}</p>
           </div>
 

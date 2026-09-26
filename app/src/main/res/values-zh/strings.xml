@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartSwine</string>
+    <string name="weight_checker_title">体重估算</string>
+    <string name="back_button_content_description">返回</string>
+    <string name="important_notes_title">重要注意事项</string>
+    <string name="weight_checker_notes">• 胸围：测量前肢后侧胸部周长，确保卷尺紧贴猪体（点 B）。\n• 体长：从两耳根部正中量至尾根处，保持卷尺紧贴背脊，不可松弛（点 A）。\n• 确保猪只四肢直立站立在平坦地面上，以获得最准确的估算结果。\n</string>
+    <string name="converter_title">单位换算</string>
+    <string name="unit_lbs">磅</string>
+    <string name="unit_kgs">公斤</string>
+    <string name="weigh_with_scale">地磅/电子秤称重</string>
+    <string name="weigh_with_tape_title">卷尺估重</string>
+    <string name="weigh_with_tape_subtitle">使用卷尺测量体长与胸围估算活重</string>
+    <string name="label_length">体长 (%1$s)</string>
+    <string name="label_girth">胸围 (%1$s)</string>
+    <string name="unit_cm">厘米</string>
+    <string name="unit_in">英寸</string>
+    <string name="placeholder_a">A</string>
+    <string name="placeholder_b">B</string>
+    <string name="label_estimated_live_weight">预估活重（毛重）</string>
+    <string name="label_estimated_carcass_weight">预估胴体重量</string>
+    <string name="msg_enter_measurements">在示意图中输入测量数据以计算体重</string>
+    <string name="pig_diagram_content_description">猪只体型测量指南</string>
+    <string name="weight_format">%1$.1f 公斤 / %2$.1f 磅</string>
+    <string name="estimated_results">估算结果</string>
+
+    <string name="specify_breed">指定品种</string>
+</resources>
