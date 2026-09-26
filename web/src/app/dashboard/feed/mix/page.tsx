@@ -10,6 +10,7 @@ import { useDevice } from "@/context/DeviceContext";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import { useTranslations } from "next-intl";
 import { ScienceIcon, ExportPdfIcon } from "@/components/icons/DashboardIcons";
+import FeedFormulationReport from "@/components/reports/FeedFormulationReport";
 import { FeedIngredient, NutritionalRequirement, SavedFeedRecipe } from "@/lib/types";
 import { formulateFeed, FormulationResult } from "@/lib/feedCalculator";
 import PremiumWrapper from "@/components/PremiumWrapper";
@@ -247,14 +248,15 @@ export default function MixFeedPage() {
 
   return (
     <div className="relative min-h-screen bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans overflow-x-hidden">
-      {!isMobile && (
-        <DesktopHeader
-          showBack
-          backPath="/dashboard?section=feed"
-          label={t("mixFeed") || "FEED FORMULATOR"}
-          labelColor="text-[#E65100] dark:text-[#FFB74D]"
-        />
-      )}
+      <div className="relative z-10 flex flex-col min-h-screen print:hidden">
+        {!isMobile && (
+          <DesktopHeader
+            showBack
+            backPath="/dashboard?section=feed"
+            label={t("mixFeed") || "FEED FORMULATOR"}
+            labelColor="text-[#E65100] dark:text-[#FFB74D]"
+          />
+        )}
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-8">
         <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-4">
@@ -533,6 +535,25 @@ export default function MixFeedPage() {
           </div>
         )}
       </main>
+      </div>
+
+      {formulation && (
+        <FeedFormulationReport
+          title={selectedStage}
+          ingredients={Object.entries(formulation.ingredients || formulation.proportions || {}).map(([id, percent]) => {
+            const ing = ingredients.find((i) => i.id === id);
+            return {
+              name: ing?.name || id,
+              percent,
+            };
+          })}
+          total={formulation.totalPercentage || Object.values(formulation.ingredients || formulation.proportions || {}).reduce((s, v) => s + v, 0)}
+          nutritionalComparison={formulation.nutritionalComparison || []}
+          costPerKg={calculatedCostPerKg}
+          costPer50kgBag={calculatedCostPerKg * 50}
+          currencySymbol={userProfile?.settings?.currencySymbol || "$"}
+        />
+      )}
     </div>
   );
 }

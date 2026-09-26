@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { TierLimiter } from "@/lib/tierLimiter";
 import HRReport from "@/components/reports/HRReport";
 import StaffDetailReport from "@/components/reports/StaffDetailReport";
+import RewardedPassModal from "@/components/ads/RewardedPassModal";
 
 interface InlineHRSectionProps {
   staff: StaffMember[];
@@ -38,6 +39,8 @@ export default function InlineHRSection({
   const [staffToPaySalary, setStaffToPaySalary] = useState<StaffMember | null>(null);
   const [resendingStaffId, setResendingStaffId] = useState<string | null>(null);
   const [selectedStaffForReport, setSelectedStaffForReport] = useState<StaffMember | null>(null);
+  const [showRewardedPassModal, setShowRewardedPassModal] = useState(false);
+  const [pendingPrintType, setPendingPrintType] = useState<"all" | "detail">("all");
 
   const handleResendInvite = async (member: StaffMember) => {
     if (!activeFarmUid || !member.email) return;
@@ -338,12 +341,12 @@ export default function InlineHRSection({
   };
 
   const handleExportPdf = () => {
+    setSelectedStaffForReport(null);
     if (!isPremium) {
-      alert("Executive HR PDF export is a SmartSwine Premium feature. Please upgrade to export HR reports.");
-      router.push("/dashboard/billing");
+      setPendingPrintType("all");
+      setShowRewardedPassModal(true);
       return;
     }
-    setSelectedStaffForReport(null);
     if (typeof window !== "undefined") {
       setTimeout(() => {
         window.print();
@@ -352,12 +355,12 @@ export default function InlineHRSection({
   };
 
   const handlePrintStaffDetail = (member: StaffMember) => {
+    setSelectedStaffForReport(member);
     if (!isPremium) {
-      alert("Individual Staff Profile PDF export is a SmartSwine Premium feature. Please upgrade to export staff reports.");
-      router.push("/dashboard/billing");
+      setPendingPrintType("detail");
+      setShowRewardedPassModal(true);
       return;
     }
-    setSelectedStaffForReport(member);
     if (typeof window !== "undefined") {
       setTimeout(() => {
         window.print();
@@ -366,7 +369,8 @@ export default function InlineHRSection({
   };
 
   return (
-    <div className="space-y-4">
+    <>
+      <div className="space-y-4 print:hidden">
       {/* Overview Card */}
       <div className="bg-white border border-purple-100 rounded-2xl p-4 shadow-sm">
         <div className="grid grid-cols-3 gap-2 text-center sm:text-left">
@@ -493,51 +497,7 @@ export default function InlineHRSection({
         )}
       </div>
 
-      {/* Printable HR Report (Active on window.print) */}
-      <div className="hidden print:block print:p-6 print:text-black">
-        <div className="border-b-2 border-purple-800 pb-3 mb-4">
-          <h1 className="text-2xl font-black text-purple-900">SmartSwine — Human Resources Report</h1>
-          <p className="text-xs text-zinc-600">Generated: {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()}</p>
-        </div>
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="p-3 border border-purple-200 rounded-lg">
-            <p className="text-[10px] font-bold uppercase text-purple-700">{t("totalStaff") || "Total Staff"}</p>
-            <p className="text-xl font-bold text-zinc-900">{staff.length}</p>
-          </div>
-          <div className="p-3 border border-purple-200 rounded-lg">
-            <p className="text-[10px] font-bold uppercase text-purple-700">{t("active") || "Active Staff"}</p>
-            <p className="text-xl font-bold text-zinc-900">{activeCount}</p>
-          </div>
-          <div className="p-3 border border-purple-200 rounded-lg">
-            <p className="text-[10px] font-bold uppercase text-purple-700">{t("monthlyPayroll") || "Monthly Payroll"}</p>
-            <p className="text-xl font-bold text-zinc-900">{currencySymbol}{monthlyPayroll.toFixed(2)}</p>
-          </div>
-        </div>
-        <table className="w-full text-left text-xs border-collapse">
-          <thead>
-            <tr className="border-b-2 border-zinc-300 bg-purple-50">
-              <th className="p-2 font-bold">{t("fullName") || "Name"}</th>
-              <th className="p-2 font-bold">{t("role") || "Role"}</th>
-              <th className="p-2 font-bold">{t("status") || "Status"}</th>
-              <th className="p-2 font-bold">{t("phone") || "Phone"}</th>
-              <th className="p-2 font-bold">{t("salary") || "Monthly Salary"}</th>
-              <th className="p-2 font-bold">{t("joined") || "Joined Date"}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {activeStaff.map((m) => (
-              <tr key={m.id} className="border-b border-zinc-200">
-                <td className="p-2 font-bold text-zinc-900">{m.name}</td>
-                <td className="p-2 text-zinc-700">{m.role}</td>
-                <td className="p-2 font-semibold text-purple-800">{m.status}</td>
-                <td className="p-2 text-zinc-600">{m.phone || "—"}</td>
-                <td className="p-2 font-bold text-zinc-900">{currencySymbol}{Number(m.salary || 0).toFixed(2)}</td>
-                <td className="p-2 text-zinc-600">{m.joinDate || "—"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+
 
       {/* Add / Edit Staff Modal */}
       {showAddModal && (
@@ -1088,22 +1048,33 @@ export default function InlineHRSection({
           </div>
         </div>
       )}
+      </div>
 
-      {isPremium && (
-        selectedStaffForReport ? (
-          <StaffDetailReport
-            member={selectedStaffForReport}
-            financialRecords={financialRecords}
-            currencySymbol={currencySymbol}
-          />
-        ) : (
-          <HRReport
-            staff={activeStaff}
-            financialRecords={financialRecords}
-            currencySymbol={currencySymbol}
-          />
-        )
+      <RewardedPassModal
+        isOpen={showRewardedPassModal}
+        onClose={() => setShowRewardedPassModal(false)}
+        title={pendingPrintType === "detail" ? "Unlock Staff Profile PDF Report" : "Unlock HR & Staff PDF Report"}
+        description="Watch a short video ad to unlock executive HR reports and all premium tools for 3 hours!"
+        onSuccess={() => {
+          setTimeout(() => {
+            window.print();
+          }, 500);
+        }}
+      />
+
+      {selectedStaffForReport ? (
+        <StaffDetailReport
+          member={selectedStaffForReport}
+          financialRecords={financialRecords}
+          currencySymbol={currencySymbol}
+        />
+      ) : (
+        <HRReport
+          staff={activeStaff}
+          financialRecords={financialRecords}
+          currencySymbol={currencySymbol}
+        />
       )}
-    </div>
+    </>
   );
 }

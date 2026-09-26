@@ -10,6 +10,7 @@ import { useDevice } from "@/context/DeviceContext";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import { useTranslations } from "next-intl";
 import { CalculateIcon, ExportPdfIcon } from "@/components/icons/DashboardIcons";
+import FeedRequirementsReport from "@/components/reports/FeedRequirementsReport";
 import { Pig } from "@/lib/types";
 import PremiumWrapper from "@/components/PremiumWrapper";
 import NativeAdBanner from "@/components/ads/NativeAdBanner";
@@ -135,14 +136,15 @@ export default function FeedCalculatorPage() {
 
   return (
     <div className="relative min-h-screen bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans overflow-x-hidden">
-      {!isMobile && (
-        <DesktopHeader
-          showBack
-          backPath="/dashboard?section=feed"
-          label={t("calculator") || "FEED CALCULATOR"}
-          labelColor="text-[#E65100] dark:text-[#FFB74D]"
-        />
-      )}
+      <div className="relative z-10 flex flex-col min-h-screen print:hidden">
+        {!isMobile && (
+          <DesktopHeader
+            showBack
+            backPath="/dashboard?section=feed"
+            label={t("calculator") || "FEED CALCULATOR"}
+            labelColor="text-[#E65100] dark:text-[#FFB74D]"
+          />
+        )}
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
         <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-4">
@@ -324,11 +326,24 @@ export default function FeedCalculatorPage() {
 
         <NativeAdBanner />
       </main>
+      </div>
 
       <RewardedPassModal
         isOpen={showRewardedPassModal}
         onClose={() => setShowRewardedPassModal(false)}
         featureName="Feed Calculator & PDF Export"
+        onSuccess={() => {
+          setTimeout(() => {
+            window.print();
+          }, 500);
+        }}
+      />
+
+      <FeedRequirementsReport
+        days={calcDays}
+        breakdown={calculationBreakdown}
+        totalDaily={totalDailyReq}
+        totalPeriod={totalPeriodReq}
       />
     </div>
   );

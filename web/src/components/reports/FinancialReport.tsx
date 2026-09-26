@@ -2,7 +2,7 @@
 
 import React from "react";
 import ReportLayout from "./ReportLayout";
-import { useTranslations } from "next-intl";
+import { resolvePigIds } from "@/lib/pdfExporter";
 import { Pig, FinancialRecord } from "@/lib/types";
 
 interface FinancialReportProps {
@@ -16,117 +16,97 @@ const FinancialReport: React.FC<FinancialReportProps> = ({
   records,
   pigs = [],
   currencySymbol = "$",
-  title
+  title = "Financial Summary Report",
 }) => {
-  const t = useTranslations("Reports");
-  const tFin = useTranslations("Financials");
-  const defaultTitle = t("financialLedger");
-
-  const translateCategory = (cat: string, type: string) => {
-    if (!cat) return "";
-    const incomeKeys: Record<string, string> = {
-      "Pig Sale": "incomeCategories.pigSale",
-      "Manure Sale": "incomeCategories.manureSale",
-      "Breeding Service": "incomeCategories.breedingService",
-      "Equipment Sale": "incomeCategories.equipmentSale",
-      "Other": "incomeCategories.other",
-    };
-    const expenseKeys: Record<string, string> = {
-      "Feed": "expenseCategories.feed",
-      "Vet/Medication": "expenseCategories.vet",
-      "Vet": "expenseCategories.vet",
-      "Labor/Salary": "expenseCategories.labor",
-      "Labor": "expenseCategories.labor",
-      "Equipment": "expenseCategories.equipment",
-      "Transport": "expenseCategories.transport",
-      "Rent": "expenseCategories.rent",
-      "Utility": "expenseCategories.utility",
-      "Other": "expenseCategories.other",
-    };
-    const key = type === "Income" ? incomeKeys[cat] : expenseKeys[cat];
-    return key ? tFin(key) : cat;
-  };
-
-  const totalIncome = records.filter(r => r.type === "Income").reduce((sum, r) => sum + r.amount, 0);
-  const totalExpense = records.filter(r => r.type === "Expense").reduce((sum, r) => sum + r.amount, 0);
+  const totalIncome = records.filter((r) => r.type === "Income").reduce((sum, r) => sum + r.amount, 0);
+  const totalExpense = records.filter((r) => r.type === "Expense").reduce((sum, r) => sum + r.amount, 0);
   const netProfit = totalIncome - totalExpense;
 
+  // Sort by date ascending matching Android DateUtils.parseAnyDateNonNull
   const sortedRecords = [...records].sort((a, b) => a.date.localeCompare(b.date));
 
-  let currentBalance = 0;
-  const recordsWithBalance = sortedRecords.map((record) => {
+  let runningBalance = 0;
+  const rows = sortedRecords.map((record) => {
     const isIncome = record.type === "Income";
-    currentBalance += isIncome ? record.amount : -record.amount;
+    const incomeVal = isIncome ? record.amount : 0;
+    const expenseVal = !isIncome ? record.amount : 0;
+    runningBalance += (incomeVal - expenseVal);
+
+    const displayDescription = resolvePigIds(record.description || "", pigs);
+
     return {
-      ...record,
-      balanceAfter: currentBalance
+      date: record.date,
+      category: record.category || "General",
+      description: displayDescription,
+      incomeVal,
+      expenseVal,
+      balance: runningBalance,
     };
   });
 
   return (
-    <ReportLayout title={title || defaultTitle}>
-      <div className="mb-10 space-y-3 p-6 border border-zinc-200 rounded-2xl bg-zinc-50/50">
-        <h3 className="text-[16pt] font-bold text-zinc-800 border-b pb-2 mb-4">{t("summary")}</h3>
-        <div className="grid grid-cols-3 gap-8">
-          <div>
-            <p className="text-[10pt] uppercase text-zinc-500 font-bold tracking-wider">{t("totalIncome")}</p>
-            <p className="text-[18pt] font-black text-emerald-700">{currencySymbol}{totalIncome.toFixed(2)}</p>
-          </div>
-          <div>
-            <p className="text-[10pt] uppercase text-zinc-500 font-bold tracking-wider">{t("totalExpense")}</p>
-            <p className="text-[18pt] font-black text-rose-700">{currencySymbol}{totalExpense.toFixed(2)}</p>
-          </div>
-          <div>
-            <p className="text-[10pt] uppercase text-zinc-500 font-bold tracking-wider">{t("netBalance")}</p>
-            <p className={`text-[18pt] font-black ${netProfit >= 0 ? "text-emerald-800" : "text-rose-800"}`}>
-              {currencySymbol}{netProfit.toFixed(2)}
+    <ReportLayout title={title}>
+      <div className="space-y-6">
+        {/* Summary section (matching Android addSection("Summary") lines 535-540) */}
+        <div>
+          <h3 className="text-[16pt] font-bold text-black mb-2">Summary</h3>
+          <div className="space-y-1 text-[11pt] text-black">
+            <p>Total Income: {currencySymbol}{totalIncome.toFixed(2)}</p>
+            <p>Total Expense: {currencySymbol}{totalExpense.toFixed(2)}</p>
+            <p
+              className={`font-bold ${
+                netProfit >= 0 ? "text-[#2E7D32]" : "text-[#D32F2F]"
+              }`}
+            >
+              Net Profit/Loss: {currencySymbol}{netProfit.toFixed(2)}
             </p>
           </div>
         </div>
-      </div>
 
-      <div className="space-y-4">
-        <h3 className="text-[14pt] font-bold text-zinc-800">{t("detailedHistory")}</h3>
-        <table className="w-full border-collapse text-[9pt]">
-          <thead>
-            <tr className="bg-zinc-100 text-left border-y-2 border-zinc-300">
-              <th className="p-3 font-bold border-r border-zinc-200">{t("date")}</th>
-              <th className="p-3 font-bold border-r border-zinc-200">{t("narration")}</th>
-              <th className="p-3 font-bold border-r border-zinc-200 w-1/3">{t("description")}</th>
-              <th className="p-3 font-bold border-r border-zinc-200 text-right">{t("totalIncome")}</th>
-              <th className="p-3 font-bold border-r border-zinc-200 text-right">{t("totalExpense")}</th>
-              <th className="p-3 font-bold text-right">{t("balance")}</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-zinc-200">
-            {recordsWithBalance.map((record) => {
-              const isIncome = record.type === "Income";
-              const amount = record.amount;
-
-              const linkedPig = pigs.find(p => p.id === record.pigId);
-              const displayDescription = linkedPig
-                ? `${record.description} (Pig ${linkedPig.tagNumber})`
-                : record.description;
-
-              return (
-                <tr key={record.id} className={isIncome ? "bg-emerald-50/20" : "bg-rose-50/20"}>
-                  <td className="p-3 border-r border-zinc-100 font-mono">{record.date}</td>
-                  <td className="p-3 border-r border-zinc-100 font-bold text-zinc-700">{translateCategory(record.category, record.type)}</td>
-                  <td className="p-3 border-r border-zinc-100 text-zinc-600 italic leading-snug">{displayDescription}</td>
-                  <td className="p-3 border-r border-zinc-100 text-right font-bold text-emerald-700">
-                    {isIncome ? amount.toFixed(2) : ""}
-                  </td>
-                  <td className="p-3 border-r border-zinc-100 text-right font-bold text-rose-700">
-                    {!isIncome ? amount.toFixed(2) : ""}
-                  </td>
-                  <td className={`p-3 text-right font-black ${record.balanceAfter >= 0 ? "text-emerald-900" : "text-rose-900"}`}>
-                    {currencySymbol}{record.balanceAfter.toFixed(2)}
+        {/* Detailed Transaction History table (matching Android lines 541-670) */}
+        <div>
+          <h3 className="text-[16pt] font-bold text-black mb-2">
+            Detailed Transaction History
+          </h3>
+          <table className="w-full border-collapse text-[9.5pt] border border-zinc-400">
+            <thead>
+              <tr className="bg-[#D3D3D3] text-black font-bold text-left border-b border-zinc-400">
+                <th className="p-2 border border-zinc-400 font-bold w-[14%]">Date</th>
+                <th className="p-2 border border-zinc-400 font-bold w-[16%]">Narration</th>
+                <th className="p-2 border border-zinc-400 font-bold w-[34%]">Description</th>
+                <th className="p-2 border border-zinc-400 font-bold text-right w-[12%]">Income</th>
+                <th className="p-2 border border-zinc-400 font-bold text-right w-[12%]">Expense</th>
+                <th className="p-2 border border-zinc-400 font-bold text-right w-[12%]">Balance</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-zinc-300">
+              {rows.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="p-4 text-center text-zinc-500 italic border border-zinc-300">
+                    No financial records found.
                   </td>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              ) : (
+                rows.map((row, idx) => (
+                  <tr key={idx} className="text-black">
+                    <td className="p-2 border border-zinc-300 font-mono text-[9pt]">{row.date}</td>
+                    <td className="p-2 border border-zinc-300">{row.category}</td>
+                    <td className="p-2 border border-zinc-300 leading-snug">{row.description}</td>
+                    <td className="p-2 border border-zinc-300 text-right font-mono text-[#2E7D32]">
+                      {row.incomeVal > 0 ? row.incomeVal.toFixed(2) : ""}
+                    </td>
+                    <td className="p-2 border border-zinc-300 text-right font-mono text-[#D32F2F]">
+                      {row.expenseVal > 0 ? row.expenseVal.toFixed(2) : ""}
+                    </td>
+                    <td className="p-2 border border-zinc-400 text-right font-mono font-bold">
+                      {row.balance.toFixed(2)}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </ReportLayout>
   );

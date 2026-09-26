@@ -10,6 +10,7 @@ import { useDevice } from "@/context/DeviceContext";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import { useTranslations } from "next-intl";
 import { AnalyticsIcon, ScienceIcon, ExportPdfIcon } from "@/components/icons/DashboardIcons";
+import FeedAnalysisReport from "@/components/reports/FeedAnalysisReport";
 import { FeedIngredient, NutritionalRequirement } from "@/lib/types";
 import { analyzeFeedMix, checkIngredientSafety, FeedNutrientProfile, InclusionSafetyAlert } from "@/lib/feedCalculator";
 import { TierLimiter } from "@/lib/tierLimiter";
@@ -136,14 +137,15 @@ export default function AnalyzeFeedPage() {
 
   return (
     <div className="relative min-h-screen bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans overflow-x-hidden">
-      {!isMobile && (
-        <DesktopHeader
-          showBack
-          backPath="/dashboard?section=feed"
-          label={t("analyzeFeed") || "ANALYZE FEED"}
-          labelColor="text-[#E65100] dark:text-[#FFB74D]"
-        />
-      )}
+      <div className="relative z-10 flex flex-col min-h-screen print:hidden">
+        {!isMobile && (
+          <DesktopHeader
+            showBack
+            backPath="/dashboard?section=feed"
+            label={t("analyzeFeed") || "ANALYZE FEED"}
+            labelColor="text-[#E65100] dark:text-[#FFB74D]"
+          />
+        )}
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-8">
         <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-4">
@@ -419,6 +421,7 @@ export default function AnalyzeFeedPage() {
 
         <NativeAdBanner />
       </main>
+      </div>
 
       {showAddIngredientModal && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
@@ -485,6 +488,11 @@ export default function AnalyzeFeedPage() {
         isOpen={showRewardedPassModal}
         onClose={() => setShowRewardedPassModal(false)}
         featureName="Feed Analysis & Full Formulas"
+        onSuccess={() => {
+          setTimeout(() => {
+            window.print();
+          }, 500);
+        }}
       />
 
       {/* Batch Mix Modal */}
@@ -518,6 +526,22 @@ export default function AnalyzeFeedPage() {
           </svg>
           <span>{batchToast}</span>
         </div>
+      )}
+
+      {analyzeItems.length > 0 && (
+        <FeedAnalysisReport
+          targetStage={analyzeTargetStage}
+          ingredients={analyzeItems.map((item) => ({
+            name: item.ingredient.name,
+            quantity: item.quantity,
+          }))}
+          isPercentage={analyzePercentageMode}
+          totalWeight={totalInputQty}
+          profile={analyzeProfile}
+          target={benchmarkReq}
+          alerts={safetyAlerts}
+          currencySymbol={userProfile?.settings?.currencySymbol || "$"}
+        />
       )}
     </div>
   );

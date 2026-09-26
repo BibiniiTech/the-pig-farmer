@@ -12,7 +12,7 @@ export default function PassCountdownBanner() {
   }
 
   return (
-    <div className="w-full mb-4 rounded-xl bg-emerald-50/90 dark:bg-emerald-950/40 border border-emerald-500/40 px-4 py-2.5 flex items-center justify-between shadow-sm animate-in fade-in duration-300">
+    <div className="w-full mb-4 rounded-xl bg-emerald-50/90 dark:bg-emerald-950/40 border border-emerald-500/40 px-4 py-2.5 flex items-center justify-between shadow-sm animate-in fade-in duration-300 print:hidden">
       <div className="flex items-center gap-2.5">
         <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-600/15 text-emerald-700 dark:text-emerald-400">
           <svg className="h-4 w-4 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">

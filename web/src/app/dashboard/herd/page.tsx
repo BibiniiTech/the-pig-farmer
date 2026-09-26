@@ -725,12 +725,10 @@ export default function HerdPage() {
         }}
       />
 
-      {isPremium && (
-        <HerdReport
-          pigs={viewingArchived ? archivedPigs : pigs}
-          title={viewingArchived ? t("titleArchived") : t("title")}
-        />
-      )}
+      <HerdReport
+        pigs={viewingArchived ? archivedPigs : pigs}
+        title={viewingArchived ? t("titleArchived") : t("title")}
+      />
 
       {/* Add Pigs Modal */}
       {showAddModal && (

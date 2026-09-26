@@ -82,6 +82,7 @@ export default function PigProfilePage() {
 
   const [pig, setPig] = useState<Pig | null>(null);
   const [healthRecords, setHealthRecords] = useState<HealthRecord[]>([]);
+  const [allPigs, setAllPigs] = useState<Pig[]>([]);
   const [dataLoading, setDataLoading] = useState(true);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showRecordModal, setShowRecordModal] = useState(false);
@@ -229,9 +230,16 @@ export default function PigProfilePage() {
       setDataLoading(false);
     });
 
+    const allPigsQuery = collection(db, "users", activeFarmUid, "pigs");
+    const unsubscribeAllPigs = onSnapshot(allPigsQuery, (snapshot) => {
+      const list = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Pig));
+      setAllPigs(list);
+    }, () => {});
+
     return () => {
       unsubscribePig();
       unsubscribeRecords();
+      unsubscribeAllPigs();
       if (unsubArchPig) unsubArchPig();
       if (unsubArchRecords) unsubArchRecords();
     };
@@ -1025,9 +1033,11 @@ export default function PigProfilePage() {
         </main>
       </div>
 
-      {isPremium && (
+      {pig && (
         <HerdReport
           pigs={[pig]}
+          allPigs={allPigs}
+          healthRecords={{ [pig.id]: healthRecords }}
           title={t("reportTitle", { tag: pig.tagNumber })}
           includeSummary={false}
         />

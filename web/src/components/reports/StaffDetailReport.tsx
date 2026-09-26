@@ -2,7 +2,6 @@
 
 import React from "react";
 import ReportLayout from "./ReportLayout";
-import { useTranslations } from "next-intl";
 import { StaffMember, FinancialRecord } from "@/lib/types";
 
 interface StaffDetailReportProps {
@@ -18,10 +17,8 @@ const StaffDetailReport: React.FC<StaffDetailReportProps> = ({
   currencySymbol = "$",
   title,
 }) => {
-  const t = useTranslations("Reports");
-  const defaultTitle = `${t("employeeProfileReport", { fallback: "Employee Profile Report" })} - ${member.name}`;
-
   const currentYear = new Date().getFullYear().toString();
+  const reportTitle = title || `Employee Profile & Salary Report - ${member.name}`;
 
   // Filter salary payments matching this staff member
   const memberSalaryPayments = financialRecords
@@ -33,70 +30,58 @@ const StaffDetailReport: React.FC<StaffDetailReportProps> = ({
     .sort((a, b) => b.date.localeCompare(a.date));
 
   const ytdSalary = memberSalaryPayments
-    .filter((r) => r.date.includes(currentYear))
+    .filter((r) => r.date.startsWith(currentYear))
     .reduce((sum, r) => sum + r.amount, 0);
 
   const lifetimeSalary = memberSalaryPayments.reduce((sum, r) => sum + r.amount, 0);
 
   return (
-    <ReportLayout title={title || defaultTitle}>
-      <div className="space-y-8">
-        {/* Staff Profile Information */}
+    <ReportLayout title={reportTitle}>
+      <div className="space-y-6">
+        {/* Profile Information */}
         <div>
-          <h3 className="text-[14pt] font-bold text-zinc-800 border-b-2 border-zinc-200 pb-2 mb-4">
-            Staff Profile Details
-          </h3>
-          <table className="w-full border-collapse text-[10pt]">
-            <tbody className="divide-y divide-zinc-200 border border-zinc-200">
-              <tr className="bg-zinc-50/50">
-                <td className="p-3 font-bold text-zinc-700 w-1/3 border-r border-zinc-200">Full Name</td>
-                <td className="p-3 font-semibold text-zinc-900">{member.name}</td>
+          <h3 className="text-[16pt] font-bold text-black mb-2">Employee Details</h3>
+          <table className="w-full border-collapse text-[10pt] border border-zinc-400">
+            <tbody className="divide-y divide-zinc-300">
+              <tr className="text-black">
+                <td className="p-2 border border-zinc-400 font-bold w-[30%]">Staff Name</td>
+                <td className="p-2 border border-zinc-400 w-[70%]">{member.name}</td>
               </tr>
-              <tr>
-                <td className="p-3 font-bold text-zinc-700 border-r border-zinc-200">Job Role / Title</td>
-                <td className="p-3 text-zinc-900">{member.role}</td>
+              <tr className="text-black">
+                <td className="p-2 border border-zinc-400 font-bold">Role</td>
+                <td className="p-2 border border-zinc-400">{member.role}</td>
               </tr>
-              <tr className="bg-zinc-50/50">
-                <td className="p-3 font-bold text-zinc-700 border-r border-zinc-200">Employment Status</td>
-                <td className="p-3 font-bold">
-                  <span
-                    className={`inline-block px-2.5 py-0.5 rounded-full text-xs ${
-                      member.status === "Active"
-                        ? "bg-emerald-100 text-emerald-800"
-                        : "bg-zinc-100 text-zinc-700"
-                    }`}
-                  >
-                    {member.status}
-                  </span>
-                </td>
+              <tr className="text-black">
+                <td className="p-2 border border-zinc-400 font-bold">Status</td>
+                <td className="p-2 border border-zinc-400">{member.status}</td>
               </tr>
-              <tr>
-                <td className="p-3 font-bold text-zinc-700 border-r border-zinc-200">Phone Number</td>
-                <td className="p-3 text-zinc-900 font-mono">{member.phone || "—"}</td>
+              <tr className="text-black">
+                <td className="p-2 border border-zinc-400 font-bold">Phone Number</td>
+                <td className="p-2 border border-zinc-400 font-mono text-[9pt]">{member.phone || "—"}</td>
               </tr>
-              <tr className="bg-zinc-50/50">
-                <td className="p-3 font-bold text-zinc-700 border-r border-zinc-200">Email Address</td>
-                <td className="p-3 text-zinc-900">{member.email || "—"}</td>
+              <tr className="text-black">
+                <td className="p-2 border border-zinc-400 font-bold">Staff Email</td>
+                <td className="p-2 border border-zinc-400">{member.email || "—"}</td>
               </tr>
-              <tr>
-                <td className="p-3 font-bold text-zinc-700 border-r border-zinc-200">Residential Address</td>
-                <td className="p-3 text-zinc-900">{member.residentialAddress || "—"}</td>
+              <tr className="text-black">
+                <td className="p-2 border border-zinc-400 font-bold">Residential Address</td>
+                <td className="p-2 border border-zinc-400">{member.residentialAddress || "—"}</td>
               </tr>
-              <tr className="bg-zinc-50/50">
-                <td className="p-3 font-bold text-zinc-700 border-r border-zinc-200">Date of Birth</td>
-                <td className="p-3 text-zinc-900 font-mono">{member.dateOfBirth || "—"}</td>
+              <tr className="text-black">
+                <td className="p-2 border border-zinc-400 font-bold">Date of Birth</td>
+                <td className="p-2 border border-zinc-400 font-mono text-[9pt]">{member.dateOfBirth || "—"}</td>
               </tr>
-              <tr>
-                <td className="p-3 font-bold text-zinc-700 border-r border-zinc-200">Gender</td>
-                <td className="p-3 text-zinc-900">{member.gender || "—"}</td>
+              <tr className="text-black">
+                <td className="p-2 border border-zinc-400 font-bold">Gender</td>
+                <td className="p-2 border border-zinc-400">{member.gender || "—"}</td>
               </tr>
-              <tr className="bg-zinc-50/50">
-                <td className="p-3 font-bold text-zinc-700 border-r border-zinc-200">Date Joined</td>
-                <td className="p-3 text-zinc-900 font-mono">{member.joinDate || "—"}</td>
+              <tr className="text-black">
+                <td className="p-2 border border-zinc-400 font-bold">Join Date</td>
+                <td className="p-2 border border-zinc-400 font-mono text-[9pt]">{member.joinDate || "—"}</td>
               </tr>
-              <tr>
-                <td className="p-3 font-bold text-zinc-700 border-r border-zinc-200">App System Access</td>
-                <td className="p-3 text-zinc-900">
+              <tr className="text-black">
+                <td className="p-2 border border-zinc-400 font-bold">System Access</td>
+                <td className="p-2 border border-zinc-400">
                   {member.allowAppAccess
                     ? `Enabled (${member.inviteStatus || "active"})`
                     : "Disabled"}
@@ -109,27 +94,25 @@ const StaffDetailReport: React.FC<StaffDetailReportProps> = ({
         {/* Emergency Contact */}
         {(member.emergencyContactName || member.emergencyContactPhone) && (
           <div>
-            <h3 className="text-[14pt] font-bold text-zinc-800 border-b-2 border-zinc-200 pb-2 mb-4">
-              Emergency Contact Information
-            </h3>
-            <table className="w-full border-collapse text-[10pt]">
-              <tbody className="divide-y divide-zinc-200 border border-zinc-200">
-                <tr className="bg-zinc-50/50">
-                  <td className="p-3 font-bold text-zinc-700 w-1/3 border-r border-zinc-200">Contact Name</td>
-                  <td className="p-3 font-semibold text-zinc-900">{member.emergencyContactName || "—"}</td>
+            <h3 className="text-[16pt] font-bold text-black mb-2">Emergency Contact Details</h3>
+            <table className="w-full border-collapse text-[10pt] border border-zinc-400">
+              <tbody className="divide-y divide-zinc-300">
+                <tr className="text-black">
+                  <td className="p-2 border border-zinc-400 font-bold w-[30%]">Name</td>
+                  <td className="p-2 border border-zinc-400 w-[70%]">{member.emergencyContactName || "—"}</td>
                 </tr>
-                <tr>
-                  <td className="p-3 font-bold text-zinc-700 border-r border-zinc-200">Relationship</td>
-                  <td className="p-3 text-zinc-900">{member.emergencyContactRelation || "—"}</td>
+                <tr className="text-black">
+                  <td className="p-2 border border-zinc-400 font-bold">Relationship</td>
+                  <td className="p-2 border border-zinc-400">{member.emergencyContactRelation || "—"}</td>
                 </tr>
-                <tr className="bg-zinc-50/50">
-                  <td className="p-3 font-bold text-zinc-700 border-r border-zinc-200">Contact Phone</td>
-                  <td className="p-3 text-zinc-900 font-mono">{member.emergencyContactPhone || "—"}</td>
+                <tr className="text-black">
+                  <td className="p-2 border border-zinc-400 font-bold">Phone Number</td>
+                  <td className="p-2 border border-zinc-400 font-mono text-[9pt]">{member.emergencyContactPhone || "—"}</td>
                 </tr>
                 {member.emergencyContactAddress && (
-                  <tr>
-                    <td className="p-3 font-bold text-zinc-700 border-r border-zinc-200">Contact Address</td>
-                    <td className="p-3 text-zinc-900">{member.emergencyContactAddress}</td>
+                  <tr className="text-black">
+                    <td className="p-2 border border-zinc-400 font-bold">Residential Address</td>
+                    <td className="p-2 border border-zinc-400">{member.emergencyContactAddress}</td>
                   </tr>
                 )}
               </tbody>
@@ -137,79 +120,69 @@ const StaffDetailReport: React.FC<StaffDetailReportProps> = ({
           </div>
         )}
 
-        {/* Compensation Summary */}
+        {/* Compensation Summary (2-column table matching Android compTable) */}
         <div>
-          <h3 className="text-[14pt] font-bold text-zinc-800 border-b-2 border-zinc-200 pb-2 mb-4">
-            Compensation Summary
-          </h3>
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-4">
-              <p className="text-xs uppercase text-zinc-500 font-bold">Monthly Base Salary</p>
-              <p className="text-xl font-black text-zinc-900 mt-1">
-                {currencySymbol}
-                {(member.salary || 0).toFixed(2)}
-              </p>
-            </div>
-            <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-4">
-              <p className="text-xs uppercase text-zinc-500 font-bold">YTD Payments ({currentYear})</p>
-              <p className="text-xl font-black text-emerald-700 mt-1">
-                {currencySymbol}
-                {ytdSalary.toFixed(2)}
-              </p>
-            </div>
-            <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-4">
-              <p className="text-xs uppercase text-zinc-500 font-bold">Total Lifetime Salary</p>
-              <p className="text-xl font-black text-blue-700 mt-1">
-                {currencySymbol}
-                {lifetimeSalary.toFixed(2)}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Salary Payment History */}
-        <div>
-          <h3 className="text-[14pt] font-bold text-zinc-800 border-b-2 border-zinc-200 pb-2 mb-4">
-            Salary Payment History
-          </h3>
-          <table className="w-full border-collapse text-[10pt]">
-            <thead>
-              <tr className="bg-zinc-100 text-left border-y-2 border-zinc-300">
-                <th className="p-3 font-bold border-r border-zinc-200">Date</th>
-                <th className="p-3 font-bold border-r border-zinc-200 w-1/2">Description</th>
-                <th className="p-3 font-bold text-right">Amount</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-zinc-200">
-              {memberSalaryPayments.length === 0 ? (
-                <tr>
-                  <td colSpan={3} className="p-4 text-center text-zinc-400 italic">
-                    No salary payments logged for this staff member yet.
-                  </td>
-                </tr>
-              ) : (
-                memberSalaryPayments.map((record) => (
-                  <tr key={record.id} className="hover:bg-zinc-50/50">
-                    <td className="p-3 border-r border-zinc-100 font-mono text-zinc-700">{record.date}</td>
-                    <td className="p-3 border-r border-zinc-100 text-zinc-900 font-medium">{record.description}</td>
-                    <td className="p-3 text-right font-mono font-bold text-rose-700">
-                      {currencySymbol}
-                      {record.amount.toFixed(2)}
-                    </td>
-                  </tr>
-                ))
-              )}
-              <tr className="bg-zinc-100 font-black text-zinc-900 border-t-2 border-zinc-300">
-                <td colSpan={2} className="p-3 uppercase tracking-wider text-right">
-                  Total Payments in Period:
+          <h3 className="text-[16pt] font-bold text-black mb-2">Compensation Summary</h3>
+          <table className="w-full border-collapse text-[10pt] border border-zinc-400">
+            <tbody className="divide-y divide-zinc-300">
+              <tr className="text-black">
+                <td className="p-2 border border-zinc-400 font-bold w-[50%]">Monthly Salary</td>
+                <td className="p-2 border border-zinc-400 text-right font-mono font-bold w-[50%]">
+                  {currencySymbol}{(member.salary || 0).toFixed(2)}
                 </td>
-                <td className="p-3 text-right font-mono text-[12pt] text-rose-800">
-                  {currencySymbol}
-                  {lifetimeSalary.toFixed(2)}
+              </tr>
+              <tr className="text-black">
+                <td className="p-2 border border-zinc-400 font-bold">Total YTD Salary Paid ({currentYear})</td>
+                <td className="p-2 border border-zinc-400 text-right font-mono font-bold">
+                  {currencySymbol}{ytdSalary.toFixed(2)}
+                </td>
+              </tr>
+              <tr className="text-black">
+                <td className="p-2 border border-zinc-400 font-bold">Total Salary Paid (Lifetime)</td>
+                <td className="p-2 border border-zinc-400 text-right font-mono font-bold">
+                  {currencySymbol}{lifetimeSalary.toFixed(2)}
                 </td>
               </tr>
             </tbody>
           </table>
+        </div>
+
+        {/* Salary Payment History */}
+        <div>
+          <h3 className="text-[16pt] font-bold text-black mb-2">Salary Payment History</h3>
+          {memberSalaryPayments.length === 0 ? (
+            <p className="italic text-zinc-500 text-[10pt]">
+              No salary payment records found for this employee.
+            </p>
+          ) : (
+            <table className="w-full border-collapse text-[9.5pt] border border-zinc-400">
+              <thead>
+                <tr className="bg-[#D3D3D3] text-black font-bold text-left border-b border-zinc-400">
+                  <th className="p-2 border border-zinc-400 font-bold w-[18%]">Activity Date</th>
+                  <th className="p-2 border border-zinc-400 font-bold w-[62%]">Description</th>
+                  <th className="p-2 border border-zinc-400 font-bold text-right w-[20%]">Amount</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-zinc-300">
+                {memberSalaryPayments.map((record) => (
+                  <tr key={record.id} className="text-black">
+                    <td className="p-2 border border-zinc-300 font-mono text-[9pt]">{record.date}</td>
+                    <td className="p-2 border border-zinc-300 leading-snug">{record.description}</td>
+                    <td className="p-2 border border-zinc-300 text-right font-mono font-bold">
+                      {currencySymbol}{record.amount.toFixed(2)}
+                    </td>
+                  </tr>
+                ))}
+                <tr className="font-bold text-black border-t-2 border-zinc-400">
+                  <td className="p-2 border border-zinc-400 font-bold">TOTAL</td>
+                  <td className="p-2 border border-zinc-400"></td>
+                  <td className="p-2 border border-zinc-400 text-right font-mono font-bold">
+                    {currencySymbol}{lifetimeSalary.toFixed(2)}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </ReportLayout>

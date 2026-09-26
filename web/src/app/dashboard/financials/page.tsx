@@ -665,13 +665,11 @@ function FinancialsContent() {
         }}
       />
 
-      {isPremium && (
-        <FinancialReport
-          records={records}
-          pigs={pigs}
-          currencySymbol={currencySymbol}
-        />
-      )}
+      <FinancialReport
+        records={records}
+        pigs={pigs}
+        currencySymbol={currencySymbol}
+      />
 
       {/* Log Transaction Modal */}
       {showAddModal && (

@@ -29,6 +29,9 @@ import {
 import { FeedIngredient, NutritionalRequirement, FeedInventoryItem, FeedInventoryTransaction } from "@/lib/types";
 import PremiumWrapper from "@/components/PremiumWrapper";
 import IngredientsCatalogModal from "@/components/feed/IngredientsCatalogModal";
+import FeedReport from "@/components/reports/FeedReport";
+import FeedFormulationReport from "@/components/reports/FeedFormulationReport";
+import FeedRequirementsReport from "@/components/reports/FeedRequirementsReport";
 
 // SVG Icons matching Android Material Icons
 const PrintIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -1238,252 +1241,48 @@ export default function FeedPage() {
         </div>
       )}
 
-      {/* Print View */}
-      {printData && (() => {
-        const d = new Date();
-        const pad = (n: number) => String(n).padStart(2, '0');
-        const generatedOn = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-
-        // Compute Feed Inventory Data if type === "inventory"
-        let inventoryRows: any[] = [];
-        let totalAdditionInKg = 0;
-        let totalUsageInKg = 0;
-        let totalInStockInKg = 0;
-
-        if (printData.type === "inventory" && printData.details) {
-          const itemsList = printData.details.items || [];
-          const txsList = printData.details.transactions || [];
-
-          inventoryRows = itemsList.map((item: any) => {
-            const itemTransactions = txsList.filter((tx: any) => tx.itemId === item.id);
-
-            const getConvertedQty = (tx: any) => {
-              if (tx.unit === item.unit) return tx.quantity;
-              if (tx.unit === "bags") {
-                return item.unit === "kg" ? tx.quantity * item.unitWeight : tx.quantity;
-              }
-              if (tx.unit === "kg") {
-                return (item.unit === "bags" && item.unitWeight > 0) ? tx.quantity / item.unitWeight : tx.quantity;
-              }
-              return tx.quantity;
-            };
-
-            const addition = itemTransactions
-              .filter((tx: any) => tx.type === "Restock")
-              .reduce((sum: number, tx: any) => sum + getConvertedQty(tx), 0);
-
-            const usage = itemTransactions
-              .filter((tx: any) => tx.type === "Usage")
-              .reduce((sum: number, tx: any) => sum + getConvertedQty(tx), 0);
-
-            const inStock = item.quantity;
-
-            const additionInKg = addition * (item.unit === "bags" ? item.unitWeight : 1.0);
-            const usageInKg = usage * (item.unit === "bags" ? item.unitWeight : 1.0);
-            const inStockInKg = inStock * (item.unit === "bags" ? item.unitWeight : 1.0);
-
-            totalAdditionInKg += additionInKg;
-            totalUsageInKg += usageInKg;
-            totalInStockInKg += inStockInKg;
-
-            return {
-              name: item.name,
-              feedType: item.feedType,
-              unit: item.unit === "bags" ? t("bags") : t("kg"),
-              addition,
-              usage,
-              inStock
-            };
-          });
+      {/* Printable Report using unified 100% parity components */}
+      {(() => {
+        if (printData?.type === "formulator" && printData.details) {
+          const form = printData.details.formulation;
+          return (
+            <FeedFormulationReport
+              title={printData.details.stage}
+              ingredients={Object.entries(form.ingredients || form.proportions || {}).map(([id, percent]: any) => {
+                const ing = (printData.details.ingredients || []).find((i: any) => i.id === id || i.name === id);
+                return {
+                  name: ing?.name || id,
+                  percent,
+                };
+              })}
+              total={form.totalPercentage || 100}
+              nutritionalComparison={form.nutritionalComparison || []}
+              currencySymbol={userProfile?.settings?.currencySymbol || "$"}
+            />
+          );
         }
-
+        if (printData?.type === "calculator" && printData.details) {
+          const c = printData.details.calcResults;
+          return (
+            <FeedRequirementsReport
+              days={c.days || 1}
+              breakdown={c.breakdown || []}
+              totalDaily={c.dailyTotal || 0}
+              totalPeriod={c.periodTotal || 0}
+              title={printData.title || "Feed Requirements Report"}
+            />
+          );
+        }
+        // Default: Inventory Report
+        const itemsToPrint = (printData?.type === "inventory" && printData.details?.items) || items;
+        const txsToPrint = (printData?.type === "inventory" && printData.details?.transactions) || transactions;
+        const reportTitle = (printData?.type === "inventory" && printData.title) || "Feed Inventory Report";
         return (
-          <div className="hidden print:block p-8 space-y-6 text-zinc-900 font-sans w-full relative min-h-screen">
-            {/* Watermark logo */}
-            <div className="fixed inset-0 flex items-center justify-center opacity-[0.12] pointer-events-none z-0">
-              <img
-                src="/app_logo.png"
-                alt="Watermark Background Logo"
-                className="w-[300px] h-[300px] object-contain"
-              />
-            </div>
-
-            <div className="relative z-10 space-y-6">
-              {/* Header */}
-              <div className="relative border-b pb-4 mb-6 text-center">
-                <div className="absolute right-0 top-0">
-                  <img src="/app_logo.png" alt="SmartSwine Logo" className="h-12 w-12 object-contain" />
-                </div>
-                <h1 className="text-[22px] font-bold text-black leading-tight">SmartSwine</h1>
-                <p className="text-[12px] italic text-zinc-500 mt-0.5 leading-tight">
-                  The Only Tool a Pig Farmer Needs.<br />Farm Smarter, Not Harder.
-                </p>
-                <h2 className="text-[18px] font-bold text-black mt-3">{printData.title}</h2>
-                <p className="text-[10px] text-zinc-400 mt-1">{t("generatedOn", { date: generatedOn })}</p>
-              </div>
-
-              {/* Report Body */}
-              {printData.type === "inventory" && printData.details && (
-                <div className="space-y-6">
-                  <table className="min-w-full divide-y divide-zinc-200 text-xs border border-zinc-200">
-                    <thead className="bg-zinc-100">
-                      <tr className="text-left font-bold text-zinc-700 uppercase tracking-wider">
-                        <th className="p-2 border">{t("feedName")}</th>
-                        <th className="p-2 border">{t("feedType")}</th>
-                        <th className="p-2 border">{t("unit")}</th>
-                        <th className="p-2 border text-right">{t("addition")}</th>
-                        <th className="p-2 border text-right">{t("usage")}</th>
-                        <th className="p-2 border text-right">{t("inStock")}</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-zinc-200 bg-white">
-                      {inventoryRows.map((row: any, index: number) => (
-                        <tr key={index} className="text-zinc-800">
-                          <td className="p-2 border font-medium">{row.name}</td>
-                          <td className="p-2 border">{t(row.feedType as any)}</td>
-                          <td className="p-2 border">{row.unit}</td>
-                          <td className="p-2 border text-right">{row.addition.toFixed(1)}</td>
-                          <td className="p-2 border text-right">{row.usage.toFixed(1)}</td>
-                          <td className="p-2 border text-right">{row.inStock.toFixed(1)}</td>
-                        </tr>
-                      ))}
-                      <tr className="bg-zinc-50 font-bold text-zinc-900 border-t-2 border-zinc-400">
-                        <td className="p-2 border">{t("totalKg")}</td>
-                        <td className="p-2 border"></td>
-                        <td className="p-2 border"></td>
-                        <td className="p-2 border text-right">{totalAdditionInKg.toFixed(1)}</td>
-                        <td className="p-2 border text-right">{totalUsageInKg.toFixed(1)}</td>
-                        <td className="p-2 border text-right">{totalInStockInKg.toFixed(1)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              )}
-
-              {printData.type === "formulator" && printData.details && (
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-sm font-bold text-zinc-700 mb-2 uppercase tracking-wide">{t("ingredientsComposition")}</h3>
-                    <table className="min-w-full divide-y divide-zinc-200 text-xs border border-zinc-200">
-                      <thead className="bg-zinc-100">
-                        <tr className="text-left font-bold text-zinc-700 uppercase tracking-wider">
-                          <th className="p-2 border">{t("ingredient")}</th>
-                          <th className="p-2 border text-right">{t("rationPercentage")}</th>
-                          <th className="p-2 border text-right">{t("perTonMixKg")}</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-zinc-200 bg-white">
-                        {Object.entries(printData.details.formulation.ingredients).map(([id, percent]: any) => {
-                          const ing = printData.details.ingredients.find((i: any) => i.id === id || i.name === id);
-                          const name = ing ? translateIngredientName(ing.name) : translateIngredientName(id);
-                          return (
-                            <tr key={id} className="text-zinc-800">
-                              <td className="p-2 border">{name}</td>
-                              <td className="p-2 border text-right">{percent.toFixed(1)}%</td>
-                              <td className="p-2 border text-right font-mono">{(percent * 10).toFixed(1)} kg</td>
-                            </tr>
-                          );
-                        })}
-                        <tr className="bg-zinc-50 font-bold text-zinc-900 border-t-2 border-zinc-400">
-                          <td className="p-2 border">{t("totalMix")}</td>
-                          <td className="p-2 border text-right">{printData.details.formulation.totalPercentage.toFixed(1)}%</td>
-                          <td className="p-2 border text-right font-mono">1000.0 kg</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  {printData.details.formulation.totalPercentage < 99.9 && (
-                    <div className="text-xs font-bold text-rose-600">
-                      {t("formulaIncomplete", { percent: printData.details.formulation.totalPercentage.toFixed(1) })}
-                    </div>
-                  )}
-
-                  <div>
-                    <h3 className="text-sm font-bold text-zinc-700 mb-2 uppercase tracking-wide">{t("nutritionalAnalysis")}</h3>
-                    <table className="min-w-full divide-y divide-zinc-200 text-xs border border-zinc-200">
-                      <thead className="bg-zinc-100">
-                        <tr className="text-left font-bold text-zinc-700 uppercase tracking-wider">
-                          <th className="p-2 border">{t("nutrient")}</th>
-                          <th className="p-2 border text-right">{t("target")}</th>
-                          <th className="p-2 border text-right">{t("actual")}</th>
-                          <th className="p-2 border text-right">{t("status")}</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-zinc-200 bg-white">
-                        {printData.details.formulation.nutritionalComparison.map((nutrient: any) => (
-                          <tr key={nutrient.label} className="text-zinc-800">
-                            <td className="p-2 border font-medium">{translateNutrientLabel(nutrient.label)}</td>
-                            <td className="p-2 border text-right font-mono text-zinc-500">{nutrient.target.toFixed(2)}</td>
-                            <td className={`p-2 border text-right font-mono font-bold ${nutrient.isDeficient ? "text-rose-600" : "text-emerald-600"}`}>
-                              {nutrient.actual.toFixed(2)}
-                            </td>
-                            <td className={`p-2 border text-right font-semibold ${nutrient.isDeficient ? "text-rose-600" : "text-emerald-600"}`}>
-                              {nutrient.isDeficient ? t("deficient") : t("ok")}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <div className="text-center font-bold text-rose-600 text-[11px] pt-4 leading-relaxed">
-                    {t("disclaimer")}
-                  </div>
-                </div>
-              )}
-
-              {printData.type === "calculator" && printData.details && (
-                <div className="space-y-6">
-                  <div>
-                    <table className="min-w-full divide-y divide-zinc-200 text-xs border border-zinc-200">
-                      <thead className="bg-zinc-100">
-                        <tr className="text-left font-bold text-zinc-700 uppercase tracking-wider">
-                          <th className="p-2 border">{t("growthStage")}</th>
-                          <th className="p-2 border text-right">{t("dailyKg")}</th>
-                          <th className="p-2 border text-right">
-                            {printData.details.calcResults.days > 1
-                              ? t("days", { count: printData.details.calcResults.days })
-                              : t("dailyKg")}
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-zinc-200 bg-white">
-                        {printData.details.calcResults.breakdown.map((row: any, i: number) => (
-                          <tr key={i} className="text-zinc-800">
-                            <td className="p-2 border font-medium">
-                              {row.category} ({row.count})
-                            </td>
-                            <td className="p-2 border text-right">{row.dailyTotal.toFixed(1)}</td>
-                            <td className="p-2 border text-right font-mono">{row.periodTotal.toFixed(1)}</td>
-                          </tr>
-                        ))}
-                        <tr className="bg-zinc-50 font-bold text-zinc-900 border-t-2 border-zinc-400">
-                          <td className="p-2 border">Total</td>
-                          <td className="p-2 border text-right">
-                            {printData.details.calcResults.dailyTotal.toFixed(1)}
-                          </td>
-                          <td className="p-2 border text-right font-mono">
-                            {printData.details.calcResults.periodTotal.toFixed(1)}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <div className="text-center font-bold text-rose-600 text-[11px] pt-4 leading-relaxed">
-                    {t("disclaimer")}
-                  </div>
-                </div>
-              )}
-
-              {/* Footer */}
-              <div className="border-t pt-4 mt-8 text-center text-[10px] text-zinc-400">
-                <p>{t("managementSystemReport")}</p>
-                <p>Copyright 2026. Developed by Goshen AgriFirm & Bibinii Tech</p>
-              </div>
-            </div>
-          </div>
+          <FeedReport
+            feedItems={itemsToPrint}
+            transactions={txsToPrint}
+            title={reportTitle}
+          />
         );
       })()}
 

@@ -19,7 +19,7 @@ export default function NativeAdBanner({ slotId, className = "" }: NativeAdBanne
 
   return (
     <div
-      className={`w-full my-6 rounded-2xl border border-zinc-200/90 dark:border-zinc-800 bg-zinc-50/80 dark:bg-zinc-900/60 p-4 transition shadow-sm overflow-hidden ${className}`}
+      className={`w-full my-6 rounded-2xl border border-zinc-200/90 dark:border-zinc-800 bg-zinc-50/80 dark:bg-zinc-900/60 p-4 transition shadow-sm overflow-hidden print:hidden ${className}`}
     >
       {/* Header Tag */}
       <div className="flex items-center justify-between mb-3">

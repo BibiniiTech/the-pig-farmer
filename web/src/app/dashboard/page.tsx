@@ -718,7 +718,7 @@ function DashboardContent() {
   return (
     <div className="relative min-h-screen bg-[#F8FAF9] dark:bg-[#121212] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans overflow-x-hidden">
       {/* Fixed SmartSwine Watermark Background Logo */}
-      <div className="fixed inset-0 pointer-events-none flex items-center justify-center -z-0 select-none overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none flex items-center justify-center -z-0 select-none overflow-hidden print:hidden">
         <img
           src="/app_logo.png"
           alt="SmartSwine Watermark"
