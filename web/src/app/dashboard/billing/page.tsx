@@ -49,9 +49,9 @@ export default function BillingPage() {
   }, []);
 
   const MONTHLY_VARIANT_ID =
-    process.env.NEXT_PUBLIC_LEMONSQUEEZY_MONTHLY_VARIANT_ID || "1798169";
+    process.env.NEXT_PUBLIC_LEMONSQUEEZY_MONTHLY_VARIANT_ID || "2179203";
   const ANNUAL_VARIANT_ID =
-    process.env.NEXT_PUBLIC_LEMONSQUEEZY_ANNUAL_VARIANT_ID || "1798219";
+    process.env.NEXT_PUBLIC_LEMONSQUEEZY_ANNUAL_VARIANT_ID || "2179200";
 
   useEffect(() => {
     if (!loading && !user) {

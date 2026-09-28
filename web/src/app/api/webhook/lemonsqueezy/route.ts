@@ -94,7 +94,11 @@ export async function POST(req: NextRequest) {
 
     console.log(`Processing Lemon Squeezy event "${eventName}" for user: ${userId}, status: ${status}`);
 
-    const isSubscriptionActive = status === "active" || status === "on_trial";
+    const isSubscriptionActive =
+      status === "active" ||
+      status === "on_trial" ||
+      status === "paid" ||
+      eventName === "subscription_payment_success";
 
     if (
       eventName === "subscription_created" ||
@@ -107,14 +111,14 @@ export async function POST(req: NextRequest) {
       const updates: Record<string, any> = {
         isPremium: isSubscriptionActive,
         subscriptionSource: "lemonsqueezy",
-        lemonSqueezyCustomerId: customerId || null,
-        lemonSqueezySubscriptionId: subscriptionId || null,
-        lemonSqueezyVariantId: variantId || null,
-        lemonSqueezyRenewsAt: renewsAt,
-        lemonSqueezyEndsAt: endsAt,
         updatedAt: Date.now(),
       };
 
+      if (customerId) updates.lemonSqueezyCustomerId = customerId;
+      if (subscriptionId) updates.lemonSqueezySubscriptionId = subscriptionId;
+      if (variantId) updates.lemonSqueezyVariantId = variantId;
+      if (renewsAt) updates.lemonSqueezyRenewsAt = renewsAt;
+      if (endsAt) updates.lemonSqueezyEndsAt = endsAt;
       if (portalUrl) {
         updates.lemonSqueezyCustomerPortalUrl = portalUrl;
       }
@@ -123,16 +127,17 @@ export async function POST(req: NextRequest) {
       console.log(`Updated subscription for user ${userId}: isPremium=${isSubscriptionActive}`);
     } else if (eventName === "subscription_cancelled") {
       // In Lemon Squeezy, cancelled means it won't renew, but remains active until ends_at
+      const isStillActive = endsAt ? new Date(endsAt).getTime() > Date.now() : true;
       const updates: Record<string, any> = {
-        isPremium: isSubscriptionActive,
-        lemonSqueezyEndsAt: endsAt,
+        isPremium: isStillActive,
         updatedAt: Date.now(),
       };
+      if (endsAt) updates.lemonSqueezyEndsAt = endsAt;
       if (portalUrl) {
         updates.lemonSqueezyCustomerPortalUrl = portalUrl;
       }
       await userDocRef.set(updates, { merge: true });
-      console.log(`Subscription marked as cancelled for user ${userId}, ends at: ${endsAt}`);
+      console.log(`Subscription marked as cancelled for user ${userId}, active=${isStillActive}, ends at: ${endsAt}`);
     } else if (
       eventName === "subscription_expired" ||
       status === "expired" ||
