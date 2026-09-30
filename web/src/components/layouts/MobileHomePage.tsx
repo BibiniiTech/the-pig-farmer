@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import StylishDivider from "@/components/StylishDivider";
+import FeaturesSection from "@/components/FeaturesSection";
 
 interface MobileHomePageProps {
   onInstallClick?: () => void;
@@ -177,12 +178,56 @@ export default function MobileHomePage({
           )}
         </div>
 
-        {/* Custom stylish pig divider above the text and below the buttons */}
+        {/* Custom stylish pig divider above Features */}
         <StylishDivider className="w-full max-w-xs my-6" />
 
-        <p className="mb-8 max-w-xs text-sm text-zinc-500 leading-relaxed">
-          Track growth, formulate feed, diagnose disease, weigh with tape, manage tasks, and optimize finances — all in real-time.
-        </p>
+        {/* Features Section */}
+        <FeaturesSection />
+
+        {/* Custom stylish pig divider below Features */}
+        <StylishDivider className="w-full max-w-xs my-6" />
+
+        {/* Bottom CTA buttons */}
+        <div className="flex w-full max-w-xs flex-col gap-3 mb-8">
+          <Link
+            id="mobile-bottom-start-button"
+            href="/login"
+            className="flex items-center justify-center rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-700 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-emerald-600/25 hover:from-emerald-700 hover:to-emerald-800 active:scale-95 transition-all duration-200"
+          >
+            Launch Web App
+            <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
+
+          <a
+            href="https://play.google.com/store/apps/details?id=com.bibiniitech.smartswine"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2.5 rounded-2xl border border-zinc-200 bg-white px-6 py-4 text-sm font-bold text-zinc-700 shadow-sm hover:bg-zinc-50 active:scale-95 transition-all duration-200"
+          >
+            <svg className="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none">
+              <path d="M3.60938 2.0625C3.39688 2.275 3.28125 2.6125 3.28125 3.0375V20.9625C3.28125 21.3875 3.39688 21.725 3.60938 21.9375L3.68438 22.0125L13.7219 11.975V11.825L3.68438 1.7875L3.60938 2.0625Z" fill="#00E5FF"/>
+              <path d="M17.0625 8.6125L13.725 11.95V12.05L17.0625 15.3875L17.1375 15.3125L21.0875 13.0625C22.2125 12.425 22.2125 11.575 21.0875 10.9375L17.1375 8.6875L17.0625 8.6125Z" fill="#FFC107"/>
+              <path d="M17.1375 15.3125L13.725 11.9062L3.60938 22.0219C3.95938 22.3844 4.54688 22.4219 5.23438 22.0219L17.1375 15.3125Z" fill="#FF3D00"/>
+              <path d="M17.1375 8.6875L5.23438 1.97812C4.54688 1.57812 3.95938 1.61562 3.60938 1.97812L13.725 12.0938L17.1375 8.6875Z" fill="#4CAF50"/>
+            </svg>
+            <span>Download Android App</span>
+          </a>
+
+          {showInstallButton && (
+            <button
+              id="mobile-bottom-pwa-install-button"
+              onClick={onInstallClick}
+              className="flex items-center justify-center gap-2 rounded-2xl border border-emerald-200 bg-emerald-50 px-6 py-4 text-sm font-bold text-emerald-700 hover:bg-emerald-100 active:scale-95 transition-all duration-200"
+            >
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Install App
+            </button>
+          )}
+        </div>
       </main>
 
       {/* Footer */}
