@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import StylishDivider from "@/components/StylishDivider";
 
 export default function Home() {
   const t = useTranslations("Home");
@@ -168,16 +169,15 @@ export default function Home() {
           <span className="block text-xl sm:text-3xl font-bold text-emerald-900 mt-1">
             {t("subtitle")}
           </span>
+          <span className="block text-lg sm:text-2xl font-semibold text-emerald-800 mt-2">
+            {t("allInOneApp")}
+          </span>
           <span className="block text-xl sm:text-3xl font-bold text-emerald-900 mt-1">
             {t("heroTagline")}
           </span>
         </h1>
 
-        <p className="mx-auto max-w-xl text-base sm:text-lg text-zinc-600">
-          {t("heroDescription")}
-        </p>
-
-        <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4 w-full max-w-lg px-4">
+        <div className="flex flex-col sm:flex-row justify-center gap-4 pt-2 w-full max-w-lg px-4">
           {showInstallButton && (
             <button
               onClick={handleInstallClick}
@@ -213,6 +213,13 @@ export default function Home() {
             <span>{t("downloadMobileApp")}</span>
           </a>
         </div>
+
+        {/* Custom stylish pig divider above the text and below the buttons */}
+        <StylishDivider className="w-full max-w-xs sm:max-w-md my-2" />
+
+        <p className="mx-auto max-w-xl text-base sm:text-lg text-zinc-600">
+          {t("heroDescription")}
+        </p>
       </div>
 
       {/* Footer */}

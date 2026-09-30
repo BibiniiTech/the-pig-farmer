@@ -6,6 +6,7 @@ import Footer from "@/components/layouts/Footer";
 import StaffLockoutWrapper from "@/components/StaffLockoutWrapper";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getLocale } from "next-intl/server";
+import Script from "next/script";
 
 // Font variable definitions with standard system font fallbacks
 const geistSans = { variable: "font-sans" };
@@ -30,6 +31,12 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-white text-zinc-900 font-sans">
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4097392441181162"
+          crossOrigin="anonymous"
+          strategy="lazyOnload"
+        />
         <NextIntlClientProvider messages={messages} locale={locale}>
           <DeviceProvider>
             <AuthProvider>

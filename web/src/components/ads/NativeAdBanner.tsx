@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 
@@ -11,6 +11,18 @@ interface NativeAdBannerProps {
 
 export default function NativeAdBanner({ slotId, className = "" }: NativeAdBannerProps) {
   const { userProfile, isPassActive } = useAuth();
+  const activeSlotId = slotId || process.env.NEXT_PUBLIC_ADSENSE_BANNER_SLOT_ID;
+
+  // Initialize AdSense unit on client mount
+  useEffect(() => {
+    try {
+      if (typeof window !== "undefined") {
+        ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+      }
+    } catch (e) {
+      console.debug("AdSense push notification (expected if adblocker is active):", e);
+    }
+  }, [activeSlotId]);
 
   // If user is paid premium or holding an active 3-hour pass, hide all ads
   if (userProfile?.isPremium || isPassActive) {
@@ -34,19 +46,27 @@ export default function NativeAdBanner({ slotId, className = "" }: NativeAdBanne
         </Link>
       </div>
 
-      {/* Google AdSense Container if slot provided */}
-      {slotId && (
-        <div className="w-full min-h-[90px] flex items-center justify-center my-2">
+      {/* Google AdSense Container */}
+      <div className="w-full min-h-[90px] flex items-center justify-center my-2 overflow-hidden">
+        {activeSlotId ? (
           <ins
             className="adsbygoogle"
-            style={{ display: "block", textAlign: "center" }}
+            style={{ display: "block", textAlign: "center", width: "100%" }}
             data-ad-layout="in-article"
             data-ad-format="fluid"
             data-ad-client="ca-pub-4097392441181162"
-            data-ad-slot={slotId}
+            data-ad-slot={activeSlotId}
           />
-        </div>
-      )}
+        ) : (
+          <ins
+            className="adsbygoogle"
+            style={{ display: "block", width: "100%" }}
+            data-ad-client="ca-pub-4097392441181162"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          />
+        )}
+      </div>
 
       {/* Native Sponsored Card matching Android NativeAdCard */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-1">

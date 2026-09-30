@@ -55,11 +55,12 @@
     "heroDescription": "Acompanhe o desempenho do crescimento, formule rações com ingredientes locais, diagnostique doenças antes que se espalhem, pese com fita, gerencie tarefas e otimize as atividades da equipe e finanças em tempo real. Dados compartilhados em todos os dispositivos.",
     "installWebApp": "Instalar Web App",
     "launchWebApp": "Lançar Web App",
-    "downloadMobileApp": "Baixar App Móvel",
+    "downloadMobileApp": "Baixar App para Android",
     "copyright": "Direitos autorais 2026",
     "developedBy": "Desenvolvido por",
     "whatsapp": "WhatsApp",
-    "telegram": "Telegrama"
+    "telegram": "Telegrama",
+    "allInOneApp": "App Tudo-em-Um para Suinocultura"
   },
   "Dashboard": {
     "welcome": "Bem-vindo à {farmName}",

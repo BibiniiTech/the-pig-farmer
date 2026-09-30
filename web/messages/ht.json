@@ -55,11 +55,12 @@
     "heroDescription": "Swiv pèfòmans kwasans, fòmile manje ak engredyan lokal, dyagnostike maladi anvan yo gaye, peze ak riban, jere travay, epi optimize aktivite anplwaye yo ak finans an tan reyèl. Done pataje sou tout aparèy.",
     "installWebApp": "Enstale Aplikasyon Web",
     "launchWebApp": "Lanse Aplikasyon Web",
-    "downloadMobileApp": "Telechaje Aplikasyon Mobil",
+    "downloadMobileApp": "Telechaje Aplikasyon Android",
     "copyright": "Dwa Otè 2026",
     "developedBy": "Kreye pa",
     "whatsapp": "WhatsApp",
-    "telegram": "Telegram"
+    "telegram": "Telegram",
+    "allInOneApp": "Aplikasyon Tout-an-Youn pou Elevaj Kochon"
   },
   "Dashboard": {
     "welcome": "Byenvini nan {farmName}",

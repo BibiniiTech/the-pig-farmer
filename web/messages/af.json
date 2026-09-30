@@ -55,11 +55,12 @@
     "heroDescription": "Volg groeiprestasie, formuleer voer met plaaslike bestanddele, diagnoseer siektes voordat dit versprei, weeg met band, bestuur take, en optimaliseer personeelaktiwiteite en finansies intyds. Gedeelde data oor toestelle heen.",
     "installWebApp": "Installeer Web App",
     "launchWebApp": "Begin Web App",
-    "downloadMobileApp": "Laai mobiele toepassing af",
+    "downloadMobileApp": "Laai Android-toepassing af",
     "copyright": "Kopiereg 2026",
     "developedBy": "Ontwikkel deur Bibinii Tech",
     "whatsapp": "WhatsApp",
-    "telegram": "Telegram"
+    "telegram": "Telegram",
+    "allInOneApp": "Alles-in-een Varkboerdery-toepassing"
   },
   "Dashboard": {
     "welcome": "Welkom by {farmName}",

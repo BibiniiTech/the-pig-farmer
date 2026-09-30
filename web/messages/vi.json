@@ -55,11 +55,12 @@
     "heroDescription": "Theo dõi hiệu suất tăng trưởng, lập công thức thức ăn với nguyên liệu địa phương, chẩn đoán bệnh trước khi lây lan, cân heo bằng thước dây, quản lý công việc và tối ưu hóa hoạt động của nhân viên và tài chính trong thời gian thực. Dữ liệu chia sẻ trên tất cả các thiết bị.",
     "installWebApp": "Cài đặt Web App",
     "launchWebApp": "Chạy Web App",
-    "downloadMobileApp": "Tải App Di Động",
+    "downloadMobileApp": "Tải App Android",
     "copyright": "Bản quyền 2026",
     "developedBy": "Phát triển bởi",
     "whatsapp": "WhatsApp",
-    "telegram": "điện tín"
+    "telegram": "điện tín",
+    "allInOneApp": "Ứng dụng Quản lý Trang trại Heo Tất cả trong Một"
   },
   "Dashboard": {
     "welcome": "Chào mừng đến với {farmName}",

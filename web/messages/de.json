@@ -55,11 +55,12 @@
     "heroDescription": "Verfolgen Sie die Wachstumsleistung, stellen Sie Futtermittel mit lokalen Zutaten zusammen, diagnostizieren Sie Krankheiten, bevor sie sich ausbreiten, wiegen Sie mit Klebeband, verwalten Sie Aufgaben und optimieren Sie Personalaktivitäten und Finanzen in Echtzeit. Geteilte Daten über Geräte hinweg.",
     "installWebApp": "Web-App installieren",
     "launchWebApp": "Starten Sie die Web-App",
-    "downloadMobileApp": "Laden Sie die mobile App herunter",
+    "downloadMobileApp": "Android-App herunterladen",
     "copyright": "Urheberrecht 2026",
     "developedBy": "Entwickelt von Bibinii Tech",
     "whatsapp": "WhatsApp",
-    "telegram": "Telegramm"
+    "telegram": "Telegramm",
+    "allInOneApp": "All-in-One Schweinezucht-App"
   },
   "Dashboard": {
     "welcome": "Willkommen bei {farmName}",

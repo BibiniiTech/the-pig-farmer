@@ -50,16 +50,17 @@
   },
   "Home": {
     "title": "SmartSwine",
-    "subtitle": "Piggery Manager",
+    "subtitle": "Pig Farm Manager",
     "heroTagline": "Farm Smarter: Not Harder",
     "heroDescription": "Track growth performance, Formulate feed with local ingredients, diagnose disease before they spread, weigh with tape, manage tasks, and optimize staff activities and financials in real-time. Shared data across devices.",
     "installWebApp": "Install Web App",
     "launchWebApp": "Launch Web App",
-    "downloadMobileApp": "Download Mobile App",
+    "downloadMobileApp": "Download Android App",
     "copyright": "Copyright 2026",
     "developedBy": "ⵢⴻⵙⵏⵓⵍⴼⴰⵜ-ⵉⴷ Bibini Tech",
     "whatsapp": "WhatsApp",
-    "telegram": "Telegram"
+    "telegram": "Telegram",
+    "allInOneApp": "All-in-One Pig Farming App"
   },
   "Dashboard": {
     "welcome": "Welcome to {farmName}",
@@ -1885,7 +1886,7 @@
     "title": "You're Offline",
     "description": "SmartSwine needs an internet connection to load your farm data. Please check your connection and try again.",
     "tryAgain": "Try Again",
-    "subtitle": "SmartSwine · Piggery Manager"
+    "subtitle": "SmartSwine · Pig Farm Manager"
   },
   "Settings": {
     "title": "ⴰⵙⴻⵖⵥⴰⵏ",

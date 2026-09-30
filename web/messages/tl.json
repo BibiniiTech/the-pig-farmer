@@ -55,11 +55,12 @@
     "heroDescription": "I-track ang paglaki, magtimpla ng pagkain gamit ang lokal na sangkap, mag-diagnose ng sakit bago kumalat, magtimbang gamit ang tape, pamahalaan ang mga gawain, at i-optimize ang trabaho ng staff at pera sa real-time. Shared data sa lahat ng device.",
     "installWebApp": "I-install ang Web App",
     "launchWebApp": "Buksan ang Web App",
-    "downloadMobileApp": "I-download ang Mobile App",
+    "downloadMobileApp": "I-download ang Android App",
     "copyright": "Copyright 2026",
     "developedBy": "Binuo ni",
     "whatsapp": "WhatsApp",
-    "telegram": "Telegram"
+    "telegram": "Telegram",
+    "allInOneApp": "All-in-One Pig Farming App"
   },
   "Dashboard": {
     "welcome": "Maligayang pagdating sa {farmName}",

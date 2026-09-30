@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import StylishDivider from "@/components/StylishDivider";
 
 interface MobileHomePageProps {
   onInstallClick?: () => void;
@@ -129,15 +130,12 @@ export default function MobileHomePage({
             SmartSwine
           </span>
         </h1>
-        <p className="mb-1 text-lg font-bold text-emerald-900">Piggery Manager</p>
+        <p className="mb-1 text-lg font-bold text-emerald-900">Pig Farm Manager</p>
+        <p className="mb-1 text-base font-semibold text-emerald-800">All-in-One Pig Farming App</p>
         <p className="mb-1 text-base font-semibold text-emerald-800">Farm Smarter: Not Harder</p>
 
-        <p className="mb-8 mt-3 max-w-xs text-sm text-zinc-500 leading-relaxed">
-          Track growth, formulate feed, diagnose disease, weigh with tape, manage tasks, and optimize finances — all in real-time.
-        </p>
-
-        {/* CTA buttons — stacked for mobile */}
-        <div className="flex w-full max-w-xs flex-col gap-3">
+        {/* CTA buttons — directly below catchphrase */}
+        <div className="flex w-full max-w-xs flex-col gap-3 mt-4">
           <Link
             id="mobile-start-button"
             href="/login"
@@ -161,7 +159,7 @@ export default function MobileHomePage({
               <path d="M17.1375 15.3125L13.725 11.9062L3.60938 22.0219C3.95938 22.3844 4.54688 22.4219 5.23438 22.0219L17.1375 15.3125Z" fill="#FF3D00"/>
               <path d="M17.1375 8.6875L5.23438 1.97812C4.54688 1.57812 3.95938 1.61562 3.60938 1.97812L13.725 12.0938L17.1375 8.6875Z" fill="#4CAF50"/>
             </svg>
-            <span>Download Mobile App</span>
+            <span>Download Android App</span>
           </a>
 
           {/* PWA Install prompt — shown only when browser supports it */}
@@ -178,6 +176,13 @@ export default function MobileHomePage({
             </button>
           )}
         </div>
+
+        {/* Custom stylish pig divider above the text and below the buttons */}
+        <StylishDivider className="w-full max-w-xs my-6" />
+
+        <p className="mb-8 max-w-xs text-sm text-zinc-500 leading-relaxed">
+          Track growth, formulate feed, diagnose disease, weigh with tape, manage tasks, and optimize finances — all in real-time.
+        </p>
       </main>
 
       {/* Footer */}

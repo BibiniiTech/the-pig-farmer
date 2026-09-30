@@ -55,11 +55,12 @@
     "heroDescription": "成長実績を追跡し、地元の食材を使用した飼料を配合し、病気が広がる前に診断し、テープで計量し、タスクを管理し、スタッフの活動と財務をリアルタイムで最適化します。デバイス間でデータを共有。",
     "installWebApp": "ウェブアプリのインストール",
     "launchWebApp": "ウェブアプリを起動する",
-    "downloadMobileApp": "モバイルアプリをダウンロード",
+    "downloadMobileApp": "Androidアプリをダウンロード",
     "copyright": "著作権 2026",
     "developedBy": "開発者: Bibinii Tech",
     "whatsapp": "ワッツアップ",
-    "telegram": "電報"
+    "telegram": "電報",
+    "allInOneApp": "オールインワン養豚管理アプリ"
   },
   "Dashboard": {
     "welcome": "{farmName} へようこそ",

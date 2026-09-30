@@ -55,11 +55,12 @@
     "heroDescription": "Lacak kinerja pertumbuhan, Formulasikan pakan dengan bahan lokal, diagnosa penyakit sebelum menyebar, timbang dengan pita ukur, kelola tugas, dan optimalkan aktivitas staf serta keuangan secara real-time. Data dibagikan di semua perangkat.",
     "installWebApp": "Instal Aplikasi Web",
     "launchWebApp": "Luncurkan Aplikasi Web",
-    "downloadMobileApp": "Unduh Aplikasi Seluler",
+    "downloadMobileApp": "Unduh Aplikasi Android",
     "copyright": "Hak Cipta 2026",
     "developedBy": "Dikembangkan oleh",
     "whatsapp": "Ada apa",
-    "telegram": "telegram"
+    "telegram": "telegram",
+    "allInOneApp": "Aplikasi Peternakan Babi Serba Ada"
   },
   "Dashboard": {
     "welcome": "Selamat datang di {farmName}",

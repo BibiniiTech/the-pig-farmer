@@ -55,11 +55,12 @@
     "heroDescription": "Sigue el rendimiento del crecimiento, formula raciones con ingredientes locales, diagnostica enfermedades antes de que se propaguen, pesa con cinta, gestiona tareas y optimiza las actividades del personal y las finanzas en tiempo real. Datos compartidos en todos los dispositivos.",
     "installWebApp": "Instalar App Web",
     "launchWebApp": "Lanzar App Web",
-    "downloadMobileApp": "Descargar App Móvil",
+    "downloadMobileApp": "Descargar App para Android",
     "copyright": "Derechos de autor 2026",
     "developedBy": "Desarrollado por Bibinii Tech",
     "whatsapp": "WhatsApp",
-    "telegram": "telegrama"
+    "telegram": "telegrama",
+    "allInOneApp": "Aplicación Todo-en-Uno para Granjas Porcinas"
   },
   "Dashboard": {
     "welcome": "Bienvenido a {farmName}",

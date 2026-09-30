@@ -55,11 +55,12 @@
     "heroDescription": "Fuatilia utendaji wa ukuaji, Tengeneza chakula kwa viungo vya kienyeji, tambua magonjwa kabla ya kuenea, pima uzito kwa utepe, dhibiti majukumu, na boresha shughuli za wafanyakazi na fedha kwa wakati halisi. Data iliyoshirikiwa kwenye vifaa vyote.",
     "installWebApp": "Sakinisha Programu ya Wavuti",
     "launchWebApp": "Anzisha Programu ya Wavuti",
-    "downloadMobileApp": "Pakua Programu ya Simu",
+    "downloadMobileApp": "Pakua Programu ya Android",
     "copyright": "Hakimiliki 2026",
     "developedBy": "Imeundwa na",
     "whatsapp": "WhatsApp",
-    "telegram": "Telegramu"
+    "telegram": "Telegramu",
+    "allInOneApp": "Programu ya Yote-katika-Moja ya Ufugaji wa Nguruwe"
   },
   "Dashboard": {
     "welcome": "Karibu kwenye {farmName}",

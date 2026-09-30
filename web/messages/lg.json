@@ -55,11 +55,12 @@
     "heroDescription": "Olondoola enkola y’okukula, Okukola emmere n’ebirungo eby’omu kitundu, okuzuula endwadde nga tezinnasaasaana, okupima n’olutambi, okuddukanya emirimu, n’okulongoosa emirimu gy’abakozi n’ebyensimbi mu kiseera ekituufu. Data egabanyizibwa mu byuma byonna.",
     "installWebApp": "Teeka Web App",
     "launchWebApp": "Tongoza Web App",
-    "downloadMobileApp": "Download App y'oku ssimu",
+    "downloadMobileApp": "Download App ya Android",
     "copyright": "Eddembe ly’okuwandiika 2026",
     "developedBy": "Yakolebwa kkampuni ya Bibinii Tech",
     "whatsapp": "WhatsApp",
-    "telegram": "Telegram"
+    "telegram": "Telegram",
+    "allInOneApp": "App y'Embizi Ey'ebintu Byonna"
   },
   "Dashboard": {
     "welcome": "Mwaniriziddwa mu {farmName}",

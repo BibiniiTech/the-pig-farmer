@@ -55,11 +55,12 @@
     "heroDescription": "Lukluk long wok bilong gro, wokim kaikai wantaim ol samting bilong ples, painimaut sik pastaim long ol i go bikpela, skelim wantaim tep, menesim ol wok, na stretim ol wok na mani bilong ol wokmanmeri long taim stret. Serim data long olgeta divais.",
     "installWebApp": "Putim Web Ap",
     "launchWebApp": "Kirapim Web Ap",
-    "downloadMobileApp": "Daunlodim Mobail Ap",
+    "downloadMobileApp": "Daunlodim Android Ap",
     "copyright": "Kopirait 2026",
     "developedBy": "Bibinii Tech i kamapim",
     "whatsapp": "WhatsApp",
-    "telegram": "Telegram"
+    "telegram": "Telegram",
+    "allInOneApp": "Olgeta-long-Wan Fam Ap Bilong Pik"
   },
   "Dashboard": {
     "welcome": "Welkam long {farmName}",

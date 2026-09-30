@@ -55,11 +55,12 @@
     "heroDescription": "跟踪生长性能、使用当地原料配制饲料、在疾病传播前进行诊断、使用卷尺测重、管理任务，并实时优化员工活动和财务。数据在多端同步。",
     "installWebApp": "安装网页应用",
     "launchWebApp": "启动网页应用",
-    "downloadMobileApp": "下载移动应用",
+    "downloadMobileApp": "下载安卓应用",
     "copyright": "版权所有 2026",
     "developedBy": "由 Bibinii Tech 开发",
     "whatsapp": "WhatsApp",
-    "telegram": "电报"
+    "telegram": "电报",
+    "allInOneApp": "全功能养猪农场管理应用"
   },
   "Dashboard": {
     "welcome": "欢迎来到 {farmName}",

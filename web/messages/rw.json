@@ -55,11 +55,12 @@
     "heroDescription": "Kurikirana imikorere yo gukura, Gutegura ibiryo hamwe nibikoresho byaho, gusuzuma indwara mbere yuko bikwirakwira, gupima kaseti, gucunga imirimo, no kunoza ibikorwa byabakozi nubukungu mugihe gikwiye. Ibisobanuro bisangiwe mubikoresho.",
     "installWebApp": "Shyiramo Urubuga",
     "launchWebApp": "Fungura Urubuga",
-    "downloadMobileApp": "Kuramo porogaramu igendanwa",
+    "downloadMobileApp": "Kuramo porogaramu ya Android",
     "copyright": "Uburenganzira 2026",
     "developedBy": "Byakozwe na Bibinii Tech",
     "whatsapp": "WhatsApp",
-    "telegram": "Telegaramu"
+    "telegram": "Telegaramu",
+    "allInOneApp": "Porogaramu Yuzuye y'Ubworozi bw'Ingurube"
   },
   "Dashboard": {
     "welcome": "Murakaza neza kuri {farmName}",

@@ -55,11 +55,12 @@
     "heroDescription": "Suivez les performances de croissance, formulez des aliments avec des ingrédients locaux, diagnostiquez les maladies avant qu'elles ne se propagent, pesez avec un ruban, gérez les tâches et optimisez les activités du personnel et les finances en temps réel. Données partagées sur tous les appareils.",
     "installWebApp": "Installer l'application Web",
     "launchWebApp": "Lancer l'application Web",
-    "downloadMobileApp": "Télécharger l'application mobile",
+    "downloadMobileApp": "Télécharger l'application Android",
     "copyright": "Droits d'auteur 2026",
     "developedBy": "Développé par Bibinii Tech",
     "whatsapp": "WhatsApp",
-    "telegram": "Télégramme"
+    "telegram": "Télégramme",
+    "allInOneApp": "Application tout-en-un pour l'élevage porcin"
   },
   "Dashboard": {
     "welcome": "Bienvenue à {farmName}",
