@@ -14,8 +14,8 @@ android {
         applicationId = "com.bibiniitech.smartswine"
         minSdk = 24
         targetSdk = 36
-        versionCode = 26
-        versionName = "2.5"
+        versionCode = 27
+        versionName = "2.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -101,6 +101,7 @@ dependencies {
     implementation(libs.play.services.ads)
     implementation(libs.unity.mediation)
     implementation(libs.unity.ads)
+    implementation(libs.ironsource.mediation)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

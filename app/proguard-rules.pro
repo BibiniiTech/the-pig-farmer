@@ -103,3 +103,19 @@
 -keep class com.google.ads.mediation.unity.** { *; }
 -dontwarn com.google.ads.mediation.unity.**
 
+# Google Mobile Ads Mediation - ironSource
+-keepclassmembers class * implements com.ironsource.mediationsdk.sdk.InterstitialSmashListener {
+    public *;
+}
+-keepclassmembers class * implements com.ironsource.mediationsdk.sdk.RewardedVideoSmashListener {
+    public *;
+}
+-keepclassmembers class * implements com.ironsource.mediationsdk.sdk.BannerSmashListener {
+    public *;
+}
+-keep class com.ironsource.mediationsdk.** { *; }
+-dontwarn com.ironsource.mediationsdk.**
+-keep class com.google.ads.mediation.ironsource.** { *; }
+-dontwarn com.google.ads.mediation.ironsource.**
+
+

@@ -27,6 +27,7 @@ lifecycleRuntimeCompose = "2.10.0"
 playServicesAds = "25.4.0"
 unityAds = "4.20.0"
 unityMediation = "4.20.0.1"
+ironsourceMediation = "8.7.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -68,6 +69,7 @@ play-integrity = { group = "com.google.android.play", name = "integrity", versio
 play-services-ads = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "playServicesAds" }
 unity-ads = { group = "com.unity3d.ads", name = "unity-ads", version.ref = "unityAds" }
 unity-mediation = { group = "com.google.ads.mediation", name = "unity", version.ref = "unityMediation" }
+ironsource-mediation = { group = "com.google.ads.mediation", name = "ironsource", version.ref = "ironsourceMediation" }
 
 [plugins]
 android-app = { id = "com.android.application", version.ref = "agp" }
