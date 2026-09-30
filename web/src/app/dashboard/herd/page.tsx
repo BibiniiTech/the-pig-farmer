@@ -72,10 +72,11 @@ export default function HerdPage() {
   const td = useTranslations("Dashboard");
   const tHr = useTranslations("HR");
   const tCommon = useTranslations("Common");
-  const { user, userProfile, activeFarmUid, loading } = useAuth();
+  const { user, userProfile, activeFarmUid, loading, isPassActive, isPaidPremium } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
-  const isPremium = Boolean(userProfile?.isPremium || userProfile?.isAdmin);
+  const isPaid = Boolean(isPaidPremium || userProfile?.isPremium || userProfile?.isAdmin);
+  const canExportPdf = isPaid || isPassActive;
 
   const [pigs, setPigs] = useState<Pig[]>([]);
   const [archivedPigs, setArchivedPigs] = useState<Pig[]>([]);
@@ -250,10 +251,9 @@ export default function HerdPage() {
     e.preventDefault();
     if (!activeFarmUid) return;
 
-    const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
     const additionalPigs = isMultiple ? malePigs.filter(p => p.tagNumber.trim() !== "").length + femalePigs.filter(p => p.tagNumber.trim() !== "").length : 1;
 
-    if (!isPremium && herdStats.total + additionalPigs > TierLimiter.FREE_MAX_PIGS) {
+    if (!isPaid && herdStats.total + additionalPigs > TierLimiter.FREE_MAX_PIGS) {
       alert(t("limitReached"));
       router.push("/dashboard/billing");
       setShowAddModal(false);
@@ -493,8 +493,7 @@ export default function HerdPage() {
               </button>
               <button
                 onClick={() => {
-                  const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
-                  if (!isPremium && herdStats.total >= TierLimiter.FREE_MAX_PIGS) {
+                  if (!isPaid && herdStats.total >= TierLimiter.FREE_MAX_PIGS) {
                     alert(t("limitReached"));
                     router.push("/dashboard/billing");
                   } else {
@@ -529,20 +528,20 @@ export default function HerdPage() {
 
               <button
                 onClick={() => {
-                  if (!isPremium) {
+                  if (!canExportPdf) {
                     setShowRewardedPassModal(true);
                     return;
                   }
                   window.print();
                 }}
                 className={`rounded-lg border px-3 py-1.5 text-xs font-semibold transition shadow-sm flex items-center gap-1.5 ${
-                  isPremium
+                  canExportPdf
                     ? "border-zinc-200 bg-zinc-50/50 text-zinc-650 hover:bg-zinc-100"
                     : "border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100"
                 }`}
               >
                 <ExportPdfIcon className="h-3.5 w-3.5 opacity-80" />
-                <span>{isPremium ? t("exportPdf") : t("exportPdfPremium")}</span>
+                <span>{canExportPdf ? t("exportPdf") : t("exportPdfPremium")}</span>
               </button>
             </div>
 

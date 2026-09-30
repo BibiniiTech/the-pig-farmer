@@ -50,7 +50,7 @@ function FinancialsContent() {
     const key = type === "Income" ? incomeKeys[cat] : expenseKeys[cat];
     return key ? t(key) : cat;
   };
-  const { user, userProfile, activeFarmUid, isFinancialsRestricted, loading } = useAuth();
+  const { user, userProfile, activeFarmUid, isFinancialsRestricted, loading, isPassActive, isPaidPremium } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
 
@@ -83,8 +83,9 @@ function FinancialsContent() {
   const [description, setDescription] = useState("");
   const [selectedPigIds, setSelectedPigIds] = useState<string[]>([]);
 
-  const isPremium = Boolean(userProfile?.isPremium || userProfile?.isAdmin);
-  const recordLimitReached = !isPremium && records.length >= TierLimiter.FREE_MAX_FINANCIAL_RECORDS;
+  const isPaid = Boolean(isPaidPremium || userProfile?.isPremium || userProfile?.isAdmin);
+  const canExportPdf = isPaid || isPassActive;
+  const recordLimitReached = !isPaid && records.length >= TierLimiter.FREE_MAX_FINANCIAL_RECORDS;
 
   const categories = {
     Income: [
@@ -495,20 +496,20 @@ function FinancialsContent() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => {
-                    if (!isPremium) {
+                    if (!canExportPdf) {
                       setShowRewardedPassModal(true);
                       return;
                     }
                     window.print();
                   }}
                   className={`rounded-lg border px-3 py-2 text-xs font-semibold transition shadow-sm flex items-center gap-1.5 ${
-                    isPremium
+                    canExportPdf
                       ? "border-zinc-200 bg-zinc-50/50 text-zinc-650 hover:bg-zinc-100"
                       : "border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100"
                   }`}
                 >
                   <ExportPdfIcon className="h-3.5 w-3.5 opacity-80" />
-                  <span>{isPremium ? t("exportPdf") : t("exportPdfPremium")}</span>
+                  <span>{canExportPdf ? t("exportPdf") : t("exportPdfPremium")}</span>
                 </button>
                 <button
                   onClick={() => {

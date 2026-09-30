@@ -11,11 +11,17 @@ interface PremiumWrapperProps {
   children: React.ReactNode;
   fallback?: React.ReactNode;
   featureName?: string;
+  allowPass?: boolean;
 }
 
-export default function PremiumWrapper({ children, fallback, featureName }: PremiumWrapperProps) {
+export default function PremiumWrapper({
+  children,
+  fallback,
+  featureName,
+  allowPass = true,
+}: PremiumWrapperProps) {
   const t = useTranslations("Premium");
-  const { userProfile, loading } = useAuth();
+  const { userProfile, loading, isPassActive, isPaidPremium } = useAuth();
   const [showRewardedModal, setShowRewardedModal] = useState(false);
 
   if (loading) {
@@ -26,9 +32,13 @@ export default function PremiumWrapper({ children, fallback, featureName }: Prem
     );
   }
 
-  const isPremiumUser = userProfile?.isPremium === true || userProfile?.isAdmin === true;
+  const isAllowed =
+    isPaidPremium ||
+    userProfile?.isPremium === true ||
+    userProfile?.isAdmin === true ||
+    (allowPass && isPassActive);
 
-  if (isPremiumUser) {
+  if (isAllowed) {
     return <>{children}</>;
   }
 

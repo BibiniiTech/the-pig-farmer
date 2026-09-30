@@ -91,7 +91,7 @@ export default function InlineHRSection({
   const [payNotes, setPayNotes] = useState("");
   const [paySaving, setPaySaving] = useState(false);
 
-  const { userProfile } = useAuth();
+  const { userProfile, isPassActive, isPaidPremium } = useAuth();
   const router = useRouter();
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -104,8 +104,9 @@ export default function InlineHRSection({
     .filter((s) => s.status === "Active")
     .reduce((sum, s) => sum + (s.salary || 0), 0);
 
-  const isPremium = Boolean(userProfile?.isPremium || userProfile?.isAdmin);
-  const staffLimitReached = !isPremium && activeStaff.length >= TierLimiter.FREE_MAX_STAFF;
+  const isPaid = Boolean(isPaidPremium || userProfile?.isPremium || userProfile?.isAdmin);
+  const canExportPdf = isPaid || isPassActive;
+  const staffLimitReached = !isPaid && activeStaff.length >= TierLimiter.FREE_MAX_STAFF;
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -199,7 +200,7 @@ export default function InlineHRSection({
       return;
     }
 
-    const effectiveAppAccess = isPremium ? allowAppAccess : false;
+    const effectiveAppAccess = isPaid ? allowAppAccess : false;
     const staffEmail = email.trim().toLowerCase();
 
     setSaving(true);
@@ -342,7 +343,7 @@ export default function InlineHRSection({
 
   const handleExportPdf = () => {
     setSelectedStaffForReport(null);
-    if (!isPremium) {
+    if (!canExportPdf) {
       setPendingPrintType("all");
       setShowRewardedPassModal(true);
       return;
@@ -356,7 +357,7 @@ export default function InlineHRSection({
 
   const handlePrintStaffDetail = (member: StaffMember) => {
     setSelectedStaffForReport(member);
-    if (!isPremium) {
+    if (!canExportPdf) {
       setPendingPrintType("detail");
       setShowRewardedPassModal(true);
       return;
@@ -414,13 +415,13 @@ export default function InlineHRSection({
           type="button"
           onClick={handleExportPdf}
           className={`w-full py-2.5 px-4 rounded-xl border text-xs font-bold transition flex items-center justify-center gap-2 ${
-            isPremium
+            canExportPdf
               ? "border-purple-700 text-purple-700 hover:bg-purple-50"
               : "border-amber-300 bg-amber-50 text-amber-800 hover:bg-amber-100"
           }`}
         >
           <ExportPdfIcon className="h-4 w-4" />
-          {isPremium ? (t("exportPdf") || "Export to PDF") : "Export to PDF (Premium)"}
+          {canExportPdf ? (t("exportPdf") || "Export to PDF") : "Export to PDF (Premium)"}
         </button>
       </div>
 
@@ -679,9 +680,9 @@ export default function InlineHRSection({
                   <input
                     type="checkbox"
                     checked={allowAppAccess}
-                    disabled={!isPremium}
+                    disabled={!isPaid}
                     onChange={(e) => {
-                      if (!isPremium) {
+                      if (!isPaid) {
                         alert("Staff mobile app access requires SmartSwine Premium. Please upgrade to enable worker logins.");
                         router.push("/dashboard/billing");
                         return;
@@ -692,7 +693,7 @@ export default function InlineHRSection({
                   />
                   <span>
                     {t("allowAppAccess") || "Allow Mobile App Access for Worker"}
-                    {!isPremium && <span className="text-amber-600 font-bold text-[10px] ml-1.5">(Premium Only)</span>}
+                    {!isPaid && <span className="text-amber-600 font-bold text-[10px] ml-1.5">(Premium Only)</span>}
                   </span>
                 </label>
                 {allowAppAccess && (

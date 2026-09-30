@@ -272,12 +272,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     rawProfile?.isAdmin === true ||
     rawProfile?.email === "bibiniitech@gmail.com";
 
-  const effectiveIsPremium = isPaidPremium || isPassActive;
-
+  // The 3-hour pass is strictly device-local and does NOT grant full account premium status
   const userProfile: UserProfile | null = rawProfile
     ? {
         ...rawProfile,
-        isPremium: effectiveIsPremium,
+        isPremium: isPaidPremium,
       }
     : null;
 

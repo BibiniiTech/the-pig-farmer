@@ -12,7 +12,7 @@ import { useTranslations } from "next-intl";
 export default function BillingPage() {
   const t = useTranslations("Billing");
   const tCommon = useTranslations("Common");
-  const { user, userProfile, loading } = useAuth();
+  const { user, userProfile, loading, isPassActive, passTimeRemaining } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
@@ -207,6 +207,20 @@ export default function BillingPage() {
             </div>
           ) : (
             <>
+              {isPassActive && (
+                <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 flex items-center gap-3 text-left max-w-2xl mx-auto mb-6">
+                  <span className="text-2xl shrink-0">⏳</span>
+                  <div>
+                    <h3 className="text-sm font-bold text-amber-900 dark:text-amber-200">
+                      Temporary 3-Hour Ad Pass Active ({passTimeRemaining || "Active"})
+                    </h3>
+                    <p className="text-xs text-amber-700/90 dark:text-amber-350">
+                      Your temporary pass unlocks PDF reports and nutritional feed formulation tools on this browser. Upgrade below to permanently unlock unlimited herd capacity, unlimited financial records, staff mobile app logins, and eliminate all ads.
+                    </p>
+                  </div>
+                </div>
+              )}
+
               {/* Pricing Cycle Toggle */}
               <div className="flex justify-center">
                 <div className="bg-zinc-100 border border-zinc-200 p-1.5 rounded-xl flex gap-1 items-center shadow-sm">

@@ -73,12 +73,13 @@ export default function PigProfilePage() {
     }
     return type;
   };
-  const { user, userProfile, activeFarmUid, loading } = useAuth();
+  const { user, userProfile, activeFarmUid, loading, isPassActive, isPaidPremium } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
   const params = useParams();
   const pigId = params?.id as string;
-  const isPremium = Boolean(userProfile?.isPremium || userProfile?.isAdmin);
+  const isPaid = Boolean(isPaidPremium || userProfile?.isPremium || userProfile?.isAdmin);
+  const canExportPdf = isPaid || isPassActive;
 
   const [pig, setPig] = useState<Pig | null>(null);
   const [healthRecords, setHealthRecords] = useState<HealthRecord[]>([]);
@@ -705,19 +706,18 @@ export default function PigProfilePage() {
 
               <button
                 onClick={() => {
-                  const isPremium = userProfile?.isPremium || userProfile?.isAdmin;
-                  if (!isPremium) {
+                  if (!canExportPdf) {
                     setShowRewardedPassModal(true);
                     return;
                   }
                   window.print();
                 }}
                 className={`p-2 rounded-xl border transition shadow-xs ${
-                  userProfile?.isPremium || userProfile?.isAdmin
+                  canExportPdf
                     ? "border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50"
                     : "border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100"
                 }`}
-                title={userProfile?.isPremium || userProfile?.isAdmin ? th("exportPdf") : th("exportPdfPremium")}
+                title={canExportPdf ? th("exportPdf") : th("exportPdfPremium")}
               >
                 <ExportPdfIcon className="h-4 w-4" />
               </button>

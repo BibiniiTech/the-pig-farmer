@@ -24,8 +24,9 @@ export default function NativeAdBanner({ slotId, className = "" }: NativeAdBanne
     }
   }, [activeSlotId]);
 
-  // If user is paid premium or holding an active 3-hour pass, hide all ads
-  if (userProfile?.isPremium || isPassActive) {
+  // Only hide native ads if the user has an actual paid premium subscription or is admin.
+  // The 3-hour ad pass does NOT hide native ads.
+  if (userProfile?.isPremium || userProfile?.isAdmin) {
     return null;
   }
 

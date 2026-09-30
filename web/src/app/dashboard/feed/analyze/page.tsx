@@ -52,11 +52,12 @@ const defaultRequirements: Record<string, NutritionalRequirement> = {
 export default function AnalyzeFeedPage() {
   const t = useTranslations("Feed");
   const tCommon = useTranslations("Common");
-  const { user, userProfile, activeFarmUid, loading } = useAuth();
+  const { user, userProfile, activeFarmUid, loading, isPassActive, isPaidPremium } = useAuth();
   const { isMobile } = useDevice();
   const router = useRouter();
 
-  const isPremium = Boolean(userProfile?.isPremium || userProfile?.isAdmin);
+  const isPaid = Boolean(isPaidPremium || userProfile?.isPremium || userProfile?.isAdmin);
+  const canAccessFeedTools = isPaid || isPassActive;
 
   const [ingredients, setIngredients] = useState<FeedIngredient[]>([]);
   const [analyzePercentageMode, setAnalyzePercentageMode] = useState<boolean>(false);
@@ -69,7 +70,7 @@ export default function AnalyzeFeedPage() {
   const [isBatchModalOpen, setIsBatchModalOpen] = useState<boolean>(false);
   const [batchToast, setBatchToast] = useState<string | null>(null);
 
-  const ingredientLimitReached = !isPremium && analyzeItems.length >= TierLimiter.FREE_MAX_FEED_INGREDIENTS;
+  const ingredientLimitReached = !canAccessFeedTools && analyzeItems.length >= TierLimiter.FREE_MAX_FEED_INGREDIENTS;
 
   useEffect(() => {
     if (!loading && !user) {
@@ -333,7 +334,7 @@ export default function AnalyzeFeedPage() {
                   <button
                     type="button"
                     onClick={() => {
-                      if (!isPremium) {
+                      if (!canAccessFeedTools) {
                         setShowRewardedPassModal(true);
                         return;
                       }
@@ -480,7 +481,7 @@ export default function AnalyzeFeedPage() {
         ingredients={ingredients}
         activeFarmUid={activeFarmUid}
         currencySymbol={userProfile?.settings?.currencySymbol || "$"}
-        isPremium={isPremium}
+        isPremium={canAccessFeedTools}
         onRequestRewardedPass={() => setShowRewardedPassModal(true)}
       />
 

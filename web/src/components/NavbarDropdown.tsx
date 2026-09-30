@@ -77,7 +77,7 @@ export default function NavbarDropdown() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const { user, userProfile } = useAuth();
+  const { user, userProfile, isPassActive, passTimeRemaining } = useAuth();
 
   useEffect(() => {
     if (userProfile?.appLanguage) {
@@ -367,9 +367,9 @@ export default function NavbarDropdown() {
                   className="mt-3 inline-flex items-center gap-2 rounded-lg bg-[#092917] hover:bg-[#0f3d23] px-2.5 py-1 text-[10px] font-extrabold tracking-wider uppercase border border-emerald-500/20 transition cursor-pointer select-none active:scale-95"
                   title={userProfile?.isPremium ? "Manage Premium Subscription" : "Upgrade to Premium"}
                 >
-                  <span className={`h-2 w-2 rounded-full ${userProfile?.isPremium ? "bg-emerald-400 animate-pulse" : "bg-amber-400"}`} />
-                  <span className={userProfile?.isPremium ? "text-emerald-300" : "text-amber-300"}>
-                    {userProfile?.isPremium ? "Premium Tier" : "Free Tier"}
+                  <span className={`h-2 w-2 rounded-full ${userProfile?.isPremium ? "bg-emerald-400 animate-pulse" : isPassActive ? "bg-amber-400 animate-pulse" : "bg-zinc-400"}`} />
+                  <span className={userProfile?.isPremium ? "text-emerald-300" : isPassActive ? "text-amber-300" : "text-zinc-300"}>
+                    {userProfile?.isPremium ? "Premium Tier" : isPassActive ? `3h Pass (${passTimeRemaining || "Active"})` : "Free Tier"}
                   </span>
                   <svg className="h-2.5 w-2.5 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />

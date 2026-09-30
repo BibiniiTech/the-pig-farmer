@@ -15,7 +15,7 @@ export default function UserProfileDropdown() {
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [isManageModalOpen, setIsManageModalOpen] = useState(false);
   const router = useRouter();
-  const { userProfile, isStaff } = useAuth();
+  const { userProfile, isStaff, isPassActive, passTimeRemaining } = useAuth();
 
   const handleSignOut = async () => {
     try {
@@ -77,10 +77,16 @@ export default function UserProfileDropdown() {
                 className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-md shrink-0 ${
                   userProfile?.isPremium
                     ? "bg-emerald-100 text-emerald-850 border border-emerald-300/60"
+                    : isPassActive
+                    ? "bg-amber-100 text-amber-800 border border-amber-300/60"
                     : "bg-zinc-200 text-zinc-650"
                 }`}
               >
-                {userProfile?.isPremium ? "Premium" : "Free"}
+                {userProfile?.isPremium
+                  ? "Premium"
+                  : isPassActive
+                  ? `3h Pass (${passTimeRemaining || "Active"})`
+                  : "Free"}
               </span>
             </div>
             <p className="text-[10px] text-zinc-500 truncate">{userProfile?.email}</p>
