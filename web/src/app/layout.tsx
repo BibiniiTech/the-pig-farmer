@@ -13,8 +13,19 @@ const geistSans = { variable: "font-sans" };
 const geistMono = { variable: "font-mono" };
 
 export const metadata: Metadata = {
-  title: "SmartSwine - Farm Management Simplified",
+  title: "SmartSwine - Pig Farm Management",
   description: "Optimize your pig farm operations with our premium feed formulators, herd tracking, task management, and financial summaries.",
+  icons: {
+    icon: [
+      { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-96x96.png", sizes: "96x96", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: [
+      { url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+  },
 };
 
 export default async function RootLayout({

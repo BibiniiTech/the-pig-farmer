@@ -23,10 +23,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Dynamically detect origin so users return to whichever domain they were browsing (smartswine.app or smartswine.vercel.app)
     const appUrl =
-      process.env.NEXT_PUBLIC_APP_URL ||
+      req.headers.get("origin") ||
       req.nextUrl.origin ||
-      "https://smartswine.vercel.app";
+      process.env.NEXT_PUBLIC_APP_URL ||
+      "https://smartswine.app";
 
     const response = await fetch("https://api.lemonsqueezy.com/v1/checkouts", {
       method: "POST",
