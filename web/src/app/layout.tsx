@@ -48,6 +48,16 @@ export default async function RootLayout({
           crossOrigin="anonymous"
           strategy="lazyOnload"
         />
+        {/* Monetag Push Notification Tag (Zone 11929267) */}
+        <Script
+          src="https://5gvci.com/act/files/tag.min.js?z=11929267"
+          data-cfasync="false"
+          strategy="afterInteractive"
+        />
+        {/* Monetag Vignette / Rewarded Tag (Zone 11929302) */}
+        <Script id="monetag-vignette" strategy="afterInteractive">
+          {`(function(s){s.dataset.zone='11929302',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')));`}
+        </Script>
         <NextIntlClientProvider messages={messages} locale={locale}>
           <DeviceProvider>
             <AuthProvider>

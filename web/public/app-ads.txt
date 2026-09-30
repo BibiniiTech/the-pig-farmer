@@ -1,6 +1,7 @@
 OWNERDOMAIN=smartswine.app
 
 google.com, pub-4097392441181162, DIRECT, f08c47fec0942fa0
+propellerads.com, 3512745, DIRECT
 
 # Liftoff / Vungle (AdMob Mediation)
 vungle.com,6ab510d05846cac3aaf45621,DIRECT,c107d686becd2d77
