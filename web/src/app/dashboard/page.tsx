@@ -18,6 +18,7 @@ import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import TaskCompletionModal from "@/components/TaskCompletionModal";
+import ActivityModal from "@/components/dashboard/ActivityModal";
 import SettingsModal from "@/components/SettingsModal";
 import NotificationDrawer from "@/components/NotificationDrawer";
 import PassCountdownBanner from "@/components/ads/PassCountdownBanner";
@@ -123,6 +124,7 @@ const ArrowLeftIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 function CompactPigDropdownCard({ pig }: { pig: Pig }) {
+  const tHerd = useTranslations("Herd");
   const ageDays = calculateAgeDays(pig.birthDate);
   const performance = evaluatePerformance(pig.breed, ageDays, pig.weight);
 
@@ -132,11 +134,19 @@ function CompactPigDropdownCard({ pig }: { pig: Pig }) {
   else if (performance === "Caution") performanceBadge = "bg-[#FFF9C4] text-[#F57F17] border-[#FFF9C4]";
   else if (performance === "Poor") performanceBadge = "bg-[#FFCDD2] text-[#C62828] border-[#FFCDD2]";
 
+  const getPerfText = (p: string) => {
+    if (p === "Excellent") return tHerd("perfExcellent") || "Excellent";
+    if (p === "Good") return tHerd("perfGood") || "Good";
+    if (p === "Caution") return tHerd("perfCaution") || "Caution";
+    if (p === "Poor") return tHerd("perfPoor") || "Poor";
+    return p;
+  };
+
   const ageDisplay = formatSwineAge(pig.birthDate, true);
 
-  const genderDisplay =
-    (pig.gender === "Female" ? "Female" : "Male") +
-    (pig.gender === "Male" && pig.castrated ? " (Castrated)" : "");
+  const genderText = pig.gender === "Female" ? (tHerd("female") || "Female") : (tHerd("male") || "Male");
+  const castratedSuffix = (pig.gender === "Male" && pig.castrated) ? (" " + (tHerd("castratedLabel") || "(Castrated)")) : "";
+  const genderDisplay = `${genderText}${castratedSuffix}`;
 
   return (
     <Link
@@ -145,18 +155,18 @@ function CompactPigDropdownCard({ pig }: { pig: Pig }) {
     >
       <div className="space-y-1 min-w-0">
         <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition truncate block">
-          Tag: {pig.tagNumber || pig.id}
+          {tHerd("tagLabel") || "Tag"}: {pig.tagNumber || pig.id}
         </span>
         <div className="flex items-center gap-2 text-[11px] text-zinc-500 dark:text-zinc-400">
-          <span>Age: {ageDisplay}</span>
+          <span>{tHerd("ageLabel") || "Age"}: {ageDisplay}</span>
           <span className="text-zinc-300 dark:text-zinc-600">•</span>
-          <span>Gender: {genderDisplay}</span>
+          <span>{tHerd("genderLabel") || "Gender"}: {genderDisplay}</span>
         </div>
       </div>
       <div className="flex items-center gap-2 shrink-0 ml-2">
         {performance && performance !== "Blank" && (
           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${performanceBadge}`}>
-            {performance}
+            {getPerfText(performance)}
           </span>
         )}
         <span className="text-zinc-400 group-hover:text-emerald-600 transition">
@@ -382,6 +392,7 @@ function DashboardContent() {
   const t = useTranslations("Dashboard");
   const tNotif = useTranslations("Notifications");
   const tAct = useTranslations("Activities");
+  const tHerd = useTranslations("Herd");
   const locale = useLocale();
 
   const getActivityTranslation = (activityName: string): string => {
@@ -460,6 +471,18 @@ function DashboardContent() {
   }, [initialSection]);
 
   useEffect(() => {
+    const rawAct = searchParams.get("activity");
+    if (rawAct) {
+      const match = herdActivitiesList.find(
+        (a) => a.name.toLowerCase() === rawAct.toLowerCase() || a.key.toLowerCase() === rawAct.toLowerCase()
+      );
+      if (match) {
+        setSelectedActivity(match);
+      }
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
     if (initialSubOption) {
       setWeightSubOption(initialSubOption);
     }
@@ -499,6 +522,7 @@ function DashboardContent() {
   const [isCompletionModalOpen, setIsCompletionModalOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [tasksToEdit, setTasksToEdit] = useState<TaskItem[]>([]);
+  const [selectedActivity, setSelectedActivity] = useState<any | null>(null);
 
   const herdActivitiesList = [
     { name: "Heat Detection", key: "Heat Detection", icon: HeatIcon },
@@ -868,13 +892,13 @@ function DashboardContent() {
                       className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md shadow-emerald-600/20 transition"
                     >
                       <PlusIcon className="h-4 w-4" />
-                      Add Pig
+                      {tHerd("addPig") || "Add Pig"}
                     </Link>
                     <Link
                       href="/dashboard/herd"
                       className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-emerald-600 text-emerald-700 hover:bg-emerald-50 text-xs font-bold transition bg-white shadow-sm"
                     >
-                      View Full Herd ({herdStats.total} Pigs)
+                      {tHerd("viewFullHerd") || "View Full Herd"} ({herdStats.total})
                       <ArrowRightIcon className="h-3.5 w-3.5" />
                     </Link>
                   </div>
@@ -891,12 +915,12 @@ function DashboardContent() {
                           <h4 className="text-xs font-bold text-zinc-600 uppercase tracking-wider">
                             Active Herd ({activePigs.length})
                           </h4>
-                          <span className="text-[11px] text-zinc-400">Showing up to 10 pigs</span>
+                          <span className="text-[11px] text-zinc-400">{tHerd("showingUpTo10") || "Showing up to 10 pigs"}</span>
                         </div>
 
                         {activePigs.length === 0 ? (
                           <div className="p-6 bg-white dark:bg-[#1E1E1E] rounded-xl border border-zinc-200 dark:border-zinc-800 text-center text-xs text-zinc-500 dark:text-zinc-400">
-                            No active pigs in your herd. Click &quot;+ Add Pig&quot; to get started!
+                            {tHerd("noPigsFound") || "No active pigs in your herd. Click \"+ Add Pig\" to get started!"}
                           </div>
                         ) : (
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -1137,22 +1161,17 @@ function DashboardContent() {
                       <h3 className="text-xs font-bold text-zinc-600 uppercase tracking-wider">
                         {t("logActivitiesEvents") || "Log Activities & Events"}
                       </h3>
-                      <Link
-                        href="/dashboard/activities"
-                        className="text-xs font-bold text-cyan-700 hover:text-cyan-800 inline-flex items-center gap-1"
-                      >
-                        {t("openActivityCalendar") || "Open Activity Calendar →"}
-                      </Link>
                     </div>
 
                     <div className="space-y-2">
                       {(activityPage === 0 ? herdActivitiesList.slice(0, 8) : herdActivitiesList.slice(8)).map((activity, idx) => {
                         const IconComponent = activity.icon;
                         return (
-                          <Link
+                          <button
                             key={`act-item-${idx}`}
-                            href={`/dashboard/activities?activity=${encodeURIComponent(activity.name)}`}
-                            className="p-3 rounded-xl bg-white dark:bg-[#1E1E1E] border border-cyan-100 dark:border-cyan-900/50 hover:border-cyan-400/80 hover:shadow-sm transition flex items-center justify-between group"
+                            type="button"
+                            onClick={() => setSelectedActivity(activity)}
+                            className="w-full text-left p-3 rounded-xl bg-white dark:bg-[#1E1E1E] border border-cyan-100 dark:border-cyan-900/50 hover:border-cyan-400/80 hover:shadow-sm transition flex items-center justify-between group"
                           >
                             <div className="flex items-center gap-3">
                               <div className="h-10 w-10 rounded-xl bg-cyan-50 dark:bg-cyan-950/40 text-cyan-700 dark:text-cyan-300 group-hover:bg-cyan-100 transition flex items-center justify-center flex-shrink-0">
@@ -1165,7 +1184,7 @@ function DashboardContent() {
                             <span className="text-cyan-500 group-hover:translate-x-0.5 transition-transform">
                               <ArrowRightIcon className="h-4 w-4" />
                             </span>
-                          </Link>
+                          </button>
                         );
                       })}
 
@@ -1220,9 +1239,6 @@ function DashboardContent() {
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
                         <h2 className="text-xl sm:text-2xl font-black text-zinc-900 dark:text-zinc-100 truncate">{t("financials")}</h2>
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#E0F2F1] text-[#00796B] dark:bg-[#004D40]/60 dark:text-[#4DB6AC]">
-                          {t("cashflowRecords") || "Cashflow & Records"}
-                        </span>
                       </div>
                     </div>
                   </div>
@@ -1548,6 +1564,16 @@ function DashboardContent() {
         isOpen={isSettingsModalOpen}
         onClose={() => setIsSettingsModalOpen(false)}
       />
+
+      {selectedActivity && (
+        <ActivityModal
+          activity={selectedActivity}
+          onClose={() => setSelectedActivity(null)}
+          pigs={allPigs}
+          activeFarmUid={activeFarmUid}
+          currencySymbol={currencySymbol}
+        />
+      )}
     </div>
   );
 }

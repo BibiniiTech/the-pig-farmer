@@ -175,7 +175,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
     if (!file) return;
 
     if (file.size > 5 * 1024 * 1024) {
-      alert("Image size must be less than 5MB");
+      alert(t("imageSizeLimit") || "Image size must be less than 5MB");
       return;
     }
 
@@ -315,7 +315,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
       alert(`${type} data cleared successfully.`);
     } catch (err) {
       console.error(err);
-      alert("Failed to clear data.");
+      alert(t("failedToClearData") || "Failed to clear data.");
     }
   };
 
@@ -334,11 +334,11 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
         snapshot.docs.forEach((d) => batch.delete(d.ref));
         await batch.commit();
       }
-      alert("Factory reset complete. All farm records have been erased.");
+      alert(t("factoryResetSuccess") || "Factory reset complete. All farm records have been erased.");
       window.location.reload();
     } catch (err) {
       console.error(err);
-      alert("Failed to complete factory reset.");
+      alert(t("factoryResetFailed") || "Failed to complete factory reset.");
     }
   };
 
@@ -359,7 +359,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
       }
       await deleteDoc(doc(db, "users", activeFarmUid));
       await deleteUser(auth.currentUser);
-      alert("Account deleted successfully.");
+      alert(t("accountDeletedSuccess") || "Account deleted successfully.");
       window.location.href = "/";
     } catch (err: any) {
       console.error(err);
@@ -368,7 +368,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           "This operation is sensitive and requires recent authentication. Please log out, log back in, and try deleting your account again."
         );
       } else {
-        alert("Failed to delete account. Please try again.");
+        alert(t("accountDeletedFailed") || "Failed to delete account. Please try again.");
       }
     }
   };
@@ -684,7 +684,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div>
                           <p className="font-bold text-zinc-900 text-sm">Porker Classification</p>
-                          <p className="text-xs text-zinc-500">Configure transition thresholds between meat porker stages</p>
+                          <p className="text-xs text-zinc-500">{t("porkerClassificationDesc") || "Configure transition thresholds between meat porker stages"}</p>
                         </div>
                         {/* Age vs Weight Switch */}
                         <div className="flex items-center bg-zinc-200/70 p-1 rounded-xl shrink-0 self-start sm:self-auto">
@@ -789,7 +789,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div>
                           <p className="font-bold text-zinc-900 text-sm">Breeder Classification</p>
-                          <p className="text-xs text-zinc-500">Configure transition thresholds between breeding herd stages</p>
+                          <p className="text-xs text-zinc-500">{t("breederClassificationDesc") || "Configure transition thresholds between breeding herd stages"}</p>
                         </div>
                         {/* Age vs Weight Switch */}
                         <div className="flex items-center bg-zinc-200/70 p-1 rounded-xl shrink-0 self-start sm:self-auto">
@@ -958,7 +958,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                        onClick={handleDeleteAccount}
                        className="mt-4 w-full py-2 bg-rose-700 hover:bg-rose-800 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition"
                      >
-                       Delete Account
+                       {t("deleteAccount") || "Delete Account"}
                      </button>
                    </div>
 
@@ -994,7 +994,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span>What's New in SmartSwine</span>
+                    <span>{t("whatsNew") || "What's New in SmartSwine"}</span>
                   </button>
 
                   {/* Developer & Support Contact Info matching Android */}
@@ -1039,7 +1039,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   <div className="flex items-center justify-between pb-3 border-b border-zinc-100">
                     <div className="flex items-center gap-2">
                       <span className="text-xl">✨</span>
-                      <h3 className="text-base font-bold text-zinc-900">What's New in SmartSwine</h3>
+                      <h3 className="text-base font-bold text-zinc-900">{t("whatsNew") || "What's New in SmartSwine"}</h3>
                     </div>
                     <button
                       type="button"
@@ -1056,8 +1056,8 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                     <div className="flex items-start gap-3 p-2.5 rounded-xl bg-emerald-50/60 border border-emerald-100">
                       <span className="text-xl shrink-0">📖</span>
                       <div>
-                        <p className="font-bold text-zinc-900 text-xs">Pig Farm Training Guide</p>
-                        <p className="text-zinc-600 text-[11px] mt-0.5">Comprehensive practical guide covering breeding, piglet care, health management, and feeding protocols.</p>
+                        <p className="font-bold text-zinc-900 text-xs">{t("trainingGuideTitle") || "Pig Farm Training Guide"}</p>
+                        <p className="text-zinc-600 text-[11px] mt-0.5">{t("trainingGuideDesc") || "Comprehensive practical guide covering breeding, piglet care, health management, and feeding protocols."}</p>
                       </div>
                     </div>
 
@@ -1065,7 +1065,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                       <span className="text-xl shrink-0">🌐</span>
                       <div>
                         <p className="font-bold text-zinc-900 text-xs">22 Worldwide Languages</p>
-                        <p className="text-zinc-600 text-[11px] mt-0.5">Full multilingual localization across 22 global and regional languages with instant in-app switching.</p>
+                        <p className="text-zinc-600 text-[11px] mt-0.5">{t("multilingualDesc") || "Full multilingual localization across 22 global and regional languages with instant in-app switching."}</p>
                       </div>
                     </div>
 
@@ -1080,8 +1080,8 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                     <div className="flex items-start gap-3 p-2.5 rounded-xl bg-purple-50/60 border border-purple-100">
                       <span className="text-xl shrink-0">🧪</span>
                       <div>
-                        <p className="font-bold text-zinc-900 text-xs">Least-Cost NRC Feed Formulator</p>
-                        <p className="text-zinc-600 text-[11px] mt-0.5">Pearson Square least-cost feed formulation with safety inclusion checks and automatic inventory deduction batches.</p>
+                        <p className="font-bold text-zinc-900 text-xs">{t("feedFormulatorTitle") || "Least-Cost NRC Feed Formulator"}</p>
+                        <p className="text-zinc-600 text-[11px] mt-0.5">{t("feedFormulatorDesc") || "Pearson Square least-cost feed formulation with safety inclusion checks and automatic inventory deduction batches."}</p>
                       </div>
                     </div>
 
@@ -1089,7 +1089,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                       <span className="text-xl shrink-0">🛡️</span>
                       <div>
                         <p className="font-bold text-zinc-900 text-xs">Swine Disease Finder & Telehealth</p>
-                        <p className="text-zinc-600 text-[11px] mt-0.5">Diagnose symptoms with hallmark sign matching and generate one-click telehealth clinical reports for veterinarians.</p>
+                        <p className="text-zinc-600 text-[11px] mt-0.5">{t("symptomDiagnosticsDesc") || "Diagnose symptoms with hallmark sign matching and generate one-click telehealth clinical reports for veterinarians."}</p>
                       </div>
                     </div>
 
@@ -1097,7 +1097,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                       <span className="text-xl shrink-0">☁️</span>
                       <div>
                         <p className="font-bold text-zinc-900 text-xs">Real-Time Cloud Sync & Role Security</p>
-                        <p className="text-zinc-600 text-[11px] mt-0.5">Multi-device synchronization between mobile and web with strict keyword-based financial protection for farm staff.</p>
+                        <p className="text-zinc-600 text-[11px] mt-0.5">{t("multiDeviceSyncDesc") || "Multi-device synchronization between mobile and web with strict keyword-based financial protection for farm staff."}</p>
                       </div>
                     </div>
                   </div>

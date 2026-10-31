@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 import ReportLayout from "./ReportLayout";
 import { resolvePigIds } from "@/lib/pdfExporter";
 import { Pig, FinancialRecord } from "@/lib/types";
@@ -18,6 +19,7 @@ const FinancialReport: React.FC<FinancialReportProps> = ({
   currencySymbol = "$",
   title = "Financial Summary Report",
 }) => {
+  const t = useTranslations("Reports");
   const totalIncome = records.filter((r) => r.type === "Income").reduce((sum, r) => sum + r.amount, 0);
   const totalExpense = records.filter((r) => r.type === "Expense").reduce((sum, r) => sum + r.amount, 0);
   const netProfit = totalIncome - totalExpense;
@@ -49,7 +51,7 @@ const FinancialReport: React.FC<FinancialReportProps> = ({
       <div className="space-y-6">
         {/* Summary section (matching Android addSection("Summary") lines 535-540) */}
         <div>
-          <h3 className="text-[16pt] font-bold text-black mb-2">Summary</h3>
+          <h3 className="text-[16pt] font-bold text-black mb-2">{t("summary") || "Summary"}</h3>
           <div className="space-y-1 text-[11pt] text-black">
             <p>Total Income: {currencySymbol}{totalIncome.toFixed(2)}</p>
             <p>Total Expense: {currencySymbol}{totalExpense.toFixed(2)}</p>
@@ -71,12 +73,12 @@ const FinancialReport: React.FC<FinancialReportProps> = ({
           <table className="w-full border-collapse text-[9.5pt] border border-zinc-400">
             <thead>
               <tr className="bg-[#D3D3D3] text-black font-bold text-left border-b border-zinc-400">
-                <th className="p-2 border border-zinc-400 font-bold w-[14%]">Date</th>
-                <th className="p-2 border border-zinc-400 font-bold w-[16%]">Narration</th>
-                <th className="p-2 border border-zinc-400 font-bold w-[34%]">Description</th>
+                <th className="p-2 border border-zinc-400 font-bold w-[14%]">{t("date") || "Date"}</th>
+                <th className="p-2 border border-zinc-400 font-bold w-[16%]">{t("narration") || "Narration"}</th>
+                <th className="p-2 border border-zinc-400 font-bold w-[34%]">{t("description") || "Description"}</th>
                 <th className="p-2 border border-zinc-400 font-bold text-right w-[12%]">Income</th>
                 <th className="p-2 border border-zinc-400 font-bold text-right w-[12%]">Expense</th>
-                <th className="p-2 border border-zinc-400 font-bold text-right w-[12%]">Balance</th>
+                <th className="p-2 border border-zinc-400 font-bold text-right w-[12%]">{t("balance") || "Balance"}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-300">

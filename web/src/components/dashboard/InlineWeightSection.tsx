@@ -230,7 +230,7 @@ export default function InlineWeightSection({
 
     const weightNum = parseFloat(saveWeightInput);
     if (isNaN(weightNum) || weightNum <= 0) {
-      alert("Please enter a valid weight in kg.");
+      alert(t("validWeightAlert") || "Please enter a valid weight in kg.");
       return;
     }
 
@@ -262,7 +262,7 @@ export default function InlineWeightSection({
       setTimeout(() => setSaveMessage(""), 4000);
     } catch (err) {
       console.error("Failed to save pig weight:", err);
-      alert("Failed to save weight. Please check connection.");
+      alert(t("failedToSaveWeight") || "Failed to save weight. Please check connection.");
     } finally {
       setSaveLoading(false);
     }
@@ -373,7 +373,7 @@ export default function InlineWeightSection({
     if (!activeFarmUid || !scalePigId) return;
 
     if (directWeightNum <= 0) {
-      alert("Please enter a valid scale weight reading.");
+      alert(t("validScaleReadingAlert") || "Please enter a valid scale weight reading.");
       return;
     }
 
@@ -405,7 +405,7 @@ export default function InlineWeightSection({
       setTimeout(() => setScaleSaveMessage(""), 4000);
     } catch (err) {
       console.error("Failed to save scale weight:", err);
-      alert("Failed to save weight. Please check connection.");
+      alert(t("failedToSaveWeight") || "Failed to save weight. Please check connection.");
     } finally {
       setScaleSaveLoading(false);
     }
@@ -576,9 +576,9 @@ export default function InlineWeightSection({
                   <span>Important Notes</span>
                 </div>
                 <ul className="list-disc list-inside space-y-1 text-amber-900/90 text-[11px] leading-relaxed">
-                  <li><strong>Point A (Body Length):</strong> Measure from the base of the ears to the base of the tail making sure the tape is firm on the body and not loose.</li>
-                  <li><strong>Point B (Heart Girth):</strong> Measure the thorax (just behind the front legs) making sure the tape fits snugly along the body and meets tightly.</li>
-                  <li>Ensure the pig is standing squarely on level ground for the most accurate result.</li>
+                  <li><strong>{t("pointABodyLength") || "Point A (Body Length):"}</strong> {t("noteBodyLength") || "Measure from the base of the ears to the base of the tail making sure the tape is firm on the body and not loose."}</li>
+                  <li><strong>{t("pointBHeartGirth") || "Point B (Heart Girth):"}</strong> {t("noteHeartGirth") || "Measure the thorax (just behind the front legs) making sure the tape fits snugly along the body and meets tightly."}</li>
+                  <li>{t("noteSquarely") || "Ensure the pig is standing squarely on level ground for the most accurate result."}</li>
                 </ul>
               </div>
             </div>
@@ -624,11 +624,11 @@ export default function InlineWeightSection({
                 </h4>
                 <div className="grid grid-cols-3 gap-2 text-center">
                   <div className="bg-white p-2.5 rounded-lg border border-slate-200">
-                    <p className="text-[10px] text-zinc-400 uppercase font-bold">Live Weight</p>
+                    <p className="text-[10px] text-zinc-400 uppercase font-bold">{t("liveWeight") || "Live Weight"}</p>
                     <p className="text-base sm:text-lg font-black text-slate-900">{estLiveKg} kg</p>
                   </div>
                   <div className="bg-white p-2.5 rounded-lg border border-slate-200">
-                    <p className="text-[10px] text-zinc-400 uppercase font-bold">In Pounds</p>
+                    <p className="text-[10px] text-zinc-400 uppercase font-bold">{t("inPounds") || "In Pounds"}</p>
                     <p className="text-base sm:text-lg font-black text-slate-900">{estLiveLbs} lbs</p>
                   </div>
                   <div className="bg-white p-2.5 rounded-lg border border-slate-200">
@@ -662,7 +662,7 @@ export default function InlineWeightSection({
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5 text-emerald-900 font-bold text-xs">
                         <TrendingUpIcon className="h-4 w-4 text-emerald-700" />
-                        <span>Growth Intelligence</span>
+                        <span>{t("growthIntelligence") || "Growth Intelligence"}</span>
                       </div>
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${tapeGrowthMetrics.ratingClass}`}>
                         {tapeGrowthMetrics.ratingText}
@@ -689,7 +689,7 @@ export default function InlineWeightSection({
                 <form onSubmit={handleSaveToProfile} className="pt-2 border-t border-slate-200 space-y-2">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <div>
-                      <label className="text-[10px] font-black uppercase text-zinc-400 block mb-1">Target Pig</label>
+                      <label className="text-[10px] font-black uppercase text-zinc-400 block mb-1">{t("targetPig") || "Target Pig"}</label>
                       <select
                         value={selectedPigId}
                         onChange={(e) => setSelectedPigId(e.target.value)}
@@ -705,7 +705,7 @@ export default function InlineWeightSection({
                       </select>
                     </div>
                     <div>
-                      <label className="text-[10px] font-black uppercase text-zinc-400 block mb-1">Weight to Save (kg)</label>
+                      <label className="text-[10px] font-black uppercase text-zinc-400 block mb-1">{t("weightToSave") || "Weight to Save (kg)"}</label>
                       <input
                         type="number"
                         step="0.1"
@@ -810,7 +810,7 @@ export default function InlineWeightSection({
               <div className="space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-center">
                   <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-                    <p className="text-[10px] text-zinc-400 uppercase font-bold">Estimated Live Weight</p>
+                    <p className="text-[10px] text-zinc-400 uppercase font-bold">{t("estLiveWeight") || "Estimated Live Weight"}</p>
                     <p className="text-lg font-black text-slate-900">
                       {roundedScaleKg} kg <span className="text-xs text-zinc-500 font-semibold">({roundedScaleLbs} lbs)</span>
                     </p>
@@ -829,7 +829,7 @@ export default function InlineWeightSection({
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5 text-emerald-900 font-bold text-xs">
                         <TrendingUpIcon className="h-4 w-4 text-emerald-700" />
-                        <span>Growth Intelligence</span>
+                        <span>{t("growthIntelligence") || "Growth Intelligence"}</span>
                       </div>
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${growthMetrics.ratingClass}`}>
                         {growthMetrics.ratingText}
@@ -854,7 +854,7 @@ export default function InlineWeightSection({
 
                 {/* Pig Profile Assignment & Save */}
                 <form onSubmit={handleSaveScaleWeight} className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs space-y-3">
-                  <h5 className="text-xs font-bold text-slate-800 text-center">Save to Pig Profile</h5>
+                  <h5 className="text-xs font-bold text-slate-800 text-center">{t("saveToProfile") || "Save to Pig Profile"}</h5>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <div className="relative">
@@ -865,7 +865,7 @@ export default function InlineWeightSection({
                           setScalePigSearch(e.target.value);
                           if (scalePigId) setScalePigId("");
                         }}
-                        placeholder="Filter pig tag..."
+                        placeholder={t("filterPigTag") || "Filter pig tag..."}
                         className="w-full text-xs p-2.5 rounded-lg border border-zinc-200 bg-zinc-50 font-medium focus:outline-none focus:ring-2 focus:ring-slate-500/20"
                       />
                       {scalePigSearch && (
@@ -1026,10 +1026,10 @@ export default function InlineWeightSection({
                   <div
                     onClick={() => setShowPrimalCuts((prev) => !prev)}
                     className="cursor-pointer bg-white p-4 rounded-xl border-2 border-emerald-500/50 hover:border-emerald-600 transition shadow-xs space-y-1 relative group"
-                    title="Click to toggle Estimated Primal Cuts Yield breakdown"
+                    title={t("togglePrimalCutsTooltip") || "Click to toggle Estimated Primal Cuts Yield breakdown"}
                   >
                     <div className="flex items-center justify-between">
-                      <p className="text-[11px] font-bold text-zinc-600">Estimated Carcass Weight</p>
+                      <p className="text-[11px] font-bold text-zinc-600">{t("estCarcassWeight") || "Estimated Carcass Weight"}</p>
                       <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
                         {showPrimalCuts ? "Hide Cuts ▲" : "View Cuts ▼"}
                       </span>
@@ -1043,7 +1043,7 @@ export default function InlineWeightSection({
 
                   {/* Card 2: Estimated Usable Meat */}
                   <div className="bg-white p-4 rounded-xl border border-zinc-200 shadow-xs space-y-1">
-                    <p className="text-[11px] font-bold text-zinc-600">Estimated Usable Meat</p>
+                    <p className="text-[11px] font-bold text-zinc-600">{t("estimatedUsableMeat") || "Estimated Usable Meat"}</p>
                     <p className="text-[10px] text-zinc-400">~78% of carcass weight</p>
                     <p className="text-lg font-black text-blue-700">
                       {carcassMetrics.usableMeatKg} kg{" "}

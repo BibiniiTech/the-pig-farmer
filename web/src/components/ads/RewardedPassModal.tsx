@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { useTranslations } from "next-intl";
 
 interface RewardedPassModalProps {
   isOpen: boolean;
@@ -14,6 +15,7 @@ interface RewardedPassModalProps {
 }
 
 export default function RewardedPassModal({
+
   isOpen,
   onClose,
   title,
@@ -21,6 +23,7 @@ export default function RewardedPassModal({
   featureName,
   onSuccess,
 }: RewardedPassModalProps) {
+  const tCommon = useTranslations("Common");
   const modalTitle = title || (featureName ? `Unlock ${featureName}` : "Unlock Premium Feature");
   const router = useRouter();
   const { activate3HourPass } = useAuth();
@@ -202,7 +205,7 @@ export default function RewardedPassModal({
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" />
                 </svg>
                 <div className="text-left">
-                  <div>Watch Ad for 3-Hour Premium Pass</div>
+                  <div>{tCommon("watchAdFor3HourPass") || "Watch Ad for 3-Hour Premium Pass"}</div>
                   <div className="text-[10px] text-emerald-200 font-normal">
                     Instant temporary premium access
                   </div>

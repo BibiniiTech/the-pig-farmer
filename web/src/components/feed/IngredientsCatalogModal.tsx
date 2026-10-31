@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 import { db } from "@/lib/firebase";
 import { doc, collection, setDoc, updateDoc, deleteDoc, serverTimestamp } from "firebase/firestore";
 import { FeedIngredient } from "@/lib/types";
@@ -25,6 +26,8 @@ export default function IngredientsCatalogModal({
   isPremium = false,
   onRequestRewardedPass,
 }: IngredientsCatalogModalProps) {
+  const t = useTranslations("Feed");
+  const tCommon = useTranslations("Common");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [editingIngredient, setEditingIngredient] = useState<FeedIngredient | null>(null);
@@ -70,7 +73,7 @@ export default function IngredientsCatalogModal({
       await deleteDoc(doc(db, "users", activeFarmUid, "feed_ingredients", id));
     } catch (err) {
       console.error("Error deleting ingredient:", err);
-      alert("Failed to delete ingredient. Please try again.");
+      alert(t("failedToDeleteIngredient") || "Failed to delete ingredient. Please try again.");
     } finally {
       setDeletingId(null);
     }
@@ -128,7 +131,7 @@ export default function IngredientsCatalogModal({
               </div>
               <div>
                 <h2 className="text-lg font-bold text-zinc-900">
-                  Farm Ingredients Catalog
+                  {t("farmIngredientsCatalog") || "Farm Ingredients Catalog"}
                 </h2>
                 <p className="text-xs text-zinc-500">
                   Manage custom local ingredients and nutritional specifications
@@ -152,7 +155,7 @@ export default function IngredientsCatalogModal({
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                 </svg>
-                <span>Add Ingredient</span>
+                <span>{t("addIngredient") || "Add Ingredient"}</span>
               </button>
               <button
                 type="button"
@@ -193,7 +196,7 @@ export default function IngredientsCatalogModal({
               </svg>
               <input
                 type="text"
-                placeholder="Search ingredients..."
+                placeholder={t("searchIngredients") || "Search ingredients..."}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl border border-zinc-200 bg-zinc-50/50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition"
@@ -204,7 +207,7 @@ export default function IngredientsCatalogModal({
             <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none">
               {categories.map((cat) => (
                 <button
-                  key={cat}
+                  key={cat === "All" ? (t("catAll") || "All") : cat === "Protein" ? (t("catProtein") || "Protein") : cat === "Energy" ? (t("catEnergy") || "Energy") : (t("catVitamins") || cat)}
                   type="button"
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition ${
@@ -237,11 +240,11 @@ export default function IngredientsCatalogModal({
                     d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
                   />
                 </svg>
-                <p className="text-sm font-semibold text-zinc-600">No ingredients found</p>
+                <p className="text-sm font-semibold text-zinc-600">{t("noIngredientsFound") || "No ingredients found"}</p>
                 <p className="text-xs text-zinc-400 mt-1 max-w-sm">
                   {searchQuery
-                    ? "Try adjusting your search or category filter"
-                    : "Add your first custom farm ingredient to tailor feed mixing and nutrient analysis"}
+                    ? (t("adjustSearchOrFilter") || "Try adjusting your search or category filter")
+                    : (t("addFirstIngredientPrompt") || "Add your first custom farm ingredient to tailor feed mixing and nutrient analysis")}
                 </p>
                 {!searchQuery && (
                   <button
@@ -249,7 +252,7 @@ export default function IngredientsCatalogModal({
                     onClick={handleOpenAdd}
                     className="mt-4 px-4 py-2 text-xs font-bold text-white bg-amber-600 hover:bg-amber-700 rounded-xl shadow-sm transition"
                   >
-                    Add Your First Ingredient
+                    {t("addFirstItem") || "Add Your First Ingredient"}
                   </button>
                 )}
               </div>
@@ -283,7 +286,7 @@ export default function IngredientsCatalogModal({
                           <button
                             type="button"
                             onClick={() => handleOpenEdit(ing)}
-                            title="Edit Ingredient"
+                            title={tCommon("edit") || "Edit Ingredient"}
                             className="p-1.5 text-zinc-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
                           >
                             <svg
@@ -305,7 +308,7 @@ export default function IngredientsCatalogModal({
                             type="button"
                             onClick={() => handleDelete(ing.id, ing.name)}
                             disabled={deletingId === ing.id}
-                            title="Delete Ingredient"
+                            title={tCommon("delete") || "Delete Ingredient"}
                             className="p-1.5 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition disabled:opacity-50"
                           >
                             <svg
@@ -347,31 +350,31 @@ export default function IngredientsCatalogModal({
                           </span>
                         </div>
                         <div className="bg-zinc-50 rounded px-2 py-1">
-                          <span className="text-zinc-400 block text-[9px]">Dry Matter</span>
+                          <span className="text-zinc-400 block text-[9px]">{t("dryMatter") || "Dry Matter"}</span>
                           <span className="font-bold text-zinc-800">
                             {ing.dryMatter?.toFixed(1) ?? "0"}%
                           </span>
                         </div>
                         <div className="bg-zinc-50 rounded px-2 py-1">
-                          <span className="text-zinc-400 block text-[9px]">Calcium</span>
+                          <span className="text-zinc-400 block text-[9px]">{t("calcium") || "Calcium"}</span>
                           <span className="font-bold text-zinc-800">
                             {ing.calcium?.toFixed(2) ?? "0"}%
                           </span>
                         </div>
                         <div className="bg-zinc-50 rounded px-2 py-1">
-                          <span className="text-zinc-400 block text-[9px]">Phosphorus</span>
+                          <span className="text-zinc-400 block text-[9px]">{t("phosphorus") || "Phosphorus"}</span>
                           <span className="font-bold text-zinc-800">
                             {ing.phosphorus?.toFixed(2) ?? "0"}%
                           </span>
                         </div>
                         <div className="bg-zinc-50 rounded px-2 py-1">
-                          <span className="text-zinc-400 block text-[9px]">Crude Fiber</span>
+                          <span className="text-zinc-400 block text-[9px]">{t("crudeFiber") || "Crude Fiber"}</span>
                           <span className="font-bold text-zinc-800">
                             {ing.crudeFiber?.toFixed(1) ?? "0"}%
                           </span>
                         </div>
                         <div className="bg-amber-50/70 border border-amber-200/50 rounded px-2 py-1">
-                          <span className="text-amber-700 block text-[9px]">Cost / kg</span>
+                          <span className="text-amber-700 block text-[9px]">{t("costPerKg") || "Cost / kg"}</span>
                           <span className="font-bold text-amber-900">
                             {currencySymbol}{ing.costPerKg?.toFixed(2) ?? "0.00"}
                           </span>

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 import ReportLayout from "./ReportLayout";
 import { FeedInventoryItem, FeedInventoryTransaction } from "@/lib/types";
 
@@ -15,6 +16,7 @@ const FeedReport: React.FC<FeedReportProps> = ({
   transactions,
   title = "Feed Inventory Report",
 }) => {
+  const t = useTranslations("Reports");
   let totalAdditionInKg = 0;
   let totalUsageInKg = 0;
   let totalInStockInKg = 0;
@@ -66,12 +68,12 @@ const FeedReport: React.FC<FeedReportProps> = ({
         <table className="w-full border-collapse text-[10pt] border border-zinc-400">
           <thead>
             <tr className="bg-[#D3D3D3] text-black font-bold text-left border-b border-zinc-400">
-              <th className="p-2 border border-zinc-400 font-bold w-[30%]">Feed Name</th>
-              <th className="p-2 border border-zinc-400 font-bold w-[20%]">Feed Type</th>
-              <th className="p-2 border border-zinc-400 font-bold text-center w-[12%]">Unit</th>
-              <th className="p-2 border border-zinc-400 font-bold text-right w-[12%]">Addition</th>
-              <th className="p-2 border border-zinc-400 font-bold text-right w-[12%]">Usage</th>
-              <th className="p-2 border border-zinc-400 font-bold text-right w-[14%]">In Stock</th>
+              <th className="p-2 border border-zinc-400 font-bold w-[30%]">{t("feedName") || "Feed Name"}</th>
+              <th className="p-2 border border-zinc-400 font-bold w-[20%]">{t("feedType") || "Feed Type"}</th>
+              <th className="p-2 border border-zinc-400 font-bold text-center w-[12%]">{t("unit") || "Unit"}</th>
+              <th className="p-2 border border-zinc-400 font-bold text-right w-[12%]">{t("addition") || "Addition"}</th>
+              <th className="p-2 border border-zinc-400 font-bold text-right w-[12%]">{t("usage") || "Usage"}</th>
+              <th className="p-2 border border-zinc-400 font-bold text-right w-[14%]">{t("inStock") || "In Stock"}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-300">
@@ -94,7 +96,7 @@ const FeedReport: React.FC<FeedReportProps> = ({
               ))
             )}
             <tr className="font-bold text-black border-t-2 border-zinc-400">
-              <td className="p-2 border border-zinc-400 font-bold">TOTAL (kg)</td>
+              <td className="p-2 border border-zinc-400 font-bold">{t("total") || "TOTAL"} (kg)</td>
               <td className="p-2 border border-zinc-400"></td>
               <td className="p-2 border border-zinc-400"></td>
               <td className="p-2 border border-zinc-400 text-right font-mono font-bold">

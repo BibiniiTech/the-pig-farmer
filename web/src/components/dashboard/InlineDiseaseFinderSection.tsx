@@ -101,6 +101,8 @@ const CloseIcon = (props: React.SVGProps<SVGSVGElement>) => (
 export default function InlineDiseaseFinderSection() {
   const t = useTranslations("Symptoms");
   const td = useTranslations("Dashboard");
+  const tFeed = useTranslations("Feed");
+  const tCommon = useTranslations("Common");
   const { activeFarmUid } = useAuth();
 
   // Pigs in farm
@@ -416,16 +418,16 @@ export default function InlineDiseaseFinderSection() {
           </svg>
         </div>
         <div className="space-y-2">
-          <h2 className="text-xl sm:text-2xl font-black text-zinc-900">Symptoms & Veterinary Diagnostics is a Premium Feature</h2>
+          <h2 className="text-xl sm:text-2xl font-black text-zinc-900">{tFeed("diagnosticsPremiumTitle") || "Symptoms & Veterinary Diagnostics is a Premium Feature"}</h2>
           <p className="text-xs sm:text-sm text-zinc-600 max-w-md mx-auto leading-relaxed">
-            Upgrade to SmartSwine Premium to unlock differential swine disease matching, clinical signs analysis, hallmark symptoms, and vet-approved interventions.
+            {tFeed("diagnosticsPremiumDesc") || "Upgrade to SmartSwine Premium to unlock differential swine disease matching, clinical signs analysis, hallmark symptoms, and vet-approved interventions."}
           </p>
         </div>
         <Link
           href="/dashboard/billing"
           className="inline-block px-7 py-3 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white text-xs font-bold rounded-xl shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
         >
-          Upgrade to Premium
+          {tFeed("upgradeToPremium") || "Upgrade to Premium"}
         </Link>
       </div>
     }>
@@ -442,7 +444,7 @@ export default function InlineDiseaseFinderSection() {
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-md w-full p-5 space-y-4 shadow-2xl border border-zinc-200 animate-fadeIn">
             <div className="flex items-center justify-between pb-2 border-b border-zinc-100">
-              <h3 className="text-sm font-bold text-zinc-900">Select Affected Pig</h3>
+              <h3 className="text-sm font-bold text-zinc-900">{t("selectAffectedPig") || "Select Affected Pig"}</h3>
               <button
                 type="button"
                 onClick={() => setShowPigSelector(false)}
@@ -469,7 +471,7 @@ export default function InlineDiseaseFinderSection() {
                 onClick={() => handleSelectPig(null)}
                 className="w-full p-2.5 rounded-xl border border-dashed border-zinc-300 text-left text-xs font-medium text-zinc-500 hover:bg-zinc-50 flex items-center justify-between"
               >
-                <span>Clear Pig (Unassigned Herd Group)</span>
+                <span>{t("clearPigUnassigned") || "Clear Pig (Unassigned Herd Group)"}</span>
                 <CloseIcon className="h-4 w-4 text-zinc-400" />
               </button>
 
@@ -558,7 +560,7 @@ export default function InlineDiseaseFinderSection() {
                   {selectedPig ? (
                     <span>Affected Pig: Tag {selectedPig.tagNumber}</span>
                   ) : (
-                    <span>Herd Link: Unassigned</span>
+                    <span>{t("herdLinkUnassigned") || "Herd Link: Unassigned"}</span>
                   )}
                 </p>
                 <p className="text-[11px] text-zinc-500">
@@ -576,7 +578,7 @@ export default function InlineDiseaseFinderSection() {
                     type="button"
                     onClick={() => handleSelectPig(null)}
                     className="p-1 rounded-lg text-red-500 hover:bg-red-50"
-                    title="Clear selected pig"
+                    title={t("clearSelectedPigTooltip") || "Clear selected pig"}
                   >
                     <CloseIcon className="h-4 w-4" />
                   </button>
@@ -645,7 +647,7 @@ export default function InlineDiseaseFinderSection() {
                         }`}
                         onClick={() => toggleSymptom(symKey)}
                       >
-                        {isHallmark && <span title="Hallmark / Pathognomonic Sign">⭐</span>}
+                        {isHallmark && <span title={t("hallmarkSignTooltip") || "Hallmark / Pathognomonic Sign"}>⭐</span>}
                         <span>{renderSymptomName(symKey)}</span>
                         <CloseIcon className="h-3 w-3 ml-0.5 opacity-70 hover:opacity-100" />
                       </span>
@@ -660,7 +662,7 @@ export default function InlineDiseaseFinderSection() {
               <SearchIcon className="h-4 w-4 absolute left-3 top-3 text-zinc-400" />
               <input
                 type="text"
-                placeholder="Search symptom (e.g. fever, blisters, coughing)..."
+                placeholder={t("searchSymptomPlaceholder") || "Search symptom (e.g. fever, blisters, coughing)..."}
                 value={symptomSearchQuery}
                 onChange={(e) => setSymptomSearchQuery(e.target.value)}
                 className="w-full pl-9 pr-8 py-2 text-xs bg-white border border-zinc-200 rounded-xl focus:outline-hidden focus:border-indigo-500 shadow-xs"
@@ -1015,7 +1017,7 @@ export default function InlineDiseaseFinderSection() {
                                   className="flex-1 min-w-[130px] py-2 px-3 bg-white border border-indigo-300 text-indigo-700 hover:bg-indigo-50 font-bold rounded-lg text-xs flex items-center justify-center gap-1.5 transition shadow-2xs"
                                 >
                                   <NoteAddIcon className="h-4 w-4 text-indigo-600" />
-                                  <span>Log to Herd</span>
+                                  <span>{t("logToHerd") || "Log to Herd"}</span>
                                 </button>
 
                                 <button
@@ -1024,7 +1026,7 @@ export default function InlineDiseaseFinderSection() {
                                   className="flex-1 min-w-[130px] py-2 px-3 bg-indigo-600 text-white hover:bg-indigo-700 font-bold rounded-lg text-xs flex items-center justify-center gap-1.5 transition shadow-2xs"
                                 >
                                   <ShareIcon className="h-4 w-4" />
-                                  <span>Share with Vet</span>
+                                  <span>{t("shareWithVet") || "Share with Vet"}</span>
                                 </button>
                               </div>
                             </div>
@@ -1039,7 +1041,7 @@ export default function InlineDiseaseFinderSection() {
                 <div className="p-3 bg-amber-50/70 border border-amber-200/70 rounded-xl flex items-start gap-2 text-[11px] text-amber-900">
                   <WarningIcon className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
                   <p>
-                    <strong>Disclaimer:</strong> This diagnostic tool provides reference insights for educational purposes. Always consult a certified veterinarian before initiating pharmaceutical treatments or herd interventions.
+                    <strong>{t("disclaimer") || "Disclaimer:"}</strong> This diagnostic tool provides reference insights for educational purposes. Always consult a certified veterinarian before initiating pharmaceutical treatments or herd interventions.
                   </p>
                 </div>
               </div>

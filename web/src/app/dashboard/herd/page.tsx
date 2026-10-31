@@ -441,33 +441,35 @@ export default function HerdPage() {
         )}
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
+          {/* Mobile Back Button (above header on mobile, removed on desktop) */}
+          <div className="sm:hidden mb-2">
+            <button
+              type="button"
+              onClick={() => router.push("/dashboard")}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition-colors text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 shadow-xs font-bold text-xs shrink-0"
+              aria-label="Back to dashboard"
+              title="Back to dashboard"
+            >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+              <span>{tCommon("back") || "Back"}</span>
+            </button>
+          </div>
+
           {/* Top Actions & Heading Bar */}
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => router.push("/dashboard")}
-                className="inline-flex items-center gap-2 px-3 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition-colors text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 shadow-xs font-bold text-xs shrink-0"
-                aria-label="Back to dashboard"
-                title="Back to dashboard"
-              >
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                </svg>
-                <span>{tCommon("back") || "Back"}</span>
-              </button>
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-[#E8F5E9] dark:bg-[#1B5E20]/40 border border-[#2E7D32]/30 flex items-center justify-center flex-shrink-0">
-                  <HerdDataIcon className="h-5 w-5 text-[#2E7D32] dark:text-[#81C784]" />
-                </div>
-                <div>
-                  <h1 className="text-xl sm:text-2xl font-black text-[#2E7D32] dark:text-[#81C784]">
-                    {t("title") || "Herd Data"}
-                  </h1>
-                  <p className="text-[11px] sm:text-xs text-zinc-500 dark:text-zinc-400">{t("desc") || "Manage individual pigs, track health, and view records"}</p>
-                </div>
+            <div className="flex items-center gap-2.5">
+              <div className="h-10 w-10 rounded-xl bg-[#E8F5E9] dark:bg-[#1B5E20]/40 border border-[#2E7D32]/30 flex items-center justify-center flex-shrink-0">
+                <HerdDataIcon className="h-5 w-5 text-[#2E7D32] dark:text-[#81C784]" />
               </div>
-            </div>
+              <div>
+                <h1 className="text-xl sm:text-2xl font-black text-[#2E7D32] dark:text-[#81C784]">
+                  {t("title") || "Herd Data"}
+                </h1>
+                <p className="hidden sm:block text-[11px] sm:text-xs text-zinc-500 dark:text-zinc-400">{t("desc") || "Manage individual pigs, track health, and view records"}</p>
+              </div>
+          </div>
 
             <div className="flex items-center gap-2 flex-wrap">
               <button
@@ -559,7 +561,7 @@ export default function HerdPage() {
                     : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
                 }`}
               >
-                All
+                {t("all") || "All"}
               </button>
 
               {PURPOSES.map((p) => {
@@ -575,7 +577,7 @@ export default function HerdPage() {
                         : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
                     }`}
                   >
-                    {p}
+                    {p.toLowerCase() === "breeder" ? (t("breeder") || "Breeder") : (t("porker") || "Porker")}
                   </button>
                 );
               })}
@@ -595,7 +597,7 @@ export default function HerdPage() {
                         : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
                     }`}
                   >
-                    {st}
+                    {t(st.toLowerCase()) || st}
                   </button>
                 );
               })}

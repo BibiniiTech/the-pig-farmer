@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 import ReportLayout from "./ReportLayout";
 import { formatSwineAge } from "@/lib/swineGrowthDatabase";
 import { resolvePigIds } from "@/lib/pdfExporter";
@@ -15,12 +16,14 @@ interface HerdReportProps {
 }
 
 const HerdReport: React.FC<HerdReportProps> = ({
+
   pigs,
   allPigs = [],
   healthRecords = {},
   title = "Herd Data Report",
   includeSummary = true,
 }) => {
+  const t = useTranslations("Reports");
   const isProfile = title.toLowerCase().includes("profile");
   const combinedAllPigs = allPigs.length > 0 ? allPigs : pigs;
 
@@ -51,7 +54,7 @@ const HerdReport: React.FC<HerdReportProps> = ({
         {/* Herd Summary block (exact text and layout matching Android generateHerdReportPdf) */}
         {includeSummary && !isProfile && (
           <div>
-            <h3 className="text-[16pt] font-bold text-black mb-2">Herd Summary</h3>
+            <h3 className="text-[16pt] font-bold text-black mb-2">{t("summary") || "Herd Summary"}</h3>
             <div className="space-y-1 text-[11pt] text-black">
               <p>Total Pigs: {pigs.length}</p>
               <p>Total Breeders: {breeders.length}</p>
@@ -72,13 +75,13 @@ const HerdReport: React.FC<HerdReportProps> = ({
             <thead>
               <tr className="bg-[#D3D3D3] text-black font-bold text-left border-b border-zinc-400">
                 <th className="p-2 border border-zinc-400 font-bold">Tag #</th>
-                <th className="p-2 border border-zinc-400 font-bold">Gender</th>
-                <th className="p-2 border border-zinc-400 font-bold">Breed</th>
-                <th className="p-2 border border-zinc-400 font-bold">Purpose</th>
-                <th className="p-2 border border-zinc-400 font-bold text-center">Weight (kg)</th>
+                <th className="p-2 border border-zinc-400 font-bold">{t("gender") || "Gender"}</th>
+                <th className="p-2 border border-zinc-400 font-bold">{t("breed") || "Breed"}</th>
+                <th className="p-2 border border-zinc-400 font-bold">{t("purpose") || "Purpose"}</th>
+                <th className="p-2 border border-zinc-400 font-bold text-center">{t("weight") || "Weight (kg)"}</th>
                 <th className="p-2 border border-zinc-400 font-bold">Pen #</th>
-                <th className="p-2 border border-zinc-400 font-bold">Date of Birth</th>
-                <th className="p-2 border border-zinc-400 font-bold">Age</th>
+                <th className="p-2 border border-zinc-400 font-bold">{t("dateOfBirth") || "Date of Birth"}</th>
+                <th className="p-2 border border-zinc-400 font-bold">{t("age") || "Age"}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-300">
@@ -111,7 +114,7 @@ const HerdReport: React.FC<HerdReportProps> = ({
         {/* History section (matching Android addSection("History") & Target Animal table) */}
         {hasHealthHistory && (
           <div className="space-y-6">
-            <h3 className="text-[16pt] font-bold text-black border-b border-zinc-300 pb-1">History</h3>
+            <h3 className="text-[16pt] font-bold text-black border-b border-zinc-300 pb-1">{t("history") || "History"}</h3>
             {Object.entries(combinedHealthRecords).map(([pigId, records]) => {
               if (!records || records.length === 0) return null;
               const pigTag =
@@ -127,9 +130,9 @@ const HerdReport: React.FC<HerdReportProps> = ({
                   <table className="w-full border-collapse text-[9pt] border border-zinc-400">
                     <thead>
                       <tr className="bg-[#D3D3D3] text-black font-bold text-left border-b border-zinc-400">
-                        <th className="p-2 border border-zinc-400 w-1/4">Activity Type</th>
-                        <th className="p-2 border border-zinc-400 w-1/5">Date</th>
-                        <th className="p-2 border border-zinc-400">Notes</th>
+                        <th className="p-2 border border-zinc-400 w-1/4">{t("activityType") || "Activity Type"}</th>
+                        <th className="p-2 border border-zinc-400 w-1/5">{t("date") || "Date"}</th>
+                        <th className="p-2 border border-zinc-400">{t("notes") || "Notes"}</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-zinc-300">

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useAuth } from "@/context/AuthContext";
+import { useTranslations } from "next-intl";
 
 interface ManageSubscriptionModalProps {
   isOpen: boolean;
@@ -44,6 +45,7 @@ const BENEFITS = [
 ];
 
 export default function ManageSubscriptionModal({ isOpen, onClose }: ManageSubscriptionModalProps) {
+  const t = useTranslations("Common");
   const { user, userProfile, activeFarmUid } = useAuth();
 
   if (!isOpen) return null;
@@ -118,7 +120,7 @@ export default function ManageSubscriptionModal({ isOpen, onClose }: ManageSubsc
             className="flex-1 h-11 flex items-center justify-center gap-1.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-750 text-xs font-bold text-zinc-700 dark:text-zinc-300 transition-colors shadow-sm"
           >
             <SupportAgentIcon className="w-4 h-4 text-zinc-500" />
-            <span>Support</span>
+            <span>{t("support") || "Support"}</span>
           </a>
 
           <button

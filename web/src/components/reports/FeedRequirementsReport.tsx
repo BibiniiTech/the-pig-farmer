@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 import ReportLayout from "./ReportLayout";
 
 export interface FeedRequirementBreakdownItem {
@@ -25,6 +26,7 @@ const FeedRequirementsReport: React.FC<FeedRequirementsReportProps> = ({
   totalPeriod,
   title = "Feed Requirements Report",
 }) => {
+  const t = useTranslations("Reports");
   const finalDays = days > 0 ? days : 1;
   const finalPeriod = totalPeriod !== undefined ? totalPeriod : totalDaily * finalDays;
   const durationLabel = finalDays > 1 ? `${finalDays} Days` : "Daily (kg)";
@@ -35,8 +37,8 @@ const FeedRequirementsReport: React.FC<FeedRequirementsReportProps> = ({
         <table className="w-full border-collapse text-[10pt] border border-zinc-400">
           <thead>
             <tr className="bg-[#D3D3D3] text-black font-bold text-left border-b border-zinc-400">
-              <th className="p-2 border border-zinc-400 font-bold w-[60%]">Growth Stage</th>
-              <th className="p-2 border border-zinc-400 font-bold text-right w-[20%]">Daily</th>
+              <th className="p-2 border border-zinc-400 font-bold w-[60%]">{t("growthStage") || "Growth Stage"}</th>
+              <th className="p-2 border border-zinc-400 font-bold text-right w-[20%]">{t("daily") || "Daily"}</th>
               <th className="p-2 border border-zinc-400 font-bold text-right w-[20%]">{durationLabel}</th>
             </tr>
           </thead>
@@ -65,7 +67,7 @@ const FeedRequirementsReport: React.FC<FeedRequirementsReportProps> = ({
               })
             )}
             <tr className="font-bold text-black border-t-2 border-zinc-400">
-              <td className="p-2 border border-zinc-400 font-bold">TOTAL</td>
+              <td className="p-2 border border-zinc-400 font-bold">{t("total") || "TOTAL"}</td>
               <td className="p-2 border border-zinc-400 text-right font-mono font-bold">{totalDaily.toFixed(1)}</td>
               <td className="p-2 border border-zinc-400 text-right font-mono font-bold">{finalPeriod.toFixed(1)}</td>
             </tr>

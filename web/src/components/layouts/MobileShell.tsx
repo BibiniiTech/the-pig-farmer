@@ -133,7 +133,7 @@ export default function MobileShell({
     { key: "home", label: tNav("home"), path: "/dashboard", icon: HomeIcon },
     { key: "herd", label: tNav("herd"), path: "/dashboard/herd", icon: HerdDataIcon },
     { key: "feed", label: tNav("feed"), path: "/dashboard/feed", icon: FeedManagementIcon },
-    { key: "activities", label: tNav("activities"), path: "/dashboard/activities", icon: HerdActivitiesIcon },
+    { key: "activities", label: tNav("activities"), path: "/dashboard?section=activities", icon: HerdActivitiesIcon },
     { key: "financials", label: tNav("financials"), path: "/dashboard/financials", icon: FinancialsIcon },
     { key: "hr", label: tNav("hr"), path: "/dashboard?section=hr", icon: HumanResourcesIcon },
     { key: "hub", label: tNav("hub"), path: "/dashboard?section=hub", icon: LocalHubIcon },
@@ -274,7 +274,7 @@ export default function MobileShell({
           id="mobile-farm-header-button"
           onClick={() => setIsSettingsModalOpen(true)}
           className="flex items-center gap-2.5 text-left select-none hover:opacity-85 active:scale-95 transition-all max-w-[65%]"
-          title="Profile & Settings"
+          title={tNav("settings") || "Profile & Settings"}
         >
           <div className="relative h-11 w-11 rounded-xl ring-1.5 ring-emerald-500/25 bg-emerald-50/80 dark:bg-emerald-950/40 flex items-center justify-center overflow-hidden flex-shrink-0 shadow-xs">
             <img
@@ -291,7 +291,7 @@ export default function MobileShell({
               {userProfile?.farmName || "SmartSwine"}
             </span>
             <span className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 truncate leading-none mt-0.5">
-              {userProfile?.firstName ? `Welcome Farmer ${userProfile.firstName}` : "Welcome Farmer"}
+              {userProfile?.firstName ? (tDash("welcomeFarmerName", { name: userProfile.firstName }) || `Welcome Farmer ${userProfile.firstName}`) : (tDash("welcomeFarmer") || "Welcome Farmer")}
             </span>
           </div>
         </button>
@@ -317,7 +317,7 @@ export default function MobileShell({
           {/* How-To Guide Help Button */}
           <Link
             href="/dashboard/guide"
-            aria-label="How-To Guide"
+            aria-label={tDash("howToGuide") || "How-To Guide"}
             className="p-2 rounded-xl text-emerald-700 dark:text-emerald-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors active:scale-95"
           >
             <svg className="h-5.5 w-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
@@ -330,7 +330,7 @@ export default function MobileShell({
           <button
             id="mobile-menu-toggle"
             onClick={() => setDrawerOpen(true)}
-            aria-label="Open navigation menu"
+            aria-label={tNav("menu") || "Open navigation menu"}
             className="p-2 -mr-1 rounded-xl text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
           >
             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
@@ -354,7 +354,7 @@ export default function MobileShell({
         className={`fixed top-0 right-0 z-[60] h-full w-[82%] max-w-[320px] flex flex-col bg-gradient-to-b from-[#0E3820] via-[#092214] to-[#04120A] text-white shadow-2xl transition-transform duration-300 ease-out rounded-l-3xl border-l border-emerald-700/30 overflow-hidden ${
           drawerOpen ? "translate-x-0" : "translate-x-full"
         }`}
-        aria-label="Navigation drawer"
+        aria-label={tNav("menu") || "Navigation drawer"}
       >
         {/* Drawer Header */}
         <div className="bg-[#134226] border-b border-emerald-600/30 p-4">
@@ -382,7 +382,7 @@ export default function MobileShell({
             <button
               onClick={() => setDrawerOpen(false)}
               className="p-1.5 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors"
-              aria-label="Close menu"
+              aria-label={tNav("close") || "Close menu"}
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />

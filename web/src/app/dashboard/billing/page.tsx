@@ -201,7 +201,7 @@ export default function BillingPage() {
                     <circle cx="12" cy="12" r="3" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
                   </svg>
-                  <span>Manage Subscription</span>
+                  <span>{t("manageSubscription") || "Manage Subscription"}</span>
                 </button>
               </div>
             </div>
@@ -312,7 +312,7 @@ export default function BillingPage() {
 
                   {errorMessage && (
                     <div className="rounded-xl bg-red-50 border border-red-200 p-3 text-center space-y-1">
-                      <p className="text-xs font-bold text-red-800">Checkout Error</p>
+                      <p className="text-xs font-bold text-red-800">{t("checkoutError") || "Checkout Error"}</p>
                       <p className="text-[11px] text-red-600">{errorMessage}</p>
                     </div>
                   )}
@@ -342,7 +342,7 @@ export default function BillingPage() {
                             setEmailTouched(true);
                           }}
                           onBlur={() => setEmailTouched(true)}
-                          placeholder="e.g. farmer@example.com"
+                          placeholder={t("emailPlaceholder") || "e.g. farmer@example.com"}
                           className={`w-full rounded-lg border px-3 py-2 text-xs text-zinc-900 bg-white placeholder-zinc-400 focus:outline-none transition ${
                             emailTouched && !isEmailValid
                               ? "border-red-400 focus:border-red-500 focus:ring-1 focus:ring-red-400"
@@ -365,7 +365,7 @@ export default function BillingPage() {
                             type="text"
                             value={billingFirstName}
                             onChange={(e) => setBillingFirstName(e.target.value)}
-                            placeholder="First name"
+                            placeholder={t("firstNamePlaceholder") || "First name"}
                             className="w-full rounded-lg border border-zinc-300 px-3 py-2 text-xs text-zinc-900 bg-white placeholder-zinc-400 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition"
                           />
                         </div>
@@ -377,7 +377,7 @@ export default function BillingPage() {
                             type="text"
                             value={billingLastName}
                             onChange={(e) => setBillingLastName(e.target.value)}
-                            placeholder="Last name"
+                            placeholder={t("lastNamePlaceholder") || "Last name"}
                             className="w-full rounded-lg border border-zinc-300 px-3 py-2 text-xs text-zinc-900 bg-white placeholder-zinc-400 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition"
                           />
                         </div>
@@ -391,7 +391,7 @@ export default function BillingPage() {
                           type="tel"
                           value={billingPhone}
                           onChange={(e) => setBillingPhone(e.target.value)}
-                          placeholder="e.g. +1 555 123 4567"
+                          placeholder={t("phonePlaceholder") || "e.g. +1 555 123 4567"}
                           className="w-full rounded-lg border border-zinc-300 px-3 py-2 text-xs text-zinc-900 bg-white placeholder-zinc-400 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition"
                         />
                       </div>
@@ -412,7 +412,7 @@ export default function BillingPage() {
                       {isSubmitting ? (
                         <>
                           <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                          <span>Preparing Secure Checkout...</span>
+                          <span>{t("preparingCheckout") || "Preparing Secure Checkout..."}</span>
                         </>
                       ) : !trimmedEmail ? (
                         t("enterEmailPrompt")

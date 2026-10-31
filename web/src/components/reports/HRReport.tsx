@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 import ReportLayout from "./ReportLayout";
 import { StaffMember, FinancialRecord } from "@/lib/types";
 
@@ -17,6 +18,7 @@ const HRReport: React.FC<HRReportProps> = ({
   currencySymbol = "$",
   title = "Staff & Payroll Report",
 }) => {
+  const t = useTranslations("Reports");
   const currentYear = new Date().getFullYear().toString();
   const totalStaff = staff.length;
   const activeStaff = staff.filter(
@@ -53,7 +55,7 @@ const HRReport: React.FC<HRReportProps> = ({
       <div className="space-y-6">
         {/* Summary section */}
         <div>
-          <h3 className="text-[16pt] font-bold text-black mb-2">Summary</h3>
+          <h3 className="text-[16pt] font-bold text-black mb-2">{t("summary") || "Summary"}</h3>
           <div className="space-y-1 text-[11pt] text-black">
             <p>Total Staff: {totalStaff}</p>
             <p>Active Staff: {activeStaff}</p>
@@ -70,16 +72,16 @@ const HRReport: React.FC<HRReportProps> = ({
 
         {/* Staff Details table */}
         <div>
-          <h3 className="text-[16pt] font-bold text-black mb-2">Staff Details</h3>
+          <h3 className="text-[16pt] font-bold text-black mb-2">{t("staffDetails") || "Staff Details"}</h3>
           <table className="w-full border-collapse text-[9.5pt] border border-zinc-400">
             <thead>
               <tr className="bg-[#D3D3D3] text-black font-bold text-left border-b border-zinc-400">
-                <th className="p-2 border border-zinc-400 font-bold w-[24%]">Staff Name</th>
-                <th className="p-2 border border-zinc-400 font-bold w-[18%]">Role</th>
-                <th className="p-2 border border-zinc-400 font-bold w-[14%]">Status</th>
-                <th className="p-2 border border-zinc-400 font-bold w-[16%]">Phone</th>
-                <th className="p-2 border border-zinc-400 font-bold text-right w-[14%]">Monthly Salary</th>
-                <th className="p-2 border border-zinc-400 font-bold text-right w-[14%]">YTD Salary</th>
+                <th className="p-2 border border-zinc-400 font-bold w-[24%]">{t("staffName") || "Staff Name"}</th>
+                <th className="p-2 border border-zinc-400 font-bold w-[18%]">{t("role") || "Role"}</th>
+                <th className="p-2 border border-zinc-400 font-bold w-[14%]">{t("status") || "Status"}</th>
+                <th className="p-2 border border-zinc-400 font-bold w-[16%]">{t("phoneNumber") || "Phone"}</th>
+                <th className="p-2 border border-zinc-400 font-bold text-right w-[14%]">{t("monthlySalary") || "Monthly Salary"}</th>
+                <th className="p-2 border border-zinc-400 font-bold text-right w-[14%]">{t("ytdSalary") || "YTD Salary"}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-300">
@@ -111,14 +113,14 @@ const HRReport: React.FC<HRReportProps> = ({
 
         {/* Payroll History section */}
         <div>
-          <h3 className="text-[16pt] font-bold text-black mb-2">Payroll History</h3>
+          <h3 className="text-[16pt] font-bold text-black mb-2">{t("payrollHistory") || "Payroll History"}</h3>
           <table className="w-full border-collapse text-[9.5pt] border border-zinc-400">
             <thead>
               <tr className="bg-[#D3D3D3] text-black font-bold text-left border-b border-zinc-400">
-                <th className="p-2 border border-zinc-400 font-bold w-[18%]">Activity Date</th>
-                <th className="p-2 border border-zinc-400 font-bold w-[46%]">Description</th>
-                <th className="p-2 border border-zinc-400 font-bold text-right w-[18%]">Amount</th>
-                <th className="p-2 border border-zinc-400 font-bold text-left w-[18%]">Category</th>
+                <th className="p-2 border border-zinc-400 font-bold w-[18%]">{t("activityDate") || "Activity Date"}</th>
+                <th className="p-2 border border-zinc-400 font-bold w-[46%]">{t("description") || "Description"}</th>
+                <th className="p-2 border border-zinc-400 font-bold text-right w-[18%]">{t("amount") || "Amount"}</th>
+                <th className="p-2 border border-zinc-400 font-bold text-left w-[18%]">{t("category") || "Category"}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-300">

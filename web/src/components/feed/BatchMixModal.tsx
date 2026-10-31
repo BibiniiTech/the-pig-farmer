@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { collection, doc, getDocs, writeBatch, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { FeedInventoryItem } from "@/lib/types";
@@ -26,6 +27,8 @@ export default function BatchMixModal({
   activeFarmUid,
   onSuccess,
 }: BatchMixModalProps) {
+  const t = useTranslations("Feed");
+  const tCommon = useTranslations("Common");
   const [batchKg, setBatchKg] = useState<number>(defaultBatchKg);
   const [inventoryItems, setInventoryItems] = useState<FeedInventoryItem[]>([]);
   const [loadingInventory, setLoadingInventory] = useState<boolean>(true);
@@ -209,8 +212,8 @@ export default function BatchMixModal({
       <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border border-zinc-200 animate-fadeIn">
         <div className="flex items-center justify-between pb-3 border-b border-zinc-150">
           <div>
-            <h3 className="text-base font-black text-amber-600">Execute Batch Mix</h3>
-            <p className="text-xs text-zinc-500">Produce finished complete feed and deduct ingredients from inventory.</p>
+            <h3 className="text-base font-black text-amber-600">{t("executeBatchMix") || "Execute Batch Mix"}</h3>
+            <p className="text-xs text-zinc-500">{t("batchMixProduceDesc") || "Produce finished complete feed and deduct ingredients from inventory."}</p>
           </div>
           <button
             type="button"
@@ -262,7 +265,7 @@ export default function BatchMixModal({
             <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-xs space-y-1">
               <div className="flex items-center gap-1.5 font-bold text-rose-800">
                 <span>⚠️</span>
-                <span>Ingredients Out of Stock in Feed Inventory:</span>
+                <span>{t("ingredientsOutOfStock") || "Ingredients Out of Stock in Feed Inventory:"}</span>
               </div>
               <p className="text-zinc-600 text-[11px]">
                 The following required ingredients have 0 kg in stock. Mixing will deduct remaining items and leave negative stock tracking if needed:
@@ -314,7 +317,7 @@ export default function BatchMixModal({
             {isMixing ? (
               <>
                 <div className="h-3 w-3 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                <span>Mixing Batch...</span>
+                <span>{t("mixingBatch") || "Mixing Batch..."}</span>
               </>
             ) : (
               <span>Mix & Deduct Stock</span>

@@ -147,15 +147,19 @@ export default function FeedCalculatorPage() {
         )}
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
+        {/* Mobile Back Button (above header on mobile, removed on desktop) */}
+        <div className="sm:hidden mb-2">
+          <Link
+            href="/dashboard?section=feed"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition font-bold text-xs shadow-xs"
+          >
+            <ArrowLeftIcon className="h-4 w-4" />
+            <span>{tCommon("back") || "Back"}</span>
+          </Link>
+        </div>
+
         <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-4">
-          <div className="flex items-center gap-3">
-            <Link
-              href="/dashboard?section=feed"
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition font-bold text-xs shadow-xs"
-            >
-              <ArrowLeftIcon className="h-4 w-4" />
-              <span>{tCommon("back") || "Back"}</span>
-            </Link>
+          <div className="flex items-center gap-2.5">
             <div className="h-10 w-10 rounded-xl bg-[#FFF3E0] dark:bg-[#E65100]/30 border border-[#E65100]/30 flex items-center justify-center flex-shrink-0">
               <CalculateIcon className="h-5 w-5 text-[#E65100] dark:text-[#FFB74D]" />
             </div>
@@ -163,7 +167,9 @@ export default function FeedCalculatorPage() {
               <h1 className="text-xl sm:text-2xl font-black text-[#E65100] dark:text-[#FFB74D]">
                 {t("calculator") || "Calculator"}
               </h1>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400">{t("calculatorDesc") || "Calculate daily and periodic feed requirements"}</p>
+              <p className="hidden sm:block text-xs text-zinc-500 dark:text-zinc-400">
+                {t("calculatorDesc") || "Calculate daily and periodic feed requirements"}
+              </p>
             </div>
           </div>
         </div>
@@ -171,7 +177,7 @@ export default function FeedCalculatorPage() {
         {/* Mobile Quick Summary for Instant Visibility */}
         <div className="lg:hidden bg-amber-600 text-white rounded-2xl p-4 shadow-sm flex items-center justify-between">
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-wider text-amber-100">Total Feed Needed ({calcDays} {calcDays === 1 ? "Day" : "Days"})</p>
+            <p className="text-[11px] font-bold uppercase tracking-wider text-amber-100">Total Feed Needed ({calcDays} {calcDays === 1 ? (t("day") || "Day") : (t("days") || "Days")})</p>
             <p className="text-2xl font-black">{calcDays > 1 ? `${totalPeriodReq.toFixed(1)} kg` : `${totalDailyReq.toFixed(1)} kg`}</p>
           </div>
           <span className="text-xs bg-white/20 px-3 py-1.5 rounded-xl font-bold">
@@ -213,14 +219,14 @@ export default function FeedCalculatorPage() {
                   <input type="number" min="0" value={lactatingCount} onChange={(e) => setLactatingCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-amber-500 shadow-sm" />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-zinc-500 mb-1">Breeder Starters</label>
+                  <label className="block text-xs font-bold text-zinc-500 mb-1">{t("breederStarters") || "Breeder Starters"}</label>
                   <input type="number" min="0" value={breedersStarterCount} onChange={(e) => setBreedersStarterCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-amber-500 shadow-sm" />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-zinc-500 mb-1">Breeder Growers</label>
+                  <label className="block text-xs font-bold text-zinc-500 mb-1">{t("breederGrowers") || "Breeder Growers"}</label>
                   <input type="number" min="0" value={breedersGrowerCount} onChange={(e) => setBreedersGrowerCount(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-amber-500 shadow-sm" />
                 </div>
                 <div>
@@ -252,13 +258,13 @@ export default function FeedCalculatorPage() {
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-bold text-zinc-900">{t("quantityNeeded") || "Quantity Needed"}</h3>
                 <span className="text-xs bg-amber-50 text-amber-700 font-bold px-2.5 py-1 rounded-full border border-amber-200">
-                  {calcDays} {calcDays === 1 ? "Day" : "Days"}
+                  {calcDays} {calcDays === 1 ? (t("day") || "Day") : (t("days") || "Days")}
                 </span>
               </div>
 
               {calculationBreakdown.length === 0 ? (
                 <div className="py-12 text-center text-zinc-400">
-                  <p className="text-sm">No pigs entered to calculate requirements.</p>
+                  <p className="text-sm">{t("noPigsEnteredForRequirements") || "No pigs entered to calculate requirements."}</p>
                 </div>
               ) : (
                 <div className="overflow-x-auto -mx-6 sm:mx-0">
@@ -268,7 +274,7 @@ export default function FeedCalculatorPage() {
                         <tr className="text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider">
                           <th className="pb-3">{t("category") || "Category"}</th>
                           <th className="pb-3 text-right">{t("headCount") || "Head"}</th>
-                          <th className="pb-3 text-right">{t("dailyIntake") || "Rate"}</th>
+                          <th className="pb-3 text-right">{t("dailyIntake") || t("rate") || "Rate"}</th>
                           <th className="pb-3 text-right">{t("dailyTotal") || "Daily"}</th>
                           {calcDays > 1 && <th className="pb-3 text-right">{t("periodTotal") || `Total (${calcDays}d)`}</th>}
                         </tr>
@@ -294,7 +300,7 @@ export default function FeedCalculatorPage() {
 
             <div className="mt-8 pt-4 border-t border-zinc-200 flex items-center justify-between flex-wrap gap-4">
               <div>
-                <p className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">Grand Total</p>
+                <p className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">{t("grandTotal") || "Grand Total"}</p>
                 <p className="text-2xl font-black text-amber-600">
                   {calcDays > 1 ? `${totalPeriodReq.toFixed(1)} kg` : `${totalDailyReq.toFixed(1)} kg`}
                 </p>
@@ -309,7 +315,7 @@ export default function FeedCalculatorPage() {
                   className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-2.5 text-xs font-bold text-amber-800 shadow-sm flex items-center gap-2 hover:bg-amber-100 transition"
                 >
                   <ExportPdfIcon className="h-4 w-4 text-amber-600" />
-                  Export PDF (Premium)
+                  {t("exportPdfPremium") || "Export PDF (Premium)"}
                 </button>
               }>
                 <button

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 import ReportLayout from "./ReportLayout";
 import { FeedNutrientProfile, InclusionSafetyAlert } from "@/lib/feedCalculator";
 import { NutritionalRequirement } from "@/lib/types";
@@ -31,6 +32,7 @@ const FeedAnalysisReport: React.FC<FeedAnalysisReportProps> = ({
   alerts = [],
   currencySymbol = "$",
 }) => {
+  const t = useTranslations("Reports");
   const unitLabel = isPercentage ? "%" : "kg";
   const sumQty = Math.max(0.0001, totalWeight);
 
@@ -73,13 +75,13 @@ const FeedAnalysisReport: React.FC<FeedAnalysisReportProps> = ({
       <div className="space-y-6">
         {/* Ration Composition */}
         <div>
-          <h3 className="text-[16pt] font-bold text-black mb-2">Ration Composition</h3>
+          <h3 className="text-[16pt] font-bold text-black mb-2">{t("rationComposition") || "Ration Composition"}</h3>
           <table className="w-full border-collapse text-[10pt] border border-zinc-400">
             <thead>
               <tr className="bg-[#D3D3D3] text-black font-bold text-left border-b border-zinc-400">
-                <th className="p-2 border border-zinc-400 font-bold w-[50%]">Ingredient</th>
-                <th className="p-2 border border-zinc-400 font-bold text-right w-[25%]">Amount</th>
-                <th className="p-2 border border-zinc-400 font-bold text-right w-[25%]">Inclusion Rate</th>
+                <th className="p-2 border border-zinc-400 font-bold w-[50%]">{t("ingredient") || "Ingredient"}</th>
+                <th className="p-2 border border-zinc-400 font-bold text-right w-[25%]">{t("amount") || "Amount"}</th>
+                <th className="p-2 border border-zinc-400 font-bold text-right w-[25%]">{t("inclusionRate") || "Inclusion Rate"}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-300">
@@ -96,7 +98,7 @@ const FeedAnalysisReport: React.FC<FeedAnalysisReportProps> = ({
                 );
               })}
               <tr className="font-bold text-black border-t-2 border-zinc-400">
-                <td className="p-2 border border-zinc-400 font-bold">TOTAL</td>
+                <td className="p-2 border border-zinc-400 font-bold">{t("total") || "TOTAL"}</td>
                 <td className="p-2 border border-zinc-400 text-right font-mono font-bold">
                   {totalWeight.toFixed(1)} {unitLabel}
                 </td>
@@ -109,30 +111,30 @@ const FeedAnalysisReport: React.FC<FeedAnalysisReportProps> = ({
         {/* Cost Analysis (if costPerKg > 0) */}
         {Boolean(profile.costPerKg && profile.costPerKg > 0) && (
           <div>
-            <h3 className="text-[16pt] font-bold text-black mb-2">Cost Analysis</h3>
+            <h3 className="text-[16pt] font-bold text-black mb-2">{t("costAnalysis") || "Cost Analysis"}</h3>
             <table className="w-full border-collapse text-[10pt] border border-zinc-400">
               <thead>
                 <tr className="bg-[#D3D3D3] text-black font-bold text-left border-b border-zinc-400">
-                  <th className="p-2 border border-zinc-400 font-bold w-[50%]">Metric</th>
-                  <th className="p-2 border border-zinc-400 font-bold text-right w-[50%]">Cost</th>
+                  <th className="p-2 border border-zinc-400 font-bold w-[50%]">{t("metric") || "Metric"}</th>
+                  <th className="p-2 border border-zinc-400 font-bold text-right w-[50%]">{t("cost") || "Cost"}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="text-black">
-                  <td className="p-2 border border-zinc-300">Cost/kg</td>
+                  <td className="p-2 border border-zinc-300">{t("costPerKg") || "Cost/kg"}</td>
                   <td className="p-2 border border-zinc-300 text-right font-mono font-bold">
                     {currencySymbol}{(profile.costPerKg || 0).toFixed(2)}
                   </td>
                 </tr>
                 <tr className="text-black">
-                  <td className="p-2 border border-zinc-300">Cost/50kg Bag</td>
+                  <td className="p-2 border border-zinc-300">{t("costPer50kgBag") || "Cost/50kg Bag"}</td>
                   <td className="p-2 border border-zinc-300 text-right font-mono font-bold">
                     {currencySymbol}{(profile.costPer50kgBag || 0).toFixed(2)}
                   </td>
                 </tr>
                 {!isPercentage && totalWeight > 0 && (
                   <tr className="font-bold text-black">
-                    <td className="p-2 border border-zinc-300 font-bold">Batch Total Cost</td>
+                    <td className="p-2 border border-zinc-300 font-bold">{t("batchTotalCost") || "Batch Total Cost"}</td>
                     <td className="p-2 border border-zinc-300 text-right font-mono font-bold">
                       {currencySymbol}{(profile.totalCost || 0).toFixed(2)}
                     </td>
@@ -151,10 +153,10 @@ const FeedAnalysisReport: React.FC<FeedAnalysisReportProps> = ({
           <table className="w-full border-collapse text-[10pt] border border-zinc-400">
             <thead>
               <tr className="bg-[#D3D3D3] text-black font-bold text-left border-b border-zinc-400">
-                <th className="p-2 border border-zinc-400 font-bold w-[40%]">Nutrient</th>
-                <th className="p-2 border border-zinc-400 font-bold text-right w-[20%]">Target</th>
-                <th className="p-2 border border-zinc-400 font-bold text-right w-[20%]">Actual</th>
-                <th className="p-2 border border-zinc-400 font-bold text-center w-[20%]">Status</th>
+                <th className="p-2 border border-zinc-400 font-bold w-[40%]">{t("nutrient") || "Nutrient"}</th>
+                <th className="p-2 border border-zinc-400 font-bold text-right w-[20%]">{t("target") || "Target"}</th>
+                <th className="p-2 border border-zinc-400 font-bold text-right w-[20%]">{t("actual") || "Actual"}</th>
+                <th className="p-2 border border-zinc-400 font-bold text-center w-[20%]">{t("status") || "Status"}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-300">
@@ -191,14 +193,14 @@ const FeedAnalysisReport: React.FC<FeedAnalysisReportProps> = ({
         {/* Veterinary Safety Alerts */}
         {alerts.length > 0 && (
           <div>
-            <h3 className="text-[16pt] font-bold text-black mb-2">Veterinary Safety Alerts</h3>
+            <h3 className="text-[16pt] font-bold text-black mb-2">{t("veterinarySafetyAlerts") || "Veterinary Safety Alerts"}</h3>
             <table className="w-full border-collapse text-[10pt] border border-zinc-400">
               <thead>
                 <tr className="bg-[#D3D3D3] text-black font-bold text-left border-b border-zinc-400">
                   <th className="p-2 border border-zinc-400 font-bold w-[25%]">Ingredient</th>
                   <th className="p-2 border border-zinc-400 font-bold text-right w-[15%]">Actual</th>
-                  <th className="p-2 border border-zinc-400 font-bold text-right w-[15%]">Max Limit</th>
-                  <th className="p-2 border border-zinc-400 font-bold w-[45%]">Risk / Clinical Guidance</th>
+                  <th className="p-2 border border-zinc-400 font-bold text-right w-[15%]">{t("maxLimit") || "Max Limit"}</th>
+                  <th className="p-2 border border-zinc-400 font-bold w-[45%]">{t("riskClinicalGuidance") || "Risk / Clinical Guidance"}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-300">

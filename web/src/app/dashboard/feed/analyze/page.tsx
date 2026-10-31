@@ -149,15 +149,19 @@ export default function AnalyzeFeedPage() {
         )}
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-8">
+        {/* Mobile Back Button (above header on mobile, removed on desktop) */}
+        <div className="sm:hidden mb-2">
+          <Link
+            href="/dashboard?section=feed"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition font-bold text-xs shadow-xs"
+          >
+            <ArrowLeftIcon className="h-4 w-4" />
+            <span>{tCommon("back") || "Back"}</span>
+          </Link>
+        </div>
+
         <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-4">
-          <div className="flex items-center gap-3">
-            <Link
-              href="/dashboard?section=feed"
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition font-bold text-xs shadow-xs"
-            >
-              <ArrowLeftIcon className="h-4 w-4" />
-              <span>{tCommon("back") || "Back"}</span>
-            </Link>
+          <div className="flex items-center gap-2.5">
             <div className="h-10 w-10 rounded-xl bg-[#FFF3E0] dark:bg-[#E65100]/30 border border-[#E65100]/30 flex items-center justify-center flex-shrink-0">
               <AnalyticsIcon className="h-5 w-5 text-[#E65100] dark:text-[#FFB74D]" />
             </div>
@@ -165,7 +169,9 @@ export default function AnalyzeFeedPage() {
               <h1 className="text-xl sm:text-2xl font-black text-[#E65100] dark:text-[#FFB74D]">
                 {t("analyzeFeed") || "Analyze Feed"}
               </h1>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400">{t("analyzeFeedDesc") || "Calculate resulting nutritional profile of your custom feed mix"}</p>
+              <p className="hidden sm:block text-xs text-zinc-500 dark:text-zinc-400">
+                {t("analyzeFeedDesc") || "Calculate resulting nutritional profile of your custom feed mix"}
+              </p>
             </div>
           </div>
 
@@ -175,7 +181,7 @@ export default function AnalyzeFeedPage() {
             className="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200/80 text-amber-900 text-xs font-bold transition flex items-center gap-2 shadow-2xs active:scale-95"
           >
             <ScienceIcon className="h-4 w-4 text-amber-600" />
-            <span>Ingredients ({ingredients.length})</span>
+            <span>{t("ingredients") || "Ingredients"} ({ingredients.length})</span>
           </button>
         </div>
 
@@ -184,7 +190,7 @@ export default function AnalyzeFeedPage() {
             <div className="bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 space-y-4 shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-sm font-bold text-zinc-900">Input Mode</h3>
+                  <h3 className="text-sm font-bold text-zinc-900">{t("inputMode") || "Input Mode"}</h3>
                   <p className="text-xs text-zinc-500">Weight (kg) or Percentage (%)</p>
                 </div>
                 <div className="inline-flex bg-zinc-200/80 p-1 rounded-xl">
@@ -261,7 +267,7 @@ export default function AnalyzeFeedPage() {
               {analyzeItems.length === 0 ? (
                 <div className="py-10 text-center text-zinc-400">
                   <ScienceIcon className="h-10 w-10 mx-auto mb-2 opacity-50 text-amber-600" />
-                  <p className="text-xs font-medium">No ingredients added yet.</p>
+                  <p className="text-xs font-medium">{t("noIngredientsAdded") || "No ingredients added yet."}</p>
                   <p className="text-[11px] text-zinc-400 mt-0.5">Click &quot;+ Add Ingredient&quot; to begin analysis.</p>
                 </div>
               ) : (
@@ -316,7 +322,7 @@ export default function AnalyzeFeedPage() {
           <div className="lg:col-span-7 bg-zinc-50/60 backdrop-blur-md border border-zinc-200 rounded-2xl p-6 shadow-sm space-y-6">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div>
-                <h3 className="text-lg font-bold text-zinc-900">Nutrient Breakdown</h3>
+                <h3 className="text-lg font-bold text-zinc-900">{t("nutrientBreakdown") || "Nutrient Breakdown"}</h3>
                 <p className="text-xs text-zinc-500">Benchmark comparison for {analyzeTargetStage}</p>
               </div>
               {analyzeItems.length > 0 && (
@@ -329,7 +335,7 @@ export default function AnalyzeFeedPage() {
                     <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
-                    <span>Mix Batch</span>
+                    <span>{t("mixBatch") || "Mix Batch"}</span>
                   </button>
                   <button
                     type="button"
@@ -369,7 +375,7 @@ export default function AnalyzeFeedPage() {
             {analyzeItems.length === 0 ? (
               <div className="py-20 text-center text-zinc-400">
                 <AnalyticsIcon className="h-12 w-12 mx-auto mb-2 opacity-40 text-amber-600" />
-                <p className="text-sm font-medium">Add ingredients on the left to see live nutritional results.</p>
+                <p className="text-sm font-medium">{t("addIngredientsPrompt") || "Add ingredients on the left to see live nutritional results."}</p>
               </div>
             ) : (
               <div className="overflow-x-auto -mx-6 sm:mx-0">
@@ -377,10 +383,10 @@ export default function AnalyzeFeedPage() {
                   <table className="min-w-full divide-y divide-zinc-200 text-xs">
                     <thead>
                       <tr className="text-left font-semibold text-zinc-500">
-                        <th className="pb-3">Nutrient</th>
-                        <th className="pb-3 text-right">Actual Level</th>
-                        <th className="pb-3 text-right">Target Level</th>
-                        <th className="pb-3 text-right">Status</th>
+                        <th className="pb-3">{t("nutrient") || "Nutrient"}</th>
+                        <th className="pb-3 text-right">{t("actualLevel") || "Actual Level"}</th>
+                        <th className="pb-3 text-right">{t("targetLevel") || "Target Level"}</th>
+                        <th className="pb-3 text-right">{t("status") || "Status"}</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-zinc-150">
@@ -428,7 +434,7 @@ export default function AnalyzeFeedPage() {
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border border-zinc-200">
             <div className="flex items-center justify-between">
-              <h3 className="text-base font-bold text-zinc-900">Select Ingredient</h3>
+              <h3 className="text-base font-bold text-zinc-900">{t("selectIngredient") || "Select Ingredient"}</h3>
               <button
                 onClick={() => setShowAddIngredientModal(false)}
                 className="text-zinc-400 hover:text-zinc-700 text-sm font-bold"
@@ -439,7 +445,7 @@ export default function AnalyzeFeedPage() {
 
             <input
               type="text"
-              placeholder="Search ingredient name..."
+              placeholder={t("searchIngredientName") || "Search ingredient name..."}
               value={ingredientSearchQuery}
               onChange={(e) => setIngredientSearchQuery(e.target.value)}
               className="w-full px-3 py-2 text-xs border border-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-amber-500"

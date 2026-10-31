@@ -7,6 +7,7 @@ import DesktopHeader from "@/components/layouts/DesktopHeader";
 import { useTranslations } from "next-intl";
 
 export default function TermsOfServicePage() {
+  const tCommon = useTranslations("Common");
   const t = useTranslations("Terms");
   const { isMobile } = useDevice();
 
@@ -59,7 +60,7 @@ export default function TermsOfServicePage() {
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
-              <span>Back</span>
+              <span>{tCommon("back") || "Back"}</span>
             </Link>
             <div className="w-16" />
           </div>

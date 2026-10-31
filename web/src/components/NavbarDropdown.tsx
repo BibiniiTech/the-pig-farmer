@@ -125,7 +125,7 @@ export default function NavbarDropdown() {
     { key: "home", label: t("home"), path: "/dashboard", icon: HomeIcon, description: t("homeDesc") },
     { key: "herd", label: t("herd"), path: "/dashboard/herd", icon: HerdDataIcon, description: t("herdDesc") },
     { key: "feed", label: t("feed"), path: "/dashboard/feed", icon: FeedManagementIcon, description: t("feedDesc") },
-    { key: "activities", label: t("activities"), path: "/dashboard/activities", icon: HerdActivitiesIcon, description: t("activitiesDesc") },
+    { key: "activities", label: t("activities"), path: "/dashboard?section=activities", icon: HerdActivitiesIcon, description: t("activitiesDesc") },
     { key: "financials", label: t("financials"), path: "/dashboard/financials", icon: FinancialsIcon, description: t("financialsDesc") },
   ];
 
@@ -599,7 +599,7 @@ export default function NavbarDropdown() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                       </svg>
                     </div>
-                    <span>How-To Guide</span>
+                    <span>{t("howToGuide") || "How-To Guide"}</span>
                   </div>
                 </Link>
 

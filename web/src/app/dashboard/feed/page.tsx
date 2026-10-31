@@ -509,7 +509,7 @@ export default function FeedPage() {
   };
 
   const handleDeleteItem = async (itemId: string) => {
-    if (!activeFarmUid || !confirm("Are you sure you want to delete this item?")) return;
+    if (!activeFarmUid || !confirm(t("confirmDeleteFeedItem") || "Are you sure you want to delete this item?")) return;
     try {
       await deleteDoc(doc(db, "users", activeFarmUid, "feed_inventory", itemId));
     } catch (err) {
@@ -623,7 +623,7 @@ export default function FeedPage() {
         {isExpanded && (
           <div className="p-3 space-y-2 divide-y divide-zinc-100">
             {list.length === 0 ? (
-              <p className="text-[11px] text-zinc-400 italic">No ingredients in this group.</p>
+              <p className="text-[11px] text-zinc-400 italic">{t("noIngredientsInGroup") || "No ingredients in this group."}</p>
             ) : (
               list.map((ing) => (
                 <div key={ing.id} className="flex items-center justify-between pt-2 first:pt-0">
@@ -678,17 +678,20 @@ export default function FeedPage() {
         )}
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-12 print:p-0">
+          {/* Mobile Back Button (above header on mobile, removed on desktop) */}
+          <div className="sm:hidden mb-2">
+            <Link
+              href="/dashboard?section=feed"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition font-bold text-xs shadow-xs"
+            >
+              <ArrowLeftIcon className="h-4 w-4" />
+              <span>{tCommon("back") || "Back"}</span>
+            </Link>
+          </div>
 
           {/* Header Bar */}
           <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-4">
-            <div className="flex items-center gap-3">
-              <Link
-                href="/dashboard?section=feed"
-                className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition font-bold text-xs shadow-xs"
-              >
-                <ArrowLeftIcon className="h-4 w-4" />
-                <span>{tCommon("back") || "Back"}</span>
-              </Link>
+            <div className="flex items-center gap-2.5">
               <div className="h-10 w-10 rounded-xl bg-[#FFF3E0] dark:bg-[#E65100]/30 border border-[#E65100]/30 flex items-center justify-center flex-shrink-0">
                 <InventoryIcon className="h-5 w-5 text-[#E65100] dark:text-[#FFB74D]" />
               </div>
@@ -696,7 +699,9 @@ export default function FeedPage() {
                 <h1 className="text-xl sm:text-2xl font-black text-[#E65100] dark:text-[#FFB74D]">
                   {t("inventory") || "Feed Inventory"}
                 </h1>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400">{t("inventoryDesc") || "Manage feed stock, restock bags, and log usage"}</p>
+                <p className="hidden sm:block text-xs text-zinc-500 dark:text-zinc-400">
+                  {t("inventoryDesc") || "Manage feed stock, restock bags, and log usage"}
+                </p>
               </div>
             </div>
 
@@ -707,7 +712,7 @@ export default function FeedPage() {
                 className="rounded-xl border border-amber-300 bg-amber-50 px-3.5 py-2 text-xs font-bold text-amber-900 hover:bg-amber-100 transition shadow-xs flex items-center gap-2 active:scale-95"
               >
                 <ScienceIcon className="h-4 w-4 text-amber-600" />
-                <span>Ingredients Catalog ({ingredients.length})</span>
+                <span>{t("ingredientsCatalog") || "Ingredients Catalog"} ({ingredients.length})</span>
               </button>
             </div>
           </div>
@@ -804,7 +809,7 @@ export default function FeedPage() {
                               <button
                                 onClick={() => handleDeleteItem(item.id)}
                                 className="p-1 text-zinc-400 hover:text-rose-600 transition"
-                                title="Delete item"
+                                title={t("deleteItemTooltip") || "Delete item"}
                               >
                                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -845,7 +850,7 @@ export default function FeedPage() {
                             }}
                             className="flex-1 rounded-xl bg-amber-600 hover:bg-amber-700 py-2 text-xs font-bold text-white shadow shadow-amber-600/10 transition active:scale-95 text-center"
                           >
-                            Log Usage
+                            {t("logUsage") || "Log Usage"}
                           </button>
                         </div>
                       </div>
@@ -924,7 +929,7 @@ export default function FeedPage() {
                   required
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
-                  placeholder="e.g. Broiler Finisher"
+                  placeholder={t("feedItemNamePlaceholder") || "e.g. Broiler Finisher"}
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                 />
               </div>
@@ -1051,7 +1056,7 @@ export default function FeedPage() {
                   type="text"
                   value={restockNotes}
                   onChange={(e) => setRestockNotes(e.target.value)}
-                  placeholder="e.g. Purchased from store"
+                  placeholder={t("feedStorePlaceholder") || "e.g. Purchased from store"}
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                 />
               </div>
@@ -1104,7 +1109,7 @@ export default function FeedPage() {
                   type="text"
                   value={usageNotes}
                   onChange={(e) => setUsageNotes(e.target.value)}
-                  placeholder="e.g. Fed to Grower Pen 1"
+                  placeholder={t("feedUsagePlaceholder") || "e.g. Fed to Grower Pen 1"}
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                 />
               </div>
@@ -1193,7 +1198,7 @@ export default function FeedPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
           <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-zinc-200 space-y-4 max-h-[85vh] flex flex-col">
             <div className="flex justify-between items-center pb-2 border-b border-zinc-100">
-              <h3 className="text-base font-bold text-zinc-900">Select Ingredient to Add</h3>
+              <h3 className="text-base font-bold text-zinc-900">{t("selectIngredientToAdd") || "Select Ingredient to Add"}</h3>
               <button
                 type="button"
                 onClick={() => setShowAddIngredientModal(false)}
@@ -1206,7 +1211,7 @@ export default function FeedPage() {
               type="text"
               value={analyzeSearchQuery}
               onChange={(e) => setAnalyzeSearchQuery(e.target.value)}
-              placeholder="Search available ingredients..."
+              placeholder={t("searchAvailableIngredients") || "Search available ingredients..."}
               className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-xs text-zinc-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
             <div className="flex-1 overflow-y-auto space-y-1.5 pr-1 divide-y divide-zinc-100">
@@ -1234,7 +1239,7 @@ export default function FeedPage() {
               {ingredients
                 .filter(ing => !analyzeItems.some(item => item.ingredient.id === ing.id))
                 .filter(ing => ing.name.toLowerCase().includes(analyzeSearchQuery.toLowerCase())).length === 0 && (
-                <p className="text-xs text-zinc-400 italic text-center py-6">No matching ingredients found.</p>
+                <p className="text-xs text-zinc-400 italic text-center py-6">{t("noMatchingIngredients") || "No matching ingredients found."}</p>
               )}
             </div>
           </div>

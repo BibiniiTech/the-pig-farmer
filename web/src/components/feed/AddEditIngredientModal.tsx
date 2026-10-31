@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { FeedIngredient } from "@/lib/types";
 
 interface AddEditIngredientModalProps {
@@ -18,6 +19,8 @@ export default function AddEditIngredientModal({
   currencySymbol = "$",
   onSave,
 }: AddEditIngredientModalProps) {
+  const t = useTranslations("Feed");
+  const tCommon = useTranslations("Common");
   const [name, setName] = useState("");
   const [mainCategory, setMainCategory] = useState("Protein");
   const [category, setCategory] = useState("Oilseed Byproducts");
@@ -182,10 +185,10 @@ export default function AddEditIngredientModal({
                 onChange={(e) => setMainCategory(e.target.value)}
                 className="w-full rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 px-3.5 py-2.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500 transition"
               >
-                <option value="Protein">Protein Source</option>
-                <option value="Energy">Energy Source</option>
+                <option value="Protein">{t("proteinSource") || "Protein Source"}</option>
+                <option value="Energy">{t("energySource") || "Energy Source"}</option>
                 <option value="Vitamins, Minerals & Salt">Vitamins, Minerals & Salt</option>
-                <option value="Roughages">Roughages / Fiber</option>
+                <option value="Roughages">{t("roughagesFiber") || "Roughages / Fiber"}</option>
               </select>
             </div>
             <div>
@@ -309,7 +312,7 @@ export default function AddEditIngredientModal({
               onClick={onClose}
               className="px-4 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
             >
-              Cancel
+              {tCommon("cancel") || "Cancel"}
             </button>
             <button
               type="submit"

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 import { SavedFeedRecipe, FeedIngredient } from "@/lib/types";
 
 interface SavedRecipesModalProps {
@@ -22,6 +23,8 @@ export default function SavedRecipesModal({
   onLoadRecipe,
   onDeleteRecipe,
 }: SavedRecipesModalProps) {
+  const t = useTranslations("Feed");
+  const tCommon = useTranslations("Common");
   const [recipeToDelete, setRecipeToDelete] = useState<SavedFeedRecipe | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
@@ -35,7 +38,7 @@ export default function SavedRecipesModal({
       setRecipeToDelete(null);
     } catch (err) {
       console.error("Failed to delete recipe:", err);
-      alert("Failed to delete recipe. Please try again.");
+      alert(t("failedToDeleteRecipe") || "Failed to delete recipe. Please try again.");
     } finally {
       setDeletingId(null);
     }
@@ -62,9 +65,9 @@ export default function SavedRecipesModal({
               </svg>
             </div>
             <div>
-              <h2 className="text-lg sm:text-xl font-bold tracking-tight">Saved Formulations</h2>
+              <h2 className="text-lg sm:text-xl font-bold tracking-tight">{t("savedFormulations") || "Saved Formulations"}</h2>
               <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                {savedRecipes.length} {savedRecipes.length === 1 ? "recipe" : "recipes"} saved on farm
+                {savedRecipes.length} {savedRecipes.length === 1 ? (t("savedFormulationsCount", { count: 1 }) || "recipe saved on farm") : (t("savedFormulationsCount", { count: savedRecipes.length }) || "recipes saved on farm")}
               </p>
             </div>
           </div>
@@ -89,9 +92,9 @@ export default function SavedRecipesModal({
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
-              <h3 className="text-base font-bold text-zinc-700 dark:text-zinc-300">No Saved Recipes Yet</h3>
+              <h3 className="text-base font-bold text-zinc-700 dark:text-zinc-300">{t("noSavedRecipesYet") || "No Saved Recipes Yet"}</h3>
               <p className="text-xs text-zinc-500 max-w-sm mx-auto leading-relaxed">
-                Formulate a balanced feed mix using the Pearson Square calculator and tap "Save Formulation" to store your recipes here.
+                {t("noSavedRecipesPrompt") || "Formulate a balanced feed mix using the Pearson Square calculator and tap \"Save Formulation\" to store your recipes here."}
               </p>
             </div>
           ) : (
@@ -118,7 +121,7 @@ export default function SavedRecipesModal({
                     </div>
 
                     <div className="text-right shrink-0">
-                      <span className="text-xs text-zinc-400 font-medium block">Est. Cost</span>
+                      <span className="text-xs text-zinc-400 font-medium block">{t("estCost") || "Est. Cost"}</span>
                       <span className="text-sm font-black text-emerald-600 dark:text-emerald-400">
                         {currencySymbol}{recipe.costPerKg > 0 ? recipe.costPerKg.toFixed(2) : "0.00"}/kg
                       </span>
@@ -188,7 +191,7 @@ export default function SavedRecipesModal({
         {recipeToDelete && (
           <div className="absolute inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-10 animate-in fade-in duration-150">
             <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 max-w-sm w-full space-y-4 shadow-xl">
-              <h4 className="font-bold text-base text-zinc-900 dark:text-white">Delete Recipe?</h4>
+              <h4 className="font-bold text-base text-zinc-900 dark:text-white">{t("deleteRecipeConfirm") || "Delete Recipe?"}</h4>
               <p className="text-xs text-zinc-600 dark:text-zinc-400">
                 Are you sure you want to delete <strong className="text-zinc-900 dark:text-zinc-100">{recipeToDelete.name}</strong>? This action cannot be undone.
               </p>

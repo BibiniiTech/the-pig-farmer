@@ -836,7 +836,7 @@ export default function TaskCompletionModal({
                     type="text"
                     value={maleTags}
                     onChange={(e) => setMaleTags(e.target.value)}
-                    placeholder="e.g. tag1, tag2"
+                    placeholder={t("tagsPlaceholder") || "e.g. tag1, tag2"}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                   />
                 </div>
@@ -865,7 +865,7 @@ export default function TaskCompletionModal({
                   type="text"
                   value={medicationName}
                   onChange={(e) => setMedicationName(e.target.value)}
-                  placeholder="e.g. Iron Dextran"
+                  placeholder={t("medicationPlaceholder") || "e.g. Iron Dextran"}
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                 />
               </div>
@@ -875,12 +875,12 @@ export default function TaskCompletionModal({
                   type="text"
                   value={medicationDosage}
                   onChange={(e) => setMedicationDosage(e.target.value)}
-                  placeholder="e.g. 2 ml"
+                  placeholder={t("dosagePlaceholder") || "e.g. 2 ml"}
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                 />
               </div>
               <div className="col-span-2">
-                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Meat Withdrawal Period (Days)</label>
+                <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("meatWithdrawalPeriodDays") || "Meat Withdrawal Period (Days)"}</label>
                 <input
                   type="number"
                   min="0"

@@ -228,6 +228,7 @@ function GuideIcon({ name, className = "h-5 w-5" }: { name: string; className?: 
 
 function HowToGuideContent() {
   const t = useTranslations("Guide");
+  const tCommon = useTranslations("Common");
   const { isMobile } = useDevice();
   const router = useRouter();
 
@@ -278,12 +279,12 @@ function HowToGuideContent() {
           <button
             onClick={() => router.push("/dashboard")}
             className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition font-bold text-xs shadow-xs"
-            aria-label="Back to Dashboard"
+            aria-label={tCommon("backToDashboard") || "Back to Dashboard"}
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
-            <span>Back</span>
+            <span>{tCommon("back") || "Back"}</span>
           </button>
           <h1 className="text-xl sm:text-2xl font-black text-[#1B5E20] dark:text-[#81C784] tracking-tight">
             {t("how_to_guide")}

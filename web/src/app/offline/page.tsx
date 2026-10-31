@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 
 export default function OfflinePage() {
+  const tCommon = useTranslations("Common");
   const t = useTranslations("Offline");
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-white px-6 text-center">
@@ -25,7 +26,7 @@ export default function OfflinePage() {
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
-            <span>Back</span>
+            <span>{tCommon("back") || "Back"}</span>
           </button>
         </div>
 

@@ -96,6 +96,7 @@ export default function DesktopHeader({
   const router = useRouter();
   const pathname = usePathname();
   const tNav = useTranslations("Navigation");
+  const tDash = useTranslations("Dashboard");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isManageModalOpen, setIsManageModalOpen] = useState(false);
 
@@ -199,8 +200,8 @@ export default function DesktopHeader({
               <button
                 onClick={() => router.push(backPath || "/dashboard")}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-zinc-250 dark:border-zinc-700 bg-white/90 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700 hover:text-zinc-900 transition-colors shadow-2xs font-bold text-xs"
-                aria-label="Go back"
-                title="Go back"
+                aria-label={tCommon("back") || "Go back"}
+                title={tCommon("back") || "Go back"}
               >
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -212,7 +213,7 @@ export default function DesktopHeader({
               type="button"
               onClick={() => setIsSettingsModalOpen(true)}
               className="flex items-center gap-3 hover:opacity-85 transition-opacity cursor-pointer text-left select-none"
-              title="Farm Settings & Profile"
+              title={tNav("settings") || "Farm Settings & Profile"}
             >
               <div className="h-9 w-9 rounded-xl bg-emerald-50 border border-emerald-500/30 p-0.5 flex items-center justify-center overflow-hidden shadow-xs flex-shrink-0">
                 <img
@@ -229,7 +230,7 @@ export default function DesktopHeader({
                   {userProfile?.farmName || "SmartSwine"}
                 </span>
                 <span className="text-[11px] font-semibold text-emerald-700 truncate leading-none mt-0.5">
-                  {userProfile?.firstName ? `Welcome Farmer ${userProfile.firstName}` : "Welcome Farmer"}
+                  {userProfile?.firstName ? (tDash("welcomeFarmerName", { name: userProfile.firstName }) || `Welcome Farmer ${userProfile.firstName}`) : (tDash("welcomeFarmer") || "Welcome Farmer")}
                 </span>
               </div>
             </button>
@@ -263,7 +264,7 @@ export default function DesktopHeader({
             <Link
               href="/dashboard/guide"
               className="p-2 text-zinc-650 dark:text-zinc-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 rounded-lg transition duration-200 focus:outline-none"
-              aria-label="How-To Guide"
+              aria-label={tCommon("howToGuide") || "How-To Guide"}
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="9" />
@@ -276,7 +277,7 @@ export default function DesktopHeader({
               <button
                 onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
                 className="inline-flex items-center justify-center gap-1.5 h-10 px-3 bg-zinc-100 dark:bg-[#252525] hover:bg-zinc-200 dark:hover:bg-zinc-700 border border-zinc-200 dark:border-zinc-700 rounded-xl text-xs font-semibold text-zinc-650 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition duration-350 shadow-sm focus:outline-none select-none"
-                aria-label="Select Language"
+                aria-label={tNav("selectLanguage") || "Select Language"}
               >
                 <span className="text-base leading-none">
                   {LANGUAGES.find((l) => l.code === selectedLang)?.flag || "🇺🇸"}
@@ -340,8 +341,8 @@ export default function DesktopHeader({
             <button
               id="desktop-menu-toggle"
               onClick={() => setDrawerOpen(true)}
-              aria-label="Open navigation menu"
-              title="Menu"
+              aria-label={tNav("menu") || "Open navigation menu"}
+              title={tNav("menu") || "Menu"}
               className="p-2 -mr-1 rounded-xl text-zinc-700 dark:text-zinc-200 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-emerald-50/70 dark:hover:bg-zinc-800 transition-colors"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
@@ -365,7 +366,7 @@ export default function DesktopHeader({
         className={`fixed top-0 right-0 z-[60] h-full w-[85%] max-w-[340px] flex flex-col bg-gradient-to-b from-[#0E3820] via-[#092214] to-[#04120A] text-white shadow-2xl transition-transform duration-300 ease-out rounded-l-3xl border-l border-emerald-700/30 overflow-hidden ${
           drawerOpen ? "translate-x-0" : "translate-x-full"
         }`}
-        aria-label="Navigation drawer"
+        aria-label={tNav("menu") || "Navigation drawer"}
       >
         {/* Drawer Header */}
         <div className="bg-[#134226] border-b border-emerald-600/30 p-4">
@@ -386,14 +387,14 @@ export default function DesktopHeader({
                   {userProfile?.farmName || "SmartSwine"}
                 </h2>
                 <p className="text-xs text-emerald-300 truncate font-medium">
-                  {userProfile?.firstName ? `Welcome Farmer ${userProfile.firstName}` : "SmartSwine Manager"}
+                  {userProfile?.firstName ? (tDash("welcomeFarmerName", { name: userProfile.firstName }) || `Welcome Farmer ${userProfile.firstName}`) : (tDash("welcomeFarmer") || "SmartSwine Manager")}
                 </p>
               </div>
             </div>
             <button
               onClick={() => setDrawerOpen(false)}
               className="p-1.5 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors"
-              aria-label="Close menu"
+              aria-label={tCommon("close") || "Close menu"}
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -454,7 +455,7 @@ export default function DesktopHeader({
           {[
             { key: "herd", label: tNav("herd"), path: "/dashboard/herd", icon: HerdDataIcon },
             { key: "feed", label: tNav("feed"), path: "/dashboard/feed", icon: FeedManagementIcon },
-            { key: "activities", label: tNav("activities"), path: "/dashboard/activities", icon: HerdActivitiesIcon },
+            { key: "activities", label: tNav("activities"), path: "/dashboard?section=activities", icon: HerdActivitiesIcon },
             { key: "financials", label: tNav("financials"), path: "/dashboard/financials", icon: FinancialsIcon },
             { key: "hr", label: tNav("hr"), path: "/dashboard?section=hr", icon: HumanResourcesIcon },
             { key: "hub", label: tNav("hub"), path: "/dashboard?section=hub", icon: LocalHubIcon },

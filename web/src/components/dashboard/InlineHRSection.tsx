@@ -374,18 +374,18 @@ export default function InlineHRSection({
       <div className="space-y-4 print:hidden">
       {/* Overview Card */}
       <div className="bg-white border border-purple-100 rounded-2xl p-4 shadow-sm">
-        <div className="grid grid-cols-3 gap-2 text-center sm:text-left">
-          <div className="p-3 rounded-xl bg-purple-50/70 border border-purple-100">
-            <p className="text-[10px] sm:text-[11px] font-bold text-purple-700 uppercase tracking-wider">{t("totalStaff") || "Total Staff"}</p>
-            <p className="text-base sm:text-xl font-black text-purple-900 mt-0.5">{staff.length}</p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-2 text-center sm:text-left">
+          <div className="p-3 rounded-xl bg-purple-50/70 border border-purple-100 flex flex-col items-center sm:items-start justify-center">
+            <p className="text-xs sm:text-[11px] font-bold text-purple-700 uppercase tracking-wider">{t("totalStaff") || "Total Staff"}</p>
+            <p className="text-xl sm:text-xl font-black text-purple-900 mt-0.5">{staff.length}</p>
           </div>
-          <div className="p-3 rounded-xl bg-purple-50/70 border border-purple-100">
-            <p className="text-[10px] sm:text-[11px] font-bold text-purple-700 uppercase tracking-wider">{t("active") || "Active Staff"}</p>
-            <p className="text-base sm:text-xl font-black text-purple-900 mt-0.5">{activeCount}</p>
+          <div className="p-3 rounded-xl bg-purple-50/70 border border-purple-100 flex flex-col items-center sm:items-start justify-center">
+            <p className="text-xs sm:text-[11px] font-bold text-purple-700 uppercase tracking-wider">{t("active") || "Active Staff"}</p>
+            <p className="text-xl sm:text-xl font-black text-purple-900 mt-0.5">{activeCount}</p>
           </div>
-          <div className="p-3 rounded-xl bg-purple-50/70 border border-purple-100">
-            <p className="text-[10px] sm:text-[11px] font-bold text-purple-700 uppercase tracking-wider">{t("monthlyPayroll") || "Monthly Payroll"}</p>
-            <p className="text-base sm:text-xl font-black text-purple-900 mt-0.5 truncate">
+          <div className="p-3 rounded-xl bg-purple-50/70 border border-purple-100 flex flex-col items-center sm:items-start justify-center">
+            <p className="text-xs sm:text-[11px] font-bold text-purple-700 uppercase tracking-wider">{t("monthlyPayroll") || "Monthly Payroll"}</p>
+            <p className="text-xl sm:text-xl font-black text-purple-900 mt-0.5 truncate">
               {currencySymbol}{monthlyPayroll.toFixed(2)}
             </p>
           </div>
@@ -421,7 +421,7 @@ export default function InlineHRSection({
           }`}
         >
           <ExportPdfIcon className="h-4 w-4" />
-          {canExportPdf ? (t("exportPdf") || "Export to PDF") : "Export to PDF (Premium)"}
+          {canExportPdf ? (t("exportPdf") || "Export to PDF") : (t("exportPdfPremium") || "Export to PDF (Premium)")}
         </button>
       </div>
 
@@ -528,7 +528,7 @@ export default function InlineHRSection({
                   )}
                 </div>
                 <div className="space-y-1.5 flex-1">
-                  <p className="text-xs font-bold text-zinc-800">Employee Photo</p>
+                  <p className="text-xs font-bold text-zinc-800">{t("employeePhoto") || "Employee Photo"}</p>
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
@@ -564,7 +564,7 @@ export default function InlineHRSection({
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. John Doe"
+                  placeholder={t("fullNamePlaceholder") || "e.g. John Doe"}
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs sm:text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-purple-500"
                 />
               </div>
@@ -577,7 +577,7 @@ export default function InlineHRSection({
                     required
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
-                    placeholder="e.g. Attendant"
+                    placeholder={t("rolePlaceholder") || "e.g. Attendant"}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs sm:text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-purple-500"
                   />
                 </div>
@@ -603,7 +603,7 @@ export default function InlineHRSection({
                     required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    placeholder="e.g. 0244123456"
+                    placeholder={t("phonePlaceholder") || "e.g. 0244123456"}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs sm:text-sm text-zinc-900 focus:outline-none"
                   />
                 </div>
@@ -648,27 +648,27 @@ export default function InlineHRSection({
                   type="text"
                   value={residentialAddress}
                   onChange={(e) => setResidentialAddress(e.target.value)}
-                  placeholder="e.g. House No 12, Piggery Lane"
+                  placeholder={t("addressPlaceholder") || "e.g. House No 12, Piggery Lane"}
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs sm:text-sm text-zinc-900 focus:outline-none"
                 />
               </div>
 
               {/* Emergency Contact */}
               <div className="p-3 bg-zinc-50 rounded-xl border border-zinc-200 space-y-2">
-                <p className="text-[11px] font-bold text-zinc-700 uppercase tracking-wider">Emergency Contact</p>
+                <p className="text-[11px] font-bold text-zinc-700 uppercase tracking-wider">{t("emergencyContact") || "Emergency Contact"}</p>
                 <div className="grid grid-cols-2 gap-2">
                   <input
                     type="text"
                     value={emergencyContactName}
                     onChange={(e) => setEmergencyContactName(e.target.value)}
-                    placeholder="Contact Name"
+                    placeholder={t("contactNamePlaceholder") || "Contact Name"}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs text-zinc-900"
                   />
                   <input
                     type="tel"
                     value={emergencyContactPhone}
                     onChange={(e) => setEmergencyContactPhone(e.target.value)}
-                    placeholder="Contact Phone"
+                    placeholder={t("contactPhonePlaceholder") || "Contact Phone"}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs text-zinc-900"
                   />
                 </div>
@@ -683,7 +683,7 @@ export default function InlineHRSection({
                     disabled={!isPaid}
                     onChange={(e) => {
                       if (!isPaid) {
-                        alert("Staff mobile app access requires SmartSwine Premium. Please upgrade to enable worker logins.");
+                        alert(t("staffMobileLockoutAlert") || "Staff mobile app access requires SmartSwine Premium. Please upgrade to enable worker logins.");
                         router.push("/dashboard/billing");
                         return;
                       }
@@ -702,7 +702,7 @@ export default function InlineHRSection({
                     required={allowAppAccess}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Employee Email Address"
+                    placeholder={t("emailPlaceholder") || "Employee Email Address"}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs sm:text-sm text-zinc-900 focus:outline-none"
                   />
                 )}
@@ -960,18 +960,18 @@ export default function InlineHRSection({
             <form onSubmit={handlePaySalarySubmit} className="space-y-3">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-600 mb-1">Payroll Month</label>
+                  <label className="block text-xs font-semibold text-zinc-600 mb-1">{t("payrollMonth") || "Payroll Month"}</label>
                   <input
                     type="text"
                     required
                     value={payMonth}
                     onChange={(e) => setPayMonth(e.target.value)}
-                    placeholder="e.g. September 2026"
+                    placeholder={t("payrollMonthPlaceholder") || "e.g. September 2026"}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-900"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-600 mb-1">Payment Date</label>
+                  <label className="block text-xs font-semibold text-zinc-600 mb-1">{t("paymentDate") || "Payment Date"}</label>
                   <input
                     type="date"
                     required
@@ -983,7 +983,7 @@ export default function InlineHRSection({
               </div>
 
               <div className="p-3 bg-purple-50/50 rounded-xl border border-purple-100 flex items-center justify-between">
-                <span className="text-xs text-zinc-600 font-medium">Base Contract Salary</span>
+                <span className="text-xs text-zinc-600 font-medium">{t("baseContractSalary") || "Base Contract Salary"}</span>
                 <span className="text-sm font-bold text-purple-900">{currencySymbol}{staffToPaySalary.salary?.toFixed(2)}</span>
               </div>
 
@@ -999,7 +999,7 @@ export default function InlineHRSection({
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-600 mb-1">Deductions (-)</label>
+                  <label className="block text-xs font-semibold text-zinc-600 mb-1">{t("deductions") || "Deductions (-)"}</label>
                   <input
                     type="number"
                     step="any"
@@ -1011,18 +1011,18 @@ export default function InlineHRSection({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-600 mb-1">Notes / Description</label>
+                <label className="block text-xs font-semibold text-zinc-600 mb-1">{t("notesDescription") || "Notes / Description"}</label>
                 <input
                   type="text"
                   value={payNotes}
                   onChange={(e) => setPayNotes(e.target.value)}
-                  placeholder="e.g. Overtime pay included"
+                  placeholder={t("notesPlaceholder") || "e.g. Overtime pay included"}
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-900"
                 />
               </div>
 
               <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-100 flex items-center justify-between">
-                <span className="text-xs font-bold text-emerald-800">Net Amount Paid</span>
+                <span className="text-xs font-bold text-emerald-800">{t("netAmountPaid") || "Net Amount Paid"}</span>
                 <span className="text-base font-black text-emerald-900">
                   {currencySymbol}
                   {Math.max(0, (staffToPaySalary.salary || 0) + payBonus - payDeduction).toFixed(2)}

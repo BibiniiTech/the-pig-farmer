@@ -211,7 +211,7 @@ export default function MixFeedPage() {
         {isExpanded && (
           <div className="p-3 space-y-2 divide-y divide-zinc-100">
             {list.length === 0 ? (
-              <p className="text-[11px] text-zinc-400 italic">No ingredients in this group.</p>
+              <p className="text-[11px] text-zinc-400 italic">{t("noIngredientsInGroup") || "No ingredients in this group."}</p>
             ) : (
               list.map((ing) => (
                 <div key={ing.id} className="flex items-center justify-between pt-2 first:pt-0">
@@ -259,15 +259,19 @@ export default function MixFeedPage() {
         )}
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-8">
+        {/* Mobile Back Button (above header on mobile, removed on desktop) */}
+        <div className="sm:hidden mb-2">
+          <Link
+            href="/dashboard?section=feed"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition font-bold text-xs shadow-xs"
+          >
+            <ArrowLeftIcon className="h-4 w-4" />
+            <span>{tCommon("back") || "Back"}</span>
+          </Link>
+        </div>
+
         <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-4">
-          <div className="flex items-center gap-3">
-            <Link
-              href="/dashboard?section=feed"
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition font-bold text-xs shadow-xs"
-            >
-              <ArrowLeftIcon className="h-4 w-4" />
-              <span>{tCommon("back") || "Back"}</span>
-            </Link>
+          <div className="flex items-center gap-2.5">
             <div className="h-10 w-10 rounded-xl bg-[#FFF3E0] dark:bg-[#E65100]/30 border border-[#E65100]/30 flex items-center justify-center flex-shrink-0">
               <ScienceIcon className="h-5 w-5 text-[#E65100] dark:text-[#FFB74D]" />
             </div>
@@ -275,7 +279,9 @@ export default function MixFeedPage() {
               <h1 className="text-xl sm:text-2xl font-black text-[#E65100] dark:text-[#FFB74D]">
                 {t("mixFeed") || "Mix Feed"}
               </h1>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400">{t("mixFeedDesc") || "Pearson square multi-nutrient balanced feed formulation"}</p>
+              <p className="hidden sm:block text-xs text-zinc-500 dark:text-zinc-400">
+                {t("mixFeedDesc") || "Pearson square multi-nutrient balanced feed formulation"}
+              </p>
             </div>
           </div>
 
@@ -286,7 +292,7 @@ export default function MixFeedPage() {
               className="px-3.5 py-2.5 rounded-xl bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-700 text-xs font-bold transition flex items-center gap-2 shadow-2xs active:scale-95"
             >
               <ScienceIcon className="h-4 w-4 text-amber-600" />
-              <span>Ingredients ({ingredients.length})</span>
+              <span>{t("ingredients") || "Ingredients"} ({ingredients.length})</span>
             </button>
             <button
               type="button"
@@ -296,7 +302,7 @@ export default function MixFeedPage() {
               <svg className="h-4 w-4 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
               </svg>
-              <span>Saved Formulations</span>
+              <span>{t("savedFormulations") || "Saved Formulations"}</span>
               {savedRecipes.length > 0 && (
                 <span className="h-5 min-w-5 px-1.5 rounded-full bg-amber-600 text-white font-black text-[10px] flex items-center justify-center">
                   {savedRecipes.length}
@@ -309,9 +315,9 @@ export default function MixFeedPage() {
         <PremiumWrapper fallback={
           <div className="p-12 text-center border border-zinc-200 rounded-2xl bg-zinc-50 space-y-4">
             <ScienceIcon className="h-12 w-12 text-amber-600 mx-auto opacity-70" />
-            <h2 className="text-xl font-bold text-zinc-900">Mix Feed is a Premium Feature</h2>
-            <p className="text-xs text-zinc-500 max-w-md mx-auto">Upgrade to SmartSwine Premium to generate balanced rations with automated Pearson square feed balancing.</p>
-            <Link href="/dashboard/billing" className="inline-block px-6 py-2.5 bg-amber-600 text-white text-xs font-bold rounded-xl shadow">Upgrade to Premium</Link>
+            <h2 className="text-xl font-bold text-zinc-900">{t("mixFeedPremiumTitle") || "Mix Feed is a Premium Feature"}</h2>
+            <p className="text-xs text-zinc-500 max-w-md mx-auto">{t("mixFeedPremiumDesc") || "Upgrade to SmartSwine Premium to generate balanced rations with automated Pearson square feed balancing."}</p>
+            <Link href="/dashboard/billing" className="inline-block px-6 py-2.5 bg-amber-600 text-white text-xs font-bold rounded-xl shadow">{t("upgradeToPremium") || "Upgrade to Premium"}</Link>
           </div>
         }>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -386,7 +392,7 @@ export default function MixFeedPage() {
                       <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                       </svg>
-                      <span>Mix Batch</span>
+                      <span>{t("mixBatch") || "Mix Batch"}</span>
                     </button>
                     <button
                       type="button"
@@ -396,7 +402,7 @@ export default function MixFeedPage() {
                       <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                       </svg>
-                      <span>Save Formulation</span>
+                      <span>{t("saveFeedFormulation") || "Save Formulation"}</span>
                     </button>
                     <button
                       type="button"
@@ -418,7 +424,7 @@ export default function MixFeedPage() {
               ) : (
                 <div className="space-y-6">
                   <div className="bg-white/95 rounded-2xl border border-amber-200/80 p-5 space-y-3 shadow-xs">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-amber-900">Ingredient Inclusions (per 100 kg batch)</h4>
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-amber-900">{t("ingredientInclusionsPer100kg") || "Ingredient Inclusions (per 100 kg batch)"}</h4>
                     <div className="divide-y divide-zinc-100">
                       {Object.entries(formulation.ingredients || formulation.proportions || {}).map(([id, percent]) => {
                         const ing = ingredients.find(i => i.id === id);
@@ -436,14 +442,14 @@ export default function MixFeedPage() {
                   </div>
 
                   <div className="bg-white/95 rounded-2xl border border-amber-200/80 p-5 space-y-3 shadow-xs">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-amber-900">Nutritional Comparison</h4>
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-amber-900">{t("nutritionalComparison") || "Nutritional Comparison"}</h4>
                     <table className="min-w-full divide-y divide-zinc-200 text-xs">
                       <thead>
                         <tr className="text-left font-semibold text-zinc-500">
-                          <th className="pb-2">Nutrient</th>
-                          <th className="pb-2 text-right">Actual</th>
-                          <th className="pb-2 text-right">Target</th>
-                          <th className="pb-2 text-right">Status</th>
+                          <th className="pb-2">{t("nutrient") || "Nutrient"}</th>
+                          <th className="pb-2 text-right">{t("actual") || "Actual"}</th>
+                          <th className="pb-2 text-right">{t("target") || "Target"}</th>
+                          <th className="pb-2 text-right">{t("status") || "Status"}</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-zinc-150">

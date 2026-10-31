@@ -11,7 +11,7 @@ import NavbarDropdown from "@/components/NavbarDropdown";
 import UserProfileDropdown from "@/components/UserProfileDropdown";
 import DesktopHeader from "@/components/layouts/DesktopHeader";
 import FinancialReport from "@/components/reports/FinancialReport";
-import { ExportPdfIcon } from "@/components/icons/DashboardIcons";
+import { ExportPdfIcon, FinancialsIcon } from "@/components/icons/DashboardIcons";
 import { useTranslations } from "next-intl";
 import { FinancialRecord, Pig } from "@/lib/types";
 import { TierLimiter } from "@/lib/tierLimiter";
@@ -349,40 +349,53 @@ function FinancialsContent() {
         )}
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
-          {/* Top Bar with Back Button and Heading */}
-          <div className="flex items-center justify-between gap-4">
+          {/* Mobile Back Button (above header on mobile, removed on desktop) */}
+          <div className="sm:hidden mb-2">
             <button
               type="button"
               onClick={() => router.push("/dashboard")}
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-700 hover:text-zinc-900 transition font-bold text-xs shadow-xs"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-700 transition font-bold text-xs shadow-xs"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
               <span>{tCommon("back") || "Back"}</span>
             </button>
-            <h1 className="text-xl sm:text-2xl font-black text-[#00796B] dark:text-[#4DB6AC] text-center flex-1">
-              {tNav("financials") || "Financials"}
-            </h1>
-            <div className="w-16" />
+          </div>
+
+          {/* Header Bar */}
+          <div className="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-4">
+            <div className="flex items-center gap-2.5">
+              <div className="h-10 w-10 rounded-xl bg-[#E0F2F1] dark:bg-[#004D40]/40 border border-[#00796B]/30 flex items-center justify-center flex-shrink-0">
+                <FinancialsIcon className="h-5 w-5 text-[#00796B] dark:text-[#4DB6AC]" />
+              </div>
+              <div>
+                <h1 className="text-xl sm:text-2xl font-black text-[#00796B] dark:text-[#4DB6AC]">
+                  {tNav("financials") || "Financials"}
+                </h1>
+                <p className="hidden sm:block text-xs text-zinc-500 dark:text-zinc-400">
+                  {t("financialsDesc") || "Cashflow tracking, expense benchmarks, and ledger records"}
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Dashboard balance summaries */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-6">
             {[
               { label: t("totalRevenue"), amount: totalIncome, color: "text-emerald-700 bg-emerald-50/50 border-emerald-100" },
               { label: t("totalExpenses"), amount: totalExpense, color: "text-rose-700 bg-rose-50/50 border-rose-100" },
               { label: t("netCashflow"), amount: netBalance, color: netBalance >= 0 ? "text-emerald-800 bg-emerald-100/30 border-emerald-200" : "text-rose-800 bg-rose-100/30 border-rose-200" }
             ].map((stat, i) => (
-              <div key={i} className={`backdrop-blur-md border rounded-2xl p-6 shadow-sm bg-white/60 ${stat.color}`}>
-                <p className="text-xs font-bold uppercase tracking-wider">{stat.label}</p>
-                <p className="text-3xl font-black mt-2">{currencySymbol}{stat.amount.toFixed(2)}</p>
+              <div key={i} className={`backdrop-blur-md border rounded-xl sm:rounded-2xl p-3.5 sm:p-6 shadow-sm bg-white/60 dark:bg-zinc-800/60 ${stat.color}`}>
+                <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider">{stat.label}</p>
+                <p className="text-xl sm:text-3xl font-black mt-1 sm:mt-2">{currencySymbol}{stat.amount.toFixed(2)}</p>
               </div>
             ))}
           </div>
 
           {/* Unit Economics & Breakeven Card */}
-          <div className="bg-emerald-50/60 border border-teal-200/80 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4">
+          <div className="bg-emerald-50/60 border border-teal-200/80 rounded-xl sm:rounded-2xl p-3.5 sm:p-6 shadow-xs space-y-2.5 sm:space-y-4">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2 text-teal-800">
                 <span className="p-1.5 rounded-lg bg-teal-100 text-teal-800">
@@ -390,7 +403,7 @@ function FinancialsContent() {
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-1c-1.66 0-3-1.34-3-3h2c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-2c0-.55-.45-1-1-1h-2c-1.66 0-3-1.34-3-3s1.34-3 3-3V3h2v1c1.66 0 3 1.34 3 3h-2c0-.55-.45-1-1-1h-2c-.55 0-1 .45-1 1v2c0 .55.45 1 1 1h2c1.66 0 3 1.34 3 3v2c0 .55-.45 1-1 1z" />
                   </svg>
                 </span>
-                <h3 className="text-base font-bold text-teal-950">Unit Economics & Breakeven</h3>
+                <h3 className="text-sm sm:text-base font-bold text-teal-950 dark:text-teal-200">Unit Economics & Breakeven</h3>
               </div>
               <div className="px-2.5 py-1 rounded-lg bg-teal-100/80 border border-teal-200 text-teal-900 text-xs font-bold">
                 {isScopedToCycle ? (
@@ -405,16 +418,16 @@ function FinancialsContent() {
               </div>
             </div>
 
-            <div className="border-t border-teal-200/50 pt-3 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="border-t border-teal-200/50 pt-2.5 sm:pt-3 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
               <div className="space-y-1">
-                <p className="text-xs text-zinc-500 font-medium">Cost of Production / kg</p>
+                <p className="text-xs text-zinc-500 font-medium">{t("costOfProductionPerKg") || "Cost of Production / kg"}</p>
                 <p className="text-xl font-black text-zinc-900">
                   {currencySymbol}{costOfProductionPerKg.toFixed(2)} / kg
                 </p>
               </div>
 
               <div className="space-y-1">
-                <p className="text-xs text-zinc-500 font-medium">Finisher Breakeven Price (90kg)</p>
+                <p className="text-xs text-zinc-500 font-medium">{t("finisherBreakevenPrice") || "Finisher Breakeven Price (90kg)"}</p>
                 <p className="text-xl font-black text-rose-700">
                   {currencySymbol}{breakEvenPerFinisher.toFixed(2)}
                 </p>
@@ -433,7 +446,7 @@ function FinancialsContent() {
           </div>
 
           {/* Expense Distribution & Financial Benchmarks Card */}
-          <div className="bg-teal-50/70 border border-teal-200/80 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4">
+          <div className="bg-teal-50/70 border border-teal-200/80 rounded-xl sm:rounded-2xl p-3.5 sm:p-6 shadow-xs space-y-2.5 sm:space-y-4">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2 text-teal-800">
                 <span className="p-1.5 rounded-lg bg-teal-100 text-teal-800">
@@ -441,7 +454,7 @@ function FinancialsContent() {
                     <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
                   </svg>
                 </span>
-                <h3 className="text-base font-bold text-teal-950">Expense Distribution & Financial Benchmarks</h3>
+                <h3 className="text-sm sm:text-base font-bold text-teal-950 dark:text-teal-200">Expense Distribution & Financial Benchmarks</h3>
               </div>
             </div>
 
@@ -600,11 +613,11 @@ function FinancialsContent() {
                 </div>
 
                 {/* Mobile Card View */}
-                <div className="sm:hidden space-y-4">
+                <div className="sm:hidden space-y-2">
                   {records.map(record => {
                     const linkedPig = pigs.find(p => p.id === record.pigId || (record.pigIds && record.pigIds.includes(p.id)));
                     return (
-                      <div key={record.id} className="p-4 rounded-xl border border-zinc-100 bg-zinc-50/50 space-y-3 relative overflow-hidden">
+                      <div key={record.id} className="p-3 rounded-xl border border-zinc-200/80 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-800/50 space-y-2 relative overflow-hidden">
                         <div className="flex justify-between items-start">
                           <div>
                             <p className="text-[10px] font-bold text-zinc-400 font-mono">{record.date}</p>
@@ -657,7 +670,7 @@ function FinancialsContent() {
       <RewardedPassModal
         isOpen={showRewardedPassModal}
         onClose={() => setShowRewardedPassModal(false)}
-        title="Unlock Financial Ledger PDF Report"
+        title={t("unlockLedgerPdfTooltip") || "Unlock Financial Ledger PDF Report"}
         description="Watch a short video ad to unlock executive cashflow reports, ledger exports, and all premium financial tools for 3 hours!"
         onSuccess={() => {
           setTimeout(() => {
@@ -722,13 +735,13 @@ function FinancialsContent() {
 
               {category === "Other" && (
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Custom Category Name</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("customCategoryName") || "Custom Category Name"}</label>
                   <input
                     type="text"
                     required
                     value={customCategory}
                     onChange={(e) => setCustomCategory(e.target.value)}
-                    placeholder="e.g. Disinfectant, Transport, Utilities, etc."
+                    placeholder={t("customCategoryPlaceholder") || "e.g. Disinfectant, Transport, Utilities, etc."}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none shadow-sm"
                   />
                 </div>
@@ -764,7 +777,7 @@ function FinancialsContent() {
                   </div>
                   <div className="border border-zinc-200 rounded-lg max-h-40 overflow-y-auto p-2.5 space-y-1.5 bg-white shadow-sm">
                     {pigs.filter(p => !p.status?.startsWith("Archived")).length === 0 ? (
-                      <p className="text-xs text-zinc-400 italic">No active pigs available</p>
+                      <p className="text-xs text-zinc-400 italic">{t("noActivePigsAvailable") || "No active pigs available"}</p>
                     ) : (
                       pigs.filter(p => !p.status?.startsWith("Archived")).map(p => (
                         <label key={p.id} className="flex items-center justify-between text-xs text-zinc-700 hover:bg-zinc-50 p-1.5 rounded cursor-pointer transition">
@@ -828,7 +841,7 @@ function FinancialsContent() {
 
 export default function FinancialsPage() {
   return (
-    <Suspense fallback={<div className="p-6">Loading...</div>}>
+    <Suspense fallback={<div className="flex h-screen items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent" /></div>}>
       <FinancialsContent />
     </Suspense>
   );

@@ -659,8 +659,8 @@ export default function PigProfilePage() {
               <Link
                 href="/dashboard/herd"
                 className="inline-flex items-center gap-2 px-3 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition-colors text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 shadow-xs font-bold text-xs shrink-0"
-                aria-label="Back to herd list"
-                title="Back to herd list"
+                aria-label={tCommon("backToHerd") || "Back to herd list"}
+                title={tCommon("backToHerd") || "Back to herd list"}
               >
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -684,7 +684,7 @@ export default function PigProfilePage() {
                 <button
                   onClick={() => setShowArchiveModal(true)}
                   className="rounded-xl border border-amber-300 bg-amber-50 px-3.5 py-1.5 text-xs font-bold text-amber-800 hover:bg-amber-100 transition-all shadow-xs flex items-center gap-1.5"
-                  title="Archive Pig"
+                  title={t("archivePigTooltip") || "Archive Pig"}
                 >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
@@ -695,7 +695,7 @@ export default function PigProfilePage() {
                 <button
                   onClick={handleRestorePig}
                   className="rounded-xl border border-emerald-300 bg-emerald-50 px-3.5 py-1.5 text-xs font-bold text-emerald-800 hover:bg-emerald-100 transition-all shadow-xs flex items-center gap-1.5"
-                  title="Restore to Active Herd"
+                  title={t("restoreToActiveTooltip") || "Restore to Active Herd"}
                 >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -1180,12 +1180,12 @@ export default function PigProfilePage() {
 
               {(recordType === "Breeding" || recordType === "Breeding/Mating") && (
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Boar Tag / ID</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("boarTag") || "Boar Tag / ID"}</label>
                   <input
                     type="text"
                     value={recordBoarTag}
                     onChange={(e) => setRecordBoarTag(e.target.value)}
-                    placeholder="e.g. Boar-01"
+                    placeholder={t("boarTagPlaceholder") || "e.g. Boar-01"}
                     className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-sm"
                   />
                 </div>
@@ -1193,7 +1193,7 @@ export default function PigProfilePage() {
 
               {(recordType === "Confirm Pregnancy" || recordType === "Pregnancy Confirmation") && (
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Pregnancy Confirmed?</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("pregnancyConfirmed") || "Pregnancy Confirmed?"}</label>
                   <div className="flex gap-4">
                     <label className="flex items-center gap-2 cursor-pointer text-sm font-semibold">
                       <input
@@ -1202,7 +1202,7 @@ export default function PigProfilePage() {
                         onChange={() => setRecordPregnancyConfirmed(true)}
                         className="h-4 w-4 border-zinc-300 text-emerald-600 focus:ring-emerald-500"
                       />
-                      <span>Confirmed (Pregnant)</span>
+                      <span>{t("confirmedPregnant") || "Confirmed (Pregnant)"}</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer text-sm font-semibold">
                       <input
@@ -1211,7 +1211,7 @@ export default function PigProfilePage() {
                         onChange={() => setRecordPregnancyConfirmed(false)}
                         className="h-4 w-4 border-zinc-300 text-emerald-600 focus:ring-emerald-500"
                       />
-                      <span>Failed (Open / Sow)</span>
+                      <span>{t("failedOpenSow") || "Failed (Open / Sow)"}</span>
                     </label>
                   </div>
                 </div>
@@ -1219,7 +1219,7 @@ export default function PigProfilePage() {
 
               {["Medication", "Deworming", "Vaccination", "Treatment"].includes(recordType) && (
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">Meat Withdrawal Period (Days)</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1.5">{t("meatWithdrawalPeriodDays") || "Meat Withdrawal Period (Days)"}</label>
                   <input
                     type="number"
                     min="0"
@@ -1291,7 +1291,7 @@ export default function PigProfilePage() {
 
             <div className="space-y-3">
               <div>
-                <label className="block text-xs font-semibold text-zinc-600 mb-1.5">Reason for Archiving</label>
+                <label className="block text-xs font-semibold text-zinc-600 mb-1.5">{t("reasonForArchiving") || "Reason for Archiving"}</label>
                 <select
                   value={archiveReason}
                   onChange={(e) => setArchiveReason(e.target.value)}
@@ -1306,12 +1306,12 @@ export default function PigProfilePage() {
 
               {archiveReason === "Other" && (
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-600 mb-1.5">Specify Reason</label>
+                  <label className="block text-xs font-semibold text-zinc-600 mb-1.5">{t("specifyReason") || "Specify Reason"}</label>
                   <input
                     type="text"
                     value={customArchiveReason}
                     onChange={(e) => setCustomArchiveReason(e.target.value)}
-                    placeholder="e.g. Transferred to secondary farm"
+                    placeholder={t("specifyReasonPlaceholder") || "e.g. Transferred to secondary farm"}
                     className="w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-1 focus:ring-amber-500 shadow-sm"
                   />
                 </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 interface SaveRecipeModalProps {
   isOpen: boolean;
@@ -21,6 +22,8 @@ export default function SaveRecipeModal({
   currencySymbol = "$",
   onSave,
 }: SaveRecipeModalProps) {
+  const t = useTranslations("Feed");
+  const tCommon = useTranslations("Common");
   const [recipeName, setRecipeName] = useState(`${stage} Balanced Mix`);
   const [batchKg, setBatchKg] = useState("1000");
   const [notes, setNotes] = useState("");
@@ -98,15 +101,15 @@ export default function SaveRecipeModal({
         {/* Quick summary strip */}
         <div className="grid grid-cols-3 gap-2 bg-zinc-50 dark:bg-zinc-800/60 border border-zinc-200/80 dark:border-zinc-700/60 rounded-xl p-3 text-center text-xs">
           <div>
-            <span className="text-[10px] text-zinc-400 font-bold uppercase block">Stage</span>
+            <span className="text-[10px] text-zinc-400 font-bold uppercase block">{t("stage") || "Stage"}</span>
             <span className="font-bold text-emerald-600 dark:text-emerald-400">{stage}</span>
           </div>
           <div>
-            <span className="text-[10px] text-zinc-400 font-bold uppercase block">Ingredients</span>
+            <span className="text-[10px] text-zinc-400 font-bold uppercase block">{t("ingredients") || "Ingredients"}</span>
             <span className="font-bold text-zinc-800 dark:text-zinc-200">{ingredientsCount} items</span>
           </div>
           <div>
-            <span className="text-[10px] text-zinc-400 font-bold uppercase block">Est. Cost</span>
+            <span className="text-[10px] text-zinc-400 font-bold uppercase block">{t("estCost") || "Est. Cost"}</span>
             <span className="font-bold text-zinc-800 dark:text-zinc-200">
               {currencySymbol}{costPerKg > 0 ? costPerKg.toFixed(2) : "0.00"}/kg
             </span>
@@ -156,7 +159,7 @@ export default function SaveRecipeModal({
               rows={2}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Add mixing instructions, premix additives, or seasonality notes..."
+              placeholder={t("recipeNotesPlaceholder") || "Add mixing instructions, premix additives, or seasonality notes..."}
               className="w-full rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 px-3.5 py-2 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 transition resize-none"
             />
           </div>
@@ -167,7 +170,7 @@ export default function SaveRecipeModal({
               onClick={onClose}
               className="px-4 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
             >
-              Cancel
+              {tCommon("cancel") || "Cancel"}
             </button>
             <button
               type="submit"
