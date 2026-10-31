@@ -33,7 +33,7 @@ export default function RewardedPassModal({
 
   const monetagDirectLink =
     process.env.NEXT_PUBLIC_MONETAG_DIRECT_LINK ||
-    "https://oathoolo.com/4/3512745";
+    "https://uplcm.com/4/12162741";
 
   // Reset ad player state when modal opens/closes
   useEffect(() => {
@@ -67,8 +67,8 @@ export default function RewardedPassModal({
     // 1. Trigger Monetag vignette if available on window
     try {
       const w = window as any;
-      if (typeof w.show_11929302 === "function") {
-        w.show_11929302();
+      if (typeof w.show_12162725 === "function") {
+        w.show_12162725();
       }
     } catch (err) {
       console.debug("Monetag vignette call:", err);

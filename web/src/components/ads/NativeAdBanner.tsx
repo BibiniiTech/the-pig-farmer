@@ -16,11 +16,11 @@ export default function NativeAdBanner({ zoneId, className = "" }: NativeAdBanne
   const activeZoneId =
     zoneId ||
     process.env.NEXT_PUBLIC_MONETAG_BANNER_ZONE_ID ||
-    "11929302";
+    "12162725";
 
   const monetagDirectLink =
     process.env.NEXT_PUBLIC_MONETAG_DIRECT_LINK ||
-    `https://oathoolo.com/4/3512745`;
+    "https://uplcm.com/4/12162741";
 
   useEffect(() => {
     // If a custom Monetag in-page zone script is provided, initialize dynamically in container
@@ -48,8 +48,8 @@ export default function NativeAdBanner({ zoneId, className = "" }: NativeAdBanne
     // Trigger Monetag vignette if available on window
     try {
       const w = window as any;
-      if (typeof w.show_11929302 === "function") {
-        w.show_11929302();
+      if (typeof w.show_12162725 === "function") {
+        w.show_12162725();
       }
     } catch (err) {
       console.debug("Monetag trigger:", err);

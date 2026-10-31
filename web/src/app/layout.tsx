@@ -5,6 +5,7 @@ import { DeviceProvider } from "@/context/DeviceContext";
 import Footer from "@/components/layouts/Footer";
 import StaffLockoutWrapper from "@/components/StaffLockoutWrapper";
 import VercelMigrationGuard from "@/components/VercelMigrationGuard";
+import MonetagTag from "@/components/ads/MonetagTag";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getLocale } from "next-intl/server";
 
@@ -47,6 +48,7 @@ export default async function RootLayout({
             <DeviceProvider>
               <AuthProvider>
                 <StaffLockoutWrapper>
+                  <MonetagTag />
                   <div className="flex flex-col min-h-screen">
                     <main className="flex-grow">
                       {children}
