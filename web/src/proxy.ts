@@ -1,6 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function proxy(request: NextRequest) {
+  const host = request.headers.get("x-forwarded-host") || request.headers.get("host") || request.nextUrl.hostname || "";
+  const isVercelDomain = host.toLowerCase().includes(".vercel.app");
+  const pathname = request.nextUrl.pathname;
+
+  // If traffic reaches any *.vercel.app domain, rewrite to the migration screen (/moved)
+  if (isVercelDomain) {
+    const isExcluded = 
+      pathname.startsWith("/api") || 
+      pathname.startsWith("/_next") || 
+      pathname === "/moved" ||
+      /\.(png|jpg|jpeg|gif|svg|ico|json|js|css|woff2?|txt|map)$/i.test(pathname);
+
+    if (!isExcluded) {
+      const movedUrl = new URL("/moved", request.url);
+      return NextResponse.rewrite(movedUrl);
+    }
+  } else if (!host.includes("localhost") && !host.includes("127.0.0.1") && pathname === "/moved") {
+    // If accessing /moved on the production custom domain (www.smartswine.app), redirect home
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
   // Perform device detection
   const ua = request.headers.get("user-agent") || "";
   const isMobile = /Mobile|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i.test(ua);

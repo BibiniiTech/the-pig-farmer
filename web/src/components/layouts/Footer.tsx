@@ -2,11 +2,17 @@
 
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 export default function Footer() {
+  const pathname = usePathname();
   const t = useTranslations("Footer");
   const currentYear = new Date().getFullYear();
+
+  if (pathname === "/moved") {
+    return null;
+  }
 
   return (
     <footer className="w-full bg-white border-t border-zinc-200 py-8 mt-auto print:hidden">

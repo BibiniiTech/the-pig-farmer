@@ -4,6 +4,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { DeviceProvider } from "@/context/DeviceContext";
 import Footer from "@/components/layouts/Footer";
 import StaffLockoutWrapper from "@/components/StaffLockoutWrapper";
+import VercelMigrationGuard from "@/components/VercelMigrationGuard";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getLocale } from "next-intl/server";
 
@@ -42,18 +43,20 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-white text-zinc-900 font-sans">
         <NextIntlClientProvider messages={messages} locale={locale}>
-          <DeviceProvider>
-            <AuthProvider>
-              <StaffLockoutWrapper>
-                <div className="flex flex-col min-h-screen">
-                  <main className="flex-grow">
-                    {children}
-                  </main>
-                  <Footer />
-                </div>
-              </StaffLockoutWrapper>
-            </AuthProvider>
-          </DeviceProvider>
+          <VercelMigrationGuard>
+            <DeviceProvider>
+              <AuthProvider>
+                <StaffLockoutWrapper>
+                  <div className="flex flex-col min-h-screen">
+                    <main className="flex-grow">
+                      {children}
+                    </main>
+                    <Footer />
+                  </div>
+                </StaffLockoutWrapper>
+              </AuthProvider>
+            </DeviceProvider>
+          </VercelMigrationGuard>
         </NextIntlClientProvider>
       </body>
     </html>

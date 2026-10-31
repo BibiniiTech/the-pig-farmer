@@ -1,17 +1,19 @@
 "use client";
 
 import React from "react";
+import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useTranslations } from "next-intl";
 
 export default function StaffLockoutWrapper({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const t = useTranslations("StaffLockout");
   const { user, userProfile, isStaff, isStaffDenied, loading, detachFromStaffRegistryAndCreateFarm } = useAuth();
   const [detaching, setDetaching] = React.useState(false);
 
-  if (loading) {
+  if (pathname === "/moved" || loading) {
     return <>{children}</>;
   }
 
