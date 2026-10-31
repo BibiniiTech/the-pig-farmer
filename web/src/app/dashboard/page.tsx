@@ -135,10 +135,10 @@ function CompactPigDropdownCard({ pig }: { pig: Pig }) {
   else if (performance === "Poor") performanceBadge = "bg-[#FFCDD2] text-[#C62828] border-[#FFCDD2]";
 
   const getPerfText = (p: string) => {
-    if (p === "Excellent") return tHerd("perfExcellent") || "Excellent";
-    if (p === "Good") return tHerd("perfGood") || "Good";
-    if (p === "Caution") return tHerd("perfCaution") || "Caution";
-    if (p === "Poor") return tHerd("perfPoor") || "Poor";
+    if (p === "Excellent") return tHerd("excellent") || "Excellent";
+    if (p === "Good") return tHerd("good") || "Good";
+    if (p === "Caution") return tHerd("caution") || "Caution";
+    if (p === "Poor") return tHerd("poor") || "Poor";
     return p;
   };
 

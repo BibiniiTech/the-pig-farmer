@@ -210,7 +210,8 @@
     "perfExcellent": "Excellent",
     "perfGood": "Good",
     "perfCaution": "Caution",
-    "perfPoor": "Poor"
+    "perfPoor": "Poor",
+    "performanceTag": "Performance Tag"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -318,7 +319,12 @@
     "all": "All",
     "starter": "Starter",
     "grower": "Grower",
-    "finisher": "Finisher"
+    "finisher": "Finisher",
+    "performanceTag": "Performance Tag",
+    "perfExcellent": "Excellent",
+    "perfGood": "Good",
+    "perfCaution": "Caution",
+    "perfPoor": "Poor"
   },
   "Profile": {
     "owner": "Owner",
