@@ -14,8 +14,31 @@ const geistSans = { variable: "font-sans" };
 const geistMono = { variable: "font-mono" };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.smartswine.app"),
   title: "SmartSwine - Pig Farm Management",
   description: "Optimize your pig farm operations with our premium feed formulators, herd tracking, task management, and financial summaries.",
+  openGraph: {
+    title: "SmartSwine - Pig Farm Management",
+    description: "Optimize your pig farm operations with our premium feed formulators, herd tracking, task management, and financial summaries.",
+    url: "https://www.smartswine.app",
+    siteName: "SmartSwine",
+    images: [
+      {
+        url: "/app_logo.png",
+        width: 512,
+        height: 512,
+        alt: "SmartSwine Logo",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "SmartSwine - Pig Farm Management",
+    description: "Optimize your pig farm operations with our premium feed formulators, herd tracking, task management, and financial summaries.",
+    images: ["/app_logo.png"],
+  },
   icons: {
     icon: [
       { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
