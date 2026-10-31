@@ -212,7 +212,32 @@
     "perfCaution": "Tahadhari",
     "perfPoor": "Duni",
     "filterOptions": "Chaguzi za Kichujio",
-    "performanceTag": "Lebo ya Utendaji"
+    "performanceTag": "Lebo ya Utendaji",
+    "activeHerd": "Kundi Linalofugwa",
+    "howToGuide": "Mwongozo wa Matumizi",
+    "noPigsFound": "Hakuna nguruwe wanaofugwa kwenye kundi lako. Bofya \"+ Ongeza Nguruwe\" kuanza!",
+    "pointABodyLength": "Ncha A (Urefu wa Mwili):",
+    "noteBodyLength": "Urefu wa Mwili: Pima kutoka msingi wa masikio hadi msingi wa mkia uhakikishe utepe uko imara mwilini na haujalegea (Hatua A).",
+    "pointBHeartGirth": "Ncha B (Mzunguko wa Kifua):",
+    "noteHeartGirth": "Mzunguko wa Moyo: Pima kifua (nyuma kidogo ya miguu ya mbele) uhakikishe utepe umeenea mwilini na umekaza (Hatua B).",
+    "noteSquarely": "Hakikisha nguruwe amesimama sawasawa kwenye ardhi iliyonyooka kwa matokeo sahihi zaidi.",
+    "liveWeight": "Uzito wa Nguruwe Akiwa Hai",
+    "inPounds": "Kwa Ratili (Pounds)",
+    "growthIntelligence": "Akili ya Ukuaji",
+    "targetPig": "Nguruwe Lengwa",
+    "weightToSave": "Uzito wa Kuhifadhi (kg)",
+    "estLiveWeight": "Makadirio ya Uzito Akiwa Hai",
+    "saveToProfile": "Hifadhi kwenye Maelezo ya Nguruwe",
+    "filterPigTag": "Chuja nambari ya hereni...",
+    "togglePrimalCutsTooltip": "Bofya kubadili mgawanyo wa nyama inayokadiriwa",
+    "estCarcassWeight": "Makadirio ya Uzito wa Mzoga",
+    "validWeightAlert": "Tafadhali ingiza uzito sahihi katika kg.",
+    "failedToSaveWeight": "Imeshindwa kuhifadhi uzito. Tafadhali kagua muunganisho.",
+    "validScaleReadingAlert": "Tafadhali weka uzito sahihi wa mizani.",
+    "deleteTaskTooltip": "Futa Kazi",
+    "dismissReminderTooltip": "Futa Kikumbusho",
+    "dismissAlertTooltip": "Futa Tahadhari",
+    "confirmAction": "Tafadhali thibitisha hatua yako"
   },
   "Login": {
     "title": "SmartSwine Wavuti",
@@ -311,7 +336,7 @@
     "pregnant": "Mjamzito",
     "lactating": "Anayenyonyesha",
     "searchPlaceholder": "Nambari ya Sikio / Banda / Aina",
-    "activeHerd": "Inafanya Kazi",
+    "activeHerd": "Kundi Linalofugwa",
     "archivedHerd": "Nguruwe Zilizohifadhiwa",
     "tag": "Nambari ya hereni",
     "castrated_label": "(Aliyehasiwa)",
@@ -325,13 +350,24 @@
     "perfExcellent": "Bora Sana",
     "perfGood": "Nzuri",
     "perfCaution": "Tahadhari",
-    "perfPoor": "Duni"
+    "perfPoor": "Duni",
+    "tagLabel": "Hereni",
+    "ageLabel": "Umri",
+    "genderLabel": "Jinsia",
+    "castratedLabel": "(Aliyehasiwa)",
+    "addPig": "Ongeza Nguruwe",
+    "viewFullHerd": "Tazama Kundi Zima (Nguruwe {count})",
+    "showingUpTo10": "Inaonyesha hadi nguruwe 10",
+    "noPigsFound": "Hakuna nguruwe wanaofugwa kwenye kundi lako. Bofya \"+ Ongeza Nguruwe\" kuanza!",
+    "dateOfBirth": "Tarehe ya Kuzaliwa"
   },
   "Profile": {
     "owner": "Mmiliki",
     "staff": "Mfanyakazi",
     "settings": "Mipangilio",
-    "signOut": "Ondoka"
+    "signOut": "Ondoka",
+    "manageSubscription": "Simamia Usajili",
+    "upgradeToPremium": "Boresha hadi Premium"
   },
   "Navigation": {
     "navigateTo": "Nenda kwa",
@@ -377,9 +413,12 @@
     "feedManagement": "Kulisha",
     "herdActivities": "Shughuli za Mifugo",
     "humanResources": "Rasilimali Watu",
-    "howToGuide": "Mwongozo wa Mafunzo",
+    "howToGuide": "Mwongozo wa Matumizi",
     "rate5Stars": "Kadiria Nyota 5 kwenye Google Play",
-    "back": "Nyuma"
+    "back": "Nyuma",
+    "selectLanguage": "Chagua Lugha",
+    "menu": "Menyu",
+    "close": "Funga"
   },
   "Activities": {
     "title": "Tekeleza Utaratibu wa Kundi",
@@ -490,7 +529,18 @@
     "reasonDisease": "Ugonjwa",
     "reasonSold": "Inauzwa",
     "criticalFoodSafetyWarning": "ONYO MUHIMU LA USALAMA WA CHAKULA",
-    "meatWithdrawalTitle": "Kipindi cha Kuondoa Nyama"
+    "meatWithdrawalTitle": "Kipindi cha Kuondoa Nyama",
+    "pregnancyOutcome": "Matokeo ya Mimba",
+    "confirmedPregnant": "Mimba Imethibitishwa",
+    "notPregnant": "Hana Mimba",
+    "numMales": "Idadi ya Madume",
+    "numFemales": "Idadi ya Majike",
+    "stillbornCount": "Waliozaliwa Wamekufa",
+    "mummiesCount": "Walionyauka Tumboni",
+    "selectAll": "Chagua Yote",
+    "noEligiblePigs": "Hakuna nguruwe wanaofaa kwa shughuli hii",
+    "confirmAndLog": "Thibitisha na Urekodi Shughuli",
+    "notes": "Vidokezo"
   },
   "Feed": {
     "lowStockWarning": "Hisa ya Chini",
@@ -721,7 +771,15 @@
     "energySource": "Chanzo cha Nishati",
     "roughagesFiber": "Chakula cha Nyuzinyuzi / Makapi",
     "catalog": "Orodha",
-    "currentQty": "Kiasi Kilichopo"
+    "currentQty": "Kiasi Kilichopo",
+    "failedToDeleteIngredient": "Imeshindwa kufuta kiambato. Tafadhali jaribu tena.",
+    "failedToDeleteRecipe": "Imeshindwa kufuta fomula ya chakula. Tafadhali jaribu tena.",
+    "crudeFiber": "Fiber ghafi",
+    "diagnosticsPremiumTitle": "Dalili na Uchunguzi wa Mifugo ni Kipengele cha Premium",
+    "diagnosticsPremiumDesc": "Boresha hadi SmartSwine Premium ili kufungua utambuzi wa magonjwa, uchambuzi wa dalili na matibabu yaliyoidhinishwa na madaktari wa mifugo.",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "Jumla ya Mapato",
@@ -774,7 +832,8 @@
     "unlockLedgerPdfTooltip": "Fungua Ripoti ya PDF ya Daftari la Fedha",
     "customCategoryName": "Jina Maalum la Kitengo",
     "customCategoryPlaceholder": "mfano: Dawa ya kuua wadudu, Usafiri, Umeme na Maji n.k.",
-    "noActivePigsAvailable": "Hakuna nguruwe wanaopatikana"
+    "noActivePigsAvailable": "Hakuna nguruwe wanaopatikana",
+    "financialsDesc": "Sajili mapato na matumizi, usajili wa fedha wa kiotomatiki, na hamisha ripoti ya fedha ya PDF."
   },
   "Hub": {
     "directoryRegion": "Eneo la Orodha",
@@ -1811,7 +1870,8 @@
     "observedSymptoms": "Dalili Zilizoshuhudiwa:",
     "keySymptoms": "Dalili Kuu:",
     "logToHerd": "Hifadhi Kwenye Kumbukumbu za Kundi",
-    "shareWithVet": "Shirikisha Daktari wa Mifugo"
+    "shareWithVet": "Shirikisha Daktari wa Mifugo",
+    "clearPigUnassigned": "Ondoa Nguruwe (Kundi Lisilopangwa)"
   },
   "HR": {
     "title": "Saraka ya Usimamizi wa Wafanyakazi",
@@ -2350,7 +2410,11 @@
     "relationship": "Uhusiano / Ukoo",
     "compensationSummary": "Muhtasari wa Fidia",
     "totalSalaryPaidLifetime": "Jumla ya Mshahara Unaolipwa (Maisha)",
-    "salaryPaymentHistory": "Historia ya Malipo ya Mishahara"
+    "salaryPaymentHistory": "Historia ya Malipo ya Mishahara",
+    "nutrient": "Virutubisho",
+    "purpose": "Kusudi",
+    "notes": "Vidokezo",
+    "staffDetails": "Maelezo ya Wafanyakazi"
   },
   "Common": {
     "loading": "Inapakia...",
@@ -2368,7 +2432,8 @@
     "watchAdFor3HourPass": "Tazama Tangazo Upate Pasi ya Saa 3 ya Premium",
     "manageSubscription": "Simamia Usajili",
     "upgradeToPremium": "Boresha hadi Premium",
-    "howToGuide": "Mwongozo"
+    "howToGuide": "Mwongozo",
+    "support": "Msaada"
   },
   "Notifications": {
     "title": "Arifa",

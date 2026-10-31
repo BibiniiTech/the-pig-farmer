@@ -212,7 +212,32 @@
     "perfCaution": "注意",
     "perfPoor": "貧しい",
     "filterOptions": "フィルター設定",
-    "performanceTag": "発育性能タグ"
+    "performanceTag": "発育性能タグ",
+    "activeHerd": "活動中の豚群",
+    "howToGuide": "使い方ガイド",
+    "noPigsFound": "飼育中の豚はいません。「+ 豚を追加」をクリックして開始してください！",
+    "pointABodyLength": "ポイント A（体長）:",
+    "noteBodyLength": "体長：耳の付け根から尻尾の付け根までを測り、テープが体にしっかりと固定され、緩んでいないことを確認してください（ポイントA）。",
+    "pointBHeartGirth": "ポイント B（胸囲）:",
+    "noteHeartGirth": "心臓周囲径: 胸部 (前脚のすぐ後ろ) を測定し、テープが体に沿ってフィットし、しっかりとつながっていることを確認します (ポイント B)。",
+    "noteSquarely": "最も正確な結果を得るには、豚が平らな地面にまっすぐに立っていることを確認してください。",
+    "liveWeight": "生体重（出荷生体重）",
+    "inPounds": "ポンド表示",
+    "growthIntelligence": "成長インテリジェンス",
+    "targetPig": "対象豚",
+    "weightToSave": "節約する重量 (kg)",
+    "estLiveWeight": "推定生体重",
+    "saveToProfile": "豚のプロフィールに保存",
+    "filterPigTag": "個体識別番号で絞り込み...",
+    "togglePrimalCutsTooltip": "クリックして推定部位肉歩留まりの内訳を切り替え",
+    "estCarcassWeight": "推定枝肉重量",
+    "validWeightAlert": "有効な体重をkg単位で入力してください。",
+    "failedToSaveWeight": "体重の保存に失敗しました。接続を確認してください。",
+    "validScaleReadingAlert": "有効な体重測定値を入力してください。",
+    "deleteTaskTooltip": "タスクを削除",
+    "dismissReminderTooltip": "リマインダーを閉じる",
+    "dismissAlertTooltip": "アラートを閉じる",
+    "confirmAction": "操作を確定してください"
   },
   "Login": {
     "title": "スマートワインウェブ",
@@ -311,7 +336,7 @@
     "pregnant": "妊娠中",
     "lactating": "授乳中",
     "searchPlaceholder": "耳標番号 / 豚房 / 品種",
-    "activeHerd": "アクティブ",
+    "activeHerd": "活動中の豚群",
     "archivedHerd": "アーカイブされた豚",
     "tag": "タグ",
     "castrated_label": "(去勢済み)",
@@ -325,13 +350,24 @@
     "perfExcellent": "素晴らしい",
     "perfGood": "良い",
     "perfCaution": "注意",
-    "perfPoor": "貧しい"
+    "perfPoor": "貧しい",
+    "tagLabel": "タグ",
+    "ageLabel": "年齢",
+    "genderLabel": "性別",
+    "castratedLabel": "(去勢済み)",
+    "addPig": "豚を追加",
+    "viewFullHerd": "豚群全体を表示（{count} 頭）",
+    "showingUpTo10": "最大10頭を表示中",
+    "noPigsFound": "飼育中の豚はいません。「+ 豚を追加」をクリックして開始してください！",
+    "dateOfBirth": "生年月日"
   },
   "Profile": {
     "owner": "オーナー",
     "staff": "スタッフ",
     "settings": "設定",
-    "signOut": "サインアウト"
+    "signOut": "サインアウト",
+    "manageSubscription": "サブスクリプション管理",
+    "upgradeToPremium": "プレミアムにアップグレード"
   },
   "Navigation": {
     "navigateTo": "に移動します",
@@ -377,9 +413,12 @@
     "feedManagement": "飼料",
     "herdActivities": "群れの活動",
     "humanResources": "人事",
-    "howToGuide": "ハウツーガイド",
+    "howToGuide": "使い方ガイド",
     "rate5Stars": "Google Play で 5 つ星を評価する",
-    "back": "戻る"
+    "back": "戻る",
+    "selectLanguage": "言語を選択",
+    "menu": "メニュー",
+    "close": "閉じる"
   },
   "Activities": {
     "title": "群れプロシージャの実行",
@@ -490,7 +529,18 @@
     "reasonDisease": "病気",
     "reasonSold": "販売済み",
     "criticalFoodSafetyWarning": "食品安全に関する重要な警告",
-    "meatWithdrawalTitle": "肉の摂取中止期間"
+    "meatWithdrawalTitle": "肉の摂取中止期間",
+    "pregnancyOutcome": "妊娠確認結果",
+    "confirmedPregnant": "受胎確認済み",
+    "notPregnant": "非受胎",
+    "numMales": "雄の数",
+    "numFemales": "雌の数",
+    "stillbornCount": "死産数",
+    "mummiesCount": "ミイラ化胎児数",
+    "selectAll": "すべて選択",
+    "noEligiblePigs": "このアクティビティの対象となる豚が見つかりません",
+    "confirmAndLog": "確認して記録する",
+    "notes": "注意事項"
   },
   "Feed": {
     "lowStockWarning": "在庫僅少",
@@ -720,7 +770,15 @@
     "proteinSource": "タンパク質源",
     "energySource": "エネルギー源",
     "roughagesFiber": "粗飼料 / 繊維",
-    "catalog": "カタログ"
+    "catalog": "カタログ",
+    "failedToDeleteIngredient": "原材料の削除に失敗しました。もう一度お試しください。",
+    "failedToDeleteRecipe": "配合レシピの削除に失敗しました。もう一度お試しください。",
+    "crudeFiber": "粗繊維",
+    "diagnosticsPremiumTitle": "症状と獣医診断はプレミアム機能です",
+    "diagnosticsPremiumDesc": "SmartSwine プレミアムにアップグレードして、鑑別診断、臨床症状分析、特徴的兆候、獣医師認定の処置法をアンロックしましょう。",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "総収入",
@@ -773,7 +831,8 @@
     "unlockLedgerPdfTooltip": "財務台帳PDFレポートをアンロック",
     "customCategoryName": "カスタムカテゴリ名",
     "customCategoryPlaceholder": "例: 消毒薬、輸送、光熱費など",
-    "noActivePigsAvailable": "利用可能なアクティブな豚がいません"
+    "noActivePigsAvailable": "利用可能なアクティブな豚がいません",
+    "financialsDesc": "収入と支出を記録し、自動財務ログを作成し、PDF 財務レポートをエクスポートします。"
   },
   "Hub": {
     "directoryRegion": "ディレクトリ地域",
@@ -1810,7 +1869,8 @@
     "observedSymptoms": "観察された症状:",
     "keySymptoms": "主要症状:",
     "logToHerd": "農場衛生管理簿に記録",
-    "shareWithVet": "獣医師に症例データを送信"
+    "shareWithVet": "獣医師に症例データを送信",
+    "clearPigUnassigned": "豚の選択を解除（未割当群）"
   },
   "HR": {
     "title": "スタッフ管理ディレクトリ",
@@ -2349,7 +2409,11 @@
     "relationship": "血縁関係",
     "compensationSummary": "報酬概要",
     "totalSalaryPaidLifetime": "支払われた給与総額 (生涯)",
-    "salaryPaymentHistory": "給与支払履歴"
+    "salaryPaymentHistory": "給与支払履歴",
+    "nutrient": "栄養素",
+    "purpose": "目的",
+    "notes": "注意事項",
+    "staffDetails": "スタッフ詳細"
   },
   "Common": {
     "loading": "読み込み中...",
@@ -2367,7 +2431,8 @@
     "watchAdFor3HourPass": "広告を見て3時間プレミアムパスを獲得",
     "manageSubscription": "サブスクリプション管理",
     "upgradeToPremium": "プレミアムにアップグレード",
-    "howToGuide": "ハウツーガイド"
+    "howToGuide": "ハウツーガイド",
+    "support": "サポート"
   },
   "Notifications": {
     "title": "通知",
@@ -2410,7 +2475,7 @@
     "overdue": "期限を過ぎました",
     "due": "期限",
     "snoozeFor": "スヌーズ",
-    "confirmAction": "操作を確定してください",
+    "confirmAction": "操作を確認してください",
     "deleteTaskTooltip": "タスクを削除",
     "dismissReminderTooltip": "リマインダーを閉じる",
     "dismissAlertTooltip": "アラートを閉じる"

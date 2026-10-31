@@ -212,7 +212,32 @@
     "perfCaution": "Cẩn trọng",
     "perfPoor": "Kém",
     "filterOptions": "Tùy chọn bộ lọc",
-    "performanceTag": "Thẻ hiệu suất tăng trưởng"
+    "performanceTag": "Thẻ hiệu suất tăng trưởng",
+    "activeHerd": "Đàn heo hiện tại",
+    "howToGuide": "Hướng dẫn sử dụng",
+    "noPigsFound": "Chưa có heo đang nuôi trong đàn. Nhấp vào \"+ Thêm heo\" để bắt đầu!",
+    "pointABodyLength": "Điểm A (Chiều dài thân):",
+    "noteBodyLength": "Chiều dài thân: Đo từ gốc tai đến gốc đuôi, đảm bảo thước dây áp sát thân heo (Điểm A).",
+    "pointBHeartGirth": "Điểm B (Vòng ngực):",
+    "noteHeartGirth": "Vòng ngực: Đo quanh lồng ngực (ngay sau chân trước), đảm bảo thước dây vừa khít và thắt chặt (Điểm B).",
+    "noteSquarely": "Đảm bảo heo đứng thẳng trên mặt đất bằng phẳng để có kết quả chính xác nhất.",
+    "liveWeight": "Thể trọng heo sống (Cân hơi)",
+    "inPounds": "Đơn vị Pound",
+    "growthIntelligence": "Trí tuệ tăng trưởng",
+    "targetPig": "Heo mục tiêu",
+    "weightToSave": "Cân nặng cần lưu (kg)",
+    "estLiveWeight": "Thể trọng hơi ước tính",
+    "saveToProfile": "Lưu vào hồ sơ heo",
+    "filterPigTag": "Lọc số tai...",
+    "togglePrimalCutsTooltip": "Nhấp để bật/tắt bảng phân tích tỷ lệ thịt xẻ ước tính",
+    "estCarcassWeight": "Khối lượng thịt xẻ ước tính",
+    "validWeightAlert": "Vui lòng nhập cân nặng hợp lệ tính bằng kg.",
+    "failedToSaveWeight": "Lưu khối lượng thất bại. Vui lòng kiểm tra kết nối.",
+    "validScaleReadingAlert": "Vui lòng nhập số đo khối lượng cân hợp lệ.",
+    "deleteTaskTooltip": "Xóa công việc",
+    "dismissReminderTooltip": "Bỏ qua nhắc nhở",
+    "dismissAlertTooltip": "Bỏ qua cảnh báo",
+    "confirmAction": "Vui lòng xác nhận thao tác"
   },
   "Login": {
     "title": "Web lợn thông minh",
@@ -311,7 +336,7 @@
     "pregnant": "Mang thai",
     "lactating": "Đang nuôi con",
     "searchPlaceholder": "Số tai / Vị trí chuồng / Giống",
-    "activeHerd": "Đang hoạt động",
+    "activeHerd": "Đàn heo hiện tại",
     "archivedHerd": "Heo đã lưu trữ",
     "tag": "Số tai",
     "castrated_label": "(Đã thiến)",
@@ -325,13 +350,24 @@
     "perfExcellent": "Xuất sắc",
     "perfGood": "Tốt",
     "perfCaution": "Cẩn trọng",
-    "perfPoor": "Kém"
+    "perfPoor": "Kém",
+    "tagLabel": "Số tai",
+    "ageLabel": "Tuổi",
+    "genderLabel": "Giới tính",
+    "castratedLabel": "(Đã thiến)",
+    "addPig": "Thêm heo",
+    "viewFullHerd": "Xem toàn bộ đàn ({count} con heo)",
+    "showingUpTo10": "Hiển thị tối đa 10 con",
+    "noPigsFound": "Chưa có heo đang nuôi trong đàn. Nhấp vào \"+ Thêm heo\" để bắt đầu!",
+    "dateOfBirth": "Ngày sinh"
   },
   "Profile": {
     "owner": "Chủ sở hữu",
     "staff": "Nhân viên",
     "settings": "Cài đặt",
-    "signOut": "Đăng xuất"
+    "signOut": "Đăng xuất",
+    "manageSubscription": "Quản lý gói đăng ký",
+    "upgradeToPremium": "Nâng cấp lên Cao Cấp"
   },
   "Navigation": {
     "navigateTo": "Đi đến",
@@ -377,9 +413,12 @@
     "feedManagement": "Thức ăn",
     "herdActivities": "Hoạt động đàn",
     "humanResources": "Nhân sự",
-    "howToGuide": "Hướng dẫn cách thực hiện",
+    "howToGuide": "Hướng dẫn sử dụng",
     "rate5Stars": "Xếp hạng 5 sao trên Google Play",
-    "back": "Quay lại"
+    "back": "Quay lại",
+    "selectLanguage": "Chọn ngôn ngữ",
+    "menu": "Thực đơn",
+    "close": "Đóng"
   },
   "Activities": {
     "title": "Thực hiện quy trình đàn",
@@ -490,7 +529,18 @@
     "reasonDisease": "Bệnh tật",
     "reasonSold": "Đã bán",
     "criticalFoodSafetyWarning": "CẢNH BÁO QUAN TRỌNG VỀ AN TOÀN THỰC PHẨM",
-    "meatWithdrawalTitle": "Thời gian rút thịt"
+    "meatWithdrawalTitle": "Thời gian rút thịt",
+    "pregnancyOutcome": "Kết quả phối giống mang thai",
+    "confirmedPregnant": "Đã xác nhận mang thai",
+    "notPregnant": "Không mang thai",
+    "numMales": "Số con đực",
+    "numFemales": "Số con cái",
+    "stillbornCount": "Số chết lưu",
+    "mummiesCount": "Số bào thai hóa khô",
+    "selectAll": "Chọn tất cả",
+    "noEligiblePigs": "Không có heo nào đủ điều kiện cho hoạt động này",
+    "confirmAndLog": "Xác nhận & Lưu nhật ký",
+    "notes": "Ghi chú"
   },
   "Feed": {
     "lowStockWarning": "Hết thức ăn sắp tới",
@@ -720,7 +770,15 @@
     "proteinSource": "Nguồn đạm",
     "energySource": "Nguồn năng lượng",
     "roughagesFiber": "Thô xanh / Chất xơ",
-    "catalog": "Danh mục"
+    "catalog": "Danh mục",
+    "failedToDeleteIngredient": "Không thể xóa nguyên liệu. Vui lòng thử lại.",
+    "failedToDeleteRecipe": "Không thể xóa công thức phối trộn. Vui lòng thử lại.",
+    "crudeFiber": "sợi thô",
+    "diagnosticsPremiumTitle": "Triệu chứng & Chẩn đoán Thú y là tính năng Cao Cấp",
+    "diagnosticsPremiumDesc": "Nâng cấp lên SmartSwine Cao Cấp để mở khóa chẩn đoán phân biệt, phân tích dấu hiệu lâm sàng, triệu chứng đặc trưng và phác đồ điều trị đã được thú y phê duyệt.",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "Tổng Thu Nhập",
@@ -773,7 +831,8 @@
     "unlockLedgerPdfTooltip": "Mở khóa báo cáo sổ thu chi PDF",
     "customCategoryName": "Tên danh mục tùy chỉnh",
     "customCategoryPlaceholder": "ví dụ: Thuốc sát trùng, Vận chuyển, Điện nước...",
-    "noActivePigsAvailable": "Không có heo hoạt động khả dụng"
+    "noActivePigsAvailable": "Không có heo hoạt động khả dụng",
+    "financialsDesc": "Ghi chép thu nhập và chi phí, nhật ký tài chính tự động và xuất báo cáo PDF."
   },
   "Hub": {
     "directoryRegion": "Khu vực danh bạ",
@@ -1810,7 +1869,8 @@
     "observedSymptoms": "Triệu chứng quan sát được:",
     "keySymptoms": "Triệu chứng chủ yếu:",
     "logToHerd": "Lưu vào sổ theo dõi đàn",
-    "shareWithVet": "Gửi cho bác sĩ thú y"
+    "shareWithVet": "Gửi cho bác sĩ thú y",
+    "clearPigUnassigned": "Xóa chọn heo (Nhóm đàn chưa phân loại)"
   },
   "HR": {
     "title": "Danh bạ quản lý nhân viên",
@@ -2349,7 +2409,11 @@
     "relationship": "Quan hệ huyết thống",
     "compensationSummary": "Tóm tắt bồi thường",
     "totalSalaryPaidLifetime": "Tổng lương được trả (Trọn đời)",
-    "salaryPaymentHistory": "Lịch sử thanh toán lương"
+    "salaryPaymentHistory": "Lịch sử thanh toán lương",
+    "nutrient": "Chất dinh dưỡng",
+    "purpose": "Mục đích",
+    "notes": "Ghi chú",
+    "staffDetails": "Chi tiết nhân viên"
   },
   "Common": {
     "loading": "Đang tải...",
@@ -2367,7 +2431,8 @@
     "watchAdFor3HourPass": "Xem quảng cáo nhận thẻ Cao Cấp 3 giờ",
     "manageSubscription": "Quản lý gói đăng ký",
     "upgradeToPremium": "Nâng cấp lên Cao Cấp",
-    "howToGuide": "Hướng dẫn cách thực hiện"
+    "howToGuide": "Hướng dẫn cách thực hiện",
+    "support": "Hỗ trợ"
   },
   "Notifications": {
     "title": "Thông báo",

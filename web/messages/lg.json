@@ -212,7 +212,32 @@
     "perfCaution": "Okwegendereza",
     "perfPoor": "Omwavu",
     "filterOptions": "Engeri z'okusunsulamu",
-    "performanceTag": "Akabonero k'Omulimu"
+    "performanceTag": "Akabonero k'Omulimu",
+    "activeHerd": "Ekirongozi Ekikola",
+    "howToGuide": "Endagiriro y'okukozesa",
+    "noPigsFound": "Tewali mbizi ziri mu ffaamu kati. Nyiga \"+ Yongeramu Embizi\" otandike!",
+    "pointABodyLength": "Akabonero A (Obuwanvu bw'Omubiri):",
+    "noteBodyLength": "Obuwanvu bw’omubiri: Pima okuva wansi w’amatu okutuuka wansi w’omukira ng’okakasa nti olutambi lunywevu ku mubiri so si lusumuluddwa (Point A).",
+    "pointBHeartGirth": "Akabonero B (Obwetoloovu bw'Ekifuba):",
+    "noteHeartGirth": "Obuwanvu bw’omutima: Pima ekifuba (emabega w’amagulu g’omu maaso) ng’okakasa nti akatambi kakwatagana bulungi n’omubiri era nga kakwatagana bulungi (Point B).",
+    "noteSquarely": "Kakasa nti embizzi eyimiridde square ku ttaka eritereevu okusobola okufuna ekivaamu ekisinga obutuufu.",
+    "liveWeight": "Obuzito nga nnamu",
+    "inPounds": "Mu Pawundi",
+    "growthIntelligence": "Obugezi bw’okukula",
+    "targetPig": "Embizi Erowoozebwako",
+    "weightToSave": "Obuzito okukekkereza (kg) .",
+    "estLiveWeight": "Obuzito ng'ekyali nnamu",
+    "saveToProfile": "Teeka ku Profile y'embizzi",
+    "filterPigTag": "Sunsula namba y'okutu...",
+    "togglePrimalCutsTooltip": "Nyiga olabe engeri ennyama gy'esalwamu",
+    "estCarcassWeight": "Obuzito bw'ennyama obuteeberezeddwa",
+    "validWeightAlert": "Nsaba oyingize obuzito obutuufu mu kkiro.",
+    "failedToSaveWeight": "Tekisobose kutereka buzito. Gendako olabe intanenti.",
+    "validScaleReadingAlert": "Nsaba owandiike obuzito obutereevu obupimiddwa.",
+    "deleteTaskTooltip": "Sazaamu Omulimu",
+    "dismissReminderTooltip": "Ggyako Ekijjukizo",
+    "dismissAlertTooltip": "Ggyako Okulabula",
+    "confirmAction": "Nsaba okakase ekikolwa kyo"
   },
   "Login": {
     "title": "Omukutu gwa SmartSwine",
@@ -311,7 +336,7 @@
     "pregnant": "Ali lubuto",
     "lactating": "Okuyonsa",
     "searchPlaceholder": "Akazindaalo k'okutu / Ekiyumba / Olulyo",
-    "activeHerd": "Eziriwo",
+    "activeHerd": "Ekirongozi Ekikola",
     "archivedHerd": "Embizzi ezikuumiddwa mu tterekero",
     "tag": "Namba y'okutu",
     "castrated_label": "(Erongoddwa)",
@@ -325,13 +350,24 @@
     "perfExcellent": "Kirungi nnyo",
     "perfGood": "Kirungi",
     "perfCaution": "Okwegendereza",
-    "perfPoor": "Omwavu"
+    "perfPoor": "Omwavu",
+    "tagLabel": "Namba y'okutu",
+    "ageLabel": "Emyaka",
+    "genderLabel": "Ekikula ky’abantu",
+    "castratedLabel": "(Erongoddwa)",
+    "addPig": "Yongeramu Embizi",
+    "viewFullHerd": "Laba zonna ({count})",
+    "showingUpTo10": "Ezisooka 10 ze ziragiddwa",
+    "noPigsFound": "Tewali mbizi ziri mu ffaamu kati. Nyiga \"+ Yongeramu Embizi\" otandike!",
+    "dateOfBirth": "Olunaku lwe yazaalibwa"
   },
   "Profile": {
     "owner": "Nnyinimu",
     "staff": "Abakozi",
     "settings": "Ensengeka",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "manageSubscription": "Kola ku By'okusasula",
+    "upgradeToPremium": "Kulaakulanya ku Premium"
   },
   "Navigation": {
     "navigateTo": "Genda ku...",
@@ -377,9 +413,12 @@
     "feedManagement": "Emmere y’emmere",
     "herdActivities": "Emirimu gy’Ekisibo",
     "humanResources": "Ebikozesebwa mu bakozi",
-    "howToGuide": "Engeri-Okulungamya",
+    "howToGuide": "Endagiriro y'okukozesa",
     "rate5Stars": "Teeka Emmunyeenye 5 ku Google Play",
-    "back": "Okudda emabega"
+    "back": "Okudda emabega",
+    "selectLanguage": "Londa Olulimi",
+    "menu": "Menyu",
+    "close": "Ggalawo"
   },
   "Activities": {
     "title": "Okukola Enkola y’Ekisibo",
@@ -490,7 +529,18 @@
     "reasonDisease": "Obulwadde",
     "reasonSold": "Yatundibwa",
     "criticalFoodSafetyWarning": "OKULABULA OKW’OBUKAKAFU BW’EMMERE OKUKULU",
-    "meatWithdrawalTitle": "Ekiseera ky’Okuggyamu Ennyama"
+    "meatWithdrawalTitle": "Ekiseera ky’Okuggyamu Ennyama",
+    "pregnancyOutcome": "Ebivudde mu kukebera olubuto",
+    "confirmedPregnant": "Lina olubuto (Kikakasiddwa)",
+    "notPregnant": "Tirina lubuto",
+    "numMales": "Omuwendo gw'ennume",
+    "numFemales": "Omuwendo gw'ensekera",
+    "stillbornCount": "Abazaaliddwa nga bafudde",
+    "mummiesCount": "Abakaze mu lubuto",
+    "selectAll": "Londa Byonna",
+    "noEligiblePigs": "Tewali mbizi zisaanira mulimu guno",
+    "confirmAndLog": "Kakasa era Oyingize Ekikolwa",
+    "notes": "Ebiwandiiko"
   },
   "Feed": {
     "lowStockWarning": "Sitooki Entono",
@@ -721,7 +771,15 @@
     "energySource": "Ensibuko y'Amaanyi",
     "roughagesFiber": "Ebyayi n'Omuddo omukalu",
     "catalog": "Kataloogo",
-    "currentQty": "Ezisigaddeyo"
+    "currentQty": "Ezisigaddeyo",
+    "failedToDeleteIngredient": "Kigaanye okuggyamu ekiriisa kino. Gezako nate.",
+    "failedToDeleteRecipe": "Kigaanye okuggyamu ffyomyula eno. Gezako nate.",
+    "crudeFiber": "Ebiwuziwuzi ebitali bilongoofu",
+    "diagnosticsPremiumTitle": "Obubonero n'Obujjanjabi bw'Ebisolo biri mu Premium",
+    "diagnosticsPremiumDesc": "Kulaakulanya ku SmartSwine Premium okumanya endwadde, obubonero obukulu n'eddagala erikkirizibwa abasawo b'ebisolo.",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "Enyingiza yonna awamu",
@@ -774,7 +832,8 @@
     "unlockLedgerPdfTooltip": "Kola PDF ku By'ensimbi Zonna",
     "customCategoryName": "Erinnya ly'omutendera ogw'ennono",
     "customCategoryPlaceholder": "okugeza: Eddagala, Entambula, Amasannyalaze n'ebirala",
-    "noActivePigsAvailable": "Tewali mbizi ziriwo kati"
+    "noActivePigsAvailable": "Tewali mbizi ziriwo kati",
+    "financialsDesc": "Wandiika enyingiza n’ensaasaanya, okuwandiika eby’ensimbi mu ngeri ey’otoma, ne lipoota y’ebyensimbi eya PDF okutunda ebweru w’eggwanga."
   },
   "Hub": {
     "directoryRegion": "Ekitundu ky'olukalala",
@@ -1811,7 +1870,8 @@
     "observedSymptoms": "Obubonero Obulabiddwa:",
     "keySymptoms": "Obubonero Obukulu:",
     "logToHerd": "Wandiika mu kitabo ky'obulamu bw'embizi",
-    "shareWithVet": "Gabanako n'omusawo w'ebisolo"
+    "shareWithVet": "Gabanako n'omusawo w'ebisolo",
+    "clearPigUnassigned": "Ggyako Embizi (Eggye eritannasengekebwa)"
   },
   "HR": {
     "title": "Ekitabo ekikwata ku nzirukanya y’abakozi",
@@ -2350,7 +2410,11 @@
     "relationship": "Olukolongo / Enkwatagana",
     "compensationSummary": "Mu bufunze okuliyirira",
     "totalSalaryPaidLifetime": "Omusaala gwonna ogwasasulwa (Obulamu bwonna) .",
-    "salaryPaymentHistory": "Ebyafaayo by'okusasula emisaala"
+    "salaryPaymentHistory": "Ebyafaayo by'okusasula emisaala",
+    "nutrient": "Ebiriisa",
+    "purpose": "Ekigendererwa",
+    "notes": "Ebiwandiiko",
+    "staffDetails": "Ebikwata ku bakozi"
   },
   "Common": {
     "loading": "Okutikka...",
@@ -2368,7 +2432,8 @@
     "watchAdFor3HourPass": "Laba Akalango Ofune Paasi ya Premium ey'Essaawa 3",
     "manageSubscription": "Kola ku By'okusasula",
     "upgradeToPremium": "Kulaakulanya ku Premium",
-    "howToGuide": "Engeri-Okulungamya"
+    "howToGuide": "Engeri-Okulungamya",
+    "support": "Obuyambi"
   },
   "Notifications": {
     "title": "Okumanyisa",

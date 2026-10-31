@@ -212,7 +212,32 @@
     "perfCaution": "Icyitonderwa",
     "perfPoor": "Abakene",
     "filterOptions": "Guhitamo akayunguruzo",
-    "performanceTag": "Ikiranga cy'Umusaruro"
+    "performanceTag": "Ikiranga cy'Umusaruro",
+    "activeHerd": "Amatungo akora",
+    "howToGuide": "Igitabo cy'uburyo bwo gukoresha",
+    "noPigsFound": "Nta ngurube ziri mu bworozi bwawe. Kanda \"+ Ongeramo Ingurube\" kugira ngo utangire!",
+    "pointABodyLength": "Ingingo A (Uburebure bw'Umubiri):",
+    "noteBodyLength": "Uburebure bwumubiri: Gupima uhereye kumatwi kugeza kumurizo wumurizo urebe neza ko kaseti ikomeye kumubiri kandi idafunguye (Ingingo A).",
+    "pointBHeartGirth": "Ingingo B (Uruziga rw'Igitereko):",
+    "noteHeartGirth": "Girth yumutima: Gupima thorax (inyuma yamaguru yimbere) urebe neza ko kaseti ikwiranye numubiri kandi ihura neza (Ingingo B).",
+    "noteSquarely": "Menya neza ko ingurube ihagaze neza kurwego rwibisubizo nyabyo.",
+    "liveWeight": "Ibiro ikiri nzima",
+    "inPounds": "Muri Pounds",
+    "growthIntelligence": "Gukura Ubwenge",
+    "targetPig": "Ingurube Yibanzweho",
+    "weightToSave": "Uburemere bwo kuzigama (kg)",
+    "estLiveWeight": "Ibiro ikiri nzima",
+    "saveToProfile": "Bika Umwirondoro w'ingurube",
+    "filterPigTag": "Yungurura ihereni ry'ingurube...",
+    "togglePrimalCutsTooltip": "Kanda uhindure ibice by'inyama biteganyijwe",
+    "estCarcassWeight": "Ibiro by'inyama byiteganyijwe",
+    "validWeightAlert": "Nyamuneka andika uburemere bwemewe muri kg.",
+    "failedToSaveWeight": "Kubika ibiro byanze. Nyamuneka genzura interineti.",
+    "validScaleReadingAlert": "Nyamuneka injiza ibiro byemewe bipimwe.",
+    "deleteTaskTooltip": "Siba Umurimo",
+    "dismissReminderTooltip": "Kura Ikibutso",
+    "dismissAlertTooltip": "Kura Umuburo",
+    "confirmAction": "Nyamuneka emeza iki gikorwa"
   },
   "Login": {
     "title": "Urubuga rwa SmartSwine",
@@ -311,7 +336,7 @@
     "pregnant": "Inda",
     "lactating": "Amabere",
     "searchPlaceholder": "Nimero y'ugutwi / Ikiraro / Ubwoko",
-    "activeHerd": "Izikora",
+    "activeHerd": "Amatungo akora",
     "archivedHerd": "Ingurube",
     "tag": "Ihereni",
     "castrated_label": "(Yashahwe)",
@@ -325,13 +350,24 @@
     "perfExcellent": "Cyiza",
     "perfGood": "Nibyiza",
     "perfCaution": "Icyitonderwa",
-    "perfPoor": "Abakene"
+    "perfPoor": "Abakene",
+    "tagLabel": "Ihereni",
+    "ageLabel": "Imyaka",
+    "genderLabel": "Uburinganire",
+    "castratedLabel": "(Yashahwe)",
+    "addPig": "Ongeramo Ingurube",
+    "viewFullHerd": "Reba amatungo yose ({count})",
+    "showingUpTo10": "Hagaragazwa ingurube zigera ku 10",
+    "noPigsFound": "Nta ngurube ziri mu bworozi bwawe. Kanda \"+ Ongeramo Ingurube\" kugira ngo utangire!",
+    "dateOfBirth": "Itariki y'amavuko"
   },
   "Profile": {
     "owner": "Nyirubwite",
     "staff": "Abakozi",
     "settings": "Igenamiterere",
-    "signOut": "Sohoka"
+    "signOut": "Sohoka",
+    "manageSubscription": "Gucunga Ifatabuguzi",
+    "upgradeToPremium": "Zamura kuri Premium"
   },
   "Navigation": {
     "navigateTo": "Kujya kuri",
@@ -377,9 +413,12 @@
     "feedManagement": "Kugaburira",
     "herdActivities": "Ibikorwa by'ubusho",
     "humanResources": "Abakozi",
-    "howToGuide": "Uburyo-Kuyobora",
+    "howToGuide": "Igitabo cy'uburyo bwo gukoresha",
     "rate5Stars": "Gereranya Inyenyeri 5 kuri Google Gukina",
-    "back": "Inyuma"
+    "back": "Inyuma",
+    "selectLanguage": "Hitamo Ururimi",
+    "menu": "Menyu",
+    "close": "Funga"
   },
   "Activities": {
     "title": "Kora uburyo bwo kuragira",
@@ -490,7 +529,18 @@
     "reasonDisease": "Indwara",
     "reasonSold": "Igurishwa",
     "criticalFoodSafetyWarning": "UMUBURO W'UMURYANGO W'INGENZI",
-    "meatWithdrawalTitle": "Igihe cyo gukuramo inyama"
+    "meatWithdrawalTitle": "Igihe cyo gukuramo inyama",
+    "pregnancyOutcome": "Ibisubizo by'ingurube ihaka",
+    "confirmedPregnant": "Yemejwe ko ihaka",
+    "notPregnant": "Ntiyasamye",
+    "numMales": "Umubare w'ingabo",
+    "numFemales": "Umubare w'ingore",
+    "stillbornCount": "Abavukiye gupfa",
+    "mummiesCount": "Abakanyaraye mu nda",
+    "selectAll": "Hitamo byose",
+    "noEligiblePigs": "Nta ngurube zujuje ibisabwa zibonetse kuri iki gikorwa",
+    "confirmAndLog": "Emeza kandi wandike igikorwa",
+    "notes": "Inyandiko"
   },
   "Feed": {
     "lowStockWarning": "Ububiko buke",
@@ -721,7 +771,15 @@
     "energySource": "Isoko y'Ingufu",
     "roughagesFiber": "Ibinyatsi / Ibyatsi Birimo Fibre",
     "catalog": "Katalogi",
-    "currentQty": "Ingano Isigaye"
+    "currentQty": "Ingano Isigaye",
+    "failedToDeleteIngredient": "Gusiba ibigize indyo byanze. Ongera ugerageze.",
+    "failedToDeleteRecipe": "Gusiba ifomire byanze. Ongera ugerageze.",
+    "crudeFiber": "Fibre",
+    "diagnosticsPremiumTitle": "Ibimenyetso n'Ubujyanama bw'Ubuvuzi ni Ikiranga cya Premium",
+    "diagnosticsPremiumDesc": "Zamura kuri SmartSwine Premium kugira ngo umenye indwara, isesengura ry'ibimenyetso n'ubuvuzi bwemejwe n'abaganga b'amatungo.",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "Amafaranga yose yinjiza",
@@ -774,7 +832,8 @@
     "unlockLedgerPdfTooltip": "Fungura Raporo ya PDF y'Ibitabo by'Imari",
     "customCategoryName": "Izina ryicyiciro",
     "customCategoryPlaceholder": "urugero: Imiti yica udukoko, Ubwikorezi, Amazi n'Umuriro n'ibindi",
-    "noActivePigsAvailable": "Nta ngurube zihari zikora"
+    "noActivePigsAvailable": "Nta ngurube zihari zikora",
+    "financialsDesc": "Andika ibyinjira nibisohoka, kwinjiza amafaranga byikora, no kohereza raporo yimari ya PDF."
   },
   "Hub": {
     "directoryRegion": "Agace k'igitabo",
@@ -1811,7 +1870,8 @@
     "observedSymptoms": "Ibimenyetso Byabonetse:",
     "keySymptoms": "Ibimenyetso By'Ingenzi:",
     "logToHerd": "Andika mu gitabo cy'ubuzima bw'amatungo",
-    "shareWithVet": "Sangiza muganga w'amatungo"
+    "shareWithVet": "Sangiza muganga w'amatungo",
+    "clearPigUnassigned": "Kura Ingurubeho (Itsinda Ritagenwe)"
   },
   "HR": {
     "title": "Ubuyobozi bw'abakozi",
@@ -2350,7 +2410,11 @@
     "relationship": "Isano / Amasano",
     "compensationSummary": "Incamake y'indishyi",
     "totalSalaryPaidLifetime": "Umushahara wose wishyuwe (Ubuzima bwose)",
-    "salaryPaymentHistory": "Amateka yo Kwishura Umushahara"
+    "salaryPaymentHistory": "Amateka yo Kwishura Umushahara",
+    "nutrient": "Intungamubiri",
+    "purpose": "Intego",
+    "notes": "Inyandiko",
+    "staffDetails": "Ibisobanuro birambuye by'abakozi"
   },
   "Common": {
     "loading": "Kuremera ...",
@@ -2368,7 +2432,8 @@
     "watchAdFor3HourPass": "Reba Iyamamazwa Ubone Uruhushya rwa Premium rw'Amasaha 3",
     "manageSubscription": "Gucunga Ifatabuguzi",
     "upgradeToPremium": "Zamura kuri Premium",
-    "howToGuide": "Uburyo-Kuyobora"
+    "howToGuide": "Uburyo-Kuyobora",
+    "support": "Ubufasha"
   },
   "Notifications": {
     "title": "Imenyesha",
@@ -2411,7 +2476,7 @@
     "overdue": "Igihe kirenze",
     "due": "Kubera",
     "snoozeFor": "Snooze for",
-    "confirmAction": "Nyamuneka emeza iki gikorwa",
+    "confirmAction": "Nyamuneka emeza icyo ushaka gukora",
     "deleteTaskTooltip": "Siba Umurimo",
     "dismissReminderTooltip": "Kura Ikibutso",
     "dismissAlertTooltip": "Kura Umuburo"

@@ -211,7 +211,32 @@
     "perfGood": "Good",
     "perfCaution": "Caution",
     "perfPoor": "Poor",
-    "performanceTag": "Performance Tag"
+    "performanceTag": "Performance Tag",
+    "activeHerd": "Active Herd",
+    "howToGuide": "How-to Guide",
+    "noPigsFound": "No active pigs in your herd. Click \"+ Add Pig\" to get started!",
+    "pointABodyLength": "Point A (Body Length):",
+    "noteBodyLength": "Body Length: Measure from the base of the ears to the base of the tail making sure the tape is firm on the body and not loose (Point A).",
+    "pointBHeartGirth": "Point B (Heart Girth):",
+    "noteHeartGirth": "Heart Girth: Measure the thorax (just behind the front legs) making sure the tape is fit along the body and meets tightly (Point B).",
+    "noteSquarely": "Ensure the pig is standing squarely on level ground for the most accurate result.",
+    "liveWeight": "Live Weight",
+    "inPounds": "In Pounds",
+    "growthIntelligence": "Growth Intelligence",
+    "targetPig": "Target Pig",
+    "weightToSave": "Weight to Save (kg)",
+    "estLiveWeight": "Estimated Live Weight",
+    "saveToProfile": "Save to Pig Profile",
+    "filterPigTag": "Filter pig tag...",
+    "togglePrimalCutsTooltip": "Click to toggle Estimated Primal Cuts Yield breakdown",
+    "estCarcassWeight": "Estimated Carcass Weight (72%)",
+    "validWeightAlert": "Please enter a valid weight in kg.",
+    "failedToSaveWeight": "Failed to save weight. Please check connection.",
+    "validScaleReadingAlert": "Please enter a valid scale weight reading.",
+    "deleteTaskTooltip": "Delete Task",
+    "dismissReminderTooltip": "Dismiss Reminder",
+    "dismissAlertTooltip": "Dismiss Alert",
+    "confirmAction": "Please confirm your action"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -310,7 +335,7 @@
     "pregnant": "Pregnant",
     "lactating": "Lactating",
     "searchPlaceholder": "Tag / Location / Breed",
-    "activeHerd": "Active",
+    "activeHerd": "Active Herd",
     "archivedHerd": "Archived Pigs",
     "tag": "Tag",
     "castrated_label": "(Castrated)",
@@ -324,13 +349,24 @@
     "perfExcellent": "Excellent",
     "perfGood": "Good",
     "perfCaution": "Caution",
-    "perfPoor": "Poor"
+    "perfPoor": "Poor",
+    "tagLabel": "Tag",
+    "ageLabel": "Age",
+    "genderLabel": "Gender",
+    "castratedLabel": "(Castrated)",
+    "addPig": "Add Pig",
+    "viewFullHerd": "View Full Herd ({count} Pigs)",
+    "showingUpTo10": "Showing up to 10 pigs",
+    "noPigsFound": "No active pigs in your herd. Click \"+ Add Pig\" to get started!",
+    "dateOfBirth": "Date of Birth"
   },
   "Profile": {
     "owner": "Owner",
     "staff": "Staff",
     "settings": "Account Settings",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "manageSubscription": "Manage Subscription",
+    "upgradeToPremium": "Upgrade to Premium"
   },
   "Navigation": {
     "navigateTo": "Navigate to",
@@ -376,9 +412,12 @@
     "feedManagement": "Feed",
     "herdActivities": "Herd Activities",
     "humanResources": "Human Resources",
-    "howToGuide": "How-To Guide",
+    "howToGuide": "How-to Guide",
     "rate5Stars": "Rate 5 Stars on Google Play",
-    "back": "Back"
+    "back": "Back",
+    "selectLanguage": "Select Language",
+    "menu": "Menu",
+    "close": "Close"
   },
   "Activities": {
     "title": "Execute Herd Procedure",
@@ -489,7 +528,18 @@
     "reasonDisease": "Disease",
     "reasonSold": "Sold",
     "criticalFoodSafetyWarning": "CRITICAL FOOD SAFETY WARNING",
-    "meatWithdrawalTitle": "Meat Withdrawal Period"
+    "meatWithdrawalTitle": "Meat Withdrawal Period",
+    "pregnancyOutcome": "Pregnancy Outcome",
+    "confirmedPregnant": "Confirmed Pregnant",
+    "notPregnant": "Not Pregnant",
+    "numMales": "Number of Males",
+    "numFemales": "Number of Females",
+    "stillbornCount": "Stillborn Count",
+    "mummiesCount": "Mummies Count",
+    "selectAll": "Select All",
+    "noEligiblePigs": "No eligible pigs found for this activity",
+    "confirmAndLog": "Confirm & Log Activity",
+    "notes": "Notes"
   },
   "Feed": {
     "lowStockWarning": "Low Stock Warning",
@@ -718,7 +768,15 @@
     "recipeNotesPlaceholder": "Add mixing instructions, premix additives, or seasonality notes...",
     "proteinSource": "Protein Source",
     "energySource": "Energy Source",
-    "roughagesFiber": "Roughages / Fiber"
+    "roughagesFiber": "Roughages / Fiber",
+    "failedToDeleteIngredient": "Failed to delete ingredient. Please try again.",
+    "failedToDeleteRecipe": "Failed to delete recipe. Please try again.",
+    "crudeFiber": "Crude Fiber",
+    "diagnosticsPremiumTitle": "Symptoms & Veterinary Diagnostics is a Premium Feature",
+    "diagnosticsPremiumDesc": "Upgrade to SmartSwine Premium to unlock differential swine disease matching, clinical signs analysis, hallmark symptoms, and vet-approved interventions.",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "Total Revenue",
@@ -771,7 +829,8 @@
     "unlockLedgerPdfTooltip": "Unlock Financial Ledger PDF Report",
     "customCategoryName": "Custom Category Name",
     "customCategoryPlaceholder": "e.g. Disinfectant, Transport, Utilities, etc.",
-    "noActivePigsAvailable": "No active pigs available"
+    "noActivePigsAvailable": "No active pigs available",
+    "financialsDesc": "Record incomes and expenses, automatic financial logging, and export PDF financial report."
   },
   "Hub": {
     "directoryRegion": "Directory Region: {region}",
@@ -1801,7 +1860,8 @@
     "observedSymptoms": "Observed Symptoms:",
     "keySymptoms": "Key Symptoms:",
     "logToHerd": "Log to Herd",
-    "shareWithVet": "Share with Vet"
+    "shareWithVet": "Share with Vet",
+    "clearPigUnassigned": "Clear Pig (Unassigned Herd Group)"
   },
   "HR": {
     "title": "Staff Management Directory",
@@ -2340,7 +2400,11 @@
     "relationship": "Relationship",
     "compensationSummary": "Compensation Summary",
     "totalSalaryPaidLifetime": "Total Salary Paid (Lifetime)",
-    "salaryPaymentHistory": "Salary Payment History"
+    "salaryPaymentHistory": "Salary Payment History",
+    "nutrient": "Nutrient",
+    "purpose": "Purpose",
+    "notes": "Notes",
+    "staffDetails": "Staff Details"
   },
   "Common": {
     "loading": "Loading...",
@@ -2358,7 +2422,8 @@
     "watchAdFor3HourPass": "Watch Ad for 3-Hour Premium Pass",
     "manageSubscription": "Manage Subscription",
     "upgradeToPremium": "Upgrade to Premium",
-    "howToGuide": "How-To Guide"
+    "howToGuide": "How-To Guide",
+    "support": "Support"
   },
   "Notifications": {
     "title": "Notifications",

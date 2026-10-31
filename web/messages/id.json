@@ -212,7 +212,32 @@
     "perfCaution": "Peringatan",
     "perfPoor": "Miskin",
     "filterOptions": "Opsi Filter",
-    "performanceTag": "Tag Kinerja"
+    "performanceTag": "Tag Kinerja",
+    "activeHerd": "Kawanan Aktif",
+    "howToGuide": "Panduan Penggunaan",
+    "noPigsFound": "Tidak ada babi aktif di peternakan Anda. Klik \"+ Tambah Babi\" untuk memulai!",
+    "pointABodyLength": "Titik A (Panjang Badan):",
+    "noteBodyLength": "Panjang Badan: Ukur dari pangkal telinga hingga pangkal ekor pastikan pita kencang pada badan dan tidak longgar (Titik A).",
+    "pointBHeartGirth": "Titik B (Lingkar Dada):",
+    "noteHeartGirth": "Lingkar Dada: Ukur toraks (tepat di belakang kaki depan) pastikan pita pas di sepanjang badan dan bertemu dengan kencang (Titik B).",
+    "noteSquarely": "Pastikan babi berdiri tegak di permukaan tanah yang rata untuk hasil yang paling akurat.",
+    "liveWeight": "Bobot Hidup Babi (Timbangan Hidup)",
+    "inPounds": "Dalam Pound",
+    "growthIntelligence": "Kecerdasan Pertumbuhan",
+    "targetPig": "Babi Sasaran",
+    "weightToSave": "Berat untuk Disimpan (kg)",
+    "estLiveWeight": "Estimasi Bobot Hidup",
+    "saveToProfile": "Simpan ke Profil Babi",
+    "filterPigTag": "Filter nomor anting...",
+    "togglePrimalCutsTooltip": "Klik untuk beralih rincian perkiraan hasil karkas potongan utama",
+    "estCarcassWeight": "Estimasi Berat Karkas",
+    "validWeightAlert": "Harap masukkan berat yang valid dalam kg.",
+    "failedToSaveWeight": "Gagal menyimpan berat. Silakan periksa koneksi.",
+    "validScaleReadingAlert": "Silakan masukkan angka berat timbangan yang valid.",
+    "deleteTaskTooltip": "Hapus Tugas",
+    "dismissReminderTooltip": "Tutup Pengingat",
+    "dismissAlertTooltip": "Tutup Peringatan",
+    "confirmAction": "Silakan konfirmasi tindakan Anda"
   },
   "Login": {
     "title": "Web Babi Cerdas",
@@ -311,7 +336,7 @@
     "pregnant": "Hamil",
     "lactating": "Menyusui",
     "searchPlaceholder": "No. Tag / Kandang / Ras",
-    "activeHerd": "Aktif",
+    "activeHerd": "Kawanan Aktif",
     "archivedHerd": "Babi yang Diarsipkan",
     "tag": "Menandai",
     "castrated_label": "(Dikebiri)",
@@ -325,13 +350,24 @@
     "perfExcellent": "Bagus sekali",
     "perfGood": "Bagus",
     "perfCaution": "Peringatan",
-    "perfPoor": "Miskin"
+    "perfPoor": "Miskin",
+    "tagLabel": "Menandai",
+    "ageLabel": "Usia",
+    "genderLabel": "Jenis kelamin",
+    "castratedLabel": "(Dikebiri)",
+    "addPig": "Tambah Babi",
+    "viewFullHerd": "Lihat Seluruh Populasi ({count} Ekor)",
+    "showingUpTo10": "Menampilkan hingga 10 ekor",
+    "noPigsFound": "Tidak ada babi aktif di peternakan Anda. Klik \"+ Tambah Babi\" untuk memulai!",
+    "dateOfBirth": "Tanggal Lahir"
   },
   "Profile": {
     "owner": "Pemilik",
     "staff": "Staf",
     "settings": "Pengaturan",
-    "signOut": "Keluar"
+    "signOut": "Keluar",
+    "manageSubscription": "Kelola Langganan",
+    "upgradeToPremium": "Tingkatkan ke Premium"
   },
   "Navigation": {
     "navigateTo": "Navigasi ke",
@@ -377,9 +413,12 @@
     "feedManagement": "Memberi makan",
     "herdActivities": "Aktivitas Kawanan",
     "humanResources": "Sumber daya manusia",
-    "howToGuide": "Panduan Cara",
+    "howToGuide": "Panduan Penggunaan",
     "rate5Stars": "Nilai 5 Bintang di Google Play",
-    "back": "Kembali"
+    "back": "Kembali",
+    "selectLanguage": "Pilih Bahasa",
+    "menu": "Menu",
+    "close": "Tutup"
   },
   "Activities": {
     "title": "Eksekusi Prosedur Ternak",
@@ -490,7 +529,18 @@
     "reasonDisease": "Penyakit",
     "reasonSold": "Terjual",
     "criticalFoodSafetyWarning": "PERINGATAN KESELAMATAN PANGAN KRITIS",
-    "meatWithdrawalTitle": "Periode Penarikan Daging"
+    "meatWithdrawalTitle": "Periode Penarikan Daging",
+    "pregnancyOutcome": "Hasil Kebuntingan",
+    "confirmedPregnant": "Bunting (Terkonfirmasi)",
+    "notPregnant": "Tidak Bunting",
+    "numMales": "Jumlah Jantan",
+    "numFemales": "Jumlah Betina",
+    "stillbornCount": "Jumlah Lahir Mati",
+    "mummiesCount": "Jumlah Mumifikasi",
+    "selectAll": "Pilih Semua",
+    "noEligiblePigs": "Tidak ada babi yang memenuhi syarat untuk aktivitas ini",
+    "confirmAndLog": "Konfirmasi & Catat Aktivitas",
+    "notes": "Catatan"
   },
   "Feed": {
     "lowStockWarning": "Stok Rendah",
@@ -720,7 +770,15 @@
     "proteinSource": "Sumber Protein",
     "energySource": "Sumber Energi",
     "roughagesFiber": "Pakan Kasar / Serat",
-    "catalog": "Katalog"
+    "catalog": "Katalog",
+    "failedToDeleteIngredient": "Gagal menghapus bahan pakan. Silakan coba lagi.",
+    "failedToDeleteRecipe": "Gagal menghapus formula pakan. Silakan coba lagi.",
+    "crudeFiber": "Serat Kasar",
+    "diagnosticsPremiumTitle": "Gejala & Diagnostik Veteriner adalah Fitur Premium",
+    "diagnosticsPremiumDesc": "Tingkatkan ke SmartSwine Premium untuk membuka pencocokan penyakit, analisis tanda klinis, gejala patognomonik, dan penanganan yang disetujui dokter hewan.",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "Jumlah Pendapatan",
@@ -773,7 +831,8 @@
     "unlockLedgerPdfTooltip": "Buka Laporan Buku Besar Keuangan PDF",
     "customCategoryName": "Nama Kategori Khusus",
     "customCategoryPlaceholder": "misal: Desinfektan, Transportasi, Listrik & Air dll.",
-    "noActivePigsAvailable": "Tidak ada babi aktif yang tersedia"
+    "noActivePigsAvailable": "Tidak ada babi aktif yang tersedia",
+    "financialsDesc": "Catat pendapatan dan pengeluaran, pencatatan keuangan otomatis, dan ekspor laporan keuangan PDF."
   },
   "Hub": {
     "directoryRegion": "Wilayah Direktori",
@@ -1810,7 +1869,8 @@
     "observedSymptoms": "Gejala yang Diamati:",
     "keySymptoms": "Gejala Kunci:",
     "logToHerd": "Catat ke Rekam Medis Babi",
-    "shareWithVet": "Bagikan ke Dokter Hewan"
+    "shareWithVet": "Bagikan ke Dokter Hewan",
+    "clearPigUnassigned": "Hapus Babi (Kelompok Kawanan Belum Ditetapkan)"
   },
   "HR": {
     "title": "Direktori Manajemen Staf",
@@ -2349,7 +2409,11 @@
     "relationship": "Hubungan Silsilah",
     "compensationSummary": "Ringkasan Kompensasi",
     "totalSalaryPaidLifetime": "Total Gaji yang Dibayar (Seumur Hidup)",
-    "salaryPaymentHistory": "Riwayat Pembayaran Gaji"
+    "salaryPaymentHistory": "Riwayat Pembayaran Gaji",
+    "nutrient": "Nutrisi",
+    "purpose": "Tujuan",
+    "notes": "Catatan",
+    "staffDetails": "Detail Staf"
   },
   "Common": {
     "loading": "Memuat...",
@@ -2367,7 +2431,8 @@
     "watchAdFor3HourPass": "Tonton Iklan untuk Akses Premium 3 Jam",
     "manageSubscription": "Kelola Langganan",
     "upgradeToPremium": "Tingkatkan ke Premium",
-    "howToGuide": "Panduan Cara"
+    "howToGuide": "Panduan Cara",
+    "support": "Bantuan & Dukungan"
   },
   "Notifications": {
     "title": "Notifikasi",
@@ -2410,7 +2475,7 @@
     "overdue": "Terlambat",
     "due": "Jatuh tempo",
     "snoozeFor": "Tunda untuk",
-    "confirmAction": "Silakan konfirmasi tindakan Anda",
+    "confirmAction": "Harap konfirmasi tindakan Anda",
     "deleteTaskTooltip": "Hapus Tugas",
     "dismissReminderTooltip": "Tutup Pengingat",
     "dismissAlertTooltip": "Tutup Peringatan"

@@ -212,7 +212,32 @@
     "perfCaution": "Achtung",
     "perfPoor": "Arm",
     "filterOptions": "Filteroptionen",
-    "performanceTag": "Leistungs-Tag"
+    "performanceTag": "Leistungs-Tag",
+    "activeHerd": "Aktive Herde",
+    "howToGuide": "Schritt-für-Schritt-Anleitung",
+    "noPigsFound": "Keine aktiven Schweine in Ihrer Herde. Klicken Sie auf „+ Schwein hinzufügen“, um zu beginnen!",
+    "pointABodyLength": "Punkt A (Körperlänge):",
+    "noteBodyLength": "Körperlänge: Messen Sie von der Basis der Ohren bis zur Basis des Schwanzes und achten Sie darauf, dass das Klebeband fest am Körper anliegt und nicht locker ist (Punkt A).",
+    "pointBHeartGirth": "Punkt B (Brustumfang):",
+    "noteHeartGirth": "Herzumfang: Messen Sie den Brustkorb (direkt hinter den Vorderbeinen) und stellen Sie sicher, dass das Band am Körper anliegt und eng anliegt (Punkt B).",
+    "noteSquarely": "Um ein möglichst genaues Ergebnis zu erzielen, stellen Sie sicher, dass das Schwein gerade auf ebenem Boden steht.",
+    "liveWeight": "Lebendgewicht (Schlachtschwein)",
+    "inPounds": "In Pfund",
+    "growthIntelligence": "Wachstumsintelligenz",
+    "targetPig": "Ziel-Schwein",
+    "weightToSave": "Zu sparendes Gewicht (kg)",
+    "estLiveWeight": "Geschätztes Lebendgewicht",
+    "saveToProfile": "Im Schweineprofil speichern",
+    "filterPigTag": "Ohrmarke filtern...",
+    "togglePrimalCutsTooltip": "Klicken, um die geschätzte Teilstückausbeute umzuschalten",
+    "estCarcassWeight": "Geschätztes Schlachtgewicht",
+    "validWeightAlert": "Bitte geben Sie ein gültiges Gewicht in kg ein.",
+    "failedToSaveWeight": "Gewicht konnte nicht gespeichert werden. Bitte Verbindung prüfen.",
+    "validScaleReadingAlert": "Bitte geben Sie ein gültiges Waagengewicht ein.",
+    "deleteTaskTooltip": "Aufgabe löschen",
+    "dismissReminderTooltip": "Erinnerung verwerfen",
+    "dismissAlertTooltip": "Warnung verwerfen",
+    "confirmAction": "Bitte bestätigen Sie Ihre Aktion"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -311,7 +336,7 @@
     "pregnant": "Schwanger",
     "lactating": "Stillende",
     "searchPlaceholder": "Ohrmarke / Stall / Rasse",
-    "activeHerd": "Aktiv",
+    "activeHerd": "Aktive Herde",
     "archivedHerd": "Archivierte Schweine",
     "tag": "Etikett",
     "castrated_label": "(Kastriert)",
@@ -325,13 +350,24 @@
     "perfExcellent": "Ausgezeichnet",
     "perfGood": "Gut",
     "perfCaution": "Achtung",
-    "perfPoor": "Arm"
+    "perfPoor": "Arm",
+    "tagLabel": "Etikett",
+    "ageLabel": "Alter",
+    "genderLabel": "Geschlecht",
+    "castratedLabel": "(Kastriert)",
+    "addPig": "Schwein hinzufügen",
+    "viewFullHerd": "Gesamte Herde anzeigen ({count} Schweine)",
+    "showingUpTo10": "Es werden bis zu 10 Schweine angezeigt",
+    "noPigsFound": "Keine aktiven Schweine in Ihrer Herde. Klicken Sie auf „+ Schwein hinzufügen“, um zu beginnen!",
+    "dateOfBirth": "Geburtsdatum"
   },
   "Profile": {
     "owner": "Besitzer",
     "staff": "Mitarbeiter",
     "settings": "Einstellungen",
-    "signOut": "Abmelden"
+    "signOut": "Abmelden",
+    "manageSubscription": "Abonnement verwalten",
+    "upgradeToPremium": "Auf Premium upgraden"
   },
   "Navigation": {
     "navigateTo": "Navigieren Sie zu",
@@ -377,9 +413,12 @@
     "feedManagement": "Futter",
     "herdActivities": "Herdenaktivitäten",
     "humanResources": "Personalwesen",
-    "howToGuide": "Anleitung",
+    "howToGuide": "Schritt-für-Schritt-Anleitung",
     "rate5Stars": "Bewerten Sie 5 Sterne bei Google Play",
-    "back": "Zurück"
+    "back": "Zurück",
+    "selectLanguage": "Sprache auswählen",
+    "menu": "Menü",
+    "close": "Schließen"
   },
   "Activities": {
     "title": "Herdenprozedur ausführen",
@@ -490,7 +529,18 @@
     "reasonDisease": "Krankheit",
     "reasonSold": "Verkauft",
     "criticalFoodSafetyWarning": "KRITISCHE WARNUNG ZUR LEBENSMITTELSICHERHEIT",
-    "meatWithdrawalTitle": "Wartezeit für Fleisch"
+    "meatWithdrawalTitle": "Wartezeit für Fleisch",
+    "pregnancyOutcome": "Trächtigkeitsergebnis",
+    "confirmedPregnant": "Trächtig bestätigt",
+    "notPregnant": "Nicht trächtig",
+    "numMales": "Anzahl männlich",
+    "numFemales": "Anzahl weiblich",
+    "stillbornCount": "Totgeburten",
+    "mummiesCount": "Mumifizierte Ferkel",
+    "selectAll": "Alle auswählen",
+    "noEligiblePigs": "Keine geeigneten Schweine für diese Aktivität gefunden",
+    "confirmAndLog": "Bestätigen & Protokollieren",
+    "notes": "Notizen"
   },
   "Feed": {
     "lowStockWarning": "Geringer Lagerbestand",
@@ -720,7 +770,15 @@
     "proteinSource": "Proteinquelle",
     "energySource": "Energiequelle",
     "roughagesFiber": "Raufutter / Ballaststoffe",
-    "catalog": "Katalog"
+    "catalog": "Katalog",
+    "failedToDeleteIngredient": "Zutat konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.",
+    "failedToDeleteRecipe": "Rezept konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.",
+    "crudeFiber": "Rohfaser",
+    "diagnosticsPremiumTitle": "Symptome & tierärztliche Diagnostik ist eine Premium-Funktion",
+    "diagnosticsPremiumDesc": "Upgraden Sie auf SmartSwine Premium, um Differentialdiagnosen, Leitsymptome und tierärztlich geprüfte Behandlungen freizuschalten.",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "Gesamteinkommen",
@@ -773,7 +831,8 @@
     "unlockLedgerPdfTooltip": "Finanzbericht als PDF freischalten",
     "customCategoryName": "Benutzerdefinierter Kategoriename",
     "customCategoryPlaceholder": "z. B. Desinfektionsmittel, Transport, Nebenkosten etc.",
-    "noActivePigsAvailable": "Keine aktiven Schweine verfügbar"
+    "noActivePigsAvailable": "Keine aktiven Schweine verfügbar",
+    "financialsDesc": "Erfassen Sie Einnahmen und Ausgaben, führen Sie eine automatische Finanzprotokollierung durch und exportieren Sie einen PDF-Finanzbericht."
   },
   "Hub": {
     "directoryRegion": "Verzeichnis-Region",
@@ -1810,7 +1869,8 @@
     "observedSymptoms": "Beobachtete Symptome:",
     "keySymptoms": "Hauptsymptome:",
     "logToHerd": "In Bestandsbuch eintragen",
-    "shareWithVet": "Mit Hoftierarzt teilen"
+    "shareWithVet": "Mit Hoftierarzt teilen",
+    "clearPigUnassigned": "Schwein abwählen (Nicht zugewiesene Herde)"
   },
   "HR": {
     "title": "Personalverwaltungsverzeichnis",
@@ -2349,7 +2409,11 @@
     "relationship": "Verhältnis",
     "compensationSummary": "Vergütungsübersicht",
     "totalSalaryPaidLifetime": "Gezahltes Gesamtgehalt (lebenslang)",
-    "salaryPaymentHistory": "Gehaltszahlungshistorie"
+    "salaryPaymentHistory": "Gehaltszahlungshistorie",
+    "nutrient": "Nährstoff",
+    "purpose": "Zweck",
+    "notes": "Notizen",
+    "staffDetails": "Personaldetails"
   },
   "Common": {
     "loading": "Laden...",
@@ -2367,7 +2431,8 @@
     "watchAdFor3HourPass": "Werbung für 3-Stunden-Premium-Pass ansehen",
     "manageSubscription": "Abonnement verwalten",
     "upgradeToPremium": "Auf Premium upgraden",
-    "howToGuide": "Anleitung"
+    "howToGuide": "Anleitung",
+    "support": "Kundendienst"
   },
   "Notifications": {
     "title": "Benachrichtigungen",

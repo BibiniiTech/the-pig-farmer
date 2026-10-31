@@ -212,7 +212,32 @@
     "perfCaution": "Attention",
     "perfPoor": "Médiocre",
     "performanceTag": "Balise de performance",
-    "filterOptions": "Options de filtre"
+    "filterOptions": "Options de filtre",
+    "activeHerd": "Troupeau actif",
+    "howToGuide": "Guide pratique",
+    "noPigsFound": "Aucun porc actif dans votre élevage. Cliquez sur \"+ Ajouter un Porc\" pour démarrer !",
+    "pointABodyLength": "Point A (Longueur corporelle) :",
+    "noteBodyLength": "Longueur du corps : Mesurez de la base des oreilles à la base de la queue en vous assurant que le ruban est ferme sur le corps et non lâche (Point A).",
+    "pointBHeartGirth": "Point B (Tour de poitrine) :",
+    "noteHeartGirth": "Tour de poitrine : Mesurez le thorax (juste derrière les pattes avant) en vous assurant que le ruban est ajusté le long du corps et se rejoint étroitement (Point B).",
+    "noteSquarely": "Assurez-vous que le cochon se tient bien droit sur un sol plat pour obtenir le résultat le plus précis.",
+    "liveWeight": "Poids Vif",
+    "inPounds": "En Livres",
+    "growthIntelligence": "Intelligence de Croissance",
+    "targetPig": "Porc Cible",
+    "weightToSave": "Poids à enregistrer (kg)",
+    "estLiveWeight": "Poids vif estimé",
+    "saveToProfile": "Enregistrer dans le profil du cochon",
+    "filterPigTag": "Filtrer le numéro d'identification...",
+    "togglePrimalCutsTooltip": "Cliquer pour basculer le rendement estimé des découpes",
+    "estCarcassWeight": "Poids carcasse estimé",
+    "validWeightAlert": "Veuillez saisir un poids valide en kg.",
+    "failedToSaveWeight": "Échec de l'enregistrement du poids. Veuillez vérifier la connexion.",
+    "validScaleReadingAlert": "Veuillez entrer une valeur de pesée valide.",
+    "deleteTaskTooltip": "Supprimer la tâche",
+    "dismissReminderTooltip": "Ignorer le rappel",
+    "dismissAlertTooltip": "Ignorer l'alerte",
+    "confirmAction": "Veuillez confirmer votre action"
   },
   "Login": {
     "title": "Web SmartSwine",
@@ -311,7 +336,7 @@
     "pregnant": "Gestante",
     "lactating": "Allaitante",
     "searchPlaceholder": "N° boucle / Emplacement / Race",
-    "activeHerd": "Actif",
+    "activeHerd": "Troupeau actif",
     "archivedHerd": "Porcs archivés",
     "tag": "Boucle",
     "castrated_label": "(Castré)",
@@ -325,13 +350,24 @@
     "perfExcellent": "Excellent",
     "perfGood": "Bon",
     "perfCaution": "Attention",
-    "perfPoor": "Médiocre"
+    "perfPoor": "Médiocre",
+    "tagLabel": "N° Boucle",
+    "ageLabel": "Âge",
+    "genderLabel": "Sexe",
+    "castratedLabel": "(Castré)",
+    "addPig": "Ajouter un porc",
+    "viewFullHerd": "Voir tout le troupeau ({count} porcs)",
+    "showingUpTo10": "Affichage jusqu'à 10 porcs",
+    "noPigsFound": "Aucun porc actif dans votre élevage. Cliquez sur \"+ Ajouter un Porc\" pour démarrer !",
+    "dateOfBirth": "Date de naissance"
   },
   "Profile": {
     "owner": "Propriétaire",
     "staff": "Personnel",
     "settings": "Paramètres",
-    "signOut": "Se déconnecter"
+    "signOut": "Se déconnecter",
+    "manageSubscription": "Gérer l'abonnement",
+    "upgradeToPremium": "Passer à Premium"
   },
   "Navigation": {
     "navigateTo": "Naviguer vers",
@@ -377,9 +413,12 @@
     "feedManagement": "Alimentation",
     "herdActivities": "Activités du troupeau",
     "humanResources": "Ressources humaines",
-    "howToGuide": "Guide Pratique",
+    "howToGuide": "Guide pratique",
     "rate5Stars": "Noter 5 étoiles sur Google Play",
-    "back": "Retour"
+    "back": "Retour",
+    "selectLanguage": "Sélectionner la langue",
+    "menu": "Menu",
+    "close": "Fermer"
   },
   "Activities": {
     "title": "Exécuter une procédure sur le troupeau",
@@ -490,7 +529,18 @@
     "reasonDisease": "Maladie",
     "reasonSold": "Vendu",
     "criticalFoodSafetyWarning": "AVERTISSEMENT CRITIQUE DE SÉCURITÉ SANITAIRE",
-    "meatWithdrawalTitle": "Délai d'Attente Avant Abattage"
+    "meatWithdrawalTitle": "Délai d'Attente Avant Abattage",
+    "pregnancyOutcome": "Résultat de gestation",
+    "confirmedPregnant": "Gestation confirmée",
+    "notPregnant": "Non gestante",
+    "numMales": "Nombre de mâles",
+    "numFemales": "Nombre de femelles",
+    "stillbornCount": "Nombre de mort-nés",
+    "mummiesCount": "Porcelets momifiés",
+    "selectAll": "Tout sélectionner",
+    "noEligiblePigs": "Aucun porc éligible trouvé pour cette activité",
+    "confirmAndLog": "Confirmer et enregistrer l'activité",
+    "notes": "Remarques"
   },
   "Feed": {
     "lowStockWarning": "Stock faible",
@@ -720,7 +770,15 @@
     "proteinSource": "Source Protéique",
     "energySource": "Source Énergétique",
     "roughagesFiber": "Fibres / Fourrages",
-    "catalog": "Catalogue"
+    "catalog": "Catalogue",
+    "failedToDeleteIngredient": "Échec de la suppression de l'ingrédient. Veuillez réessayer.",
+    "failedToDeleteRecipe": "Échec de la suppression de la formulation. Veuillez réessayer.",
+    "crudeFiber": "Cellulose brute",
+    "diagnosticsPremiumTitle": "Diagnostic Clinique & Symptômes est une Option Premium",
+    "diagnosticsPremiumDesc": "Passez à SmartSwine Premium pour débloquer le diagnostic différentiel porcin, les signes cliniques et les conseils vétérinaires.",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "Revenu Total",
@@ -773,7 +831,8 @@
     "unlockLedgerPdfTooltip": "Débloquer le rapport PDF du grand livre",
     "customCategoryName": "Nom de catégorie personnalisé",
     "customCategoryPlaceholder": "ex. Désinfectant, Transport, Électricité",
-    "noActivePigsAvailable": "Aucun porc actif disponible"
+    "noActivePigsAvailable": "Aucun porc actif disponible",
+    "financialsDesc": "Enregistrez les revenus et les dépenses, journalisation financière automatique et exportez des rapports financiers PDF."
   },
   "Hub": {
     "directoryRegion": "Région de l'annuaire",
@@ -1803,7 +1862,8 @@
     "observedSymptoms": "Symptômes observés :",
     "keySymptoms": "Symptômes clés :",
     "logToHerd": "Enregistrer dans l'élevage",
-    "shareWithVet": "Partager avec le vétérinaire"
+    "shareWithVet": "Partager avec le vétérinaire",
+    "clearPigUnassigned": "Effacer Porc (Groupe d'Élevage)"
   },
   "HR": {
     "title": "Répertoire de gestion du personnel",
@@ -2342,7 +2402,11 @@
     "relationship": "Lien de Parenté",
     "compensationSummary": "Résumé des Rémunérations",
     "totalSalaryPaidLifetime": "Total Salaires Versés (Historique)",
-    "salaryPaymentHistory": "Historique des Versements Salariaux"
+    "salaryPaymentHistory": "Historique des Versements Salariaux",
+    "nutrient": "Nutriment",
+    "purpose": "Objectif",
+    "notes": "Remarques",
+    "staffDetails": "Détails du personnel"
   },
   "Common": {
     "loading": "Chargement...",
@@ -2360,7 +2424,8 @@
     "watchAdFor3HourPass": "Regarder une pub pour un pass Premium de 3 heures",
     "manageSubscription": "Gérer l'abonnement",
     "upgradeToPremium": "Passer à Premium",
-    "howToGuide": "Guide Pratique"
+    "howToGuide": "Guide Pratique",
+    "support": "Support technique"
   },
   "Notifications": {
     "title": "Notifications",

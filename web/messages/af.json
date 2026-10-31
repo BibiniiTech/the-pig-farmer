@@ -212,7 +212,32 @@
     "perfCaution": "Versigtig",
     "perfPoor": "Arm",
     "filterOptions": "Filteropsies",
-    "performanceTag": "Prestasie-merker"
+    "performanceTag": "Prestasie-merker",
+    "activeHerd": "Aktiewe Kudde",
+    "howToGuide": "Handleiding",
+    "noPigsFound": "Geen aktiewe varke in jou kudde nie. Klik \"+ Voeg Vark by\" om te begin!",
+    "pointABodyLength": "Punt A (Liggaamslengte):",
+    "noteBodyLength": "Liggaamslengte: Meet vanaf die basis van die ore tot by die basis van die stert en maak seker dat die band stewig op die lyf is en nie los nie (Punt A).",
+    "pointBHeartGirth": "Punt B (Borsomtrek):",
+    "noteHeartGirth": "Hartomtrek: Meet die toraks (net agter die voorpote) en maak seker dat die band langs die lyf pas en styf bymekaar pas (Punkt B).",
+    "noteSquarely": "Maak seker die vark staan vierkantig op gelyk grond vir die mees akkurate resultaat.",
+    "liveWeight": "Lewendige Gewig (Skaalgewig)",
+    "inPounds": "In Pond",
+    "growthIntelligence": "Groei Intelligensie",
+    "targetPig": "Teikenvark",
+    "weightToSave": "Gewig om te bespaar (kg)",
+    "estLiveWeight": "Beraamde Lewendige Gewig",
+    "saveToProfile": "Stoor na varkprofiel",
+    "filterPigTag": "Filtreer oornommer...",
+    "togglePrimalCutsTooltip": "Klik om beraamde snitopbrengs-verdeling te wissel",
+    "estCarcassWeight": "Beraamde Karkasgewig",
+    "validWeightAlert": "Voer asseblief 'n geldige gewig in kg in.",
+    "failedToSaveWeight": "Failed to save weight. Please check connection.",
+    "validScaleReadingAlert": "Please enter a valid scale weight reading.",
+    "deleteTaskTooltip": "Vee Taak Uit",
+    "dismissReminderTooltip": "Maak Herinnering Toe",
+    "dismissAlertTooltip": "Maak Waarskuwing Toe",
+    "confirmAction": "Bevestig asseblief jou aksie"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -311,7 +336,7 @@
     "pregnant": "Swanger",
     "lactating": "Lakterend",
     "searchPlaceholder": "Oormerk / Hok / Ras",
-    "activeHerd": "Aktief",
+    "activeHerd": "Aktiewe Kudde",
     "archivedHerd": "Geargiveerde Varke",
     "tag": "Merk",
     "castrated_label": "(Gekastreer)",
@@ -325,13 +350,24 @@
     "perfExcellent": "Uitstekend",
     "perfGood": "Goed",
     "perfCaution": "Versigtig",
-    "perfPoor": "Arm"
+    "perfPoor": "Arm",
+    "tagLabel": "Merk",
+    "ageLabel": "Ouderdom",
+    "genderLabel": "Geslag",
+    "castratedLabel": "(Gekastreer)",
+    "addPig": "Voeg Vark by",
+    "viewFullHerd": "Bekyk Volledige Kudde ({count} Varke)",
+    "showingUpTo10": "Wys tot 10 varke",
+    "noPigsFound": "Geen aktiewe varke in jou kudde nie. Klik \"+ Voeg Vark by\" om te begin!",
+    "dateOfBirth": "Geboortedatum"
   },
   "Profile": {
     "owner": "Eienaar",
     "staff": "Personeel",
     "settings": "Instellings",
-    "signOut": "Teken uit"
+    "signOut": "Teken uit",
+    "manageSubscription": "Bestuur Intekening",
+    "upgradeToPremium": "Gradeer op na Premium"
   },
   "Navigation": {
     "navigateTo": "Navigeer na",
@@ -377,9 +413,12 @@
     "feedManagement": "Voer",
     "herdActivities": "Kudde-aktiwiteite",
     "humanResources": "Menslike Hulpbronne",
-    "howToGuide": "Hoe-om-gids",
+    "howToGuide": "Handleiding",
     "rate5Stars": "Beoordeel 5 sterre op Google Play",
-    "back": "Terug"
+    "back": "Terug",
+    "selectLanguage": "Kies Taal",
+    "menu": "Kieslys",
+    "close": "Maak toe"
   },
   "Activities": {
     "title": "Voer die kuddeprosedure uit",
@@ -490,7 +529,18 @@
     "reasonDisease": "Siekte",
     "reasonSold": "Verkoop",
     "criticalFoodSafetyWarning": "KRITIESE VOEDSELVEILIGHEID WAARSKUWING",
-    "meatWithdrawalTitle": "Vleis Onttrekking Tydperk"
+    "meatWithdrawalTitle": "Vleis Onttrekking Tydperk",
+    "pregnancyOutcome": "Dragtigheidsuitslag",
+    "confirmedPregnant": "Dragtig Bevestig",
+    "notPregnant": "Nie Dragtig Nie",
+    "numMales": "Aantal Mannetjies",
+    "numFemales": "Aantal Wyfies",
+    "stillbornCount": "Doodgebore Aantal",
+    "mummiesCount": "Gemummifiseerde Aantal",
+    "selectAll": "Kies Alles",
+    "noEligiblePigs": "Geen geskikte varke gevind vir hierdie aktiwiteit nie",
+    "confirmAndLog": "Bevestig & Teken Aan",
+    "notes": "Notas"
   },
   "Feed": {
     "lowStockWarning": "Lae voorraad",
@@ -720,7 +770,15 @@
     "proteinSource": "Proteïenbron",
     "energySource": "Energiebron",
     "roughagesFiber": "Ruvoer / Vesel",
-    "catalog": "Katalogus"
+    "catalog": "Katalogus",
+    "failedToDeleteIngredient": "Kon nie bestanddeel verwyder nie. Probeer asseblief weer.",
+    "failedToDeleteRecipe": "Kon nie resep verwyder nie. Probeer asseblief weer.",
+    "crudeFiber": "Ruwe vesel",
+    "diagnosticsPremiumTitle": "Simptome & Veeartsenykundige Diagnostiek is 'n Premium-funksie",
+    "diagnosticsPremiumDesc": "Gradeer op na SmartSwine Premium om siektediagnose, kliniese tekens en veearts-goedgekeurde behandelings te ontsluit.",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "Totale inkomste",
@@ -773,7 +831,8 @@
     "unlockLedgerPdfTooltip": "Ontsluit Finansiële Grootboek PDF Verslag",
     "customCategoryName": "Gepasmaakte kategorienaam",
     "customCategoryPlaceholder": "bv. Ontsmettingsmiddel, Vervoer, Elektrisiteit ens.",
-    "noActivePigsAvailable": "Geen aktiewe varke beskikbaar nie"
+    "noActivePigsAvailable": "Geen aktiewe varke beskikbaar nie",
+    "financialsDesc": "Teken inkomste en uitgawes op, outomatiese finansiële aantekening, en voer PDF finansiële verslag uit."
   },
   "Hub": {
     "directoryRegion": "Gidsstreek",
@@ -1810,7 +1869,8 @@
     "observedSymptoms": "Waargenome Simptome:",
     "keySymptoms": "Sleutelsimptome:",
     "logToHerd": "Teken aan in Kuddegesondheidsrekords",
-    "shareWithVet": "Deel met Veearts"
+    "shareWithVet": "Deel met Veearts",
+    "clearPigUnassigned": "Maak Vark Skoon (Ongewese Kuddegroep)"
   },
   "HR": {
     "title": "Personeelbestuurgids",
@@ -2349,7 +2409,11 @@
     "relationship": "Verwantskap",
     "compensationSummary": "Opsomming van vergoeding",
     "totalSalaryPaidLifetime": "Totale salaris betaal (leeftyd)",
-    "salaryPaymentHistory": "Salarisbetalingsgeskiedenis"
+    "salaryPaymentHistory": "Salarisbetalingsgeskiedenis",
+    "nutrient": "Voedingstof",
+    "purpose": "Doel",
+    "notes": "Notas",
+    "staffDetails": "Personeelbesonderhede"
   },
   "Common": {
     "loading": "Laai tans...",
@@ -2367,7 +2431,8 @@
     "watchAdFor3HourPass": "Kyk Advertensie vir 3-Uur Premium Pas",
     "manageSubscription": "Bestuur Intekening",
     "upgradeToPremium": "Gradeer op na Premium",
-    "howToGuide": "Hoe-om-gids"
+    "howToGuide": "Hoe-om-gids",
+    "support": "Ondersteuning"
   },
   "Notifications": {
     "title": "Kennisgewings",
@@ -2410,7 +2475,7 @@
     "overdue": "Agterstallig",
     "due": "Verskuldig",
     "snoozeFor": "Sluimer vir",
-    "confirmAction": "Bevestig asseblief jou aksie",
+    "confirmAction": "Bevestig asseblief u aksie",
     "deleteTaskTooltip": "Vee Taak Uit",
     "dismissReminderTooltip": "Maak Herinnering Toe",
     "dismissAlertTooltip": "Maak Waarskuwing Toe"

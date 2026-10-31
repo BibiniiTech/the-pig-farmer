@@ -418,16 +418,16 @@ export default function InlineDiseaseFinderSection() {
           </svg>
         </div>
         <div className="space-y-2">
-          <h2 className="text-xl sm:text-2xl font-black text-zinc-900">{tFeed("diagnosticsPremiumTitle") || "Symptoms & Veterinary Diagnostics is a Premium Feature"}</h2>
+          <h2 className="text-xl sm:text-2xl font-black text-zinc-900">{t("diagnosticsPremiumTitle") || tFeed("diagnosticsPremiumTitle") || "Symptoms & Veterinary Diagnostics is a Premium Feature"}</h2>
           <p className="text-xs sm:text-sm text-zinc-600 max-w-md mx-auto leading-relaxed">
-            {tFeed("diagnosticsPremiumDesc") || "Upgrade to SmartSwine Premium to unlock differential swine disease matching, clinical signs analysis, hallmark symptoms, and vet-approved interventions."}
+            {t("diagnosticsPremiumDesc") || tFeed("diagnosticsPremiumDesc") || "Upgrade to SmartSwine Premium to unlock differential swine disease matching, clinical signs analysis, hallmark symptoms, and vet-approved interventions."}
           </p>
         </div>
         <Link
           href="/dashboard/billing"
           className="inline-block px-7 py-3 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white text-xs font-bold rounded-xl shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
         >
-          {tFeed("upgradeToPremium") || "Upgrade to Premium"}
+          {t("upgradeToPremium") || tFeed("upgradeToPremium") || "Upgrade to Premium"}
         </Link>
       </div>
     }>

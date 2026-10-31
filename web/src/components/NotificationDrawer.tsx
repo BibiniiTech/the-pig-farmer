@@ -499,7 +499,7 @@ export default function NotificationDrawer({
                                 });
                               }}
                               className="inline-flex items-center gap-1 text-[11px] font-semibold text-rose-600 hover:text-rose-700 bg-white/80 hover:bg-rose-50 px-2 py-1 rounded-lg border border-rose-200/60 shadow-xs transition"
-                              title={t("deleteTaskTooltip") || "Delete Task"}
+                              title={tNotif("deleteTaskTooltip") || "Delete Task"}
                             >
                               <TrashIcon className="h-3.5 w-3.5 text-rose-500" />
                               <span>{tNotif("delete")}</span>
@@ -627,7 +627,7 @@ export default function NotificationDrawer({
                                 });
                               }}
                               className="inline-flex items-center gap-1 text-[11px] font-semibold text-rose-600 hover:text-rose-700 bg-white/80 hover:bg-rose-50 px-2 py-1 rounded-lg border border-rose-200/60 shadow-xs transition"
-                              title={t("dismissReminderTooltip") || "Dismiss Reminder"}
+                              title={tNotif("dismissReminderTooltip") || "Dismiss Reminder"}
                             >
                               <TrashIcon className="h-3.5 w-3.5 text-rose-500" />
                               <span>{tNotif("delete")}</span>
@@ -745,7 +745,7 @@ export default function NotificationDrawer({
                                 });
                               }}
                               className="inline-flex items-center gap-1 text-[11px] font-semibold text-rose-600 hover:text-rose-700 bg-white/80 hover:bg-rose-50 px-2 py-1 rounded-lg border border-rose-200/60 shadow-xs transition"
-                              title={t("dismissAlertTooltip") || "Dismiss Alert"}
+                              title={tNotif("dismissAlertTooltip") || "Dismiss Alert"}
                             >
                               <TrashIcon className="h-3.5 w-3.5 text-rose-500" />
                               <span>{tNotif("delete")}</span>
@@ -775,7 +775,7 @@ export default function NotificationDrawer({
               </div>
               <div>
                 <h3 className="font-bold text-base text-zinc-900">{deleteConfirmTarget.title}</h3>
-                <p className="text-xs text-zinc-500 mt-0.5">{t("confirmAction") || "Please confirm your action"}</p>
+                <p className="text-xs text-zinc-500 mt-0.5">{tNotif("confirmAction") || "Please confirm your action"}</p>
               </div>
             </div>
             <p className="text-xs text-zinc-600 leading-relaxed">

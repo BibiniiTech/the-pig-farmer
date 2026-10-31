@@ -212,7 +212,32 @@
     "perfCaution": "Atansyon",
     "perfPoor": "Pòv",
     "filterOptions": "Opsyon Filtre",
-    "performanceTag": "Etikèt Pèfòmans"
+    "performanceTag": "Etikèt Pèfòmans",
+    "activeHerd": "Twoupo aktif",
+    "howToGuide": "Gid itilizasyon",
+    "noPigsFound": "Pa gen kochon aktif nan bann ou an. Klike sou \"+ Ajoute Kochon\" pou kòmanse!",
+    "pointABodyLength": "Pwen A (Longè Kò a):",
+    "noteBodyLength": "Longè Kò: Mezire soti nan baz zòrèy yo rive nan baz ke a, asire w riban an byen kole sou kò a (Pwen A).",
+    "pointBHeartGirth": "Pwen B (Tou Pwatrin lan):",
+    "noteHeartGirth": "Sikonferans Pwatrin: Mezire tora a (jis dèyè janm devan yo) asire w riban an byen kole sou kò a (Pwen B).",
+    "noteSquarely": "Asire kochon an kanpe byen sou yon tè ki nivo pou rezilta a ka pi egzak.",
+    "liveWeight": "Pwa Kochon an Viv (Pwa sou pye)",
+    "inPounds": "An Liv (Pounds)",
+    "growthIntelligence": "Entèlijans kwasans",
+    "targetPig": "Kochon Sib",
+    "weightToSave": "Pwa pou Sove (kg)",
+    "estLiveWeight": "Estimasyon Pwa sou Pye",
+    "saveToProfile": "Sove nan Pwofil Kochon an",
+    "filterPigTag": "Filtre zanno kochon...",
+    "togglePrimalCutsTooltip": "Klike pou wè detay rannman vyann estime a",
+    "estCarcassWeight": "Estimasyon Pwa Vyann Pandye",
+    "validWeightAlert": "Tanpri antre yon pwa ki valab an kg.",
+    "failedToSaveWeight": "Pa rive anrejistre pwa a. Tanpri tcheke koneksyon an.",
+    "validScaleReadingAlert": "Tanpri antre yon mezi pwa balans ki valab.",
+    "deleteTaskTooltip": "Efase Travay",
+    "dismissReminderTooltip": "Fèmen Rapèl",
+    "dismissAlertTooltip": "Fèmen Alèt",
+    "confirmAction": "Tanpri konfime aksyon ou an"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -311,7 +336,7 @@
     "pregnant": "Ansent",
     "lactating": "Laktasyon",
     "searchPlaceholder": "Nimewo zòrèy / Pak / Ras",
-    "activeHerd": "Aktif",
+    "activeHerd": "Twoupo aktif",
     "archivedHerd": "Kochon achiv",
     "tag": "Zanno",
     "castrated_label": "(Chastre)",
@@ -325,13 +350,24 @@
     "perfExcellent": "Ekselan",
     "perfGood": "Bon",
     "perfCaution": "Atansyon",
-    "perfPoor": "Pòv"
+    "perfPoor": "Pòv",
+    "tagLabel": "Zanno",
+    "ageLabel": "Laj",
+    "genderLabel": "Sèks",
+    "castratedLabel": "(Chastre)",
+    "addPig": "Ajoute Kochon",
+    "viewFullHerd": "Wè Tout Bann Kochon an ({count} Kochon)",
+    "showingUpTo10": "Ap montre jiska 10 kochon",
+    "noPigsFound": "Pa gen kochon aktif nan bann ou an. Klike sou \"+ Ajoute Kochon\" pou kòmanse!",
+    "dateOfBirth": "Dat Nesans"
   },
   "Profile": {
     "owner": "Mèt",
     "staff": "Estaf",
     "settings": "Anviwònman",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "manageSubscription": "Jere Abònman",
+    "upgradeToPremium": "Amelyore sou Premium"
   },
   "Navigation": {
     "navigateTo": "Ale nan",
@@ -377,9 +413,12 @@
     "feedManagement": "Manje",
     "herdActivities": "Aktivite twoupo yo",
     "humanResources": "Resous Imèn",
-    "howToGuide": "Kijan Pou Gid",
+    "howToGuide": "Gid itilizasyon",
     "rate5Stars": "Evalyasyon 5 Stars sou Google Play",
-    "back": "Retounen"
+    "back": "Retounen",
+    "selectLanguage": "Chwazi lang",
+    "menu": "Meni",
+    "close": "Fèmen"
   },
   "Activities": {
     "title": "Egzekite Pwosedi Elevaj",
@@ -490,7 +529,18 @@
     "reasonDisease": "Maladi",
     "reasonSold": "Vann",
     "criticalFoodSafetyWarning": "AVÈTISMAN KRITIK SEKIRITE MANJE",
-    "meatWithdrawalTitle": "Peryòd retrè vyann"
+    "meatWithdrawalTitle": "Peryòd retrè vyann",
+    "pregnancyOutcome": "Rezilta gwosès",
+    "confirmedPregnant": "Gwosès konfime",
+    "notPregnant": "Pa gen gwosès",
+    "numMales": "Kantite gason",
+    "numFemales": "Kantite fi",
+    "stillbornCount": "Kantite ki fèt mò",
+    "mummiesCount": "Kantite ki momifye",
+    "selectAll": "Chwazi tout",
+    "noEligiblePigs": "Pa gen kochon ki kalifye pou aktivite sa a",
+    "confirmAndLog": "Konfime epi anrejistre aktivite a",
+    "notes": "Nòt"
   },
   "Feed": {
     "lowStockWarning": "Ba Stock",
@@ -721,7 +771,15 @@
     "energySource": "Sous Enèji",
     "roughagesFiber": "Fouraj / Fib",
     "catalog": "Katalòg",
-    "currentQty": "Kantite Ki Rete"
+    "currentQty": "Kantite Ki Rete",
+    "failedToDeleteIngredient": "Echèk pou efase engredyan an. Tanpri reye ankò.",
+    "failedToDeleteRecipe": "Echèk pou efase fòmil sa a. Tanpri reye ankò.",
+    "crudeFiber": "Fib brit",
+    "diagnosticsPremiumTitle": "Sentòm ak Dyagnostik Veterinè se yon Fonksyonalite Premium",
+    "diagnosticsPremiumDesc": "Amelyore sou SmartSwine Premium pou debloke idantifikasyon maladi, analiz siy klinik, sentòm prensipal ak tretman veterinè apwouve.",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "Revni total",
@@ -774,7 +832,8 @@
     "unlockLedgerPdfTooltip": "Debloke Rapò PDF Liv Finansye a",
     "customCategoryName": "Non Kategori Custom",
     "customCategoryPlaceholder": "pa egzanp: Dezenfektan, Transpò, Kouran ak Dlo elatriye",
-    "noActivePigsAvailable": "Pa gen kochon aktif ki disponib"
+    "noActivePigsAvailable": "Pa gen kochon aktif ki disponib",
+    "financialsDesc": "Anrejistre revni ak depans, anrejistreman finansye otomatik, epi ekspòte rapò finansye PDF."
   },
   "Hub": {
     "directoryRegion": "Zòn nan anyè a",
@@ -1811,7 +1870,8 @@
     "observedSymptoms": "Sentòm yo Obsève:",
     "keySymptoms": "Sentòm Kle yo:",
     "logToHerd": "Anrejistre nan Dosye Sante Bann lan",
-    "shareWithVet": "Pataje sa ak Veterinè a"
+    "shareWithVet": "Pataje sa ak Veterinè a",
+    "clearPigUnassigned": "Retire Kochon (Gwoup ki pa asiyen)"
   },
   "HR": {
     "title": "Anyè Jesyon Estaf",
@@ -2350,7 +2410,11 @@
     "relationship": "Fanmi / Relasyon",
     "compensationSummary": "Rezime Konpansasyon",
     "totalSalaryPaidLifetime": "Salè total peye (tout lavi)",
-    "salaryPaymentHistory": "Istwa Peman Salè"
+    "salaryPaymentHistory": "Istwa Peman Salè",
+    "nutrient": "Nutriyan",
+    "purpose": "Objektif",
+    "notes": "Nòt",
+    "staffDetails": "Detay anplwaye yo"
   },
   "Common": {
     "loading": "Ap chaje...",
@@ -2368,7 +2432,8 @@
     "watchAdFor3HourPass": "Gade Piblisite pou yon Pas Premium 3 Zèdtan",
     "manageSubscription": "Jere Abònman",
     "upgradeToPremium": "Amelyore sou Premium",
-    "howToGuide": "Kijan Pou Gid"
+    "howToGuide": "Kijan Pou Gid",
+    "support": "Sipò"
   },
   "Notifications": {
     "title": "Notifikasyon",

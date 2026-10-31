@@ -212,7 +212,32 @@
     "perfCaution": "Pag-iingat",
     "perfPoor": "Mahina",
     "filterOptions": "Mga Opsyon sa Filter",
-    "performanceTag": "Tag ng Pagganap"
+    "performanceTag": "Tag ng Pagganap",
+    "activeHerd": "Aktibong Kawan",
+    "howToGuide": "Gabay sa Paggamit",
+    "noPigsFound": "Walang aktibong baboy sa iyong kawan. I-click ang \"+ Magdagdag ng Baboy\" para magsimula!",
+    "pointABodyLength": "Punto A (Haba ng Katawan):",
+    "noteBodyLength": "Haba ng Katawan: Sukatin mula sa base ng mga tainga hanggang sa base ng buntot. Siguraduhing lapat ang medida (Point A).",
+    "pointBHeartGirth": "Punto B (Kabilugan ng Dibdib):",
+    "noteHeartGirth": "Sukat ng Dibdib: Sukatin sa likod ng harapang mga paa. Siguraduhing mahigpit at lapat ang medida (Point B).",
+    "noteSquarely": "Siguraduhing maayos ang tayo ng baboy sa pantay na lupa para sa tamang resulta.",
+    "liveWeight": "Timbang Habang Buhay (Buhay na Timbang)",
+    "inPounds": "Nasa Pounds",
+    "growthIntelligence": "Paglago ng Katalinuhan",
+    "targetPig": "Target na Baboy",
+    "weightToSave": "Timbang na Ise-save (kg)",
+    "estLiveWeight": "Tantiyang Timbang Habang Buhay",
+    "saveToProfile": "I-save sa Profile ng Baboy",
+    "filterPigTag": "I-filter ang ear tag...",
+    "togglePrimalCutsTooltip": "I-click upang makita ang detalye ng tinatayang hiwa ng karne",
+    "estCarcassWeight": "Tantiyang Timbang ng Karne",
+    "validWeightAlert": "Pakilagay ang tamang timbang sa kg.",
+    "failedToSaveWeight": "Nabigong i-save ang timbang. Pakisuri ang koneksyon.",
+    "validScaleReadingAlert": "Mangyaring maglagay ng wastong timbang mula sa timbangan.",
+    "deleteTaskTooltip": "Tanggalin ang Gawain",
+    "dismissReminderTooltip": "Alisin ang Paalala",
+    "dismissAlertTooltip": "Alisin ang Babala",
+    "confirmAction": "Pakikumpirma ang iyong aksyon"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -311,7 +336,7 @@
     "pregnant": "Buntis",
     "lactating": "Nagpapasuso",
     "searchPlaceholder": "Tag / Kulungan / Lahi",
-    "activeHerd": "Aktibo",
+    "activeHerd": "Aktibong Kawan",
     "archivedHerd": "Naka-archive na Baboy",
     "tag": "Tag / Hikaw",
     "castrated_label": "(Kapon)",
@@ -325,13 +350,24 @@
     "perfExcellent": "Napakahusay",
     "perfGood": "Mabuti",
     "perfCaution": "Pag-iingat",
-    "perfPoor": "Mahina"
+    "perfPoor": "Mahina",
+    "tagLabel": "Tag / Hikaw",
+    "ageLabel": "Edad",
+    "genderLabel": "Kasarian",
+    "castratedLabel": "(Kapon)",
+    "addPig": "Magdagdag ng Baboy",
+    "viewFullHerd": "Tingnan ang Buong Kawan ({count} Baboy)",
+    "showingUpTo10": "Ipinapakita ang hanggang 10 baboy",
+    "noPigsFound": "Walang aktibong baboy sa iyong kawan. I-click ang \"+ Magdagdag ng Baboy\" para magsimula!",
+    "dateOfBirth": "Araw ng Kapanganakan"
   },
   "Profile": {
     "owner": "May-ari",
     "staff": "Mga tauhan",
     "settings": "Mga Setting",
-    "signOut": "Mag-sign Out"
+    "signOut": "Mag-sign Out",
+    "manageSubscription": "Pamahalaan ang Subskripsyon",
+    "upgradeToPremium": "Mag-upgrade sa Premium"
   },
   "Navigation": {
     "navigateTo": "Pumunta sa",
@@ -379,7 +415,10 @@
     "humanResources": "Yamang Tao",
     "howToGuide": "Gabay sa Paggamit",
     "rate5Stars": "Mag-rate ng 5 Stars sa Google Play",
-    "back": "Bumalik"
+    "back": "Bumalik",
+    "selectLanguage": "Pumili ng Wika",
+    "menu": "Menu",
+    "close": "Isara"
   },
   "Activities": {
     "title": "Magsagawa ng Aktibidad sa Babuyan",
@@ -490,7 +529,18 @@
     "reasonDisease": "Sakit",
     "reasonSold": "Ibinenta",
     "criticalFoodSafetyWarning": "KRITIKAL NA BABALA SA KALIGTASAN NG PAGKAIN",
-    "meatWithdrawalTitle": "Panahon ng Pag-alis ng Karne"
+    "meatWithdrawalTitle": "Panahon ng Pag-alis ng Karne",
+    "pregnancyOutcome": "Resulta ng Pagbubuntis",
+    "confirmedPregnant": "Kumpirmadong Buntis",
+    "notPregnant": "Hindi Buntis",
+    "numMales": "Bilang ng Lalaki",
+    "numFemales": "Bilang ng Babae",
+    "stillbornCount": "Bilang ng Patay Nang Isilang",
+    "mummiesCount": "Bilang ng Mumipikado",
+    "selectAll": "Piliin Lahat",
+    "noEligiblePigs": "Walang angkop na baboy para sa gawaing ito",
+    "confirmAndLog": "Kumpirmahin at I-log ang Gawain",
+    "notes": "Mga Tala"
   },
   "Feed": {
     "lowStockWarning": "Mababa ang Stock",
@@ -721,7 +771,15 @@
     "energySource": "Pinagmumulan ng Enerhiya",
     "roughagesFiber": "Magaspang na Pakain / Hibla",
     "catalog": "Katalogo",
-    "currentQty": "Kasalukuyang Dami"
+    "currentQty": "Kasalukuyang Dami",
+    "failedToDeleteIngredient": "Bigo sa pagbura ng sangkap. Pakisubukan muli.",
+    "failedToDeleteRecipe": "Bigo sa pagbura ng pormula. Pakisubukan muli.",
+    "crudeFiber": "Magaspang na Hibla",
+    "diagnosticsPremiumTitle": "Ang Sintomas at Beterinaryong Pagsusuri ay Premium na Feature",
+    "diagnosticsPremiumDesc": "Mag-upgrade sa SmartSwine Premium upang ma-unlock ang pagsusuri ng sakit, mga klinikal na senyales, at lunas na aprubado ng beterinaryo.",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "Kabuuang Kita",
@@ -774,7 +832,8 @@
     "unlockLedgerPdfTooltip": "I-unlock ang Ulat sa PDF ng Libro ng Pananalapi",
     "customCategoryName": "Pangalan ng Custom na Kategorya",
     "customCategoryPlaceholder": "hal. Disinfectant, Transportasyon, Tubig at Kuryente atbp.",
-    "noActivePigsAvailable": "Walang available na aktibong baboy"
+    "noActivePigsAvailable": "Walang available na aktibong baboy",
+    "financialsDesc": "I-record ang kita at gastos, awtomatikong financial logging, at mag-export ng PDF report."
   },
   "Hub": {
     "directoryRegion": "Rehiyon ng Direktoryo",
@@ -1811,7 +1870,8 @@
     "observedSymptoms": "Mga Naobserbahang Sintomas:",
     "keySymptoms": "Pangunahing Sintomas:",
     "logToHerd": "Itala sa Rekord ng Kawan",
-    "shareWithVet": "Ibahagi sa Beterinaryo"
+    "shareWithVet": "Ibahagi sa Beterinaryo",
+    "clearPigUnassigned": "Alisin ang Baboy (Hindi nakatalagang grupo)"
   },
   "HR": {
     "title": "Direktoryo ng Staff",
@@ -2350,7 +2410,11 @@
     "relationship": "Ugnayan ng Lahi",
     "compensationSummary": "Buod ng Kabayaran",
     "totalSalaryPaidLifetime": "Kabuuang Sahod na Binayaran (Habang-buhay)",
-    "salaryPaymentHistory": "Kasaysayan ng Pagbabayad ng Salary"
+    "salaryPaymentHistory": "Kasaysayan ng Pagbabayad ng Salary",
+    "nutrient": "Nutrisyon",
+    "purpose": "Layunin",
+    "notes": "Mga Tala",
+    "staffDetails": "Detalye ng Staff"
   },
   "Common": {
     "loading": "Naglo-load...",
@@ -2368,7 +2432,8 @@
     "watchAdFor3HourPass": "Manood ng Ad para sa 3-Oras na Premium Pass",
     "manageSubscription": "Pamahalaan ang Subskripsyon",
     "upgradeToPremium": "Mag-upgrade sa Premium",
-    "howToGuide": "Gabay sa Paggamit"
+    "howToGuide": "Gabay sa Paggamit",
+    "support": "Tulong at Suporta"
   },
   "Notifications": {
     "title": "Mga Abiso",

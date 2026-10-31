@@ -212,7 +212,32 @@
     "perfCaution": "Atenção",
     "perfPoor": "Fraco",
     "filterOptions": "Opções de filtro",
-    "performanceTag": "Tag de desempenho"
+    "performanceTag": "Tag de desempenho",
+    "activeHerd": "Rebanho ativo",
+    "howToGuide": "Guia de uso",
+    "noPigsFound": "Nenhum suíno ativo no seu rebanho. Clique em \"+ Adicionar suíno\" para começar!",
+    "pointABodyLength": "Ponto A (Comprimento corporal):",
+    "noteBodyLength": "Comprimento: Meça da base das orelhas à base da cauda garantindo que a fita esteja firme (Ponto A).",
+    "pointBHeartGirth": "Ponto B (Perímetro torácico):",
+    "noteHeartGirth": "Perímetro Torácico: Meça o tórax logo atrás das patas dianteiras garantindo que a fita esteja justa (Ponto B).",
+    "noteSquarely": "Certifique-se de que o animal esteja em pé em terreno nivelado para maior precisão.",
+    "liveWeight": "Peso Vivo",
+    "inPounds": "Em libras",
+    "growthIntelligence": "Inteligência de Crescimento",
+    "targetPig": "Suíno alvo",
+    "weightToSave": "Peso a Salvar (kg)",
+    "estLiveWeight": "Peso Vivo Estimado",
+    "saveToProfile": "Salvar no Perfil",
+    "filterPigTag": "Filtrar brinco...",
+    "togglePrimalCutsTooltip": "Clique para alternar o detalhamento do rendimento estimado de cortes",
+    "estCarcassWeight": "Peso de Carcaça Estimado",
+    "validWeightAlert": "Por favor, insira um peso válido em kg.",
+    "failedToSaveWeight": "Falha ao salvar peso. Verifique a conexão.",
+    "validScaleReadingAlert": "Por favor, insira uma leitura de peso válida.",
+    "deleteTaskTooltip": "Excluir tarefa",
+    "dismissReminderTooltip": "Dispensar lembrete",
+    "dismissAlertTooltip": "Dispensar alerta",
+    "confirmAction": "Por favor, confirme sua ação"
   },
   "Login": {
     "title": "SmartSwineWeb",
@@ -311,7 +336,7 @@
     "pregnant": "Gestante",
     "lactating": "Lactante",
     "searchPlaceholder": "Brinco / Baia / Raça",
-    "activeHerd": "Ativo",
+    "activeHerd": "Rebanho ativo",
     "archivedHerd": "Porcos Arquivados",
     "tag": "Brinco",
     "castrated_label": "(Castrado)",
@@ -325,13 +350,24 @@
     "perfExcellent": "Excelente",
     "perfGood": "Bom",
     "perfCaution": "Atenção",
-    "perfPoor": "Fraco"
+    "perfPoor": "Fraco",
+    "tagLabel": "Brinco",
+    "ageLabel": "Idade",
+    "genderLabel": "Sexo",
+    "castratedLabel": "(Castrado)",
+    "addPig": "Adicionar suíno",
+    "viewFullHerd": "Ver rebanho completo ({count} suínos)",
+    "showingUpTo10": "Exibindo até 10 suínos",
+    "noPigsFound": "Nenhum suíno ativo no seu rebanho. Clique em \"+ Adicionar suíno\" para começar!",
+    "dateOfBirth": "Data de Nascimento"
   },
   "Profile": {
     "owner": "Proprietário",
     "staff": "Equipe",
     "settings": "Configurações",
-    "signOut": "Sair"
+    "signOut": "Sair",
+    "manageSubscription": "Gerenciar assinatura",
+    "upgradeToPremium": "Atualizar para Premium"
   },
   "Navigation": {
     "navigateTo": "Navegar para",
@@ -377,9 +413,12 @@
     "feedManagement": "Alimentação",
     "herdActivities": "Atividades do Rebanho",
     "humanResources": "Recursos Humanos",
-    "howToGuide": "Guia Prático",
+    "howToGuide": "Guia de uso",
     "rate5Stars": "Avalie 5 estrelas no Google Play",
-    "back": "Voltar"
+    "back": "Voltar",
+    "selectLanguage": "Selecionar idioma",
+    "menu": "Menu",
+    "close": "Fechar"
   },
   "Activities": {
     "title": "Executar Procedimento no Rebanho",
@@ -490,7 +529,18 @@
     "reasonDisease": "Doença",
     "reasonSold": "Vendido",
     "criticalFoodSafetyWarning": "AVISO CRÍTICO DE SEGURANÇA ALIMENTAR",
-    "meatWithdrawalTitle": "Período de Carência da Carne"
+    "meatWithdrawalTitle": "Período de Carência da Carne",
+    "pregnancyOutcome": "Resultado de gestação",
+    "confirmedPregnant": "Prenhez confirmada",
+    "notPregnant": "Não prenhe",
+    "numMales": "Número de machos",
+    "numFemales": "Número de fêmeas",
+    "stillbornCount": "Nados-mortos",
+    "mummiesCount": "Fetos mumificados",
+    "selectAll": "Selecionar todos",
+    "noEligiblePigs": "Nenhum suíno elegível encontrado para esta atividade",
+    "confirmAndLog": "Confirmar e registrar atividade",
+    "notes": "Notas"
   },
   "Feed": {
     "lowStockWarning": "Estoque baixo",
@@ -720,7 +770,15 @@
     "proteinSource": "Fonte de proteína",
     "energySource": "Fonte de energia",
     "roughagesFiber": "Volumoso / Fibra",
-    "catalog": "Catálogo"
+    "catalog": "Catálogo",
+    "failedToDeleteIngredient": "Falha ao excluir ingrediente. Tente novamente.",
+    "failedToDeleteRecipe": "Falha ao excluir fórmula. Tente novamente.",
+    "crudeFiber": "Fibra Bruta",
+    "diagnosticsPremiumTitle": "Sintomas & Diagnósticos Veterinários é um recurso Premium",
+    "diagnosticsPremiumDesc": "Assine o SmartSwine Premium para desbloquear cruzamento de doenças, análise de sinais clínicos e intervenções aprovadas por veterinários.",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "Receita Total",
@@ -773,7 +831,8 @@
     "unlockLedgerPdfTooltip": "Desbloquear relatório em PDF do livro financeiro",
     "customCategoryName": "Nome da Categoria Personalizada",
     "customCategoryPlaceholder": "ex.: Desinfetante, Transporte, Utilidades etc.",
-    "noActivePigsAvailable": "Nenhum suíno ativo disponível"
+    "noActivePigsAvailable": "Nenhum suíno ativo disponível",
+    "financialsDesc": "Registre receitas e despesas, fluxo de caixa automático e exportação de PDF."
   },
   "Hub": {
     "directoryRegion": "Região do catálogo",
@@ -1810,7 +1869,8 @@
     "observedSymptoms": "Sintomas observados:",
     "keySymptoms": "Principais sintomas:",
     "logToHerd": "Registrar no Histórico do Rebanho",
-    "shareWithVet": "Compartilhar com o Veterinário"
+    "shareWithVet": "Compartilhar com o Veterinário",
+    "clearPigUnassigned": "Limpar suíno (Grupo de rebanho não atribuído)"
   },
   "HR": {
     "title": "Diretório de Funcionários",
@@ -2349,7 +2409,11 @@
     "relationship": "Relação",
     "compensationSummary": "Resumo de remuneração",
     "totalSalaryPaidLifetime": "Salário total pago (vitalício)",
-    "salaryPaymentHistory": "Histórico de pagamento de salário"
+    "salaryPaymentHistory": "Histórico de pagamento de salário",
+    "nutrient": "Nutriente",
+    "purpose": "Propósito",
+    "notes": "Notas",
+    "staffDetails": "Detalhes da Equipe"
   },
   "Common": {
     "loading": "Carregando...",
@@ -2367,7 +2431,8 @@
     "watchAdFor3HourPass": "Assistir anúncio para passe Premium de 3 horas",
     "manageSubscription": "Gerenciar assinatura",
     "upgradeToPremium": "Atualizar para Premium",
-    "howToGuide": "Guia de Instruções"
+    "howToGuide": "Guia de Instruções",
+    "support": "Suporte"
   },
   "Notifications": {
     "title": "Notificações",

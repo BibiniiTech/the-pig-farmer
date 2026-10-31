@@ -212,7 +212,32 @@
     "perfCaution": "သတိထားပါ။",
     "perfPoor": "ဆင်းရဲတယ်။",
     "filterOptions": "စစ်ထုတ်မှု ရွေးချယ်စရာများ",
-    "performanceTag": "ကြီးထွားမှု စွမ်းဆောင်ရည် တံဆိပ်"
+    "performanceTag": "ကြီးထွားမှု စွမ်းဆောင်ရည် တံဆိပ်",
+    "activeHerd": "လက်ရှိမွေးမြူထားသော ဝက်များ",
+    "howToGuide": "အသုံးပြုနည်းလမ်းညွှန်",
+    "noPigsFound": "သင့်ခြံတွင် ဝက်မရှိသေးပါ။ စတင်ရန် \"+ ဝက်အသစ်ထည့်ရန်\" ကို နှိပ်ပါ!",
+    "pointABodyLength": "အမှတ် A (ကိုယ်ထည် အလျား):",
+    "noteBodyLength": "ကိုယ်ထည်အလျား: နားရွက်ခြေရင်းမှ အမြီးခြေရင်းအထိ တိပ်ကို ခန္ဓာကိုယ်ပေါ်တွင် တင်းတင်းရင်းရင်း တိုင်းတာပါ (Point A)။",
+    "pointBHeartGirth": "အမှတ် B (ရင်အုပ် လုံးပတ်):",
+    "noteHeartGirth": "ရင်ပတ်ပတ်လည်: ရှေ့ခြေထောက်များနောက်မှ ရင်ပတ်ကို တိပ်ဖြင့် တင်းတင်းကျပ်ကျပ် ပတ်၍ တိုင်းတာပါ (Point B)။",
+    "noteSquarely": "တိကျသောရလဒ်ရရန် ဝက်ကို ညီညာသော မြေပြင်ပေါ်တွင် မတ်မတ်ရပ်ခိုင်းပါ။",
+    "liveWeight": "ဝက်အရှင်အလေးချိန်",
+    "inPounds": "ပေါင်ဖြင့်",
+    "growthIntelligence": "ဉာဏ်ရည်တိုးတက်မှု",
+    "targetPig": "ချိန်တွယ်မည့် ဝက်",
+    "weightToSave": "သိမ်းဆည်းမည့် အလေးချိန် (ကီလို)",
+    "estLiveWeight": "ခန့်မှန်း အရှင်အလေးချိန်",
+    "saveToProfile": "ဝက်၏အချက်အလက်တွင် သိမ်းဆည်းရန်",
+    "filterPigTag": "နားကပ်နံပါတ်ဖြင့် စစ်ထုတ်ရန်...",
+    "togglePrimalCutsTooltip": "ခန့်မှန်း အသားထွက်နှုန်း အသေးစိတ်ကို ဖွင့်/ပိတ်ရန် နှိပ်ပါ",
+    "estCarcassWeight": "ခန့်မှန်း အသားအလေးချိန်",
+    "validWeightAlert": "ကျေးဇူးပြု၍ မှန်ကန်သော အလေးချိန် ထည့်သွင်းပါ။",
+    "failedToSaveWeight": "Failed to save weight. Please check connection.",
+    "validScaleReadingAlert": "ကျေးဇူးပြု၍ မှန်ကန်သော အလေးချိန်ကို ထည့်သွင်းပါ။",
+    "deleteTaskTooltip": "တာဝန် ဖျက်ရန်",
+    "dismissReminderTooltip": "သတိပေးချက် ပိတ်ရန်",
+    "dismissAlertTooltip": "အသိပေးချက် ပိတ်ရန်",
+    "confirmAction": "လုပ်ဆောင်ချက်ကို အတည်ပြုပါ"
   },
   "Login": {
     "title": "SmartSwine ဝဘ်",
@@ -311,7 +336,7 @@
     "pregnant": "ကိုယ်ဝန်",
     "lactating": "နို့တိုက်",
     "searchPlaceholder": "နားကပ်နံပါတ် / ခြံအကန့် / မျိုးစိတ်",
-    "activeHerd": "အသုံးပြုနေသည်",
+    "activeHerd": "လက်ရှိမွေးမြူထားသော ဝက်များ",
     "archivedHerd": "Archived ဟူသည်မှာ၊",
     "tag": "နားကပ်နံပါတ်",
     "castrated_label": "(သင်းကွပ်ပြီး)",
@@ -325,13 +350,24 @@
     "perfExcellent": "အရမ်းကောင်းတယ်။",
     "perfGood": "ကောင်းတယ်။",
     "perfCaution": "သတိထားပါ။",
-    "perfPoor": "ဆင်းရဲတယ်။"
+    "perfPoor": "ဆင်းရဲတယ်။",
+    "tagLabel": "နားကပ်နံပါတ်",
+    "ageLabel": "အသက်",
+    "genderLabel": "ကျား၊",
+    "castratedLabel": "(သင်းကွပ်ပြီး)",
+    "addPig": "ဝက်အသစ်ထည့်ရန်",
+    "viewFullHerd": "ဝက်အုပ်စုတစ်ခုလုံးကြည့်ရန် ({count} ကောင်)",
+    "showingUpTo10": "ဝက် ၁၀ ကောင်အထိ ဖော်ပြထားသည်",
+    "noPigsFound": "သင့်ခြံတွင် ဝက်မရှိသေးပါ။ စတင်ရန် \"+ ဝက်အသစ်ထည့်ရန်\" ကို နှိပ်ပါ!",
+    "dateOfBirth": "မွေးသက္ကရာဇ်"
   },
   "Profile": {
     "owner": "ခြံပိုင်ရှင်",
     "staff": "ဝန်ထမ်း",
     "settings": "ဆက်တင်များ",
-    "signOut": "ဆိုင်းအောက်"
+    "signOut": "ဆိုင်းအောက်",
+    "manageSubscription": "စာရင်းသွင်းမှု စီမံရန်",
+    "upgradeToPremium": "ပရီမီယမ်သို့ အဆင့်မြှင့်တင်ရန်"
   },
   "Navigation": {
     "navigateTo": "သွားရောက်ရန်",
@@ -377,9 +413,12 @@
     "feedManagement": "ကျွေးပါ။",
     "herdActivities": "နွားလှုပ်ရှားမှုများ",
     "humanResources": "လူ့အင်အားအရင်းအမြစ်",
-    "howToGuide": "လမ်းညွှန်နည်း",
+    "howToGuide": "အသုံးပြုနည်းလမ်းညွှန်",
     "rate5Stars": "Google Play တွင် ကြယ် 5 ပွင့် အဆင့်သတ်မှတ်ပါ။",
-    "back": "ကျော"
+    "back": "ကျော",
+    "selectLanguage": "ဘာသာစကားရွေးပါ",
+    "menu": "မီနူး",
+    "close": "ပိတ်လိုက်"
   },
   "Activities": {
     "title": "မွေးမြူရေးလုပ်ငန်းစဉ်များ ဆောင်ရွက်ရန်",
@@ -490,7 +529,18 @@
     "reasonDisease": "ရောဂါ",
     "reasonSold": "ရောင်းတယ်။",
     "criticalFoodSafetyWarning": "အရေးကြီးသော အစားအစာ ဘေးကင်းရေး သတိပေးချက်",
-    "meatWithdrawalTitle": "အသားထုတ်ယူသည့်ကာလ"
+    "meatWithdrawalTitle": "အသားထုတ်ယူသည့်ကာလ",
+    "pregnancyOutcome": "ကိုယ်ဝန်ရှိမှုရလဒ်",
+    "confirmedPregnant": "ကိုယ်ဝန်ရှိကြောင်း အတည်ပြုပြီး",
+    "notPregnant": "ကိုယ်ဝန်မရှိပါ",
+    "numMales": "အထီးအရေအတွက်",
+    "numFemales": "အမအရေအတွက်",
+    "stillbornCount": "အသေမွေးအရေအတွက်",
+    "mummiesCount": "ခြောက်ကပ်သန္ဓေအရေအတွက်",
+    "selectAll": "အားလုံးရွေးပါ",
+    "noEligiblePigs": "ဤလုပ်ဆောင်ချက်အတွက် သင့်လျော်သော ဝက်မရှိပါ",
+    "confirmAndLog": "အတည်ပြုပြီး လုပ်ဆောင်ချက်မှတ်တမ်းတင်ပါ",
+    "notes": "မှတ်စုများ"
   },
   "Feed": {
     "lowStockWarning": "Low Stock",
@@ -721,7 +771,15 @@
     "energySource": "စွမ်းအင် ရင်းမြစ်",
     "roughagesFiber": "အမျှင်ဓာတ် / အကြမ်းစာ",
     "catalog": "စာရင်း",
-    "currentQty": "လက်ကျန်ပမာဏ"
+    "currentQty": "လက်ကျန်ပမာဏ",
+    "failedToDeleteIngredient": "ပါဝင်ပစ္စည်းဖျက်၍မရပါ။ နောက်တစ်ကြိမ် ထပ်ကြိုးစားပါ။",
+    "failedToDeleteRecipe": "ဖော်မြူလာဖျက်၍မရပါ။ နောက်တစ်ကြိမ် ထပ်ကြိုးစားပါ။",
+    "crudeFiber": "ဖိုက်ဘာအရိုင်း",
+    "diagnosticsPremiumTitle": "ရောဂါလက္ခဏာ စစ်ဆေးမှုသည် ပရီမီယမ် ဝန်ဆောင်မှုဖြစ်သည်",
+    "diagnosticsPremiumDesc": "ဝက်ရောဂါ ခွဲခြားစစ်ဆေးမှု၊ ကုသမှု လမ်းညွှန်ချက်များ ရယူရန် SmartSwine ပရီမီယမ်သို့ အဆင့်မြှင့်တင်ပါ။",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "စုစုပေါင်းဝင်ငွေ",
@@ -774,7 +832,8 @@
     "unlockLedgerPdfTooltip": "ငွေစာရင်း PDF အစီရင်ခံစာ ရယူရန်",
     "customCategoryName": "စိတ်ကြိုက်အမျိုးအစားအမည်",
     "customCategoryPlaceholder": "ဥပမာ - ပိုးသတ်ဆေး၊ သယ်ယူစရိတ်၊ မီးနှင့်ရေ စသည်",
-    "noActivePigsAvailable": "လက်ရှိ မွေးမြူထားသော ဝက်မရှိပါ"
+    "noActivePigsAvailable": "လက်ရှိ မွေးမြူထားသော ဝက်မရှိပါ",
+    "financialsDesc": "ဝင်ငွေနှင့် အသုံးစရိတ်များကို မှတ်တမ်းတင်ပါ၊ ဘဏ္ဍာရေးအစီရင်ခံစာများကို PDF ဖြင့် ထုတ်ယူပါ။"
   },
   "Hub": {
     "directoryRegion": "လမ်းညွှန်ဒေသ",
@@ -1811,7 +1870,8 @@
     "observedSymptoms": "တွေ့ရှိရသော လက္ခဏာများ -",
     "keySymptoms": "အဓိက လက္ခဏာများ -",
     "logToHerd": "ဝက်အုပ်ကျန်းမာရေး မှတ်တမ်းတွင် ထည့်ရန်",
-    "shareWithVet": "ဆရာဝန်ထံ မျှဝေပြသရန်"
+    "shareWithVet": "ဆရာဝန်ထံ မျှဝေပြသရန်",
+    "clearPigUnassigned": "ဝက်ရွေးချယ်မှု ပယ်ဖျက်ရန်"
   },
   "HR": {
     "title": "ဝန်ထမ်း စီမံခန့်ခွဲမှု",
@@ -2350,7 +2410,11 @@
     "relationship": "ဆွေမျိုးတော်စပ်မှု",
     "compensationSummary": "လျော်ကြေးအနှစ်ချုပ်",
     "totalSalaryPaidLifetime": "စုစုပေါင်းလစာ (တစ်သက်တာ)",
-    "salaryPaymentHistory": "လစာငွေပေးချေမှုမှတ်တမ်း"
+    "salaryPaymentHistory": "လစာငွေပေးချေမှုမှတ်တမ်း",
+    "nutrient": "အာဟာရဓာတ်",
+    "purpose": "ရည်ရွယ်ချက်",
+    "notes": "မှတ်စုများ",
+    "staffDetails": "ဝန်ထမ်းအသေးစိတ်"
   },
   "Common": {
     "loading": "လုပ်ဆောင်နေပါသည်...",
@@ -2368,7 +2432,8 @@
     "watchAdFor3HourPass": "ကြော်ငြာကြည့်ပြီး ၃ နာရီ ပရီမီယမ်သုံးခွင့် ရယူပါ",
     "manageSubscription": "စာရင်းသွင်းမှု စီမံရန်",
     "upgradeToPremium": "ပရီမီယမ်သို့ အဆင့်မြှင့်တင်ရန်",
-    "howToGuide": "လမ်းညွှန်နည်း"
+    "howToGuide": "လမ်းညွှန်နည်း",
+    "support": "အကူအညီ"
   },
   "Notifications": {
     "title": "အသိပေးချက်များ",

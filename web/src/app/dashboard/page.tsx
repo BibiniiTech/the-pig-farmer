@@ -125,6 +125,7 @@ const ArrowLeftIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 function CompactPigDropdownCard({ pig }: { pig: Pig }) {
   const tHerd = useTranslations("Herd");
+  const tDash = useTranslations("Dashboard");
   const ageDays = calculateAgeDays(pig.birthDate);
   const performance = evaluatePerformance(pig.breed, ageDays, pig.weight);
 
@@ -145,7 +146,7 @@ function CompactPigDropdownCard({ pig }: { pig: Pig }) {
   const ageDisplay = formatSwineAge(pig.birthDate, true);
 
   const genderText = pig.gender === "Female" ? (tHerd("female") || "Female") : (tHerd("male") || "Male");
-  const castratedSuffix = (pig.gender === "Male" && pig.castrated) ? (" " + (tHerd("castratedLabel") || "(Castrated)")) : "";
+  const castratedSuffix = (pig.gender === "Male" && pig.castrated) ? (" " + (tDash("castratedLabel") || tHerd("castratedLabel") || "(Castrated)")) : "";
   const genderDisplay = `${genderText}${castratedSuffix}`;
 
   return (
@@ -155,12 +156,12 @@ function CompactPigDropdownCard({ pig }: { pig: Pig }) {
     >
       <div className="space-y-1 min-w-0">
         <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition truncate block">
-          {tHerd("tagLabel") || "Tag"}: {pig.tagNumber || pig.id}
+          {tDash("tagLabel") || tHerd("tagLabel") || "Tag"}: {pig.tagNumber || pig.id}
         </span>
         <div className="flex items-center gap-2 text-[11px] text-zinc-500 dark:text-zinc-400">
-          <span>{tHerd("ageLabel") || "Age"}: {ageDisplay}</span>
+          <span>{tDash("ageLabel") || tHerd("ageLabel") || "Age"}: {ageDisplay}</span>
           <span className="text-zinc-300 dark:text-zinc-600">•</span>
-          <span>{tHerd("genderLabel") || "Gender"}: {genderDisplay}</span>
+          <span>{tDash("genderLabel") || tHerd("genderLabel") || "Gender"}: {genderDisplay}</span>
         </div>
       </div>
       <div className="flex items-center gap-2 shrink-0 ml-2">
@@ -892,13 +893,13 @@ function DashboardContent() {
                       className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md shadow-emerald-600/20 transition"
                     >
                       <PlusIcon className="h-4 w-4" />
-                      {tHerd("addPig") || "Add Pig"}
+                      {t("addPig") || tHerd("addPig") || "Add Pig"}
                     </Link>
                     <Link
                       href="/dashboard/herd"
                       className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-emerald-600 text-emerald-700 hover:bg-emerald-50 text-xs font-bold transition bg-white shadow-sm"
                     >
-                      {tHerd("viewFullHerd") || "View Full Herd"} ({herdStats.total})
+                      {t("viewFullHerd") || tHerd("viewFullHerd") || "View Full Herd"} ({herdStats.total})
                       <ArrowRightIcon className="h-3.5 w-3.5" />
                     </Link>
                   </div>
@@ -913,14 +914,14 @@ function DashboardContent() {
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
                           <h4 className="text-xs font-bold text-zinc-600 uppercase tracking-wider">
-                            Active Herd ({activePigs.length})
+                            {t("activeHerd") || "Active Herd"} ({activePigs.length})
                           </h4>
-                          <span className="text-[11px] text-zinc-400">{tHerd("showingUpTo10") || "Showing up to 10 pigs"}</span>
+                          <span className="text-[11px] text-zinc-400">{t("showingUpTo10") || tHerd("showingUpTo10") || "Showing up to 10 pigs"}</span>
                         </div>
 
                         {activePigs.length === 0 ? (
                           <div className="p-6 bg-white dark:bg-[#1E1E1E] rounded-xl border border-zinc-200 dark:border-zinc-800 text-center text-xs text-zinc-500 dark:text-zinc-400">
-                            {tHerd("noPigsFound") || "No active pigs in your herd. Click \"+ Add Pig\" to get started!"}
+                            {t("noPigsFound") || t("noActivePigs") || tHerd("noPigsFound") || "No active pigs in your herd. Click \"+ Add Pig\" to get started!"}
                           </div>
                         ) : (
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">

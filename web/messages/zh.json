@@ -212,7 +212,32 @@
     "perfCaution": "警惕",
     "perfPoor": "极差",
     "filterOptions": "筛选选项",
-    "performanceTag": "生长性能标签"
+    "performanceTag": "生长性能标签",
+    "activeHerd": "在群猪只",
+    "howToGuide": "操作指南",
+    "noPigsFound": "您的猪群中暂无活跃猪只。点击“+ 添加猪只”开始！",
+    "pointABodyLength": "点 A（体长）：",
+    "noteBodyLength": "体长：从耳根测量到尾根，确保卷尺紧贴身体而非松垮 (A 点)。",
+    "pointBHeartGirth": "点 B（胸围）：",
+    "noteHeartGirth": "胸围：在前腿后部测量胸腔周长，确保卷尺紧贴身体并闭合 (B 点)。",
+    "noteSquarely": "确保猪只站在平整地面上，以获得最准确的结果。",
+    "liveWeight": "毛重 / 活重 (kg)",
+    "inPounds": "磅",
+    "growthIntelligence": "生长智控",
+    "targetPig": "目标猪只",
+    "weightToSave": "待保存重量 (kg)",
+    "estLiveWeight": "估算活重",
+    "saveToProfile": "保存到生猪档案",
+    "filterPigTag": "筛选耳标号...",
+    "togglePrimalCutsTooltip": "点击切换预估各部位分割肉产出明细",
+    "estCarcassWeight": "估算胴体重",
+    "validWeightAlert": "请输入有效的重量 (kg)。",
+    "failedToSaveWeight": "保存体重失败，请检查网络连接。",
+    "validScaleReadingAlert": "请输入有效的秤重读数。",
+    "deleteTaskTooltip": "删除任务",
+    "dismissReminderTooltip": "忽略提醒",
+    "dismissAlertTooltip": "忽略警报",
+    "confirmAction": "请确认您的操作"
   },
   "Login": {
     "title": "智能猪网",
@@ -311,7 +336,7 @@
     "pregnant": "怀孕",
     "lactating": "哺乳",
     "searchPlaceholder": "耳号 / 猪舍栏位 / 品种",
-    "activeHerd": "正常存栏",
+    "activeHerd": "在群猪只",
     "archivedHerd": "已归档的猪",
     "tag": "耳号",
     "castrated_label": "(已阉割)",
@@ -325,13 +350,24 @@
     "perfExcellent": "极佳",
     "perfGood": "良好",
     "perfCaution": "警惕",
-    "perfPoor": "极差"
+    "perfPoor": "极差",
+    "tagLabel": "耳号",
+    "ageLabel": "年龄",
+    "genderLabel": "性别",
+    "castratedLabel": "(已阉割)",
+    "addPig": "添加猪只",
+    "viewFullHerd": "查看全部猪群（{count} 头猪）",
+    "showingUpTo10": "最多显示 10 头猪",
+    "noPigsFound": "您的猪群中暂无活跃猪只。点击“+ 添加猪只”开始！",
+    "dateOfBirth": "出生日期"
   },
   "Profile": {
     "owner": "所有者",
     "staff": "员工",
     "settings": "设置",
-    "signOut": "登出"
+    "signOut": "登出",
+    "manageSubscription": "管理订阅",
+    "upgradeToPremium": "升级至高级版"
   },
   "Navigation": {
     "navigateTo": "导航至",
@@ -379,7 +415,10 @@
     "humanResources": "人力资源",
     "howToGuide": "操作指南",
     "rate5Stars": "在应用商店给予 5 星好评",
-    "back": "返回"
+    "back": "返回",
+    "selectLanguage": "选择语言",
+    "menu": "菜单",
+    "close": "关闭"
   },
   "Activities": {
     "title": "执行猪群操作",
@@ -490,7 +529,18 @@
     "reasonDisease": "疾病",
     "reasonSold": "已售",
     "criticalFoodSafetyWarning": "食品安全重大警示",
-    "meatWithdrawalTitle": "肉类休药期"
+    "meatWithdrawalTitle": "肉类休药期",
+    "pregnancyOutcome": "妊娠检查结果",
+    "confirmedPregnant": "已确认妊娠",
+    "notPregnant": "未妊娠",
+    "numMales": "公猪崽数",
+    "numFemales": "母猪崽数",
+    "stillbornCount": "死胎数",
+    "mummiesCount": "木乃伊胎数",
+    "selectAll": "全选",
+    "noEligiblePigs": "未找到符合此项活动条件的猪只",
+    "confirmAndLog": "确认并记录活动",
+    "notes": "备注"
   },
   "Feed": {
     "lowStockWarning": "库存偏低",
@@ -720,7 +770,15 @@
     "proteinSource": "蛋白质来源",
     "energySource": "能量来源",
     "roughagesFiber": "粗饲料 / 纤维",
-    "catalog": "目录"
+    "catalog": "目录",
+    "failedToDeleteIngredient": "删除原料失败，请重试。",
+    "failedToDeleteRecipe": "删除配方失败，请重试。",
+    "crudeFiber": "粗纤维",
+    "diagnosticsPremiumTitle": "症状与兽医诊断为高级版功能",
+    "diagnosticsPremiumDesc": "升级至 SmartSwine 高级版，解锁猪病鉴别诊断、临床体征分析、特征性症状以及兽医认证的诊疗方案。",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "总收入",
@@ -773,7 +831,8 @@
     "unlockLedgerPdfTooltip": "解锁财务账本 PDF 报表",
     "customCategoryName": "自定义类别名称",
     "customCategoryPlaceholder": "例如 消毒剂、运输、水电费等",
-    "noActivePigsAvailable": "无可用活跃猪只"
+    "noActivePigsAvailable": "无可用活跃猪只",
+    "financialsDesc": "记录收支、自动生成财务日志并导出 PDF 财务报告。"
   },
   "Hub": {
     "directoryRegion": "服务目录地区",
@@ -1810,7 +1869,8 @@
     "observedSymptoms": "观察到的症状：",
     "keySymptoms": "关键症状：",
     "logToHerd": "记录到猪群病历",
-    "shareWithVet": "发送给兽医"
+    "shareWithVet": "发送给兽医",
+    "clearPigUnassigned": "清除猪只（未分配猪群）"
   },
   "HR": {
     "title": "员工管理目录",
@@ -2349,7 +2409,11 @@
     "relationship": "亲缘关系",
     "compensationSummary": "薪资福利总览",
     "totalSalaryPaidLifetime": "入职以来累计实发薪酬",
-    "salaryPaymentHistory": "薪资发放历史明细"
+    "salaryPaymentHistory": "薪资发放历史明细",
+    "nutrient": "营养指标",
+    "purpose": "用途",
+    "notes": "备注",
+    "staffDetails": "员工详情"
   },
   "Common": {
     "loading": "加载中...",
@@ -2367,7 +2431,8 @@
     "watchAdFor3HourPass": "看广告获取 3 小时高级版通行证",
     "manageSubscription": "管理订阅",
     "upgradeToPremium": "升级至高级版",
-    "howToGuide": "操作指南"
+    "howToGuide": "操作指南",
+    "support": "技术支持"
   },
   "Notifications": {
     "title": "通知",

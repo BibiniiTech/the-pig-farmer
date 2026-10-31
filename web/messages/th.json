@@ -212,7 +212,32 @@
     "perfCaution": "ข้อควรระวัง",
     "perfPoor": "ต้องปรับปรุง",
     "filterOptions": "ตัวเลือกตัวกรอง",
-    "performanceTag": "แท็กประสิทธิภาพ"
+    "performanceTag": "แท็กประสิทธิภาพ",
+    "activeHerd": "ฝูงสุกรปัจจุบัน",
+    "howToGuide": "คู่มือการใช้งาน",
+    "noPigsFound": "ไม่มีสุกรในฝูง คลิก \"+ เพิ่มสุกร\" เพื่อเริ่มต้น!",
+    "pointABodyLength": "จุด A (ความยาวลำตัว):",
+    "noteBodyLength": "ความยาวลำตัว: วัดจากโคนหูจนถึงโคนหาง ตรวจสอบให้แน่ใจว่าสายวัดแนบไปกับตัวหมูและไม่หย่อน (จุด A)",
+    "pointBHeartGirth": "จุด B (รอบอก):",
+    "noteHeartGirth": "รอบอก: วัดรอบหน้าอก (หลังขาหน้าพอดี) ตรวจสอบให้แน่ใจว่าสายวัดแนบกระชับกับตัวหมู (จุด B)",
+    "noteSquarely": "เพื่อให้ได้ผลลัพธ์ที่แม่นยำที่สุด ตรวจสอบให้แน่ใจว่าหมูยืนตัวตรงบนพื้นราบ",
+    "liveWeight": "น้ำหนักสุกรมีชีวิต (น้ำหนักชั่งเป็น)",
+    "inPounds": "เป็นปอนด์",
+    "growthIntelligence": "หน่วยสืบราชการลับการเจริญเติบโต",
+    "targetPig": "สุกรเป้าหมาย",
+    "weightToSave": "น้ำหนักที่จะบันทึก (กก.)",
+    "estLiveWeight": "น้ำหนักมีชีวิตโดยประมาณ",
+    "saveToProfile": "บันทึกลงโปรไฟล์หมู",
+    "filterPigTag": "กรองเบอร์หู...",
+    "togglePrimalCutsTooltip": "คลิกเพื่อสลับดูรายละเอียดผลผลิตชิ้นส่วนเนื้อโดยประมาณ",
+    "estCarcassWeight": "น้ำหนักซากโดยประมาณ",
+    "validWeightAlert": "กรุณากรอกน้ำหนักที่ถูกต้องในหน่วยกิโลกรัม",
+    "failedToSaveWeight": "บันทึกน้ำหนักไม่สำเร็จ กรุณาตรวจสอบการเชื่อมต่อ",
+    "validScaleReadingAlert": "กรุณากรอกค่าน้ำหนักที่ถูกต้อง",
+    "deleteTaskTooltip": "ลบงาน",
+    "dismissReminderTooltip": "ปิดการแจ้งเตือน",
+    "dismissAlertTooltip": "ปิดการแจ้งเตือนด่วน",
+    "confirmAction": "โปรดยืนยันการดำเนินการ"
   },
   "Login": {
     "title": "เว็บสมาร์ทสุกร",
@@ -311,7 +336,7 @@
     "pregnant": "อุ้มท้อง",
     "lactating": "เลี้ยงลูก",
     "searchPlaceholder": "เบอร์หู / โรงเรือน-คอก / สายพันธุ์",
-    "activeHerd": "เปิดใช้งาน",
+    "activeHerd": "ฝูงสุกรปัจจุบัน",
     "archivedHerd": "สุกรที่เก็บถาวร",
     "tag": "เบอร์หู",
     "castrated_label": "(ตอนแล้ว)",
@@ -325,13 +350,24 @@
     "perfExcellent": "ดีเยี่ยม",
     "perfGood": "ดี",
     "perfCaution": "ข้อควรระวัง",
-    "perfPoor": "ต้องปรับปรุง"
+    "perfPoor": "ต้องปรับปรุง",
+    "tagLabel": "เบอร์หู",
+    "ageLabel": "อายุ",
+    "genderLabel": "เพศ",
+    "castratedLabel": "(ตอนแล้ว)",
+    "addPig": "เพิ่มสุกร",
+    "viewFullHerd": "ดูฝูงสุกรทั้งหมด ({count} ตัว)",
+    "showingUpTo10": "แสดงสูงสุด 10 ตัว",
+    "noPigsFound": "ไม่มีสุกรในฝูง คลิก \"+ เพิ่มสุกร\" เพื่อเริ่มต้น!",
+    "dateOfBirth": "วันเกิด"
   },
   "Profile": {
     "owner": "เจ้าของ",
     "staff": "พนักงาน",
     "settings": "การตั้งค่า",
-    "signOut": "ออกจากระบบ"
+    "signOut": "ออกจากระบบ",
+    "manageSubscription": "จัดการการสมัครสมาชิก",
+    "upgradeToPremium": "อัปเกรดเป็นพรีเมียม"
   },
   "Navigation": {
     "navigateTo": "ไปยังหน้า",
@@ -377,9 +413,12 @@
     "feedManagement": "อาหารสัตว์",
     "herdActivities": "กิจกรรมในฝูง",
     "humanResources": "ทรัพยากรบุคคล",
-    "howToGuide": "คู่มือวิธีใช้",
+    "howToGuide": "คู่มือการใช้งาน",
     "rate5Stars": "ให้คะแนน 5 ดาวบน Google Play",
-    "back": "กลับ"
+    "back": "กลับ",
+    "selectLanguage": "เลือกภาษา",
+    "menu": "เมนู",
+    "close": "ปิด"
   },
   "Activities": {
     "title": "ดำเนินการจัดการฝูงหมู",
@@ -490,7 +529,18 @@
     "reasonDisease": "โรค",
     "reasonSold": "ขายแล้ว",
     "criticalFoodSafetyWarning": "คำเตือนด้านความปลอดภัยของอาหารที่สำคัญ",
-    "meatWithdrawalTitle": "ระยะเวลาถอนเนื้อสัตว์"
+    "meatWithdrawalTitle": "ระยะเวลาถอนเนื้อสัตว์",
+    "pregnancyOutcome": "ผลการตรวจการตั้งท้อง",
+    "confirmedPregnant": "ยืนยันตั้งท้อง",
+    "notPregnant": "ไม่ตั้งท้อง",
+    "numMales": "จำนวนตัวผู้",
+    "numFemales": "จำนวนตัวเมีย",
+    "stillbornCount": "จำนวนลูกกรด/ตายคลอด",
+    "mummiesCount": "จำนวนลูกมัมมี่",
+    "selectAll": "เลือกทั้งหมด",
+    "noEligiblePigs": "ไม่พบสุกรที่ตรงตามเกณฑ์สำหรับกิจกรรมนี้",
+    "confirmAndLog": "ยืนยันและบันทึกกิจกรรม",
+    "notes": "บันทึก"
   },
   "Feed": {
     "lowStockWarning": "สต็อกต่ำ",
@@ -720,7 +770,15 @@
     "proteinSource": "แหล่งโปรตีน",
     "energySource": "แหล่งพลังงาน",
     "roughagesFiber": "พืชอาหารหยาบ / กากใย",
-    "catalog": "แคตตาล็อก"
+    "catalog": "แคตตาล็อก",
+    "failedToDeleteIngredient": "ลบวัตถุดิบไม่สำเร็จ กรุณาลองใหม่อีกครั้ง",
+    "failedToDeleteRecipe": "ลบสูตรอาหารไม่สำเร็จ กรุณาลองใหม่อีกครั้ง",
+    "crudeFiber": "ไฟเบอร์ดิบ",
+    "diagnosticsPremiumTitle": "อาการและการวินิจฉัยโรคสัตว์เป็นฟีเจอร์พรีเมียม",
+    "diagnosticsPremiumDesc": "อัปเกรดเป็น SmartSwine พรีเมียม เพื่อปลดล็อกการวินิจฉัยแยกโรค การวิเคราะห์อาการทางคลินิก อาการบ่งชี้เฉพาะ และแนวทางรักษาที่สัตวแพทย์รับรอง",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "รายได้รวม",
@@ -773,7 +831,8 @@
     "unlockLedgerPdfTooltip": "ปลดล็อกรายงานบัญชีการเงินแบบ PDF",
     "customCategoryName": "ชื่อหมวดหมู่ที่กำหนดเอง",
     "customCategoryPlaceholder": "เช่น ยาฆ่าเชื้อ, ค่าขนส่ง, ค่าน้ำค่าไฟ ฯลฯ",
-    "noActivePigsAvailable": "ไม่มีสุกรที่พร้อมใช้งาน"
+    "noActivePigsAvailable": "ไม่มีสุกรที่พร้อมใช้งาน",
+    "financialsDesc": "บันทึกรายรับรายจ่าย บันทึกบัญชีอัตโนมัติ และส่งออกรายงาน PDF"
   },
   "Hub": {
     "directoryRegion": "ภูมิภาคในสมุดรายชื่อ",
@@ -1810,7 +1869,8 @@
     "observedSymptoms": "อาการที่สังเกตพบ:",
     "keySymptoms": "อาการสำคัญ:",
     "logToHerd": "บันทึกในสมุดประวัติสุขภาพฝูง",
-    "shareWithVet": "ส่งต่อข้อมูลให้สัตวแพทย์"
+    "shareWithVet": "ส่งต่อข้อมูลให้สัตวแพทย์",
+    "clearPigUnassigned": "ล้างสุกร (กลุ่มฝูงที่ยังไม่ได้กำหนด)"
   },
   "HR": {
     "title": "รายชื่อการจัดการพนักงาน",
@@ -2349,7 +2409,11 @@
     "relationship": "สายเลือด/ความสัมพันธ์",
     "compensationSummary": "สรุปค่าตอบแทน",
     "totalSalaryPaidLifetime": "เงินเดือนที่จ่ายทั้งหมด (ตลอดชีวิต)",
-    "salaryPaymentHistory": "ประวัติการจ่ายเงินเดือน"
+    "salaryPaymentHistory": "ประวัติการจ่ายเงินเดือน",
+    "nutrient": "สารอาหาร",
+    "purpose": "วัตถุประสงค์",
+    "notes": "บันทึก",
+    "staffDetails": "รายละเอียดพนักงาน"
   },
   "Common": {
     "loading": "กำลังโหลด...",
@@ -2367,7 +2431,8 @@
     "watchAdFor3HourPass": "ดูโฆษณาเพื่อรับบัตรผ่านพรีเมียม 3 ชั่วโมง",
     "manageSubscription": "จัดการการสมัครสมาชิก",
     "upgradeToPremium": "อัปเกรดเป็นพรีเมียม",
-    "howToGuide": "คู่มือวิธีใช้"
+    "howToGuide": "คู่มือวิธีใช้",
+    "support": "ฝ่ายสนับสนุน"
   },
   "Notifications": {
     "title": "การแจ้งเตือน",
@@ -2410,7 +2475,7 @@
     "overdue": "เกินกำหนด",
     "due": "ครบกำหนด",
     "snoozeFor": "เลื่อนเพื่อ",
-    "confirmAction": "โปรดยืนยันการดำเนินการ",
+    "confirmAction": "กรุณายืนยันการดำเนินการของคุณ",
     "deleteTaskTooltip": "ลบงาน",
     "dismissReminderTooltip": "ปิดการแจ้งเตือน",
     "dismissAlertTooltip": "ปิดการแจ้งเตือนด่วน"

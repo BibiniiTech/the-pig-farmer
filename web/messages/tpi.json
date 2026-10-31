@@ -212,7 +212,32 @@
     "perfCaution": "Tok lukaut",
     "perfPoor": "Pua",
     "filterOptions": "Skelim Rot",
-    "performanceTag": "Mak bilong Groim"
+    "performanceTag": "Mak bilong Groim",
+    "activeHerd": "Ol pik i stap long banis nau",
+    "howToGuide": "Gaid bilong yusim",
+    "noPigsFound": "Nogat pik i stap yet long banis. Klikim \"+ Putim Nupela Pik\" bilong stat!",
+    "pointABodyLength": "Mak A (Longpela bilong Bodi):",
+    "noteBodyLength": "Longpela bilong bodi: Mekim stat long as bilong yau i go inap long as bilong tel na meksua olsem tep i stap strong long bodi na i no lus (Poin A).",
+    "pointBHeartGirth": "Mak B (Bikpela bilong Bros):",
+    "noteHeartGirth": "Heart Girth: Skelim 'thorax' (bihain long fran lek) na meksua olsem tep i pas long bodi na i pas gut (Poin B).",
+    "noteSquarely": "Mekim gut olsem buai i sanap stret long gutpela graun bilong kisim stretpela risalt.",
+    "liveWeight": "Hevi bilong pik laip",
+    "inPounds": "Long Paund",
+    "growthIntelligence": "Gro Intelejens",
+    "targetPig": "Pik Yu Makim",
+    "weightToSave": "Hevi bilong sevim (kg)",
+    "estLiveWeight": "Hevi bilong pik i stap laip",
+    "saveToProfile": "Sevim long Pig Profail",
+    "filterPigTag": "Skelim yau namba...",
+    "togglePrimalCutsTooltip": "Klikim bilong lukim skel bilong mit",
+    "estCarcassWeight": "Hevi bilong mit ol i skelim",
+    "validWeightAlert": "Plis putim wanpela gutpela hevi long kg.",
+    "failedToSaveWeight": "Nogat, em i no inap holim hevi bilong pik. Sekim intanet.",
+    "validScaleReadingAlert": "Plis putim stretpela skel bilong pik.",
+    "deleteTaskTooltip": "Rausim Wok",
+    "dismissReminderTooltip": "Kliaim Tingting",
+    "dismissAlertTooltip": "Kliaim Lukaut Tok",
+    "confirmAction": "Plis tok orait long dispela"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -311,7 +336,7 @@
     "pregnant": "Bel",
     "lactating": "Givim susu",
     "searchPlaceholder": "Mak namba / Banis / Kain pik",
-    "activeHerd": "Ektiv",
+    "activeHerd": "Ol pik i stap long banis nau",
     "archivedHerd": "Ol pik we ol i bin putim long arkiv",
     "tag": "Yau Namba",
     "castrated_label": "(Katim Pinis)",
@@ -325,13 +350,24 @@
     "perfExcellent": "Gutpela tru",
     "perfGood": "Gutpela",
     "perfCaution": "Tok lukaut",
-    "perfPoor": "Pua"
+    "perfPoor": "Pua",
+    "tagLabel": "Yau Namba",
+    "ageLabel": "Krismas",
+    "genderLabel": "Jenda",
+    "castratedLabel": "(Katim Pinis)",
+    "addPig": "Putim Nupela Pik",
+    "viewFullHerd": "Lukim Olgeta Pik ({count})",
+    "showingUpTo10": "Soim 10-pela pik tasol pastaim",
+    "noPigsFound": "Nogat pik i stap yet long banis. Klikim \"+ Putim Nupela Pik\" bilong stat!",
+    "dateOfBirth": "Deit bilong bon"
   },
   "Profile": {
     "owner": "Ona",
     "staff": "Ol wokman",
     "settings": "Ol seting",
-    "signOut": "Sain Aut"
+    "signOut": "Sain Aut",
+    "manageSubscription": "Lukautim Sabskripsen",
+    "upgradeToPremium": "Go antap long Premium"
   },
   "Navigation": {
     "navigateTo": "Go long",
@@ -377,9 +413,12 @@
     "feedManagement": "Fidim",
     "herdActivities": "Ol wok bilong lain animal",
     "humanResources": "Human Risos",
-    "howToGuide": "Hau-Long Gaid",
+    "howToGuide": "Gaid bilong yusim",
     "rate5Stars": "Givim 5-pela sta long Google Play",
-    "back": "Go bek"
+    "back": "Go bek",
+    "selectLanguage": "Makim Tokples",
+    "menu": "Meniu",
+    "close": "Klosim"
   },
   "Activities": {
     "title": "Mekim Herd Prosedur",
@@ -490,7 +529,18 @@
     "reasonDisease": "Sik",
     "reasonSold": "Salim",
     "criticalFoodSafetyWarning": "BIKPELA TOKSAVE BILONG SEFTI BILONG KAIKAI",
-    "meatWithdrawalTitle": "Taim bilong rausim mit"
+    "meatWithdrawalTitle": "Taim bilong rausim mit",
+    "pregnancyOutcome": "Kisim bel o no gat",
+    "confirmedPregnant": "Tru em i kisim bel",
+    "notPregnant": "No gat bel",
+    "numMales": "Namba bilong man",
+    "numFemales": "Namba bilong meri",
+    "stillbornCount": "Pikinini dai pinis long bel",
+    "mummiesCount": "Pikinini drai pinis long bel",
+    "selectAll": "Makim olgeta",
+    "noEligiblePigs": "No gat pik i stret long dispela samting",
+    "confirmAndLog": "Konfimim na raitim ripot",
+    "notes": "Ol toksave"
   },
   "Feed": {
     "lowStockWarning": "Liklik stok",
@@ -721,7 +771,15 @@
     "energySource": "As bilong Pawa / Enaji",
     "roughagesFiber": "Grash na Rop",
     "catalog": "Katalok",
-    "currentQty": "Kaikai i Stap Yet"
+    "currentQty": "Kaikai i Stap Yet",
+    "failedToDeleteIngredient": "Nogat inap rausim dispela kaikai. Traim gen.",
+    "failedToDeleteRecipe": "Nogat inap rausim dispela fomula. Traim gen.",
+    "crudeFiber": "Krud Faiba",
+    "diagnosticsPremiumTitle": "Lukim Sik bilong Pik em samting bilong Premium",
+    "diagnosticsPremiumDesc": "Go antap long SmartSwine Premium bilong save long olgeta kain sik bilong pik wantaim marasin dokta i tok orait long en.",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "Olgeta mani yu kisim",
@@ -774,7 +832,8 @@
     "unlockLedgerPdfTooltip": "Opim Buk bilong Meni long PDF",
     "customCategoryName": "Kastom Kategori Nem",
     "customCategoryPlaceholder": "olsem: Marasin, PMV, Pawa na Wara",
-    "noActivePigsAvailable": "Nogat pik i stap"
+    "noActivePigsAvailable": "Nogat pik i stap",
+    "financialsDesc": "Rekodim ol winmani na ol ekspens, otomatik fainensel logging, na salim PDF fainensel ripot i go aut."
   },
   "Hub": {
     "directoryRegion": "Hap o Provins",
@@ -1811,7 +1870,8 @@
     "observedSymptoms": "Sik Mak Yu Lukim:",
     "keySymptoms": "Bikpela Sik Mak:",
     "logToHerd": "Raitim long buk rikod bilong pik",
-    "shareWithVet": "Salim i go long dokta bilong animal"
+    "shareWithVet": "Salim i go long dokta bilong animal",
+    "clearPigUnassigned": "Rausim Pik (Nogat Banis yet)"
   },
   "HR": {
     "title": "Staf Menesmen Dairektori",
@@ -2350,7 +2410,11 @@
     "relationship": "Kain Femili",
     "compensationSummary": "Kompensesen Samari",
     "totalSalaryPaidLifetime": "Olgeta pe ol i bin baim (Laiptaim)",
-    "salaryPaymentHistory": "Histri bilong peimen bilong pe"
+    "salaryPaymentHistory": "Histri bilong peimen bilong pe",
+    "nutrient": "Gutpela kaikai",
+    "purpose": "As tingting",
+    "notes": "Ol toksave",
+    "staffDetails": "Ol wokmanmeri"
   },
   "Common": {
     "loading": "Loading...",
@@ -2368,7 +2432,8 @@
     "watchAdFor3HourPass": "Lukim Wanpela Ad bilong Kisim 3 Awa Premium Pas",
     "manageSubscription": "Lukautim Sabskripsen",
     "upgradeToPremium": "Go antap long Premium",
-    "howToGuide": "Hau-Long Gaid"
+    "howToGuide": "Hau-Long Gaid",
+    "support": "Halivim"
   },
   "Notifications": {
     "title": "Ol Notifikesen",
@@ -2411,7 +2476,7 @@
     "overdue": "Overdue",
     "due": "Due",
     "snoozeFor": "Snooze long",
-    "confirmAction": "Plis tok orait long dispela",
+    "confirmAction": "Plis konfimim dispela samting",
     "deleteTaskTooltip": "Rausim Wok",
     "dismissReminderTooltip": "Kliaim Tingting",
     "dismissAlertTooltip": "Kliaim Lukaut Tok"

@@ -212,7 +212,32 @@
     "perfCaution": "Precaución",
     "perfPoor": "Deficiente",
     "performanceTag": "Etiqueta de rendimiento",
-    "filterOptions": "Opciones de filtro"
+    "filterOptions": "Opciones de filtro",
+    "activeHerd": "Piara activa",
+    "howToGuide": "Guía de uso",
+    "noPigsFound": "No hay cerdos activos en su hato. ¡Haga clic en \"+ Agregar Cerdo\" para comenzar!",
+    "pointABodyLength": "Punto A (Largo Corporal):",
+    "noteBodyLength": "Largo Corporal: Mide desde la base de las orejas hasta la base de la cola asegurando que la cinta esté firme (Punto A).",
+    "pointBHeartGirth": "Punto B (Perímetro Torácico):",
+    "noteHeartGirth": "Perímetro Torácico: Mide el tórax (detrás de las patas delanteras) asegurando que la cinta ajuste bien (Punto B).",
+    "noteSquarely": "Asegúrate de que el cerdo esté parado sobre terreno nivelado para mayor precisión.",
+    "liveWeight": "Peso Vivo",
+    "inPounds": "En Libras",
+    "growthIntelligence": "Inteligencia de Crecimiento",
+    "targetPig": "Cerdo Objetivo",
+    "weightToSave": "Peso a Guardar (kg)",
+    "estLiveWeight": "Peso vivo estimado",
+    "saveToProfile": "Guardar en Perfil",
+    "filterPigTag": "Filtrar arete...",
+    "togglePrimalCutsTooltip": "Clic para alternar desglose de rendimiento estimado de cortes",
+    "estCarcassWeight": "Peso de canal estimado",
+    "validWeightAlert": "Por favor, ingresa un peso válido en kg.",
+    "failedToSaveWeight": "Error al guardar el peso. Por favor verifique la conexión.",
+    "validScaleReadingAlert": "Por favor ingrese una lectura de peso válida.",
+    "deleteTaskTooltip": "Eliminar tarea",
+    "dismissReminderTooltip": "Descartar recordatorio",
+    "dismissAlertTooltip": "Descartar alerta",
+    "confirmAction": "Por favor confirme su acción"
   },
   "Login": {
     "title": "Web porcina inteligente",
@@ -311,7 +336,7 @@
     "pregnant": "Gestante",
     "lactating": "Lactante",
     "searchPlaceholder": "Crotal / Ubicación / Raza",
-    "activeHerd": "Activo",
+    "activeHerd": "Piara activa",
     "archivedHerd": "Cerdos archivados",
     "tag": "Arete",
     "castrated_label": "(Castrado)",
@@ -325,13 +350,24 @@
     "perfExcellent": "Excelente",
     "perfGood": "Bueno",
     "perfCaution": "Precaución",
-    "perfPoor": "Deficiente"
+    "perfPoor": "Deficiente",
+    "tagLabel": "Arete",
+    "ageLabel": "Edad",
+    "genderLabel": "Sexo",
+    "castratedLabel": "(Castrado)",
+    "addPig": "Agregar cerdo",
+    "viewFullHerd": "Ver piara completa ({count} cerdos)",
+    "showingUpTo10": "Mostrando hasta 10 cerdos",
+    "noPigsFound": "No hay cerdos activos en su hato. ¡Haga clic en \"+ Agregar Cerdo\" para comenzar!",
+    "dateOfBirth": "Fecha de Nacimiento"
   },
   "Profile": {
     "owner": "Dueño",
     "staff": "Personal",
     "settings": "Ajustes",
-    "signOut": "Cerrar sesión"
+    "signOut": "Cerrar sesión",
+    "manageSubscription": "Gestionar suscripción",
+    "upgradeToPremium": "Mejorar a Premium"
   },
   "Navigation": {
     "navigateTo": "Navegar a",
@@ -377,9 +413,12 @@
     "feedManagement": "Alimentación",
     "herdActivities": "Actividades",
     "humanResources": "Recursos humanos",
-    "howToGuide": "Guía Práctica",
+    "howToGuide": "Guía de uso",
     "rate5Stars": "Calificar con 5 Estrellas en Google Play",
-    "back": "Atrás"
+    "back": "Atrás",
+    "selectLanguage": "Seleccionar idioma",
+    "menu": "Menú",
+    "close": "Cerrar"
   },
   "Activities": {
     "title": "Ejecutar Procedimiento",
@@ -490,7 +529,18 @@
     "reasonDisease": "Enfermedad",
     "reasonSold": "Vendido",
     "criticalFoodSafetyWarning": "ADVERTENCIA CRÍTICA DE INOCUIDAD ALIMENTARIA",
-    "meatWithdrawalTitle": "Periodo de Retiro en Carne"
+    "meatWithdrawalTitle": "Periodo de Retiro en Carne",
+    "pregnancyOutcome": "Resultado de gestación",
+    "confirmedPregnant": "Gestante confirmada",
+    "notPregnant": "No gestante",
+    "numMales": "Número de machos",
+    "numFemales": "Número de hembras",
+    "stillbornCount": "Nacidos muertos",
+    "mummiesCount": "Momificados",
+    "selectAll": "Seleccionar todo",
+    "noEligiblePigs": "No se encontraron cerdos elegibles para esta actividad",
+    "confirmAndLog": "Confirmar y registrar actividad",
+    "notes": "Notas"
   },
   "Feed": {
     "lowStockWarning": "Inventario bajo",
@@ -720,7 +770,15 @@
     "proteinSource": "Fuente Proteica",
     "energySource": "Fuente Energética",
     "roughagesFiber": "Fibras / Forrajes",
-    "catalog": "Catálogo"
+    "catalog": "Catálogo",
+    "failedToDeleteIngredient": "Error al eliminar el ingrediente. Por favor intente de nuevo.",
+    "failedToDeleteRecipe": "Error al eliminar la fórmula. Por favor intente de nuevo.",
+    "crudeFiber": "Fibra Bruta",
+    "diagnosticsPremiumTitle": "Diagnóstico Clínico y Síntomas es una Función Premium",
+    "diagnosticsPremiumDesc": "Actualice a SmartSwine Premium para desbloquear diagnóstico diferencial porcino, análisis de signos clínicos y tratamientos veterinarios.",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "Ingreso Total",
@@ -773,7 +831,8 @@
     "unlockLedgerPdfTooltip": "Desbloquear reporte PDF del libro financiero",
     "customCategoryName": "Nombre de categoría personalizado",
     "customCategoryPlaceholder": "ej. Desinfectante, Transporte, Electricidad",
-    "noActivePigsAvailable": "No hay cerdos activos disponibles"
+    "noActivePigsAvailable": "No hay cerdos activos disponibles",
+    "financialsDesc": "Registra ingresos y gastos, contabilidad automática y exporta informes PDF."
   },
   "Hub": {
     "directoryRegion": "Región del directorio",
@@ -1803,7 +1862,8 @@
     "observedSymptoms": "Síntomas observados:",
     "keySymptoms": "Síntomas clave:",
     "logToHerd": "Registrar en la Piara",
-    "shareWithVet": "Compartir con el Veterinario"
+    "shareWithVet": "Compartir con el Veterinario",
+    "clearPigUnassigned": "Quitar Cerdo (Grupo de Hato Sin Asignar)"
   },
   "HR": {
     "title": "Directorio de Gestión de Personal",
@@ -2342,7 +2402,11 @@
     "relationship": "Parentesco",
     "compensationSummary": "Resumen Salarial",
     "totalSalaryPaidLifetime": "Salario Total Pagado (Histórico)",
-    "salaryPaymentHistory": "Historial de Pagos de Salario"
+    "salaryPaymentHistory": "Historial de Pagos de Salario",
+    "nutrient": "Nutriente",
+    "purpose": "Propósito",
+    "notes": "Notas",
+    "staffDetails": "Detalles del personal"
   },
   "Common": {
     "loading": "Cargando...",
@@ -2360,7 +2424,8 @@
     "watchAdFor3HourPass": "Ver anuncio para pase Premium de 3 horas",
     "manageSubscription": "Gestionar suscripción",
     "upgradeToPremium": "Mejorar a Premium",
-    "howToGuide": "Guía Práctica"
+    "howToGuide": "Guía Práctica",
+    "support": "Soporte"
   },
   "Notifications": {
     "title": "Notificaciones",

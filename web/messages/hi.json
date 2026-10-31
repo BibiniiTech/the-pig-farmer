@@ -212,7 +212,32 @@
     "perfCaution": "सावधानी",
     "perfPoor": "खराब",
     "filterOptions": "फ़िल्टर विकल्प",
-    "performanceTag": "प्रदर्शन टैग"
+    "performanceTag": "प्रदर्शन टैग",
+    "activeHerd": "सक्रिय झुंड",
+    "howToGuide": "मार्गदर्शिका",
+    "noPigsFound": "आपके झुंड में कोई सक्रिय सूअर नहीं है। शुरू करने के लिए \"+ सूअर जोड़ें\" पर क्लिक करें!",
+    "pointABodyLength": "बिंदु A (शरीर की लंबाई):",
+    "noteBodyLength": "लंबाई: कानों से पूंछ तक मापें, सुनिश्चित करें कि टेप शरीर पर फिट हो (बिंदุ A)।",
+    "pointBHeartGirth": "बिंदु B (सीने का घेरा):",
+    "noteHeartGirth": "घेरा: छाती के चारों ओर मापें, सुनिश्चित करें कि टेप मजबूती से मिले (बिंदु B)।",
+    "noteSquarely": "सटीक परिणाम के लिए सुनिश्चित करें कि सूअर समतल जमीन पर खड़ा हो।",
+    "liveWeight": "जीवित वजन (कांटा वजन)",
+    "inPounds": "पाउंड में",
+    "growthIntelligence": "ग्रोथ इंटेलिजेंस",
+    "targetPig": "लक्षित सूअर",
+    "weightToSave": "सहेजने के लिए वजन (किलो)",
+    "estLiveWeight": "अनुमानित जीवित वजन",
+    "saveToProfile": "प्रोफ़ाइल में सहेजें",
+    "filterPigTag": "टैग नंबर से फ़िल्टर करें...",
+    "togglePrimalCutsTooltip": "अनुमानित मांस टुकड़ों के विवरण को देखने के लिए क्लिक करें",
+    "estCarcassWeight": "अनुमानित कारकास (मांस) वजन",
+    "validWeightAlert": "कृपया किलो में सही वजन दर्ज करें।",
+    "failedToSaveWeight": "वजन सहेजने में विफल। कृपया इंटरनेट कनेक्शन जांचें।",
+    "validScaleReadingAlert": "कृपया मान्य वजन दर्ज करें।",
+    "deleteTaskTooltip": "कार्य हटाएं",
+    "dismissReminderTooltip": "अनुस्मारक खारिज करें",
+    "dismissAlertTooltip": "चेतावनी खारिज करें",
+    "confirmAction": "कृपया अपनी कार्रवाई की पुष्टि करें"
   },
   "Login": {
     "title": "SmartSwine वेब",
@@ -311,7 +336,7 @@
     "pregnant": "गर्भवती",
     "lactating": "स्तनपान कराने वाली",
     "searchPlaceholder": "टैग नंबर / बाड़ा / नस्ल",
-    "activeHerd": "सक्रिय",
+    "activeHerd": "सक्रिय झुंड",
     "archivedHerd": "आर्काइव किए गए सूअर",
     "tag": "टैग",
     "castrated_label": "(बधिया)",
@@ -325,13 +350,24 @@
     "perfExcellent": "बहुत बढ़िया",
     "perfGood": "अच्छा",
     "perfCaution": "सावधानी",
-    "perfPoor": "खराब"
+    "perfPoor": "खराब",
+    "tagLabel": "टैग",
+    "ageLabel": "आयु",
+    "genderLabel": "लिंग",
+    "castratedLabel": "(बधिया)",
+    "addPig": "सूअर जोड़ें",
+    "viewFullHerd": "पूरा झुंड देखें ({count} सूअर)",
+    "showingUpTo10": "अधिकतम 10 सूअर प्रदर्शित",
+    "noPigsFound": "आपके झुंड में कोई सक्रिय सूअर नहीं है। शुरू करने के लिए \"+ सूअर जोड़ें\" पर क्लिक करें!",
+    "dateOfBirth": "जन्म तिथि"
   },
   "Profile": {
     "owner": "मालिक",
     "staff": "स्टाफ",
     "settings": "सेटिंग्स",
-    "signOut": "साइन आउट"
+    "signOut": "साइन आउट",
+    "manageSubscription": "सदस्यता प्रबंधित करें",
+    "upgradeToPremium": "प्रीमियम में अपग्रेड करें"
   },
   "Navigation": {
     "navigateTo": "यहाँ जाएं",
@@ -377,9 +413,12 @@
     "feedManagement": "चारा",
     "herdActivities": "झुंड की गतिविधियाँ",
     "humanResources": "मानव संसाधन",
-    "howToGuide": "कैसे करें मार्गदर्शन",
+    "howToGuide": "मार्गदर्शिका",
     "rate5Stars": "Google Play पर 5 स्टार रेटिंग दें",
-    "back": "पीछे"
+    "back": "पीछे",
+    "selectLanguage": "भाषा चुनें",
+    "menu": "मेनू",
+    "close": "बंद करें"
   },
   "Activities": {
     "title": "प्रक्रिया निष्पादित करें",
@@ -490,7 +529,18 @@
     "reasonDisease": "बीमारी",
     "reasonSold": "बेचा गया",
     "criticalFoodSafetyWarning": "गंभीर खाद्य सुरक्षा चेतावनी",
-    "meatWithdrawalTitle": "मांस निकासी की अवधि"
+    "meatWithdrawalTitle": "मांस निकासी की अवधि",
+    "pregnancyOutcome": "गर्भावस्था परिणाम",
+    "confirmedPregnant": "गर्भावस्था पुष्ट",
+    "notPregnant": "गर्भवती नहीं",
+    "numMales": "नर की संख्या",
+    "numFemales": "मादा की संख्या",
+    "stillbornCount": "मृत जन्मे की संख्या",
+    "mummiesCount": "ममीकृत भ्रूण संख्या",
+    "selectAll": "सभी चुनें",
+    "noEligiblePigs": "इस गतिविधि के लिए कोई योग्य सूअर नहीं मिला",
+    "confirmAndLog": "पुष्टि करें और गतिविधि दर्ज करें",
+    "notes": "नोट्स"
   },
   "Feed": {
     "lowStockWarning": "कम स्टॉक",
@@ -720,7 +770,15 @@
     "proteinSource": "प्रोटीन स्रोत",
     "energySource": "ऊर्जा स्रोत",
     "roughagesFiber": "मोटा चारा / फाइबर",
-    "catalog": "कैटलॉग"
+    "catalog": "कैटलॉग",
+    "failedToDeleteIngredient": "सामग्री हटाने में विफल। कृपया पुनः प्रयास करें।",
+    "failedToDeleteRecipe": "फॉर्मूलेशन हटाने में विफल। कृपया पुनः प्रयास करें।",
+    "crudeFiber": "कच्चा फाइबर",
+    "diagnosticsPremiumTitle": "लक्षण और पशु चिकित्सा निदान एक प्रीमियम सुविधा है",
+    "diagnosticsPremiumDesc": "रोग मिलान, नैदानिक संकेत विश्लेषण, प्रमुख लक्षण और पशु चिकित्सक द्वारा प्रमाणित उपचारों को अनलॉक करने के लिए SmartSwine प्रीमियम पर अपग्रेड करें।",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "कुल आय",
@@ -773,7 +831,8 @@
     "unlockLedgerPdfTooltip": "वित्तीय खाता-बही PDF रिपोर्ट अनलॉक करें",
     "customCategoryName": "कस्टम श्रेणी का नाम",
     "customCategoryPlaceholder": "उदा. कीटाणुनाशक, परिवहन, बिजली आदि",
-    "noActivePigsAvailable": "कोई सक्रिय सूअर उपलब्ध नहीं है"
+    "noActivePigsAvailable": "कोई सक्रिय सूअर उपलब्ध नहीं है",
+    "financialsDesc": "आय और खर्च दर्ज करें और पीडीएफ रिपोर्ट निर्यात करें।"
   },
   "Hub": {
     "directoryRegion": "निर्देशिका क्षेत्र",
@@ -1810,7 +1869,8 @@
     "observedSymptoms": "देखे गए लक्षण:",
     "keySymptoms": "मुख्य लक्षण:",
     "logToHerd": "झुंड स्वास्थ्य रिकॉर्ड में दर्ज करें",
-    "shareWithVet": "पशु चिकित्सक से साझा करें"
+    "shareWithVet": "पशु चिकित्सक से साझा करें",
+    "clearPigUnassigned": "सूअर चयन हटाएं (अवर्गीकृत झुंड समूह)"
   },
   "HR": {
     "title": "स्टाफ प्रबंधन",
@@ -2349,7 +2409,11 @@
     "relationship": "रिश्ता / वंशावली",
     "compensationSummary": "मुआवज़ा सारांश",
     "totalSalaryPaidLifetime": "कुल भुगतान किया गया वेतन (जीवनकाल)",
-    "salaryPaymentHistory": "वेतन भुगतान इतिहास"
+    "salaryPaymentHistory": "वेतन भुगतान इतिहास",
+    "nutrient": "पोषक तत्व",
+    "purpose": "उद्देश्य",
+    "notes": "नोट्स",
+    "staffDetails": "कर्मचारी विवरण"
   },
   "Common": {
     "loading": "लोड हो रहा है...",
@@ -2367,7 +2431,8 @@
     "watchAdFor3HourPass": "3 घंटे के प्रीमियम पास के लिए विज्ञापन देखें",
     "manageSubscription": "सदस्यता प्रबंधित करें",
     "upgradeToPremium": "प्रीमियम में अपग्रेड करें",
-    "howToGuide": "कैसे करें मार्गदर्शन"
+    "howToGuide": "कैसे करें मार्गदर्शन",
+    "support": "सहायता"
   },
   "Notifications": {
     "title": "सूचनाएं",

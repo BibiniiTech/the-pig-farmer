@@ -212,7 +212,32 @@
     "perfCaution": "ⵃⴰⴷⵔⴻⵜ",
     "perfPoor": "ⴰⴳⴻⵍⵍⵉⵍ",
     "filterOptions": "ⵉⵎⵙⵜⴰⵢⵏ ⵏ ⵓⵙⵜⴰⵢ",
-    "performanceTag": "ⵜⴰⵎⴰⵜⴰⵔⵜ ⵏ ⵜⵡⵓⵔⵉ"
+    "performanceTag": "ⵜⴰⵎⴰⵜⴰⵔⵜ ⵏ ⵜⵡⵓⵔⵉ",
+    "activeHerd": "ⴰⵢⵍⵉⵎ ⵉⵙⵡⵓⵔⵉⵏ",
+    "howToGuide": "ⴰⵎⴰⵍⴰⵍ ⵏ ⵜⵎⵙⵙⵓⵎⴰⵏⵜ",
+    "noPigsFound": "ⵓⵔ ⵉⵍⵍⵉ ⵢⵉⵍⴼ ⵉⴷⴷⵔⵏ ⴳ ⵜⴼⵔⴰⵏⵜ. ⴰⴷⵔ ⵅⴼ \"+ ⵔⵏⵓ ⵉⵍⴼ\" ⴰⴷ ⵜⴱⴷⵓⴷ!",
+    "pointABodyLength": "ⵜⴰⵙⵇⵇⵉⵍⵜ A (ⵜⵉⵖⵣⵉ ⵏ ⵜⴼⴽⴽⴰ):",
+    "noteBodyLength": "Body Length: Measure from the base of the ears to the base of the tail making sure the tape is firm on the body and not loose (Point A).",
+    "pointBHeartGirth": "ⵜⴰⵙⵇⵇⵉⵍⵜ B (ⵜⵓⴷⴷⵙⴰ ⵏ ⵢⵉⴷⵉⵎⵔ):",
+    "noteHeartGirth": "Heart Girth: Measure the thorax (just behind the front legs) making sure the tape is fit along the body and meets tightly (Point B).",
+    "noteSquarely": "Ensure the pig is standing squarely on level ground for the most accurate result.",
+    "liveWeight": "Azuk deg tudert",
+    "inPounds": "ⵙ ⵍⴱⴰⵡⵏⴷ",
+    "growthIntelligence": "ⵜⴰⵎⵓⵖⵍⵉ ⵏ ⵜⵏⴻⴼⵍⵉⵜ",
+    "targetPig": "ⵉⵍⴼ ⵉⵜⵜⵡⴰⵙⵜⴰⵢⵏ",
+    "weightToSave": "Weight to Save (kg)",
+    "estLiveWeight": "Azuk deg tudert yettwasidmren",
+    "saveToProfile": "Save to Pig Profile",
+    "filterPigTag": "ⵙⵜⵉ ⵜⴰⵎⵥⵥⵓⵖⵜ ⵏ ⵢⵉⵍⴼ...",
+    "togglePrimalCutsTooltip": "ⴰⴷⵔ ⴰⴷ ⵜⵥⵕⴷ ⵜⵉⴼⵔⴽⵉⵡⵉⵏ ⵏ ⵓⴽⵙⵓⵎ",
+    "estCarcassWeight": "Azuk n uksum yettwasidmren",
+    "validWeightAlert": "Please enter a valid weight in kg.",
+    "failedToSaveWeight": "ⵓⵔ ⵢⵉⵣﻤⵉⵔ ⴰⴷ ⵉⵃⴹⵓ ⴰⵣⴰⵍ. ⵙⵏⵇⴷ ⴰⵥⵟⵟⴰ.",
+    "validScaleReadingAlert": "ⵙⴽⵛⵎ ⴰⵣⴰⵍ ⵏ ⵜⵎⵉⵣⴰⵏⵜ ⵉⵖⵥⴰⵏⵏ.",
+    "deleteTaskTooltip": "ⴽⴽⵙ ⵜⴰⵡⵓⵔⵉ",
+    "dismissReminderTooltip": "ⴽⴽⵙ ⴰⵙⵎⴽⵜⵉ",
+    "dismissAlertTooltip": "ⴽⴽⵙ ⴰⵙⵉⴷⴼ",
+    "confirmAction": "ⵙⴷⵉⴷ ⵜⵉⴳⴰⵡⵜ ⵏⵏⴽ"
   },
   "Login": {
     "title": "SmartSwine Web",
@@ -311,7 +336,7 @@
     "pregnant": "ⵙ ⵜⴰⴷⵉⵙⵜ",
     "lactating": "ⵢⴻⵙⵙⵓⵙⵓ",
     "searchPlaceholder": "ⵓⵟⵟⵓⵏ ⵏ ⵓⵎⵥⵥⵓⵖ / ⴰⴷⵖⴰⵔ / ⴰⵏⴰⵡ",
-    "activeHerd": "ⵢⴻⵙⵡⴻⵔ",
+    "activeHerd": "ⴰⵢⵍⵉⵎ ⵉⵙⵡⵓⵔⵉⵏ",
     "archivedHerd": "ⵉⵍⴻⴼ ⵢⴻⵜⵜⵡⴰⵃⴻⵔⵣⴻⵏ",
     "tag": "ⵜⴰⵎⵥⵥⵓⵖⵜ",
     "castrated_label": "(ⵉⵜⵜⵡⴰⴽⴽⵙⵏ)",
@@ -325,13 +350,24 @@
     "perfExcellent": "ⵉⵖⵓⴷⴰⵏ",
     "perfGood": "ⵢⴻⵡⵇⴻⵎ",
     "perfCaution": "ⵃⴰⴷⵔⴻⵜ",
-    "perfPoor": "ⴰⴳⴻⵍⵍⵉⵍ"
+    "perfPoor": "ⴰⴳⴻⵍⵍⵉⵍ",
+    "tagLabel": "ⵜⴰⵎⵥⵥⵓⵖⵜ",
+    "ageLabel": "ⵍⴻⵄⵎⴻⵔ",
+    "genderLabel": "ⴰⵏⴰⵡ",
+    "castratedLabel": "(ⵉⵜⵜⵡⴰⴽⴽⵙⵏ)",
+    "addPig": "ⵔⵏⵓ ⵉⵍⴼ",
+    "viewFullHerd": "ⵥⵕ ⴰⴽⴽྭ ⵜⴰⴼⵔⴰⵏⵜ ({count} ⵉⵍⴼⴰⵏ)",
+    "showingUpTo10": "ⴰⵙⴽⴰⵏ ⴰⵔ 10 ⵏ ⵢⵉⵍⴼⴰⵏ",
+    "noPigsFound": "ⵓⵔ ⵉⵍⵍⵉ ⵢⵉⵍⴼ ⵉⴷⴷⵔⵏ ⴳ ⵜⴼⵔⴰⵏⵜ. ⴰⴷⵔ ⵅⴼ \"+ ⵔⵏⵓ ⵉⵍⴼ\" ⴰⴷ ⵜⴱⴷⵓⴷ!",
+    "dateOfBirth": "ⴰⵙⵙ ⵏ ⵜⵍⴰⵍⵉⵜ"
   },
   "Profile": {
     "owner": "Owner",
     "staff": "Staff",
     "settings": "ⴰⵙⴻⵖⵥⴰⵏ",
-    "signOut": "ⴼⴼⴻⵖ"
+    "signOut": "ⴼⴼⴻⵖ",
+    "manageSubscription": "ⵙⵡⵓⴷⴷⵓ ⴰⵎⵢⴰⵣⴰⵏ",
+    "upgradeToPremium": "ⵙⵙⵉⵍⵉ ⵖⵔ ⴱⵔⵉⵎⵢⵓⵎ"
   },
   "Navigation": {
     "navigateTo": "Navigate to",
@@ -377,9 +413,12 @@
     "feedManagement": "ⴰⵖⴻⵓⵎ",
     "herdActivities": "ⵜⵉⴳⴰⵡⵜ ⵏ ⵜⵇⴻⴹⵄⵉⵜ",
     "humanResources": "ⵜⵉⵖⴱⵓⵍⴰ ⵏ ⵓⵎⴷⴰⵏ",
-    "howToGuide": "ⴰⵎⴻⴽ ⴰⵔ ⴰⴷ ⵜⵉⴷⵜⴻⵙⵙⴻⴽⵏⴻⴹ",
+    "howToGuide": "ⴰⵎⴰⵍⴰⵍ ⵏ ⵜⵎⵙⵙⵓⵎⴰⵏⵜ",
     "rate5Stars": "ⵙⵙⵓⵎⴰ ⵏ 5 ⵏ ⵢⵉⵜⵔⴰⵏ ⴷⴻⴳ Gugl Play",
-    "back": "ⵖⴻⵔ ⴷⴻⴼⴼⵉⵔ"
+    "back": "ⵖⴻⵔ ⴷⴻⴼⴼⵉⵔ",
+    "selectLanguage": "ⴼⵔⵏ ⵜⵓⵜⵍⴰⵢⵜ",
+    "menu": "ⵓⵎⵓⵖ",
+    "close": "ⵖⵍⴻⵇ"
   },
   "Activities": {
     "title": "Execute Herd Procedure",
@@ -490,7 +529,18 @@
     "reasonDisease": "ⴰⵟⵟⴰⵏ",
     "reasonSold": "ⵢⴻⵣⵣⴻⵏⵣ",
     "criticalFoodSafetyWarning": "ANEBGI TAƔELNAST TAƔELNAWT ⵏ TUCCIT",
-    "meatWithdrawalTitle": "ⵜⴰⵍⵍⵉⵜ ⵏ ⵜⵓⴽⴽⵙⴰ ⵏ ⵓⴽⵙⵓⵎ"
+    "meatWithdrawalTitle": "ⵜⴰⵍⵍⵉⵜ ⵏ ⵜⵓⴽⴽⵙⴰ ⵏ ⵓⴽⵙⵓⵎ",
+    "pregnancyOutcome": "ⵜⴰⵢⴰⴼⵓⵜ ⵏ ⵜⴰⴷⵉⵙⵜ",
+    "confirmedPregnant": "ⵜⴻⵜⵜⵓⵙⵖⵥⵏ ⵜⴰⴷⵉⵙⵜ",
+    "notPregnant": "ⵓⵔ ⵜⵍⵍⵉ ⵜⴰⴷⵉⵙⵜ",
+    "numMales": "ⵓⵟⵟⵓⵏ ⵏ ⵉⵡⵜⵎⴰⵏ",
+    "numFemales": "ⵓⵟⵟⵓⵏ ⵏ ⵜⵉⵡⵜⵎⵉⵏ",
+    "stillbornCount": "ⵓⵟⵟⵓⵏ ⵏ ⵉⵎⵎⵓⵜⵏ ⵖ ⵜⵍⴰⵍⵉⵜ",
+    "mummiesCount": "ⵓⵟⵟⵓⵏ ⵏ ⵉⵎⵓⵎⵉⵢⵏ",
+    "selectAll": "ⴼⵔⵏ ⴽⵓⵍⵍⵓ",
+    "noEligiblePigs": "ⵓⵔ ⵜⵜⵢⴰⴼⴰⵏⵜ ⵜⵉⵍⴼⵉⵏ ⵉⵍⵎⵙⵙⵓⴷⵓ ⴰⴷ",
+    "confirmAndLog": "ⵙⵖⵥⵏ & ⵣⵎⵎⴻⵎ ⵜⵉⴳⴰⵡⵜ",
+    "notes": "ⵜⵉⴳⵏⴰⵜⵉⵏ"
   },
   "Feed": {
     "lowStockWarning": "ⴰⵃⵔⵉⵛ ⴷ ⴰⵎⴻⵛⵟⵓⵃ",
@@ -721,7 +771,15 @@
     "energySource": "ⴰⵙⴰⴳⵎ ⵏ ⵜⵥⴹⴰⵕⵜ",
     "roughagesFiber": "ⵉⴼⵔⴰⵡⵏ / ⵉⴼⵉⵍⴰⵏ",
     "catalog": "ⴰⴽⴰⵜⴰⵍⵓⴳ",
-    "currentQty": "ⴰⵙⴽⵜⵉ ⵉⵖⴰⵎⴰⵏ"
+    "currentQty": "ⴰⵙⴽⵜⵉ ⵉⵖⴰⵎⴰⵏ",
+    "failedToDeleteIngredient": "ⵉⵣⴳⵍ ⵓⴽⴽⴰⵙ ⵏ ⵓⴼⵔⴷⵉⵙ. ⴰⵔⵎ ⴷⴰⵖ.",
+    "failedToDeleteRecipe": "ⵉⵣⴳⵍ ⵓⴽⴽⴰⵙ ⵏ ⵜⵎⵙⴽⴰⵔⵜ. ⴰⵔⵎ ⴷⴰⵖ.",
+    "crudeFiber": "ⵍⴼⵉⴱⴻⵔ ⵓⵔ ⵏⴻⵜⵜⵡⴰⴽⴽⴻⵙ ⴰⵔⴰ",
+    "diagnosticsPremiumTitle": "ⵜⵉⵎⵉⵜⴰⵔ ⴷ ⵓⵙⵏⵉⵊⵊⵉ ⵉⴳⴰ ⵜⴰⵏⴰⴼⵓⵜ ⵏ ⴱⵔⵉⵎⵢⵓⵎ",
+    "diagnosticsPremiumDesc": "ⵙⵙⵉⵍⵉ ⵖⵔ SmartSwine ⴱⵔⵉⵎⵢⵓⵎ ⴰⴷ ⵜⵙⴽⵏⴷ ⴰⵙⵏⵉⵊⵊⵉ ⴷ ⵜⵎⵉⵜⴰⵔ ⵏ ⵡⴰⵟⵟⴰⵏ ⴷ ⵉⵙⴰⴼⴰⵔⵏ ⵏ ⵓⴹⴱⵉⴱ.",
+    "lbs": "lbs",
+    "lb": "lb",
+    "bag": "Bag"
   },
   "Financials": {
     "totalRevenue": "ⴰⴳⵎⵓⴹ ⵏ ⵜⴻⴷⵔⵉⵎⵜ",
@@ -774,7 +832,8 @@
     "unlockLedgerPdfTooltip": "ⵕⵥⵎ ⴰⵏفقⴷ ⵏ PDF ⵏ ⵓⴷⵍⵉⵙ ⵏ ⵜⵥⵕⴼⵜ",
     "customCategoryName": "ⵉⵙⴻⵎ ⵏ ⵜⴰⴳⴳⴰⵢⵜ ⵜⴰⵡⴻⵣⵍⴰⵏⵜ",
     "customCategoryPlaceholder": "zund: ⴰⵙⵉⵔⴷ, ⴰⵙⵉⴽⵍ, ⵜⵉⵙⵏⵜ ⴷ ⵡⴰⵎⴰⵏ",
-    "noActivePigsAvailable": "ⵓⵔ ⵍⵍⵉⵏ ⵢⵉⵍⴼⴰⵏ ⵉⴷⴷⵔⵏ"
+    "noActivePigsAvailable": "ⵓⵔ ⵍⵍⵉⵏ ⵢⵉⵍⴼⴰⵏ ⵉⴷⴷⵔⵏ",
+    "financialsDesc": "Record incomes and expenses, automatic financial logging, and export PDF financial report."
   },
   "Hub": {
     "directoryRegion": "ⵜⴰⵎⵏⴰⴹⵜ ⵏ ⵓⴼⴰⵢⵍⵓ",
@@ -1811,7 +1870,8 @@
     "observedSymptoms": "ⵜⵉⵎⵉⵜⴰⵔ ⵉⵜⵜⵡⴰⵥⵕⴰⵏ:",
     "keySymptoms": "ⵜⵉⵎⵉⵜⴰⵔ ⵜⵉⴷⵙⵍⴰⵏⵉⵏ:",
     "logToHerd": "Aru deg uzmam n tezmert n tuzzya",
-    "shareWithVet": "Bḍu d umsasafar"
+    "shareWithVet": "Bḍu d umsasafar",
+    "clearPigUnassigned": "ⴽⴽⵙ ⵉⵍⴼ (ⴰⴳⵔⵓⵎⵎⴰ ⵓⵔ ⵉⵜⵜⵡⴰⵙⵜⴰⵢⵏ)"
   },
   "HR": {
     "title": "Staff Management Directory",
@@ -2350,7 +2410,11 @@
     "relationship": "ⵜⴰⵙⴰⵖⵓⵍⵜ",
     "compensationSummary": "ⴰⴳⵣⵓⵎ ⵏ ⵓⵄⴰⵇⴻⴱ",
     "totalSalaryPaidLifetime": "ⴰⴳⵎⵓⴹ ⵏ ⵍⵎⵉⵣⴰⵏ ⵢⴻⵜⵜⵡⴰⵅⴻⵍⵚⴻⵏ (ⵜⵓⴷⴻⵔⵜ)",
-    "salaryPaymentHistory": "ⴰⵎⴻⵣⵔⵓⵢ ⵏ ⵓⵅⴻⵍⵍⴻⵚ ⵏ ⵜⵓⵖⴷⴰⴹⵜ"
+    "salaryPaymentHistory": "ⴰⵎⴻⵣⵔⵓⵢ ⵏ ⵓⵅⴻⵍⵍⴻⵚ ⵏ ⵜⵓⵖⴷⴰⴹⵜ",
+    "nutrient": "ⵉⵎⵙⵓⴷⵉⵙⵏ ⵏ ⵜⵓⵜⵛⵉⵜ",
+    "purpose": "ⵉⵙⵡⵉ",
+    "notes": "ⵜⵉⴳⵏⴰⵜⵉⵏ",
+    "staffDetails": "ⵜⵜⴼⴰⵚⵉⵍ ⵏ ⵢⵉⵅⴻⴷⴷⴰⵎⴻⵏ"
   },
   "Common": {
     "loading": "Loading...",
@@ -2368,7 +2432,8 @@
     "watchAdFor3HourPass": "ⵥⵕ ⴰⵙⵓⵙⵙⵏ ⵉ 3 ⵏ ⵉⵙⵔⴰⴳⵏ ⴱⵔⵉⵎⵢⵓⵎ",
     "manageSubscription": "ⵙⵡⵓⴷⴷⵓ ⴰⵎⵢⴰⵣⴰⵏ",
     "upgradeToPremium": "ⵙⵙⵉⵍⵉ ⵖⵔ ⴱⵔⵉⵎⵢⵓⵎ",
-    "howToGuide": "ⴰⵎⴻⴽ ⴰⵔ ⴰⴷ ⵜⵉⴷⵜⴻⵙⵙⴻⴽⵏⴻⴹ"
+    "howToGuide": "ⴰⵎⴻⴽ ⴰⵔ ⴰⴷ ⵜⵉⴷⵜⴻⵙⵙⴻⴽⵏⴻⴹ",
+    "support": "ⵜⵉⵡⵉⵙⵉ"
   },
   "Notifications": {
     "title": "Ilɣan",
@@ -2411,7 +2476,7 @@
     "overdue": "ⵢⴻⵄⴹⵉⵍ",
     "due": "ⵍⵃⴻⵇ",
     "snoozeFor": "Snooze for",
-    "confirmAction": "ⵙⴷⵉⴷ ⵜⵉⴳⴰⵡⵜ ⵏⵏⴽ",
+    "confirmAction": "ⵙⵖⵥⵏ ⵜⵉⴳⴰⵡⵜ ⵏⵏⴽ",
     "deleteTaskTooltip": "ⴽⴽⵙ ⵜⴰⵡⵓⵔⵉ",
     "dismissReminderTooltip": "ⴽⴽⵙ ⴰⵙⵎⴽⵜⵉ",
     "dismissAlertTooltip": "ⴽⴽⵙ ⴰⵙⵉⴷⴼ"
