@@ -15,6 +15,7 @@ import { FeedIngredient, NutritionalRequirement, SavedFeedRecipe } from "@/lib/t
 import { formulateFeed, FormulationResult } from "@/lib/feedCalculator";
 import PremiumWrapper from "@/components/PremiumWrapper";
 import NativeAdBanner from "@/components/ads/NativeAdBanner";
+import RewardedPassModal from "@/components/ads/RewardedPassModal";
 import SavedRecipesModal from "@/components/feed/SavedRecipesModal";
 import SaveRecipeModal from "@/components/feed/SaveRecipeModal";
 import IngredientsCatalogModal from "@/components/feed/IngredientsCatalogModal";
@@ -61,6 +62,7 @@ export default function MixFeedPage() {
   const [isBatchModalOpen, setIsBatchModalOpen] = useState(false);
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
   const [saveToast, setSaveToast] = useState<string | null>(null);
+  const [showRewardedModal, setShowRewardedModal] = useState(false);
 
   const toggleCategory = (cat: string) => {
     setExpandedCategory(prev => (prev === cat ? null : cat));
@@ -313,11 +315,30 @@ export default function MixFeedPage() {
         </div>
 
         <PremiumWrapper fallback={
-          <div className="p-12 text-center border border-zinc-200 rounded-2xl bg-zinc-50 space-y-4">
-            <ScienceIcon className="h-12 w-12 text-amber-600 mx-auto opacity-70" />
-            <h2 className="text-xl font-bold text-zinc-900">{t("mixFeedPremiumTitle") || "Mix Feed is a Premium Feature"}</h2>
-            <p className="text-xs text-zinc-500 max-w-md mx-auto">{t("mixFeedPremiumDesc") || "Upgrade to SmartSwine Premium to generate balanced rations with automated Pearson square feed balancing."}</p>
-            <Link href="/dashboard/billing" className="inline-block px-6 py-2.5 bg-amber-600 text-white text-xs font-bold rounded-xl shadow">{t("upgradeToPremium") || "Upgrade to Premium"}</Link>
+          <div className="p-8 md:p-12 text-center border border-zinc-200 dark:border-zinc-800 rounded-3xl bg-zinc-50/80 dark:bg-zinc-900/60 max-w-xl mx-auto space-y-5 my-6 shadow-sm">
+            <div className="h-14 w-14 rounded-2xl bg-amber-100 dark:bg-amber-950/60 text-amber-600 flex items-center justify-center mx-auto shadow-inner">
+              <ScienceIcon className="h-8 w-8" />
+            </div>
+            <div className="space-y-2">
+              <h2 className="text-xl sm:text-2xl font-black text-zinc-900 dark:text-zinc-100">{t("mixFeedPremiumTitle") || "Mix Feed is a Premium Feature"}</h2>
+              <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 max-w-md mx-auto leading-relaxed">{t("mixFeedPremiumDesc") || "Upgrade to SmartSwine Premium to generate balanced rations with automated Pearson square feed balancing."}</p>
+            </div>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setShowRewardedModal(true)}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white rounded-xl font-bold text-xs shadow-md transition active:scale-95"
+              >
+                <span>▶</span>
+                <span>Watch Ad for 3-Hour Pass</span>
+              </button>
+              <Link
+                href="/dashboard/billing"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-5 py-3 border border-amber-500/80 bg-amber-400/10 hover:bg-amber-400/20 text-zinc-900 dark:text-zinc-100 rounded-xl font-bold text-xs transition"
+              >
+                {t("upgradeToPremium") || "Upgrade to Premium"}
+              </Link>
+            </div>
           </div>
         }>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -560,6 +581,12 @@ export default function MixFeedPage() {
           currencySymbol={userProfile?.settings?.currencySymbol || "$"}
         />
       )}
+
+      <RewardedPassModal
+        isOpen={showRewardedModal}
+        onClose={() => setShowRewardedModal(false)}
+        featureName="Mix Feed Formulator"
+      />
     </div>
   );
 }

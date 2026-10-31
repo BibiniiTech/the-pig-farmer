@@ -7,6 +7,7 @@ import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 import { Pig } from "@/lib/types";
 import PremiumWrapper from "@/components/PremiumWrapper";
+import RewardedPassModal from "@/components/ads/RewardedPassModal";
 import Link from "next/link";
 import {
   SYMPTOM_GROUPS,
@@ -146,6 +147,7 @@ export default function InlineDiseaseFinderSection() {
   const [diagnosisResults, setDiagnosisResults] = useState<DiagnosisMatchResult[]>([]);
   const [hasDiagnosed, setHasDiagnosed] = useState(false);
   const [expandedResultId, setExpandedResultId] = useState<string | null>(null);
+  const [showRewardedModal, setShowRewardedModal] = useState(false);
 
   // Action toasts / feedback
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -423,12 +425,22 @@ export default function InlineDiseaseFinderSection() {
             {t("diagnosticsPremiumDesc") || tFeed("diagnosticsPremiumDesc") || "Upgrade to SmartSwine Premium to unlock differential swine disease matching, clinical signs analysis, hallmark symptoms, and vet-approved interventions."}
           </p>
         </div>
-        <Link
-          href="/dashboard/billing"
-          className="inline-block px-7 py-3 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white text-xs font-bold rounded-xl shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
-        >
-          {t("upgradeToPremium") || tFeed("upgradeToPremium") || "Upgrade to Premium"}
-        </Link>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+          <button
+            type="button"
+            onClick={() => setShowRewardedModal(true)}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white text-xs font-bold rounded-xl shadow-md transition active:scale-95"
+          >
+            <span>▶</span>
+            <span>Watch Ad for 3-Hour Pass</span>
+          </button>
+          <Link
+            href="/dashboard/billing"
+            className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 border border-pink-300 bg-white hover:bg-pink-50 text-zinc-900 rounded-xl font-bold text-xs shadow-xs transition"
+          >
+            {t("upgradeToPremium") || tFeed("upgradeToPremium") || "Upgrade to Premium"}
+          </Link>
+        </div>
       </div>
     }>
       <div className="space-y-3">
@@ -1192,6 +1204,11 @@ export default function InlineDiseaseFinderSection() {
         )}
       </div>
     </div>
+    <RewardedPassModal
+      isOpen={showRewardedModal}
+      onClose={() => setShowRewardedModal(false)}
+      featureName="Symptoms & Diagnostics"
+    />
     </PremiumWrapper>
   );
 }
