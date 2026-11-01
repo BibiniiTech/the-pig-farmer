@@ -64,17 +64,7 @@ export default function RewardedPassModal({
     setCountdown(15);
     setAdFinished(false);
 
-    // 1. Trigger Monetag vignette if available on window
-    try {
-      const w = window as any;
-      if (typeof w.show_12162725 === "function") {
-        w.show_12162725();
-      }
-    } catch (err) {
-      console.debug("Monetag vignette call:", err);
-    }
-
-    // 2. Open Monetag sponsored offer in a new tab to ensure conversion tracking and publisher earning
+    // Open Monetag sponsored offer in a new tab to ensure conversion tracking and publisher earning
     try {
       window.open(monetagDirectLink, "_blank", "noopener,noreferrer");
     } catch (err) {

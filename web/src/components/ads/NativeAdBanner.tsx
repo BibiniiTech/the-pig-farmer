@@ -44,18 +44,6 @@ export default function NativeAdBanner({ zoneId, className = "" }: NativeAdBanne
     return null;
   }
 
-  const handleSponsoredClick = () => {
-    // Trigger Monetag vignette if available on window
-    try {
-      const w = window as any;
-      if (typeof w.show_12162725 === "function") {
-        w.show_12162725();
-      }
-    } catch (err) {
-      console.debug("Monetag trigger:", err);
-    }
-  };
-
   return (
     <div
       className={`w-full my-6 rounded-2xl border border-zinc-200/90 dark:border-zinc-800 bg-zinc-50/80 dark:bg-zinc-900/60 p-4 transition shadow-sm overflow-hidden print:hidden ${className}`}
@@ -85,7 +73,6 @@ export default function NativeAdBanner({ zoneId, className = "" }: NativeAdBanne
           href={monetagDirectLink}
           target="_blank"
           rel="noopener noreferrer sponsored"
-          onClick={handleSponsoredClick}
           className="flex items-center gap-3 group flex-1"
         >
           <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-emerald-600 to-green-500 flex items-center justify-center text-white text-xl shadow-md shrink-0 group-hover:scale-105 transition-transform">
@@ -106,7 +93,6 @@ export default function NativeAdBanner({ zoneId, className = "" }: NativeAdBanne
             href={monetagDirectLink}
             target="_blank"
             rel="noopener noreferrer sponsored"
-            onClick={handleSponsoredClick}
             className="w-1/2 sm:w-auto text-center px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition shadow-xs"
           >
             Explore Offers

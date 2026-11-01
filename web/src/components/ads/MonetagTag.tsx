@@ -9,12 +9,21 @@ export default function MonetagTag() {
   const { userProfile } = useAuth();
 
   useEffect(() => {
-    // Never load ad tags for paid premium members, admins, or on the migration redirect page
+    // 1. Unregister and purge any background service workers (killing legacy Zone 11929267 push ads)
+    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        for (const reg of registrations) {
+          reg.unregister().catch(() => {});
+        }
+      });
+    }
+
+    // 2. Never load ad tags for paid premium members, admins, or on the migration redirect page
     if (pathname === "/moved" || userProfile?.isPremium || userProfile?.isAdmin) {
       return;
     }
 
-    // Prevent duplicate tag injection
+    // 3. Inject ONLY the approved In-Page Push tag (Zone 12162725)
     if (document.querySelector('script[data-zone="12162725"]')) {
       return;
     }
@@ -28,7 +37,7 @@ export default function MonetagTag() {
         target.appendChild(s);
       }
     } catch (e) {
-      console.debug("Monetag tag initialization:", e);
+      console.debug("Monetag in-page tag initialization:", e);
     }
   }, [pathname, userProfile]);
 
